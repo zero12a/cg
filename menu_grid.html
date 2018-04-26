@@ -1,0 +1,337 @@
+<!--conf
+<sample>
+               <product version="1.4" edition="std"/>
+                       <modifications>
+                               <modified date="071211"/>
+                       </modifications>
+               </sample>
+ --> 
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>Test</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!--<link rel="stylesheet" type="text/css" href="../../../codebase/dhtmlx.css"/>-->
+	<link rel="stylesheet" type="text/css" href="./lib/dhtmlxSuite/codebase/dhtmlx.css"/>
+	<script src="./lib/dhtmlxSuite/codebase/dhtmlx.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+<style>
+	td {font-size:9pt}
+	.even{
+        background-color:#e9e2e4;
+    }
+    .uneven{
+        background-color:#ffffff;
+    }
+</style>
+
+</head>
+
+<body>
+<table border=0 cellpadding=0 cellspacing=0><tr><td><img src="./imgtest/title.PNG" align=absmiddle></td><td style="padding-left:5"><b>오브젝트 딕셔너리</b></td></tr></table>
+<div id="gridbox" style="width:100%;height:300px;background-color:white;"></div>
+<script>
+	mygrid = new dhtmlXGridObject('gridbox');
+	mygrid.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
+	mygrid.setHeader("ch,co,coro,combo,txttxt,ed");
+	mygrid.setInitWidths("50,100,100,100,400,100")
+	mygrid.setColAlign("left,left,left,center,left,left")
+	mygrid.setColTypes("ch,co,coro,combo,txttxt,ed");
+	mygrid.setColSorting("str,str,str,str,str,str,str")
+	mygrid.setSkin("dhx_skyblue")
+	mygrid.setEditable(true); //편집모드
+	//mygrid.enableMultiline(true); //멀티라인허용
+
+	//스타일
+	//grid.setStyle(ss_header, ss_grid, ss_selCell, ss_selRow);
+	//헤더 좌측 10px 제거 div.gridbox_dhx_skyblue.gridbox table.hdr td div.hdrcell{padding-left:10px;width:auto;}
+	//셀 높이 변경 div.gridbox_dhx_skyblue.gridbox table.obj.row20px tr td{padding-top:1px;padding-bottom:1px;height:25px;border-right:1px solid #fff;border-top:1px solid #fff;border-bottom:1px solid #fff;}
+
+	mygrid.setStyle("font-weight:bold;text-align:center;padding:2 2 2 2;font-size:10pt", "font-size:9pt;","","");
+	//mygrid.enableAlterCss("even","uneven");//sets even/odd css styles --> void enableAlterCss(string cssE,string cssU,boolean perLevel,boolean levelUnique);
+	//mygrid.setColumnColor("gray,silver");
+
+	//초기화
+	mygrid.init();
+	mygrid.loadXML("./grid_test.xml");
+
+
+
+	mygrid.getCombo(0).put("A01","A01한");
+	mygrid.getCombo(0).put("A02","A02한");
+	mygrid.getCombo(0).put("A03","A03한");
+	mygrid.getCombo(0).put("AAA","AAA한");
+
+	mygrid.getCombo(1).put("B01","B01한");
+	mygrid.getCombo(1).put("B02","B02한");
+	mygrid.getCombo(1).put("B03","B03한");
+	mygrid.getCombo(1).put("BBB","BBB한");
+
+	mygrid.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+		console.log("onEditCell-------------------------start");
+
+		console.log("	rid : " + rId);
+		console.log("	stage : " + stage);
+		console.log("	oValue : " + oValue);
+		console.log("	nValue : " + nValue);
+		
+		RowEditStatus = mygrid.getUserData(rId,"!nativeeditor_status");
+
+		if( stage == 2 
+			&& (RowEditStatus != "inserted" || RowEditStatus == "deleted") 
+			&& nValue != oValue
+			){
+			if(RowEditStatus != "updated")mygrid.setUserData(rId,"!nativeeditor_status","updated");
+			
+			mygrid.setRowTextStyle(rId, "font-weight:bold;");
+		}
+		console.log("onEditCell-------------------------end");
+
+		return true;
+
+	});
+
+
+	//mygrid.attachEvent("onAfterRowDeleted", function(id,pid){
+	//		console.log("onAfterRowDeleted-------------------------------------------");
+	//	});
+	//mygrid.attachEvent("onBeforeRowDeleted", function(rId){
+	//		console.log("onBeforeRowDeleted-------------------------------------------start");
+
+	//		if (mygrid.getUserData(rId,"!nativeeditor_status")=="true_deleted"){
+	//			console.log("		 return : true");
+	//			return true;
+	//		}else{
+	//			console.log("		 return : false");
+	//			return false;
+	//		}
+	//		 
+	//	}); 
+
+	var combo = mygrid.getColumnCombo(2);
+	combo.addOption([
+			["C01","C01한"],
+			["C02","C02한", "color:red;"],
+			["C03","C03한"],
+			["C04","CCC한"]
+		]);
+
+
+
+
+
+
+
+	function serializeAll(){
+		console.log("serializeAll-------------------------start");
+
+		//setSerializationLevel
+		//userData			enable/disable user data serialization
+		//selectedAttr		include "selected" row's attribute in result XML
+		//config				serialize grid configuration (only information about grid structure)
+		//changedAttr			include "changed" cell's attribute in result XML
+		//onlyChanged			include only changed rows in result XML
+		//asCDATA				output cell values as CDATA sections (prevent invalid XML)
+
+		mygrid.setSerializationLevel(true,false,false,true,false,false);
+		var xml = mygrid.serialize();
+		xml = xml.replace(new RegExp("<row","g"),"\n<row");
+		xml = xml.replace(new RegExp("</row","g"),"\n</row");
+		xml = xml.replace(new RegExp("<cell","g"),"\n\t<cell");
+
+		$("#tt").val(xml);
+		
+		console.log("serializeAll-------------------------end");
+	}
+
+	function serializeChange(){
+		console.log("serializeChange-------------------------start");
+
+		//setSerializationLevel
+		//userData			enable/disable user data serialization
+		//selectedAttr		include "selected" row's attribute in result XML
+		//config				serialize grid configuration (only information about grid structure)
+		//changedAttr			include "changed" cell's attribute in result XML
+		//onlyChanged			include only changed rows in result XML
+		//asCDATA				output cell values as CDATA sections (prevent invalid XML)
+
+		mygrid.setSerializationLevel(true,false,false,true,true,false);
+		var xml = mygrid.serialize();
+		xml = xml.replace(new RegExp("<row","g"),"\n<row");
+		xml = xml.replace(new RegExp("</row","g"),"\n</row");
+		xml = xml.replace(new RegExp("<cell","g"),"\n\t<cell");
+
+		$("#tt").val(xml);
+		
+		console.log("serializeChange-------------------------end");
+	}
+
+	function add(){
+		console.log("add-------------------------start");
+
+		var rid = mygrid.uid();
+		mygrid.addRow(rid,["AAA","BBB","CCC","DDD"],0);
+		mygrid.setRowTextStyle(rid, "font-weight:bold;");
+		mygrid.setUserData(rid,"!nativeeditor_status","inserted");
+
+		console.log("add-------------------------end");
+	}
+	function save(){
+		console.log("save-------------------------start");
+		console.log("	setEditable : " + false);
+		mygrid.setEditable(false); //편집모드
+
+		//var count=mygrid.getRowsNum();
+		var rid="";
+		for(j=0;j<mygrid.getRowsNum();j++){
+			rid = mygrid.getRowId(j);
+			console.log("	rid : " + rid);
+
+			RowEditStatus = mygrid.getUserData(rid,"!nativeeditor_status");
+
+			if( RowEditStatus == "inserted" ){
+				mygrid.setUserData(rid,"!nativeeditor_status","");
+				rowStyleClear(rid);
+				clearRowChangeState(rid);
+				mygrid.changeRowId(rid,j+10); //j+10은 서버에서 전달 받은 서버에 저장된 id값
+				console.log("	rid [" + rid + "] is [inserted]");
+			}
+			if( RowEditStatus == "updated" ){
+				mygrid.setUserData(rid,"!nativeeditor_status","");
+				rowStyleClear(rid);
+				clearRowChangeState(rid);
+				console.log("	rid [" + rid + "] is [updated]");
+			}
+			if( RowEditStatus == "deleted" ){
+				mygrid.deleteRow(rid);
+				console.log("	rid [" + rid + "] is [deleted]");
+			}
+		}
+
+		mygrid.setEditable(true); //편집모드
+		console.log("	setEditable : " + true);
+
+		console.log("save-------------------------end");
+	}
+
+
+	function userdata(){
+		console.log("userdata-------------------------start");
+	
+		mygrid.setUserData(1,"aaaa","2222");
+		mygrid.setUserData(1,"bbbb","3333");
+
+		console.log("userdata-------------------------end");
+	}
+
+
+	function clearChangedState(){
+		console.log("clearChangedState-------------------------start");
+		mygrid.clearChangedState();
+		console.log("clearChangedState-------------------------end");
+	}
+	function selecteddelrow(){
+		mygrid.deleteSelectedRows();
+	}
+	function rowlock(){
+		mygrid.lockRow(1,true);
+	}
+	function rowunlock(){
+		mygrid.lockRow(1,false);
+	}
+
+	function delrow(rid){
+		console.log("delrow-------------------------start");
+
+		if(!rid) rid = $("#trowid").val();
+		console.log("	rid : " + rid);
+
+		//삭제 전처리
+		mygrid.setUserData(rid,"!nativeeditor_status","deleted");
+		mygrid.setRowTextStyle(rid, "font-weight:bold;text-decoration : line-through;");
+		mygrid.cells(rid,0).cell.wasChanged = true;
+		
+		console.log("delrow-------------------------start");
+	}
+	function delrealrow(rid){
+		console.log("delrealrow-------------------------start");
+		if(!rid) rid = $("#trowid").val();
+
+		mygrid.deleteRow(rid);
+		console.log("delrealrow-------------------------end");
+	}
+	function clearRowChangeState(rid){
+		console.log("clearChangeState-------------------------start");
+
+		if(!rid)rid = mygrid.getSelectedRowId();
+
+		console.log("	rid : " + rid);
+
+		for(i=0;i<mygrid.getColumnsNum();i++){
+
+			mygrid.cells(rid,i).cell.wasChanged = false;
+			console.log("	col  " + i  + " " + mygrid.cells(rid,i).cell.wasChanged);
+
+		}
+
+		console.log("clearChangeState-------------------------end");
+	}
+
+	function rowBold(){
+		console.log("rowBold-------------------------start");
+		rid = mygrid.getSelectedRowId();
+		console.log("	rid : " + rid);
+		mygrid.setRowTextBold(rid);
+		console.log("rowBold-------------------------end");
+	}
+	function rowNormal(){
+		console.log("rowNormal-------------------------start");
+		rid = mygrid.getSelectedRowId();
+		console.log("	rid : " + rid);
+		mygrid.setRowTextNormal(rid);
+		console.log("rowNormal-------------------------end");
+	}
+	function rowStyleClear(rid){
+		console.log("rowStyleClear-------------------------start");
+		//rid = mygrid.getSelectedRowId();
+		if(!rid) rid = mygrid.getSelectedRowId();
+		mygrid.setRowTextStyle(rid, "font-weight:normal;text-decoration:none;");
+		console.log("rowStyleClear-------------------------end");
+	}
+
+
+
+	function rowstyle(){
+		//updated:"font-weight:bold;"
+		//,inserted:"font-weight:bold;"
+		//,deleted:"text-decoration : line-through;"
+		//,invalid:"background-color:FFE0E0;"
+		//,invalid_cell:"border-bottom:2px solid red;"
+		//,error:"color:red;"
+		//,clear:"font-weight:normal;text-decoration:none;"
+	}
+</script>
+<input type=button value="selecteddelrow" onclick="selecteddelrow();">
+<input type=button value="delrow" onclick="delrow();">
+<input type=button value="delrealrow" onclick="delrealrow();">
+<input type=button value="clearAllChangedState" onclick="clearAllChangedState();">
+<input type=button value="clearRowChangeState" onclick="clearRowChangeState();">
+<input type=button value="serializeAll" onclick="serializeAll();">
+<input type=button value="serializeChange" onclick="serializeChange();">
+<input type=button value="add" onclick="add();">
+<input type=button value="userdata" onclick="userdata();">
+<input type=button value="save" onclick="save();">
+<input type=button value="rowlock" onclick="rowlock();">
+<input type=button value="rowunlock" onclick="rowunlock();">
+<input type=button value="rowBold" onclick="rowBold();">
+<input type=button value="rowNormal" onclick="rowNormal();">
+<input type=button value="rowStyleClear" onclick="rowStyleClear();">
+<input type=text value="" id="trowid">
+
+<textarea style="width:100%;height:400px;font-size:8pt;" id="tt" name="tt"></textarea>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<title>Document.1</title>
+	<style type="text/css">
+		*{margin:0;padding:0}
+		body{font-size:10pt;color:#FFF}
+
+		#container{background-color:#0F0;}
+
+		.CON_LINE {background-color:yellow;position: relative;width:100%;height:22px;line-height;122px;overflow:visible;}
+		.CON_OBJCHK {position: relative;float:left;background-color: #eeeeee;height:22px;line-height:22px;vertical-align:middle ;overflow:visible;}
+		.CON_OBJGRP {background-color:blue;width:100%;position: relative;float:left;background-color: #eeeeee;height:22px;line-height:22px;vertical-align:middle ;overflow:visible;}
+		.CON_LABEL {position: relative;float:left;background-color: #eeeeee;height:22px;line-height:22px;vertical-align:middle ;padding-left:5px;color:blue}
+		.CON_OBJECT {position: relative;float:left;background-color: #eeeeee;height:22px;line-height:22px;vertical-align:middle ;}
+		.CON_LINEBREAK {position: relative;height:5px;overflow:auto;}
+
+		.GRP_LINE {position: relative;width:100%;z-index:10;overflow:auto;}
+		.GRP_OBJECT {position: relative;float:left;z-index:20;}
+
+
+
+
+	</style>
+	<!--jquery / json-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="./lib/json2.min.js"></script>
+
+	<!--dhmltx-->
+    <script src="./lib/dhtmlxSuite/codebase/dhtmlx461_beautify.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
+
+
+    <!--공통-->
+    <script src="./rst/common.js" type="text/javascript" charset="utf-8"></script>
+
+
+	<!--bootstrap-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="lib/navbar-fixed-side.css">
+
+	<!--bootstrap ie8
+	<script src="./lib/js/html5shiv.js" type="text/javascript"></script>
+	<script src="./lib/js/respond.min.js" type="text/javascript"></script>
+-->
+
+	<!--knockout-->
+	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+
+
+
+
+
+	<script>
+		//선언
+		var myList, myDetail, myToolbar, lastBtn, prevBtn, isEditYn, isMenuOpen;
+		var isListEditMode = false;
+		var rowSeq = 1;
+
+		//초기화
+		isMenuOpen = 1;
+
+		//alert("pjtview2_is start");
+
+
+        $(document).ready(function() {
+			alog("document_ready...............................");
+
+
+			//공통 초기화
+			commnonBodyOnlaod();
+
+			//페이지 초기화
+			pageBodyOnload();
+
+			// Activates knockout.js
+			ko.applyBindings(new AppViewModel(
+				[
+					{header: 'header 1', text: "Cras justo odio"},
+					{header: 'header 2', text: "Dapibus ac facilisis in"},
+					{header: 'header 3', text: "Morbi leo risus"},
+					{header: 'header 4', text: "Porta ac consectetur ac"},
+					{header: 'header 5', text: "Vestibulum at eros"}
+				]			
+			));
+
+        });    
+
+		
+
+		function AppViewModel(initItmes){
+			alog("AppViewModel_____________start");
+			
+			var s = this;
+
+			s.items = ko.observableArray(initItmes);
+			s.itemToAdd = ko.observable({header: 'header 6', text: "Cras justo odio"});
+			s.addItem = function() {
+				alog("	addItem is " + s.itemToAdd().header);
+
+				if (s.itemToAdd() != "") {
+					s.items.push(s.itemToAdd()); // Adds the item. Writing to the "items" observableArray causes any associated UI to update.
+					//s.itemToAdd(""); // Clears the text box, because it's bound to the "itemToAdd" observable
+				}
+			}.bind(s);
+
+			//row 선택
+			s.selectedItem = ko.observable();
+			//s.selectedItems = ko.observable([""]);
+			s.select = function(itemTemp){
+				alog("	selectedItem is " + itemTemp.header);
+				alog("	selectedItem is " + itemTemp.text);
+				s.selectedItem(itemTemp);
+			};
+
+			//삭제
+			s.deleteSelected = function () {
+				alog("	deleteSelected length is  " + s.selectedItem());
+				if(s.selectedItem())	s.items.remove(s.selectedItem()); 
+			};
+		 
+			//전체 삭제
+			s.deleteAll = function () {
+				alog("	deleteAll length is  " + s.items().length);
+				s.items.removeAll(); 
+			};
+		 
+			alog("AppViewModel_____________end");
+
+		}
+
+
+		function pageBodyOnload(){
+			alog("pageBodyOnload...............................");
+			
+			//리스트 버튼
+            $("#btnListEdit").click(function(){
+				$("input[name=listChk]:checkbox").each(function(){
+					alog($(this).val());
+					//alog( $(this).attr("id") );
+					if(isListEditMode == false){
+						$(this).css("display","");
+					}else{
+						$(this).css("display","none");
+					}
+					//$(this).attr("checked", false);
+				});
+
+
+				if(isListEditMode == false){
+					isListEditMode=true;
+
+					$("#btnListDelete").prop('disabled', false);
+					$("#btnListConfirm").prop('disabled', false);
+
+				}else{
+					isListEditMode=false ;
+
+					$("#btnListDelete").prop('disabled', true);
+					$("#btnListConfirm").prop('disabled', true);
+
+				}
+
+			});
+			
+
+
+			//폼뷰 링크
+            $("#btnFormviewAdd").click(function(){
+				btnCmdChange("BTN_ADD");
+			});
+
+            $("#btnFormviewEdit").click(function(){
+				btnCmdChange("BTN_EDIT");
+			});
+
+            $("#btnFormviewSave").click(function(){
+				btnCmdChange("BTN_SAVE");
+			});
+
+            $("#btnFormviewDelete").click(function(){
+				btnCmdChange("BTN_DELETE");
+			});
+
+            $("#btnFormviewCancel").click(function(){
+				btnCmdChange("BTN_CANCEL");
+			});
+
+            $("#btnFormviewReload").click(function(){
+				btnCmdChange("BTN_RELOAD");
+			});
+
+
+		}
+
+
+		function commnonBodyOnlaod(){
+			alog("commnonBodyOnlaod...............................");
+
+
+            $("#btnNavReload").click(function() {
+                location.reload();
+            });
+
+			//초기화
+			setTitle("프로젝트 관리");
+			
+			//back링크
+            $("#btnNavBack").click(function() {
+				alert("go back");
+                history.back();
+            });
+
+
+			//메뉴 링크
+            $("#naviMenu1").click(function() {
+				alert("go naver");
+                $("#container").load("cg_login.php");
+            });
+		}
+
+
+		function setTitle(tmp){
+			//값 비우기
+			$("#nav_title").text(tmp);
+		}
+
+		function doOnLoad2() {
+			//alert("doOnLoad2()___________________start");
+
+
+			
+			//alert("doOnLoad2()___________________start");
+
+
+			msgNotice("doOnLoad2_______________start");
+
+
+
+
+		}
+
+		function listEditMode(){
+			msgNotice("listEditMode___________________start");
+
+			//if($(".CON_OBJCHK").css("display") == "none"){
+			//  $(".CON_OBJCHK").show();
+			//} else {
+			//  $(".CON_OBJCHK").hide();
+			//}
+
+		}
+
+		function btnCmdChange(action){
+			alog("btnCmdChange..............................." + action);
+
+			$("#btnFormviewAdd").prop('disabled', false);
+			$("#btnFormviewEdit").prop('disabled', false);
+			$("#btnFormviewSave").prop('disabled', false);
+			$("#btnFormviewDelete").prop('disabled', false);
+			$("#btnFormviewCencel").prop('disabled', false);
+			$("#btnFormviewReload").prop('disabled', false);
+
+
+			if(action == "BTN_VIEW"){
+				//save버튼만 비활성화
+				$("#btnFormviewSave").prop('disabled', true);
+				$("#btnFormviewCencel").prop('disabled', true);
+
+				//값 편집모드 전환
+				$("#CRUD_MODE").attr("readonly",true);
+				$("#PJTSEQ").attr("readonly",true);
+				$("#PJTNM").attr("readonly",true);
+				$("#UITOOL").attr("readonly",true);
+				$("#SVRLANG").attr("readonly",true);
+
+				//값 비우기
+				$("#CRUD_MODE").val("R");
+
+
+			}else if(action == "BTN_ADD"){
+				//save버튼만 비활성화
+
+				$("#btnFormviewAdd").prop('disabled', true);
+				$("#btnFormviewEdit").prop('disabled', true);
+				$("#btnFormviewDelete").prop('disabled', true);
+
+				//값 편집모드 전환
+				$("#PJTSEQ").attr("readonly",false);
+				$("#PJTNM").attr("readonly",false);
+				$("#UITOOL").attr("readonly",false);
+				$("#SVRLANG").attr("readonly",false);
+
+				//값 비우기
+				$("#CRUD_MODE").val("C");
+				$("#PJTSEQ").val("");
+				$("#PJTSEQ").focus();
+				$("#PJTNM").val("");
+				$("#UITOOL").val("");
+				$("#SVRLANG").val("");
+
+			}else if(action == "BTN_EDIT"){
+				//save버튼만 비활성화
+				$("#btnFormviewAdd").prop('disabled', true);
+				$("#btnFormviewEdit").prop('disabled', true);
+				$("#btnFormviewDelete").prop('disabled', true);
+
+
+				//값 비우기
+				$("#CRUD_MODE").val("U");
+
+				//값 편집모드 전환
+				$("#PJTSEQ").attr("readonly",false);
+				$("#PJTNM").attr("readonly",false);
+				$("#UITOOL").attr("readonly",false);
+				$("#SVRLANG").attr("readonly",false);
+
+			}else if(action == "BTN_SAVE"){
+				//save버튼만 비활성화
+				$("#btnFormviewAdd").prop('disabled', true);
+				$("#btnFormviewEdit").prop('disabled', true);
+				$("#btnFormviewSave").prop('disabled', true);
+				$("#btnFormviewDelete").prop('disabled', true);
+				$("#btnFormviewCencel").prop('disabled', true);
+				$("#btnFormviewReload").prop('disabled', true);
+
+				//서버 저장하기 전송
+			}else if(action == "BTN_DELETE"){
+				//save버튼만 비활성화
+				$("#btnFormviewAdd").prop('disabled', true);
+				$("#btnFormviewEdit").prop('disabled', true);
+				$("#btnFormviewSave").prop('disabled', true);
+				$("#btnFormviewDelete").prop('disabled', true);
+				$("#btnFormviewCancel").prop('disabled', true);
+				$("#btnFormviewReload").prop('disabled', true);
+
+				//서버 저장하기 전송
+
+			}else if(action == "BTN_CANCEL"){
+				//save버튼만 비활성화
+				//$("#btnFormviewCancel").prop('disabled', true);
+
+			}		
+	
+			prevBtn = lastBtn;
+			lastBtn = action;
+
+		}
+
+		function addRow2(heading){
+			rowSeq++;
+			alog("addRow______________start");
+			$("#listGroup").prepend("<a class='list-group-item' id='listRow"+ rowSeq +"' keyid='" + rowSeq + "'><span><h5 class='list-group-item-heading'><input style='display:none;' type=checkbox name='listChk' id='listChk' value='" + rowSeq + "'></label>AAAAAAAAAAAAAA</h5><h6>"+new Date()+"</h6></a>");
+
+			$("#listRow"+rowSeq).click(function() {
+				alert($(this).attr("keyid")); 
+            });
+
+			alog("addRow______________end");
+		}
+
+		function viewSide(){
+			//alert(1);
+			if(isMenuOpen == 1){
+				isMenuOpen = 0;
+				jQuery('#sidebarObj').hide();
+			}else{
+				isMenuOpen = 1;
+				jQuery('#sidebarObj').show();
+			}
+			//mySidebar.showSide();
+		}
+
+
+	</script>
+</head>
+<body id="BODY_BOX" class="BODY_BOX" onl__oad="">
+		<div class="container-fluid">
+		<div class="row">
+		<div class="col-sm-3 col-lg-2">
+		  <nav class="navbar navbar-default navbar-fixed-side">
+			<!-- normal collapsible navbar markup -->
+
+			<div class="container">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="#">Project name</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+			  <ul class="nav navbar-nav">
+				<li class="active"><a href="#">Home</a></li>
+				<li><a href="#about">About</a></li>
+				<li><a href="#contact">Contact</a></li>
+			  </ul>
+			</div><!--/.nav-collapse -->
+			</div>
+
+
+		  </nav>
+		</div>
+		<div class="col-sm-9 col-lg-10">
+		  <!-- your page content -->
+
+
+
+
+			<div id="container">
+				
+
+				<div class="row">
+				  <div class="col-xs-12 col-md-8 col-lg-6">
+				  
+						<div id="toolbar_container2">
+
+							<div class="btn-group" role="group" aria-label="...">
+							  <button type="button" class="btn btn-default" on__click="addRow()" data-bind="click:addItem">Add</button>
+							  <button type="button" class="btn btn-default" id="btnListDelete" data-bind="click: deleteSelected">Delete</button>
+							  <button type="button" class="btn btn-default" data-bind="click: deleteAll">Delete All</button>
+							  <button type="button" class="btn btn-default" id="btnListConfirm">Conform</button>
+							  <button type="button" class="btn btn-default">Conform All</button>
+							  <button type="button" class="btn btn-default" id="btnListEdit">Edit</button>
+
+							  <div class="btn-group" role="group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								  Link
+								  <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+								  <li><a href="#">PROGRAM</a></li>
+								  <li><a href="#">DATA DICTINONARY</a></li>
+								  <li><a href="#">CONFIG</a></li>
+								  <li><a href="#">FILE</a></li>
+								</ul>
+							  </div>
+							</div>
+
+
+						</div>	
+
+						<div class="input-group">
+							<input type="text" name="SearchDualList" class="form-control" placeholder="Search" />
+							<span class="input-group-addon glyphicon glyphicon-search"></span>
+						</div>
+						<div class="list-group" id="listGroup" data-bind="foreach: items">
+						  <a href="#" class="list-group-item " data-bind="click: $parent.select.bind($parent)">
+							<h4 class="list-group-item-heading"><input type="checkbox"><span data-bind="text: header">List group item heading</span></h4>
+							<p class="list-group-item-text" data-bind="text: text">...</p>
+						  </a>
+						</div>
+				  
+				  
+				  </div>
+				  <div class="col-xs-12 col-md-4 col-lg-6">
+				  
+				  
+						<div id="toolbar_container">
+							<div class="btn-group" role="group" aria-label="...">
+							  <button type="button" class="btn btn-default" id="btnFormviewAdd">Add</button>
+							  <button type="button" class="btn btn-default" id="btnFormviewDelete">Delete</button>
+							  <button type="button" class="btn btn-default" id="btnFormviewEdit">Edit</button>
+							  <button type="button" class="btn btn-default" id="btnFormviewSave">Save</button>
+							  <button type="button" class="btn btn-default" id="btnFormviewCancel">Cancel</button>
+							  <button type="button" class="btn btn-default" id="btnFormviewReload">Reload</button>
+							</div>				
+						</div>	
+
+						<div id="detail_container">	
+							<div class="CON_LINE" style="">
+								<div class="CON_OBJGRP" style="">
+									<div class="CON_LABEL" style="width:200px;">CRUD MODE</div>
+									<div class="CON_OBJECT" style="width:250px;"><input type="text" name="CRUD_MODE" value="" id="CRUD_MODE"></div>
+								</div>
+							</div>			
+							<div class="CON_LINE" style="">
+								<div class="CON_OBJGRP" style="">
+									<div class="CON_LABEL" style="width:200px;">PJTSEQ</div>
+									<div class="CON_OBJECT" style="width:250px;"><input type="text" name="PJTSEQ" value="" id="PJTSEQ"></div>
+								</div>
+							</div>
+							<div class="CON_LINE" style="">
+								<div class="CON_OBJGRP" style="">
+									<div class="CON_LABEL" style="width:200px;">PJTNM</div>
+									<div class="CON_OBJECT" style="width:250px;"><input type="text" name="PJTNM" value="" id="PJTNM"></div>
+								</div>
+							</div>
+							<div class="CON_LINE" style="">
+
+								<div class="CON_OBJGRP" style="">
+									<div class="CON_LABEL" style="width:200px;">UITOOL</div>
+									<div class="CON_OBJECT" style="width:250px;"><input type="text" name="UITOOL" value="" id="UITOOL"></div>
+								</div>
+							</div>
+							<div class="CON_LINE" style="">
+
+								<div class="CON_OBJGRP" style="">
+									<div class="CON_LABEL" style="width:200px;">SVRLANG</div>
+									<div class="CON_OBJECT" style="width:250px;"><input type="text" name="SVRLANG" value="" id="SVRLANG"></div>
+								</div>
+							</div>
+						
+						</div>					  
+				  
+				  </div>
+				</div>
+
+
+
+			</div>
+
+
+		</div>
+
+
+
+
+</body>
+</html>

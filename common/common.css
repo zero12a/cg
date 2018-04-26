@@ -1,0 +1,59 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+html {font-family: "Nanum Gothic", sans-serif;margin:0;padding:0;height:100%;}
+body {background-color:gray; font-family: "Nanum Gothic", sans-serif;}
+
+.HTML_BODY {margin:0px;padding:5px;}
+
+div,input,textarea,select,span {font-family: "Nanum Gothic", sans-serif;font-size: 11px;}
+
+#F_START_DT, #F_END_DT {
+    border: 1px solid #909090;
+}
+
+input[type=text]:-moz-read-only { /* For Firefox */
+    background-color: silver;
+}
+
+input[type=text]:read-only {
+    background-color: silver;
+}
+
+.BODY_BOX {overflow:visible;width:100%;background-color:blue;padding:0px 0px 0px 0px;margin:0px 0px 0px 0px;z-index:1}
+.BODY_BOX_TOP {height:48px;background-color:silver;padding:5px 5px 0px 5px;z-index:1}
+
+.CON_LINE {position: relative;width:100%;overflow:auto;z-index:20;}
+.CON_OBJGRP {position: relative;float:left;background-color: #eeeeee;vertical-align:middle ;overflow:auto;z-index:25;}
+.CON_LABEL {position: relative;float:left;background-color: #eeeeee;vertical-align:middle ;padding-left:5px;overflow:auto;z-index:30;}
+.CON_OBJECT {position: relative;float:left;background-color: #eeeeee;vertical-align:middle;overflow:auto;z-index:30;}
+.CON_LINEPADDING {position: relative;height:5px;overflow:auto;z-index:20;}
+
+.GRID_LABELGRP {overflow:visible;position:relative;width:100%;height:22px;z-index:20;}
+.GRID_LABEL {overflow:visible;position:relative;float:left;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
+.GRID_LABELBTN {overflow:visible;position: relative;float:right;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
+.GRID_OBJECT {overflow:hidden;background-color: white;position: relative;width:100%;z-index:20;}
+
+.CONDITION_LABELGRP {position:relative;width:100%;height:22px;z-index:20;}
+.CONDITION_LABEL {position:relative;float:left;width:60%;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
+.CONDITION_LABELBTN {position: relative;float:left;width:40%;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
+.CONDITION_OBJECT {position: relative;background-color:#eeeeee;padding:10px 10px 10px 10px;overflow:auto;}
+
+.DETAIL_LABELGRP {position:relative;width:100%;height:22px;z-index:20;}
+.DETAIL_LABEL {position:relative;float:left;width:30%;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
+.DETAIL_LABELBTN {position: relative;float:left;width:70%;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
+.DETAIL_OBJECT {position: relative;background-color:#eeeeee;padding:10px 10px 10px 10px;overflow:auto;}
+
+.GRP_LINE {background-color:#eeeeee;position: relative;width:100%;z-index:10;overflow:auto;}
+.GRP_OBJECT {position: relative;float:left;z-index:20;padding:5px 0px 0px 0px}
+.GRP_OBJECT_VBOX {position: relative;float:left;z-index:20;padding:0px 0px 0px 0px}
+
+.FORMVIEW_IMGVIEWER {background-color:#e1e1e1;}
+
+
+.ui-datepicker{ font-size: 12px; width: 200px; }
+.ui-datepicker select.ui-datepicker-month{ width:60px; font-size: 10px; }
+.ui-datepicker select.ui-datepicker-year{ width:60px; font-size: 10px; }
+.ui-datepicker-trigger {
+	margin-left:2px;
+	vertical-align:top;
+	}

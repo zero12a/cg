@@ -1,0 +1,10 @@
+# Log file
+*.log
+
+# file
+*.7z
+*.sql
+
+# folder
+up/
+lib/
