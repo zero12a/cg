@@ -18,7 +18,7 @@ include_once('../include/incUtil.php');//CG UTIL
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
 alog("PgmmngControl___________________________start");
 
-$reqToken = reqGetString("TOKEN",30);
+$reqToken = reqGetString("TOKEN",37);
 $resToken = uniqid();
 alog("reqToken : " . $reqToken);
 alog("resToken : " . $resToken);

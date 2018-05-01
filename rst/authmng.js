@@ -195,15 +195,22 @@ function G2_INIT(){
 				
 		//블럭선택 및 복사
 		mygridG2.enableBlockSelection(true);
+
+
 		mygridG2.attachEvent("onKeyPress",function(code,ctrl,shift){
 			alog("onKeyPress.......code=" + code + ", ctrl=" + ctrl + ", shift=" + shift);
 
+
+
+			
 			//셀편집모드 아닐때만 블록처리
 			if(!mygridG2.editor){
-				alog("editor....on");
-
 				mygridG2.setCSVDelimiter("	");
 				if(code==67&&ctrl){
+				   if(!mygridG2._selectionArea){
+						alert("블럭을 선택해 주세요");
+						return false;
+					}
 					mygridG2.copyBlockToClipboard();
 
 					var top_row_idx = mygridG2.getSelectedBlock().LeftTopRow;
@@ -213,14 +220,11 @@ function G2_INIT(){
 
 				}
 				if(code==86&&ctrl){
-					alog("붙여넣기 고고.....start");
 					mygridG2.pasteBlockFromClipboard();
 
 					//row상태 변경
 					var top_row_idx = mygridG2.getSelectedBlock().LeftTopRow;
 					var bottom_row_idx = mygridG2.getSelectedBlock().RightBottomRow;
-					alog("	top_row_idx=" + top_row_idx);
-					alog("	bottom_row_idx=" + bottom_row_idx);					
 					for(j=top_row_idx;j<=bottom_row_idx;j++){
 						var rowID = mygridG2.getRowId(j);
 						RowEditStatus = mygridG2.getUserData(rowID,"!nativeeditor_status");
@@ -229,11 +233,9 @@ function G2_INIT(){
 							mygridG2.setRowTextBold(rowID);
 						}
 					}
-					alog("붙여넣기 고고.....end");
 				}
 				return true;
 			}else{
-				alog("editor....off");
 				return false;
 			}
 		});
@@ -300,7 +302,7 @@ function G2_INIT(){
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
 			', "AUTH_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("AUTH_SEQ")).getValue()) + '"' +
 			'}');
-		G3_SEARCH(lastinputG3); //자식그룹 호출 : 권한상세
+		G3_SEARCH(lastinputG3,uuidv4()); //자식그룹 호출 : 권한상세
 		});
 		mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
 
@@ -337,7 +339,7 @@ function G3_INIT(){
 }
 //D146 그룹별 기능 함수 출력		
 // CONDITIONSearch	
-function G1_SEARCHALL(){
+function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
 	//입력값검증
 	//폼의 모든값 구하기
@@ -347,7 +349,7 @@ function G1_SEARCHALL(){
 	//json : G1
             lastinputG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +'}');
 	//  호출
-	G2_SEARCH(lastinputG2);
+	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
 //조회조건, 저장	
@@ -387,29 +389,11 @@ function G1_RESET(){
 	alog("G1_RESET--------------------------start");
 	$('#condition')[0].reset();
 }
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/c.g/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG2.setSerializationLevel(true,false,false,false,false,false);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("CHK,AUTH_SEQ,PGMID,AUTH_ID,AUTH_NM,USE_YN,ADD_DT,MOD_DT,PGMID2");
-	$("#DATA_WIDTHS").val("50,60,100,120,120,60,60,60,120");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
-}
-//새로고침	
-function G2_RELOAD(){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2);
-}
+    function G2_ROWDELETE(){	
+        alog("G2_ROWDELETE()------------start");
+        delRow(mygridG2);
+        alog("G2_ROWDELETE()------------start");
+    }
 //그리드 행추가 : 권한목록
 	function G2_ADDBULK(){
 		if( !(lastinputG2json)){
@@ -425,12 +409,15 @@ function G2_RELOAD(){
 	}
 			}
 	}
-    function G2_ROWDELETE(){	
-        alog("G2_ROWDELETE()------------start");
-        delRow(mygridG2);
-        alog("G2_ROWDELETE()------------start");
+    function G2_HIDDENCOL(){
+		alog("G2_HIDDENCOL()..................start");
+        if(isToggleHiddenColG2){
+            isToggleHiddenColG2 = false;     }else{
+            isToggleHiddenColG2 = true;
+        }
+		alog("G2_HIDDENCOL()..................end");
     }
-	function G2_SAVE(){
+	function G2_SAVE(token){
 	alog("G2_SAVE()------------start");
 	tgrid = mygridG2;
 
@@ -441,7 +428,7 @@ function G2_RELOAD(){
 	alog("   ConAllData = " + ConAllData);
 	$.ajax({
 		type : "POST",
-		url : url_G2_SAVE + "&" + lastinputG2 ,
+		url : url_G2_SAVE + "&TOKEN=" + token + "&" + lastinputG2 ,
 		data : { "G2-XML" : myXmlString},
 		dataType: "json",
 		async: false,
@@ -464,16 +451,8 @@ function G2_RELOAD(){
 	
 	alog("G2_SAVE()------------end");
 }
-    function G2_HIDDENCOL(){
-		alog("G2_HIDDENCOL()..................start");
-        if(isToggleHiddenColG2){
-            isToggleHiddenColG2 = false;     }else{
-            isToggleHiddenColG2 = true;
-        }
-		alog("G2_HIDDENCOL()..................end");
-    }
     //그리드 조회(권한목록)	
-    function G2_SEARCH(tinput){
+    function G2_SEARCH(tinput,token){
         alog("G2_SEARCH()------------start");
 
 		var tGrid = mygridG2;
@@ -484,7 +463,7 @@ function G2_RELOAD(){
         //불러오기
         $.ajax({
             type : "POST",
-            url : url_G2_SEARCH+"&G2_CRUD_MODE=read&" + tinput ,
+            url : url_G2_SEARCH+"&TOKEN=" + token + " &G2_CRUD_MODE=read&" + tinput ,
             data : tinput,
             dataType: "json",
             async: true,
@@ -566,14 +545,37 @@ var postData = lastinputG2+ "&G2-CHK=" + arrRows ;
 			var tCols = ["","","","","","","","",""];//초기값
 			addRow(mygridG2,tCols);
 		}
-	}//디테일 검색	
-function G3_SEARCH(tinput){
+	}//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/c.g/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,false);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("CHK,AUTH_SEQ,PGMID,AUTH_ID,AUTH_NM,USE_YN,ADD_DT,MOD_DT,PGMID2");
+	$("#DATA_WIDTHS").val("50,60,100,120,120,60,60,60,120");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
+}
+//디테일 검색	
+function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
 
 
     $.ajax({
         type : "POST",
-        url : url_G3_SEARCH+"&G3_CRUD_MODE=SEARCH&" ,
+        url : url_G3_SEARCH+"&TOKEN=" + token + "&G3_CRUD_MODE=SEARCH&" ,
         data : tinput,
         dataType: "json",
         success: function(data){
@@ -611,7 +613,7 @@ function G3_NEW(){
 }
 //G3_SAVE
 //IO_FILE_YN = N	
-function G3_SAVE(){	
+function G3_SAVE(token){	
 	alog("G3_SAVE---------------start");
 
 	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
@@ -627,7 +629,7 @@ function G3_SAVE(){
 
 	$.ajax({
 		type : "POST",
-		url : url_G3_SAVE,
+		url : url_G3_SAVE + "&TOKEN=" + token,
 		data : formData,
 		processData: false,
 		contentType: false,
@@ -709,5 +711,5 @@ function G3_DELETE(){
 //새로고침	
 function G3_RELOAD(){
 	alog("G3_RELOAD-----------------start");
-	G3_SEARCH(lastinputG3);
+	G3_SEARCH(lastinputG3,token);
 }

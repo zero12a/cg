@@ -1,6 +1,6 @@
 <?php
-//PGMID : INTRONORMAL
-//PGMNM : 인트로_일반
+//PGMID : INTROADMIN
+//PGMNM : 인트로_관리자
 header("Content-Type: text/html; charset=UTF-8"); //HTML
 
 require_once("../include/incUtil.php");
@@ -8,7 +8,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>	
-<title>인트로_일반</title>
+<title>인트로_관리자</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
 <script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
@@ -18,7 +18,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
-<script src="intronormal.js?<?=getRndVal(10)?>"></script>
+<script src="introadmin.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
 <script>
 	//팝업창인 경우 오프너에게서 파라미터 받기
@@ -32,11 +32,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 
 <div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
 	<!--G.GRPID : G1-->
-	<div class="GRP_OBJECT" style="width:100%;height:70px;border-radius:3px;-moz-border-radius: 3px;">
+	<div class="GRP_OBJECT" style="width:100%;height:150px;border-radius:3px;-moz-border-radius: 3px;">
 	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 			<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
-				<b>* 인트로_일반</b>	
+				<b>* 인트로_관리자</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
@@ -45,7 +45,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<input type="button" name="BTN_G1_RESET" value="입력 초기화" onclick="G1_RESET(uuidv4());">
 			</div>
 		</div>
-		<div style="height:28px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:108px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 			</div><!-- is_br_tag end -->
@@ -57,11 +57,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:305px;">
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
-	  				* 로그인      
+	  				* 로그인성공      
 			</div>
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
@@ -71,7 +71,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:283px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
 		</div>
 	</div>
 	<!--
@@ -79,18 +79,16 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - END
 	#####################################################
 	-->
-	<!--VBOX START-->
-	<div class="GRP_OBJECT_VBOX" style="width:50%;">
 	<!--
 	#####################################################
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:100%;height:100px;">
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
-	  				* 잠금      
+	  				* 잠금횟수      
 			</div>
 			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
@@ -100,7 +98,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:78px;width:100%;"></div>
+			<div id="gridG3"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
 		</div>
 	</div>
 	<!--
@@ -113,11 +111,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:100%;height:200px;">
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
-	  				* 메뉴이력      
+	  				* 로그인실패      
 			</div>
 			<div id="div_gridG4_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG4Cnt" name="그리드 ROW 갯수">N</span>
@@ -135,8 +133,85 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - END
 	#####################################################
 	-->
+	<!--
+	#####################################################
+	## 그리드 - START
+	#####################################################
+	-->
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+
+		<div  class="GRID_LABELGRP">
+  			<div id="div_gridG5_GRID_LABEL"class="GRID_LABEL" >
+	  				* 개인정보접근      
+			</div>
+			<div id="div_gridG5_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
+				<span id="spanG5Cnt" name="그리드 ROW 갯수">N</span>
+			<input type="button" name="BTN_G5_RELOAD" value="새로고침" onclick="G5_RELOAD(uuidv4());">
+			<input type="button" name="BTN_G5_EXCEL" value="엑셀다운로드" onclick="G5_EXCEL(uuidv4());">
+			</div>
+		</div>
+		<div  class="GRID_OBJECT"  style="">
+			<div id="gridG5"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+		</div>
 	</div>
-	<!--VBOX END--><div style="width:0px;height:0px;overflow: hidden">
+	<!--
+	#####################################################
+	## 그리드 - END
+	#####################################################
+	-->
+	<!--
+	#####################################################
+	## 그리드 - START
+	#####################################################
+	-->
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+
+		<div  class="GRID_LABELGRP">
+  			<div id="div_gridG6_GRID_LABEL"class="GRID_LABEL" >
+	  				* 로그인실패IP      
+			</div>
+			<div id="div_gridG6_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
+				<span id="spanG6Cnt" name="그리드 ROW 갯수">N</span>
+			<input type="button" name="BTN_G6_RELOAD" value="새로고침" onclick="G6_RELOAD(uuidv4());">
+			<input type="button" name="BTN_G6_EXCEL" value="엑셀다운로드" onclick="G6_EXCEL(uuidv4());">
+			</div>
+		</div>
+		<div  class="GRID_OBJECT"  style="">
+			<div id="gridG6"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+		</div>
+	</div>
+	<!--
+	#####################################################
+	## 그리드 - END
+	#####################################################
+	-->
+	<!--
+	#####################################################
+	## 그리드 - START
+	#####################################################
+	-->
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+
+		<div  class="GRID_LABELGRP">
+  			<div id="div_gridG7_GRID_LABEL"class="GRID_LABEL" >
+	  				* 비인가메뉴접근      
+			</div>
+			<div id="div_gridG7_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
+				<span id="spanG7Cnt" name="그리드 ROW 갯수">N</span>
+			<input type="button" name="BTN_G7_RELOAD" value="새로고침" onclick="G7_RELOAD(uuidv4());">
+			<input type="button" name="BTN_G7_EXCEL" value="엑셀다운로드" onclick="G7_EXCEL(uuidv4());">
+			</div>
+		</div>
+		<div  class="GRID_OBJECT"  style="">
+			<div id="gridG7"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+		</div>
+	</div>
+	<!--
+	#####################################################
+	## 그리드 - END
+	#####################################################
+	-->
+<div style="width:0px;height:0px;overflow: hidden">
 	<form name="excelDownForm" id="excelDownForm">
 	<input type="hidden" name="DATA_HEADERS" id="DATA_HEADERS">
 	<input type="hidden" name="DATA_WIDTHS" id="DATA_WIDTHS">
