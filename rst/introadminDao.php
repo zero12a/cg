@@ -84,8 +84,9 @@ GROUP by USR_ID ORDER BY count(login_seq) desc ";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "DATING";
-		$RtnVal["SQLTXT"] = "SELECT b.USR_ID,sum(a.ROW_CNT) as AUTH_ROW_SUM FROM `CMN_LOG_AUTHD` a
-JOIN CMN_LOG_AUTH b ON a.LAUTH_SEQ = b.LAUTH_SEQ
+		$RtnVal["SQLTXT"] = "SELECT b.USR_ID,count(a.LAUTHD_SEQ) as REQ_PI_CNT,sum(a.ROW_CNT) as VIEW_ROW_SUM 
+FROM CMN_LOG_AUTHD a
+	JOIN CMN_LOG_AUTH b ON a.REQ_TOKEN = b.REQ_TOKEN
 WHERE PI_IN_COLIDS != '' AND PI_IN_COLIDS is not NULL
 GROUP BY b.USR_ID
 ORDER BY count(a.ROW_CNT) desc";
@@ -124,7 +125,9 @@ ORDER BY count(a.ROW_CNT) desc";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "DATING";
-		$RtnVal["SQLTXT"] = "SELECT CFM_SEQ,FROM_DT,TO_DT,CFM_DESC
+		$RtnVal["SQLTXT"] = "SELECT 
+	CFM_SEQ, FROM_DT, TO_DT, CFM_DESC, ADD_DT
+	, ADD_ID
 FROM CMN_LOG_CFM
 ORDER BY CFM_SEQ DESC
 ";

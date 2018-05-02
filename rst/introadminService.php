@@ -179,7 +179,7 @@ class introadminService
 		alog("INTROADMINService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
 		//V_GRPNM : 로그인성공
@@ -305,7 +305,7 @@ class introadminService
 		alog("INTROADMINService-goG5Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
 		//V_GRPNM : 개인정보접근
@@ -347,7 +347,7 @@ class introadminService
 		alog("INTROADMINService-goG6Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, REMOTE_ADDR
 
 		//조회
 		//V_GRPNM : 로그인실패IP
@@ -389,7 +389,7 @@ class introadminService
 		alog("INTROADMINService-goG7Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
 		//V_GRPNM : 비인가메뉴접근

@@ -87,7 +87,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			<div class="DETAIL_LABELBTN"  style="">
 				<input type="button" name="BTN_F9_SAVE" value="저장" onclick="F9_SAVE(uuidv4());">				<input type="button" name="BTN_F9_NEW" value="신규" onclick="F9_NEW(uuidv4());">			</div>
 		</div>
-		<div style="height:158px;" class="DETAIL_OBJECT">
+		<div style="height:159px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 		<!--D101: STARTTXT, TAG-->

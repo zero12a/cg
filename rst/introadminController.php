@@ -91,10 +91,14 @@ $REQ["G8-CFM_SEQ"] = reqPostNumber("G8-CFM_SEQ",20);//CFM_SEQ
 $REQ["G8-CFM_SEQ"] = getFilter($REQ["G8-CFM_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G8-FROM_DT"] = reqPostString("G8-FROM_DT",10);//FROM_DT	
 $REQ["G8-FROM_DT"] = getFilter($REQ["G8-FROM_DT"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G8-TO_DT"] = reqPostString("G8-TO_DT",10);//~	
+$REQ["G8-TO_DT"] = reqPostString("G8-TO_DT",10);//TO_DT	
 $REQ["G8-TO_DT"] = getFilter($REQ["G8-TO_DT"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G8-CFM_DESC"] = reqPostString("G8-CFM_DESC",100);//CFM_DESC	
 $REQ["G8-CFM_DESC"] = getFilter($REQ["G8-CFM_DESC"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G8-ADD_DT"] = reqPostString("G8-ADD_DT",14);//ADD_DT	
+$REQ["G8-ADD_DT"] = getFilter($REQ["G8-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G8-ADD_ID"] = reqPostString("G8-ADD_ID",30);//ADD_ID	
+$REQ["G8-ADD_ID"] = getFilter($REQ["G8-ADD_ID"],"SAFETEXT","/--미 정의--/");	
 
 //G2, 로그인성공
 $REQ["G2-USR_ID"] = reqPostString("G2-USR_ID",10);//USR_ID	
@@ -117,8 +121,10 @@ $REQ["G4-LOGIN_CNT"] = getFilter($REQ["G4-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");
 //G5, 개인정보접근
 $REQ["G5-USR_ID"] = reqPostString("G5-USR_ID",10);//USR_ID	
 $REQ["G5-USR_ID"] = getFilter($REQ["G5-USR_ID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G5-AUTH_ROW_SUM"] = reqPostNumber("G5-AUTH_ROW_SUM",20);//AUTH_ROW_SUM	
-$REQ["G5-AUTH_ROW_SUM"] = getFilter($REQ["G5-AUTH_ROW_SUM"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G5-REQ_PI_CNT"] = reqPostNumber("G5-REQ_PI_CNT",20);//REQ_PI_CNT	
+$REQ["G5-REQ_PI_CNT"] = getFilter($REQ["G5-REQ_PI_CNT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G5-VIEW_ROW_SUM"] = reqPostNumber("G5-VIEW_ROW_SUM",20);//VIEW_ROW_SUM	
+$REQ["G5-VIEW_ROW_SUM"] = getFilter($REQ["G5-VIEW_ROW_SUM"],"REGEXMAT","/^[0-9]+$/");	
 
 //G6, 로그인실패IP
 $REQ["G6-REMOTE_ADDR"] = reqPostString("G6-REMOTE_ADDR",20);//IP	
@@ -142,13 +148,15 @@ $REQ["G8-XML"] = getXml2Array($_POST["G8-XML"]);//월점검
 	$REQ["G8-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G8-XML"]
-		,"COLORD"=>"CFM_SEQ,FROM_DT,TO_DT,CFM_DESC"
+		,"COLORD"=>"CFM_SEQ,FROM_DT,TO_DT,CFM_DESC,ADD_DT,ADD_ID"
 		,"VALID"=>
 			array(
 			"CFM_SEQ"=>array("NUMBER",20)	
 			,"FROM_DT"=>array("STRING",10)	
 			,"TO_DT"=>array("STRING",10)	
 			,"CFM_DESC"=>array("STRING",100)	
+			,"ADD_DT"=>array("STRING",14)	
+			,"ADD_ID"=>array("STRING",30)	
 					)
 		,"FILTER"=>
 			array(
@@ -156,6 +164,8 @@ $REQ["G8-XML"] = getXml2Array($_POST["G8-XML"]);//월점검
 			,"FROM_DT"=>array("CLEARTEXT","/--미 정의--/")
 			,"TO_DT"=>array("CLEARTEXT","/--미 정의--/")
 			,"CFM_DESC"=>array("CLEARTEXT","/--미 정의--/")
+			,"ADD_DT"=>array("REGEXMAT","/^[0-9]+$/")
+			,"ADD_ID"=>array("SAFETEXT","/--미 정의--/")
 					)
 	)
 );
@@ -210,16 +220,18 @@ $REQ["G4-XML"] = filterGridXml(
 $REQ["G5-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G5-XML"]
-		,"COLORD"=>"USR_ID,AUTH_ROW_SUM"
+		,"COLORD"=>"USR_ID,REQ_PI_CNT,VIEW_ROW_SUM"
 		,"VALID"=>
 			array(
 			"USR_ID"=>array("STRING",10)	
-			,"AUTH_ROW_SUM"=>array("NUMBER",20)	
+			,"REQ_PI_CNT"=>array("NUMBER",20)	
+			,"VIEW_ROW_SUM"=>array("NUMBER",20)	
 					)
 		,"FILTER"=>
 			array(
 			"USR_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
-			,"AUTH_ROW_SUM"=>array("REGEXMAT","/^[0-9]+$/")
+			,"REQ_PI_CNT"=>array("REGEXMAT","/^[0-9]+$/")
+			,"VIEW_ROW_SUM"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
