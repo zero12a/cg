@@ -144,7 +144,7 @@ header("Pragma:no-cache");
             </div>
         </div>
 
-        <div class="GRP_OBJECT" style="width:17%;">
+        <div class="GRP_OBJECT" style="width:20%;">
 
             <div  class="GRID_LABELGRP" >
                 <div class="GRID_LABEL" >* 기능</div>
@@ -163,7 +163,7 @@ header("Pragma:no-cache");
 
         </div>
 
-        <div class="GRP_OBJECT" style="width:43%;">
+        <div class="GRP_OBJECT" style="width:38%;">
 
             <div  class="GRID_LABELGRP" >
                 <div class="GRID_LABEL" >* 오브젝트</div>
@@ -182,7 +182,7 @@ header("Pragma:no-cache");
             </div>
         </div>
 
-        <div class="GRP_OBJECT" style="width:13%;">
+        <div class="GRP_OBJECT" style="width:15%;">
             <div  class="GRID_LABELGRP" >
                 <div class="GRID_LABEL" >* 상속</div>
                 <div  class="GRID_LABELBTN"  >

@@ -32,7 +32,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 
 <div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
 	<!--G.GRPID : G1-->
-	<div class="GRP_OBJECT" style="width:100%;height:150px;border-radius:3px;-moz-border-radius: 3px;">
+	<div class="GRP_OBJECT" style="width:100%;height:65px;border-radius:3px;-moz-border-radius: 3px;">
 	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 			<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
@@ -45,13 +45,116 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<input type="button" name="BTN_G1_RESET" value="입력 초기화" onclick="G1_RESET(uuidv4());">
 			</div>
 		</div>
-		<div style="height:108px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:23px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
+		<!--D101: STARTTXT, TAG-->
+		<!--I.COLID : FROM_DT-->
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:100px;text-align:right;">
+				FROM_DT
+			</div>
+		<div class="CON_OBJECT">
+			<input type="text" name="G1-FROM_DT" value="" id="G1-FROM_DT" style="width:100px;">
+		</div>
+	</div>
+		<!--D101: STARTTXT, TAG-->
+		<!--I.COLID : TO_DT-->
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:40px;text-align:center;">
+				~
+			</div>
+		<div class="CON_OBJECT">
+			<input type="text" name="G1-TO_DT" value="" id="G1-TO_DT" style="width:100px;">
+		</div>
+	</div>
 			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
 	</div>
+	<!--
+	#####################################################
+	## 폼뷰 - START
+	#####################################################
+	-->
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+		<div sty_le="width:0px;height:0px;overflow: hidden">
+			<form id="formviewF9" name="formviewF9" method="post" enctype="multipart/form-data"  onsubmit="return false;">
+			<input type="hidden" name="F9-CTLCUD"  id="F9-CTLCUD" value="">
+		</div>	
+		<div class="DETAIL_LABELGRP">
+			<div class="DETAIL_LABEL"  style="">
+				* 월점검
+			</div>
+			<div class="DETAIL_LABELBTN"  style="">
+				<input type="button" name="BTN_F9_SAVE" value="저장" onclick="F9_SAVE(uuidv4());">				<input type="button" name="BTN_F9_NEW" value="신규" onclick="F9_NEW(uuidv4());">			</div>
+		</div>
+		<div style="height:158px;" class="DETAIL_OBJECT">
+			<DIV class="CON_LINE" is_br_tag>
+			<!--OBJECT LIST PRINT.-->
+		<!--D101: STARTTXT, TAG-->
+		<!--I.COLID : FROM_DT-->
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:100px;text-align:right;">
+				FROM_DT
+			</div>
+		<div class="CON_OBJECT">
+			<input type="text" name="F9-FROM_DT" value="" id="F9-FROM_DT" style="width:100px;">
+		</div>
+	</div>
+		<!--D101: STARTTXT, TAG-->
+		<!--I.COLID : TO_DT-->
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:40px;text-align:center;">
+				~
+			</div>
+		<div class="CON_OBJECT">
+			<input type="text" name="F9-TO_DT" value="" id="F9-TO_DT" style="width:100px;">
+		</div>
+	</div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : CFM_DESC-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:90px;text-align:left;">
+						CFM_DESC
+					</div>
+					<!-- style="width:200px;"-->
+					<div class="CON_OBJECT">
+	<!--CFM_DESC오브젝트출력-->						<input type="text" name="F9-CFM_DESC" value="" id="F9-CFM_DESC" style="width:200px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+		</div>
+		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+	</div>
+	<!--
+	#####################################################
+	## 폼뷰 - END
+	#####################################################
+	-->
+	<!--
+	#####################################################
+	## 그리드 - START
+	#####################################################
+	-->
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+
+		<div  class="GRID_LABELGRP">
+  			<div id="div_gridG8_GRID_LABEL"class="GRID_LABEL" >
+	  				* 월점검      
+			</div>
+			<div id="div_gridG8_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
+				<span id="spanG8Cnt" name="그리드 ROW 갯수">N</span>
+			<input type="button" name="BTN_G8_SAVE" value="저장" onclick="G8_SAVE(uuidv4());">
+			<input type="button" name="BTN_G8_ROWDELETE" value="행삭제" onclick="G8_ROWDELETE(uuidv4());">
+			<input type="button" name="BTN_G8_RELOAD" value="새로고침" onclick="G8_RELOAD(uuidv4());">
+			</div>
+		</div>
+		<div  class="GRID_OBJECT"  style="">
+			<div id="gridG8"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+		</div>
+	</div>
+	<!--
+	#####################################################
+	## 그리드 - END
+	#####################################################
+	-->
 	<!--
 	#####################################################
 	## 그리드 - START

@@ -92,6 +92,45 @@ ORDER BY count(a.ROW_CNT) desc";
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  
+	//MONTH    
+	public function iMonthG($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLTXT"] = "INSERT INTO CMN_LOG_CFM (
+	FROM_DT, TO_DT, CFM_DESC, ADD_DT, ADD_ID 
+) VALUES (
+	replace(#{F9-FROM_DT},'.',''), replace(#{F9-TO_DT},'.',''), #{F9-CFM_DESC}, date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
+)
+";
+		$RtnVal["BINDTYPE"] = "sssi";
+		return $RtnVal;
+    }  
+	//MONTH    
+	public function sMonthG($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLTXT"] = "SELECT #{G1-FROM_DT} as FROM_DT, #{G1-TO_DT} as TO_DT
+";
+		$RtnVal["BINDTYPE"] = "ss";
+		return $RtnVal;
+    }  
+	//MONTH    
+	public function s2MonthG($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLTXT"] = "SELECT CFM_SEQ,FROM_DT,TO_DT,CFM_DESC
+FROM CMN_LOG_CFM
+ORDER BY CFM_SEQ DESC
+";
+		$RtnVal["BINDTYPE"] = "";
+		return $RtnVal;
+    }  
 }
                                                              
 ?>

@@ -31,9 +31,14 @@ class authObject
 	function __destruct(){
 		alog("authLog-__destruct");
 
+        //갱신 내용 알리기
+        if($this->REDIS)$this->REDIS->publish("PUBSUB_AUTH_LOG","NEWMSG");   
+
+        //메모리 비우기
         if($this->REDIS)$this->REDIS->disconnect();
         unset($this->REDIS);
         
+        //메모리 비우기
 		if($this->DB)$this->DB->close();
 		unset($this->DB);
 	}
@@ -91,6 +96,7 @@ class authObject
     //로그 저장
     function logUsrAuth($reqToken,$resToken,$tPgmid,$tAuth,$tSuccessYn){
         global $_SESSION, $CFG_AUTH_LOG;
+        alog("##### logUsrAuth()...........................start : " . $CFG_AUTH_LOG);        
         $RtnVal = "";
     
         $tMap["SVR_DT"] = date("YmdHis");
@@ -135,7 +141,7 @@ class authObject
             $redisMap["MAP"] = $tMap;
         
             //redis에 넣기
-            $this->REDIS->rpush( 'auth_log', json_encode($redisMap) );  // 'fruit' LIST의 끝에 'apple'추가.
+            $this->REDIS->rpush( 'log_auth', json_encode($redisMap) );  // 'fruit' LIST의 끝에 'apple'추가.
         }else{
             JsonMsg("500","200","[authLog] logUsrAuth() .......................CFG_AUTH_LOG 정의가 잘못되었습니다.");
         }
@@ -149,6 +155,7 @@ class authObject
     //로그 상세 저장
     function logUsrAuthD($reqToken,$resToken){
         global $_SESSION, $PGM_CFG, $CFG_AUTH_LOG;
+        alog("##### logUsrAuthD()...........................start : " . $CFG_AUTH_LOG);        
         $RtnVal = "";
     
         $tMap["LAUTH_SEQ"] = $this->LAUTH_SEQ;
@@ -159,25 +166,29 @@ class authObject
         $tMap["SVR_DT"] = date("YmdHis");
         $tMap["REQ_TOKEN"] = $reqToken;
         $tMap["RES_TOKEN"] = $resToken;        
-        //alog("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^count(tArr) = ". count($tArr));
+        alog("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^count(tArr) = ". count($tArr));
     
+        $startSqlNo = ($CFG_AUTH_LOG == "REDIS")? 0 : 1; //DB저장 방식이면 첫번째 SQL(log_auth)무시 
 
-        for($j=1;$j<count($tArr);$j++){
-            //alog("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^logUsrAuthD() j = ". $j);
+        for($j=$startSqlNo;$j<count($tArr);$j++){
+            alog("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^logUsrAuthD() j = ". $j);
     
             $tMap["PREPARE_SQL"] = $tArr[$j]["PREPARE_SQL"];
+            alog("PREPARE_SQL = " . $tMap["PREPARE_SQL"]);
             $tMap["FULL_SQL"] = $tArr[$j]["FULL_SQL"];
+            alog("FULL_SQL = " . $tMap["FULL_SQL"]);
             $tMap["ROW_CNT"] = $tArr[$j]["ROW_CNT"];
     
-    
-            $tMap["PARAM_COLIDS"] = array2str($tArr[$j]["COLIDS"],", "); //중복허용
+            $tMap["COLIDS"] = $tArr[$j]["COLIDS"];
+
+            $tMap["PARAM_COLIDS"] = array2str($tMap["COLIDS"],", "); //중복허용
 
         
 
             if($CFG_AUTH_LOG == "DB"){      
                 
-                $tMap["DD_COLIDS"] = array2ddstr($tArr[$j]["COLIDS"],", "); //중복허용
-                $tMap["PI_IN_COLIDS"] = array2pistr($tArr[$j]["COLIDS"],", "); //중복제거
+                $tMap["DD_COLIDS"] = array2ddstr($tMap["COLIDS"],", "); //중복허용
+                $tMap["PI_IN_COLIDS"] = array2pistr($tMap["COLIDS"],", "); //중복제거
                 $tMap["PI_OUT_COLIDS"] = array2pistr(getSqlSelect2Array($tMap["PREPARE_SQL"]),", "); //SQL에서 SELECT 컬럼 추출하기
         
                 $coltype = "ssiss ssssi";
@@ -207,7 +218,7 @@ class authObject
                 //$redisMap["COLTYPE"] = $coltype;
                 $redisMap["MAP"] = $tMap;
             
-                $this->REDIS->rpush( 'auth_logd', json_encode($redisMap) );  // 'fruit' LIST의 끝에 'apple'추가.
+                $this->REDIS->rpush( 'log_authd', json_encode($redisMap) );  // 'fruit' LIST의 끝에 'apple'추가.
             }else{
                 JsonMsg("500","200","[authLog] logUsrAuthD() .......................CFG_AUTH_LOG 정의가 잘못되었습니다.");
             }

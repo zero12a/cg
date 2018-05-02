@@ -18,7 +18,7 @@ include_once('../include/incUtil.php');//CG UTIL
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
 alog("AuthlogControl___________________________start");
 
-$reqToken = reqGetString("TOKEN",30);
+$reqToken = reqGetString("TOKEN",37);
 $resToken = uniqid();
 alog("reqToken : " . $reqToken);
 alog("resToken : " . $resToken);
@@ -49,14 +49,18 @@ if(!isLogin()){
 	$objAuth->logUsrAuth($reqToken,$resToken,"AUTHLOG",$ctl,"N");
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
-	//로그 저장 방식 결정
-//일반로그, 권한변경로그, PI로그, 권한&PI로그
-//NORMAL, POWER, PI, POWER_N_PI
-$PGM_CFG["LOGTYPE"] = "POWER";
+		//사용자 정보 가져오기
+//로그 저장 방식 결정
+//일반로그, 권한변경로그, PI로그
+//NORMAL, POWER, PI
+$PGM_CFG["SECTYPE"] = "POWER";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 $REQ["G4-CTLCUD"] = reqPostString("G4-CTLCUD",2);
-	//FILE먼저 : G1, 컨
+
+//로그인정보 및 환경경수 받기
+
+//FILE먼저 : G1, 컨
 //FILE먼저 : G2, AUTH
 //FILE먼저 : G3, AUTHD
 //FILE먼저 : G4, AUTHD상세
@@ -65,13 +69,13 @@ $REQ["G4-CTLCUD"] = reqPostString("G4-CTLCUD",2);
 
 //G2, AUTH
 $REQ["G2-LAUTH_SEQ"] = reqPostNumber("G2-LAUTH_SEQ",10);//SEQ	
-$REQ["G2-LAUTH_SEQ"] = getFilter($REQ["G2-LAUTH_SEQ"],"REGEXMAT","/^[0-9]{1}[0-9]*$/");	
-$REQ["G2-REQ_TOKEN"] = reqPostString("G2-REQ_TOKEN",30);//REQ	
+$REQ["G2-LAUTH_SEQ"] = getFilter($REQ["G2-LAUTH_SEQ"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G2-REQ_TOKEN"] = reqPostString("G2-REQ_TOKEN",37);//REQ	
 $REQ["G2-REQ_TOKEN"] = getFilter($REQ["G2-REQ_TOKEN"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-RES_TOKEN"] = reqPostString("G2-RES_TOKEN",30);//RES	
 $REQ["G2-RES_TOKEN"] = getFilter($REQ["G2-RES_TOKEN"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-USR_SEQ"] = reqPostNumber("G2-USR_SEQ",10);//USR_SEQ	
-$REQ["G2-USR_SEQ"] = getFilter($REQ["G2-USR_SEQ"],"REGEXMAT","/^[0-9]{1}[0-9]*$/");	
+$REQ["G2-USR_SEQ"] = getFilter($REQ["G2-USR_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-USR_ID"] = reqPostString("G2-USR_ID",10);//USR_ID	
 $REQ["G2-USR_ID"] = getFilter($REQ["G2-USR_ID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
 $REQ["G2-PGMID"] = reqPostString("G2-PGMID",20);//프로그램ID	
@@ -81,17 +85,17 @@ $REQ["G2-AUTH_ID"] = getFilter($REQ["G2-AUTH_ID"],"REGEXMAT","/^[a-zA-Z]{1}[_a-z
 $REQ["G2-SUCCESS_YN"] = reqPostString("G2-SUCCESS_YN",1);//SUCCESS_YN	
 $REQ["G2-SUCCESS_YN"] = getFilter($REQ["G2-SUCCESS_YN"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-ADD_DT"] = reqPostString("G2-ADD_DT",14);//ADD	
-$REQ["G2-ADD_DT"] = getFilter($REQ["G2-ADD_DT"],"REGEXMAT","/^[0-9]{1}[0-9]*$/");	
+$REQ["G2-ADD_DT"] = getFilter($REQ["G2-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G3, AUTHD
 $REQ["G3-LAUTHD_SEQ"] = reqPostString("G3-LAUTHD_SEQ",30);//DSEQ	
-$REQ["G3-LAUTHD_SEQ"] = getFilter($REQ["G3-LAUTHD_SEQ"],"REGEXMAT","/^[0-9]{1}[0-9]*$/");	
-$REQ["G3-REQ_TOKEN"] = reqPostString("G3-REQ_TOKEN",30);//REQ	
+$REQ["G3-LAUTHD_SEQ"] = getFilter($REQ["G3-LAUTHD_SEQ"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G3-REQ_TOKEN"] = reqPostString("G3-REQ_TOKEN",37);//REQ	
 $REQ["G3-REQ_TOKEN"] = getFilter($REQ["G3-REQ_TOKEN"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-RES_TOKEN"] = reqPostString("G3-RES_TOKEN",30);//RES	
 $REQ["G3-RES_TOKEN"] = getFilter($REQ["G3-RES_TOKEN"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-LAUTH_SEQ"] = reqPostNumber("G3-LAUTH_SEQ",10);//SEQ	
-$REQ["G3-LAUTH_SEQ"] = getFilter($REQ["G3-LAUTH_SEQ"],"REGEXMAT","/^[0-9]{1}[0-9]*$/");	
+$REQ["G3-LAUTH_SEQ"] = getFilter($REQ["G3-LAUTH_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-PARAM_COLIDS"] = reqPostString("G3-PARAM_COLIDS",30);//PARAM	
 $REQ["G3-PARAM_COLIDS"] = getFilter($REQ["G3-PARAM_COLIDS"],"SAFETEXT","/--미 정의--/");	
 $REQ["G3-DD_COLIDS"] = reqPostString("G3-DD_COLIDS",30);//DD	
@@ -101,19 +105,19 @@ $REQ["G3-PI_IN_COLIDS"] = getFilter($REQ["G3-PI_IN_COLIDS"],"SAFETEXT","/--미 �
 $REQ["G3-PI_OUT_COLIDS"] = reqPostString("G3-PI_OUT_COLIDS",30);//PI OUT	
 $REQ["G3-PI_OUT_COLIDS"] = getFilter($REQ["G3-PI_OUT_COLIDS"],"SAFETEXT","/--미 정의--/");	
 $REQ["G3-ROW_CNT"] = reqPostString("G3-ROW_CNT",30);//ROW_CNT	
-$REQ["G3-ROW_CNT"] = getFilter($REQ["G3-ROW_CNT"],"REGEXMAT","/^[0-9]{1}[0-9]*$/");	
+$REQ["G3-ROW_CNT"] = getFilter($REQ["G3-ROW_CNT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-ADD_DT"] = reqPostString("G3-ADD_DT",14);//ADD	
-$REQ["G3-ADD_DT"] = getFilter($REQ["G3-ADD_DT"],"REGEXMAT","/^[0-9]{1}[0-9]*$/");	
+$REQ["G3-ADD_DT"] = getFilter($REQ["G3-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G4, AUTHD상세
 $REQ["G4-LAUTHD_SEQ"] = reqPostString("G4-LAUTHD_SEQ",30);//DSEQ	
-$REQ["G4-LAUTHD_SEQ"] = getFilter($REQ["G4-LAUTHD_SEQ"],"REGEXMAT","/^[0-9]{1}[0-9]*$/");	
+$REQ["G4-LAUTHD_SEQ"] = getFilter($REQ["G4-LAUTHD_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G4-PREPARE_SQL"] = reqPostString("G4-PREPARE_SQL",30);//PREPARE	
 $REQ["G4-PREPARE_SQL"] = getFilter($REQ["G4-PREPARE_SQL"],"SAFETEXT","/--미 정의--/");	
 $REQ["G4-FULL_SQL"] = reqPostString("G4-FULL_SQL",30);//FULL	
 $REQ["G4-FULL_SQL"] = getFilter($REQ["G4-FULL_SQL"],"SAFETEXT","/--미 정의--/");	
 $REQ["G4-ADD_DT"] = reqPostString("G4-ADD_DT",14);//ADD	
-$REQ["G4-ADD_DT"] = getFilter($REQ["G4-ADD_DT"],"REGEXMAT","/^[0-9]{1}[0-9]*$/");	
+$REQ["G4-ADD_DT"] = getFilter($REQ["G4-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//AUTH	
 	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//AUTHD	
 	//,  입력값 필터 
@@ -124,7 +128,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//AUTH
 		,"VALID"=>
 			array(
 			"LAUTH_SEQ"=>array("NUMBER",10)	
-			,"REQ_TOKEN"=>array("STRING",30)	
+			,"REQ_TOKEN"=>array("STRING",37)	
 			,"RES_TOKEN"=>array("STRING",30)	
 			,"USR_SEQ"=>array("NUMBER",10)	
 			,"USR_ID"=>array("STRING",10)	
@@ -135,15 +139,15 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//AUTH
 					)
 		,"FILTER"=>
 			array(
-			"LAUTH_SEQ"=>array("REGEXMAT","/^[0-9]{1}[0-9]*$/")
+			"LAUTH_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"REQ_TOKEN"=>array("CLEARTEXT","/--미 정의--/")
 			,"RES_TOKEN"=>array("CLEARTEXT","/--미 정의--/")
-			,"USR_SEQ"=>array("REGEXMAT","/^[0-9]{1}[0-9]*$/")
+			,"USR_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"USR_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
 			,"PGMID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
 			,"AUTH_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[_a-zA-Z0-9]*$/")
 			,"SUCCESS_YN"=>array("CLEARTEXT","/--미 정의--/")
-			,"ADD_DT"=>array("REGEXMAT","/^[0-9]{1}[0-9]*$/")
+			,"ADD_DT"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
@@ -154,7 +158,7 @@ $REQ["G3-XML"] = filterGridXml(
 		,"VALID"=>
 			array(
 			"LAUTHD_SEQ"=>array("STRING",30)	
-			,"REQ_TOKEN"=>array("STRING",30)	
+			,"REQ_TOKEN"=>array("STRING",37)	
 			,"RES_TOKEN"=>array("STRING",30)	
 			,"LAUTH_SEQ"=>array("NUMBER",10)	
 			,"PARAM_COLIDS"=>array("STRING",30)	
@@ -166,16 +170,16 @@ $REQ["G3-XML"] = filterGridXml(
 					)
 		,"FILTER"=>
 			array(
-			"LAUTHD_SEQ"=>array("REGEXMAT","/^[0-9]{1}[0-9]*$/")
+			"LAUTHD_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"REQ_TOKEN"=>array("CLEARTEXT","/--미 정의--/")
 			,"RES_TOKEN"=>array("CLEARTEXT","/--미 정의--/")
-			,"LAUTH_SEQ"=>array("REGEXMAT","/^[0-9]{1}[0-9]*$/")
+			,"LAUTH_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"PARAM_COLIDS"=>array("SAFETEXT","/--미 정의--/")
 			,"DD_COLIDS"=>array("SAFETEXT","/--미 정의--/")
 			,"PI_IN_COLIDS"=>array("SAFETEXT","/--미 정의--/")
 			,"PI_OUT_COLIDS"=>array("SAFETEXT","/--미 정의--/")
-			,"ROW_CNT"=>array("REGEXMAT","/^[0-9]{1}[0-9]*$/")
-			,"ADD_DT"=>array("REGEXMAT","/^[0-9]{1}[0-9]*$/")
+			,"ROW_CNT"=>array("REGEXMAT","/^[0-9]+$/")
+			,"ADD_DT"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
@@ -218,7 +222,7 @@ switch ($ctl){
 		break;
 }
 	array_push($_RTIME,array("[TIME 50.SVC]",microtime(true)));
-if($PGM_CFG["LOGTYPE"] == "POWER" || $PGM_CFG["LOGTYPE"] == "POWER_N_PI") $objAuth->logUsrAuthD($reqToken,$resToken);;	//권한변경 로그 저장
+if($PGM_CFG["SECTYPE"] == "POWER" || $PGM_CFG["SECTYPE"] == "PI") $objAuth->logUsrAuthD($reqToken,$resToken);;	//권한변경 로그 저장
 	array_push($_RTIME,array("[TIME 60.AUGHD_LOG]",microtime(true)));
 //실행시간 검사
 for($j=1;$j<sizeof($_RTIME);$j++){

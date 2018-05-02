@@ -28,7 +28,7 @@ include_once('../include/incRequest.php');//CG REQUEST
     var btnNm = "<?=getFilter(reqPostString("BTNNM",30),"SAFEECHO","")?>";
 </script>
 </head>
-<body onload="initBody();" class="HTML_BODY">
+<body onload="initBody();">
 
 <div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
 	<!--G.GRPID : G1-->
@@ -134,7 +134,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			<div class="DETAIL_LABELBTN"  style="">
 				<input type="button" name="BTN_G3_SAVE" value="저장" onclick="G3_SAVE(uuidv4());">				<input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">				<input type="button" name="BTN_G3_NEW" value="신규" onclick="G3_NEW(uuidv4());">				<input type="button" name="BTN_G3_MODIFY" value="수정" onclick="G3_MODIFY(uuidv4());">				<input type="button" name="BTN_G3_DELETE" value="삭제" onclick="G3_DELETE(uuidv4());">			</div>
 		</div>
-		<div style="height:359px;" class="DETAIL_OBJECT">
+		<div style="height:358px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 			</DIV><!--is_br_tab end-->
@@ -239,9 +239,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<input type="text" name="BTNNM" id="BTNNM">
 	</form>
 </div>
+</div>
 
 
-</div><!--BODY_BOX-->
 
 </body>
 </html>

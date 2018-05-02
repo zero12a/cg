@@ -1,4 +1,4 @@
-<?
+<?php
 
 //ini_set('session.save_path', 'tcp://192.168.1.101:1234');
 
@@ -21,7 +21,7 @@ $xhandler_unique_id = sprintf("%08x", abs(crc32($_SERVER['REMOTE_ADDR'] . $_SERV
 	$CFG_PI_COLIDS = array("USR_ID", "USR_NM");
 
 	//권한변경 및 개인정보 이력 저장 방식
-	$CFG_AUTH_LOG = "DB"; //DB, REDIS
+	$CFG_AUTH_LOG = "REDIS"; //DB, REDIS
 	$CFG_AUTH_REDIS = "tcp://172.17.0.1:1234"; //REDIS인 경우 REDIS 경로
 
     //디자인 테마

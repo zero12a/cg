@@ -2371,7 +2371,7 @@
         mygridCol.enableMultiselect(true);
         mygridCol.splitAt(5);//'freezes' 0 columns // ROW선택 이벤트        
 
-        viewGrid3();//컬럼 숨기기
+        viewGrid3(true);//컬럼 숨기기
         mygridCol.init();
 
 		//GRPTYPE 콤보
@@ -2708,8 +2708,8 @@
 
     }//initBody();
 
-    function viewGrid3(){
-        if(isView3){
+    function viewGrid3(tmp){
+        if(isView3 || tmp == true){
             isView3 = false;
             
             mygridCol.setColumnHidden(mygridCol.getColIndexById("COLSEQ"),false); //COLSEQ

@@ -150,6 +150,7 @@ if($F_GRPID == "1" && $REQ["G1_CRUD_MODE"] == "read"){
       select
         PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,ADDDT,MODDT
       from CG_PGMGRP where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ#
+      order by GRPORD
           ";
     alog("        selected : " );
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);

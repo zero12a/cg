@@ -342,7 +342,7 @@ function makeStmt($db,$sql,$coltype,$map){
     alog("full sql : " . $debug_sql);
 
     //[로그저장용] 권한변경로그용 SQL더하기 
-    if($PGM_CFG["PGMTYPE"] == "POWER" || $PGM_CFG["PGMTYPE"] == "PI") {
+    if($PGM_CFG["SECTYPE"] == "POWER" || $PGM_CFG["SECTYPE"] == "PI") {
         $tArr = array("PREPARE_SQL"=>$to_sql,"FULL_SQL"=>$debug_sql, "COLIDS"=>$tParamColids);
         array_push($PGM_CFG["SQLTXT"],$tArr);
     }
@@ -1730,7 +1730,7 @@ end
     
 
     function getSqlSelect2Array($tSql){
-        include_once("../lib/PHP-SQL-Parser/src/PHPSQLParser.php");
+        include_once("../c.g/lib/PHP-SQL-Parser/src/PHPSQLParser.php");
         $RtnVal = array();
 
         $parser = new PHPSQLParser($tSql);
