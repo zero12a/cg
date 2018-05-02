@@ -160,7 +160,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+	<div class="GRP_OBJECT" style="width:33%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
@@ -169,7 +169,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
 			<input type="button" name="BTN_G2_RELOAD" value="새로고침" onclick="G2_RELOAD(uuidv4());">
-			<input type="button" name="BTN_G2_HIDDENCOL" value="숨김필드보기" onclick="G2_HIDDENCOL(uuidv4());">
 			<input type="button" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
 			</div>
 		</div>
@@ -187,7 +186,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+	<div class="GRP_OBJECT" style="width:33%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
@@ -196,7 +195,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
 			<input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
-			<input type="button" name="BTN_G3_HIDDENCOL" value="숨김필드보기" onclick="G3_HIDDENCOL(uuidv4());">
 			<input type="button" name="BTN_G3_EXCEL" value="엑셀다운로드" onclick="G3_EXCEL(uuidv4());">
 			</div>
 		</div>
@@ -214,7 +212,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+	<div class="GRP_OBJECT" style="width:34%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
@@ -223,7 +221,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 			<div id="div_gridG4_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG4Cnt" name="그리드 ROW 갯수">N</span>
 			<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">
-			<input type="button" name="BTN_G4_HIDDENCOL" value="숨김필드보기" onclick="G4_HIDDENCOL(uuidv4());">
 			<input type="button" name="BTN_G4_EXCEL" value="엑셀다운로드" onclick="G4_EXCEL(uuidv4());">
 			</div>
 		</div>
@@ -241,7 +238,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+	<div class="GRP_OBJECT" style="width:33%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG5_GRID_LABEL"class="GRID_LABEL" >
@@ -267,7 +264,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+	<div class="GRP_OBJECT" style="width:33%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG6_GRID_LABEL"class="GRID_LABEL" >
@@ -293,7 +290,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+	<div class="GRP_OBJECT" style="width:34%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG7_GRID_LABEL"class="GRID_LABEL" >
