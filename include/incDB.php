@@ -352,7 +352,7 @@ function makeStmt($db,$sql,$coltype,$map){
     //$stmt->bind_param($to_coltype, $to_map);
 
     if(!$stmt){
-        clog("        stmt error : " . $db->errno . " > " . $db->error);
+        clog("        stmt error : " . $stmt->errno . " > " . $stmt->error);
         return false;
     }else if($k > 0){
 		//sql문에 bind param이 하나라도 있으면 처리
@@ -370,7 +370,7 @@ function makeStmt($db,$sql,$coltype,$map){
 
         //바인드 파람 처리
         if(!call_user_func_array(array(&$stmt, 'bind_param'), $bind_names)){
-            alog("        bind_param error : " . $db->errno . " > " . $db->error);
+            alog("        bind_param error : " . $stmt->errno . " > " . $stmt->error);
             return false;
         }
     }

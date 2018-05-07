@@ -1,7 +1,6 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
 var url_G1_SEARCHALL = "intronormalController.php?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "intronormalController.php?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
 var url_G1_RESET = "intronormalController.php?CTLGRP=G1&CTLFNC=RESET";// 변수 선언	
 //그리드 변수 초기화	
 //컨트롤러 경로
@@ -392,7 +391,7 @@ function G4_INIT(){
 		//헤더초기화
         mygridG4.setHeader("SEQ,REQ,RES,USR_SEQ,USR_ID,프로그램ID,AUTH_ID,SUCCESS_YN,ADD");
 		mygridG4.setColumnIds("LAUTH_SEQ,REQ_TOKEN,RES_TOKEN,USR_SEQ,USR_ID,PGMID,AUTH_ID,SUCCESS_YN,ADD_DT");
-		mygridG4.setInitWidths("60,60,60,60,100,200,120,60,60");
+		mygridG4.setInitWidths("60,60,60,60,70,80,100,60,80");
 		mygridG4.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro");
 	//가로 정렬
 		mygridG4.setColAlign("left,left,left,left,left,left,left,left,left");
@@ -529,6 +528,11 @@ function G4_INIT(){
         alog("G4_INIT()-------------------------end");
      }
 //D146 그룹별 기능 함수 출력		
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -550,48 +554,6 @@ function G1_SEARCHALL(token){
 	//  호출
 	G4_SEARCH(lastinputG4,token);
 	alog("G1_SEARCHALL--------------------------end");
-}
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-//, 저장	
-function G1_SAVE(){
- alog("G1_SAVE-------------------start");
-	//FormData parameter에 담아줌	
-	var formData = new FormData();	//G1 getparams	
-//var params = { CTL : "G1_SAVE"};
-	$.ajax({	
-		type : "POST",
-		url : url_G1_SAVE  ,
-		data : formData,
-		processData: false,
-		contentType: false,
-		async: false,
-		success: function(tdata){
-			alog("   json return----------------------");
-			alog("   json data : " + tdata);
-			data = jQuery.parseJSON(tdata);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("[G1] Ajax http 500 error ( " + error + " )");
-			alog("[G1] Ajax http 500 error ( " + error + " )");
-		}
-	});
-	alog("G1_SAVE-------------------end");	
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
 }
     //그리드 조회(로그인)	
     function G2_SEARCH(tinput,token){
@@ -665,6 +627,11 @@ function G2_EXCEL(){
 	$("#DATA_WIDTHS").val("40,50,60,40,60,40,60,60,60,60,60,60");
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
+}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
 }
     //그리드 조회(잠금)	
     function G3_SEARCH(tinput,token){
@@ -813,7 +780,7 @@ function G4_EXCEL(){
 	mygridG4.setSerializationLevel(true,false,false,false,false,false);
 	var myXmlString = mygridG4.serialize();        //컨디션 데이터 모두 말기
 	$("#DATA_HEADERS").val("LAUTH_SEQ,REQ_TOKEN,RES_TOKEN,USR_SEQ,USR_ID,PGMID,AUTH_ID,SUCCESS_YN,ADD_DT");
-	$("#DATA_WIDTHS").val("60,60,60,60,100,200,120,60,60");
+	$("#DATA_WIDTHS").val("60,60,60,60,70,80,100,60,80");
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
 }

@@ -41,7 +41,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
 			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
-				<input type="button" name="BTN_G1_SAVE" value="저장" onclick="G1_SAVE(uuidv4());">
 				<input type="button" name="BTN_G1_RESET" value="입력 초기화" onclick="G1_RESET(uuidv4());">
 			</div>
 		</div>
@@ -57,7 +56,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:305px;">
+	<div class="GRP_OBJECT" style="width:50%;height:505px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
@@ -71,7 +70,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:283px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:483px;width:100%;"></div>
 		</div>
 	</div>
 	<!--
@@ -86,7 +85,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:100%;height:100px;">
+	<div class="GRP_OBJECT" style="width:100%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
@@ -100,7 +99,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:78px;width:100%;"></div>
+			<div id="gridG3"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
 		</div>
 	</div>
 	<!--
@@ -113,7 +112,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:100%;height:200px;">
+	<div class="GRP_OBJECT" style="width:100%;height:300px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
@@ -127,7 +126,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG4"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+			<div id="gridG4"  style="background-color:white;overflow:hidden;height:278px;width:100%;"></div>
 		</div>
 	</div>
 	<!--

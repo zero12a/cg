@@ -242,9 +242,6 @@ switch ($ctl){
 			case "G1_SEARCHALL" :
   		echo $objService->goG1Searchall(); //, 조회(전체)
   		break;
-	case "G1_SAVE" :
-  		echo $objService->goG1Save(); //, 저장
-  		break;
 	case "G2_SEARCH" :
   		echo $objService->goG2Search(); //로그인, 조회
   		break;

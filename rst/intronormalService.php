@@ -42,21 +42,6 @@ class intronormalService
 		echo json_encode($rtnVal);
 		alog("INTRONORMALService-goG1Searchall________________________end");
 	}
-	//, 저장
-	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("INTRONORMALService-goG1Save________________________start");
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("INTRONORMALService-goG1Save________________________end");
-	}
 	//로그인, 조회
 	public function goG2Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;

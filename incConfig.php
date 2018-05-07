@@ -20,6 +20,9 @@ $xhandler_unique_id = sprintf("%08x", abs(crc32($_SERVER['REMOTE_ADDR'] . $_SERV
 	//개인정보(PI) 컬럼에 해당하는 DD
 	$CFG_PI_COLIDS = array("USR_ID", "USR_NM");
 
+	//R.D용 프로젝트명
+	$CFG_PROJECT_NAME = "리얼 만남";
+
 	//권한변경 및 개인정보 이력 저장 방식
 	$CFG_AUTH_LOG = "REDIS"; //DB, REDIS
 	$CFG_AUTH_REDIS = "tcp://172.17.0.1:1234"; //REDIS인 경우 REDIS 경로
