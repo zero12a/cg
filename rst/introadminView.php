@@ -32,7 +32,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 
 <div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
 	<!--G.GRPID : G1-->
-	<div class="GRP_OBJECT" style="width:100%;height:65px;border-radius:3px;-moz-border-radius: 3px;">
+	<div class="GRP_OBJECT" style="width:100%;height:80px;border-radius:3px;-moz-border-radius: 3px;">
 	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 			<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
@@ -45,7 +45,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<input type="button" name="BTN_G1_RESET" value="입력 초기화" onclick="G1_RESET(uuidv4());">
 			</div>
 		</div>
-		<div style="height:23px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:38px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 		<!--D101: STARTTXT, TAG-->
@@ -60,7 +60,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<!--D101: STARTTXT, TAG-->
 		<!--I.COLID : TO_DT-->
 		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:40px;text-align:center;">
-				~
+				TO_DT
 			</div>
 		<div class="CON_OBJECT">
 			<input type="text" name="G1-TO_DT" value="" id="G1-TO_DT" style="width:100px;">
@@ -77,46 +77,48 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
 	<div class="GRP_OBJECT" style="width:50%;height:200px;">
 		<div sty_le="width:0px;height:0px;overflow: hidden">
-			<form id="formviewF9" name="formviewF9" method="post" enctype="multipart/form-data"  onsubmit="return false;">
-			<input type="hidden" name="F9-CTLCUD"  id="F9-CTLCUD" value="">
+			<form id="formviewG2" name="formviewG2" method="post" enctype="multipart/form-data"  onsubmit="return false;">
+			<input type="hidden" name="G2-CTLCUD"  id="G2-CTLCUD" value="">
 		</div>	
 		<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
 				* 월점검
 			</div>
 			<div class="DETAIL_LABELBTN"  style="">
-				<input type="button" name="BTN_F9_SAVE" value="저장" onclick="F9_SAVE(uuidv4());">				<input type="button" name="BTN_F9_NEW" value="신규" onclick="F9_NEW(uuidv4());">			</div>
+				<input type="button" name="BTN_G2_SAVE" value="저장" onclick="G2_SAVE(uuidv4());">				<input type="button" name="BTN_G2_RELOAD" value="새로고침" onclick="G2_RELOAD(uuidv4());">				<input type="button" name="BTN_G2_NEW" value="신규" onclick="G2_NEW(uuidv4());">			</div>
 		</div>
-		<div style="height:159px;" class="DETAIL_OBJECT">
+		<div style="height:158px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 		<!--D101: STARTTXT, TAG-->
 		<!--I.COLID : FROM_DT-->
-		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:100px;text-align:right;">
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:100px;text-align:left;">
 				FROM_DT
 			</div>
 		<div class="CON_OBJECT">
-			<input type="text" name="F9-FROM_DT" value="" id="F9-FROM_DT" style="width:100px;">
+			<input type="text" name="G2-FROM_DT" value="" id="G2-FROM_DT" style="width:100px;">
 		</div>
 	</div>
 		<!--D101: STARTTXT, TAG-->
 		<!--I.COLID : TO_DT-->
-		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:40px;text-align:center;">
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:40px;text-align:left;">
 				~
 			</div>
 		<div class="CON_OBJECT">
-			<input type="text" name="F9-TO_DT" value="" id="F9-TO_DT" style="width:100px;">
+			<input type="text" name="G2-TO_DT" value="" id="G2-TO_DT" style="width:100px;">
 		</div>
 	</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : CFM_DESC-->
 				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:90px;text-align:left;">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
 						CFM_DESC
 					</div>
-					<!-- style="width:200px;"-->
+					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--CFM_DESC오브젝트출력-->						<input type="text" name="F9-CFM_DESC" value="" id="F9-CFM_DESC" style="width:200px;">
+	<!--CFM_DESC오브젝트출력-->						<input type="text" name="G2-CFM_DESC" value="" id="G2-CFM_DESC" style="width:100px;">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -137,13 +139,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG8_GRID_LABEL"class="GRID_LABEL" >
-	  				* 월점검      
+	  				* 월점검목록      
 			</div>
 			<div id="div_gridG8_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG8Cnt" name="그리드 ROW 갯수">N</span>
-			<input type="button" name="BTN_G8_SAVE" value="저장" onclick="G8_SAVE(uuidv4());">
-			<input type="button" name="BTN_G8_ROWDELETE" value="행삭제" onclick="G8_ROWDELETE(uuidv4());">
 			<input type="button" name="BTN_G8_RELOAD" value="새로고침" onclick="G8_RELOAD(uuidv4());">
+			<input type="button" name="BTN_G8_EXCEL" value="엑셀다운로드" onclick="G8_EXCEL(uuidv4());">
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
@@ -160,37 +161,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:33%;height:200px;">
-
-		<div  class="GRID_LABELGRP">
-  			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
-	  				* 로그인성공      
-			</div>
-			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
-				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
-			<input type="button" name="BTN_G2_RELOAD" value="새로고침" onclick="G2_RELOAD(uuidv4());">
-			<input type="button" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
-			</div>
-		</div>
-		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
-		</div>
-	</div>
-	<!--
-	#####################################################
-	## 그리드 - END
-	#####################################################
-	-->
-	<!--
-	#####################################################
-	## 그리드 - START
-	#####################################################
-	-->
-	<div class="GRP_OBJECT" style="width:33%;height:200px;">
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
-	  				* 잠금횟수      
+	  				* 로그인실패      
 			</div>
 			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
@@ -212,11 +187,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:34%;height:200px;">
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
-	  				* 로그인실패      
+	  				* 로그인실패IP      
 			</div>
 			<div id="div_gridG4_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG4Cnt" name="그리드 ROW 갯수">N</span>
@@ -241,34 +216,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<div class="GRP_OBJECT" style="width:33%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
-  			<div id="div_gridG5_GRID_LABEL"class="GRID_LABEL" >
-	  				* 개인정보접근      
-			</div>
-			<div id="div_gridG5_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
-				<span id="spanG5Cnt" name="그리드 ROW 갯수">N</span>
-			<input type="button" name="BTN_G5_RELOAD" value="새로고침" onclick="G5_RELOAD(uuidv4());">
-			<input type="button" name="BTN_G5_EXCEL" value="엑셀다운로드" onclick="G5_EXCEL(uuidv4());">
-			</div>
-		</div>
-		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG5"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
-		</div>
-	</div>
-	<!--
-	#####################################################
-	## 그리드 - END
-	#####################################################
-	-->
-	<!--
-	#####################################################
-	## 그리드 - START
-	#####################################################
-	-->
-	<div class="GRP_OBJECT" style="width:33%;height:200px;">
-
-		<div  class="GRID_LABELGRP">
   			<div id="div_gridG6_GRID_LABEL"class="GRID_LABEL" >
-	  				* 로그인실패IP      
+	  				* 권한없는접근      
 			</div>
 			<div id="div_gridG6_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG6Cnt" name="그리드 ROW 갯수">N</span>
@@ -290,11 +239,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:34%;height:200px;">
+	<div class="GRP_OBJECT" style="width:33%;height:200px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG7_GRID_LABEL"class="GRID_LABEL" >
-	  				* 비인가메뉴접근      
+	  				* 로그인잠금      
 			</div>
 			<div id="div_gridG7_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG7Cnt" name="그리드 ROW 갯수">N</span>
@@ -304,6 +253,32 @@ include_once('../include/incRequest.php');//CG REQUEST
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG7"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+		</div>
+	</div>
+	<!--
+	#####################################################
+	## 그리드 - END
+	#####################################################
+	-->
+	<!--
+	#####################################################
+	## 그리드 - START
+	#####################################################
+	-->
+	<div class="GRP_OBJECT" style="width:34%;height:200px;">
+
+		<div  class="GRID_LABELGRP">
+  			<div id="div_gridG9_GRID_LABEL"class="GRID_LABEL" >
+	  				* 개인정보접근      
+			</div>
+			<div id="div_gridG9_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
+				<span id="spanG9Cnt" name="그리드 ROW 갯수">N</span>
+			<input type="button" name="BTN_G9_RELOAD" value="새로고침" onclick="G9_RELOAD(uuidv4());">
+			<input type="button" name="BTN_G9_EXCEL" value="엑셀다운로드" onclick="G9_EXCEL(uuidv4());">
+			</div>
+		</div>
+		<div  class="GRID_OBJECT"  style="">
+			<div id="gridG9"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
 		</div>
 	</div>
 	<!--

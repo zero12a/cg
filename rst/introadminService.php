@@ -58,39 +58,39 @@ class introadminService
 		alog("INTROADMINService-goG1Save________________________end");
 	}
 	//월점검, 조회
-	public function goF9Search(){
+	public function goG2Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goF9Search________________________start");
+		alog("INTROADMINService-goG2Search________________________start");
 //FORMVIEW SEARCH
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array();
 // SQL LOOP
-		// MONTH
+		// sMonthG
 		$FORMVIEW["SQL"]["R"] = $this->DAO->sMonthG($REQ); 
 		$rtnVal = makeFormviewSearchJson($FORMVIEW,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME F9]",microtime(true)));
+		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goF9Search________________________end");
+		alog("INTROADMINService-goG2Search________________________end");
 	}
 	//월점검, 저장
-	public function goF9Save(){
+	public function goG2Save(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goF9Save________________________start");
+		alog("INTROADMINService-goG2Save________________________start");
 		//FORMVIEW SAVE
-		$grpId="F9";
+		$grpId="G2";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
 		$GRID["KEYCOLID"] = "";  //KEY컬럼 COLID, -1
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
@@ -99,7 +99,7 @@ class introadminService
 			//CTLCUD 명령어에 따른 분개 처리
 		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
 			switch($FORMVIEW["FNCTYPE"]){
-				case "C":////MONTH
+				case "C":////iMonthG
 					//추가
 					$FORMVIEW["SQL"][$FORMVIEW["FNCTYPE"]] = $this->DAO->iMonthG($REQ); 
 					break;
@@ -112,7 +112,7 @@ class introadminService
 			}
 
 			$tmpVal = makeFormviewSaveJson($FORMVIEW,$this->DB);
-			array_push($_RTIME,array("[TIME 50.DB_TIME F9]",microtime(true)));
+			array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
 			$al->GRPID = $grpId;
 			array_push($rtnVal->GRP_DATA, $tmpVal);
@@ -124,9 +124,9 @@ class introadminService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goF9Save________________________end");
+		alog("INTROADMINService-goG2Save________________________end");
 	}
-	//월점검, 조회
+	//월점검목록, 조회
 	public function goG8Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -140,8 +140,8 @@ class introadminService
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, CFM_SEQ
 
 		//조회
-		//V_GRPNM : 월점검
-		$GRID["SQL"]["R"] = $this->DAO->s2MonthG($REQ); //SEARCH, 조회,MONTH
+		//V_GRPNM : 월점검목록
+		$GRID["SQL"]["R"] = $this->DAO->s2MonthG($REQ); //SEARCH, 조회,s2MonthG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
@@ -153,64 +153,22 @@ class introadminService
 		echo json_encode($rtnVal);
 		alog("INTROADMINService-goG8Search________________________end");
 	}
-	//월점검, 저장
-	public function goG8Save(){
+	//월점검목록, 엑셀다운로드
+	public function goG8Excel(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG8Save________________________start");
+		alog("INTROADMINService-goG8Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG8Save________________________end");
+		alog("INTROADMINService-goG8Excel________________________end");
 	}
-	//로그인성공, 조회
-	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("INTROADMINService-goG2Search________________________start");
-		//그리드 서버 조회 
-		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
-
-		//조회
-		//V_GRPNM : 로그인성공
-		$GRID["SQL"]["R"] = $this->DAO->sLgnSuccG($REQ); //SEARCH, 조회,LOGIN
-	//암호화컬럼
-		$GRID["COLCRYPT"] = array();
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
-		//GRID_SEARCH____________________________end
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG2Search________________________end");
-	}
-	//로그인성공, 엑셀다운로드
-	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("INTROADMINService-goG2Excel________________________start");
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG2Excel________________________end");
-	}
-	//잠금횟수, 조회
+	//로그인실패, 조회
 	public function goG3Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -224,8 +182,8 @@ class introadminService
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
-		//V_GRPNM : 잠금횟수
-		$GRID["SQL"]["R"] = $this->DAO->sLgnLockG($REQ); //SEARCH, 조회,LOGIN
+		//V_GRPNM : 로그인실패
+		$GRID["SQL"]["R"] = $this->DAO->sLgnFailG($REQ); //SEARCH, 조회,sLgnFailG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
@@ -237,7 +195,7 @@ class introadminService
 		echo json_encode($rtnVal);
 		alog("INTROADMINService-goG3Search________________________end");
 	}
-	//잠금횟수, 엑셀다운로드
+	//로그인실패, 엑셀다운로드
 	public function goG3Excel(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -252,7 +210,7 @@ class introadminService
 		echo json_encode($rtnVal);
 		alog("INTROADMINService-goG3Excel________________________end");
 	}
-	//로그인실패, 조회
+	//로그인실패IP, 조회
 	public function goG4Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -263,11 +221,11 @@ class introadminService
 		alog("INTROADMINService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, REMOTE_ADDR
 
 		//조회
-		//V_GRPNM : 로그인실패
-		$GRID["SQL"]["R"] = $this->DAO->sLgnFailG($REQ); //SEARCH, 조회,LOGIN
+		//V_GRPNM : 로그인실패IP
+		$GRID["SQL"]["R"] = $this->DAO->sLgnIpG($REQ); //SEARCH, 조회,sLgnIpG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
@@ -279,7 +237,7 @@ class introadminService
 		echo json_encode($rtnVal);
 		alog("INTROADMINService-goG4Search________________________end");
 	}
-	//로그인실패, 엑셀다운로드
+	//로그인실패IP, 엑셀다운로드
 	public function goG4Excel(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -294,49 +252,7 @@ class introadminService
 		echo json_encode($rtnVal);
 		alog("INTROADMINService-goG4Excel________________________end");
 	}
-	//개인정보접근, 조회
-	public function goG5Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("INTROADMINService-goG5Search________________________start");
-		//그리드 서버 조회 
-		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
-
-		//조회
-		//V_GRPNM : 개인정보접근
-		$GRID["SQL"]["R"] = $this->DAO->sAuthPiG($REQ); //SEARCH, 조회,AUTH
-	//암호화컬럼
-		$GRID["COLCRYPT"] = array();
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME G5]",microtime(true)));
-		//GRID_SEARCH____________________________end
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG5Search________________________end");
-	}
-	//개인정보접근, 엑셀다운로드
-	public function goG5Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("INTROADMINService-goG5Excel________________________start");
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG5Excel________________________end");
-	}
-	//로그인실패IP, 조회
+	//권한없는접근, 조회
 	public function goG6Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -347,11 +263,11 @@ class introadminService
 		alog("INTROADMINService-goG6Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, REMOTE_ADDR
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
-		//V_GRPNM : 로그인실패IP
-		$GRID["SQL"]["R"] = $this->DAO->sLgnIpG($REQ); //SEARCH, 조회,LOGIN
+		//V_GRPNM : 권한없는접근
+		$GRID["SQL"]["R"] = $this->DAO->sAuthNoG($REQ); //SEARCH, 조회,sAuthNoG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
@@ -363,7 +279,7 @@ class introadminService
 		echo json_encode($rtnVal);
 		alog("INTROADMINService-goG6Search________________________end");
 	}
-	//로그인실패IP, 엑셀다운로드
+	//권한없는접근, 엑셀다운로드
 	public function goG6Excel(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -378,7 +294,7 @@ class introadminService
 		echo json_encode($rtnVal);
 		alog("INTROADMINService-goG6Excel________________________end");
 	}
-	//비인가메뉴접근, 조회
+	//로그인잠금, 조회
 	public function goG7Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -392,8 +308,8 @@ class introadminService
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
-		//V_GRPNM : 비인가메뉴접근
-		$GRID["SQL"]["R"] = $this->DAO->sAuthNoG($REQ); //SEARCH, 조회,AUTH
+		//V_GRPNM : 로그인잠금
+		$GRID["SQL"]["R"] = $this->DAO->sLgnLockG($REQ); //SEARCH, 조회,sLgnLockG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
@@ -405,7 +321,7 @@ class introadminService
 		echo json_encode($rtnVal);
 		alog("INTROADMINService-goG7Search________________________end");
 	}
-	//비인가메뉴접근, 엑셀다운로드
+	//로그인잠금, 엑셀다운로드
 	public function goG7Excel(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -419,6 +335,48 @@ class introadminService
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
 		alog("INTROADMINService-goG7Excel________________________end");
+	}
+	//개인정보접근, 조회
+	public function goG9Search(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("INTROADMINService-goG9Search________________________start");
+		//그리드 서버 조회 
+		//GRID_SEARCH____________________________start
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
+
+		//조회
+		//V_GRPNM : 개인정보접근
+		$GRID["SQL"]["R"] = $this->DAO->sAuthPiG($REQ); //SEARCH, 조회,sAuthPiG
+	//암호화컬럼
+		$GRID["COLCRYPT"] = array();
+		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G9]",microtime(true)));
+		//GRID_SEARCH____________________________end
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("INTROADMINService-goG9Search________________________end");
+	}
+	//개인정보접근, 엑셀다운로드
+	public function goG9Excel(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("INTROADMINService-goG9Excel________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("INTROADMINService-goG9Excel________________________end");
 	}
 }
                                                              

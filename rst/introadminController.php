@@ -50,100 +50,91 @@ if(!isLogin()){
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
 		//사용자 정보 가져오기
-	$REQ["USER.SEQ"] = getUserSeq();
 //로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
 $PGM_CFG["SECTYPE"] = "NORMAL";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
-$REQ["F9-CTLCUD"] = reqPostString("F9-CTLCUD",2);
+$REQ["G2-CTLCUD"] = reqPostString("G2-CTLCUD",2);
 
 //로그인정보 및 환경경수 받기
 $REQ["USER.SEQ"] = getUserSeq();
 
 //FILE먼저 : G1, 조건
-//FILE먼저 : F9, 월점검
-//FILE먼저 : G8, 월점검
-//FILE먼저 : G2, 로그인성공
-//FILE먼저 : G3, 잠금횟수
-//FILE먼저 : G4, 로그인실패
-//FILE먼저 : G5, 개인정보접근
-//FILE먼저 : G6, 로그인실패IP
-//FILE먼저 : G7, 비인가메뉴접근
+//FILE먼저 : G2, 월점검
+//FILE먼저 : G8, 월점검목록
+//FILE먼저 : G3, 로그인실패
+//FILE먼저 : G4, 로그인실패IP
+//FILE먼저 : G6, 권한없는접근
+//FILE먼저 : G7, 로그인잠금
+//FILE먼저 : G9, 개인정보접근
 
 //G1, 조건
 $REQ["G1-FROM_DT"] = reqPostString("G1-FROM_DT",10);//FROM_DT	
 $REQ["G1-FROM_DT"] = getFilter($REQ["G1-FROM_DT"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G1-TO_DT"] = reqPostString("G1-TO_DT",10);//~	
+$REQ["G1-TO_DT"] = reqPostString("G1-TO_DT",10);//TO_DT	
 $REQ["G1-TO_DT"] = getFilter($REQ["G1-TO_DT"],"CLEARTEXT","/--미 정의--/");	
 
-//F9, 월점검
-$REQ["F9-FROM_DT"] = reqPostString("F9-FROM_DT",10);//FROM_DT	
-$REQ["F9-FROM_DT"] = getFilter($REQ["F9-FROM_DT"],"CLEARTEXT","/--미 정의--/");	
-$REQ["F9-TO_DT"] = reqPostString("F9-TO_DT",10);//~	
-$REQ["F9-TO_DT"] = getFilter($REQ["F9-TO_DT"],"CLEARTEXT","/--미 정의--/");	
-$REQ["F9-CFM_DESC"] = reqPostString("F9-CFM_DESC",100);//CFM_DESC	
-$REQ["F9-CFM_DESC"] = getFilter($REQ["F9-CFM_DESC"],"CLEARTEXT","/--미 정의--/");	
+//G2, 월점검
+$REQ["G2-FROM_DT"] = reqPostString("G2-FROM_DT",10);//FROM_DT	
+$REQ["G2-FROM_DT"] = getFilter($REQ["G2-FROM_DT"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G2-TO_DT"] = reqPostString("G2-TO_DT",10);//~	
+$REQ["G2-TO_DT"] = getFilter($REQ["G2-TO_DT"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G2-CFM_DESC"] = reqPostString("G2-CFM_DESC",150);//CFM_DESC	
+$REQ["G2-CFM_DESC"] = getFilter($REQ["G2-CFM_DESC"],"CLEARTEXT","/--미 정의--/");	
 
-//G8, 월점검
-$REQ["G8-CFM_SEQ"] = reqPostNumber("G8-CFM_SEQ",20);//CFM_SEQ	
+//G8, 월점검목록
+$REQ["G8-CFM_SEQ"] = reqPostString("G8-CFM_SEQ",20);//CFM_SEQ	
 $REQ["G8-CFM_SEQ"] = getFilter($REQ["G8-CFM_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G8-FROM_DT"] = reqPostString("G8-FROM_DT",10);//FROM_DT	
-$REQ["G8-FROM_DT"] = getFilter($REQ["G8-FROM_DT"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G8-FROM_DT"] = getFilter($REQ["G8-FROM_DT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G8-TO_DT"] = reqPostString("G8-TO_DT",10);//TO_DT	
-$REQ["G8-TO_DT"] = getFilter($REQ["G8-TO_DT"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G8-CFM_DESC"] = reqPostString("G8-CFM_DESC",100);//CFM_DESC	
+$REQ["G8-TO_DT"] = getFilter($REQ["G8-TO_DT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G8-CFM_DESC"] = reqPostString("G8-CFM_DESC",50);//CFM_DESC	
 $REQ["G8-CFM_DESC"] = getFilter($REQ["G8-CFM_DESC"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G8-ADD_DT"] = reqPostString("G8-ADD_DT",14);//ADD_DT	
+$REQ["G8-ADD_DT"] = reqPostString("G8-ADD_DT",14);//ADD	
 $REQ["G8-ADD_DT"] = getFilter($REQ["G8-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G8-ADD_ID"] = reqPostString("G8-ADD_ID",30);//ADD_ID	
 $REQ["G8-ADD_ID"] = getFilter($REQ["G8-ADD_ID"],"SAFETEXT","/--미 정의--/");	
 
-//G2, 로그인성공
-$REQ["G2-USR_ID"] = reqPostString("G2-USR_ID",10);//USR_ID	
-$REQ["G2-USR_ID"] = getFilter($REQ["G2-USR_ID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G2-LOGIN_CNT"] = reqPostNumber("G2-LOGIN_CNT",10);//LOGIN_CNT	
-$REQ["G2-LOGIN_CNT"] = getFilter($REQ["G2-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
-
-//G3, 잠금횟수
+//G3, 로그인실패
 $REQ["G3-USR_ID"] = reqPostString("G3-USR_ID",10);//USR_ID	
 $REQ["G3-USR_ID"] = getFilter($REQ["G3-USR_ID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G3-LOGIN_CNT"] = reqPostNumber("G3-LOGIN_CNT",10);//LOGIN_CNT	
+$REQ["G3-LOGIN_CNT"] = reqPostNumber("G3-LOGIN_CNT",20);//LOGIN_CNT	
 $REQ["G3-LOGIN_CNT"] = getFilter($REQ["G3-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G4, 로그인실패
-$REQ["G4-USR_ID"] = reqPostString("G4-USR_ID",10);//USR_ID	
-$REQ["G4-USR_ID"] = getFilter($REQ["G4-USR_ID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G4-LOGIN_CNT"] = reqPostNumber("G4-LOGIN_CNT",10);//LOGIN_CNT	
+//G4, 로그인실패IP
+$REQ["G4-REMOTE_ADDR"] = reqPostString("G4-REMOTE_ADDR",20);//IP	
+$REQ["G4-REMOTE_ADDR"] = getFilter($REQ["G4-REMOTE_ADDR"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G4-LOGIN_CNT"] = reqPostNumber("G4-LOGIN_CNT",20);//LOGIN_CNT	
 $REQ["G4-LOGIN_CNT"] = getFilter($REQ["G4-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G5, 개인정보접근
-$REQ["G5-USR_ID"] = reqPostString("G5-USR_ID",10);//USR_ID	
-$REQ["G5-USR_ID"] = getFilter($REQ["G5-USR_ID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G5-REQ_PI_CNT"] = reqPostNumber("G5-REQ_PI_CNT",20);//REQ_PI_CNT	
-$REQ["G5-REQ_PI_CNT"] = getFilter($REQ["G5-REQ_PI_CNT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G5-VIEW_ROW_SUM"] = reqPostNumber("G5-VIEW_ROW_SUM",20);//VIEW_ROW_SUM	
-$REQ["G5-VIEW_ROW_SUM"] = getFilter($REQ["G5-VIEW_ROW_SUM"],"REGEXMAT","/^[0-9]+$/");	
+//G6, 권한없는접근
+$REQ["G6-USR_ID"] = reqPostString("G6-USR_ID",10);//USR_ID	
+$REQ["G6-USR_ID"] = getFilter($REQ["G6-USR_ID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
+$REQ["G6-AUTH_CNT"] = reqPostNumber("G6-AUTH_CNT",20);//AUTH_CNT	
+$REQ["G6-AUTH_CNT"] = getFilter($REQ["G6-AUTH_CNT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G6, 로그인실패IP
-$REQ["G6-REMOTE_ADDR"] = reqPostString("G6-REMOTE_ADDR",20);//IP	
-$REQ["G6-REMOTE_ADDR"] = getFilter($REQ["G6-REMOTE_ADDR"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G6-LOGIN_CNT"] = reqPostNumber("G6-LOGIN_CNT",10);//LOGIN_CNT	
-$REQ["G6-LOGIN_CNT"] = getFilter($REQ["G6-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
-
-//G7, 비인가메뉴접근
+//G7, 로그인잠금
 $REQ["G7-USR_ID"] = reqPostString("G7-USR_ID",10);//USR_ID	
 $REQ["G7-USR_ID"] = getFilter($REQ["G7-USR_ID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G7-AUTH_CNT"] = reqPostNumber("G7-AUTH_CNT",20);//AUTH_CNT	
-$REQ["G7-AUTH_CNT"] = getFilter($REQ["G7-AUTH_CNT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G8-XML"] = getXml2Array($_POST["G8-XML"]);//월점검	
-	$REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//로그인성공	
-	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//잠금횟수	
-	$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//로그인실패	
-	$REQ["G5-XML"] = getXml2Array($_POST["G5-XML"]);//개인정보접근	
-	$REQ["G6-XML"] = getXml2Array($_POST["G6-XML"]);//로그인실패IP	
-	$REQ["G7-XML"] = getXml2Array($_POST["G7-XML"]);//비인가메뉴접근	
+$REQ["G7-LOGIN_CNT"] = reqPostNumber("G7-LOGIN_CNT",20);//LOGIN_CNT	
+$REQ["G7-LOGIN_CNT"] = getFilter($REQ["G7-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
+
+//G9, 개인정보접근
+$REQ["G9-USR_ID"] = reqPostString("G9-USR_ID",10);//USR_ID	
+$REQ["G9-USR_ID"] = getFilter($REQ["G9-USR_ID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
+$REQ["G9-REQ_PI_CNT"] = reqPostNumber("G9-REQ_PI_CNT",20);//PI_CNT	
+$REQ["G9-REQ_PI_CNT"] = getFilter($REQ["G9-REQ_PI_CNT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G9-VIEW_ROW_SUM"] = reqPostNumber("G9-VIEW_ROW_SUM",30);//ROW_SUM	
+$REQ["G9-VIEW_ROW_SUM"] = getFilter($REQ["G9-VIEW_ROW_SUM"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G8-XML"] = getXml2Array($_POST["G8-XML"]);//월점검목록	
+	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//로그인실패	
+	$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//로그인실패IP	
+	$REQ["G6-XML"] = getXml2Array($_POST["G6-XML"]);//권한없는접근	
+	$REQ["G7-XML"] = getXml2Array($_POST["G7-XML"]);//로그인잠금	
+	$REQ["G9-XML"] = getXml2Array($_POST["G9-XML"]);//개인정보접근	
 	//,  입력값 필터 
 	$REQ["G8-XML"] = filterGridXml(
 	array(
@@ -151,37 +142,21 @@ $REQ["G8-XML"] = getXml2Array($_POST["G8-XML"]);//월점검
 		,"COLORD"=>"CFM_SEQ,FROM_DT,TO_DT,CFM_DESC,ADD_DT,ADD_ID"
 		,"VALID"=>
 			array(
-			"CFM_SEQ"=>array("NUMBER",20)	
+			"CFM_SEQ"=>array("STRING",20)	
 			,"FROM_DT"=>array("STRING",10)	
 			,"TO_DT"=>array("STRING",10)	
-			,"CFM_DESC"=>array("STRING",100)	
+			,"CFM_DESC"=>array("STRING",50)	
 			,"ADD_DT"=>array("STRING",14)	
 			,"ADD_ID"=>array("STRING",30)	
 					)
 		,"FILTER"=>
 			array(
 			"CFM_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
-			,"FROM_DT"=>array("CLEARTEXT","/--미 정의--/")
-			,"TO_DT"=>array("CLEARTEXT","/--미 정의--/")
+			,"FROM_DT"=>array("REGEXMAT","/^[0-9]+$/")
+			,"TO_DT"=>array("REGEXMAT","/^[0-9]+$/")
 			,"CFM_DESC"=>array("CLEARTEXT","/--미 정의--/")
 			,"ADD_DT"=>array("REGEXMAT","/^[0-9]+$/")
 			,"ADD_ID"=>array("SAFETEXT","/--미 정의--/")
-					)
-	)
-);
-$REQ["G2-XML"] = filterGridXml(
-	array(
-		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"USR_ID,LOGIN_CNT"
-		,"VALID"=>
-			array(
-			"USR_ID"=>array("STRING",10)	
-			,"LOGIN_CNT"=>array("NUMBER",10)	
-					)
-		,"FILTER"=>
-			array(
-			"USR_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
-			,"LOGIN_CNT"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
@@ -192,7 +167,7 @@ $REQ["G3-XML"] = filterGridXml(
 		,"VALID"=>
 			array(
 			"USR_ID"=>array("STRING",10)	
-			,"LOGIN_CNT"=>array("NUMBER",10)	
+			,"LOGIN_CNT"=>array("NUMBER",20)	
 					)
 		,"FILTER"=>
 			array(
@@ -204,45 +179,11 @@ $REQ["G3-XML"] = filterGridXml(
 $REQ["G4-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G4-XML"]
-		,"COLORD"=>"USR_ID,LOGIN_CNT"
-		,"VALID"=>
-			array(
-			"USR_ID"=>array("STRING",10)	
-			,"LOGIN_CNT"=>array("NUMBER",10)	
-					)
-		,"FILTER"=>
-			array(
-			"USR_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
-			,"LOGIN_CNT"=>array("REGEXMAT","/^[0-9]+$/")
-					)
-	)
-);
-$REQ["G5-XML"] = filterGridXml(
-	array(
-		"XML"=>$REQ["G5-XML"]
-		,"COLORD"=>"USR_ID,REQ_PI_CNT,VIEW_ROW_SUM"
-		,"VALID"=>
-			array(
-			"USR_ID"=>array("STRING",10)	
-			,"REQ_PI_CNT"=>array("NUMBER",20)	
-			,"VIEW_ROW_SUM"=>array("NUMBER",20)	
-					)
-		,"FILTER"=>
-			array(
-			"USR_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
-			,"REQ_PI_CNT"=>array("REGEXMAT","/^[0-9]+$/")
-			,"VIEW_ROW_SUM"=>array("REGEXMAT","/^[0-9]+$/")
-					)
-	)
-);
-$REQ["G6-XML"] = filterGridXml(
-	array(
-		"XML"=>$REQ["G6-XML"]
 		,"COLORD"=>"REMOTE_ADDR,LOGIN_CNT"
 		,"VALID"=>
 			array(
 			"REMOTE_ADDR"=>array("STRING",20)	
-			,"LOGIN_CNT"=>array("NUMBER",10)	
+			,"LOGIN_CNT"=>array("NUMBER",20)	
 					)
 		,"FILTER"=>
 			array(
@@ -251,9 +192,9 @@ $REQ["G6-XML"] = filterGridXml(
 					)
 	)
 );
-$REQ["G7-XML"] = filterGridXml(
+$REQ["G6-XML"] = filterGridXml(
 	array(
-		"XML"=>$REQ["G7-XML"]
+		"XML"=>$REQ["G6-XML"]
 		,"COLORD"=>"USR_ID,AUTH_CNT"
 		,"VALID"=>
 			array(
@@ -264,6 +205,40 @@ $REQ["G7-XML"] = filterGridXml(
 			array(
 			"USR_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
 			,"AUTH_CNT"=>array("REGEXMAT","/^[0-9]+$/")
+					)
+	)
+);
+$REQ["G7-XML"] = filterGridXml(
+	array(
+		"XML"=>$REQ["G7-XML"]
+		,"COLORD"=>"USR_ID,LOGIN_CNT"
+		,"VALID"=>
+			array(
+			"USR_ID"=>array("STRING",10)	
+			,"LOGIN_CNT"=>array("NUMBER",20)	
+					)
+		,"FILTER"=>
+			array(
+			"USR_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
+			,"LOGIN_CNT"=>array("REGEXMAT","/^[0-9]+$/")
+					)
+	)
+);
+$REQ["G9-XML"] = filterGridXml(
+	array(
+		"XML"=>$REQ["G9-XML"]
+		,"COLORD"=>"USR_ID,REQ_PI_CNT,VIEW_ROW_SUM"
+		,"VALID"=>
+			array(
+			"USR_ID"=>array("STRING",10)	
+			,"REQ_PI_CNT"=>array("NUMBER",20)	
+			,"VIEW_ROW_SUM"=>array("NUMBER",30)	
+					)
+		,"FILTER"=>
+			array(
+			"USR_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
+			,"REQ_PI_CNT"=>array("REGEXMAT","/^[0-9]+$/")
+			,"VIEW_ROW_SUM"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
@@ -280,53 +255,47 @@ switch ($ctl){
 	case "G1_SAVE" :
   		echo $objService->goG1Save(); //조건, 저장
   		break;
-	case "F9_SEARCH" :
-  		echo $objService->goF9Search(); //월점검, 조회
+	case "G2_SEARCH" :
+  		echo $objService->goG2Search(); //월점검, 조회
   		break;
-	case "F9_SAVE" :
-  		echo $objService->goF9Save(); //월점검, 저장
+	case "G2_SAVE" :
+  		echo $objService->goG2Save(); //월점검, 저장
   		break;
 	case "G8_SEARCH" :
-  		echo $objService->goG8Search(); //월점검, 조회
+  		echo $objService->goG8Search(); //월점검목록, 조회
   		break;
-	case "G8_SAVE" :
-  		echo $objService->goG8Save(); //월점검, 저장
-  		break;
-	case "G2_SEARCH" :
-  		echo $objService->goG2Search(); //로그인성공, 조회
-  		break;
-	case "G2_EXCEL" :
-  		echo $objService->goG2Excel(); //로그인성공, 엑셀다운로드
+	case "G8_EXCEL" :
+  		echo $objService->goG8Excel(); //월점검목록, 엑셀다운로드
   		break;
 	case "G3_SEARCH" :
-  		echo $objService->goG3Search(); //잠금횟수, 조회
+  		echo $objService->goG3Search(); //로그인실패, 조회
   		break;
 	case "G3_EXCEL" :
-  		echo $objService->goG3Excel(); //잠금횟수, 엑셀다운로드
+  		echo $objService->goG3Excel(); //로그인실패, 엑셀다운로드
   		break;
 	case "G4_SEARCH" :
-  		echo $objService->goG4Search(); //로그인실패, 조회
+  		echo $objService->goG4Search(); //로그인실패IP, 조회
   		break;
 	case "G4_EXCEL" :
-  		echo $objService->goG4Excel(); //로그인실패, 엑셀다운로드
-  		break;
-	case "G5_SEARCH" :
-  		echo $objService->goG5Search(); //개인정보접근, 조회
-  		break;
-	case "G5_EXCEL" :
-  		echo $objService->goG5Excel(); //개인정보접근, 엑셀다운로드
+  		echo $objService->goG4Excel(); //로그인실패IP, 엑셀다운로드
   		break;
 	case "G6_SEARCH" :
-  		echo $objService->goG6Search(); //로그인실패IP, 조회
+  		echo $objService->goG6Search(); //권한없는접근, 조회
   		break;
 	case "G6_EXCEL" :
-  		echo $objService->goG6Excel(); //로그인실패IP, 엑셀다운로드
+  		echo $objService->goG6Excel(); //권한없는접근, 엑셀다운로드
   		break;
 	case "G7_SEARCH" :
-  		echo $objService->goG7Search(); //비인가메뉴접근, 조회
+  		echo $objService->goG7Search(); //로그인잠금, 조회
   		break;
 	case "G7_EXCEL" :
-  		echo $objService->goG7Excel(); //비인가메뉴접근, 엑셀다운로드
+  		echo $objService->goG7Excel(); //로그인잠금, 엑셀다운로드
+  		break;
+	case "G9_SEARCH" :
+  		echo $objService->goG9Search(); //개인정보접근, 조회
+  		break;
+	case "G9_EXCEL" :
+  		echo $objService->goG9Excel(); //개인정보접근, 엑셀다운로드
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");
