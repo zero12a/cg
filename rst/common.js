@@ -198,7 +198,7 @@ function setCodeYN(tGrptype, tCombo, tPcd){
 
 
 function setCodeCombo(tGrptype, tCombo, tPcd){
-	alog("   setGridCombo----------------------start");
+	//alog("   setGridCombo----------------------start");
 	//alog("		tPcd = " + tPcd);
 	
 	//alert(tCombo);
@@ -229,7 +229,7 @@ function setCodeCombo(tGrptype, tCombo, tPcd){
 					tCombo.put("","");
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
-						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
+						//alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
 
 						tCombo.put(data.RTN_DATA.rows[i].data[0],data.RTN_DATA.rows[i].data[1]);
 					}

@@ -624,3 +624,5 @@ function uuidv4() {
 	)
   }
   
+//Chart.js
+var color = Chart.helpers.color;

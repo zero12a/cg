@@ -247,11 +247,12 @@ where PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "update CG_PJTCFG set
- CFGID = #{CFGID}, CFGNM = #{CFGNM}, MVCGBN = #{MVCGBN}, PATH = #{PATH}, USEYN = #{USEYN}
-, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
+	CFGID = #{CFGID}, CFGNM = #{CFGNM}, MVCGBN = #{MVCGBN}, PATH = #{PATH}, USEYN = #{USEYN}
+	, CFGORD = #{CFGORD}
+	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 ";
-		$RtnVal["BINDTYPE"] = "sssssiii";
+		$RtnVal["BINDTYPE"] = "ssssssiii";
 		return $RtnVal;
     }  
 	//CONFIG    

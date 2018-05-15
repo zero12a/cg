@@ -56,4 +56,12 @@ input[type=text]:read-only {
 .ui-datepicker-trigger {
 	margin-left:2px;
 	vertical-align:top;
-	}
+    }
+    
+
+/* Chart.js */
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}

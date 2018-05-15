@@ -1973,6 +1973,12 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),false);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),false);    
                     break;
+                case "CHARTBAR":
+                    //(FNC) FNCTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCCHARTBAR");
+
+                    //(IO) OBJTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTBAR");                                        
                 default:
                     alog("IO의 OBJTYPE 생성을 위한 GRPTYPE이 아닙니다.(" + grptype + ")");
                     break;
@@ -2370,10 +2376,10 @@
         mygridCol.enableSmartRendering(false);
         mygridCol.enableMultiselect(true);
         mygridCol.splitAt(5);//'freezes' 0 columns // ROW선택 이벤트        
-
-        viewGrid3(true);//컬럼 숨기기
+        
         mygridCol.init();
-
+        isView3=false;
+        viewGrid3();//컬럼 숨기기
 		//GRPTYPE 콤보
 		setCodeCombo("GRID",mygridCol.getCombo(mygridCol.getColIndexById("SQLGBN")),"SQLGBN");
 
@@ -2708,8 +2714,9 @@
 
     }//initBody();
 
-    function viewGrid3(tmp){
-        if(isView3 || tmp == true){
+    function viewGrid3(){
+        if(isView3){
+            alog("viewGrid3..........보여줘");
             isView3 = false;
             
             mygridCol.setColumnHidden(mygridCol.getColIndexById("COLSEQ"),false); //COLSEQ
@@ -2718,6 +2725,7 @@
             mygridCol.setColumnHidden(mygridCol.getColIndexById("SQLSEQ"),false); //SQLSEQ
             mygridCol.setColumnHidden(mygridCol.getColIndexById("DDCOLID"),false); //SQLSEQ
         }else{
+            alog("viewGrid3..........숨겨");            
             isView3 = true;
 
             mygridCol.setColumnHidden(mygridCol.getColIndexById("COLSEQ"),true); //COLSEQ

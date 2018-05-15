@@ -739,6 +739,7 @@ function getInput($input,$filetype,$param,$G){
 			  ,ifnull(bc.CDVAL,'') as CONDITION_CDVAL
 			  ,ifnull(bg.CDVAL,'') as GRID_CDVAL
               ,ifnull(bf.CDVAL,'') as FORMVIEW_CDVAL
+              ,ifnull(chartbar.CDVAL,'') as CHARTBAR_CDVAL              
 			  ,ifnull(bc.CDVAL2,'') as CONDITION_CDVAL2
 			  ,ifnull(bg.CDVAL2,'') as GRID_CDVAL2
               ,ifnull(bf.CDVAL2,'') as FORMVIEW_CDVAL2
@@ -757,6 +758,7 @@ function getInput($input,$filetype,$param,$G){
                 left outer join CG_CODED bc on a.OBJTYPE = bc.CD and bc.PCD='CTCONDITION'	and a.PJTSEQ = bc.PJTSEQ
                 left outer join CG_CODED bg on a.OBJTYPE = bg.CD and bg.PCD='CTGRID'		and a.PJTSEQ = bg.PJTSEQ
                 left outer join CG_CODED bf on a.OBJTYPE = bf.CD and bf.PCD='CTFORMVIEW'	and a.PJTSEQ = bf.PJTSEQ
+                left outer join CG_CODED chartbar on a.OBJTYPE = chartbar.CD and chartbar.PCD='CTCHARTBAR'	and a.PJTSEQ = chartbar.PJTSEQ
                 left outer join CG_CODED oalign on a.OBJALIGN = oalign.CD and oalign.PCD='OBJALIGN'	and a.PJTSEQ = oalign.PJTSEQ      
                 left outer join CG_CODED csort on a.DATATYPE = csort.CD and csort.PCD='COLSORT'	and a.PJTSEQ = csort.PJTSEQ    
                 left outer join ( select COLID,CRYPTCD FROM CG_DD where PJTSEQ = %d ) dd on a.COLID = dd.COLID    

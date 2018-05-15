@@ -27,7 +27,7 @@ class usermngService
 	function __toString(){
 		alog("UsermngService-__toString");
 	}
-	//USR, 비번변경
+	//사용자1, 비번변경
 	public function goG2Userdef(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -60,7 +60,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG2Userdef________________________end");
 	}
-	//USR, 조회
+	//사용자1, 조회
 	public function goG2Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -74,7 +74,7 @@ class usermngService
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USERSEQ
 
 		//조회
-		//V_GRPNM : USR
+		//V_GRPNM : 사용자1
 		$GRID["SQL"]["R"] = $this->DAO->selUserG($REQ); //SEARCH, 조회,사용자목록
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array("PASSWD"=>"HASH");
@@ -87,7 +87,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG2Search________________________end");
 	}
-	//USR, S
+	//사용자1, S
 	public function goG2Save(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -120,7 +120,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG2Save________________________end");
 	}
-	//USR, E
+	//사용자1, E
 	public function goG2Excel(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -135,7 +135,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG2Excel________________________end");
 	}
-	//USR, 선택저장
+	//사용자1, 선택저장
 	public function goG2Chksave(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -150,7 +150,22 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG2Chksave________________________end");
 	}
-	//PJT, 조회
+	//프로젝트2, 사용자정의
+	public function goG3Userdef(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("USERMNGService-goG3Userdef________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("USERMNGService-goG3Userdef________________________end");
+	}
+	//프로젝트2, 조회
 	public function goG3Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -164,7 +179,7 @@ class usermngService
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PJTSEQ
 
 		//조회
-		//V_GRPNM : PJT
+		//V_GRPNM : 프로젝트2
 		$GRID["SQL"]["R"] = $this->DAO->selPjtG($REQ); //SEARCH, 조회,프로젝목록
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
@@ -177,7 +192,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG3Search________________________end");
 	}
-	//PJT, S
+	//프로젝트2, S
 	public function goG3Save(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -192,7 +207,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG3Save________________________end");
 	}
-	//PJT, E
+	//프로젝트2, E
 	public function goG3Excel(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -207,7 +222,22 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG3Excel________________________end");
 	}
-	//SVR, 사용자정의
+	//프로젝트2, 선택저장
+	public function goG3Chksave(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("USERMNGService-goG3Chksave________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("USERMNGService-goG3Chksave________________________end");
+	}
+	//서버4, 사용자정의
 	public function goG4Userdef(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -222,7 +252,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG4Userdef________________________end");
 	}
-	//SVR, 조회
+	//서버4, 조회
 	public function goG4Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -236,7 +266,7 @@ class usermngService
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, SVRSEQ
 
 		//조회
-		//V_GRPNM : SVR
+		//V_GRPNM : 서버4
 		$GRID["SQL"]["R"] = $this->DAO->selSvrG($REQ); //SEARCH, 조회,서버록록
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array("DBUSRPW"=>"CRYPT");
@@ -249,7 +279,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG4Search________________________end");
 	}
-	//SVR, S
+	//서버4, S
 	public function goG4Save(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -283,7 +313,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG4Save________________________end");
 	}
-	//SVR, E
+	//서버4, E
 	public function goG4Excel(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -298,7 +328,7 @@ class usermngService
 		echo json_encode($rtnVal);
 		alog("USERMNGService-goG4Excel________________________end");
 	}
-	//SVR, 선택저장
+	//서버4, 선택저장
 	public function goG4Chksave(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;

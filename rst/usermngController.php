@@ -18,7 +18,7 @@ include_once('../include/incUtil.php');//CG UTIL
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
 alog("UsermngControl___________________________start");
 
-$reqToken = reqGetString("TOKEN",36);
+$reqToken = reqGetString("TOKEN",37);
 $resToken = uniqid();
 alog("reqToken : " . $reqToken);
 alog("resToken : " . $resToken);
@@ -49,7 +49,8 @@ if(!isLogin()){
 	$objAuth->logUsrAuth($reqToken,$resToken,"USERMNG",$ctl,"N");
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
-	//로그 저장 방식 결정
+		//사용자 정보 가져오기
+//로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
 $PGM_CFG["SECTYPE"] = "POWER";
@@ -59,15 +60,15 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //로그인정보 및 환경경수 받기
 
 //FILE먼저 : C1, 조건1
-//FILE먼저 : G2, USR
-//FILE먼저 : G3, PJT
-//FILE먼저 : G4, SVR
+//FILE먼저 : G2, 사용자1
+//FILE먼저 : G3, 프로젝트2
+//FILE먼저 : G4, 서버4
 
 //C1, 조건1
 $REQ["C1-EMAIL"] = reqPostString("C1-EMAIL",20);//이메일	
 $REQ["C1-EMAIL"] = getFilter($REQ["C1-EMAIL"],"","//");	
 
-//G2, USR
+//G2, 사용자1
 $REQ["G2-USERSEQ"] = reqPostNumber("G2-USERSEQ",20);//USERSEQ	
 $REQ["G2-USERSEQ"] = getFilter($REQ["G2-USERSEQ"],"","//");	
 $REQ["G2-EMAIL"] = reqPostString("G2-EMAIL",20);//이메일	
@@ -93,7 +94,7 @@ $REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"","//");
 $REQ["G2-MODDT"] = reqPostString("G2-MODDT",14);//수정일	
 $REQ["G2-MODDT"] = getFilter($REQ["G2-MODDT"],"","//");	
 
-//G3, PJT
+//G3, 프로젝트2
 $REQ["G3-USERSEQ"] = reqPostNumber("G3-USERSEQ",20);//USERSEQ	
 $REQ["G3-USERSEQ"] = getFilter($REQ["G3-USERSEQ"],"","//");	
 $REQ["G3-PJTSEQ"] = reqPostNumber("G3-PJTSEQ",20);//SEQ	
@@ -103,7 +104,7 @@ $REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"","//");
 $REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//수정일	
 $REQ["G3-MODDT"] = getFilter($REQ["G3-MODDT"],"","//");	
 
-//G4, SVR
+//G4, 서버4
 $REQ["G4-SVRSEQ"] = reqPostNumber("G4-SVRSEQ",20);//SERVERSEQ	
 $REQ["G4-SVRSEQ"] = getFilter($REQ["G4-SVRSEQ"],"","//");	
 $REQ["G4-SVRID"] = reqPostString("G4-SVRID",20);//SVRID	
@@ -130,9 +131,9 @@ $REQ["G4-ADDDT"] = reqPostString("G4-ADDDT",14);//ADDDT
 $REQ["G4-ADDDT"] = getFilter($REQ["G4-ADDDT"],"","//");	
 $REQ["G4-MODDT"] = reqPostString("G4-MODDT",14);//수정일	
 $REQ["G4-MODDT"] = getFilter($REQ["G4-MODDT"],"","//");	
-$REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//USR	
-	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//PJT	
-	$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//SVR	
+$REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//사용자1	
+	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//프로젝트2	
+	$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//서버4	
 	//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
@@ -208,43 +209,49 @@ $objService = new usermngService();
 alog("ctl:" . $ctl);
 switch ($ctl){
 			case "G2_USERDEF" :
-  		echo $objService->goG2Userdef(); //USR, 비번변경
+  		echo $objService->goG2Userdef(); //사용자1, 비번변경
   		break;
 	case "G2_SEARCH" :
-  		echo $objService->goG2Search(); //USR, 조회
+  		echo $objService->goG2Search(); //사용자1, 조회
   		break;
 	case "G2_SAVE" :
-  		echo $objService->goG2Save(); //USR, S
+  		echo $objService->goG2Save(); //사용자1, S
   		break;
 	case "G2_EXCEL" :
-  		echo $objService->goG2Excel(); //USR, E
+  		echo $objService->goG2Excel(); //사용자1, E
   		break;
 	case "G2_CHKSAVE" :
-  		echo $objService->goG2Chksave(); //USR, 선택저장
+  		echo $objService->goG2Chksave(); //사용자1, 선택저장
+  		break;
+	case "G3_USERDEF" :
+  		echo $objService->goG3Userdef(); //프로젝트2, 사용자정의
   		break;
 	case "G3_SEARCH" :
-  		echo $objService->goG3Search(); //PJT, 조회
+  		echo $objService->goG3Search(); //프로젝트2, 조회
   		break;
 	case "G3_SAVE" :
-  		echo $objService->goG3Save(); //PJT, S
+  		echo $objService->goG3Save(); //프로젝트2, S
   		break;
 	case "G3_EXCEL" :
-  		echo $objService->goG3Excel(); //PJT, E
+  		echo $objService->goG3Excel(); //프로젝트2, E
+  		break;
+	case "G3_CHKSAVE" :
+  		echo $objService->goG3Chksave(); //프로젝트2, 선택저장
   		break;
 	case "G4_USERDEF" :
-  		echo $objService->goG4Userdef(); //SVR, 사용자정의
+  		echo $objService->goG4Userdef(); //서버4, 사용자정의
   		break;
 	case "G4_SEARCH" :
-  		echo $objService->goG4Search(); //SVR, 조회
+  		echo $objService->goG4Search(); //서버4, 조회
   		break;
 	case "G4_SAVE" :
-  		echo $objService->goG4Save(); //SVR, S
+  		echo $objService->goG4Save(); //서버4, S
   		break;
 	case "G4_EXCEL" :
-  		echo $objService->goG4Excel(); //SVR, E
+  		echo $objService->goG4Excel(); //서버4, E
   		break;
 	case "G4_CHKSAVE" :
-  		echo $objService->goG4Chksave(); //SVR, 선택저장
+  		echo $objService->goG4Chksave(); //서버4, 선택저장
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");

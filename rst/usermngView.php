@@ -28,7 +28,7 @@ include_once('../include/incRequest.php');//CG REQUEST
     var btnNm = "<?=getFilter(reqPostString("BTNNM",30),"SAFEECHO","")?>";
 </script>
 </head>
-<body onload="initBody();" class="HTML_BODY">
+<body onload="initBody();">
 
 <div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
 	<!--G.GRPID : C1-->
@@ -68,11 +68,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:40%;height:500px;">
+	<div class="GRP_OBJECT" style="width:45%;height:500px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
-	  				* USR      
+	  				* 사용자1      
 			</div>
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
@@ -100,20 +100,22 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:20%;height:500px;">
+	<div class="GRP_OBJECT" style="width:15%;height:500px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
-	  				* PJT      
+	  				* 프로젝트2      
 			</div>
 			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
+			<input type="button" name="BTN_G3_USERDEF" value="사용자정의" onclick="G3_USERDEF(uuidv4());">
 			<input type="button" name="BTN_G3_SAVE" value="S" onclick="G3_SAVE(uuidv4());">
 			<input type="button" name="BTN_G3_ROWDELETE" value="-" onclick="G3_ROWDELETE(uuidv4());">
 			<input type="button" name="BTN_G3_ROWADD" value="+" onclick="G3_ROWADD(uuidv4());">
 			<input type="button" name="BTN_G3_RELOAD" value="R" onclick="G3_RELOAD(uuidv4());">
 			<input type="button" name="BTN_G3_HIDDENCOL" value="V" onclick="G3_HIDDENCOL(uuidv4());">
 			<input type="button" name="BTN_G3_EXCEL" value="E" onclick="G3_EXCEL(uuidv4());">
+			<input type="button" name="BTN_G3_CHKSAVE" value="선택저장" onclick="G3_CHKSAVE(uuidv4());">
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
@@ -134,7 +136,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
-	  				* SVR      
+	  				* 서버4      
 			</div>
 			<div id="div_gridG4_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG4Cnt" name="그리드 ROW 갯수">N</span>
@@ -172,9 +174,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<input type="text" name="BTNNM" id="BTNNM">
 	</form>
 </div>
+</div>
 
 
-</div><!--BODY_BOX-->
 
 </body>
 </html>
