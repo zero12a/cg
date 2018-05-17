@@ -18,6 +18,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
+<script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <script src="chartbar.js?<?=getRndVal(10)?>"></script>
@@ -54,28 +55,34 @@ include_once('../include/incRequest.php');//CG REQUEST
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
 	</div>
-	<!--D72 : STARTTXT, TAG-->
 	<!--G.GRPID : G2-->
-	<div class="GRP_OBJECT" style="width:100%;height:300px;border-radius:3px;-moz-border-radius: 3px;">
-	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
-		<div class="DETAIL_LABELGRP">
-			<div class="DETAIL_LABEL"  style="">
-					<b>* 챠트</b>	
-				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
-				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
-				</div>	
-				<div class="DETAIL_LABELBTN">
+	<div class="GRP_OBJECT" style="width:50%;height:300px;">
+		<div class="GRID_LABELGRP">
+			<div class="GRID_LABEL"  style="">
+					* 챠트			</div>	
+				<div class="GRID_LABELBTN">
 				<input type="button" name="BTN_G2_" value="" onclick="G2_(uuidv4());">
 				</div>
 		</div>
-			<div style="height:258px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
-			<DIV class="CON_LINE" is_br_tag>
-		<canvas id="canvasG2"></canvas>
-			</div><!-- is_br_tag end -->
+			<div class="GRID_OBJECT" style="height:258px;height:300px;border-radius:3px;-moz-border-radius: 3px;">
+				<canvas id="canvasG2" style="height:258px"></canvas>
 		</div>
-			<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+		</div>
+	<!--G.GRPID : G3-->
+	<div class="GRP_OBJECT" style="width:50%;height:300px;">
+		<div class="GRID_LABELGRP">
+			<div class="GRID_LABEL"  style="">
+				* 챠트
+			</div>	
+			<div class="GRID_LABELBTN">
+				<input type="button" name="BTN_G3_" value="" onclick="G3_(uuidv4());">
+			</div>
+		</div>
+		<div class="GRID_OBJECT" style="height:258px;height:300px;border-radius:3px;-moz-border-radius: 3px;">
+			<canvas id="canvasG3" style="height:258px"></canvas>
+		</div>
 	</div>
-	<div style="width:0px;height:0px;overflow: hidden">
+<div style="width:0px;height:0px;overflow: hidden">
 	<form name="excelDownForm" id="excelDownForm">
 	<input type="hidden" name="DATA_HEADERS" id="DATA_HEADERS">
 	<input type="hidden" name="DATA_WIDTHS" id="DATA_WIDTHS">

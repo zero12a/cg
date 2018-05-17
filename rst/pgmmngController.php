@@ -184,7 +184,7 @@ $REQ["G6-MVCGBN"] = reqPostString("G6-MVCGBN",30);//MVCGBN
 $REQ["G6-MVCGBN"] = getFilter($REQ["G6-MVCGBN"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G6-PATH"] = reqPostString("G6-PATH",300);//PATH	
 $REQ["G6-PATH"] = getFilter($REQ["G6-PATH"],"SAFETEXT","/--미 정의--/");	
-$REQ["G6-CFGORD"] = reqPostString("G6-CFGORD",30);//ORD	
+$REQ["G6-CFGORD"] = reqPostNumber("G6-CFGORD",30);//ORD	
 $REQ["G6-CFGORD"] = getFilter($REQ["G6-CFGORD"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G6-ADDDT"] = reqPostString("G6-ADDDT",14);//ADDDT	
 $REQ["G6-ADDDT"] = getFilter($REQ["G6-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
@@ -347,7 +347,7 @@ $REQ["G6-XML"] = filterGridXml(
 			,"CFGNM"=>array("STRING",100)	
 			,"MVCGBN"=>array("STRING",30)	
 			,"PATH"=>array("STRING",300)	
-			,"CFGORD"=>array("STRING",30)	
+			,"CFGORD"=>array("NUMBER",30)	
 			,"ADDDT"=>array("STRING",14)	
 			,"MODDT"=>array("STRING",14)	
 					)

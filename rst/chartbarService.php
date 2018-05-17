@@ -83,6 +83,32 @@ class chartbarService
 		echo json_encode($rtnVal);
 		alog("CHARTBARService-goG2Search________________________end");
 	}
+	//PIE, 조회
+	public function goG3Search(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("CHARTBARService-goG3Search________________________start");
+		//CHARTPIE SEARCH____________________________start
+		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
+
+		//조회
+		//V_GRPNM : PIE
+		$GRID["SQL"]["R"] = $this->DAO->sLogin($REQ); //SEARCH, 조회,LOGIN
+	//암호화컬럼
+		$GRID["COLCRYPT"] = array();
+		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
+		//CHARTPIE_SEARCH____________________________end
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("CHARTBARService-goG3Search________________________end");
+	}
 }
                                                              
 ?>

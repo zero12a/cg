@@ -237,7 +237,7 @@ where PJTSEQ = #{G3-PJTSEQ}
  , date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 ) 
 ";
-		$RtnVal["BINDTYPE"] = "issssssi";
+		$RtnVal["BINDTYPE"] = "issssisi";
 		return $RtnVal;
     }  
 	//CONFIG    
@@ -252,7 +252,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 ";
-		$RtnVal["BINDTYPE"] = "ssssssiii";
+		$RtnVal["BINDTYPE"] = "sssssiiii";
 		return $RtnVal;
     }  
 	//CONFIG    

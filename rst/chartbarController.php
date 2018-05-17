@@ -61,12 +61,17 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 
 //FILE먼저 : G1, 컨디션
 //FILE먼저 : G2, 챠트
+//FILE먼저 : G3, PIE
 
 //G1, 컨디션
 
 //G2, 챠트
 $REQ["G2-LOGIN_CNT"] = reqPostNumber("G2-LOGIN_CNT",20);//LOGIN_CNT	
 $REQ["G2-LOGIN_CNT"] = getFilter($REQ["G2-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
+
+//G3, PIE
+$REQ["G3-LOGIN_CNT"] = reqPostNumber("G3-LOGIN_CNT",20);//LOGIN_CNT	
+$REQ["G3-LOGIN_CNT"] = getFilter($REQ["G3-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
 //,  입력값 필터 
 		
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
@@ -83,6 +88,9 @@ switch ($ctl){
   		break;
 	case "G2_SEARCH" :
   		echo $objService->goG2Search(); //챠트, 조회
+  		break;
+	case "G3_SEARCH" :
+  		echo $objService->goG3Search(); //PIE, 조회
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");

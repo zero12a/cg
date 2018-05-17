@@ -117,8 +117,9 @@ function popReturn(tGrpId,tRowId,tColId,tBtnNm,tJsonObj){
 // CONDITIONInit	//컨디션 초기화
 function G1_INIT(){
   alog("G1_INIT()-------------------------start	");
+$("#G1-FROM_DT").val(moment().add(-30, 'days').format("YYYY.MM.DD"));
 
-
+$("#G1-TO_DT").val(moment().format("YYYY.MM.DD"));
 	//각 폼 오브젝트들 초기화
 	//달력 FROM_DT, FROM_DT
 	$( "#G1-FROM_DT" ).datepicker(dateFormatJson);

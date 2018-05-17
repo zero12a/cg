@@ -1978,7 +1978,15 @@
                     setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCCHARTBAR");
 
                     //(IO) OBJTYPE 다시 불러오기
-                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTBAR");                                        
+                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTBAR");         
+                
+                case "CHARTPIE":
+                //(FNC) FNCTYPE 다시 불러오기
+                setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCCHARTPIE");
+
+                //(IO) OBJTYPE 다시 불러오기
+                setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTPIE");    
+                                    
                 default:
                     alog("IO의 OBJTYPE 생성을 위한 GRPTYPE이 아닙니다.(" + grptype + ")");
                     break;
