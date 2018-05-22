@@ -78,6 +78,8 @@
         //그리드 조회
         gridSearch2(ConAllData);
 
+        //POPUP
+        goGridIoPopCombo();
 
         //코드미러 비우기
         codemirrorInit();
@@ -211,7 +213,7 @@
 				dataType: "json",
 				async: true,
 				success: function(data){
-					alog("   gridSearch1 json return----------------------");
+					alog("   gridSearcLayout json return----------------------");
 					alog("   json data : " + data);
 					alog("   json RTN_CD : " + data.RTN_CD);
 					alog("   json ERR_CD : " + data.ERR_CD);
@@ -287,7 +289,7 @@
             dataType: "json",
             async: true,
             success: function(data){
-                alog("   gridSearch1 json return----------------------");
+                alog("   gridSearchLayoutD json return----------------------");
                 alog("   json data : " + data);
                 alog("   json RTN_CD : " + data.RTN_CD);
                 alog("   json ERR_CD : " + data.ERR_CD);
@@ -625,6 +627,20 @@
         });
 
         alog("gridSearchPgm()------------end");
+    }
+
+    //io 팝업 콤보 만들기
+    function goGridIoPopCombo(){
+        alog("goGridIoPopCombo()----------------start");
+
+        if($("#F_PGMTYPE").val() == "POPUP"){
+            //(IO) OBJTYPE 다시 불러오기
+            setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("POPUP")),"POPUPCD");   
+        }else{
+            //(IO) OBJTYPE 다시 불러오기
+            setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("POPUP")),"PGMSEQ_POPUP");   
+        }
+
     }
 
 
@@ -1825,7 +1841,7 @@
 			$("#F_PGMID").val(q(mygridPgm.cells(rowID,2).getValue()));
 			$("#F_PGMNM").val(q(mygridPgm.cells(rowID,3).getValue()));
             $("#F_PGMURL").val(q(mygridPgm.cells(rowID,4).getValue()));
-            $("#F_PGMURL").val(q(mygridPgm.cells(rowID,4).getValue()));
+            $("#F_PGMTYPE").val(q(mygridPgm.cells(rowID,5).getValue()));
 
 			if(myWins && myWins.window("pgmwindow"))myWins.window("pgmwindow").hide();
 			
@@ -1924,6 +1940,8 @@
                 ', "GRPTYPE" : "' + q(mygridGrp.cells(lastrowid1,4).getValue()) + '"' +
                 '}');
 
+            
+
             //IO컬럼의 OBJTYPE 다시 불러오기
             var grptype = mygridGrp.cells(lastrowid1,4).getValue();
             alog(grptype);
@@ -1981,11 +1999,11 @@
                     setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTBAR");         
                 
                 case "CHARTPIE":
-                //(FNC) FNCTYPE 다시 불러오기
-                setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCCHARTPIE");
+                    //(FNC) FNCTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCCHARTPIE");
 
-                //(IO) OBJTYPE 다시 불러오기
-                setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTPIE");    
+                    //(IO) OBJTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTPIE");    
                                     
                 default:
                     alog("IO의 OBJTYPE 생성을 위한 GRPTYPE이 아닙니다.(" + grptype + ")");
@@ -2430,7 +2448,7 @@
 
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
         mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,30,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
-        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,ed,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,ro,ro"); //29
+        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,ro,ro"); //29
         mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
 		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
 

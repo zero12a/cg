@@ -41,6 +41,13 @@
              , addSqlSlashes($userSeq)
             );
 
+    }else if($REQ["PCD"] =="PGMSEQ_POPUP" ){
+        $to_coltype = "";
+        $sql = sprintf("
+            select PGMID as CD, concat(PGMNM,'(',PGMID,')') as NM from CG_PGMINFO where PGMTYPE='POPUP' order by PGMNM desc
+            "
+            );
+
     }else if($REQ["FNCSEQ"] !="" || $REQ["GRPSEQ"] !="" ){
         //SVC에서 사용할 GRP목록 가져오기
         $to_coltype = "ii";
@@ -63,7 +70,7 @@
 
     //alog("cg_clode_json.php...............444");
 
-    if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+    if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $stmt->errno . " -> " . $stmt->error);
 
     echo make_grid_read_json($stmt,1);
 
