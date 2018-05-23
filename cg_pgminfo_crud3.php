@@ -148,7 +148,7 @@ if($F_GRPID == "1" && $REQ["G1_CRUD_MODE"] == "read"){
     alog("        to_coltype : " . $to_coltype);
     $sql = "
       select
-        PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,ADDDT,MODDT
+        PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,ADDDT,MODDT
       from CG_PGMGRP where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ#
       order by GRPORD
           ";
@@ -167,22 +167,22 @@ if($F_GRPID == "1" && $REQ["G1_CRUD_MODE"] == "read"){
 
 	$xml_array = getXml2Array($_POST["xmldata"]);
 
-    $colord = "PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,ADDDT,MODDT";
+    $colord = "PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,ADDDT,MODDT";
 
 	$sql_inserted = "
 	  insert into CG_PGMGRP (
 			PJTSEQ,PGMSEQ,GRPID,GRPNM,GRPTYPE
             ,GRPORD,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT
-            ,BRYN,FREEZECNT,COLSIZETYPE
+            ,BRYN,FREEZECNT,COLSIZETYPE,LEGENDALIGN
 			,ADDDT
 		) values (
 			#PJTSEQ#, #PGMSEQ#, #GRPID#, #GRPNM#, #GRPTYPE#
             ,#GRPORD#, #REFGRPID#, #VBOX#, #GRPWIDTH#, #GRPHEIGHT#
-            ,#BRYN#, #FREEZECNT#, if(#COLSIZETYPE#='','X',#COLSIZETYPE#)
+            ,#BRYN#, #FREEZECNT#, if(#COLSIZETYPE#='','X',#COLSIZETYPE#),#LEGENDALIGN#
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 	";
-	$sql_inserted_coltype = "iisss issss siss";
+	$sql_inserted_coltype = "iisss issss sisss";
 
 	$sql_deleted = "
 		delete from  CG_PGMGRP  where PJTSEQ = #PJTSEQ# and PGMSEQ = #PGMSEQ# and GRPSEQ = #GRPSEQ#	
@@ -193,11 +193,11 @@ if($F_GRPID == "1" && $REQ["G1_CRUD_MODE"] == "read"){
 		update CG_PGMGRP set
             GRPID = #GRPID#, GRPNM =#GRPNM#, GRPTYPE = #GRPTYPE#, GRPORD = #GRPORD#, REFGRPID = #REFGRPID#
             , GRPWIDTH = #GRPWIDTH#, GRPHEIGHT = #GRPHEIGHT#, BRYN = #BRYN#, FREEZECNT = #FREEZECNT#, COLSIZETYPE = #COLSIZETYPE#
-            , VBOX = #VBOX#
+            , VBOX = #VBOX#, LEGENDALIGN = #LEGENDALIGN#
             , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
 		where PJTSEQ = #PJTSEQ# and PGMSEQ = #PGMSEQ# and GRPSEQ = #GRPSEQ#
 	";
-	$sql_updated_coltype = "sssis sssis s iii";
+	$sql_updated_coltype = "sssis sssis ss iii";
 
 
 	echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","GRPSEQ");

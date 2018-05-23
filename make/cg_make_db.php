@@ -442,9 +442,13 @@ function getInput($input,$filetype,$param,$G){
 
     }else if($input == "PGMGRP"){
         $T_SQL = sprintf("
-                select g.*, cd.NM as COLSIZETYPE_CDVAL, if(io.ROWCHECK_YN is null,'N','Y') as ROWCHECK_YN
+                select g.*
+                    , cd.NM as COLSIZETYPE_CDVAL
+                    , cd2.CDVAL as LEGENDALIGN_CDVAL
+                    , if(io.ROWCHECK_YN is null,'N','Y') as ROWCHECK_YN
                 from CG_PGMGRP g
                     left outer join CG_CODED cd on g.PJTSEQ = cd.PJTSEQ and g.COLSIZETYPE = cd.CD and cd.PCD = 'COLSIZETYPE'
+                    left outer join CG_CODED cd2 on g.PJTSEQ = cd2.PJTSEQ and g.LEGENDALIGN = cd2.CD and cd2.PCD = 'LEGENDALIGN'
                     left outer join
                         ( select GRPSEQ,if(count(IOSEQ)>0,'Y','N') as ROWCHECK_YN from CG_PGMIO where PJTSEQ = %d and PGMSEQ = %d and OBJTYPE='ROWCHECK' group by GRPSEQ ) io
                         on g.GRPSEQ = io.GRPSEQ
@@ -539,10 +543,12 @@ function getInput($input,$filetype,$param,$G){
 
     }else if($input == "PGMFNC.OBJD"){
         $T_SQL = sprintf("
-            select a.*,b.GRPTYPE,c.*
+            select a.*
+                , b.GRPTYPE
+                , c.*
             from CG_PGMFNC a 
 				join CG_PGMGRP b on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and a.GRPSEQ = b.GRPSEQ
-				join CG_OBJINFOD c on b.GRPTYPE = c.OBJTYPE and a.PJTSEQ = b.PJTSEQ and a.FNCCD = c.OBJVAL
+                join CG_OBJINFOD c on b.GRPTYPE = c.OBJTYPE and a.PJTSEQ = b.PJTSEQ and a.FNCCD = c.OBJVAL
             where a.PJTSEQ = %d and a.PGMSEQ = %d and a.GRPSEQ = %d %s order by FNCORD asc
             "
             ,addSqlSlashes($F_PJTSEQ)
@@ -550,7 +556,7 @@ function getInput($input,$filetype,$param,$G){
             ,addSqlSlashes($G["G"]["GRPSEQ"])
 	        ,$AddSql
         );
-        //mlog("SQL (input " . $input . ") : " .$T_SQL);
+        alog("SQL 561 (input " . $input . ") : " .$T_SQL);
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
         $result = $db[$svrid]->query($T_SQL) or ServerMsg("500","241", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
 
@@ -659,10 +665,15 @@ function getInput($input,$filetype,$param,$G){
 
     }else if($input == "PGMGRP.OBJD"){
         $T_SQL = sprintf("
-            select a.*,b.*,cd.CDVAL as COLSIZETYPE_CDVAL
+            select 
+                a.*
+                ,   b.*
+                ,   cd2.CDVAL as LEGENDALIGN_CDVAL
+                ,   cd.CDVAL as COLSIZETYPE_CDVAL
             from CG_PGMGRP a 
                 join CG_OBJINFOD b on a.GRPTYPE = b.OBJTYPE and a.PJTSEQ = b.PJTSEQ
-                left outer join CG_CODED cd on a.PJTSEQ = cd.PJTSEQ and a.COLSIZETYPE = cd.CD and cd.PCD = 'COLSIZETYPE'            
+                left outer join CG_CODED cd on a.PJTSEQ = cd.PJTSEQ and a.COLSIZETYPE = cd.CD and cd.PCD = 'COLSIZETYPE'        
+                left outer join CG_CODED cd2 on a.PJTSEQ = cd2.PJTSEQ and a.LEGENDALIGN = cd2.CD and cd2.PCD = 'LEGENDALIGN'    
             where a.PJTSEQ = %d and a.PGMSEQ = %d %s 
 			order by a.GRPORD asc, b.OBJDORD asc
             "
@@ -774,7 +785,7 @@ function getInput($input,$filetype,$param,$G){
             ,$G["G"]["GRPSEQ"]
             ,$AddSql
         );
-        alog("SQL 735 (input " . $input . ") : " .$T_SQL);
+        //alog("SQL 735 (input " . $input . ") : " .$T_SQL);
 
         //echo "<br>getInput $input :  ". $T_SQL;
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################

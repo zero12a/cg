@@ -60,8 +60,8 @@
 
     }else{
         //일반 코드가져오기
-        $to_coltype = "ss";
-        $sql = " select CD,NM from CG_CODED where PJTSEQ = #PJTSEQ# and PCD = #PCD# and DELYN = 'N' ORDER BY   ORD ASC   ";
+        $to_coltype = "is";
+        $sql = " select CD,NM from CG_CODED where PJTSEQ = #PJTSEQ# and PCD = #PCD# and DELYN = 'N' and USEYN='Y' ORDER BY   ORD ASC   ";
     } 
 
     mlog("cg_clode_json.php...............333");

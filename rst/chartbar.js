@@ -64,7 +64,7 @@ function G2_INIT(){
 					responsive: true,
 					maintainAspectRatio: false,  				
 					legend: {
-						position: 'top',
+						position: 'right',
 					}
 				}
             });
@@ -91,6 +91,24 @@ function G3_INIT(){
 function G1_RESET(){
 	alog("G1_RESET--------------------------start");
 	$('#condition')[0].reset();
+}
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	lastinputG2 = ConAllData ;
+	lastinputG3 = ConAllData ;
+	//json : G1
+            lastinputG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +'}');
+            lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +'}');
+	//  호출
+	G2_SEARCH(lastinputG2,token);
+	//  호출
+	G3_SEARCH(lastinputG3,token);
+	alog("G1_SEARCHALL--------------------------end");
 }
 //컨디션, 저장	
 function G1_SAVE(){
@@ -124,24 +142,6 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	lastinputG2 = ConAllData ;
-	lastinputG3 = ConAllData ;
-	//json : G1
-            lastinputG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +'}');
-            lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +'}');
-	//  호출
-	G2_SEARCH(lastinputG2,token);
-	//  호출
-	G3_SEARCH(lastinputG3,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
     //그리드 조회(챠트)	
     function G2_SEARCH(tinput,token){
         alog("G2_SEARCH()------------start");
@@ -172,7 +172,10 @@ function G1_SEARCHALL(token){
 
           var colorNames = Object.keys(window.chartColors);     
 
-		//첫 컬럼은 라벨
+			//데이터 초기화
+			chartG2Data.datasets = [];
+
+			//첫 컬럼은 라벨
             var newLabels = [];
             var nowCol = 0;
             for(i=0;i<resData.RTN_DATA.rows.length;i++){
@@ -187,7 +190,7 @@ function G1_SEARCHALL(token){
 				label: 'LOGIN_CNT',
 				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
 				borderColor: dsColor,
-				borderWidth: 1,
+				borderWidth: 3,
 				data: []
             };
             for(i=0;i<resData.RTN_DATA.rows.length;i++){
@@ -241,6 +244,9 @@ function G1_SEARCHALL(token){
 
 
           var colorNames = Object.keys(window.chartColors);     
+
+			//데이터 초기화
+			chartG3Data.datasets = [];
 
 			//첫 컬럼은 라벨
             var newLabels = [];

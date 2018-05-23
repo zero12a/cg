@@ -1871,11 +1871,11 @@
         mygridGrp = new dhtmlXGridObject('grid1');
 		mygridGrp.setUserData("","gridTitle","grid1 : group list"); //글로별 변수에 그리드 타이블 넣기
         mygridGrp.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,ADDDT,MODDT");
-        mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,ADDDT,MODDT");
-        mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,50,50")
-        mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,ro,ro");
-		mygridGrp.setColSorting("str,str,str,str,str,int,int,int,int,str,str,str,str,str,str");
+        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,ADDDT,MODDT");
+        mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,ADDDT,MODDT");
+        mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,50,50")
+        mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,ro,ro");
+		mygridGrp.setColSorting("str,str,str,str,str,int,int,int,int,str,str,str,str,str,str,str");
 
 		mygridGrp.enableSmartRendering(false);
         mygridGrp.enableMultiselect(true);
@@ -1883,6 +1883,7 @@
 		setCodeCombo("GRID",mygridGrp.getCombo(mygridGrp.getColIndexById("GRPTYPE")),"GRPTYPE");
         setCodeCombo("GRID",mygridGrp.getCombo(mygridGrp.getColIndexById("COLSIZETYPE")),"COLSIZETYPE");
         setCodeCombo("GRID",mygridGrp.getCombo(mygridGrp.getColIndexById("VBOX")),"VBOX");        
+        setCodeCombo("GRID",mygridGrp.getCombo(mygridGrp.getColIndexById("LEGENDALIGN")),"LEGENDALIGN");        
         
         mygridGrp.splitAt(5);//'freezes' 0 columns // ROW선택 이벤트
         mygridGrp.init();
@@ -1998,13 +1999,51 @@
                     //(IO) OBJTYPE 다시 불러오기
                     setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTBAR");         
                 
+
+                    //BRYN, LBLHIDDEN, LBLWIDTH 숨기기
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
+
+                    
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),true);                     
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("SEQYN"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),true);    
+
                 case "CHARTPIE":
                     //(FNC) FNCTYPE 다시 불러오기
                     setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCCHARTPIE");
 
                     //(IO) OBJTYPE 다시 불러오기
                     setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTPIE");    
-                                    
+                             
+                    //BRYN, LBLHIDDEN, LBLWIDTH 숨기기
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
+
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),true);                      
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("SEQYN"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),true);    
+
                 default:
                     alog("IO의 OBJTYPE 생성을 위한 GRPTYPE이 아닙니다.(" + grptype + ")");
                     break;
@@ -2250,8 +2289,6 @@
             //(SVC) 그리드 조회
             gridSearch9(lastinput9);
 
-            //(PARAM) 그리드 조회
-            gridSearchParam(lastinputParam);
 
 
             alog("mygridFnc - onRowSelect ----------end");
