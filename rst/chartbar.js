@@ -87,11 +87,6 @@ function G3_INIT(){
             });
 	}
 	//D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -142,6 +137,11 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
     //그리드 조회(챠트)	
     function G2_SEARCH(tinput,token){
         alog("G2_SEARCH()------------start");
@@ -172,10 +172,10 @@ function G1_SAVE(){
 
           var colorNames = Object.keys(window.chartColors);     
 
-			//데이터 초기화
-			chartG2Data.datasets = [];
+		//데이터 초기화
+		chartG2Data.datasets = [];
 
-			//첫 컬럼은 라벨
+		//첫 컬럼은 라벨
             var newLabels = [];
             var nowCol = 0;
             for(i=0;i<resData.RTN_DATA.rows.length;i++){
@@ -190,7 +190,23 @@ function G1_SAVE(){
 				label: 'LOGIN_CNT',
 				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
 				borderColor: dsColor,
-				borderWidth: 3,
+				borderWidth: 1,
+				data: []
+            };
+            for(i=0;i<resData.RTN_DATA.rows.length;i++){
+                newDataset.data.push(resData.RTN_DATA.rows[i].data[nowCol]);
+            }      
+            chartG2Data.datasets.push(newDataset);
+														 
+            //두번째 컬럼부터 
+            nowCol++;
+            var dsColor = window.chartColors[colorNames[nowCol-1]];                 
+            var newDataset = {
+                type : 'line',                
+				label: 'LOGIN_CNT2',
+				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+				borderColor: dsColor,
+				borderWidth: 1,
 				data: []
             };
             for(i=0;i<resData.RTN_DATA.rows.length;i++){

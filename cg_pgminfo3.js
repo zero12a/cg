@@ -2004,7 +2004,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),true);   
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
 
@@ -2019,6 +2019,8 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),true); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),true);    
 
+                    break;
+
                 case "CHARTPIE":
                     //(FNC) FNCTYPE 다시 불러오기
                     setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCCHARTPIE");
@@ -2030,7 +2032,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),true);   
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
 
@@ -2044,6 +2046,8 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),true); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),true);    
 
+                    break;
+                                    
                 default:
                     alog("IO의 OBJTYPE 생성을 위한 GRPTYPE이 아닙니다.(" + grptype + ")");
                     break;

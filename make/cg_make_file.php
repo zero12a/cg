@@ -52,6 +52,7 @@ function saveFile2($filetype,$filenm){
 
     alog("Success, wrote ($somecontent) to file ($filename)");
 
+    return md5_file($filename); 
     //JsonMsg("200","200","Success, wrote ($somecontent) to file ($filename)");
 
 }

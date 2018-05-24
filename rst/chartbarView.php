@@ -64,7 +64,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<input type="button" name="BTN_G2_SEARCH" value="조회" onclick="G2_SEARCH(uuidv4());">
 			</div>
 		</div>
-			<div class="GRID_OBJECT" style="height:258px;height:300px;border-radius:8px;-moz-border-radius: 8px;">
+			<div class="GRID_OBJECT" style="height:258px;height:300px;border-radius:3px;-moz-border-radius: 3px;">
 				<canvas id="canvasG2" style="height:258px"></canvas>
 		</div>
 		</div>
@@ -78,7 +78,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<input type="button" name="BTN_G3_SEARCH" value="조회" onclick="G3_SEARCH(uuidv4());">
 			</div>
 		</div>
-			<div class="GRID_OBJECT" style="height:258px;height:300px;border-radius:8px;-moz-border-radius: 8px;">
+			<div class="GRID_OBJECT" style="height:258px;height:300px;border-radius:3px;-moz-border-radius: 3px;">
 			<canvas id="canvasG3" style="height:258px"></canvas>
 		</div>
 	</div>

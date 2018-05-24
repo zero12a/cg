@@ -181,8 +181,8 @@ for($j=0;$j<sizeof($arrFileList);$j++){
 		}
 		
 		//040 DB추출해서 실제파일생성
-		saveFile2($arrFileList[$j]["MKFILETYPE"],$MAKE_FILE_NM);
-
+		$REQ["FILEHASH"] = saveFile2($arrFileList[$j]["MKFILETYPE"],$MAKE_FILE_NM);
+        //alog("FILEHASH 1: " . $map["FILEHASH"]);
 
         //050 이전 결과파일은 ACTIVEYN = N으로 변경하기
         $map["FNCTYPE"] = "U";
@@ -197,22 +197,25 @@ for($j=0;$j<sizeof($arrFileList);$j++){
 		$REQ["FILETYPE"] = $arrFileList[$j]["MKFILETYPE"];
         $rtnVal = makeFormviewSaveJson($map,$db);
         
+        //alog("FILEHASH 2: " . $map["FILEHASH"]);
 
 		//060 CG_RSTFILE결과 파일 목록  추가
         $map["FNCTYPE"] = "C";
         $map["SQL"]["C"]["SVRID"] = $svrid;        
-		$map["SQL"]["C"]["BINDTYPE"] = "iiiss";
+		$map["SQL"]["C"]["BINDTYPE"] = "iiiss s";
 		$map["SQL"]["C"]["SQLTXT"] = "
 		insert into CG_RSTFILE (
 			PJTSEQ, PGMSEQ, VERSEQ, FILETYPE, FILENM
-			,ACTIVEYN,ADDDT
+			, ACTIVEYN, FILEHASH, ADDDT
 		) values (
-			#{PJTSEQ} ,#{PGMSEQ} ,#{VERSEQ} ,#{FILETYPE},#{FILENM} 
-			,'Y',date_format(NOW(),'%Y%m%d%H%i%s') 
+			#{PJTSEQ} ,#{PGMSEQ} ,#{VERSEQ} ,#{FILETYPE}, #{FILENM} 
+			, 'Y', #{FILEHASH} , date_format(NOW(),'%Y%m%d%H%i%s') 
 		)
 		";
 		$REQ["FILETYPE"] = $arrFileList[$j]["MKFILETYPE"];
-		$REQ["FILENM"] = $MAKE_FILE_NM;
+        $REQ["FILENM"] = $MAKE_FILE_NM;
+        
+        //alog("FILEHASH 3: " . $map["FILEHASH"]);        
         $rtnVal = makeFormviewSaveJson($map,$db);
         
         //070 프로그램 viewurl 업데이트

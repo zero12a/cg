@@ -68,6 +68,8 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //G2, 챠트
 $REQ["G2-LOGIN_CNT"] = reqPostNumber("G2-LOGIN_CNT",20);//LOGIN_CNT	
 $REQ["G2-LOGIN_CNT"] = getFilter($REQ["G2-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G2-LOGIN_CNT2"] = reqPostNumber("G2-LOGIN_CNT2",0);//LOGIN_CNT2	
+$REQ["G2-LOGIN_CNT2"] = getFilter($REQ["G2-LOGIN_CNT2"],"","//");	
 
 //G3, PIE
 $REQ["G3-LOGIN_CNT"] = reqPostNumber("G3-LOGIN_CNT",20);//LOGIN_CNT	
