@@ -52,7 +52,7 @@ function saveFile2($filetype,$filenm){
 
     alog("Success, wrote ($somecontent) to file ($filename)");
 
-    return md5_file($filename); 
+    return array("FILEHASH" => md5_file($filename), "FILESIZE" => filesize($filename)); 
     //JsonMsg("200","200","Success, wrote ($somecontent) to file ($filename)");
 
 }

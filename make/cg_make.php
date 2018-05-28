@@ -180,8 +180,12 @@ for($j=0;$j<sizeof($arrFileList);$j++){
 			goJsD($OBJINFOD,$G,$arrFileList[$j]["MKFILETYPE"]);
 		}
 		
-		//040 DB추출해서 실제파일생성
-		$REQ["FILEHASH"] = saveFile2($arrFileList[$j]["MKFILETYPE"],$MAKE_FILE_NM);
+        //040 DB추출해서 실제파일생성
+        $rtnMap = saveFile2($arrFileList[$j]["MKFILETYPE"],$MAKE_FILE_NM);
+
+        $REQ["FILEHASH"] = $rtnMap["FILEHASH"];
+        $REQ["FILESIZE"] = $rtnMap["FILESIZE"];
+        
         //alog("FILEHASH 1: " . $map["FILEHASH"]);
 
         //050 이전 결과파일은 ACTIVEYN = N으로 변경하기
@@ -202,14 +206,14 @@ for($j=0;$j<sizeof($arrFileList);$j++){
 		//060 CG_RSTFILE결과 파일 목록  추가
         $map["FNCTYPE"] = "C";
         $map["SQL"]["C"]["SVRID"] = $svrid;        
-		$map["SQL"]["C"]["BINDTYPE"] = "iiiss s";
+		$map["SQL"]["C"]["BINDTYPE"] = "iiiss si";
 		$map["SQL"]["C"]["SQLTXT"] = "
 		insert into CG_RSTFILE (
 			PJTSEQ, PGMSEQ, VERSEQ, FILETYPE, FILENM
-			, ACTIVEYN, FILEHASH, ADDDT
+			, ACTIVEYN, FILEHASH, FILESIZE, ADDDT
 		) values (
 			#{PJTSEQ} ,#{PGMSEQ} ,#{VERSEQ} ,#{FILETYPE}, #{FILENM} 
-			, 'Y', #{FILEHASH} , date_format(NOW(),'%Y%m%d%H%i%s') 
+			, 'Y', #{FILEHASH} , #{FILESIZE} , date_format(NOW(),'%Y%m%d%H%i%s') 
 		)
 		";
 		$REQ["FILETYPE"] = $arrFileList[$j]["MKFILETYPE"];

@@ -128,15 +128,14 @@ class pgmmngService
 		//GRID_SAVE____________________________start
 		$grpId="G4";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
-	//암호화컬럼
+		$GRID["COLORD"] = "CHK,PGMSEQ,PGMID,PGMNM,PKGGRP,VIEWURL,PGMTYPE,SECTYPE,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
 		$GRID["KEYCOLID"] = "PGMSEQ";  //KEY컬럼 COLID, 1
-		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
+		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		$GRID["SQL"]["C"] = $this->DAO->sql7($REQ); // SAVE, 저장, PGM
-		$GRID["SQL"]["U"] = $this->DAO->sql8($REQ); // SAVE, 저장, PGM
-		$GRID["SQL"]["D"] = $this->DAO->sql9($REQ); // SAVE, 저장, PGM
+
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 

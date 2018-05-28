@@ -262,7 +262,8 @@ header("Pragma:no-cache");
                         <option value="#{USER.SEQ}">유저SEQ</option>
                         <option value="#{SERVER.REMOTE_ADDR}">접속자IP</option>
                         <option value="date_format(sysdate(),'%Y%m%d%H%i%s')">현재날짜</option>  
-                        <option value="concat(CD,'^',NM,'^','GRPID')  ">그리드:버튼</option>
+                        <option value="concat(CD,'^',NM,'^','GRPID')">그리드:버튼</option>
+                        <option value="<![CDATA[SomeText]]>">CDATA</option>                        
                     </select>
                     <input type="button" name="SqlSearch" value="Sql검색" onclick="goSqlSearch();">
                     <input type="button" name="SqlPreview" value="Preview" onclick="goSqlpreview();">

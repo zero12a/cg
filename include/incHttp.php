@@ -366,4 +366,23 @@ function getFavicon($url)
     return $href;
 }
 
+
+function getHttpBody($url){
+    alog("getHttpBody()...................start url=" . $url);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    //curl_setopt($ch, CURLOPT_NOBODY, TRUE); // remove body
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 1000); // 1초
+    
+    $resData = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $header = substr($resData, 0, $header_size);
+    $body = substr($resData, $header_size);
+    
+    alog("getHttpBody()...................end");
+    return $body;
+}
 ?>
