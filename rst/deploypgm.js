@@ -473,20 +473,14 @@ function G4_INIT(){
 		mygridG4.attachEvent("onCheck",function(rowId, cellInd, state){
 			//onCheck is void return event
 			alog(rowId + " is onCheck.");
-			//ROW 마스터 체크 박스는 변경이면 실제 row 안함
-			if(  mygridG4.getColumnId(cellInd) == "ROWCHK" ){
-					mygridG4.cells(rowId,cellInd).cell.wasChanged = false;	
-			}	
-			//일반 체크 박스는 변경이면 실제 row 변경
-			if( 1 == 2 
-				){
-				RowEditStatus = mygridG4.getUserData(rowId,"!nativeeditor_status");
-				if(RowEditStatus == ""){
-					mygridG4.setUserData(rowId,"!nativeeditor_status","updated");
-					mygridG4.setRowTextBold(rowId);
-					mygridG4.cells(rowId,cellInd).cell.wasChanged = true;	
-				}
+
+			RowEditStatus = mygridG4.getUserData(rowId,"!nativeeditor_status");
+			if(RowEditStatus == ""){
+				mygridG4.setUserData(rowId,"!nativeeditor_status","updated");
+				mygridG4.setRowTextBold(rowId);
+				mygridG4.cells(rowId,cellInd).cell.wasChanged = true;	
 			}
+
 						
 		});	
 		// ROW선택 이벤트
@@ -535,7 +529,20 @@ function G4_INIT(){
                     mygridG4.setRowTextBold(rId);
                 }
                 mygridG4.cells(rId,cInd).cell.wasChanged = true;
-            }
+			}
+			if(stage == 1
+				&& cInd == 0
+                && RowEditStatus != "inserted"
+                && RowEditStatus != "deleted"
+                && nValue != oValue
+                ){
+                if(RowEditStatus == "") {
+                    mygridG4.setUserData(rId,"!nativeeditor_status","updated");
+                    mygridG4.setRowTextBold(rId);
+                }
+                mygridG4.cells(rId,cInd).cell.wasChanged = true;
+            }				
+
             return true;
 
 		});

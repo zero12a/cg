@@ -14,14 +14,14 @@ class deploypgmService
 
 		$this->DAO = new deploypgmDao();
 	    //$this->DB = db_s_open();
-		$this->DB["CG"] = db_obj_open(getDbSvrInfo("CG"));
+		$this->DB["DATING"] = db_obj_open(getDbSvrInfo("DATING"));
 	}
 	//파괴자
 	function __destruct(){
 		alog("DeploypgmService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CG"])$this->DB["CG"]->close();
+		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
@@ -143,7 +143,7 @@ class deploypgmService
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PGMSEQ
 
 		//001 원격에서 PGM목록 가져오기
-		$url = "http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&PJTSEQ=3&PGMSEQ=66&PGM_LIST_YN=Y";
+		$url = "http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&PGM_LIST_YN=Y";
 
 		$body = getHttpBody($url);
 		//alog($body);
@@ -159,7 +159,7 @@ class deploypgmService
 				, addSqlSlashes($tPgmMap["PGMID"])
 			);
 			//alog("sql = " . $sql);
-			$result = $this->DB["CG"]->query($sql) or JsonMsg("500","300", "PGM_LIST_YN [" . $this->DB["CG"]->errno . "] " . $this->DB["CG"]->error) ;
+			$result = $this->DB["DATING"]->query($sql) or JsonMsg("500","300", "PGM_LIST_YN [" . $this->DB["DATING"]->errno . "] " . $this->DB["DATING"]->error) ;
 
 			//$line2 = null;
 			$arr = fetch_all($result,MYSQLI_ASSOC);
@@ -182,7 +182,7 @@ class deploypgmService
 			$tPgmMap = $deployArr[$j];
 
 			$rtnVal->RTN_DATA->rows[$j]['id']=$tPgmMap["PGMSEQ"];
-			$one_row = array(0); //첫번째 컬럼 chk
+			$one_row = array(); //첫번째 컬럼 chk
 			foreach($tPgmMap as $k=>$v){
 				alog(" add value = " . $v);
 				array_push($one_row,$v);
@@ -224,12 +224,12 @@ class deploypgmService
 		//GRID_SAVE____________________________start
 		$grpId="G3";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,MNUORD,FOLDER_SEQ,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "CHK,PGMSEQ,PGMID,PGMNM,PKGGRP,VIEWURL,MNU_ORD,FOLDER_SEQ,PGMTYPE,SECTYPE,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 		$GRID["COLCRYPT"] = array();	//암호화컬럼
 		$GRID["KEYCOLID"] = "PGMSEQ";  //KEY컬럼 COLID, 1
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
-		$GRID["SQL"]["C"] = $this->DAO->insMnuG($REQ); // SAVE, 저장, PGM
+		$GRID["SQL"]["U"] = $this->DAO->insMnuG($REQ); // SAVE, 저장, PGM
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 
@@ -283,6 +283,62 @@ class deploypgmService
 		$rtnVal->GRP_DATA = array();
 
 		alog("DEPLOYPGMService-goG4Search________________________start");
+
+
+		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PGMSEQ
+
+		//001 원격에서 PGM목록 가져오기
+		$url = "http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&AUTH_LIST_YN=Y";
+
+
+		$body = getHttpBody($url);
+		alog($body);
+		$bodyJson = json_decode($body,true);
+
+		$deployArr = array();
+		alog("sizeof  bodyJson = " . count($bodyJson["AUTH_LIST"]));
+		for($i=0; $i<count($bodyJson["AUTH_LIST"]); $i++){
+			$tPgmMap = $bodyJson["AUTH_LIST"][$i];
+
+			//PGM정보가 R.D에 있는지 검사하기
+			$sql = sprintf("select ifnull(count(AUTH_ID),0) as CNT from CMN_AUTH where PGMID = '%s' and AUTH_ID = '%s' "
+				, addSqlSlashes($tPgmMap["PGMID"])
+				, addSqlSlashes($tPgmMap["AUTH_ID"])
+			);
+			//alog("sql = " . $sql);
+			$result = $this->DB["DATING"]->query($sql) or JsonMsg("500","300", "AUTH_LIST [" . $this->DB["DATING"]->errno . "] " . $this->DB["DATING"]->error) ;
+
+			//$line2 = null;
+			$arr = fetch_all($result,MYSQLI_ASSOC);
+			if(intval($arr[0]["CNT"]) == 0){
+				//alog("신규파일 : " . $i . " -> " . $tPgmMap["PGMID"]);
+				array_push($deployArr,$tPgmMap);
+			}else{
+				//alog("신규파일 아님 : " . $i . " -> " . $tPgmMap["PGMID"]);
+			}
+			$result->close();
+		}
+
+		alog("sizeof(deployArr) = ". sizeof($deployArr));
+		//exit;
+
+		//리턴 배열 만들기
+		$rtnVal->RTN_DATA = new stdClass();
+		for($j=0;$j<count($deployArr);$j++){
+			alog("j = " . $j . " -> " . $tPgmMap["PGMID"]);
+			$tPgmMap = $deployArr[$j];
+
+			$rtnVal->RTN_DATA->rows[$j]['id'] = $tPgmMap["PGMID"] . "-" . $tPgmMap["AUTH_ID"];
+			$one_row = array(); //첫번째 컬럼 chk
+			foreach($tPgmMap as $k=>$v){
+				alog(" add value = " . $v);
+				array_push($one_row,$v);
+			}
+			$rtnVal->RTN_DATA->rows[$j]['data']=$one_row;
+		}
+
+		
+		/*
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, ROWID
@@ -296,6 +352,9 @@ class deploypgmService
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
+
+		*/
+
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
@@ -310,6 +369,23 @@ class deploypgmService
 		$rtnVal->GRP_DATA = array();
 
 		alog("DEPLOYPGMService-goG4Save________________________start");
+
+		//GRID_SAVE____________________________start
+		$grpId="G4";
+		$GRID["XML"]=$REQ[$grpId."-XML"];
+		$GRID["COLORD"] = "CHK,ROWID,PGMID,AUTH_ID,AUTH_NM"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLCRYPT"] = array();	//암호화컬럼
+		$GRID["KEYCOLID"] = "ROWID";  //KEY컬럼 COLID, 1
+		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
+		//저장
+		$GRID["SQL"]["U"] = $this->DAO->insAuthG($REQ); // SAVE, 저장, PGM
+		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+
+
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";

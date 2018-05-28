@@ -51,6 +51,10 @@ if(!isLogin()){
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
 		//사용자 정보 가져오기
+
+//로그인정보 및 환경경수 받기
+$REQ["USER.SEQ"] = getUserSeq();
+
 //로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
@@ -157,7 +161,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//파일
 $REQ["G3-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G3-XML"]
-		,"COLORD"=>"CHK,PGMSEQ,PGMID,PGMNM,PKGGRP,VIEWURL,PGMTYPE,SECTYPE,ADDDT,MODDT"
+		,"COLORD"=>"CHK,PGMSEQ,PGMID,PGMNM,PKGGRP,VIEWURL,MNU_ORD,FOLDER_SEQ,PGMTYPE,SECTYPE,ADDDT,MODDT"
 		,"VALID"=>
 			array(
 			"CHK"=>array("NUMBER",1)	
@@ -166,6 +170,8 @@ $REQ["G3-XML"] = filterGridXml(
 			,"PGMNM"=>array("STRING",50)	
 			,"PKGGRP"=>array("STRING",15)	
 			,"VIEWURL"=>array("STRING",30)	
+			,"MNU_ORD"=>array("NUMBER",30)	
+			,"FOLDER_SEQ"=>array("NUMBER",30)							
 			,"PGMTYPE"=>array("STRING",10)	
 			,"SECTYPE"=>array("STRING",10)	
 			,"ADDDT"=>array("STRING",14)	
@@ -180,7 +186,7 @@ $REQ["G3-XML"] = filterGridXml(
 			,"PKGGRP"=>array("CLEARTEXT","/--미 정의--/")
 			,"VIEWURL"=>array("CLEARTEXT","/--미 정의--/")
 			,"PGMTYPE"=>array("CLEARTEXT","/--미 정의--/")
-			,"SECTYPE"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
+			,"SECTYPE"=>array("CLEARTEXT","/--미 정의--/")
 			,"ADDDT"=>array("REGEXMAT","/^[0-9]+$/")
 			,"MODDT"=>array("REGEXMAT","/^[0-9]+$/")
 					)

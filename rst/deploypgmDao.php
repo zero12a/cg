@@ -17,7 +17,7 @@ class deploypgmDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLTXT"] = "SELECT 
         0 as CHK, PGMSEQ, PGMID, PGMNM, PKGGRP, VIEWURL, PGMTYPE, SECTYPE, ADDDT, MODDT
     FROM 
@@ -32,18 +32,18 @@ class deploypgmDao
 	public function insMnuG($req){
 		//조회
 		$RtnVal = null;
-		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLTXT"] = "
 		insert into CMN_MNU (
 			PGMID, MNU_NM, URL, MNU_ORD, FOLDER_SEQ
 			,USE_YN, PGMTYPE, ADD_DT, ADD_ID
 		) values (
 			#{PGMID}, #{PGMNM}, #{VIEWURL}, if(#{MNU_ORD}='',10,#{MNU_ORD}), #{FOLDER_SEQ}
-			,if(#{USE_YN}='','Y',#{USE_YN}), #{PGMTYPE}, date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
+			,'Y', #{PGMTYPE}, date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 		)		
-";
-		$RtnVal["BINDTYPE"] = "sssii isssi";
+		";
+		$RtnVal["BINDTYPE"] = "sssiii si";
 		return $RtnVal;
 	}  
 		
@@ -52,7 +52,7 @@ class deploypgmDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLTXT"] = "  SELECT 
  		0 as CHK
 		, concat(p.PGMID,'-',g.GRPID,'_',f.FNCID) as ROWID
@@ -68,13 +68,37 @@ class deploypgmDao
 ";
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
-    }  
+	}  
+	
+	//AUTH 
+	public function insAuthG($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLTXT"] = "
+		insert into CMN_AUTH (
+			PGMID, AUTH_ID, AUTH_NM, USE_YN
+			, ADD_DT
+		) values (
+			#{PGMID}, #{AUTH_ID}, #{AUTH_NM}, if(#{USE_YN}='N','N','Y')
+			,date_format(sysdate(),'%Y%m%d%H%i%s')
+		)	
+		";
+		$RtnVal["BINDTYPE"] = "ssss";
+		return $RtnVal;
+	}  
+		
+
+	
+
+
 	//FILE    
 	public function sFileG($req){
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLTXT"] = "    SELECT 
         0 as CHK, PGMSEQ, VERSEQ, FILESEQ, FILETYPE, FILENM, FILEHASH, FILESIZE, ADDDT, MODDT
     FROM 

@@ -87,7 +87,7 @@ if($REQ["PGM_LIST_YN"] =="Y"){
     
     $T_SQL  = sprintf("
     SELECT 
-        PGMSEQ, PGMID, PGMNM, PKGGRP, VIEWURL, PGMTYPE, SECTYPE, ADDDT, MODDT
+        0 as CHK, PGMSEQ, PGMID, PGMNM, PKGGRP, VIEWURL, '10' as MNU_ORD, 0 as FOLDER_SEQ, PGMTYPE, SECTYPE, ADDDT, MODDT
     FROM 
         CG.CG_PGMINFO
     WHERE PJTSEQ = %d       
@@ -107,9 +107,11 @@ if($REQ["AUTH_LIST_YN"] =="Y"){
 
   $T_SQL  = sprintf("
   SELECT 
-      p.PGMID 
-      ,concat(g.GRPID,'_',f.FNCID) as AUTH_ID
-      ,concat(g.GRPNM,'_',f.FNCNM) as AUTH_NM 
+      0 as CHK
+      , concat(p.PGMID, '-', g.GRPID, '_', f.FNCID) as ROWID
+      , p.PGMID 
+      , concat(g.GRPID,'_',f.FNCID) as AUTH_ID
+      , concat(g.GRPNM,'_',f.FNCNM) as AUTH_NM 
   FROM 
       CG.CG_PGMGRP g
       JOIN CG.CG_PGMFNC f on g.GRPSEQ = f.GRPSEQ and g.PGMSEQ = f.PGMSEQ
