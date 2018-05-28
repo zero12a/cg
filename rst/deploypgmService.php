@@ -70,14 +70,71 @@ class deploypgmService
 		//GRID_SEARCH____________________________start
 		$GRID["KEYCOLIDX"] = 3; // KEY 컬럼, FILESEQ
 
+		//001 원격에서 PGM목록 가져오기
+		$url = "http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&FILE_LIST_YN=Y";
+
+		$body = getHttpBody($url);
+		//alog($body);
+		$bodyJson = json_decode($body,true);
+
+		$deployArr = array();
+		alog("sizeof  bodyJson = " . count($bodyJson["FILE_LIST"]));
+		for($i=0; $i<count($bodyJson["FILE_LIST"]); $i++){
+			$tPgmMap = $bodyJson["FILE_LIST"][$i];
+
+			//FILE 정보가 R.D에 있는지 검사하기
+			$sql = sprintf("
+			select ifnull(count(DEPLOY_SEQ),0) as CNT 
+			from CMN_DEPLOY_FILE 
+			where PGMID = '%s' and FILENM = '%s' and FILEHASH = '%s'"
+				, addSqlSlashes($tPgmMap["PGMID"])
+				, addSqlSlashes($tPgmMap["FILENM"])
+				, addSqlSlashes($tPgmMap["FILEHASH"])
+			);
+			//alog("sql = " . $sql);
+			$result = $this->DB["DATING"]->query($sql) or JsonMsg("500","300", "FILE_LIST_YN [" . $this->DB["DATING"]->errno . "] " . $this->DB["DATING"]->error) ;
+
+			//$line2 = null;
+			$arr = fetch_all($result,MYSQLI_ASSOC);
+			if(intval($arr[0]["CNT"]) == 0){
+				//alog("신규파일 : " . $i . " -> " . $tPgmMap["PGMID"]);
+				array_push($deployArr,$tPgmMap);
+			}else{
+				//alog("신규파일 아님 : " . $i . " -> " . $tPgmMap["PGMID"]);
+			}
+			$result->close();
+		}
+
+		alog("sizeof(deployArr) = ". sizeof($deployArr));
+		//exit;
+
+		//리턴 배열 만들기
+		$rtnVal->RTN_DATA = new stdClass();
+		for($j=0;$j<count($deployArr);$j++){
+			alog("j = " . $j . " -> " . $tPgmMap["FILESEQ"]);
+			$tPgmMap = $deployArr[$j];
+
+			$rtnVal->RTN_DATA->rows[$j]['id']=$tPgmMap["FILESEQ"];
+			$one_row = array(); //첫번째 컬럼 chk
+			foreach($tPgmMap as $k=>$v){
+				//alog(" add value = " . $v);
+				array_push($one_row,$v);
+			}
+			$rtnVal->RTN_DATA->rows[$j]['data']=$one_row;
+		}
+
+		/*
+
 		//조회
 		//V_GRPNM : 파일
 		$GRID["SQL"]["R"] = $this->DAO->sFileG($REQ); //SEARCH, 조회,FILE
-	//암호화컬럼
+		//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
+		*/
+
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
@@ -86,13 +143,94 @@ class deploypgmService
 	}
 	//파일, 저장
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME,$CFG_ROOT_DEPLOY_DIR;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
 		alog("DEPLOYPGMService-goG2Save________________________start");
+
+
+		//루프 돌면서 땡여오고 db에 넣기
+		$map["XML"] = $REQ["G2-XML"];
+		$map["COLORD"] = "CHK,PGMSEQ,VERSEQ,FILESEQ,PGMID,PGMNM,FILETYPE,FILENM,FILEHASH,FILESIZE,ADDDT,MODDT";
+
+		$colord_array = explode(",",$map["COLORD"]);
+
+		if(is_assoc($map["XML"]["row"]) == 1) {
+			alog(" Y " );
+			$xml_array_last[0] = $map["XML"]["row"];
+		}else{
+			alog(" N " );
+
+			$xml_array_last = $map["XML"]["row"];
+		}
+		//var_dump($xml_array_last);
+
+		$RtnVal = null;
+		$RtnCnt = 0;
+		alog("xml sizeof : " . sizeof($xml_array_last));
+		for($i=0;$i<sizeof($xml_array_last);$i++){
+
+			$row = $xml_array_last[$i];
+			alog("        i : " . $i);
+			alog("        @attributes : " . $row["@attributes"]["id"]);
+			alog("        userdata : " . $row["userdata"]);
+
+			//현재 그리드 line을 bind 배열에 담기
+			$to_row = null;
+			$to_coltype = null;
+			$sql = null;
+			for($j=0;$j<sizeof($row["cell"]);$j++){
+				$col = $row["cell"][$j];
+				$to_row[trim($colord_array[$j])] = $col;
+
+			}
+
+			//DB처리
+			$sql = "
+				insert into CMN_DEPLOY_FILE ( 
+					PGMSEQ, PGMID, FILESEQ, FILENM, FILETYPE
+					, FILEHASH, FILESIZE
+					, ADD_DT, ADD_ID
+				) values (
+					#{PGMSEQ}, #{PGMID}, #{FILESEQ}, #{FILENM}, #{FILETYPE}
+					, #{FILEHASH}, #{FILESIZE}
+					, date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
+				)
+			";
+			$to_coltype = str_replace(" ","","isiss si i");
+			$stmt = makeStmt($this->DB["DATING"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			if(!$stmt) JsonMsg("500","200","(makeGridSaveJson) stmt 생성 실패 " . $stmt->errno . " -> " . $stmt->error);
+		
+			if(!$stmt->execute())JsonMsg("500","210","(makeGridSaveJson) stmt 실행 실패 " . $stmt->error);
+			$deploySeq = $this->DB["DATING"]->insert_id;	
+
+			//파일가져오기
+			$url = sprintf(
+				"http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&PGMSEQ=%d&FILESEQ=%d&FILE_LIST_YN=Y&FILEHASH=%s"
+				,addSqlSlashes($to_row["PGMSEQ"])
+				,addSqlSlashes($to_row["FILESEQ"])
+				,addSqlSlashes($to_row["FILEHASH"])
+			);
+
+			$body = getHttpBody($url);
+			alog($body);
+			$bodyJson = json_decode($body,true);
+
+			$filename = $CFG_ROOT_DEPLOY_DIR . $to_row["FILENM"];
+			$fp = fopen($filename, 'w');
+			fwrite($fp, $bodyJson["FILE_SRC"]);
+			fclose($fp);
+
+			//파일권한 변경
+			chmod($filename,0755);
+		}		
+
+
+
+
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
@@ -184,7 +322,7 @@ class deploypgmService
 			$rtnVal->RTN_DATA->rows[$j]['id']=$tPgmMap["PGMSEQ"];
 			$one_row = array(); //첫번째 컬럼 chk
 			foreach($tPgmMap as $k=>$v){
-				alog(" add value = " . $v);
+				//alog(" add value = " . $v);
 				array_push($one_row,$v);
 			}
 			$rtnVal->RTN_DATA->rows[$j]['data']=$one_row;
@@ -331,7 +469,7 @@ class deploypgmService
 			$rtnVal->RTN_DATA->rows[$j]['id'] = $tPgmMap["PGMID"] . "-" . $tPgmMap["AUTH_ID"];
 			$one_row = array(); //첫번째 컬럼 chk
 			foreach($tPgmMap as $k=>$v){
-				alog(" add value = " . $v);
+				//alog(" add value = " . $v);
 				array_push($one_row,$v);
 			}
 			$rtnVal->RTN_DATA->rows[$j]['data']=$one_row;

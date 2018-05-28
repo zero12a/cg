@@ -45,7 +45,7 @@ if($REQ["FILESEQ"] != ""){
     , addSqlSlashes($REQ["FILEHASH"]) 
     );
 
-    echo $T_SQL;
+    //echo $T_SQL;
     $result = $db->query($T_SQL) or JsonMsg("500","300", "FILESEQ [" . $db->errno . "] " . $db->error) ;
 
     $arr = fetch_all($result,MYSQLI_ASSOC);
@@ -66,10 +66,11 @@ if($REQ["FILE_LIST_YN"] =="Y"){
     
     $T_SQL  = sprintf("
     SELECT 
-        PGMSEQ, VERSEQ, FILESEQ, FILETYPE, FILENM, FILEHASH, ADDDT, MODDT
+        0 as CHK, a.PGMSEQ, a.VERSEQ, a.FILESEQ, b.PGMID, b.PGMNM, a.FILETYPE, a.FILENM, a.FILEHASH, a.FILESIZE, a.ADDDT, a.MODDT
     FROM 
-        CG.CG_RSTFILE
-    WHERE PJTSEQ = %d and ACTIVEYN = 'Y'
+        CG.CG_RSTFILE a
+        join CG_PGMINFO b on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ
+    WHERE a.PJTSEQ = %d and a.ACTIVEYN = 'Y'
     ", addSqlSlashes($REQ["PJTSEQ"]));
     $result = $db->query($T_SQL) or JsonMsg("500","300", "FILE_LIST_YN [" . $db->errno . "] " . $db->error) ;
 

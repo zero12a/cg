@@ -103,13 +103,13 @@ function G2_INIT(){
         mygridG2.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG2.setUserData("","gridTitle","G2 : 파일"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
-        mygridG2.setHeader("#master_checkbox,PGMSEQ,VERSEQ,FILESEQ,FILETYPE,FILENM,FILEHASH,FILESIZE,ADDDT,MODDT");
-		mygridG2.setColumnIds("CHK,PGMSEQ,VERSEQ,FILESEQ,FILETYPE,FILENM,FILEHASH,FILESIZE,ADDDT,MODDT");
-		mygridG2.setInitWidths("50,50,60,50,60,60,60,50,60,60");
-		mygridG2.setColTypes("ch,ro,ro,ed,ro,ro,ro,ro,ro,ro");
+        mygridG2.setHeader("#master_checkbox,PGMSEQ,VERSEQ,FILESEQ,PGMID,PGMNM,FILETYPE,FILENM,FILEHASH,FILESIZE,ADDDT,MODDT");
+		mygridG2.setColumnIds("CHK,PGMSEQ,VERSEQ,FILESEQ,PGMID,PGMNM,FILETYPE,FILENM,FILEHASH,FILESIZE,ADDDT,MODDT");
+		mygridG2.setInitWidths("50,50,60,50,60,60,60,60,60,50,60,60");
+		mygridG2.setColTypes("ch,ro,ro,ed,ro,ro,ro,ro,ro,ro,ro,ro");
 	//가로 정렬
-		mygridG2.setColAlign("left,left,left,left,left,left,left,left,left,left");
-		mygridG2.setColSorting("int,int,int,str,str,str,str,str,str,str");		//렌더링
+		mygridG2.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left");
+		mygridG2.setColSorting("int,int,int,str,str,str,str,str,str,str,str,str");		//렌더링
 		mygridG2.enableSmartRendering(false);
 		mygridG2.enableMultiselect(true);
 
@@ -170,20 +170,14 @@ function G2_INIT(){
 		mygridG2.attachEvent("onCheck",function(rowId, cellInd, state){
 			//onCheck is void return event
 			alog(rowId + " is onCheck.");
-			//ROW 마스터 체크 박스는 변경이면 실제 row 안함
-			if(  mygridG2.getColumnId(cellInd) == "ROWCHK" ){
-					mygridG2.cells(rowId,cellInd).cell.wasChanged = false;	
-			}	
-			//일반 체크 박스는 변경이면 실제 row 변경
-			if( 1 == 2 
-				){
-				RowEditStatus = mygridG2.getUserData(rowId,"!nativeeditor_status");
-				if(RowEditStatus == ""){
-					mygridG2.setUserData(rowId,"!nativeeditor_status","updated");
-					mygridG2.setRowTextBold(rowId);
-					mygridG2.cells(rowId,cellInd).cell.wasChanged = true;	
-				}
+
+			RowEditStatus = mygridG2.getUserData(rowId,"!nativeeditor_status");
+			if(RowEditStatus == ""){
+				mygridG2.setUserData(rowId,"!nativeeditor_status","updated");
+				mygridG2.setRowTextBold(rowId);
+				mygridG2.cells(rowId,cellInd).cell.wasChanged = true;	
 			}
+
 						
 		});	
 		// ROW선택 이벤트
@@ -237,7 +231,19 @@ function G2_INIT(){
                     mygridG2.setRowTextBold(rId);
                 }
                 mygridG2.cells(rId,cInd).cell.wasChanged = true;
-            }
+			}
+			if(stage == 1
+				&& cInd == 0
+                && RowEditStatus != "inserted"
+                && RowEditStatus != "deleted"
+                && nValue != oValue
+                ){
+                if(RowEditStatus == "") {
+                    mygridG2.setUserData(rId,"!nativeeditor_status","updated");
+                    mygridG2.setRowTextBold(rId);
+                }
+                mygridG2.cells(rId,cInd).cell.wasChanged = true;
+            }				
             return true;
 
 		});
