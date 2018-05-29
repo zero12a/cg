@@ -142,7 +142,7 @@ $xhandler_unique_id = sprintf("%08x", abs(crc32($_SERVER['REMOTE_ADDR'] . $_SERV
 	$CFG_ROOT_DIR = "/data/www/c.g/";
 
 	//배포 관련 정보
-	$CFG_ROOT_DEPLOY_DIR = "/data/www/r.d/";
+	$CFG_DEPLOY_DIR = "/data/www/r.d/";
 	$CFG_DEPLOY_KEY = "MyLoveKim";
 	
 		
