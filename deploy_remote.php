@@ -9,8 +9,12 @@ require_once("./include/incUtil.php");
 require_once("./incConfig.php");
 
 
+
 //외부 파라미터 받기
 $REQ["PJTSEQ"] = $_GET["PJTSEQ"];
+$REQ["DEPLOYKEY"] = $_GET["DEPLOY_KEY"]; //배포 인증키
+
+alog("REQ.DEPLOYKEY = " . $REQ["DEPLOYKEY"] );
 
 $REQ["FILE_LIST_YN"] = $_GET["FILE_LIST_YN"];
 $REQ["PGMSEQ"] = $_GET["PGMSEQ"];
@@ -27,8 +31,30 @@ $db = db_m_open();
 
 $RtnArr = null;
 
-//PGM 상세 불러오기
-//pgm list 생성
+
+
+
+
+//100 간편 인증 해당 프로젝트에 대한 배포키가 일치 하는지 확인 하기
+$T_SQL = sprintf("select PJTID,PJTNM,DEPLOYKEY from CG_PJTINFO where PJTSEQ = %d "
+    , addSqlSlashes($REQ["PJTSEQ"])
+    );
+
+//echo $T_SQL;
+$result = $db->query($T_SQL) or JsonMsg("500","300", "FILESEQ [" . $db->errno . "] " . $db->error) ;
+
+$row = $result->fetch_assoc();
+
+alog("Searched Project = " . $row["PJTID"] . ", " . $row["PJTNM"] );
+alog("Searched DEPLOYKEY = " . $row["DEPLOYKEY"]);
+
+if($row["PJTID"] == "")JsonMsg("500","100","해당 프로젝트가 존재하지 않습니다.");
+if($row["DEPLOYKEY"] != $REQ["DEPLOYKEY"])JsonMsg("500","110","배포키가 일치하지 않습니다.");
+$result->close();
+
+
+
+//200 PGM 상세 불러오기
 if($REQ["FILESEQ"] != ""){
     
     $T_SQL = sprintf("
@@ -61,7 +87,7 @@ if($REQ["FILESEQ"] != ""){
 }
 
 
-//pgm list 생성
+//300 pgm list 생성
 if($REQ["FILE_LIST_YN"] =="Y"){
     
     $T_SQL  = sprintf("
@@ -83,7 +109,7 @@ if($REQ["FILE_LIST_YN"] =="Y"){
 }
 
 
-//pgm list 생성
+//400 pgm list 생성
 if($REQ["PGM_LIST_YN"] =="Y"){
     
     $T_SQL  = sprintf("
@@ -103,7 +129,7 @@ if($REQ["PGM_LIST_YN"] =="Y"){
 
 }
 
-//db 권한 생성
+//500 db 권한 생성
 if($REQ["AUTH_LIST_YN"] =="Y"){
 
   $T_SQL  = sprintf("
@@ -136,6 +162,8 @@ $db->close();
 if($RtnArr == null){
     JsonMsg("500","999", "RtnArr is null") ;
 }else{
+    $RtnArr["RTN_CD"] = "200";
+    $RtnArr["ERR_CD"] = "200";    
     echo json_encode($RtnArr);
 }
 ?>

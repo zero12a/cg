@@ -86,6 +86,8 @@ $REQ["G3-UITOOL"] = reqPostString("G3-UITOOL",10);//UITOOL
 $REQ["G3-UITOOL"] = getFilter($REQ["G3-UITOOL"],"","//");	
 $REQ["G3-SVRLANG"] = reqPostString("G3-SVRLANG",10);//서버언어	
 $REQ["G3-SVRLANG"] = getFilter($REQ["G3-SVRLANG"],"","//");	
+$REQ["G3-DEPLOYKEY"] = reqPostString("G3-DEPLOYKEY",50);//DEPLOYKEY	
+$REQ["G3-DEPLOYKEY"] = getFilter($REQ["G3-DEPLOYKEY"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-PKGROOT"] = reqPostString("G3-PKGROOT",10);//패키지ROOT	
 $REQ["G3-PKGROOT"] = getFilter($REQ["G3-PKGROOT"],"","//");	
 $REQ["G3-STARTDT"] = reqPostString("G3-STARTDT",8);//시작일	
@@ -223,7 +225,7 @@ $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//PJT
 	$REQ["G3-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G3-XML"]
-		,"COLORD"=>"PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG,PKGROOT,STARTDT,ENDDT,DELYN,ADDDT,MODDT"
+		,"COLORD"=>"PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT,DELYN,ADDDT,MODDT"
 		,"VALID"=>
 			array(
 			"PJTSEQ"=>array("NUMBER",20)	
@@ -232,6 +234,7 @@ $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//PJT
 			,"FILECHARSET"=>array("STRING",30)	
 			,"UITOOL"=>array("STRING",10)	
 			,"SVRLANG"=>array("STRING",10)	
+			,"DEPLOYKEY"=>array("STRING",50)	
 			,"PKGROOT"=>array("STRING",10)	
 			,"STARTDT"=>array("STRING",8)	
 			,"ENDDT"=>array("STRING",8)	
@@ -241,6 +244,7 @@ $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//PJT
 					)
 		,"FILTER"=>
 			array(
+			"DEPLOYKEY"=>array("CLEARTEXT","/--미 정의--/")
 					)
 	)
 );

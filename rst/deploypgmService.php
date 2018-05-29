@@ -59,7 +59,7 @@ class deploypgmService
 	}
 	//파일, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME,$CFG_DEPLOY_KEY;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -71,11 +71,16 @@ class deploypgmService
 		$GRID["KEYCOLIDX"] = 3; // KEY 컬럼, FILESEQ
 
 		//001 원격에서 PGM목록 가져오기
-		$url = "http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&FILE_LIST_YN=Y";
+		$url = sprintf(
+			"http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&FILE_LIST_YN=Y&DEPLOY_KEY=%s"
+			,$CFG_DEPLOY_KEY
+		);
 
+		alog("DEPLOY GET URL = " . $url);
 		$body = getHttpBody($url);
 		//alog($body);
 		$bodyJson = json_decode($body,true);
+		if($bodyJson["RTN_CD"] != "200")JsonMsg($bodyJson["RTN_CD"],$bodyJson["ERR_CD"],$bodyJson["RTN_MSG"]);
 
 		$deployArr = array();
 		alog("sizeof  bodyJson = " . count($bodyJson["FILE_LIST"]));
@@ -143,7 +148,7 @@ class deploypgmService
 	}
 	//파일, 저장
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME,$CFG_ROOT_DEPLOY_DIR;
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME,$CFG_DEPLOY_DIR,$CFG_DEPLOY_KEY;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -188,44 +193,87 @@ class deploypgmService
 
 			}
 
-			//DB처리
-			$sql = "
-				insert into CMN_DEPLOY_FILE ( 
-					PGMSEQ, PGMID, FILESEQ, FILENM, FILETYPE
-					, FILEHASH, FILESIZE
-					, ADD_DT, ADD_ID
-				) values (
-					#{PGMSEQ}, #{PGMID}, #{FILESEQ}, #{FILENM}, #{FILETYPE}
-					, #{FILEHASH}, #{FILESIZE}
-					, date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
-				)
-			";
-			$to_coltype = str_replace(" ","","isiss si i");
-			$stmt = makeStmt($this->DB["DATING"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			//이미 배포된 적이 있는지 확인하기
+			$sql = " select DEPLOY_SEQ from CMN_DEPLOY_FILE where PGMID = #{PGMID} and FILENM = #{FILENM} ";
+			$to_coltype = str_replace(" ","","ss");
+			$stmt = makeStmt($this->DB["DATING"],$sql, $to_coltype, $to_row);
 			if(!$stmt) JsonMsg("500","200","(makeGridSaveJson) stmt 생성 실패 " . $stmt->errno . " -> " . $stmt->error);
 		
-			if(!$stmt->execute())JsonMsg("500","210","(makeGridSaveJson) stmt 실행 실패 " . $stmt->error);
-			$deploySeq = $this->DB["DATING"]->insert_id;	
+			if(!$stmt->execute()) JsonMsg("500","210","(makeGridSaveJson) stmt 실행 실패 " . $stmt->error);
+			$result = $stmt->get_result();
+			if ($row = $result->fetch_array(MYSQLI_ASSOC)){
+				alog("기존 배포된 파일에서 찾음 = " . $row["DEPLOY_SEQ"]);
+				$to_row["DEPLOY_SEQ"] = $row["DEPLOY_SEQ"];
+			}
+			$result->close();
+			$stmt->close();
+
+			//배포 이력이 없으면 추가하기
+			if(!is_numeric($to_row["DEPLOY_SEQ"])){
+				$sql = "
+					insert into CMN_DEPLOY_FILE ( 
+						PGMSEQ, PGMID, FILESEQ, FILENM, FILETYPE
+						, FILEHASH, FILESIZE
+						, ADD_DT, ADD_ID
+					) values (
+						#{PGMSEQ}, #{PGMID}, #{FILESEQ}, #{FILENM}, #{FILETYPE}
+						, #{FILEHASH}, #{FILESIZE}
+						, date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
+					)
+				";
+				$to_coltype = str_replace(" ","","isiss si i");
+				$stmt = makeStmt($this->DB["DATING"],$sql, $to_coltype, array_merge($REQ,$to_row));
+				if(!$stmt) JsonMsg("500","200","(makeGridSaveJson) stmt 생성 실패 " . $stmt->errno . " -> " . $stmt->error);
+			
+				if(!$stmt->execute())JsonMsg("500","210","(makeGridSaveJson) stmt 실행 실패 " . $stmt->error);
+				$to_row["DEPLOY_SEQ"] = $this->DB["DATING"]->insert_id;	
+			}
+
 
 			//파일가져오기
 			$url = sprintf(
-				"http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&PGMSEQ=%d&FILESEQ=%d&FILE_LIST_YN=Y&FILEHASH=%s"
+				"http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&PGMSEQ=%d&FILESEQ=%d&FILE_LIST_YN=Y&FILEHASH=%s&DEPLOY_KEY=%s"
 				,addSqlSlashes($to_row["PGMSEQ"])
 				,addSqlSlashes($to_row["FILESEQ"])
 				,addSqlSlashes($to_row["FILEHASH"])
+				,$CFG_DEPLOY_KEY
 			);
 
 			$body = getHttpBody($url);
 			alog($body);
 			$bodyJson = json_decode($body,true);
+			if($bodyJson["RTN_CD"] != "200")JsonMsg($bodyJson["RTN_CD"],$bodyJson["ERR_CD"],$bodyJson["RTN_MSG"]);
+			
 
-			$filename = $CFG_ROOT_DEPLOY_DIR . $to_row["FILENM"];
+			//파일 해쉬 검사.
+			alog("REQ HASH : " . $to_row["FILEHASH"]);
+			alog("RES HASH : " . md5($bodyJson["FILE_SRC"]));
+			
+			if(md5($bodyJson["FILE_SRC"]) != $to_row["FILEHASH"])JsonMsg("500","100","파일 해쉬값이 일치하지 않습니다.");
+
+			//서버 저장
+			$filename = $CFG_DEPLOY_DIR . $to_row["FILENM"];
 			$fp = fopen($filename, 'w');
 			fwrite($fp, $bodyJson["FILE_SRC"]);
 			fclose($fp);
 
 			//파일권한 변경
 			chmod($filename,0755);
+
+			//배포 완료 처리 하기
+			$sql = "
+				update CMN_DEPLOY_FILE set
+					FILEHASH = #{FILEHASH}, FILESIZE = #{FILESIZE}, DEPLOY_DT = date_format(sysdate(),'%Y%m%d%H%i%s'), DEPLOY_ID = #{USER.SEQ}
+					, MOD_DT = date_format(sysdate(),'%Y%m%d%H%i%s'), MOD_ID = #{USER.SEQ}
+				where DEPLOY_SEQ = #{DEPLOY_SEQ}
+				";
+			$to_coltype = str_replace(" ","","sii ii");
+			$stmt = makeStmt($this->DB["DATING"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			if(!$stmt) JsonMsg("500","200","(makeGridSaveJson) stmt 생성 실패 " . $stmt->errno . " -> " . $stmt->error);
+			if(!$stmt->execute())JsonMsg("500","210","(makeGridSaveJson) stmt 실행 실패 " . $stmt->error);
+			$stmt->close();
+
+
 		}		
 
 
@@ -269,7 +317,7 @@ class deploypgmService
 	}
 	//SQL PGM, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME,$CFG_DEPLOY_KEY;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -281,11 +329,15 @@ class deploypgmService
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PGMSEQ
 
 		//001 원격에서 PGM목록 가져오기
-		$url = "http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&PGM_LIST_YN=Y";
+		$url = sprintf(
+			"http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&PGM_LIST_YN=Y&DEPLOY_KEY=%s"
+			,$CFG_DEPLOY_KEY
+		);
 
 		$body = getHttpBody($url);
 		//alog($body);
 		$bodyJson = json_decode($body,true);
+		if($bodyJson["RTN_CD"] != "200")JsonMsg($bodyJson["RTN_CD"],$bodyJson["ERR_CD"],$bodyJson["RTN_MSG"]);
 
 		$deployArr = array();
 		alog("sizeof  bodyJson = " . count($bodyJson["PGM_LIST"]));
@@ -414,7 +466,7 @@ class deploypgmService
 	}
 	//SQL AUTH, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME,$CFG_DEPLOY_KEY;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -426,7 +478,10 @@ class deploypgmService
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PGMSEQ
 
 		//001 원격에서 PGM목록 가져오기
-		$url = "http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&AUTH_LIST_YN=Y";
+		$url = sprintf(
+			"http://172.17.0.1:8080/c.g/deploy_remote.php?PJTSEQ=3&AUTH_LIST_YN=Y&DEPLOY_KEY=%s"
+			,$CFG_DEPLOY_KEY
+		);
 
 
 		$body = getHttpBody($url);

@@ -20,8 +20,8 @@ class pgmmngDao
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "select
 	PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL
-	,SVRLANG,PKGROOT,STARTDT,ENDDT,DELYN
-	,ADDDT,MODDT 
+	,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT
+	,DELYN,ADDDT,MODDT 
 from
  CG_PJTINFO	
 where DELYN = 'N'
@@ -49,11 +49,12 @@ where DELYN = 'N'
 		$RtnVal["SQLTXT"] = "update CG_PJTINFO set 
 PJTID = #{PJTID}, PJTNM = #{PJTNM},FILECHARSET = #{FILECHARSET}, UITOOL = #{UITOOL}
 , SVRLANG = #{SVRLANG}, STARTDT = #{STARTDT}, ENDDT = #{ENDDT}
-,PKGROOT = #{PKGROOT} ,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
+, DEPLOYKEY = #{DEPLOYKEY}, PKGROOT = #{PKGROOT}
+, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} 
 
 ";
-		$RtnVal["BINDTYPE"] = "ssssssssii";
+		$RtnVal["BINDTYPE"] = "sssssssssii";
 		return $RtnVal;
     }  
 	//PJT    
@@ -64,13 +65,15 @@ where PJTSEQ = #{PJTSEQ}
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "insert into CG_PJTINFO (
 	PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG
-	,PKGROOT,STARTDT,ENDDT,ADDDT,ADDID
+	,DEPLOYKEY,PKGROOT,STARTDT,ENDDT
+	,ADDDT,ADDID
 ) values (
 	#{PJTID},#{PJTNM},#{FILECHARSET},#{UITOOL},#{SVRLANG}
-	,#{PKGROOT},#{STARTDT},#{ENDDT},date_format(sysdate(),'%Y%m%d%H%i%s'),#{USER.SEQ}
+	, #{DEPLOYKEY},#{PKGROOT},#{STARTDT},#{ENDDT}
+	,date_format(sysdate(),'%Y%m%d%H%i%s'),#{USER.SEQ}
 	)
 	";
-		$RtnVal["BINDTYPE"] = "ssssssssi";
+		$RtnVal["BINDTYPE"] = "sssssssssi";
 		return $RtnVal;
     }  
 	//PGM    
