@@ -18,7 +18,7 @@ include_once('../include/incUtil.php');//CG UTIL
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
 alog("AppapiControl___________________________start");
 
-$reqToken = reqGetString("TOKEN",30);
+$reqToken = reqGetString("TOKEN",37);
 $resToken = uniqid();
 alog("reqToken : " . $reqToken);
 alog("resToken : " . $resToken);
@@ -49,7 +49,8 @@ if(!isLogin()){
 	$objAuth->logUsrAuth($reqToken,$resToken,"APPAPI",$ctl,"N");
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
-	//로그 저장 방식 결정
+		//사용자 정보 가져오기
+//로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
 $PGM_CFG["SECTYPE"] = "NORMAL";

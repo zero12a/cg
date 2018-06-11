@@ -15,7 +15,10 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="../lib/jquery-ui-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="../lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
+<script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+<script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
+<script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <script src="appapi.js?<?=getRndVal(10)?>"></script>
@@ -28,7 +31,7 @@ include_once('../include/incRequest.php');//CG REQUEST
     var btnNm = "<?=getFilter(reqPostString("BTNNM",30),"SAFEECHO","")?>";
 </script>
 </head>
-<body onload="initBody();" class="HTML_BODY">
+<body onload="initBody();">
 
 <div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
 	<!--G.GRPID : C2-->
@@ -40,9 +43,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
-			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_C2_SEARCHALL" value="조회(전체)" onclick="C2_SEARCHALL();">
-				<input type="button" name="BTN_C2_SAVE" value="저장" onclick="C2_SAVE();">
-				<input type="button" name="BTN_C2_RESET" value="검색조건 초기화" onclick="C2_RESET();">
+			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_C2_SEARCHALL" value="조회(전체)" onclick="C2_SEARCHALL(uuidv4());">
+				<input type="button" name="BTN_C2_SAVE" value="저장" onclick="C2_SAVE(uuidv4());">
+				<input type="button" name="BTN_C2_RESET" value="검색조건 초기화" onclick="C2_RESET(uuidv4());">
 			</div>
 		</div>
 		<div style="height:38px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
@@ -109,13 +112,13 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
-			<input type="button" name="BTN_G3_CHKSAVE" value="완전삭제" onclick="G3_CHKSAVE();">
-			<input type="button" name="BTN_G3_SAVE" value="S" onclick="G3_SAVE();">
-			<input type="button" name="BTN_G3_RELOAD" value="R" onclick="G3_RELOAD();">
-			<input type="button" name="BTN_G3_EXCEL" value="E" onclick="G3_EXCEL();">
-			<input type="button" name="BTN_G3_HIDDENCOL" value="V" onclick="G3_HIDDENCOL();">
-			<input type="button" name="BTN_G3_ROWDELETE" value="-" onclick="G3_ROWDELETE();">
-			<input type="button" name="BTN_G3_ROWADD" value="+" onclick="G3_ROWADD();">
+			<input type="button" name="BTN_G3_CHKSAVE" value="완전삭제" onclick="G3_CHKSAVE(uuidv4());">
+			<input type="button" name="BTN_G3_SAVE" value="S" onclick="G3_SAVE(uuidv4());">
+			<input type="button" name="BTN_G3_RELOAD" value="R" onclick="G3_RELOAD(uuidv4());">
+			<input type="button" name="BTN_G3_EXCEL" value="E" onclick="G3_EXCEL(uuidv4());">
+			<input type="button" name="BTN_G3_HIDDENCOL" value="V" onclick="G3_HIDDENCOL(uuidv4());">
+			<input type="button" name="BTN_G3_ROWDELETE" value="-" onclick="G3_ROWDELETE(uuidv4());">
+			<input type="button" name="BTN_G3_ROWADD" value="+" onclick="G3_ROWADD(uuidv4());">
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
@@ -142,9 +145,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 				* 폼뷰1
 			</div>
 			<div class="DETAIL_LABELBTN"  style="">
-				<input type="button" name="BTN_F4_SAVE" value="저장" onclick="F4_SAVE();">				<input type="button" name="BTN_F4_RELOAD" value="새로고침" onclick="F4_RELOAD();">				<input type="button" name="BTN_F4_NEW" value="신규" onclick="F4_NEW();">				<input type="button" name="BTN_F4_DELETE" value="삭제" onclick="F4_DELETE();">				<input type="button" name="BTN_F4_MOD" value="수정" onclick="F4_MOD();">			</div>
+				<input type="button" name="BTN_F4_SAVE" value="저장" onclick="F4_SAVE(uuidv4());">				<input type="button" name="BTN_F4_RELOAD" value="새로고침" onclick="F4_RELOAD(uuidv4());">				<input type="button" name="BTN_F4_NEW" value="신규" onclick="F4_NEW(uuidv4());">				<input type="button" name="BTN_F4_DELETE" value="삭제" onclick="F4_DELETE(uuidv4());">				<input type="button" name="BTN_F4_MOD" value="수정" onclick="F4_MOD(uuidv4());">			</div>
 		</div>
-		<div style="height:409px;" class="DETAIL_OBJECT">
+		<div style="height:408px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 			</DIV><!--is_br_tab end-->
@@ -331,9 +334,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<input type="text" name="BTNNM" id="BTNNM">
 	</form>
 </div>
+</div>
 
 
-</div><!--BODY_BOX-->
 
 </body>
 </html>
