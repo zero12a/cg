@@ -41,7 +41,7 @@ order by ORD asc";
 	,ADDDT,MODDT
 from CG_CODED
 where PCD = #{G2-PCD}
-order by ORD";
+order by ORD ";
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  

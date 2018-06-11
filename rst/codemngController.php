@@ -18,7 +18,7 @@ include_once('../include/incUtil.php');//CG UTIL
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
 alog("CodemngControl___________________________start");
 
-$reqToken = reqGetString("TOKEN",30);
+$reqToken = reqGetString("TOKEN",37);
 $resToken = uniqid();
 alog("reqToken : " . $reqToken);
 alog("resToken : " . $resToken);
@@ -49,10 +49,11 @@ if(!isLogin()){
 	$objAuth->logUsrAuth($reqToken,$resToken,"CODEMNG",$ctl,"N");
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
-	//로그 저장 방식 결정
+		//사용자 정보 가져오기
+//로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
-$PGM_CFG["PGMTYPE"] = "NORMAL";
+$PGM_CFG["SECTYPE"] = "NORMAL";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 
@@ -244,7 +245,7 @@ switch ($ctl){
 		break;
 }
 	array_push($_RTIME,array("[TIME 50.SVC]",microtime(true)));
-if($PGM_CFG["PGMTYPE"] == "POWER" || $PGM_CFG["PGMTYPE"] == "PI") $objAuth->logUsrAuthD($reqToken,$resToken);;	//권한변경 로그 저장
+if($PGM_CFG["SECTYPE"] == "POWER" || $PGM_CFG["SECTYPE"] == "PI") $objAuth->logUsrAuthD($reqToken,$resToken);;	//권한변경 로그 저장
 	array_push($_RTIME,array("[TIME 60.AUGHD_LOG]",microtime(true)));
 //실행시간 검사
 for($j=1;$j<sizeof($_RTIME);$j++){
