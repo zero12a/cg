@@ -71,7 +71,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:510px;">
+	<div class="GRP_OBJECT" style="width:50%;height:505px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
@@ -87,7 +87,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:488px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:483px;width:100%;"></div>
 		</div>
 	</div>
 	<!--
@@ -96,7 +96,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	#####################################################
 	-->
 	<!--VBOX START-->
-	<div class="GRP_OBJECT" style="width:50%;">
+	<div class="GRP_OBJECT_VBOX" style="width:50%;">
 	<!--
 	#####################################################
 	## 그리드 - START
