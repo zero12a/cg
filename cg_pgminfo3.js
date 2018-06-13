@@ -1960,7 +1960,18 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),false);  
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);            
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),false);       
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),false);       
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),false);    
+                    
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),false);                     
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("SEQYN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),false);   
+                    
                     break;
                 case "GRID":
                     //(FNC) FNCTYPE 다시 불러오기
@@ -1976,6 +1987,17 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),true);                    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);
+
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),false);                     
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("SEQYN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),false);   
+
                     break;
                 case "FORMVIEW":
                     //(FNC) FNCTYPE 다시 불러오기
@@ -1991,6 +2013,17 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),false);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),false);    
+
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),false);                     
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("SEQYN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),false);    
+
                     break;
                 case "CHARTBAR":
                     //(FNC) FNCTYPE 다시 불러오기

@@ -64,8 +64,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<input type="button" name="BTN_G2_SEARCH" value="조회" onclick="G2_SEARCH(uuidv4());">
 			</div>
 		</div>
-			<div class="GRID_OBJECT" style="height:258px;height:300px;border-radius:3px;-moz-border-radius: 3px;">
-				<canvas id="canvasG2" style="height:258px"></canvas>
+			<div class="GRID_OBJECT" style="border-radius:3px;-moz-border-radius: 3px;">
+				<canvas id="canvasG2" style="width:100%;height:278px"></canvas>
 		</div>
 		</div>
 	<!--G.GRPID : G3-->
@@ -78,10 +78,62 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<input type="button" name="BTN_G3_SEARCH" value="조회" onclick="G3_SEARCH(uuidv4());">
 			</div>
 		</div>
-			<div class="GRID_OBJECT" style="height:258px;height:300px;border-radius:3px;-moz-border-radius: 3px;">
-			<canvas id="canvasG3" style="height:258px"></canvas>
+			<div class="GRID_OBJECT" style="border-radius:3px;-moz-border-radius: 3px;">
+			<canvas id="canvasG3" style="width:100%;height:278px"></canvas>
 		</div>
 	</div>
+	<!--
+	#####################################################
+	## 그리드 - START
+	#####################################################
+	-->
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+
+		<div  class="GRID_LABELGRP">
+  			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
+	  				* BAR상속      
+			</div>
+			<div id="div_gridG4_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
+				<span id="spanG4Cnt" name="그리드 ROW 갯수">N</span>
+			<input type="button" name="BTN_G4_SAVE" value="저장" onclick="G4_SAVE(uuidv4());">
+			<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">
+			</div>
+		</div>
+		<div  class="GRID_OBJECT"  style="">
+			<div id="gridG4"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+		</div>
+	</div>
+	<!--
+	#####################################################
+	## 그리드 - END
+	#####################################################
+	-->
+	<!--
+	#####################################################
+	## 그리드 - START
+	#####################################################
+	-->
+	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+
+		<div  class="GRID_LABELGRP">
+  			<div id="div_gridG5_GRID_LABEL"class="GRID_LABEL" >
+	  				* PIE상속      
+			</div>
+			<div id="div_gridG5_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
+				<span id="spanG5Cnt" name="그리드 ROW 갯수">N</span>
+			<input type="button" name="BTN_G5_SAVE" value="저장" onclick="G5_SAVE(uuidv4());">
+			<input type="button" name="BTN_G5_RELOAD" value="새로고침" onclick="G5_RELOAD(uuidv4());">
+			</div>
+		</div>
+		<div  class="GRID_OBJECT"  style="">
+			<div id="gridG5"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+		</div>
+	</div>
+	<!--
+	#####################################################
+	## 그리드 - END
+	#####################################################
+	-->
 <div style="width:0px;height:0px;overflow: hidden">
 	<form name="excelDownForm" id="excelDownForm">
 	<input type="hidden" name="DATA_HEADERS" id="DATA_HEADERS">

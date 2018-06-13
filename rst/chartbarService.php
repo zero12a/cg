@@ -109,6 +109,90 @@ class chartbarService
 		echo json_encode($rtnVal);
 		alog("CHARTBARService-goG3Search________________________end");
 	}
+	//BAR상속, 조회
+	public function goG4Search(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("CHARTBARService-goG4Search________________________start");
+		//그리드 서버 조회 
+		//GRID_SEARCH____________________________start
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, LOGIN_DT
+
+		//조회
+		//V_GRPNM : BAR상속
+		$GRID["SQL"]["R"] = $this->DAO->sLogin($REQ); //SEARCH, 조회,LOGIN
+	//암호화컬럼
+		$GRID["COLCRYPT"] = array();
+		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
+		//GRID_SEARCH____________________________end
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("CHARTBARService-goG4Search________________________end");
+	}
+	//BAR상속, 저장
+	public function goG4Save(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("CHARTBARService-goG4Save________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("CHARTBARService-goG4Save________________________end");
+	}
+	//PIE상속, 조회
+	public function goG5Search(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("CHARTBARService-goG5Search________________________start");
+		//그리드 서버 조회 
+		//GRID_SEARCH____________________________start
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, LOGIN_DT
+
+		//조회
+		//V_GRPNM : PIE상속
+		$GRID["SQL"]["R"] = $this->DAO->sLogin($REQ); //SEARCH, 조회,LOGIN
+	//암호화컬럼
+		$GRID["COLCRYPT"] = array();
+		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G5]",microtime(true)));
+		//GRID_SEARCH____________________________end
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("CHARTBARService-goG5Search________________________end");
+	}
+	//PIE상속, 저장
+	public function goG5Save(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("CHARTBARService-goG5Save________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("CHARTBARService-goG5Save________________________end");
+	}
 }
                                                              
 ?>

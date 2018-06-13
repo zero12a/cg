@@ -525,14 +525,18 @@ function getInput($input,$filetype,$param,$G){
 
     }else if($input == "PGMGRP.REF"){
         $T_SQL = sprintf("
-            select * from CG_PGMGRP
-            where PJTSEQ = %d and PGMSEQ = %d and REFGRPID = '%s' order by GRPORD asc
+            select a.*, b.FNCID  
+            from 
+                CG_PGMGRP a
+                left outer join CG_PGMFNC b 
+                    on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and a.GRPSEQ = b.GRPSEQ and b.FNCCD = 'SEARCH'
+            where a.PJTSEQ = %d and a.PGMSEQ = %d and a.REFGRPID = '%s' order by GRPORD asc
             "
             ,addSqlSlashes($F_PJTSEQ)
             ,addSqlSlashes($F_PGMSEQ)
             ,$G["G"]["GRPID"]
         );
-        //mlog("SQL 120 (input " . $input . ") : " .$T_SQL);
+        alog("SQL 538 (input " . $input . ") : " .$T_SQL);
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
         $result = $db[$svrid]->query($T_SQL) or ServerMsg("500","230", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
 
