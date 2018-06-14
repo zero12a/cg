@@ -6,7 +6,7 @@ var url_G1_RESET = "chartbarController.php?CTLGRP=G1&CTLFNC=RESET";//컨디션 �
 //컨트롤러 경로
 var url_G2_SEARCH = "chartbarController.php?CTLGRP=G2&CTLFNC=SEARCH";
 			//G.GRPID 챠트 데이터
-		var chartG2Data = { labels : [],	datasets: [] };
+		var chartG2Data = { labels : [], datasets: [] };
 //컨트롤러 경로
 var url_G3_SEARCH = "chartbarController.php?CTLGRP=G3&CTLFNC=SEARCH";
 		//G.GRPID 챠트 데이터
@@ -85,18 +85,10 @@ function G2_INIT(){
 			maintainAspectRatio: false,  				
 			legend: {
 				position: 'right',
-			},
-			layout: {
-				padding: {
-					left: 00,
-					right: 0,
-					top: 15,
-					bottom: 0
-				}
-			}			
+			}
 		}
 	});
-		$("#canvasG2").on('click', function (e) {
+	$("#canvasG2").on('click', function (e) {
 		//alert(e);
 		var bars = window.myBarG2.getElementAtEvent(e);
 		if (bars.length == 0) return;
@@ -106,13 +98,14 @@ function G2_INIT(){
 
 		var labelElement, dataElement;
 		labelElement = chartG2Data.datasets[element._datasetIndex].label;
+		colid = chartG2Data.datasets[element._datasetIndex].colid;
 		//alert(labelElement);
 		firstColLabel = chartG2Data.labels[element._index];
 		//alert(firstColLabel);                
 		dataElement = chartG2Data.datasets[element._datasetIndex].data[element._index];
 		//alert(dataElement);
 
-		lastG2input = labelElement + "=" + firstColLabel;
+		lastG2input = colid + "=" + firstColLabel;
 		//G1_SEARCH(lastinput,uuidv4());
 			G4_SEARCH(lastG2input,uuidv4());
 	});
@@ -143,13 +136,14 @@ function G3_INIT(){
 
 		var labelElement, dataElement;
 		labelElement = chartG3Data.datasets[element._datasetIndex].label;
+		colid = chartG3Data.datasets[element._datasetIndex].colid;
 		//alert(labelElement);
 		firstColLabel = chartG3Data.labels[element._index];
 		//alert(firstColLabel);                
 		dataElement = chartG3Data.datasets[element._datasetIndex].data[element._index];
 		//alert(dataElement);
 
-		lastG3input = labelElement + "=" + firstColLabel;
+		lastG3input = colid + "=" + firstColLabel;
 		//G1_SEARCH(lastinput,uuidv4());
 			G5_SEARCH(lastG3input,uuidv4());
 
@@ -520,6 +514,7 @@ function G1_SEARCHALL(token){
             var newDataset = {
                 type : 'bar',                
 				label: 'LOGIN_CNT',
+				colid : 'LOGIN_CNT',
 				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
 				borderColor: dsColor,
 				borderWidth: 1,
@@ -536,6 +531,7 @@ function G1_SEARCHALL(token){
             var newDataset = {
                 type : 'line',                
 				label: 'LOGIN_CNT2',
+				colid : 'LOGIN_CNT2',
 				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
 				borderColor: dsColor,
 				borderWidth: 1,
@@ -610,6 +606,7 @@ function G1_SEARCHALL(token){
             var dsColor = window.chartColors[colorNames[nowCol-1]];                 
             var newDataset = {     
 				label: 'LOGIN_CNT',
+				colid: 'LOGIN_CNT',
 				backgroundColor: newColors,
 				data: []
             };
@@ -635,6 +632,11 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG3()------------end");
     }
+//새로고침	
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
+}
     //그리드 조회(BAR상속)	
     function G4_SEARCH(tinput,token){
         alog("G4_SEARCH()------------start");
@@ -717,45 +719,6 @@ function G1_SEARCHALL(token){
 	alog("G4_SAVE()------------end");
 }
 //새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
-}
-	function G5_SAVE(token){
-	alog("G5_SAVE()------------start");
-	tgrid = mygridG5;
-
-	tgrid.setSerializationLevel(true,false,false,false,true,false);
-	var myXmlString = tgrid.serialize();
-	//컨디션 데이터 모두 말기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("   ConAllData = " + ConAllData);
-	$.ajax({
-		type : "POST",
-		url : url_G5_SAVE + "&TOKEN=" + token + "&" + lastinputG5 ,
-		data : { "G5-XML" : myXmlString},
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G5_SAVE()------------end");
-}
-//새로고침	
 function G5_RELOAD(token){
   alog("G5_RELOAD-----------------start");
   G5_SEARCH(lastinputG5,token);
@@ -807,5 +770,37 @@ function G5_RELOAD(token){
 
         alog("G5_SEARCH()------------end");
     }
+	function G5_SAVE(token){
+	alog("G5_SAVE()------------start");
+	tgrid = mygridG5;
 
+	tgrid.setSerializationLevel(true,false,false,false,true,false);
+	var myXmlString = tgrid.serialize();
+	//컨디션 데이터 모두 말기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("   ConAllData = " + ConAllData);
+	$.ajax({
+		type : "POST",
+		url : url_G5_SAVE + "&TOKEN=" + token + "&" + lastinputG5 ,
+		data : { "G5-XML" : myXmlString},
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G5_SAVE()------------end");
+}

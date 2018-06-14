@@ -56,7 +56,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
 	</div>
 	<!--G.GRPID : G2-->
-	<div class="GRP_OBJECT" style="width:50%;height:300px;">
+	<div class="GRP_OBJECT" style="width:50%;height:500px;">
 		<div class="GRID_LABELGRP">
 			<div class="GRID_LABEL"  style="">
 					* 챠트			</div>	
@@ -65,11 +65,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 			<div class="GRID_OBJECT" style="border-radius:3px;-moz-border-radius: 3px;">
-				<canvas id="canvasG2" style="width:100%;height:278px"></canvas>
+				<canvas id="canvasG2" style="width:100%;height:478px"></canvas>
 		</div>
 		</div>
 	<!--G.GRPID : G3-->
-	<div class="GRP_OBJECT" style="width:50%;height:300px;">
+	<div class="GRP_OBJECT" style="width:50%;height:500px;">
 		<div class="GRID_LABELGRP">
 			<div class="GRID_LABEL"  style="">
 				* 챠트
@@ -79,7 +79,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 			<div class="GRID_OBJECT" style="border-radius:3px;-moz-border-radius: 3px;">
-			<canvas id="canvasG3" style="width:100%;height:278px"></canvas>
+			<canvas id="canvasG3" style="width:100%;height:478px"></canvas>
 		</div>
 	</div>
 	<!--
