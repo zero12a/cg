@@ -59,7 +59,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<div class="GRP_OBJECT" style="width:50%;height:500px;">
 		<div class="GRID_LABELGRP">
 			<div class="GRID_LABEL"  style="">
-					* 챠트			</div>	
+					* 챠트				</div>	
 				<div class="GRID_LABELBTN">
 				<input type="button" name="BTN_G2_SEARCH" value="조회" onclick="G2_SEARCH(uuidv4());">
 			</div>
@@ -72,7 +72,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<div class="GRP_OBJECT" style="width:50%;height:500px;">
 		<div class="GRID_LABELGRP">
 			<div class="GRID_LABEL"  style="">
-				* 챠트
+				* PIE
 			</div>	
 			<div class="GRID_LABELBTN">
 				<input type="button" name="BTN_G3_SEARCH" value="조회" onclick="G3_SEARCH(uuidv4());">
