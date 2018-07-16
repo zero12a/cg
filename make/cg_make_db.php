@@ -280,10 +280,8 @@ function getInput($input,$filetype,$param,$G){
                   CD AS NM
                   ,CDVAL AS VAL
                 FROM CG_CODED
-                WHERE PJTSEQ = %d
                 %s
                 "
-            ,addSqlSlashes($F_PJTSEQ)
             ,$AddSql
         );
         //echo "<br>getInput :  ". $T_SQL;
@@ -302,10 +300,8 @@ function getInput($input,$filetype,$param,$G){
                   ,LBLTXT AS LBLTXT
                   ,OBJTXT AS OBJTXT
                 FROM CG_OBJINFO
-                WHERE PJTSEQ = %d
                 %s
                 "
-            ,addSqlSlashes($F_PJTSEQ)
             ,$AddSql
         );
         mlog("SQL (input " . $input . ") : " .$T_SQL);
@@ -326,13 +322,11 @@ function getInput($input,$filetype,$param,$G){
                 SELECT
                   a.*
                 FROM CG_OBJINFOD a
-					join CG_PJTINFO b on a.PJTSEQ = b.PJTSEQ
-                WHERE b.PJTSEQ = %d and a.OBJTYPE = '%s'
+                WHERE  a.OBJTYPE = '%s'
                 %s
                 ORDER BY OBJDORD ASC
                 "
-            ,addSqlSlashes($F_PJTSEQ)
-			,$input
+            ,$input
             ,$AddSql
         );
         //echo "<br>getInput :  ". $T_SQL;
@@ -348,12 +342,11 @@ function getInput($input,$filetype,$param,$G){
         $T_SQL = sprintf("
                 SELECT
                   distinct b.SRCTXT as SRCTXT, '' as SPTTXT
-                FROM CG_PGMIO a join CG_OBJINFOD b on a.OBJTYPE = b.OBJTYPE and a.PJTSEQ = b.PJTSEQ
-                WHERE a.PJTSEQ = %d and b.OBJVALTYPE = '%s'
+                FROM CG_PGMIO a join CG_OBJINFOD b on a.OBJTYPE = b.OBJTYPE 
+                WHERE  b.OBJVALTYPE = '%s'
                 %s
                 ORDER BY OBJDORD ASC
                 "
-            ,addSqlSlashes($F_PJTSEQ)
             ,$input
             ,$AddSql
         );
@@ -421,12 +414,11 @@ function getInput($input,$filetype,$param,$G){
                         ) e on e.GRPSEQ = a.GRPSEQ
 					join CG_PGMFNC b on a.GRPSEQ = b.GRPSEQ and a.PGMSEQ = %d and b.PGMSEQ = %d
                     join CG_OBJINFOD c on a.GRPTYPE = c.OBJTYPE and b.FNCCD = c.OBJVAL
-                where  a.PJTSEQ = %d and b.PJTSEQ = %d and c.PJTSEQ = %d %s order by GRPORD asc "
+                where  a.PJTSEQ = %d and b.PJTSEQ = %d %s order by GRPORD asc "
             ,addSqlSlashes($F_PJTSEQ)
             ,addSqlSlashes($F_PGMSEQ)
             ,addSqlSlashes($F_PGMSEQ)
             ,addSqlSlashes($F_PGMSEQ)
-			,addSqlSlashes($F_PJTSEQ)
 			,addSqlSlashes($F_PJTSEQ)
 			,addSqlSlashes($F_PJTSEQ)
 			,$AddSql
@@ -447,8 +439,8 @@ function getInput($input,$filetype,$param,$G){
                     , cd2.CDVAL as LEGENDALIGN_CDVAL
                     , if(io.ROWCHECK_YN is null,'N','Y') as ROWCHECK_YN
                 from CG_PGMGRP g
-                    left outer join CG_CODED cd on g.PJTSEQ = cd.PJTSEQ and g.COLSIZETYPE = cd.CD and cd.PCD = 'COLSIZETYPE'
-                    left outer join CG_CODED cd2 on g.PJTSEQ = cd2.PJTSEQ and g.LEGENDALIGN = cd2.CD and cd2.PCD = 'LEGENDALIGN'
+                    left outer join CG_CODED cd on  g.COLSIZETYPE = cd.CD and cd.PCD = 'COLSIZETYPE'
+                    left outer join CG_CODED cd2 on  g.LEGENDALIGN = cd2.CD and cd2.PCD = 'LEGENDALIGN'
                     left outer join
                         ( select GRPSEQ,if(count(IOSEQ)>0,'Y','N') as ROWCHECK_YN from CG_PGMIO where PJTSEQ = %d and PGMSEQ = %d and OBJTYPE='ROWCHECK' group by GRPSEQ ) io
                         on g.GRPSEQ = io.GRPSEQ
@@ -601,7 +593,7 @@ function getInput($input,$filetype,$param,$G){
 				CG_PGMSVC a
 				join CG_PGMGRP b on a.PJTSEQ= b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and a.SVCGRPID = b.GRPID
 				join CG_PGMFNC c on a.PJTSEQ= c.PJTSEQ and a.PGMSEQ = c.PGMSEQ and a.GRPSEQ = c.GRPSEQ and a.FNCSEQ = c.FNCSEQ
-				left join CG_OBJINFOD d on a.PJTSEQ = d.PJTSEQ and b.GRPTYPE = d.OBJTYPE and c.FNCCD = d.OBJVAL
+				left join CG_OBJINFOD d on  b.GRPTYPE = d.OBJTYPE and c.FNCCD = d.OBJVAL
 			where a.PJTSEQ = %d and a.PGMSEQ = %d and a.GRPSEQ = %d and a.FNCSEQ = %d %s
             "
             ,addSqlSlashes($F_PJTSEQ)
@@ -628,7 +620,7 @@ function getInput($input,$filetype,$param,$G){
                 join CG_PGMGRP b on a.PJTSEQ= b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and a.SVCGRPID = b.GRPID
                 left outer join (SELECT GRPSEQ, COUNT(IOSEQ) AS IO_FILE_CNT FROM CG_PGMIO WHERE PJTSEQ = %d AND PGMSEQ=%d  AND OBJTYPE='FILE' GROUP BY GRPSEQ) e on e.GRPSEQ = b.GRPSEQ
 				join CG_PGMFNC c on a.PJTSEQ= c.PJTSEQ and a.PGMSEQ = c.PGMSEQ and a.GRPSEQ = c.GRPSEQ and a.FNCSEQ = c.FNCSEQ
-				join CG_OBJINFOD d on a.PJTSEQ = d.PJTSEQ and b.GRPTYPE = d.OBJTYPE 
+				join CG_OBJINFOD d on b.GRPTYPE = d.OBJTYPE 
 			where a.PJTSEQ = %d and a.PGMSEQ = %d and a.GRPSEQ = %d and a.FNCSEQ = %d    %s
             "
             ,addSqlSlashes($F_PJTSEQ)
@@ -675,9 +667,9 @@ function getInput($input,$filetype,$param,$G){
                 ,   cd2.CDVAL as LEGENDALIGN_CDVAL
                 ,   cd.CDVAL as COLSIZETYPE_CDVAL
             from CG_PGMGRP a 
-                join CG_OBJINFOD b on a.GRPTYPE = b.OBJTYPE and a.PJTSEQ = b.PJTSEQ
-                left outer join CG_CODED cd on a.PJTSEQ = cd.PJTSEQ and a.COLSIZETYPE = cd.CD and cd.PCD = 'COLSIZETYPE'        
-                left outer join CG_CODED cd2 on a.PJTSEQ = cd2.PJTSEQ and a.LEGENDALIGN = cd2.CD and cd2.PCD = 'LEGENDALIGN'    
+                join CG_OBJINFOD b on a.GRPTYPE = b.OBJTYPE 
+                left outer join CG_CODED cd on a.COLSIZETYPE = cd.CD and cd.PCD = 'COLSIZETYPE'        
+                left outer join CG_CODED cd2 on a.LEGENDALIGN = cd2.CD and cd2.PCD = 'LEGENDALIGN'    
             where a.PJTSEQ = %d and a.PGMSEQ = %d %s 
 			order by a.GRPORD asc, b.OBJDORD asc
             "
@@ -770,15 +762,15 @@ function getInput($input,$filetype,$param,$G){
               ,pop.POPHEIGHT as POP_HEIGHT    
               ,pop.VIEWURL as POP_URL                   
             from CG_PGMIO a
-                left outer join CG_CODED bc on a.OBJTYPE = bc.CD and bc.PCD='CTCONDITION'	and a.PJTSEQ = bc.PJTSEQ
-                left outer join CG_CODED bg on a.OBJTYPE = bg.CD and bg.PCD='CTGRID'		and a.PJTSEQ = bg.PJTSEQ
-                left outer join CG_CODED bf on a.OBJTYPE = bf.CD and bf.PCD='CTFORMVIEW'	and a.PJTSEQ = bf.PJTSEQ
-                left outer join CG_CODED chartbar on a.OBJTYPE = chartbar.CD and chartbar.PCD='CTCHARTBAR'	and a.PJTSEQ = chartbar.PJTSEQ
-                left outer join CG_CODED oalign on a.OBJALIGN = oalign.CD and oalign.PCD='OBJALIGN'	and a.PJTSEQ = oalign.PJTSEQ      
-                left outer join CG_CODED csort on a.DATATYPE = csort.CD and csort.PCD='COLSORT'	and a.PJTSEQ = csort.PJTSEQ    
+                left outer join CG_CODED bc on a.OBJTYPE = bc.CD and bc.PCD='CTCONDITION'	
+                left outer join CG_CODED bg on a.OBJTYPE = bg.CD and bg.PCD='CTGRID'		
+                left outer join CG_CODED bf on a.OBJTYPE = bf.CD and bf.PCD='CTFORMVIEW'	
+                left outer join CG_CODED chartbar on a.OBJTYPE = chartbar.CD and chartbar.PCD='CTCHARTBAR'	
+                left outer join CG_CODED oalign on a.OBJALIGN = oalign.CD and oalign.PCD='OBJALIGN'	     
+                left outer join CG_CODED csort on a.DATATYPE = csort.CD and csort.PCD='COLSORT'	 
                 left outer join ( select COLID,CRYPTCD FROM CG_DD where PJTSEQ = %d ) dd on a.COLID = dd.COLID    
-                left outer join CG_CODED crypt on dd.CRYPTCD = crypt.CD and crypt.PCD='CRYPT'	and a.PJTSEQ = crypt.PJTSEQ   
-                left outer join CG_VALID vld on a.VALIDSEQ = vld.VALIDSEQ and a.PJTSEQ = vld.PJTSEQ 
+                left outer join CG_CODED crypt on dd.CRYPTCD = crypt.CD and crypt.PCD='CRYPT'	
+                left outer join CG_VALID vld on a.VALIDSEQ = vld.VALIDSEQ 
                 left outer join CG_PGMINFO pop on a.PJTSEQ = pop.PJTSEQ and a.POPUP = pop.PGMID                                
             where a.PJTSEQ = %d and a.PGMSEQ = %d and a.GRPSEQ = %d %s
 			order by a.COLORD asc
@@ -809,9 +801,9 @@ function getInput($input,$filetype,$param,$G){
               ,ifnull(bf.CDVAL,'') as FORMVIEW_CDVAL
               ,dd.CRYPTCD as DD_CRYPTCD
             from CG_PGMIO a
-                left outer join CG_CODED bc on a.OBJTYPE = bc.CD and bc.PCD='CTCONDITION'	and a.PJTSEQ = bc.PJTSEQ
-                left outer join CG_CODED bg on a.OBJTYPE = bg.CD and bg.PCD='CTGRID'		and a.PJTSEQ = bg.PJTSEQ
-                left outer join CG_CODED bf on a.OBJTYPE = bf.CD and bf.PCD='CTFORMVIEW'	and a.PJTSEQ = bf.PJTSEQ
+                left outer join CG_CODED bc on a.OBJTYPE = bc.CD and bc.PCD='CTCONDITION'	
+                left outer join CG_CODED bg on a.OBJTYPE = bg.CD and bg.PCD='CTGRID'		
+                left outer join CG_CODED bf on a.OBJTYPE = bf.CD and bf.PCD='CTFORMVIEW'	
                 left outer join (SELECT COLID,CRYPTCD FROM CG_DD WHERE PJTSEQ = %d ) dd on a.COLID = dd.COLID 
             where a.PJTSEQ = %d and a.PGMSEQ = %d and a.GRPSEQ = %d %s
 			order by COLORD asc
@@ -883,13 +875,15 @@ function getInput($input,$filetype,$param,$G){
 			select 
 			  b.COLID as INHERITCOLID
 			  ,case when b.COLID is null then '\"\"'
-				 else concat('lastinput',c.GRPID,'json.',a.COLID)
-				 end as  REALCOLID
+				 else concat('lastinput',c.GRPID,'.get(\"',d.GRPID,'-',a.COLID,'\")')
+                 end as  REALCOLID
+              ,d.GRPID as PARENTGRPID
 			  ,a.* 
 			from CG_PGMIO a 
 			    left outer join CG_PGMINHERIT b
                     on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and b.CHILDGRPID = '%s'     and a.COLID = b.COLID
                 left outer join CG_PGMGRP c on a.GRPSEQ = c.GRPSEQ
+                left outer join CG_PGMGRP d on a.PJTSEQ = d.PJTSEQ and a.PGMSEQ = d.PGMSEQ and b.GRPSEQ = d.GRPSEQ
 			where a.PJTSEQ = %d and a.PGMSEQ = %d and a.GRPSEQ = %d  %s
 			order by COLORD asc
             "
@@ -899,7 +893,7 @@ function getInput($input,$filetype,$param,$G){
             ,$G["G"]["GRPSEQ"]
 			,$AddSql
         );
-        //mlog("SQL 811 (input " . $input . ") : " .$T_SQL);
+        alog("SQL 897 (input " . $input . ") : " .$T_SQL);
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
         $result = $db[$svrid]->query($T_SQL) or ServerMsg("500","320", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
 
@@ -918,10 +912,10 @@ function getInput($input,$filetype,$param,$G){
               ,crypt.CDVAL as DD_CRYPTCD_CDVAL     
               ,crypt.CDVAL2 as DD_CRYPTCD_CDVAL2                     
             from CG_PGMIO a
-                left outer join CG_CODED b on a.DATATYPE = b.CD and b.PCD='GRIDSORT' and a.PJTSEQ = b.PJTSEQ
-                join CG_OBJINFOD c on a.OBJTYPE = c.OBJTYPE and c.PJTSEQ = a.PJTSEQ
+                left outer join CG_CODED b on a.DATATYPE = b.CD and b.PCD='GRIDSORT'
+                join CG_OBJINFOD c on a.OBJTYPE = c.OBJTYPE
                 left outer join ( select COLID,CRYPTCD FROM CG_DD where PJTSEQ = %d ) dd on a.COLID = dd.COLID    
-                left outer join CG_CODED crypt on dd.CRYPTCD = crypt.CD and crypt.PCD='CRYPT'	and a.PJTSEQ = crypt.PJTSEQ                  
+                left outer join CG_CODED crypt on dd.CRYPTCD = crypt.CD and crypt.PCD='CRYPT'	                  
             where a.PJTSEQ = %d and a.PGMSEQ = %d and a.GRPSEQ = %d %s
 			order by a.COLORD asc, a.COLID asc, c.OBJDORD asc
             "
@@ -956,7 +950,6 @@ function getInput($input,$filetype,$param,$G){
             ,$G["V"]["GRPSEQ"]
             ,$AddSql
         );
-        //mlog("SQL 190 (input " . $input . ") : " .$T_SQL);
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
 
 		$result = $db[$svrid]->query($T_SQL) or ServerMsg("500","335", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
@@ -972,7 +965,7 @@ function getInput($input,$filetype,$param,$G){
               a.*
               ,ifnull(b.CDVAL,'na') as COLSORT
             from CG_PGMIO a
-              left outer join CG_CODED b on a.DATATYPE = b.CD and b.PCD='GRIDSORT' and a.PJTSEQ = b.PJTSEQ
+              left outer join CG_CODED b on a.DATATYPE = b.CD and b.PCD='GRIDSORT' 
             where a.PJTSEQ = %d and a.PGMSEQ = %d
               and a.GRPSEQ = (select GRPSEQ from CG_PGMGRP where PJTSEQ = %d and PGMSEQ = %d and GRPTYPE = 'CONDITION' )
               %s
@@ -1139,7 +1132,6 @@ function getInput($input,$filetype,$param,$G){
                     ON b.PCD = 'RTN_TYPE' and a.RTN_TYPE = b.CD
                 left outer join CG_SVR s on a.SVRSEQ = s.SVRSEQ
 			where a.PJTSEQ = %d and a.PGMSEQ = %d %s
-				and a.PJTSEQ= b.PJTSEQ
             "
             ,addSqlSlashes($F_PJTSEQ)
             ,addSqlSlashes($F_PGMSEQ)
@@ -1185,7 +1177,7 @@ function getInput($input,$filetype,$param,$G){
 			from 
                 CG_PGMSQLD a
                 left outer join CG_DD c on a.PJTSEQ = c.PJTSEQ and a.DDCOLID = c.COLID
-				left outer join CG_CODED b on b.PCD = 'DATATYPE' and c.DATATYPE = b.CD and a.PJTSEQ = b.PJTSEQ
+				left outer join CG_CODED b on b.PCD = 'DATATYPE' and c.DATATYPE = b.CD
 			where a.PJTSEQ = %d and a.PGMSEQ = %d and a.SQLSEQ = '%s' %s
 			order by ORD asc
             "
@@ -1251,10 +1243,8 @@ function getJsA($lineD){
 
     $T_SQL = sprintf("
 		select a.* from CG_OBJINFOA  a
-			join CG_PJTINFO b on a.PJTSEQ = b.PJTSEQ
-		where b.PJTSEQ = %d and OBJDSEQ = %d order by OBJAORD ASC"
-        , $F_PJTSEQ
-        , $lineD["OBJDSEQ"]
+		where  OBJDSEQ = %d order by OBJAORD ASC"
+         , $lineD["OBJDSEQ"]
     );
 
 	//if($lineD["OBJDSEQ"] == 124)rlog("SQL : " . $T_SQL);
@@ -1276,9 +1266,7 @@ function getJsB($lineA){
 
     $T_SQL = sprintf("
 		select a.* from CG_OBJINFOB a
-			join CG_PJTINFO b on a.PJTSEQ = b.PJTSEQ
-		where b.PJTSEQ = %d and OBJASEQ = %d order by OBJBORD ASC"
-        , $F_PJTSEQ
+		where OBJASEQ = %d order by OBJBORD ASC"
         , $lineA["OBJASEQ"]
     );
 	//if($lineA["OBJASEQ"] == 124)rlog("SQL : " . $T_SQL);
@@ -1296,42 +1284,6 @@ function getJsB($lineA){
 
 
 
-function getSrcA($lineD){
-    Global $db,$svrid,$F_PJTSEQ;
-    $RtnVal=null;
 
-    $T_SQL = sprintf("select SRCTXT,SRCAORD,INPUT,PARAM,SRCTYPE,SPTTXT from CG_SRCINFOA   where PJTSEQ = %d and SRCDSEQ = %d order by SRCAORD ASC"
-        , $F_PJTSEQ
-        , $lineD["SRCDSEQ"]
-    );
-    //echo "<br>getSrcA :  ". $T_SQL;
-    $result2 = $db[$svrid]->query($T_SQL) or ServerMsg("500","143", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
-
-    //$line2 = null;
-    $RtnVal = fetch_all($result2,MYSQLI_ASSOC);
-
-    $result2->close();
-
-    return $RtnVal;
-}
-
-function getSrcD($line){
-    Global $db,$svrid,$F_PJTSEQ;
-    $RtnVal=null;
-
-    $T_SQL = sprintf("select SRCDSEQ,SRCTXT,SRCDORD,INPUT,PARAM,SRCTYPE,SPTTXT from CG_SRCINFOD   where PJTSEQ = %d and SRCSEQ = %d order by SRCDORD ASC"
-        , $F_PJTSEQ
-        , $line["SRCSEQ"]
-    );
-    //echo "<br>getSrcD :  ". $T_SQL;
-    $result2 = $db[$svrid]->query($T_SQL) or ServerMsg("500","144", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
-
-    //$line2 = null;
-    $RtnVal = fetch_all($result2,MYSQLI_ASSOC);
-
-    $result2->close();
-
-    return $RtnVal;
-}
 
 ?>

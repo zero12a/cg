@@ -120,15 +120,15 @@ where USERSEQ = #{USERSEQ}";
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "INSERT INTO CG_SVR (
-	SVRID,SVRNM,USERSEQ,DBHOST,DBPORT
-	,DBNAME,DBUSRID,DBUSRPW,USEYN
+	SVRID,SVRNM,PJTSEQ,USERSEQ,DBHOST
+	,DBPORT,DBNAME,DBUSRID,DBUSRPW,USEYN
 	,ADDDT
 )VALUES(
-	#{SVRID},#{SVRNM},#{USERSEQ},#{DBHOST},#{DBPORT}
-	,#{DBNAME},#{DBUSRID},#{DBUSRPW},#{USEYN}
+	#{SVRID},#{SVRNM},#{PJTSEQ}, #{USERSEQ},#{DBHOST}
+	,#{DBPORT},#{DBNAME},#{DBUSRID},#{DBUSRPW},#{USEYN}
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
-		$RtnVal["BINDTYPE"] = "ssissssss";
+		$RtnVal["BINDTYPE"] = "ssiissssss";
 		return $RtnVal;
     }  
 }

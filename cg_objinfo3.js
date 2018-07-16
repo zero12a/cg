@@ -61,7 +61,7 @@
         tgrid = mygrid2;
 
         var id=tgrid.uid();
-        tgrid.addRow(id,[lastinput2json.PJTSEQ,,lastinput2json.OBJTYPE],0);
+        tgrid.addRow(id,[,lastinput2json.OBJTYPE],0);
         tgrid.showRow(id);
         tgrid.selectRow(0);
         tgrid.cells(id,0).cell.wasChanged = true;
@@ -76,7 +76,7 @@
         tgrid = mygrid3;
 
         var id=tgrid.uid();
-        tgrid.addRow(id,[lastinput3json.PJTSEQ,"",lastinput3json.OBJTYPE,lastinput3json.OBJDSEQ],0);
+        tgrid.addRow(id,["",lastinput3json.OBJTYPE,lastinput3json.OBJDSEQ],0);
         tgrid.showRow(id);
         tgrid.selectRow(0);
         tgrid.cells(id,0).cell.wasChanged = true;
@@ -94,7 +94,7 @@
         tgrid = mygrid4;
 
         var id=tgrid.uid();
-        tgrid.addRow(id,[lastinput4json.PJTSEQ,"",lastinput4json.OBJTYPE,lastinput4json.OBJASEQ],0);
+        tgrid.addRow(id,["",lastinput4json.OBJTYPE,lastinput4json.OBJASEQ],0);
         tgrid.showRow(id);
         tgrid.selectRow(0);
         tgrid.cells(id,0).cell.wasChanged = true;
@@ -843,11 +843,11 @@
         //그리드 초기화
         mygrid1 = new dhtmlXGridObject('grid1'); //OBJINFO
         mygrid1.setImagePath("../dhtmlx/imgs/");
-        mygrid1.setHeader("PJTSEQ,OLD_OBJTYPE,OBJTYPE,USE,ADDDT,MODDT");
-        mygrid1.setColumnIds("PJTSEQ,OLD_OBJTYPE,OBJTYPE,USEYN,ADDDT,MODDT");
+        mygrid1.setHeader("OLD_OBJTYPE,OBJTYPE,USE,ADDDT,MODDT");
+        mygrid1.setColumnIds("OLD_OBJTYPE,OBJTYPE,USEYN,ADDDT,MODDT");
         //mygrid1.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygrid1.setInitWidths("40,40,50,30,60,60")
-        mygrid1.setColTypes("ed,ed,ed,ed,ro,ro");
+        mygrid1.setInitWidths("40,50,30,60,60")
+        mygrid1.setColTypes("ed,ed,ed,ro,ro");
         mygrid1.enableSmartRendering(false);
         mygrid1.enableMultiselect(true);
         mygrid1.init();
@@ -906,8 +906,7 @@
 			//alert(q(mygrid1.cells(rowID,1).getValue()));
 			//alert(q(mygrid1.cells(rowID,2).getValue()));
             lastinput2json = jQuery.parseJSON('{ "__NAME":"lastinput2json"' +
-                ', "PJTSEQ" : "' + q(mygrid1.cells(rowID,0).getValue()) + '"' +
-                ', "OBJTYPE" : "' + q(mygrid1.cells(rowID,2).getValue()) + '"' +
+                ', "OBJTYPE" : "' + q(mygrid1.cells(rowID,mygrid1.getColIndexById("OBJTYPE")).getValue()) + '"' +
                 '}');
 
 
@@ -923,14 +922,14 @@
 
         mygrid2 = new dhtmlXGridObject('grid2'); //OBJINFOD
         mygrid2.setImagePath("../dhtmlx/imgs/");
-        mygrid2.setHeader("PJTSEQ,DSEQ,OBJTYPE,FILETYPE,OBJVAL,ORD,OBJVALTYPE,UILANG,OBJVALNM,DESC,SRCTXT,SPT,INPUT,PARAM,TYPE,FILTER,ADDDT,MODDT,DEBUGYN");
-        mygrid2.setColumnIds("PJTSEQ,OBJDSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN");
+        mygrid2.setHeader("DSEQ,OBJTYPE,FILETYPE,OBJVAL,ORD,OBJVALTYPE,UILANG,OBJVALNM,DESC,SRCTXT,SPT,INPUT,PARAM,TYPE,FILTER,ADDDT,MODDT,DEBUGYN");
+        mygrid2.setColumnIds("OBJDSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN");
         //mygrid2.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygrid2.setInitWidths("30,30,50,30,100,30,60,60,50,60,350,40,60,60,40,50,60,60,40")
-        mygrid2.setColTypes("ed,ro,ed,co,co,ed,co,co,ed,ed,txttxt,ed,ed,edtxt,ed,ed,ro,ro,ed");
-        mygrid2.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left")
+        mygrid2.setInitWidths("30,50,30,100,30,60,60,50,60,350,40,60,60,40,50,60,60,40")
+        mygrid2.setColTypes("ro,ed,co,co,ed,co,co,ed,ed,txttxt,ed,ed,edtxt,ed,ed,ro,ro,ed");
+        mygrid2.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left")
         //mygrid2.isColumnHidden(0);//PJTID숨기기
-		mygrid2.setColSorting("int,int,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str");
+		mygrid2.setColSorting("int,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str");
 
         mygrid2.enableSmartRendering(false)
         mygrid2.enableMultiselect(true)
@@ -998,9 +997,8 @@
             lastinput3 = ConAllData + RowAllData;
 
             lastinput3json = jQuery.parseJSON('{ "__NAME":"lastinput3json"' +
-                ', "PJTSEQ" : "' + q(mygrid2.cells(rowID,0).getValue()) + '"' +
-                ', "OBJDSEQ" : "' + q(mygrid2.cells(rowID,1).getValue()) + '"' +
-                ', "OBJTYPE" : "' + q(mygrid2.cells(rowID,2).getValue()) + '"' +
+                ', "OBJDSEQ" : "' + q(mygrid2.cells(rowID,mygrid2.getColIndexById("OBJDSEQ")).getValue()) + '"' +
+                ', "OBJTYPE" : "' + q(mygrid2.cells(rowID,mygrid2.getColIndexById("OBJTYPE")).getValue()) + '"' +
                 '}');
 
 
@@ -1030,13 +1028,13 @@
 
         mygrid3 = new dhtmlXGridObject('grid3'); //OBJINFOA
         mygrid3.setImagePath("../dhtmlx/imgs/");
-        mygrid3.setHeader("PJTSEQ,ASEQ,OBJTYPE,DSEQ,ORD,OBJDESC,SRCTXT,SPT,INPUT,PARAM,TYPE,FILTER,ADDDT,MODDT,DEBUGYN");
-        mygrid3.setColumnIds("PJTSEQ,OBJASEQ,OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN");
+        mygrid3.setHeader("ASEQ,OBJTYPE,DSEQ,ORD,OBJDESC,SRCTXT,SPT,INPUT,PARAM,TYPE,FILTER,ADDDT,MODDT,DEBUGYN");
+        mygrid3.setColumnIds("OBJASEQ,OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN");
         //mygrd3.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygrid3.setInitWidths("30,30,50,30,30,80,500,30,80,80,50,50,70,70,40")
-        mygrid3.setColTypes("ed,ro,ed,ed,ed,ed,txttxt,ed,ed,edtxt,ed,ed,ro,ro,ed");
-        mygrid3.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left")
-		mygrid3.setColSorting("int,int,str,int,int,str,str,str,str,str,str,str,str,str,str");
+        mygrid3.setInitWidths("30,50,30,30,80,500,30,80,80,50,50,70,70,40")
+        mygrid3.setColTypes("ro,ed,ed,ed,ed,txttxt,ed,ed,edtxt,ed,ed,ro,ro,ed");
+        mygrid3.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left")
+		mygrid3.setColSorting("int,str,int,int,str,str,str,str,str,str,str,str,str,str");
         //mygrid2.isColumnHidden(0);//PJTID숨기기
 
         mygrid3.enableSmartRendering(false)
@@ -1096,9 +1094,8 @@
 
 
             lastinput4json = jQuery.parseJSON('{ "__NAME":"lastinput4json"' +
-                ', "PJTSEQ" : "' + q(mygrid3.cells(rowID,0).getValue()) + '"' +
-                ', "OBJASEQ" : "' + q(mygrid3.cells(rowID,1).getValue()) + '"' +
-                ', "OBJTYPE" : "' + q(mygrid3.cells(rowID,2).getValue()) + '"' +
+                ', "OBJASEQ" : "' + q(mygrid3.cells(rowID,mygrid3.getColIndexById("OBJASEQ")).getValue()) + '"' +
+                ', "OBJTYPE" : "' + q(mygrid3.cells(rowID,mygrid3.getColIndexById("OBJTYPE")).getValue()) + '"' +
                 '}');
 
 
@@ -1124,14 +1121,14 @@
 
         mygrid4 = new dhtmlXGridObject('grid4'); //OBJINFOB
         mygrid4.setImagePath("../dhtmlx/imgs/");
-        mygrid4.setHeader("PJTSEQ,BSEQ,OBJTYPE,ASEQ,ORD,OBJDESC,SRCTXT,SPT,INPUT,PARAM,TYPE,FILTER,ADDDT,MODDT,DEBUGYN");
-        mygrid4.setColumnIds("PJTSEQ,OBJBSEQ,OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN");
+        mygrid4.setHeader("BSEQ,OBJTYPE,ASEQ,ORD,OBJDESC,SRCTXT,SPT,INPUT,PARAM,TYPE,FILTER,ADDDT,MODDT,DEBUGYN");
+        mygrid4.setColumnIds("OBJBSEQ,OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN");
 
-        mygrid4.setInitWidths("20,30,50,30,30,80,500,30,80,80,50,50,70,70,40");
-        mygrid4.setColTypes("ed,ro,ed,ed,ed,ed,txttxt,ed,ed,edtxt,ed,ed,ro,ro,ed");
-        mygrid4.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        mygrid4.setInitWidths("30,50,30,30,80,500,30,80,80,50,50,70,70,40");
+        mygrid4.setColTypes("ro,ed,ed,ed,ed,txttxt,ed,ed,edtxt,ed,ed,ro,ro,ed");
+        mygrid4.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         //mygrid2.isColumnHidden(0);//PJTID숨기기
-		mygrid4.setColSorting("int,int,str,int,int,str,str,str,str,str,str,str,str,str");
+		mygrid4.setColSorting("int,str,int,int,str,str,str,str,str,str,str,str,str");
 
         mygrid4.enableSmartRendering(false)
         mygrid4.enableMultiselect(true)

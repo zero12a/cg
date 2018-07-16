@@ -886,11 +886,11 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "read"){
     alog("---------------GRP G8 ---------------------START");
     alog("        G8_CRUD_MODE : " . $REQ["G8_CRUD_MODE"]);
 
-    $to_coltype = "sss";
+    $to_coltype = "s";
     $sql = "
 			select a.CD,b.NM,a.CDVAL
-			from CG_CODED a join CG_CODED b on a.PCD = #G1_PCD# and b.PCD = 'FNC' and a.CD = b.CD 
-			where a.PJTSEQ = #F_PJTSEQ# and b.PJTSEQ = #F_PJTSEQ# 
+			from CG_CODED a join CG_CODED b on  a.CD = b.CD 
+			where a.PCD = #G1_PCD# and b.PCD = 'FNC'
           ";
     alog("        selected : " );
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);

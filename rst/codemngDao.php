@@ -19,7 +19,7 @@ class codemngDao
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "select 
-	PJTSEQ,PCD,PNM,PCDDESC,ORD
+	PCD,PNM,PCDDESC,ORD
 	,UITOOL,USEYN,DELYN
 	,ADDDT,MODDT
 from 
@@ -35,7 +35,7 @@ order by ORD asc";
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "select
-	PJTSEQ, CD,NM,CDDESC,PCD,ORD
+	CD,NM,CDDESC,PCD,ORD
 	,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE
 	,EDITYN,FORMATYN,USEYN,DELYN
 	,ADDDT,MODDT
@@ -52,15 +52,15 @@ order by ORD ";
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "insert into CG_CODE (
-	PJTSEQ,PCD,PNM,PCDDESC,ORD
+	PCD,PNM,PCDDESC,ORD
 	,UITOOL,USEYN,DELYN
 	,ADDDT
 ) values (
-	#{PJTSEQ},#{PCD},#{PNM},#{PCDDESC},if(#{ORD}='','10',#{ORD})
+	#{PCD},#{PNM},#{PCDDESC},if(#{ORD}='','10',#{ORD})
 	,#{UITOOL},if(#{USEYN}='','Y',#{USEYN}),if(#{DELYN}='','N',#{DELYN})
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
-		$RtnVal["BINDTYPE"] = "isssiisssss";
+		$RtnVal["BINDTYPE"] = "sssiisssss";
 		return $RtnVal;
     }  
 	//DTL    
@@ -70,17 +70,17 @@ order by ORD ";
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "insert into CG_CODED (
-	PJTSEQ, CD,NM,CDDESC,PCD
+	CD,NM,CDDESC,PCD
 	,ORD,CDVAL,CDVAL2,CDMIN,CDMAX
 	,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN
 	,ADDDT
 ) values (
-	#{PJTSEQ},#{CD},#{NM},#{CDDESC},#{PCD}
+	#{CD},#{NM},#{CDDESC},#{PCD}
 	,if(#{ORD}='',10,#{ORD}),#{CDVAL},#{CDVAL2},#{CDMIN},#{CDMAX}
 	,#{DATATYPE},#{EDITYN},#{FORMATYN},if(#{USEYN}='','Y',#{USEYN}),if(#{DELYN}='','N',#{DELYN})
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
-		$RtnVal["BINDTYPE"] = "issssiisssssssssss";
+		$RtnVal["BINDTYPE"] = "ssssiisssssssssss";
 		return $RtnVal;
     }  
 	//MAS    
@@ -93,9 +93,9 @@ order by ORD ";
 	PNM = #{PNM}, PCDDESC = #{PCDDESC}, ORD = #{ORD}, UITOOL = #{UITOOL}, USEYN = #{USEYN}
 	, DELYN = #{DELYN}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-where PCD = #{PCD} and PJTSEQ = #{PJTSEQ}
+where PCD = #{PCD}
 ";
-		$RtnVal["BINDTYPE"] = "ssissssi";
+		$RtnVal["BINDTYPE"] = "ssissss";
 		return $RtnVal;
     }  
 	//DTL    
@@ -109,9 +109,9 @@ where PCD = #{PCD} and PJTSEQ = #{PJTSEQ}
 	, CDMIN = #{CDMIN}, CDMAX = #{CDMAX}, DATATYPE = #{DATATYPE}, EDITYN = #{EDITYN}, FORMATYN = #{FORMATYN}
 	, USEYN = #{USEYN}, DELYN = #{DELYN}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-where PJTSEQ = #{PJTSEQ} and PCD = #{PCD} and CD = #{CD}
+where  PCD = #{PCD} and CD = #{CD}
 ";
-		$RtnVal["BINDTYPE"] = "ssisssssssssiss";
+		$RtnVal["BINDTYPE"] = "ssisssssssssss";
 		return $RtnVal;
     }  
 	//DTL    
@@ -121,9 +121,9 @@ where PJTSEQ = #{PJTSEQ} and PCD = #{PCD} and CD = #{CD}
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "delete from CG_CODED 
-where PJTSEQ = #{PJTSEQ} and PCD = #{PCD} and CD = #{CD}
+where PCD = #{PCD} and CD = #{CD}
 ";
-		$RtnVal["BINDTYPE"] = "iss";
+		$RtnVal["BINDTYPE"] = "ss";
 		return $RtnVal;
     }  
 	//MAS    
@@ -133,9 +133,9 @@ where PJTSEQ = #{PJTSEQ} and PCD = #{PCD} and CD = #{CD}
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "delete from CG_CODE
-where PCD = #{PCD} and PJTSEQ = #{PJTSEQ}
+where PCD = #{PCD} 
 ";
-		$RtnVal["BINDTYPE"] = "si";
+		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
 }

@@ -84,10 +84,9 @@ if($REQ["F_GRPID"] == "4" && $REQ["F4_CRUD_MODE"] == "read"){
     alog("        to_coltype : " . $to_coltype);
     $sql = "
           select
-            a.PJTSEQ,OBJTYPE,STARTTXT,LBLSTARTTXT,LBLTXT,LBLENDTXT,OBJSTARTTXT,OBJTXT,OBJENDTXT,ENDTXT,USEYN,a.ADDDT,a.MODDT
+            OBJTYPE,STARTTXT,LBLSTARTTXT,LBLTXT,LBLENDTXT,OBJSTARTTXT,OBJTXT,OBJENDTXT,ENDTXT,USEYN,a.ADDDT,a.MODDT
           from CG_OBJINFO a 
-			join CG_PJTINFO b on a.PJTSEQ=b.PJTSEQ
-		  where a.DELYN='N' and b.PJTID = #F_PJTID# and a.OBJTYPE = #G1_OBJTYPE#
+		  where a.DELYN='N' and a.OBJTYPE = #G1_OBJTYPE#
           limit 1
           ";
 
@@ -108,31 +107,25 @@ if($REQ["F_GRPID"] == "4" && $REQ["F4_CRUD_MODE"] == "read"){
 
     $sql_inserted = "
                 insert into CG_OBJINFO (
-                    PJTSEQ,OBJTYPE,LBLTXT,OBJTXT,USEYN
-                    ,STARTTXT,ENDTXT,LBLSTARTTXT,LBLENDTXT,OBJSTARTTXT
-                    ,OBJENDTXT
+                    OBJTYPE,USEYN,DELYN
                     ,ADDDT
                 ) values (
-                    #PJTSEQ#,#OBJTYPE#,#LBLTXT#,#OBJTXT#,#USEYN#
-                    ,#STARTTXT#,#ENDTXT#,#LBLSTARTTXT#,#LBLENDTXT#,#OBJSTARTTXT#
-                    ,#OBJENDTXT#
+                    #OBJTYPE#,#USEYN#,'N'
                     ,date_format(sysdate(),'%Y%m%d%H%i%s')
                 )
     ";
-    $sql_inserted_coltype = "issss sssss s";
+    $sql_inserted_coltype = "ss";
 
-    $sql_deleted = "update  CG_OBJINFO set DELYN='Y' where PJTSEQ  = ( SELECT PJTSEQ FROM CG_PJTINFO WHERE PJTID = #F_PJTID# ) and OBJTYPE = #OBJTYPE# ";
-    $sql_deleted_coltype = "ss";
+    $sql_deleted = "update  CG_OBJINFO set DELYN='Y' where  OBJTYPE = #OBJTYPE# ";
+    $sql_deleted_coltype = "s";
 
     $sql_updated = "
                 update CG_OBJINFO set
-                    LBLTXT = #LBLTXT#,OBJTXT = #OBJTXT#, USEYN = #USEYN#
-                    ,STARTTXT = #STARTTXT#, ENDTXT = #ENDTXT#,LBLSTARTTXT = #LBLSTARTTXT#,LBLENDTXT = #LBLENDTXT#,OBJSTARTTXT = #OBJSTARTTXT#
-                    ,OBJENDTXT = #OBJENDTXT#
+                    USEYN = #USEYN#
                     , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
-                where PJTSEQ = #PJTSEQ# and OBJTYPE = #OBJTYPE#
+                where OBJTYPE = #OBJTYPE#
     ";
-    $sql_updated_coltype = "sssss ssssi s";
+    $sql_updated_coltype = "s s";
 
 
     $sql=null;
@@ -167,10 +160,9 @@ if($REQ["F_GRPID"] == "1" && $REQ["G1_CRUD_MODE"] == "read"){
     alog("        to_coltype : " . $to_coltype);
     $sql = "
           select
-            a.PJTSEQ,OBJTYPE as OLD_OBJTYPE,OBJTYPE,a.USEYN,a.ADDDT,a.MODDT
+            OBJTYPE as OLD_OBJTYPE,OBJTYPE,a.USEYN,a.ADDDT,a.MODDT
           from CG_OBJINFO a
-			join CG_PJTINFO b on a.PJTSEQ = b.PJTSEQ
-		  where a.DELYN='N' and b.PJTID = #F_PJTID# 
+		  where a.DELYN='N' 
           ";
     if($REQ["F_OBJTYPE"] != "") {
         $sql .= " and OBJTYPE = #F_OBJTYPE# ";
@@ -203,25 +195,25 @@ if($REQ["F_GRPID"] == "1" && $REQ["G1_CRUD_MODE"] == "read"){
 
     $sql_inserted = "
                 insert into CG_OBJINFO (
-                    PJTSEQ,OBJTYPE,USEYN
+                    OBJTYPE,USEYN
                     ,ADDDT
                 ) values (
-                    #PJTSEQ#,#OBJTYPE#,#USEYN#
+                    #OBJTYPE#,#USEYN#
                     ,date_format(sysdate(),'%Y%m%d%H%i%s')
                 )
     ";
-    $sql_inserted_coltype = "iss";
+    $sql_inserted_coltype = "ss";
 
-    $sql_deleted = "update   CG_OBJINFO set DELYN='Y' where PJTSEQ = #PJTSEQ# and OBJTYPE = #OBJTYPE# ";
-    $sql_deleted_coltype = "ss";
+    $sql_deleted = "update   CG_OBJINFO set DELYN='Y' where OBJTYPE = #OBJTYPE# ";
+    $sql_deleted_coltype = "s";
 
     $sql_updated = "
                 update CG_OBJINFO set
                     OBJTYPE = #OBJTYPE#, USEYN = #USEYN#
                     , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
-                where PJTSEQ = #PJTSEQ# and OBJTYPE = #OLD_OBJTYPE#
+                where OBJTYPE = #OLD_OBJTYPE#
     ";
-    $sql_updated_coltype = "ss is";
+    $sql_updated_coltype = "ss s";
 
 
     //echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype);
@@ -245,18 +237,17 @@ if($REQ["F_GRPID"] == "2" && $REQ["G2_CRUD_MODE"] == "read"){
     alog("---------------GRP G2 ---------------------START");
     alog("        G2_CRUD_MODE : " .$REQ["G2_CRUD_MODE"]);	
 	$add_sql = "";
-    $to_coltype = "ss";
+    $to_coltype = "s";
     if($REQ["F_FILETYPE"] != "") {
         $add_sql = " and FILETYPE = #F_FILETYPE# ";
         $to_coltype .= "s";
     }
     $sql = "
           select
-             a.PJTSEQ,OBJDSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
+             OBJDSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
           from 
-			CG_OBJINFOD a 
-			join CG_PJTINFO b on a.PJTSEQ = b.PJTSEQ		  
-		  where b.PJTID = #F_PJTID# and OBJTYPE = #G1_OBJTYPE# $add_sql
+			CG_OBJINFOD a 		  
+		  where OBJTYPE = #G1_OBJTYPE# $add_sql
 		  order by OBJDORD asc
           ";
     alog("        to_coltype : " . $to_coltype);
@@ -265,7 +256,7 @@ if($REQ["F_GRPID"] == "2" && $REQ["G2_CRUD_MODE"] == "read"){
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
     if(!$stmt)    JsonMsg("500","109","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
-    echo make_grid_read_json($stmt,1);
+    echo make_grid_read_json($stmt,0);
     $db->close();
 
 }else if($REQ["F_GRPID"] == "2"){
@@ -289,23 +280,21 @@ if($REQ["F_GRPID"] == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 
     $sql_inserted = "
                insert into CG_OBJINFOD (
-                                    PJTSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD
-									,OBJVALTYPE,UILANG,OBJVALNM,OBJDESC,SRCTXT
-									,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER
-									,DEBUGYN
+                                    OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE
+                                    ,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT
+                                    ,INPUT,PARAM,SRCTYPE,FILTER,DEBUGYN
                                     ,ADDDT
                ) values (
-                                    #PJTSEQ#, #OBJTYPE#,#FILETYPE#,#OBJVAL#,#OBJDORD#
-									,#OBJVALTYPE#,#UILANG#,#OBJVALNM#,#OBJDESC#,#SRCTXT#
-									,#SPTTXT#,#INPUT#,#PARAM#,#SRCTYPE#,#FILTER#
-									,#DEBUGYN#
+                                    #OBJTYPE#,#FILETYPE#,#OBJVAL#,#OBJDORD#,#OBJVALTYPE#
+                                    ,#UILANG#,#OBJVALNM#,#OBJDESC#,#SRCTXT#,#SPTTXT#
+                                    ,#INPUT#,#PARAM#,#SRCTYPE#,#FILTER#,#DEBUGYN#
                                     ,date_format(sysdate(),'%Y%m%d%H%i%s')
                )
     ";
-    $sql_inserted_coltype = "isssi sssss sssss s";
+    $sql_inserted_coltype = "sssis sssss sssss";
 
-    $sql_deleted = " delete from CG_OBJINFOD where PJTSEQ = #PJTSEQ# and OBJTYPE = #G1_OBJTYPE# and OBJDSEQ = #OBJDSEQ# ";
-    $sql_deleted_coltype = "ssi";
+    $sql_deleted = " delete from CG_OBJINFOD where  OBJTYPE = #G1_OBJTYPE# and OBJDSEQ = #OBJDSEQ# ";
+    $sql_deleted_coltype = "si";
 
     $sql_updated = "
                update CG_OBJINFOD set
@@ -313,9 +302,9 @@ if($REQ["F_GRPID"] == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 					, OBJVALTYPE = #OBJVALTYPE#, UILANG = #UILANG#,  OBJDESC = #OBJDESC#, SRCTXT = #SRCTXT#, SPTTXT = #SPTTXT#
 					, INPUT = #INPUT#, PARAM = #PARAM#, SRCTYPE = #SRCTYPE#, FILTER = #FILTER#, DEBUGYN = #DEBUGYN#
                     ,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-                where PJTSEQ = #PJTSEQ# and OBJDSEQ = #OBJDSEQ#
+                where OBJDSEQ = #OBJDSEQ#
     ";
-    $sql_updated_coltype = "ssssi sssss sssss ii";
+    $sql_updated_coltype = "ssssi sssss sssss i";
 
 
 
@@ -335,21 +324,20 @@ if($REQ["F_GRPID"] == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 
 if($REQ["F_GRPID"] == "3" && $REQ["G3_CRUD_MODE"] == "read"){
 
-    $to_coltype = "si";
+    $to_coltype = "i";
     alog("        to_coltype : " . $to_coltype);
     $sql = "
           select
-            a.PJTSEQ,OBJASEQ,OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
+            OBJASEQ,OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
           from CG_OBJINFOA a
-			join CG_PJTINFO b on a.PJTSEQ = b.PJTSEQ
-		  where b.PJTID = #F_PJTID# and OBJDSEQ = #G2_OBJDSEQ#
+		  where  OBJDSEQ = #G2_OBJDSEQ#
 		  order by OBJAORD asc
           ";
     alog("        selected : " );
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
     if(!$stmt)    JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
-    echo make_grid_read_json($stmt,1);
+    echo make_grid_read_json($stmt,0);
 
     $db->close();
 
@@ -379,21 +367,21 @@ if($REQ["F_GRPID"] == "3" && $REQ["G3_CRUD_MODE"] == "read"){
 
     $sql_inserted = "
                insert into CG_OBJINFOA (
-                                    PJTSEQ,OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC
-                                    ,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE
-									,FILTER,DEBUGYN
+                                    OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT
+                                    ,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER
+                                    ,DEBUGYN
                                     ,ADDDT
                ) values (
-                                    #PJTSEQ#,#OBJTYPE#,#OBJDSEQ#,#OBJAORD#,#OBJDESC#
-                                    ,#SRCTXT#,#SPTTXT#,#INPUT#,#PARAM#,#SRCTYPE#
-									,#FILTER#,#DEBUGYN#
+                                    #OBJTYPE#,#OBJDSEQ#,#OBJAORD#,#OBJDESC#,#SRCTXT#
+                                    ,#SPTTXT#,#INPUT#,#PARAM#,#SRCTYPE#,#FILTER#
+                                    ,#DEBUGYN#
                                     ,date_format(sysdate(),'%Y%m%d%H%i%s')
                )
     ";
-    $sql_inserted_coltype = "isiis sssss ss";
+    $sql_inserted_coltype = "siiss sssss s";
 
-    $sql_deleted = " delete from CG_OBJINFOA where PJTSEQ = #PJTSEQ# and OBJASEQ = #OBJASEQ# ";
-    $sql_deleted_coltype = "ii";
+    $sql_deleted = " delete from CG_OBJINFOA where OBJASEQ = #OBJASEQ# ";
+    $sql_deleted_coltype = "i";
 
     $sql_updated = "
               update CG_OBJINFOA set
@@ -401,9 +389,9 @@ if($REQ["F_GRPID"] == "3" && $REQ["G3_CRUD_MODE"] == "read"){
                     , SPTTXT = #SPTTXT#, INPUT = #INPUT#, PARAM = #PARAM#, SRCTYPE = #SRCTYPE#, FILTER = #FILTER#
                     , DEBUGYN = #DEBUGYN#
                     ,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-                where PJTSEQ = #PJTSEQ# and OBJASEQ = #OBJASEQ#
+                where  OBJASEQ = #OBJASEQ#
     ";
-    $sql_updated_coltype = "sisis sssss s ii";
+    $sql_updated_coltype = "sisis sssss s i";
 
 
     echo make_grid_save_json_new($db,$REQ,$json_array["REQ_DATA"]["COLS"],$json_array["REQ_DATA"]["ROWS"]
@@ -420,21 +408,20 @@ if($REQ["F_GRPID"] == "3" && $REQ["G3_CRUD_MODE"] == "read"){
 
 if($REQ["F_GRPID"] == "5" && $REQ["G5_CRUD_MODE"] == "read"){
     alog("---------------GRP G5 ---------------------START");
-    $to_coltype = "si";
+    $to_coltype = "i";
     alog("        to_coltype : " . $to_coltype);
     $sql = "
           select
-            a.PJTSEQ,OBJBSEQ,OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
+            OBJBSEQ,OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
           from CG_OBJINFOB a
-			join CG_PJTINFO b on a.PJTSEQ = b.PJTSEQ
-		  where b.PJTID = #F_PJTID# and OBJASEQ = #G3_OBJASEQ#
+		  where  OBJASEQ = #G3_OBJASEQ#
 		  order by OBJBORD asc
           ";
     alog("        selected : " );
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
     if(!$stmt)    JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
-    echo make_grid_read_json($stmt,1);
+    echo make_grid_read_json($stmt,0);
 
     $db->close();
 
@@ -456,30 +443,30 @@ if($REQ["F_GRPID"] == "5" && $REQ["G5_CRUD_MODE"] == "read"){
 
     $sql_inserted = "
                insert into CG_OBJINFOB (
-                                    PJTSEQ,OBJTYPE,OBJASEQ,OBJBORD,OBJDESC
-                                    ,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE
-									,FILTER,DEBUGYN
+                                    OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT
+                                    ,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER
+                                    ,DEBUGYN
                                     ,ADDDT
                ) values (
-                                    #PJTSEQ#,#OBJTYPE#,#OBJASEQ#,#OBJBORD#,#OBJDESC#
-                                    ,#SRCTXT#,#SPTTXT#,#INPUT#,#PARAM#,#SRCTYPE#
-									,#FILTER#,#DEBUGYN#
+                                    #OBJTYPE#,#OBJASEQ#,#OBJBORD#,#OBJDESC#,#SRCTXT#
+                                    ,#SPTTXT#,#INPUT#,#PARAM#,#SRCTYPE#,#FILTER#
+                                    ,#DEBUGYN#
                                     ,date_format(sysdate(),'%Y%m%d%H%i%s')
                )
     ";
-    $sql_inserted_coltype = "isiis sssss ss";
+    $sql_inserted_coltype = "siiss sssss s";
 
-    $sql_deleted = " delete from CG_OBJINFOB where PJTSEQ = #PJTSEQ# and OBJBSEQ = #OBJBSEQ# ";
-    $sql_deleted_coltype = "si";
+    $sql_deleted = " delete from CG_OBJINFOB where  OBJBSEQ = #OBJBSEQ# ";
+    $sql_deleted_coltype = "i";
 
     $sql_updated = "
               update CG_OBJINFOB set
                     OBJTYPE = #OBJTYPE#, OBJDESC = #OBJDESC#, OBJBORD = #OBJBORD#, SRCTXT = #SRCTXT#, SPTTXT = #SPTTXT#
 					, INPUT = #INPUT#, PARAM = #PARAM#, SRCTYPE = #SRCTYPE#, FILTER = #FILTER#, DEBUGYN = #DEBUGYN#
                     ,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-                where PJTSEQ = #PJTSEQ# and OBJBSEQ = #OBJBSEQ#
+                where OBJBSEQ = #OBJBSEQ#
     ";
-    $sql_updated_coltype = "ssiss sssss ii";
+    $sql_updated_coltype = "ssiss sssss i";
 
 
     //echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","OBJBSEQ");
