@@ -68,7 +68,7 @@ class fileloadService
 		alog("fileLoadService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, LOAD_SEQ
+		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, LOAD_SEQ
 
 		//조회
 		//V_GRPNM : 3
@@ -93,6 +93,24 @@ class fileloadService
 		$rtnVal->GRP_DATA = array();
 
 		alog("fileLoadService-goG2Save________________________start");
+		//GRID_SAVE____________________________start
+		$grpId="G2";
+		$GRID["XML"]=$REQ[$grpId."-XML"];
+		$GRID["COLORD"] = "CHK,LOAD_SEQ,FILE_NM,TEAM_NM,TEAM_NM_LEN,SYS_NM,SYS_NM_LEN,SUBSYS_NM,SUBSYS_NM_LEN,FILE_HASH,XML_VERSION,XML_TIMESTAMP,XML_ANAL_TIMESTAMP,XML_DT,XML_ANAL_DT,BUG_CNT,LOAD_END_DT,ADD_DT,MOD_DT"; //그리드 컬럼순서(Hidden컬럼포함)
+	//암호화컬럼
+		$GRID["COLCRYPT"] = array();	
+		$GRID["KEYCOLID"] = "LOAD_SEQ";  //KEY컬럼 COLID, 1
+		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
+		//저장
+		$GRID["SQL"]["U"] = $this->DAO->uLoad($REQ); // SAVE, 저장, LOAD
+		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_SAVE____________________________end
+
+
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
@@ -114,7 +132,7 @@ class fileloadService
 		echo json_encode($rtnVal);
 		alog("fileLoadService-goG2Excel________________________end");
 	}
-	//3, 선택저장
+	//3, 선택삭제
 	public function goG2Chksave(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -123,6 +141,18 @@ class fileloadService
 		$rtnVal->GRP_DATA = array();
 
 		alog("fileLoadService-goG2Chksave________________________start");
+		//GRID_CHK_SAVE____________________________start
+		$grpId="G2";
+		$GRID["CHK"]=$REQ[$grpId."-CHK"];
+		$GRID["KEYCOLID"] = "LOAD_SEQ";  //KEY컬럼 COLID, 1
+		//선택삭제	
+		$GRID["SQL"] = $this->DAO->dLoad($REQ); // CHKSAVE, 선택삭제, LOAD
+			$tmpVal = makeGridChkJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_CHK_SAVE____________________________end
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
@@ -144,7 +174,7 @@ class fileloadService
 
 		//조회
 		//V_GRPNM : 4
-		$GRID["SQL"]["R"] = $this->DAO->sLoadD($REQ); //SEARCH, 조회,LOAD
+		$GRID["SQL"]["R"] = $this->DAO->sLoadD($REQ); //SEARCH, 조회,LOADD
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);

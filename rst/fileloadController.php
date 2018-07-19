@@ -64,16 +64,30 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //FILE먼저 : G3, 4
 
 //G1, 2
+$REQ["G1-FILE_NM"] = reqPostString("G1-FILE_NM",1000);//FILE_NM	
+$REQ["G1-FILE_NM"] = getFilter($REQ["G1-FILE_NM"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G1-TEAM_NM"] = reqPostString("G1-TEAM_NM",300);//TEAM_NM	
+$REQ["G1-TEAM_NM"] = getFilter($REQ["G1-TEAM_NM"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G1-ADD_DT"] = reqPostString("G1-ADD_DT",14);//ADD_DT	
+$REQ["G1-ADD_DT"] = getFilter($REQ["G1-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G2, 3
 $REQ["G2-LOAD_SEQ"] = reqPostNumber("G2-LOAD_SEQ",30);//SEQ	
 $REQ["G2-LOAD_SEQ"] = getFilter($REQ["G2-LOAD_SEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-FILE_NM"] = reqPostString("G2-FILE_NM",30);//FILE_NM	
+$REQ["G2-FILE_NM"] = reqPostString("G2-FILE_NM",1000);//FILE_NM	
 $REQ["G2-FILE_NM"] = getFilter($REQ["G2-FILE_NM"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-TEAM_NM"] = reqPostString("G2-TEAM_NM",30);//TEAM_NM	
+$REQ["G2-TEAM_NM"] = reqPostString("G2-TEAM_NM",300);//TEAM_NM	
 $REQ["G2-TEAM_NM"] = getFilter($REQ["G2-TEAM_NM"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-SYS_NM"] = reqPostString("G2-SYS_NM",30);//SYS_NM	
+$REQ["G2-TEAM_NM_LEN"] = reqPostNumber("G2-TEAM_NM_LEN",30);//TEAM_NM_LEN	
+$REQ["G2-TEAM_NM_LEN"] = getFilter($REQ["G2-TEAM_NM_LEN"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G2-SYS_NM"] = reqPostString("G2-SYS_NM",1000);//SYS_NM	
 $REQ["G2-SYS_NM"] = getFilter($REQ["G2-SYS_NM"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G2-SYS_NM_LEN"] = reqPostNumber("G2-SYS_NM_LEN",30);//SYS_NM_LEN	
+$REQ["G2-SYS_NM_LEN"] = getFilter($REQ["G2-SYS_NM_LEN"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G2-SUBSYS_NM"] = reqPostString("G2-SUBSYS_NM",1000);//SUBSYS_NM	
+$REQ["G2-SUBSYS_NM"] = getFilter($REQ["G2-SUBSYS_NM"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G2-SUBSYS_NM_LEN"] = reqPostNumber("G2-SUBSYS_NM_LEN",30);//SUBSYS_NM_LEN	
+$REQ["G2-SUBSYS_NM_LEN"] = getFilter($REQ["G2-SUBSYS_NM_LEN"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-FILE_HASH"] = reqPostString("G2-FILE_HASH",30);//FILE_HASH	
 $REQ["G2-FILE_HASH"] = getFilter($REQ["G2-FILE_HASH"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-XML_VERSION"] = reqPostString("G2-XML_VERSION",30);//XML_VERSION	
@@ -138,13 +152,18 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//3
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"LOAD_SEQ,FILE_NM,TEAM_NM,SYS_NM,FILE_HASH,XML_VERSION,XML_TIMESTAMP,XML_ANAL_TIMESTAMP,XML_DT,XML_ANAL_DT,BUG_CNT,LOAD_END_DT,ADD_DT,MOD_DT"
+		,"COLORD"=>"CHK,LOAD_SEQ,FILE_NM,TEAM_NM,TEAM_NM_LEN,SYS_NM,SYS_NM_LEN,SUBSYS_NM,SUBSYS_NM_LEN,FILE_HASH,XML_VERSION,XML_TIMESTAMP,XML_ANAL_TIMESTAMP,XML_DT,XML_ANAL_DT,BUG_CNT,LOAD_END_DT,ADD_DT,MOD_DT"
 		,"VALID"=>
 			array(
-			"LOAD_SEQ"=>array("NUMBER",30)	
-			,"FILE_NM"=>array("STRING",30)	
-			,"TEAM_NM"=>array("STRING",30)	
-			,"SYS_NM"=>array("STRING",30)	
+			"CHK"=>array("STRING",30)	
+			,"LOAD_SEQ"=>array("NUMBER",30)	
+			,"FILE_NM"=>array("STRING",1000)	
+			,"TEAM_NM"=>array("STRING",300)	
+			,"TEAM_NM_LEN"=>array("NUMBER",30)	
+			,"SYS_NM"=>array("STRING",1000)	
+			,"SYS_NM_LEN"=>array("NUMBER",30)	
+			,"SUBSYS_NM"=>array("STRING",1000)	
+			,"SUBSYS_NM_LEN"=>array("NUMBER",30)	
 			,"FILE_HASH"=>array("STRING",30)	
 			,"XML_VERSION"=>array("STRING",30)	
 			,"XML_TIMESTAMP"=>array("STRING",30)	
@@ -158,10 +177,15 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//3
 					)
 		,"FILTER"=>
 			array(
-			"LOAD_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
+			"CHK"=>array("REGEXMAT","/^[0-9]+$/")
+			,"LOAD_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"FILE_NM"=>array("CLEARTEXT","/--미 정의--/")
 			,"TEAM_NM"=>array("CLEARTEXT","/--미 정의--/")
+			,"TEAM_NM_LEN"=>array("REGEXMAT","/^[0-9]+$/")
 			,"SYS_NM"=>array("CLEARTEXT","/--미 정의--/")
+			,"SYS_NM_LEN"=>array("REGEXMAT","/^[0-9]+$/")
+			,"SUBSYS_NM"=>array("CLEARTEXT","/--미 정의--/")
+			,"SUBSYS_NM_LEN"=>array("REGEXMAT","/^[0-9]+$/")
 			,"FILE_HASH"=>array("CLEARTEXT","/--미 정의--/")
 			,"XML_VERSION"=>array("CLEARTEXT","/--미 정의--/")
 			,"XML_TIMESTAMP"=>array("REGEXMAT","/^[0-9]+$/")
@@ -224,7 +248,10 @@ $REQ["G3-XML"] = filterGridXml(
 	)
 );
 	
-array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
+$REQ["G2-CHK"] = $_POST["G2-CHK"];//CHK 받기
+//filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
+$REQ["G2-CHK"] = filterGridChk($REQ["G2-CHK"],"NUMBER",30,"REGEXMAT","/^[0-9]+$/");//LOAD_SEQ 입력값검증
+	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new fileloadService();
 	//컨트롤 명령별 분개처리
@@ -246,7 +273,7 @@ switch ($ctl){
   		echo $objService->goG2Excel(); //3, 엑셀다운로드
   		break;
 	case "G2_CHKSAVE" :
-  		echo $objService->goG2Chksave(); //3, 선택저장
+  		echo $objService->goG2Chksave(); //3, 선택삭제
   		break;
 	case "G3_SEARCH" :
   		echo $objService->goG3Search(); //4, 조회
