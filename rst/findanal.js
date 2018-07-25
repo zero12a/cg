@@ -1,34 +1,34 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "findanalController.php?CTLGRP=G1&CTLFNC=SEARCHALL";// 변수 선언	
+var url_G1_SEARCHALL = "findanalController?CTLGRP=G1&CTLFNC=SEARCHALL";// 변수 선언	
 var obj_G1_EX_TEAM_NM_valid = jQuery.parseJSON( '{ "G1_EX_TEAM_NM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":100,  "DATATYPE":"STRING"} }' );  //그래프 제외 팀명  밸리데이션
 var obj_G1_EX_TEAM_NM; // 그래프 제외 팀명 변수선언//컨트롤러 경로
-var url_G2_SEARCH = "findanalController.php?CTLGRP=G2&CTLFNC=SEARCH";
+var url_G2_SEARCH = "findanalController?CTLGRP=G2&CTLFNC=SEARCH";
 			//G.GRPID 챠트 데이터
 		var chartG2Data = { labels : [], datasets: [] };
 //그리드 변수 초기화	
 //컨트롤러 경로
-var url_G3_SEARCH = "findanalController.php?CTLGRP=G3&CTLFNC=SEARCH";
+var url_G3_SEARCH = "findanalController?CTLGRP=G3&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G3_RELOAD = "findanalController.php?CTLGRP=G3&CTLFNC=RELOAD";
+var url_G3_RELOAD = "findanalController?CTLGRP=G3&CTLFNC=RELOAD";
 //그리드 객체
 var mygridG3,isToggleHiddenColG3,lastinputG3,lastinputG3json,lastrowidG3;
 var lastselectG3json;//그리드 변수 초기화	
 //컨트롤러 경로
-var url_G4_SEARCH = "findanalController.php?CTLGRP=G4&CTLFNC=SEARCH";
+var url_G4_SEARCH = "findanalController?CTLGRP=G4&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G4_RELOAD = "findanalController.php?CTLGRP=G4&CTLFNC=RELOAD";
+var url_G4_RELOAD = "findanalController?CTLGRP=G4&CTLFNC=RELOAD";
 //컨트롤러 경로
-var url_G4_VIEWHIDDEN = "findanalController.php?CTLGRP=G4&CTLFNC=VIEWHIDDEN";
+var url_G4_VIEWHIDDEN = "findanalController?CTLGRP=G4&CTLFNC=VIEWHIDDEN";
 //그리드 객체
 var mygridG4,isToggleHiddenColG4,lastinputG4,lastinputG4json,lastrowidG4;
 var lastselectG4json;//그리드 변수 초기화	
 //컨트롤러 경로
-var url_G5_SEARCH = "findanalController.php?CTLGRP=G5&CTLFNC=SEARCH";
+var url_G5_SEARCH = "findanalController?CTLGRP=G5&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G5_RELOAD = "findanalController.php?CTLGRP=G5&CTLFNC=RELOAD";
+var url_G5_RELOAD = "findanalController?CTLGRP=G5&CTLFNC=RELOAD";
 //컨트롤러 경로
-var url_G5_HIDDENCOL = "findanalController.php?CTLGRP=G5&CTLFNC=HIDDENCOL";
+var url_G5_HIDDENCOL = "findanalController?CTLGRP=G5&CTLFNC=HIDDENCOL";
 //그리드 객체
 var mygridG5,isToggleHiddenColG5,lastinputG5,lastinputG5json,lastrowidG5;
 var lastselectG5json;//화면 초기화	
@@ -88,7 +88,13 @@ function G2_INIT(){
 			responsive: true,
 			maintainAspectRatio: false,  				
 			legend: {
-				position: '',
+				position: 'right',
+			},
+			scales:{
+				yAxes:[
+					{type:'linear', display:true, position:'left', id:'y-left'}
+					,{type:'linear', display:true, position:'right', id:'y-right',gridLines:{ drawOnChartArea:false}}
+				]
 			}
 		}
 	});
@@ -113,7 +119,7 @@ function G2_INIT(){
 		//G1_SEARCH(lastinput,uuidv4());
 	});
 }
-		//팀별 현황 (보안취약점 갯수) 그리드 초기화
+	//팀별 현황 (보안취약점 갯수) 그리드 초기화
 function G3_INIT(){
   alog("G3_INIT()-------------------------start");
 
@@ -123,9 +129,9 @@ function G3_INIT(){
         mygridG3.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG3.setUserData("","gridTitle","G3 : 팀별 현황 (보안취약점 갯수)"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
-        mygridG3.setHeader("UUID_SEQ,TEAM_NM,위험 상,위험 중,위험 하,취약점수");
-		mygridG3.setColumnIds("UUID_SEQ,TEAM_NM,PRIORITY_1,PRIORITY_2,PRIORITY_3,vul_cnt");
-		mygridG3.setInitWidths("60,100,60,60,60,50");
+        mygridG3.setHeader("UUID_SEQ,TEAM_NM,위험 상,위험 중,위험 하,취약점갯수");
+		mygridG3.setColumnIds("UUID_SEQ,TEAM_NM,PRIORITY_1,PRIORITY_2,PRIORITY_3,VUL_CNT");
+		mygridG3.setInitWidths("60,100,60,60,60,60");
 		mygridG3.setColTypes("ro,ro,ro,ro,ro,ro");
 	//가로 정렬
 		mygridG3.setColAlign("left,left,right,right,right,right");
@@ -134,7 +140,7 @@ function G3_INIT(){
 		mygridG3.enableMultiselect(true);
 
 
-		//mygridG3.setColValidators("G3_UUID_SEQ,G3_TEAM_NM,G3_PRIORITY_1,G3_PRIORITY_2,G3_PRIORITY_3,G3_vul_cnt");
+		//mygridG3.setColValidators("G3_UUID_SEQ,G3_TEAM_NM,G3_PRIORITY_1,G3_PRIORITY_2,G3_PRIORITY_3,G3_VUL_CNT");
 		mygridG3.splitAt(0);//'freezes' 0 columns 
 		mygridG3.init();
 
@@ -181,7 +187,7 @@ function G3_INIT(){
 		 // IO : 위험 상초기화	
 		 // IO : 위험 중초기화	
 		 // IO : 위험 하초기화	
-		 // IO : 취약점수초기화	
+		 // IO : 취약점갯수초기화	
 	//onCheck
 		mygridG3.attachEvent("onCheck",function(rowId, cellInd, state){
 			//onCheck is void return event
@@ -221,7 +227,7 @@ function G3_INIT(){
 			//', "PRIORITY_1" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PRIORITY_1")).getValue()) + '"' +
 			//', "PRIORITY_2" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PRIORITY_2")).getValue()) + '"' +
 			//', "PRIORITY_3" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PRIORITY_3")).getValue()) + '"' +
-			//', "vul_cnt" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("vul_cnt")).getValue()) + '"' +
+			//', "VUL_CNT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("VUL_CNT")).getValue()) + '"' +
 			//'}');
 			//A125
 			//astinputG4 = ConAllData + RowAllData;
@@ -270,18 +276,18 @@ function G4_INIT(){
         mygridG4.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG4.setUserData("","gridTitle","G4 : 시스템별 현황"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
-        mygridG4.setHeader("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,취약점수");
-		mygridG4.setColumnIds("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,vul_cnt");
-		mygridG4.setInitWidths("60,60,120,60,100");
+        mygridG4.setHeader("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,취약점갯수");
+		mygridG4.setColumnIds("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,VUL_CNT");
+		mygridG4.setInitWidths("60,60,120,60,60");
 		mygridG4.setColTypes("ro,ro,ro,ro,ro");
 	//가로 정렬
-		mygridG4.setColAlign("left,left,left,left,right");
+		mygridG4.setColAlign("left,left,left,left,left");
 		mygridG4.setColSorting("int,str,str,str,int");		//렌더링
 		mygridG4.enableSmartRendering(false);
 		mygridG4.enableMultiselect(true);
 
 
-		//mygridG4.setColValidators("G4_UUID_SEQ,G4_TEAM_NM,G4_SYS_NM,G4_SUBSYS_NM,G4_vul_cnt");
+		//mygridG4.setColValidators("G4_UUID_SEQ,G4_TEAM_NM,G4_SYS_NM,G4_SUBSYS_NM,G4_VUL_CNT");
 		mygridG4.splitAt(0);//'freezes' 0 columns 
 		mygridG4.init();
 
@@ -327,7 +333,7 @@ function G4_INIT(){
 		 // IO : TEAM_NM초기화	
 		 // IO : SYS_NM초기화	
 		 // IO : SUBSYS_NM초기화	
-		 // IO : 취약점수초기화	
+		 // IO : 취약점갯수초기화	
 	//onCheck
 		mygridG4.attachEvent("onCheck",function(rowId, cellInd, state){
 			//onCheck is void return event
@@ -366,7 +372,7 @@ function G4_INIT(){
 			//', "TEAM_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("TEAM_NM")).getValue()) + '"' +
 			//', "SYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue()) + '"' +
 			//', "SUBSYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue()) + '"' +
-			//', "vul_cnt" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("vul_cnt")).getValue()) + '"' +
+			//', "VUL_CNT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("VUL_CNT")).getValue()) + '"' +
 			//'}');
 			//A125
 			//astinputG5 = ConAllData + RowAllData;
@@ -420,18 +426,18 @@ function G5_INIT(){
         mygridG5.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG5.setUserData("","gridTitle","G5 : 취약점별 현황"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
-        mygridG5.setHeader("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,RUESET,취약점수");
-		mygridG5.setColumnIds("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,RULESET,vul_cnt");
+        mygridG5.setHeader("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,RUESET,취약점갯수");
+		mygridG5.setColumnIds("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,RULESET,VUL_CNT");
 		mygridG5.setInitWidths("60,60,120,60,180,60");
 		mygridG5.setColTypes("ro,ro,ro,ro,ro,ro");
 	//가로 정렬
-		mygridG5.setColAlign("left,left,left,left,left,right");
+		mygridG5.setColAlign("left,left,left,left,left,left");
 		mygridG5.setColSorting("int,str,str,str,str,int");		//렌더링
 		mygridG5.enableSmartRendering(false);
 		mygridG5.enableMultiselect(true);
 
 
-		//mygridG5.setColValidators("G5_UUID_SEQ,G5_TEAM_NM,G5_SYS_NM,G5_SUBSYS_NM,G5_RULESET,G5_vul_cnt");
+		//mygridG5.setColValidators("G5_UUID_SEQ,G5_TEAM_NM,G5_SYS_NM,G5_SUBSYS_NM,G5_RULESET,G5_VUL_CNT");
 		mygridG5.splitAt(0);//'freezes' 0 columns 
 		mygridG5.init();
 
@@ -478,7 +484,7 @@ function G5_INIT(){
 		 // IO : SYS_NM초기화	
 		 // IO : SUBSYS_NM초기화	
 		 // IO : RUESET초기화	
-		 // IO : 취약점수초기화	
+		 // IO : 취약점갯수초기화	
 	//onCheck
 		mygridG5.attachEvent("onCheck",function(rowId, cellInd, state){
 			//onCheck is void return event
@@ -518,7 +524,7 @@ function G5_INIT(){
 			//', "SYS_NM" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("SYS_NM")).getValue()) + '"' +
 			//', "SUBSYS_NM" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("SUBSYS_NM")).getValue()) + '"' +
 			//', "RULESET" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("RULESET")).getValue()) + '"' +
-			//', "vul_cnt" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("vul_cnt")).getValue()) + '"' +
+			//', "VUL_CNT" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("VUL_CNT")).getValue()) + '"' +
 			//'}');
 		//A124
 		});
@@ -624,13 +630,32 @@ function G1_SEARCHALL(token){
             nowCol++;
             var dsColor = window.chartColors[colorNames[nowCol-1]];                 
             var newDataset = {
-                type : 'bar',                
-				label: '취약점수',
-				colid : 'vul_cnt',
+                type : 'line',                
+				label: '유형수',
+				colid : 'TYPE_CNT',
 				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
 				borderColor: dsColor,
 				borderWidth: 1,
-				data: []
+				data: [],
+				yAxisID: 'y-left'
+            };
+            for(i=0;i<resData.RTN_DATA.rows.length;i++){
+                newDataset.data.push(resData.RTN_DATA.rows[i].data[nowCol]);
+            }      
+            chartG2Data.datasets.push(newDataset);
+														 
+            //두번째 컬럼부터 
+            nowCol++;
+            var dsColor = window.chartColors[colorNames[nowCol-1]];                 
+            var newDataset = {
+                type : 'bar',                
+				label: '취약점갯수',
+				colid : 'VUL_CNT',
+				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+				borderColor: dsColor,
+				borderWidth: 1,
+				data: [],
+				yAxisID: 'y-right'
             };
             for(i=0;i<resData.RTN_DATA.rows.length;i++){
                 newDataset.data.push(resData.RTN_DATA.rows[i].data[nowCol]);
@@ -715,11 +740,6 @@ function G3_RELOAD(token){
 
         alog("G3_SEARCH()------------end");
     }
-//새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
-}
     //그리드 조회(시스템별 현황)	
     function G4_SEARCH(tinput,token){
         alog("G4_SEARCH()------------start");
@@ -789,26 +809,10 @@ function G4_RELOAD(token){
 		alog("G4_VIEWHIDDEN()..................end");
     }
 //새로고침	
-function G5_RELOAD(token){
-  alog("G5_RELOAD-----------------start");
-  G5_SEARCH(lastinputG5,token);
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
 }
-    function G5_HIDDENCOL(){
-		alog("G5_HIDDENCOL()..................start");
-        if(isToggleHiddenColG5){
-            isToggleHiddenColG5 = false;            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),true); //TEAM_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),true); //SYS_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),true); //SUBSYS_NM
-     }else{
-            isToggleHiddenColG5 = true;
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),false); //TEAM_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),false); //SYS_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),false); //SUBSYS_NM
-        }
-		alog("G5_HIDDENCOL()..................end");
-    }
     //그리드 조회(취약점별 현황)	
     function G5_SEARCH(tinput,token){
         alog("G5_SEARCH()------------start");
@@ -864,4 +868,25 @@ function G5_RELOAD(token){
         });
 
         alog("G5_SEARCH()------------end");
+    }
+//새로고침	
+function G5_RELOAD(token){
+  alog("G5_RELOAD-----------------start");
+  G5_SEARCH(lastinputG5,token);
+}
+    function G5_HIDDENCOL(){
+		alog("G5_HIDDENCOL()..................start");
+        if(isToggleHiddenColG5){
+            isToggleHiddenColG5 = false;            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),true); //TEAM_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),true); //SYS_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),true); //SUBSYS_NM
+     }else{
+            isToggleHiddenColG5 = true;
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),false); //TEAM_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),false); //SYS_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),false); //SUBSYS_NM
+        }
+		alog("G5_HIDDENCOL()..................end");
     }

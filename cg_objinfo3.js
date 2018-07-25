@@ -852,7 +852,7 @@
         mygrid1.enableMultiselect(true);
         mygrid1.init();
         mygrid1.splitAt(2);
-        mygrid1.setColumnHidden(1,true); //OLD_OBJTYPE
+        mygrid1.setColumnHidden(0,true); //OLD_OBJTYPE
 
         mygrid1.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
 

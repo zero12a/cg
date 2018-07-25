@@ -751,7 +751,8 @@ function getInput($input,$filetype,$param,$G){
 			  ,ifnull(bg.CDVAL2,'') as GRID_CDVAL2
               ,ifnull(bf.CDVAL2,'') as FORMVIEW_CDVAL2
               ,case when ifnull(bg.CDVAL2,'') = '' then a.COLNM else bg.CDVAL2 end as GRID_CDVAL2_COLNM   
-              ,ifnull(oalign.CDVAL,'') as OBJALIGN_CDVAL            
+              ,ifnull(oalign.CDVAL,'') as OBJALIGN_CDVAL    
+              ,ifnull(lalign.CDVAL,'') as LBLALIGN_CDVAL        
               ,ifnull(csort.CDVAL,'') as COLSORT_CDVAL 
               ,dd.CRYPTCD as DD_CRYPTCD       
               ,crypt.CDVAL as DD_CRYPTCD_CDVAL     
@@ -767,6 +768,7 @@ function getInput($input,$filetype,$param,$G){
                 left outer join CG_CODED bf on a.OBJTYPE = bf.CD and bf.PCD='CTFORMVIEW'	
                 left outer join CG_CODED chartbar on a.OBJTYPE = chartbar.CD and chartbar.PCD='CTCHARTBAR'	
                 left outer join CG_CODED oalign on a.OBJALIGN = oalign.CD and oalign.PCD='OBJALIGN'	     
+                left outer join CG_CODED lalign on a.LBLALIGN = lalign.CD and lalign.PCD='OBJALIGN'	   
                 left outer join CG_CODED csort on a.DATATYPE = csort.CD and csort.PCD='COLSORT'	 
                 left outer join ( select COLID,CRYPTCD FROM CG_DD where PJTSEQ = %d ) dd on a.COLID = dd.COLID    
                 left outer join CG_CODED crypt on dd.CRYPTCD = crypt.CD and crypt.PCD='CRYPT'	

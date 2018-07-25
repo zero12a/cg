@@ -19,10 +19,10 @@ class findanalDao
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "SC";
 		$RtnVal["SQLTXT"] = "select uuid() as UUID_SEQ, c.TEAM_NM
-, sum( case when priority = 1 then 1 else 0 end ) as PRIORITY_1
-, sum( case when priority = 2 then 1 else 0 end ) as PRIORITY_2
-, sum( case when priority = 3 then 1 else 0 end ) as PRIORITY_3
-, count(b.LOADD_SEQ) as vul_cnt
+, format(sum( case when priority = 1 then 1 else 0 end ),0) as PRIORITY_1
+, format(sum( case when priority = 2 then 1 else 0 end ),0) as PRIORITY_2
+, format(sum( case when priority = 3 then 1 else 0 end ),0) as PRIORITY_3
+, format(count(b.LOADD_SEQ),0) as vul_cnt
 from 
 	TEAMINFO c
 	left outer join FILELOAD a on c.TEAM_NM = a.TEAM_NM
@@ -38,7 +38,7 @@ order by ifnull(count(b.LOADD_SEQ),0) desc";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "SC";
-		$RtnVal["SQLTXT"] = "select UUID() as UUID_SEQ, TEAM_NM,SYS_NM, SUBSYS_NM, count(b.LOADD_SEQ) as vul_cnt
+		$RtnVal["SQLTXT"] = "select UUID() as UUID_SEQ, TEAM_NM,SYS_NM, SUBSYS_NM, count(b.LOADD_SEQ) as VUL_CNT
 from 
 	FILELOAD a 
     join  FILELOADD b on a.load_seq = b.LOAD_SEQ
@@ -76,7 +76,7 @@ order by count(b.LOADD_SEQ) desc";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "SC";
-		$RtnVal["SQLTXT"] = "select c.TEAM_NM, ifnull(count(b.LOADD_SEQ),0) as vul_cnt
+		$RtnVal["SQLTXT"] = "select c.TEAM_NM, count(distinct b.type) as TYPE_CNT, ifnull(count(b.LOADD_SEQ),0) as VUL_CNT
 from 
 	TEAMINFO c 
 	left outer join FILELOAD a on c.TEAM_NM = a.TEAM_NM
