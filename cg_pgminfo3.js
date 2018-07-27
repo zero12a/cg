@@ -580,6 +580,97 @@
 
 
 
+
+    //파일 카피 하기
+    function delPgm(){
+        alog("delPgm()------------start");
+
+        if(!confirm("정말로 삭제하시겠습니까?")){
+            return;
+        }
+
+        sendFormData = new FormData();
+        sendFormData.append("PJTSEQ",$("#F_PJTSEQ").val());
+        sendFormData.append("PGMSEQ",$("#F_PGMSEQ").val());
+
+        //불러오기
+        $.ajax({
+            type : "POST",
+            url : "cg_pgminfo_del.php",
+            data : sendFormData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            async: true,
+            success: function(data){
+                alog("   delPgm json return----------------------");
+                alog("   json data : " + data);
+                alog("   json RTN_CD : " + data.RTN_CD);
+                alog("   json ERR_CD : " + data.ERR_CD);
+                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+                //그리드에 데이터 반영
+                if(data.RTN_CD == "200"){
+                    msgNotice("[PGM] Del 성공했습니다.",1);
+                }else{
+                    msgError("[PGM] Del 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG,3);
+                }
+
+            },
+            error: function(error){
+                msgError("[PGM] Ajax http 500 error ( " + error + " )",3);
+                alog("[PGM] Ajax http 500 error ( " + error + " )");
+            }
+        });
+
+        alog("delPgm()------------end");
+    }
+
+
+    //파일 카피 하기
+    function popCopyPgm(){
+        alog("popCopyPgm()------------start");
+
+        sendFormData = new FormData();
+        sendFormData.append("FROM_PJTSEQ",$("#F_PJTSEQ").val());
+        sendFormData.append("FROM_PGMSEQ",$("#F_PGMSEQ").val());
+        sendFormData.append("TO_PJTSEQ",$("#TO_PJTSEQ").val());
+        sendFormData.append("TO_PGMID",$("#TO_PGMID").val());
+
+        //불러오기
+        $.ajax({
+            type : "POST",
+            url : "cg_pgminfo_copy.php",
+            data : sendFormData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            async: true,
+            success: function(data){
+                alog("   popCopyPgm json return----------------------");
+                alog("   json data : " + data);
+                alog("   json RTN_CD : " + data.RTN_CD);
+                alog("   json ERR_CD : " + data.ERR_CD);
+                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+                //그리드에 데이터 반영
+                if(data.RTN_CD == "200"){
+                    msgNotice("[PGM] Copy 성공했습니다.",1);
+                }else{
+                    msgError("[PGM] Copy 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG,3);
+                }
+
+            },
+            error: function(error){
+                msgError("[PGM] Ajax http 500 error ( " + error + " )",3);
+                alog("[PGM] Ajax http 500 error ( " + error + " )");
+            }
+        });
+
+        alog("popCopyPgm()------------end");
+    }
+
+
     //그리드 조회 (pgm)
     function gridSearchPgm(tinput){
         alog("gridSearchPgm()------------start");
@@ -1079,18 +1170,6 @@
     }
 
 
-    function saveAll(){
-        alog("saveAll()------------start");
-        save1();
-        save2();
-        save3();
-        save4();
-        addstatusyn1 = false;
-        addstatusyn2 = false;
-        addstatusyn3 = false;
-        addstatusyn4 = false;
-        alog("saveAll()------------end");
-    }
 
     function view1(){
         if(isView1){
@@ -1663,6 +1742,38 @@
         '}');
 
 	
+    //프로그램 검색
+    function pgmCopy(){
+        //alert( "#F_PGMNM for .change() called." );
+        //alert($("#F_PGMNM").val());
+
+        $("#divPgmCopy").css("display","");
+        if(myWins && myWins.window("pgmCopyWindow")){
+            //alert("show");
+            myWins.window("pgmCopyWindow").show();
+        }else{
+            //alert("new");
+            myWins = new dhtmlXWindows();
+
+            myWins.createWindow({
+                id:"pgmCopyWindow",
+                left:20,
+                top:30,
+                width:680,
+                height:470,
+                caption:"프로그램 Copy"
+            });
+            //myWins.window("pgmwindow").hideHeader();
+
+            myWins.window("pgmCopyWindow").attachEvent("onClose", function(win){
+                //alert(1);
+                myWins.window("pgmCopyWindow").hide();
+                return false;
+            });
+            myWins.window("pgmCopyWindow").attachObject("divPgmCopy");
+        }
+
+    }
 
 	//프로그램 검색
 	function pgmSearch(inputNm){
@@ -1715,7 +1826,16 @@
         $("#F_PJTSEQ").val("3");
         $("#F_PGMSEQ").val("20");
 
-		
+        //조건 폼에 ONCHANGE이벤트 붙이기
+        $( "#btnCopyPgm" ).click(function( event ) {
+            pgmCopy();
+        });
+
+        //조건 폼에 ONCHANGE이벤트 붙이기
+        $( "#btnDelPgm" ).click(function( event ) {
+            delPgm();
+        });
+        
 		//조건 폼에 ONCHANGE이벤트 붙이기
 		$( "#btnPgmSearch1" ).click(function( event ) {
 			pgmSearch("F_PGMSEQ");

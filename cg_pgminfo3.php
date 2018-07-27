@@ -70,7 +70,8 @@ header("Pragma:no-cache");
 		<div  class="GRID_LABELBTN"  >
             <input 
             type="button" name="some_name" value="Search1" onclick="search1();"><input 
-            type="button" name="some_name" value="SaveAll" onclick="saveAll();"><input 
+            type="button" name="some_name" value="Copy" id="btnCopyPgm"><input 
+            type="button" name="some_name" value="Del" id="btnDelPgm"><input 
             type="button" name="some_name" value="Make" onclick="Make('');"><input 
             type="button" name="some_name" value="MakeAsync" onclick="MakeAsync(uuidv4());"><input 
             type="button" name="some_name" value="V" onclick="Make('HTML');"><input 
@@ -322,6 +323,29 @@ header("Pragma:no-cache");
         </div>
         <div id="gridPgm" width="660px" height="400px" style="background-color:white;z-index:30;"></div>
     </div>
+
+
+    <!--프로그램 COPY 팝업 윈도우 WINSOWS-->
+    <div style="position:absolute;top:0px;left:0px;display: none;width:700px;height:400px;z-index;5" id="divPgmCopy">
+        <div class="CON_LINE" style=""><form name="pgmCopyForm">
+            <div class="CON_OBJGRP" style="">
+                <div class="CON_LABEL" style="width:80px;">to PJTSEQ</div>
+                <div class="CON_OBJECT" style="width:100px;"><input type="text" name="TO_PJTSEQ" value="" id="TO_PJTSEQ" style="width:80px;"></div>
+            </div>
+            <div class="CON_OBJGRP" style="">
+                <div class="CON_LABEL" style="width:80px;">to PGMID</div>
+                <div class="CON_OBJECT" style="width:100px;"><input type="text" name="TO_PGMID" value="" id="TO_PGMID" style="width:80px;"></div>
+            </div>  
+            <div class="CON_OBJGRP" style="">
+                <div class="CON_OBJECT" style="width:150px;">
+                    <input type="button" name="some_name" value="Copy" onclick="popCopyPgm();">
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+
 
 </div>
 
