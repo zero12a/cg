@@ -68,6 +68,12 @@ header("Pragma:no-cache");
 			<!--reload--><a href="javascript:location.reload();"><img src="./img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 		</div>
 		<div  class="GRID_LABELBTN"  >
+            <!--"HTML","HTMLJS","SVRCTL","SVRSVC","SVRDAO"-->
+            <span id="makeHTML"></span>
+            <span id="makeHTMLJS"></span>
+            <span id="makeSVRCTL"></span>
+            <span id="makeSVRSVC"></span>
+            <span id="makeSVRDAO"></span>
             <input 
             type="button" name="some_name" value="Search1" onclick="search1();"><input 
             type="button" name="some_name" value="Copy" id="btnCopyPgm"><input 

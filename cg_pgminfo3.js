@@ -14,6 +14,8 @@
         for(i=0;i<types.length;i++){
             alog("MakeAsync = "  + types[i]);
             pgmtype =  types[i];
+
+            $("#make" + pgmtype).text(pgmtype);
             $.ajax({
                 type : "GET",
                 url : "./make/cg_make.php?TOKEN=" + token + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype,
@@ -21,6 +23,13 @@
                 async: true,
                 success: function(data){
                     alog(" Return : " + data.RTN_CD + " / " + data.RTN_MSG);
+
+                    if(data.RTN_MSG.indexOf("HTML") != -1) $("#makeHTML").text("R");
+                    if(data.RTN_MSG.indexOf("HTMLJS") != -1) $("#makeHTMLJS").text("R");
+                    if(data.RTN_MSG.indexOf("SVRCTL") != -1) $("#makeSVRCTL").text("R");
+                    if(data.RTN_MSG.indexOf("SVRSVC") != -1) $("#makeSVRSVC").text("R");
+                    if(data.RTN_MSG.indexOf("SVRDAO") != -1) $("#makeSVRDAO").text("R");
+
                     msgNotice(data.RTN_MSG,10);
                 },
                 error: function(error){
