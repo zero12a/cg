@@ -56,7 +56,7 @@ alog("---------------GRP PGM ---------------------START");
         $tPgmArray = make_grid_read_array($stmt);
         $subItemCnt = 0;
         foreach($tPgmArray->RTN_DATA->data as $tMap2) {
-            echo '      <item text="' . $tMap2["PGMNM"] . '" id="' . $tMap2["PGMSEQ"] . ":/c.g/rst/" . $tMap2["VIEWURL"] . '"></item>' . PHP_EOL;
+            echo '      <item text="' . $tMap2["PGMNM"] . '" id="' . $tMap2["PGMSEQ"] . ":/c.g/" . $tMap["PJTID"] . "/" . $tMap2["VIEWURL"] . '"></item>' . PHP_EOL;
             $subItemCnt++;
         }
         if($subItemCnt == 0){

@@ -123,11 +123,12 @@ if($F_GRPID == "PGM" && $REQ["PGM_CRUD_MODE"] == "read"){
     alog("        to_coltype : " . $to_coltype);
     $sql = "
       select
-        a.PJTSEQ, a.PGMSEQ, a.PGMID, a.PGMNM, a.VIEWURL, a.PGMTYPE
+        a.PJTSEQ, c.PJTID, a.PGMSEQ, a.PGMID, a.PGMNM, a.VIEWURL, a.PGMTYPE
         ,b.VERDT, b.DEGREE, a.ADDDT, a.MODDT
       from 
 		CG_PGMINFO a
-			left outer join CG_PGMVER b on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and b.ACTIVEYN='Y'
+            left outer join CG_PGMVER b on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and b.ACTIVEYN='Y'
+            join CG_PJTINFO c on a.PJTSEQ = c.PJTSEQ
       where a.PJTSEQ = #POP_PJTSEQ# and (a.PGMID = #POP_PGMID# or a.PGMNM LIKE #POP_PGMNM# or a.PGMTYPE LIKE #POP_PGMTYPE#)
       order by a.PGMSEQ desc
           ";

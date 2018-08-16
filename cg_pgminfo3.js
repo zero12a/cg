@@ -44,7 +44,8 @@
         if($("#F_PGMURL").val() == ""){
             alert("조회조건에 URL을 입력해 주세요.")
         }else{
-            window.open("./rst/" + $("#F_PGMURL").val() );
+            //window.open("./rst/" + $("#F_PGMURL").val() );//단일 프로젝트일때
+            window.open("./" + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val() );//멀티 프로젝트일때
         }
         
     }
@@ -1941,11 +1942,11 @@
         mygridPgm = new dhtmlXGridObject('gridPgm');
 		mygridPgm.setUserData("","gridTitle","pgm : pgm list"); //글로별 변수에 그리드 타이블 넣기
         mygridPgm.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridPgm.setHeader("PJTSEQ,PGMSEQ,PGMID,PGMNM,URL,PGMTYPE,VERDT,차수,ADDDT,MODDT");
-        mygridPgm.setColumnIds("PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,VERDT,DEGREE,ADDDT,MODDT");
-        mygridPgm.setInitWidths("50,70,70,*,100,60,50,40,70,70")
-        mygridPgm.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
-		mygridPgm.setColSorting("int,int,str,str,str,str,str,int,str,str");
+        mygridPgm.setHeader("PJTSEQ,PJTID,PGMSEQ,PGMID,PGMNM,URL,PGMTYPE,VERDT,차수,ADDDT,MODDT");
+        mygridPgm.setColumnIds("PJTSEQ,PJTID,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,VERDT,DEGREE,ADDDT,MODDT");
+        mygridPgm.setInitWidths("50,50,70,70,*,100,60,50,40,70,70")
+        mygridPgm.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+		mygridPgm.setColSorting("int,str,int,str,str,str,str,str,int,str,str");
 
 		mygridPgm.enableSmartRendering(false);
         mygridPgm.enableMultiselect(true);
@@ -1965,12 +1966,12 @@
 			
 
 
-
-			$("#F_PGMSEQ").val(q(mygridPgm.cells(rowID,1).getValue()));
-			$("#F_PGMID").val(q(mygridPgm.cells(rowID,2).getValue()));
-			$("#F_PGMNM").val(q(mygridPgm.cells(rowID,3).getValue()));
-            $("#F_PGMURL").val(q(mygridPgm.cells(rowID,4).getValue()));
-            $("#F_PGMTYPE").val(q(mygridPgm.cells(rowID,5).getValue()));
+			$("#F_PJTID").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PJTID")).getValue()));
+			$("#F_PGMSEQ").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PGMSEQ")).getValue()));
+			$("#F_PGMID").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PGMID")).getValue()));
+			$("#F_PGMNM").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PGMNM")).getValue()));
+            $("#F_PGMURL").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("VIEWURL")).getValue()));
+            $("#F_PGMTYPE").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PGMTYPE")).getValue()));
 
 			if(myWins && myWins.window("pgmwindow"))myWins.window("pgmwindow").hide();
 			

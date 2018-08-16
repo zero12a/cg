@@ -63,7 +63,7 @@ $xhandler_unique_id = sprintf("%08x", abs(crc32($_SERVER['REMOTE_ADDR'] . $_SERV
 	$CFG_DEBUG_YN = "Y";
 
 	//생성된 PGM 목록 URL ROOT
-	$CFG_PGM_URL_ROOT = "/c.g/rst/";
+	$CFG_PGM_URL_ROOT = "/c.g/SC/";
 
 	//업로드 가능 이미지 확장자
 	$CFG_IMG_EXT = array( "JPG", "JPEG", "PNG", "GIF", "BMP" );
