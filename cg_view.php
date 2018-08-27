@@ -13,6 +13,7 @@ if(!include_once './incConfig.php')	        echo "include fail(1)";
 if(!include_once './include/incDB.php')			echo "include fail(2)";
 if(!include_once './include/incUtil.php')		echo "include fail(3)";
 if(!include_once './include/incSec.php')		echo "include fail(4)";
+if(!include_once './include/incRequest.php')		echo "include fail(5)";
 
 ?>
 <html>
@@ -81,8 +82,8 @@ $db = db_m_open();
 //전체 리플레서 정보
 $G = null;
 
-$F_PJTSEQ = 3;
-$F_PGMSEQ = $_POST["pgmseq"];
+$F_PJTSEQ = reqPostNumber("pjtseq",10);
+$F_PGMSEQ = reqPostNumber("pgmseq",10);
 $F_FILETYPE = $_POST["filetype"];
 $RstCnt = 0;
 $NowFileType = "";

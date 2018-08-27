@@ -13,9 +13,11 @@ if(!include_once './incConfig.php')	        echo "include fail(1)";
 if(!include_once './include/incDB.php')			echo "include fail(2)";
 if(!include_once './include/incUtil.php')		echo "include fail(3)";
 if(!include_once './include/incSec.php')		echo "include fail(4)";
+if(!include_once './include/incRequest.php')		echo "include fail(5)";
 
 
-$F_PGMSEQ= $_GET["pgmseq"];
+$F_PGMSEQ= reqGetNumber("pgmseq",10);
+$F_PJTSEQ= reqGetNumber("pjtseq",10);
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,11 +45,11 @@ $F_PGMSEQ= $_GET["pgmseq"];
 			myTabbar.addTab("a4", "SVC");
 			myTabbar.addTab("a5", "DAO");
 			
-			myTabbar.tabs("a1").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","filetype":"HTML"});
-			myTabbar.tabs("a2").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","filetype":"HTMLJS"});
-			myTabbar.tabs("a3").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","filetype":"SVRCTL"});
-			myTabbar.tabs("a4").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","filetype":"SVRSVC"});
-			myTabbar.tabs("a5").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","filetype":"SVRDAO"});
+			myTabbar.tabs("a1").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","pjtseq":"<?=$F_PJTSEQ?>","filetype":"HTML"});
+			myTabbar.tabs("a2").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","pjtseq":"<?=$F_PJTSEQ?>","filetype":"HTMLJS"});
+			myTabbar.tabs("a3").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","pjtseq":"<?=$F_PJTSEQ?>","filetype":"SVRCTL"});
+			myTabbar.tabs("a4").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","pjtseq":"<?=$F_PJTSEQ?>","filetype":"SVRSVC"});
+			myTabbar.tabs("a5").attachURL("cg_view.php", null, {"pgmseq":"<?=$F_PGMSEQ?>","pjtseq":"<?=$F_PJTSEQ?>","filetype":"SVRDAO"});
 		}
 	</script>
 

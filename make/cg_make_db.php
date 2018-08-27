@@ -663,21 +663,34 @@ function getInput($input,$filetype,$param,$G){
         $T_SQL = sprintf("
             select 
                 a.*
-                ,   b.*
-                ,   cd2.CDVAL as LEGENDALIGN_CDVAL
-                ,   cd.CDVAL as COLSIZETYPE_CDVAL
+                , b.*
+                , cd2.CDVAL as LEGENDALIGN_CDVAL
+                , cd.CDVAL as COLSIZETYPE_CDVAL
+                , case when io2.IO_GRIDFOOTER_CNT is not null and io2.IO_GRIDFOOTER_CNT >= 0 then 'Y' else 'N' end 
+                    as IO_GRIDFOOTER_YN
             from CG_PGMGRP a 
                 join CG_OBJINFOD b on a.GRPTYPE = b.OBJTYPE 
                 left outer join CG_CODED cd on a.COLSIZETYPE = cd.CD and cd.PCD = 'COLSIZETYPE'        
-                left outer join CG_CODED cd2 on a.LEGENDALIGN = cd2.CD and cd2.PCD = 'LEGENDALIGN'    
+                left outer join CG_CODED cd2 on a.LEGENDALIGN = cd2.CD and cd2.PCD = 'LEGENDALIGN' 
+                left outer join
+                    (
+                    select GRPSEQ, count(*) as IO_GRIDFOOTER_CNT from CG_PGMIO io 
+                    where io.PJTSEQ = %d and io.PGMSEQ = %d
+                        and io.GRIDFOOTER is not null
+                        and io.GRIDFOOTER <> ''
+                    group by GRPSEQ
+                    ) io2 on a.GRPSEQ = io2.GRPSEQ
             where a.PJTSEQ = %d and a.PGMSEQ = %d %s 
 			order by a.GRPORD asc, b.OBJDORD asc
             "
             ,addSqlSlashes($F_PJTSEQ)
             ,addSqlSlashes($F_PGMSEQ)
+            ,addSqlSlashes($F_PJTSEQ)
+            ,addSqlSlashes($F_PGMSEQ)
 	        ,$AddSql
         );
-        //mlog("SQL 624  (input " . $input . ") : " .$T_SQL);
+        //alog("SQL 689  (input " . $input . ") : " .$T_SQL);
+        //exit;
         //echo "<br>getInput :  ". $T_SQL;
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
         $result = $db[$svrid]->query($T_SQL) or ServerMsg("500","260", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
