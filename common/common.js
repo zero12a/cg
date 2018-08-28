@@ -614,6 +614,7 @@ Map.prototype = {
     }
 };
 
+
 //var map = new Map();
 //map.put("user_id", "atspeed");
 //map.get("user_id");
@@ -626,3 +627,9 @@ function uuidv4() {
   
 //Chart.js
 var color = Chart.helpers.color;
+
+
+//2018.08.29
+function formatNumber(a){
+	return String(a).replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+}

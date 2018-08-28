@@ -676,8 +676,8 @@ function getInput($input,$filetype,$param,$G){
                     (
                     select GRPSEQ, count(*) as IO_GRIDFOOTER_CNT from CG_PGMIO io 
                     where io.PJTSEQ = %d and io.PGMSEQ = %d
-                        and io.GRIDFOOTER is not null
-                        and io.GRIDFOOTER <> ''
+                        and io.FOOTERMATH is not null
+                        and io.FOOTERMATH <> ''
                     group by GRPSEQ
                     ) io2 on a.GRPSEQ = io2.GRPSEQ
             where a.PJTSEQ = %d and a.PGMSEQ = %d %s 
@@ -796,7 +796,8 @@ function getInput($input,$filetype,$param,$G){
             ,$G["G"]["GRPSEQ"]
             ,$AddSql
         );
-        //alog("SQL 735 (input " . $input . ") : " .$T_SQL);
+        alog("SQL 799 (input " . $input . ") : " .$T_SQL);
+        //exit;
 
         //echo "<br>getInput $input :  ". $T_SQL;
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
@@ -908,7 +909,7 @@ function getInput($input,$filetype,$param,$G){
             ,$G["G"]["GRPSEQ"]
 			,$AddSql
         );
-        alog("SQL 897 (input " . $input . ") : " .$T_SQL);
+        //alog("SQL 897 (input " . $input . ") : " .$T_SQL);
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
         $result = $db[$svrid]->query($T_SQL) or ServerMsg("500","320", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
 
@@ -1201,7 +1202,7 @@ function getInput($input,$filetype,$param,$G){
             ,$G["S"]["SQLSEQ"]
             ,$AddSql
         );
-        alog("SQL 1134 (input " . $input . ") : " .$T_SQL);
+        //alog("SQL 1134 (input " . $input . ") : " .$T_SQL);
         //echo "<br>getInput $input :  ". $T_SQL;
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
 
@@ -1223,7 +1224,7 @@ function getInput($input,$filetype,$param,$G){
             ,addSqlSlashes($F_PGMSEQ)
             ,$AddSql
         );
-        alog("SQL 1155 (input " . $input . ") : " . $T_SQL);
+        //alog("SQL 1155 (input " . $input . ") : " . $T_SQL);
         //echo "<br>getInput $input :  ". $T_SQL;
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
 

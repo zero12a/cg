@@ -562,23 +562,26 @@
             $map["FNINIT"]        = $ios["FNINIT"];
             $map["BRYN"]        = $ios["BRYN"];
             $map["FORMAT"]        = $ios["FORMAT"];
-            $map["GRIDFOOTER"]        = $ios["GRIDFOOTER"];
+            $map["FOOTERNM"]        = $ios["FOOTERNM"];
+            $map["FOOTERMATH"]        = $ios["FOOTERMATH"];
 
-            $coltype = "iiiis ssiis sssss sssss sssss";
+            $coltype = "iiiis ssiis sssss sssss sssss s";
             $sql = "
                 insert into CG_PGMIO (
                     PJTSEQ, PGMSEQ, GRPSEQ, COLORD, COLID
                     , COLNM, DATATYPE, VALIDSEQ, DATASIZE, OBJTYPE
                     , POPUP, KEYYN, SEQYN, LBLHIDDENYN, LBLWIDTH
                     , LBLALIGN, OBJWIDTH, OBJHEIGHT, OBJALIGN, HIDDENYN
-                    , EDITYN, FNINIT, BRYN, FORMAT, GRIDFOOTER
+                    , EDITYN, FNINIT, BRYN, FORMAT, FOOTERNM
+                    , FOOTERMATH
                     , ADDDT, ADDID
                 ) values (
                     #{PJTSEQ}, #{PGMSEQ}, #{GRPSEQ}, #{COLORD}, #{COLID}
                     ,#{COLNM}, #{DATATYPE}, #{VALIDSEQ}, #{DATASIZE}, #{OBJTYPE}
                     ,#{POPUP}, #{KEYYN}, #{SEQYN}, #{LBLHIDDENYN}, #{LBLWIDTH}
                     ,#{LBLALIGN}, #{OBJWIDTH}, #{OBJHEIGHT}, #{OBJALIGN}, #{HIDDENYN}
-                    ,#{EDITYN}, #{FNINIT}, #{BRYN}, #{FORMAT}, #{GRIDFOOTER}
+                    ,#{EDITYN}, #{FNINIT}, #{BRYN}, #{FORMAT}, #{FOOTERNM}
+                    ,#{FOOTERMATH}
                     , date_format(sysdate(),'%Y%m%d%H%i%s'), 0
                 )
             ";

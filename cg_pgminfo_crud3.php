@@ -528,7 +528,8 @@ if($F_GRPID == "4" && $REQ["G4_CRUD_MODE"] == "read"){
           , a.COLID, a.COLORD, a.COLNM, a.DATATYPE,ifnull(a.VALIDSEQ,'') AS VALIDSEQ
           , a.DATASIZE, a.OBJTYPE, a.POPUP, a.BRYN, a.LBLHIDDENYN
           , a.LBLWIDTH, a.LBLALIGN, a.OBJWIDTH, a.OBJHEIGHT, a.OBJALIGN
-          , a.KEYYN, a.SEQYN, a.HIDDENYN, a.EDITYN, a.FNINIT, a.FORMAT, ifnull(a.GRIDFOOTER,'') as GRIDFOOTER
+          , a.KEYYN, a.SEQYN, a.HIDDENYN, a.EDITYN, a.FNINIT, a.FORMAT, a.FOOTERNM
+          , ifnull(a.FOOTERMATH,'') as FOOTERMATH
           , a.ADDDT, a.MODDT
         from CG_PGMIO a
             left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.COLID = b.COLID
@@ -551,7 +552,7 @@ if($F_GRPID == "4" && $REQ["G4_CRUD_MODE"] == "read"){
 	$xml_array = getXml2Array($_POST["xmldata"]);
 
 
-    $colord = "PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,COLORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POPUP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FORMAT,GRIDFOOTER,ADDDT,MODDT";
+    $colord = "PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,COLORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POPUP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FORMAT,FOOTERNM,FOOTERMATH,ADDDT,MODDT";
 
 	$sql_inserted = "
 		insert into CG_PGMIO (
@@ -559,18 +560,18 @@ if($F_GRPID == "4" && $REQ["G4_CRUD_MODE"] == "read"){
 							,COLNM,DATATYPE,DATASIZE,OBJTYPE,LBLHIDDENYN
                             ,LBLWIDTH, LBLALIGN, OBJWIDTH,OBJHEIGHT,OBJALIGN
                             ,HIDDENYN,EDITYN,FNINIT,KEYYN,SEQYN
-                            ,VALIDSEQ,POPUP,FORMAT,GRIDFOOTER
+                            ,VALIDSEQ,POPUP,FORMAT,FOOTERNM,FOOTERMATH
 							,ADDDT,ADDID
 	   ) values (
 							#F_PJTSEQ#,#F_PGMSEQ#,#G1_GRPSEQ#,#COLID#,#COLORD#
 							,#COLNM#,#DATATYPE#,#DATASIZE#,#OBJTYPE#,#LBLHIDDENYN#
                             ,#LBLWIDTH#, #LBLALIGN#, #OBJWIDTH#, #OBJHEIGHT#, #OBJALIGN#
                             ,#HIDDENYN#,if(#EDITYN#='','Y',#EDITYN#),#FNINIT#,#KEYYN#,#SEQYN#
-                            ,#VALIDSEQ#,#POPUP#, #FORMAT#, #GRIDFOOTER#
+                            ,#VALIDSEQ#,#POPUP#, #FORMAT#, #FOOTERNM#, #FOOTERMATH#
 							,date_format(sysdate(),'%Y%m%d%H%i%s'),#ADDID#
 	   )
 	";
-	$sql_inserted_coltype = "iiisi ssiss sssss ssssss isss i";
+	$sql_inserted_coltype = "iiisi ssiss sssss ssssss issss i";
 
 	$sql_deleted = "
                 delete from CG_PGMIO where PJTSEQ=#F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1_GRPSEQ# and IOSEQ = #IOSEQ#
@@ -583,12 +584,12 @@ if($F_GRPID == "4" && $REQ["G4_CRUD_MODE"] == "read"){
             ,OBJTYPE = #OBJTYPE#, LBLHIDDENYN=#LBLHIDDENYN#, LBLWIDTH=#LBLWIDTH#, LBLALIGN=#LBLALIGN#, OBJWIDTH=#OBJWIDTH#
             , OBJHEIGHT=#OBJHEIGHT#, OBJALIGN=#OBJALIGN#, HIDDENYN=#HIDDENYN#, EDITYN=#EDITYN#, FNINIT=#FNINIT#
             , KEYYN=#KEYYN#, SEQYN = #SEQYN#, BRYN=#BRYN#, VALIDSEQ = #VALIDSEQ#, POPUP = #POPUP#
-            , FORMAT = #FORMAT#, GRIDFOOTER = #GRIDFOOTER#
+            , FORMAT = #FORMAT#, FOOTERNM = #FOOTERNM#, FOOTERMATH = #FOOTERMATH#
 			,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #MODID#
 	  where PJTSEQ=#F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1_GRPSEQ# and IOSEQ = #IOSEQ#
 
 	";
-	$sql_updated_coltype = "sissi sssss sssss sssis ss i iiii";
+	$sql_updated_coltype = "sissi sssss sssss sssis sss i iiii";
 
 
 	echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"N","COLID");
