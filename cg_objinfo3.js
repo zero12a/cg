@@ -926,7 +926,7 @@
         mygrid2.setColumnIds("OBJDSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN");
         //mygrid2.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
         mygrid2.setInitWidths("30,50,30,100,30,60,60,50,60,350,40,60,60,40,50,60,60,40")
-        mygrid2.setColTypes("ro,ed,co,co,ed,co,co,ed,ed,txttxt,ed,ed,edtxt,ed,ed,ro,ro,ed");
+        mygrid2.setColTypes("ro,ed,co,co,ed,co,co,ed,ed,txttxt,ed,ed,edtxt,ed,edtxt,ro,ro,ed");
         mygrid2.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left")
         //mygrid2.isColumnHidden(0);//PJTID숨기기
 		mygrid2.setColSorting("int,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str");
@@ -1032,7 +1032,7 @@
         mygrid3.setColumnIds("OBJASEQ,OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN");
         //mygrd3.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
         mygrid3.setInitWidths("30,50,30,30,80,500,30,80,80,50,50,70,70,40")
-        mygrid3.setColTypes("ro,ed,ed,ed,ed,txttxt,ed,ed,edtxt,ed,ed,ro,ro,ed");
+        mygrid3.setColTypes("ro,ed,ed,ed,ed,txttxt,ed,ed,edtxt,ed,edtxt,ro,ro,ed");
         mygrid3.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left")
 		mygrid3.setColSorting("int,str,int,int,str,str,str,str,str,str,str,str,str,str");
         //mygrid2.isColumnHidden(0);//PJTID숨기기
@@ -1125,7 +1125,7 @@
         mygrid4.setColumnIds("OBJBSEQ,OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN");
 
         mygrid4.setInitWidths("30,50,30,30,80,500,30,80,80,50,50,70,70,40");
-        mygrid4.setColTypes("ro,ed,ed,ed,ed,txttxt,ed,ed,edtxt,ed,ed,ro,ro,ed");
+        mygrid4.setColTypes("ro,ed,ed,ed,ed,txttxt,ed,ed,edtxt,ed,edtxt,ro,ro,ed");
         mygrid4.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         //mygrid2.isColumnHidden(0);//PJTID숨기기
 		mygrid4.setColSorting("int,str,int,int,str,str,str,str,str,str,str,str,str");

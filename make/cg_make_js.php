@@ -7,7 +7,7 @@
  */
 
 function isFilter($G, $tFilter){
-    //alog("isFilter()..................................start : " . $tFilter);
+    alog("isFilter()..................................start : " . $tFilter);
     $isAndOper = null;
     if(strpos($tFilter,"&&") > 0){
         $tarr = explode("&&",$tFilter);
@@ -22,7 +22,7 @@ function isFilter($G, $tFilter){
 
     $SuccessCnt = 0;
     $FailCnt = 0;
-    //alog("  필터갯수 : " . sizeof($tarr));
+    alog("  필터갯수 : " . sizeof($tarr));
     for($u=0;$u<sizeof($tarr);$u++){
         $tFilter2 = $tarr[$u];
         if(strpos($tFilter2,"!=") > 0){

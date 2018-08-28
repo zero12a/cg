@@ -669,11 +669,6 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG2()------------end");
     }
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
-}
 
 
 
@@ -755,7 +750,7 @@ function G3_RELOAD(token){
 							//천단위 금액 표기
 							out = formatNumber(out);
 																			 
-							$("#G3-VUL_CNT_SUM").text(out);
+							$("#G3-VUL_CNT_SUM").text(out);	
 
 																			 						},"json");
 						
@@ -774,6 +769,11 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
 //새로고침	
 function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");
