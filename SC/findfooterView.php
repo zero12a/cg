@@ -90,8 +90,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
-			<input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
-			</div>
+<input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
+<input type="checkbox" name="G3-EDITMD_EDIT_MODE" id="G3-EDITMD_EDIT_MODE" value="Y" style="vertical-align:middle;">Edit
+				</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG3"  style="background-color:white;overflow:hidden;height:378px;width:100%;"></div>
@@ -115,8 +116,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 			<div id="div_gridG4_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG4Cnt" name="그리드 ROW 갯수">N</span>
-			<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">
-			<input type="button" name="BTN_G4_VIEWHIDDEN" value="V" onclick="G4_VIEWHIDDEN(uuidv4());">
+<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">
+<input type="button" name="BTN_G4_VIEWHIDDEN" value="V" onclick="G4_VIEWHIDDEN(uuidv4());">
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
@@ -141,8 +142,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 			<div id="div_gridG5_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG5Cnt" name="그리드 ROW 갯수">N</span>
-			<input type="button" name="BTN_G5_RELOAD" value="새로고침" onclick="G5_RELOAD(uuidv4());">
-			<input type="button" name="BTN_G5_HIDDENCOL" value="V" onclick="G5_HIDDENCOL(uuidv4());">
+<input type="button" name="BTN_G5_RELOAD" value="새로고침" onclick="G5_RELOAD(uuidv4());">
+<input type="button" name="BTN_G5_HIDDENCOL" value="V" onclick="G5_HIDDENCOL(uuidv4());">
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">

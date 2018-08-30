@@ -11,6 +11,8 @@ var url_G2_SEARCH = "findfooterController?CTLGRP=G2&CTLFNC=SEARCH";
 var url_G3_SEARCH = "findfooterController?CTLGRP=G3&CTLFNC=SEARCH";
 //컨트롤러 경로
 var url_G3_RELOAD = "findfooterController?CTLGRP=G3&CTLFNC=RELOAD";
+//컨트롤러 경로
+var url_G3_EDITMD = "findfooterController?CTLGRP=G3&CTLFNC=EDITMD";
 //그리드 객체
 var mygridG3,isToggleHiddenColG3,lastinputG3,lastinputG3json,lastrowidG3;
 var lastselectG3json;//그리드 변수 초기화	
@@ -214,7 +216,8 @@ function G3_INIT(){
 			RowEditStatus = mygridG3.getUserData(rowID,"!nativeeditor_status");
 			if(RowEditStatus == "inserted"){return false;}
 			//GRIDRowSelect30(rowID,celInd);
-			//var RowAllData = getRowsColid(mygridG3,rowID,"G3");
+            //편집모드 일때는 하위 새로고침 안하게 하기
+            if($("#G3-EDITMD_EDIT_MODE") && $("#G3-EDITMD_EDIT_MODE").is(":checked"))return false;
 			//팝업오프너 호출
 			//CD[필수], NM 정보가 있는 경우 팝업 오프너에게 값 전달
 			popG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
@@ -353,7 +356,6 @@ function G4_INIT(){
 			RowEditStatus = mygridG4.getUserData(rowID,"!nativeeditor_status");
 			if(RowEditStatus == "inserted"){return false;}
 			//GRIDRowSelect40(rowID,celInd);
-			//var RowAllData = getRowsColid(mygridG4,rowID,"G4");
 			//팝업오프너 호출
 			//CD[필수], NM 정보가 있는 경우 팝업 오프너에게 값 전달
 			popG4json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
@@ -497,7 +499,6 @@ function G5_INIT(){
 			RowEditStatus = mygridG5.getUserData(rowID,"!nativeeditor_status");
 			if(RowEditStatus == "inserted"){return false;}
 			//GRIDRowSelect50(rowID,celInd);
-			//var RowAllData = getRowsColid(mygridG5,rowID,"G5");
 			//팝업오프너 호출
 			//CD[필수], NM 정보가 있는 경우 팝업 오프너에게 값 전달
 			popG5json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
@@ -669,6 +670,11 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG2()------------end");
     }
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
 
 
 
@@ -769,11 +775,6 @@ function G1_SEARCHALL(token){
         alog("G3_SEARCH()------------end");
     }
 
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
-}
 //새로고침	
 function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");

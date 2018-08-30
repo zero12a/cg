@@ -9,6 +9,9 @@
 function isFilter($G, $tFilter){
     alog("isFilter()..................................start : " . $tFilter);
     $isAndOper = null;
+
+    $tFilter = str_replace("&amp;","&",$tFilter);//그리드에서 & 입력시 자꾸 &amp;로 변경되서 이거 처리 함
+
     if(strpos($tFilter,"&&") > 0){
         $tarr = explode("&&",$tFilter);
         $isAndOper = true;
