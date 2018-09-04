@@ -128,7 +128,7 @@ class pgmmngService
 		//GRID_SAVE____________________________start
 		$grpId="G4";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,LOGINYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
 		$GRID["KEYCOLID"] = "PGMSEQ";  //KEY컬럼 COLID, 1

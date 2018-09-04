@@ -122,6 +122,8 @@ $REQ["G4-SECTYPE"] = reqPostString("G4-SECTYPE",10);//SECTYPE
 $REQ["G4-SECTYPE"] = getFilter($REQ["G4-SECTYPE"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
 $REQ["G4-PKGGRP"] = reqPostString("G4-PKGGRP",15);//PKGGRP	
 $REQ["G4-PKGGRP"] = getFilter($REQ["G4-PKGGRP"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G4-LOGINYN"] = reqPostString("G4-LOGINYN",1);//로그인필요	
+$REQ["G4-LOGINYN"] = getFilter($REQ["G4-LOGINYN"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G4-ADDDT"] = reqPostString("G4-ADDDT",14);//ADDDT	
 $REQ["G4-ADDDT"] = getFilter($REQ["G4-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G4-MODDT"] = reqPostString("G4-MODDT",14);//MODDT	
@@ -251,7 +253,7 @@ $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//PJT
 $REQ["G4-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G4-XML"]
-		,"COLORD"=>"PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,ADDDT,MODDT"
+		,"COLORD"=>"PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,LOGINYN,ADDDT,MODDT"
 		,"VALID"=>
 			array(
 			"PJTSEQ"=>array("NUMBER",20)	
@@ -264,6 +266,7 @@ $REQ["G4-XML"] = filterGridXml(
 			,"POPHEIGHT"=>array("STRING",10)	
 			,"SECTYPE"=>array("STRING",10)	
 			,"PKGGRP"=>array("STRING",15)	
+			,"LOGINYN"=>array("STRING",1)	
 			,"ADDDT"=>array("STRING",14)	
 			,"MODDT"=>array("STRING",14)	
 					)
@@ -279,6 +282,7 @@ $REQ["G4-XML"] = filterGridXml(
 			,"POPHEIGHT"=>array("CLEARTEXT","/--미 정의--/")
 			,"SECTYPE"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
 			,"PKGGRP"=>array("CLEARTEXT","/--미 정의--/")
+			,"LOGINYN"=>array("CLEARTEXT","/--미 정의--/")
 			,"ADDDT"=>array("REGEXMAT","/^[0-9]+$/")
 			,"MODDT"=>array("REGEXMAT","/^[0-9]+$/")
 					)

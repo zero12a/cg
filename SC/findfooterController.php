@@ -37,18 +37,8 @@ if($ctl1 == "" || $ctl2 == ""){
 }else{
 	$ctl = $ctl1 . "_" . $ctl2;
 }
-//권한정보 검사하기 in_array("aix", $os)
-if(!isLogin()){
-	JsonMsg("500","110"," 로그아웃되었습니다.");
-}else if(!$objAuth->isOneConnection()){
-	logOut();
-	JsonMsg("500","120"," 다른기기(PC,브라우저 등)에서 로그인하였습니다. 다시로그인 후 사용해 주세요.");
-}else if($objAuth->isAuth("findFooter",$ctl)){
-	$objAuth->LAUTH_SEQ = $objAuth->logUsrAuth($reqToken,$resToken,"findFooter",$ctl,"Y");
-}else{
-	$objAuth->logUsrAuth($reqToken,$resToken,"findFooter",$ctl,"N");
-	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
-}
+//비로그인 : 권한정보 검사하기 (로그인검사, 권한검사 없이 패스)
+$objAuth->LAUTH_SEQ = $objAuth->logUsrAuth($reqToken,$resToken,"findFooter",$ctl,"Y");
 		//사용자 정보 가져오기
 //로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그

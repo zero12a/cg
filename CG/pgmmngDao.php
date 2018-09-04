@@ -82,7 +82,7 @@ where PJTSEQ = #{PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
-		$RtnVal["SQLTXT"] = "select PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,ADDDT,MODDT 
+		$RtnVal["SQLTXT"] = "select PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,LOGINYN,ADDDT,MODDT 
 from
  CG_PGMINFO	
 where PJTSEQ = #{G3-PJTSEQ} 
@@ -98,15 +98,15 @@ where PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "insert into CG_PGMINFO(
 	 PJTSEQ, PGMID, PGMNM, PKGGRP, PGMTYPE
-	, POPWIDTH, POPHEIGHT, SECTYPE
+	, POPWIDTH, POPHEIGHT, SECTYPE, LOGINYN
 	, ADDDT, ADDID
 ) values (
 	 #{PJTSEQ},#{PGMID},#{PGMNM}, #{PKGGRP}, #{PGMTYPE}
-	, #{POPWIDTH}, #{POPHEIGHT}, #{SECTYPE}
+	, #{POPWIDTH}, #{POPHEIGHT}, #{SECTYPE}, #{LOGINYN}
 	 ,date_format(sysdate(),'%Y%m%d%H%i%s'),#{USER.SEQ}
 ) 
 ";
-		$RtnVal["BINDTYPE"] = "isssssssi";
+		$RtnVal["BINDTYPE"] = "issssssssi";
 		return $RtnVal;
     }  
 	//PGM    
@@ -119,11 +119,11 @@ where PJTSEQ = #{G3-PJTSEQ}
  CG_PGMINFO
 set 
  PGMNM = #{PGMNM}, PGMID = #{PGMID}, PKGGRP = #{PKGGRP}, PGMTYPE = #{PGMTYPE}
- , POPWIDTH = #{POPWIDTH}, POPHEIGHT = #{POPHEIGHT}, SECTYPE = #{SECTYPE}
+ , POPWIDTH = #{POPWIDTH}, POPHEIGHT = #{POPHEIGHT}, SECTYPE = #{SECTYPE}, LOGINYN = #{LOGINYN}
  , MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} 
 ";
-		$RtnVal["BINDTYPE"] = "sssssssiii";
+		$RtnVal["BINDTYPE"] = "ssssssssiii";
 		return $RtnVal;
     }  
 	//PGM    

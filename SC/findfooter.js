@@ -146,8 +146,6 @@ function G3_INIT(){
 			["text-align:center;","text-align:center;","text-align:center;","text-align:center;","text-align:center;","text-align:center;"]);
 		mygridG3.splitAt(0);//'freezes' 0 columns 
 		mygridG3.init();
-		mygridG3.setNumberFormat("",mygridG3.getColIndexById("UUID_SEQ")); // UUID_SEQ
-		mygridG3.setNumberFormat("",mygridG3.getColIndexById("TEAM_NM")); // TEAM_NM
 		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_1")); // 위험 상
 		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_2")); // 위험 중
 		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_3")); // 위험 하
@@ -670,11 +668,6 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG2()------------end");
     }
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
-}
 
 
 
@@ -775,6 +768,11 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
 //새로고침	
 function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");

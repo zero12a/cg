@@ -115,6 +115,9 @@ function getInput($input,$filetype,$param,$G){
     //echo "<br>      param : " . $param;
     //mlog("	strpos && : " . strpos($param,"&&") );
     //echo "<br>      strpos || : " . strpos($param,"||");
+
+    $param = str_replace("&amp;","&",$param);//그리드에서 & 입력시 자꾸 &amp;로 변경되서 이거 처리 함
+
     if(strpos($param,"&&") > 0){
         $tarr = explode("&&",$param);
         $toper = " and ";
@@ -142,7 +145,7 @@ function getInput($input,$filetype,$param,$G){
                 if($col != "")    {
                     if($paramCnt > 0) $AddSql .= $toper;
                     if(strtoupper($val) == "NULL"){
-                        $AddSql .= sprintf(" (%s is not null or %s = '') ", $col,$col);
+                        $AddSql .= sprintf(" (%s is not null and %s != '') ", $col,$col);
                     }else{
                         $AddSql .= sprintf(" %s != '%s' ", $col, $val);
                     }
@@ -181,7 +184,7 @@ function getInput($input,$filetype,$param,$G){
             if($col != "")    {
                 if($paramCnt > 0) $AddSql .= $toper;
                 if(strtoupper($val) == "NULL"){
-                    $AddSql .= sprintf(" (%s is not null or %s = '') ", $col,$col);
+                    $AddSql .= sprintf(" (%s is not null and %s != '') ", $col,$col);
                 }else{
                     $AddSql .= sprintf(" %s != '%s' ", $col, $val);
                 }
