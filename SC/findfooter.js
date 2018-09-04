@@ -87,6 +87,14 @@ function G2_INIT(){
 		type: 'bar', //일단 선언해 줘야 함                
 		data: chartG2Data,                
 		options: {
+			layout: {
+					padding: {
+						left: 0,
+						right: 0,
+						top: 10,
+						bottom: 0
+					}
+			},
 			responsive: true,
 			maintainAspectRatio: false,  				
 			legend: {
