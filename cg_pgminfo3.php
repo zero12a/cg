@@ -29,8 +29,9 @@ header("Pragma:no-cache");
     <script src="./lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
 
-    <!--공통-->
-    <script src="./rst/common.js?11" type="text/javascript" charset="utf-8"></script>
+    <!--chart-->
+    <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
     <link rel=stylesheet href="./lib/codemirror/doc/docs.css">
@@ -40,7 +41,16 @@ header("Pragma:no-cache");
     <script src="./lib/codemirror/mode/sql/sql.js"></script>
     <script src="./lib/codemirror/addon/selection/active-line.js"></script>
 
+    <!--프로퍼티 그리드-->
+    <script src="/lib/jqPropertyGrid.js"></script>  
+    <link href="/lib/jqPropertyGrid.css" rel="stylesheet" type="text/css" />
+
+    <!--공통-->
+    <script src="./common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
     <link href="./common/common.css" rel="stylesheet" type="text/css" />
+
+    
+
     <style>
         .CodeMirror {
             border-top: 1px solid black;
@@ -351,13 +361,12 @@ header("Pragma:no-cache");
         </div>
     </div>
 
-
+    <!--그룹타입에 따른 프로퍼티 그리드-->
+    <div id="divPgGrid" style="position:absolute;top:0px;left:0px;display: none;z-index;5"></div>
+    <div id="divPgChart" style="position:absolute;top:0px;left:0px;display: none;z-index;5"></div>
 
 </div>
 
-<!--
-<textarea style="width:100%;height:300px;font-size:9pt;" id="tt"></textarea>
-<textarea style="width:100%;height:300px;font-size:9pt;" id="tt2"></textarea>
--->
+
 </body>
 </html>

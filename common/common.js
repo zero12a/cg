@@ -54,7 +54,7 @@ function eXcell_button(cell){ //the eXcell name is defined here
 			alog("cell.cellIndex = " + colIndex);
 			//alog("this.grid.getUserData(GRPID) = " + this.grid.getUserData("","GRPID"));	
 			tStr += "<span  id=\"" + tValue + "\" >" + tText + "</span>";
-			tStr += "<input type=\"image\" src=\"../img/search.png\" height=20 style=\"vertical-align:middle;\" onclick=\"goGridPopOpen('" + tGrpId + "','" + rowId + "','" + colIndex + "','" +  tValue + "','" + tText + "')\">";
+			tStr += "<input type=\"image\" src=\"/c.g/img/search.png\" height=20 style=\"vertical-align:middle;\" onclick=\"goGridPopOpen('" + tGrpId + "','" + rowId + "','" + colIndex + "','" +  tValue + "','" + tText + "')\">";
 			
 			this.setCValue(tStr,tValue);//NM,CD
 		}else{
@@ -171,6 +171,73 @@ function addRowLast(tGrid,tCols){
 	tGrid.setUserData(id,"!nativeeditor_status","inserted");
 	tGrid.setRowTextBold(id);
 	alog("(common) addRow(" + tname + ")------------end");
+}
+
+
+function setCodeYN(tGrptype, tCombo, tPcd){
+	alog("   setGridCombo----------------------start");
+	//alog("		tPcd = " + tPcd);
+	
+	//alert(tCombo);
+
+	if(!tCombo)return;
+
+	
+
+
+	var data = {
+			"RTN_DATA":
+				{"rows":
+					[
+						{"data":["Y","Y"]}
+						,{"data":["N","N"]}
+					]
+				}
+			};
+
+	if(tGrptype == "GRID"){
+		if(!data.RTN_DATA)return;
+		//alog("	코드수 : " + data.RTN_DATA.rows.length);
+		
+		tCombo.clear(); //비우기
+		tCombo.put("","");
+
+		for(var i=0;i<data.RTN_DATA.rows.length;i++){
+			alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
+
+			tCombo.put(data.RTN_DATA.rows[i].data[0],data.RTN_DATA.rows[i].data[1]);
+		}
+	}else if(tGrptype == "CONDITION"){
+		if(!data.RTN_DATA)return;
+		//alog("	코드수 : " + data.RTN_DATA.rows.length);
+		
+		tCombo.empty(); //비우기
+		tCombo.append("<option value=''></option>"); //빈라인 추가
+
+		for(var i=0;i<data.RTN_DATA.rows.length;i++){
+			//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
+
+			tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1] + "</option>");
+		}
+	}else if(tGrptype == "FORMVIEW"){
+		if(!data.RTN_DATA)return;
+		//alog("	코드수 : " + data.RTN_DATA.rows.length);
+		
+		tCombo.empty(); //비우기
+		tCombo.append("<option value=''></option>"); //빈라인 추가
+
+		for(var i=0;i<data.RTN_DATA.rows.length;i++){
+			//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
+
+			tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1] + "</option>");
+		}
+	}else{
+		alog("	그룹 타입이 없습니다");
+	}
+
+		
+	//alog("   setGridCombo----------------------end");
+
 }
 
 

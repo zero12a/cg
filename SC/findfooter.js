@@ -676,6 +676,11 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG2()------------end");
     }
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
 
 
 
@@ -776,11 +781,6 @@ function G1_SEARCHALL(token){
         alog("G3_SEARCH()------------end");
     }
 
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
-}
 //새로고침	
 function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");

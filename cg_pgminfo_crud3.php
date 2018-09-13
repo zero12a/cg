@@ -32,15 +32,7 @@
     $F_END_DT = str_replace("-","",$_GET['F_END_DT']); //날짜 타입은 - 제거
 
     //컬럼ROW받기 GRPID,GRPTYPE,GRPNM,GRPORD,BRCNT,REFGRPID,GRPWIDTH,GRPHEIGHT,
-    $G1_GRPSEQ = $_GET['G1_GRPSEQ'];
-    $G1_GRPID = $_GET['G1_GRPID'];
-    $G1_GRPTYPE = $_GET['G1_GRPTYPE'];
-    $G1_GRPNM = $_GET['G1_GRPNM'];
-    $G1_GRPORD = $_GET['G1_GRPORD'];
-    $G1_REFGRPID = $_GET['G1_REFGRPID'];
-    $G1_GRPWIDTH = $_GET['G1_GRPWIDTH'];
-    $G1_GRPHEIGHT = $_GET['G1_GRPHEIGHT'];
-
+ 
 
     $G2_CRUD_MODE = $_GET['G2_CRUD_MODE'];
     $G4_CRUD_MODE = $_GET['G4_CRUD_MODE'];
@@ -61,30 +53,30 @@
     $REQ["F_END_DT"] = str_replace("-","",$_GET['F_END_DT']); //날짜 타입은 - 제거
 
 
-    $REQ["G1_PJTSEQ"]   = $_GET['G1_PJTSEQ'];
-    $REQ["G1_PGMSEQ"]   = $_GET['G1_PGMSEQ'];
-    $REQ["G1_GRPSEQ"]   = $_GET['G1_GRPSEQ'];
-    $REQ["G1_GRPTYPE"]   = $_GET['G1_GRPTYPE'];    
-    $REQ["G1_GRPID"]   = $_GET['G1_GRPID'];
-    $REQ["G1_PCD"]	   = $_GET['G1_PCD'];
+    $REQ["G1-PJTSEQ"]   = $_GET['G1-PJTSEQ'];
+    $REQ["G1-PGMSEQ"]   = $_GET['G1-PGMSEQ'];
+    $REQ["G1-GRPSEQ"]   = $_GET['G1-GRPSEQ'];
+    $REQ["G1-GRPTYPE"]   = $_GET['G1-GRPTYPE'];    
+    $REQ["G1-GRPID"]   = $_GET['G1-GRPID'];
+    $REQ["G1-PCD"]	   = $_GET['G1-PCD'];
 
-    $REQ["G5_PJTSEQ"]   = $_GET['G5_PJTSEQ'];
-    $REQ["G5_PGMSEQ"]   = $_GET['G5_PGMSEQ'];
-    $REQ["G5_GRPSEQ"]   = $_GET['G5_GRPSEQ'];
-    $REQ["G5_FNCSEQ"]   = $_GET['G5_FNCSEQ'];
+    $REQ["G5-PJTSEQ"]   = $_GET['G5-PJTSEQ'];
+    $REQ["G5-PGMSEQ"]   = $_GET['G5-PGMSEQ'];
+    $REQ["G5-GRPSEQ"]   = $_GET['G5-GRPSEQ'];
+    $REQ["G5-FNCSEQ"]   = $_GET['G5-FNCSEQ'];
 
-    $REQ["G2_PJTSEQ"]   = $_GET['G2_PJTSEQ'];
-    $REQ["G2_PGMSEQ"]   = $_GET['G2_PGMSEQ'];
-    $REQ["G2_GRPSEQ"]   = $_GET['G2_GRPSEQ'];
-    $REQ["G2_FNCSEQ"]   = $_GET['G2_FNCSEQ'];
-    $REQ["G2_SQLID"]   = $_GET['G2_SQLID'];
-    $REQ["G2_SQLSEQ"]   = $_GET['G2_SQLSEQ'];
+    $REQ["G2-PJTSEQ"]   = $_GET['G2-PJTSEQ'];
+    $REQ["G2-PGMSEQ"]   = $_GET['G2-PGMSEQ'];
+    $REQ["G2-GRPSEQ"]   = $_GET['G2-GRPSEQ'];
+    $REQ["G2-FNCSEQ"]   = $_GET['G2-FNCSEQ'];
+    $REQ["G2-SQLID"]   = $_GET['G2-SQLID'];
+    $REQ["G2-SQLSEQ"]   = $_GET['G2-SQLSEQ'];
 
-    $REQ["G9_SVCSEQ"]  = $_GET['G9_SVCSEQ'];
-    $REQ["G9_PJTSEQ"]   = $_GET['G9_PJTSEQ'];
-    $REQ["G9_PGMSEQ"]   = $_GET['G9_PGMSEQ'];
-    $REQ["G9_GRPSEQ"]   = $_GET['G9_GRPSEQ'];
-    $REQ["G9_FNCSEQ"]   = $_GET['G9_FNCSEQ'];
+    $REQ["G9-SVCSEQ"]  = $_GET['G9-SVCSEQ'];
+    $REQ["G9-PJTSEQ"]   = $_GET['G9-PJTSEQ'];
+    $REQ["G9-PGMSEQ"]   = $_GET['G9-PGMSEQ'];
+    $REQ["G9-GRPSEQ"]   = $_GET['G9-GRPSEQ'];
+    $REQ["G9-FNCSEQ"]   = $_GET['G9-FNCSEQ'];
 
     $REQ["G1_CRUD_MODE"]    = $_GET['G1_CRUD_MODE'];
     $REQ["G2_CRUD_MODE"]    = $_GET['G2_CRUD_MODE'];
@@ -149,7 +141,7 @@ if($F_GRPID == "1" && $REQ["G1_CRUD_MODE"] == "read"){
     alog("        to_coltype : " . $to_coltype);
     $sql = "
       select
-        PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,ADDDT,MODDT
+        PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,'a^b^c',ADDDT,MODDT
       from CG_PGMGRP where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ#
       order by GRPORD
           ";
@@ -450,7 +442,7 @@ if($F_GRPID == "3" && $REQ["G3_CRUD_MODE"] == "read"){
 				a.COLSEQ, a.PJTSEQ, a.PGMSEQ, a.SQLSEQ, a.DDCOLID, a.COLID, b.DATATYPE, a.SQLGBN, a.ORD, a.ADDDT, a.MODDT 
             from CG_PGMSQLD a
                 left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.DDCOLID = b.COLID
-            where a.PJTSEQ=#G2_PJTSEQ# and a.PGMSEQ = #G2_PGMSEQ# and a.SQLSEQ = #G2_SQLSEQ#
+            where a.PJTSEQ=#G2-PJTSEQ# and a.PGMSEQ = #G2-PGMSEQ# and a.SQLSEQ = #G2-SQLSEQ#
             order by a.SQLGBN,a.ORD asc
           ";
     alog("        selected : " );
@@ -533,7 +525,7 @@ if($F_GRPID == "4" && $REQ["G4_CRUD_MODE"] == "read"){
           , a.ADDDT, a.MODDT
         from CG_PGMIO a
             left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.COLID = b.COLID
-        where a.PJTSEQ=#F_PJTSEQ# and a.PGMSEQ = #F_PGMSEQ# and a.GRPSEQ = #G1_GRPSEQ#
+        where a.PJTSEQ=#F_PJTSEQ# and a.PGMSEQ = #F_PGMSEQ# and a.GRPSEQ = #G1-GRPSEQ#
         ORDER BY a.COLORD ASC
         ";
     alog("        selected : " );
@@ -563,7 +555,7 @@ if($F_GRPID == "4" && $REQ["G4_CRUD_MODE"] == "read"){
                             ,VALIDSEQ,POPUP,FORMAT,FOOTERNM,FOOTERMATH
 							,ADDDT,ADDID
 	   ) values (
-							#F_PJTSEQ#,#F_PGMSEQ#,#G1_GRPSEQ#,#COLID#,#COLORD#
+							#F_PJTSEQ#,#F_PGMSEQ#,#G1-GRPSEQ#,#COLID#,#COLORD#
 							,#COLNM#,#DATATYPE#,#DATASIZE#,#OBJTYPE#,#LBLHIDDENYN#
                             ,#LBLWIDTH#, #LBLALIGN#, #OBJWIDTH#, #OBJHEIGHT#, #OBJALIGN#
                             ,#HIDDENYN#,if(#EDITYN#='','Y',#EDITYN#),#FNINIT#,#KEYYN#,#SEQYN#
@@ -574,7 +566,7 @@ if($F_GRPID == "4" && $REQ["G4_CRUD_MODE"] == "read"){
 	$sql_inserted_coltype = "iiisi ssiss sssss ssssss issss i";
 
 	$sql_deleted = "
-                delete from CG_PGMIO where PJTSEQ=#F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1_GRPSEQ# and IOSEQ = #IOSEQ#
+                delete from CG_PGMIO where PJTSEQ=#F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1-GRPSEQ# and IOSEQ = #IOSEQ#
 		";
 	$sql_deleted_coltype = "ssss";
 
@@ -586,7 +578,7 @@ if($F_GRPID == "4" && $REQ["G4_CRUD_MODE"] == "read"){
             , KEYYN=#KEYYN#, SEQYN = #SEQYN#, BRYN=#BRYN#, VALIDSEQ = #VALIDSEQ#, POPUP = #POPUP#
             , FORMAT = #FORMAT#, FOOTERNM = #FOOTERNM#, FOOTERMATH = #FOOTERMATH#
 			,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #MODID#
-	  where PJTSEQ=#F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1_GRPSEQ# and IOSEQ = #IOSEQ#
+	  where PJTSEQ=#F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1-GRPSEQ# and IOSEQ = #IOSEQ#
 
 	";
 	$sql_updated_coltype = "sissi sssss sssss sssis sss i iiii";
@@ -708,11 +700,11 @@ function updateDd($xml_array,$colord,&$db,$REQ){
                 DDSEQ,GRPTYPE,OBJTYPE
                 ,ADDDT, ADDID
             ) values (
-                #{DDSEQ},#{G1_GRPTYPE},#{OBJTYPE}
+                #{DDSEQ},#{G1-GRPTYPE},#{OBJTYPE}
                 ,date_format(sysdate(),'%Y%m%d%H%i%s'), #{ADDID}
             )
             ON DUPLICATE KEY 
-                UPDATE DDSEQ = #{DDSEQ}, GRPTYPE = #{G1_GRPTYPE}, OBJTYPE = #{OBJTYPE}
+                UPDATE DDSEQ = #{DDSEQ}, GRPTYPE = #{G1-GRPTYPE}, OBJTYPE = #{OBJTYPE}
                 ,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{MODID}
             ";
         
@@ -746,7 +738,7 @@ if($F_GRPID == "5" && $REQ["G5_CRUD_MODE"] == "read"){
           ,a.OBJHEIGHT,a.VALIDSEQ, a.LBLALIGN, a.OBJALIGN
 		  ,a.ADDDT,a.MODDT
         from CG_DD a
-            left outer join CG_DDOBJ b on a.DDSEQ = b.DDSEQ and b.GRPTYPE = #G1_GRPTYPE#
+            left outer join CG_DDOBJ b on a.DDSEQ = b.DDSEQ and b.GRPTYPE = #G1-GRPTYPE#
         where a.PJTSEQ=#F_PJTSEQ# and a.COLID = #searchdd#
         ";
     alog("        selected : " );
@@ -825,7 +817,7 @@ if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "read"){
     $sql = "
           select
             PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,IF(USEYN='Y',1,0) AS USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,ADDDT,MODDT
-          from CG_PGMFNC where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1_GRPSEQ#
+          from CG_PGMFNC where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1-GRPSEQ#
           ";
     alog("        selected : " );
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
@@ -855,7 +847,7 @@ if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "read"){
 									,FNCNM,FNCTYPE,USEYN,FNCORD
 									,ADDDT
                ) values (
-                                    #F_PJTSEQ#,#F_PGMSEQ#,#G1_GRPSEQ#,#FNCID#,#FNCCD#
+                                    #F_PJTSEQ#,#F_PGMSEQ#,#G1-GRPSEQ#,#FNCID#,#FNCCD#
 									,#FNCNM#,#FNCTYPE#,case #USEYN# when 1 then 'Y' else 'N' end,#FNCORD#
 									,date_format(sysdate(),'%Y%m%d%H%i%s')
                )
@@ -893,7 +885,7 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "read"){
     $sql = "
 			select a.CD,b.NM,a.CDVAL
 			from CG_CODED a join CG_CODED b on  a.CD = b.CD 
-			where a.PCD = #G1_PCD# and b.PCD = 'FNC'
+			where a.PCD = #G1-PCD# and b.PCD = 'FNC'
           ";
     alog("        selected : " );
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
@@ -919,7 +911,7 @@ if($REQ["F_GRPID"] == "9" && $REQ["G9_CRUD_MODE"] == "read"){
     $sql = "
           select
 			INHERITSEQ,PJTSEQ,PGMSEQ,GRPSEQ,COLID,CHILDGRPID,ADDDT,MODDT
-          from CG_PGMINHERIT where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1_GRPSEQ#
+          from CG_PGMINHERIT where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1-GRPSEQ#
           ";
     alog("        selected : " );
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
@@ -987,7 +979,7 @@ if($REQ["F_GRPID"] == "10" && $REQ["G10_CRUD_MODE"] == "read"){
     $sql = "
           select
 			SQLRSEQ,PJTSEQ,PGMSEQ,SVCSEQ,SQLID,ORD,ADDDT,MODDT
-          from CG_PGMSQLR where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and SVCSEQ = #G9_SVCSEQ#
+          from CG_PGMSQLR where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and SVCSEQ = #G9-SVCSEQ#
 		  order by ORD asc
           ";
     alog("        selected : " );
@@ -1065,7 +1057,7 @@ if($REQ["F_GRPID"] == "11" && $REQ["G11_CRUD_MODE"] == "read"){
             ,ifnull(b.OBJALIGN,'') as OBJALIGN
           from CG_PGMSQLD a
 			left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.COLID = b.COLID
-		  where a.SQLGBN = 'O' and a.PJTSEQ = #G1_PJTSEQ# and a.PGMSEQ = #G1_PGMSEQ# and a.SQLSEQ = #G2_SQLSEQ#
+		  where a.SQLGBN = 'O' and a.PJTSEQ = #G1-PJTSEQ# and a.PGMSEQ = #G1-PGMSEQ# and a.SQLSEQ = #G2-SQLSEQ#
 		  order by ORD desc
           ";
     alog("        selected : " );
@@ -1166,7 +1158,7 @@ if($REQ["F_GRPID"] == "13" && $REQ["G13_CRUD_MODE"] == "read"){
           select
 			SVCSEQ,PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,ORD,SVCGRPID,ADDDT,MODDT
           from CG_PGMSVC 
-		  where PJTSEQ = #G5_PJTSEQ# and PGMSEQ = #G5_PGMSEQ# and GRPSEQ = #G5_GRPSEQ# and FNCSEQ = #G5_FNCSEQ#
+		  where PJTSEQ = #G5-PJTSEQ# and PGMSEQ = #G5-PGMSEQ# and GRPSEQ = #G5-GRPSEQ# and FNCSEQ = #G5-FNCSEQ#
 		  order by ORD desc
           ";
     alog("        selected : " );

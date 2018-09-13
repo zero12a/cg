@@ -60,8 +60,8 @@ $REQ["G1-EX_TEAM_NM"] = reqPostString("G1-EX_TEAM_NM",100);//그래프 제외 �
 $REQ["G1-EX_TEAM_NM"] = getFilter($REQ["G1-EX_TEAM_NM"],"CLEARTEXT","/--미 정의--/");	
 
 //G2, 팀별 현황 (보안취약점 갯수)
-$REQ["G2-TYPE_CNT"] = reqPostNumber("G2-TYPE_CNT",0);//유형수	
-$REQ["G2-TYPE_CNT"] = getFilter($REQ["G2-TYPE_CNT"],"","//");	
+$REQ["G2-TYPE_CNT"] = reqPostNumber("G2-TYPE_CNT",30);//유형수	
+$REQ["G2-TYPE_CNT"] = getFilter($REQ["G2-TYPE_CNT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-VUL_CNT"] = reqPostNumber("G2-VUL_CNT",30);//취약점갯수	
 $REQ["G2-VUL_CNT"] = getFilter($REQ["G2-VUL_CNT"],"REGEXMAT","/^[0-9]+$/");	
 

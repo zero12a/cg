@@ -9,7 +9,7 @@
         var types = ["HTML","HTMLJS","SVRCTL","SVRSVC","SVRDAO"];
 
         //요청 토큰
-        var token = uuidv4();
+        //var token = uuidv4();
 
         for(i=0;i<types.length;i++){
             alog("MakeAsync = "  + types[i]);
@@ -1751,7 +1751,40 @@
         ' ,"F_PGMID": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
         '}');
 
-	
+    
+    //프로그램 검색
+    function grpPropertyGrid(tDivNm,tJson){
+        //alert( "#F_PGMNM for .change() called." );
+        //alert($("#F_PGMNM").val());
+
+        $("#divPgGrid").css("display","");
+        if(myWins && myWins.window("grpPropertyWindow")){
+            //alert("show");
+            myWins.window("grpPropertyWindow").show();
+        }else{
+            //alert("new");
+            myWins = new dhtmlXWindows();
+
+            myWins.createWindow({
+                id:"grpPropertyWindow",
+                left:20,
+                top:30,
+                width:400,
+                height:200,
+                caption:"프로퍼티 그리드"
+            });
+            //myWins.window("pgmwindow").hideHeader();
+
+            myWins.window("grpPropertyWindow").attachEvent("onClose", function(win){
+                //alert(1);
+                myWins.window("grpPropertyWindow").hide();
+                return false;
+            });
+            myWins.window("grpPropertyWindow").attachObject("divPgGrid");
+        }
+
+    }
+        
     //프로그램 검색
     function pgmCopy(){
         //alert( "#F_PGMNM for .change() called." );
@@ -2001,11 +2034,11 @@
         mygridGrp = new dhtmlXGridObject('grid1');
 		mygridGrp.setUserData("","gridTitle","grid1 : group list"); //글로별 변수에 그리드 타이블 넣기
         mygridGrp.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,ADDDT,MODDT");
-        mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,ADDDT,MODDT");
-        mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,50,50")
-        mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,ro,ro");
-		mygridGrp.setColSorting("str,str,str,str,str,int,int,int,int,str,str,str,str,str,str,str");
+        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,PROPERTY,ADDDT,MODDT");
+        mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,PROPERTY,ADDDT,MODDT");
+        mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,30,50,50")
+        mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,button,ro,ro");
+		mygridGrp.setColSorting("str,str,str,str,str,int,int,int,int,str,str,str,str,str,str,str,str");
 
 		mygridGrp.enableSmartRendering(false);
         mygridGrp.enableMultiselect(true);
@@ -2102,6 +2135,10 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),false);   
                     
+                    //그리드 전용 컬럼 숨기기  
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERNM"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERMATH"),true);   
+
                     break;
                 case "GRID":
                     //(FNC) FNCTYPE 다시 불러오기
@@ -2128,6 +2165,10 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),false);   
 
+                    //그리드 전용 컬럼 숨기기  
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERNM"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERMATH"),false);   
+                    
                     break;
                 case "FORMVIEW":
                     //(FNC) FNCTYPE 다시 불러오기
@@ -2154,6 +2195,10 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),false);    
 
+                    //그리드 전용 컬럼 숨기기  
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERNM"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERMATH"),true);   
+                    
                     break;
                 case "CHARTBAR":
                     //(FNC) FNCTYPE 다시 불러오기
@@ -2182,6 +2227,10 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),true); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),true);    
 
+                    //그리드 전용 컬럼 숨기기  
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERNM"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERMATH"),true);   
+
                     break;
 
                 case "CHARTPIE":
@@ -2209,8 +2258,47 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),true); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),true);    
 
+                    //그리드 전용 컬럼 숨기기  
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERNM"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERMATH"),true);   
+
                     break;
-                                    
+                                   
+                    
+                    case "CHARTBAR2Y":
+                    //(FNC) FNCTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCCHARTBAR");
+
+                    //(IO) OBJTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTCHARTBAR");         
+                
+
+                    //BRYN, LBLHIDDEN, LBLWIDTH 숨기기
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
+
+                    
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),true);                     
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("SEQYN"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),true);    
+
+                    //그리드 전용 컬럼 숨기기  
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERNM"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERMATH"),true);    
+
+
+                    break;
+
                 default:
                     alog("IO의 OBJTYPE 생성을 위한 GRPTYPE이 아닙니다.(" + grptype + ")");
                     break;
@@ -2938,12 +3026,67 @@
 		});
 
 
+        //Grp에 따른 프로퍼티 그리드 초기화
+        propertyGridInit();
 
-
-		
+        grpPropertyGrid();
+        
 		alog("initBody-----------------------------end");
 
     }//initBody();
+
+
+    function propertyGridInit(){
+        var setObj = {
+            FREEZECNT: ''
+            ,COLSIZETYPE: '',
+        };
+
+        //그리드만 있는거 COLSIZETYPE
+        //챠트BAR만 있는거 LEGENDALIGN, 스택여부
+        //챠트PIE만 있는거 LEGENDALIGN
+        //챠트BAR2Y만 있는거 LEGENDALIGN
+        var metaObj = {
+            FREEZECNT: {group : 'Grid', name : '좌측 고정 컬럼(숫자)',  type: 'text'}
+            ,COLSIZETYPE: {group : 'Grid', name : '컬럼 가로 사이즈 타입',  type: 'options', options: [
+                {text:'- 선택 -', value: ''}
+                ,{text:'px', value: 'X'}
+                ,{text:'%', value: 'P'}
+            ]}
+        };
+
+
+
+        // Lets create the grid for it
+        $('#divPgGrid').jqPropertyGrid(setObj, {meta: metaObj});
+        //$('#pgGrid').css("display","");
+        //$('#pgGrid').css({top:50 + 'px', left:200 + 'px'});
+        //$('#pgGrid').show();
+
+        // Now create another grid
+        var setObj2 = {
+            LEGENDALIGN: '',
+            STACKED: false,
+        };
+
+        // This is the metadata object that describes the target object properties (optional)
+
+        var metaObj2 = {
+            LEGENDALIGN: {group: 'Chart', name : '범례 위치',  type: 'options', options: [
+                {text:'- 선택 -', value: ''}
+                ,{text:'TOP', value: 'TOP'}
+                ,{text:'LEFT', value: 'LEFT'}
+                ,{text:'RIGHT', value: 'RIGHT'}
+                ,{text:'BOTTOM', value: 'BOTTOM'}
+            ]},
+            STACKED: {group: 'Chart', name : '스택으로 쌓기', type: 'boolean'}
+        };
+
+        $('#divPgChart').jqPropertyGrid(setObj2, {meta: metaObj2});
+        //$('#pgChart').css("display","");
+        //$('#pgChart').css({top:200, left:500, position:'absolute'});
+        //$('#pgChart').show();
+    }
 
     function viewGrid3(){
         if(isView3){
@@ -3020,3 +3163,118 @@
             doc.replaceRange(data, pos);
         }   
     }
+
+
+
+
+//GRP목록 가져오기(FNC선택시, GRP선택시)
+function setGridGrp(tGrptype, tCombo, tPjtseq, tPgmseq, tGrpseq, tFncseq){
+	alog("   setGridSql----------------------start");
+	//alog("		tPcd = " + tPcd);
+	
+	//alert(tCombo);
+
+	if(!tCombo)return;
+
+	//불러오기
+	$.ajax({
+		type : "GET",
+		url : "/c.g/cg_code_json.php",
+		data : {PJTSEQ : tPjtseq, PGMSEQ : tPgmseq, GRPSEQ : tGrpseq , FNCSEQ : tFncseq},
+		dataType: "json",
+		async: false,
+		success: function(data){
+			//alog("   getCodeJson json return----------------------");
+			//alog("   json data : " + JSON.stringify(data.RTN_DATA));
+			//alog("   json RTN_CD : " + data.RTN_CD);
+			//alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			if(data.RTN_CD == "200"){
+				if(tGrptype == "GRID"){
+					if(!data.RTN_DATA)return;
+					//alog("	코드수 : " + data.RTN_DATA.rows.length);
+					
+					tCombo.clear(); //비우기
+					tCombo.put("","");
+
+					for(var i=0;i<data.RTN_DATA.rows.length;i++){
+						//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
+
+						tCombo.put(data.RTN_DATA.rows[i].data[0],data.RTN_DATA.rows[i].data[1]);
+					}
+				}else{
+					alog("	그룹 타입이 없습니다");
+				}
+
+			}else{
+				alert("서버 조회중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG);
+			}
+		},
+		error: function(error){
+			alert("Error:" + error);
+		}
+	});
+
+	//alog("   setGridCombo----------------------end");
+
+}
+
+
+
+//SQL목록 가져오기
+function setGridSql(tGrptype, tCombo, tPjtseq, tPgmseq, tSvcseq){
+	alog("   setGridSql----------------------start");
+	//alog("		tPcd = " + tPcd);
+	
+	//alert(tCombo);
+
+	if(!tCombo)return;
+
+	//불러오기
+	$.ajax({
+		type : "GET",
+		url : "/c.g/cg_code_json.php",
+		data : {PJTSEQ : tPjtseq, PGMSEQ : tPgmseq, SVCSEQ : tSvcseq},
+		dataType: "json",
+		async: false,
+		success: function(data){
+			//alog("   getCodeJson json return----------------------");
+			//alog("   json data : " + JSON.stringify(data.RTN_DATA));
+			//alog("   json RTN_CD : " + data.RTN_CD);
+			//alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			if(data.RTN_CD == "200"){
+				if(tGrptype == "GRID"){
+					if(!data.RTN_DATA)return;
+					//alog("	코드수 : " + data.RTN_DATA.rows.length);
+					
+					tCombo.clear(); //비우기
+					tCombo.put("","");
+
+					for(var i=0;i<data.RTN_DATA.rows.length;i++){
+						//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
+
+						tCombo.put(data.RTN_DATA.rows[i].data[0],data.RTN_DATA.rows[i].data[1]);
+					}
+				}else{
+					alog("	그룹 타입이 없습니다");
+				}
+
+			}else{
+				alert("서버 조회중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG);
+			}
+		},
+		error: function(error){
+			alert("Error:" + error);
+		}
+	});
+
+	//alog("   setGridCombo----------------------end");
+
+}
+
+
