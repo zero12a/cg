@@ -1,3 +1,53 @@
+    
+
+
+    //정적 변수 선언
+    var cm;//codemirror
+	var popSelectLayout; //레이아웃용
+    var myCalendar;
+    var lastCondition;
+    var mygridGrp,dp1,addstatusyn1,lastinput1,lastinput1json,lastrowid1,isViewGrp;
+    var mygridSql,dp2,addstatusyn2,lastinput2,lastinput2json,lastrowid2,isView2;
+    var mygridCol,dp3,addstatusyn3,lastinput3,lastinput3json,lastrowid3,isView3;
+    var mygridIo,dp4,addstatusyn4,lastinput4,lastinput4json,lastrowid4,isViewIo;
+    var mygridFnc,dp5,addstatusyn5,lastinput5,lastinput5json,lastrowid5,isView5;
+    var mygridInherit,dp6,addstatusyn6,lastinput6,lastinput6json,lastrowid6,isView6;
+    var mygridSqlR,dp7,addstatusyn7,lastinput7,lastinput7json,lastrowid7,isView7;
+    var mygrid8,dp8,addstatusyn8,lastinput8,lastinput8json,lastrowid8,isView8;
+    var mygridSvc,dp9,addstatusyn9,lastinput9,lastinput9json,lastrowid9,isView9;
+    var mygridPgm,addstatusynPgm,lastinputPgm,lastinputPgmjson,lastrowidPgm;
+    var mygridGrp_url = "cg_pgminfo_crud3.php?F_GRPID=1&";
+    var mygridSql_url = "cg_pgminfo_crud3.php?F_GRPID=2&";
+    var mygridCol_url = "cg_pgminfo_crud3.php?F_GRPID=3&";
+    var mygridIo_url = "cg_pgminfo_crud3.php?F_GRPID=4&";
+    var mygridFnc_url = "cg_pgminfo_crud3.php?F_GRPID=5&";
+    var mygridInherit_url = "cg_pgminfo_crud3.php?F_GRPID=6&";
+    var mygridSqlR_url = "cg_pgminfo_crud3.php?F_GRPID=7&";
+    var mygrid8_url = "cg_pgminfo_crud3.php?F_GRPID=8&";
+    var mygridSvc_url = "cg_pgminfo_crud3.php?F_GRPID=9&";
+    var mygridGrp0_url = "cg_pgminfo_crud3.php?F_GRPID=10&";
+    var mygridGrp1_url = "cg_pgminfo_crud3.php?F_GRPID=11&"; //IO그리드, COL그리드에서 상속받기
+    var mygridGrp2_url = "cg_pgminfo_crud3.php?F_GRPID=12&"; //VALID
+    var mygridGrp3_url = "cg_pgminfo_crud3.php?F_GRPID=13&"; //SVC
+    var mygridPgm_url = "cg_pgminfo_crud3.php?F_GRPID=PGM&"; //팝업윈도우 프로그램 검색
+    var validmsg = jQuery.parseJSON('{"REQUARED":"[0]는 반드시 입력바랍니다.", "MIN":"this는 [0]이상 입력바랍니다."}');
+
+	var isLayoutLoaded = false;
+	var myWins;
+
+    //동적 변수 선언
+    var obj_condition_valid = jQuery.parseJSON( '{"__NAME":"obj_condition_valid"' +
+        ' ,"F_PJTID": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
+        ' ,"F_PGMID": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
+        '}');
+    var obj_G4_valid = jQuery.parseJSON( '{"__NAME":"obj_G4_valid"' +
+        ' ,"OBJTYPE": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
+        ' ,"F_PGMID": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
+        '}');
+
+    var lastSelectGrpRowId; //마지막 선택한 그리드 프로퍼티 row
+
+    
     function Make(pgmtype) {
         window.open( "./make/cg_make.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
@@ -52,6 +102,112 @@
     function SourceView() {
         window.open("cg_viewtab.php?pgmseq=" + $("#F_PGMSEQ").val() + "&pjtseq=" + $("#F_PJTSEQ").val());
     }
+
+    //('" + tGrpId + "','" + rowId + "','" + colIndex + "','" +  tValue + "','" + tText + "')
+    function goGridPopOpen(tGrpId,rowId,colIndex,tValue,tText,tObject){
+        alog("goGridPopOpen() tGrpId=" + tGrpId + ", rowId=" + rowId + ", colIndex=" + colIndex + ", tValue=" + tValue + ", tText=" + tText);
+        
+        lastSelectGrpRowId = rowId;
+
+        var groupNm = tText + "(" + tValue + ")";
+        
+        //오브젝트 정보 얻기
+        var x = window.dhx4.absLeft(tObject);
+		var y = window.dhx4.absTop(tObject);
+		//var w = tObject.offsetWidth;
+        //var h = tObject.offsetHeight;
+        alog("tObject x=" + x + ", y=" + y);
+        
+        //일단 다 숨기기 시작
+        $("#divPgGrid").css("display","none");
+        $("#divPgChart").css("display","none");
+
+        if(tGrpId =="GRP"){
+            //mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue() 
+            var grpType = mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue();
+            alog("grpType=" + grpType);
+            if(grpType == "GRID"){
+                var freezeCnt = mygridGrp.cells(rowId,mygridGrp.getColIndexById("FREEZECNT")).getValue();
+                var colSizeType = mygridGrp.cells(rowId,mygridGrp.getColIndexById("COLSIZETYPE")).getValue();
+
+                var setObj = {
+                    FREEZECNT: freezeCnt
+                    ,COLSIZETYPE: colSizeType
+                };
+        
+                //그리드만 있는거 COLSIZETYPE
+                //챠트BAR만 있는거 LEGENDALIGN, 스택여부
+                //챠트PIE만 있는거 LEGENDALIGN
+                //챠트BAR2Y만 있는거 LEGENDALIGN
+
+                var metaObj = {
+                    FREEZECNT: {group :groupNm , name : '좌측 고정 컬럼(숫자)',  type: 'text'}
+                    ,COLSIZETYPE: {group : groupNm, name : '컬럼 가로 사이즈 타입',  type: 'options', options: [
+                        {text:'- 선택 -', value: ''}
+                        ,{text:'px', value: 'X'}
+                        ,{text:'%', value: 'P'}
+                    ]}
+                };
+
+        
+                // Lets create the grid for it
+                $('#divPgGrid').jqPropertyGrid(setObj, {meta: metaObj, callback: pgGridChange});
+
+                grpPropertyGrid("divPgGrid","(GRP) 그리드",x,y);
+
+            }else if(grpType == "CHARTBAR" || grpType == "CHARTPIE" || grpType == "CHARTBAR2Y"){
+                
+                var legendAlign = mygridGrp.cells(rowId,mygridGrp.getColIndexById("LEGENDALIGN")).getValue();
+                var stacked = mygridGrp.cells(rowId,mygridGrp.getColIndexById("STACKED")).getValue();
+
+                // Now create another grid
+                var setObj2 = {
+                    LEGENDALIGN: legendAlign,
+                    STACKED: yn2boolen(stacked),
+                };
+
+                // This is the metadata object that describes the target object properties (optional)
+
+                var metaObj2 = {
+                    LEGENDALIGN: {group: groupNm, name : '범례 위치',  type: 'options', options: [
+                        {text:'- 선택 -', value: ''}
+                        ,{text:'TOP', value: 'TOP'}
+                        ,{text:'LEFT', value: 'LEFT'}
+                        ,{text:'RIGHT', value: 'RIGHT'}
+                        ,{text:'BOTTOM', value: 'BOTTOM'}
+                    ]},
+                    STACKED: {group: groupNm, name : '스택으로 쌓기', type: 'boolean'}
+                };
+                $('#divPgChart').jqPropertyGrid(setObj2, {meta: metaObj2, callback: pgChartChange});
+                grpPropertyGrid("divPgChart","(GRP) 챠트",x,y);
+            }else{
+                msgError(grpType + "의 프로퍼티 레이어가 정의되지 않았습니다.",3);
+            }
+            
+
+        }
+    }
+
+    function pgGridChange(grid, name, value) {
+        // handle callback
+        alog("pgGridChange() grid=" + grid + ", name=" + name + ", value=" + value);
+
+        //오브젝트 모든 정보 가져와서 행의 값 변경하기
+        var objJson = $('#divPgGrid').jqPropertyGrid('get');
+        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("FREEZECNT")).setValue(objJson.FREEZECNT);
+        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("COLSIZETYPE")).setValue(objJson.COLSIZETYPE);
+    }
+
+    function pgChartChange(grid, name, value) {
+        // handle callback
+        alog("pgChartChange() grid=" + grid + ", name=" + name + ", value=" + value);
+
+        //오브젝트 모든 정보 가져와서 행의 값 변경하기
+        var objJson = $('#divPgChart').jqPropertyGrid('get');
+        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("LEGENDALIGN")).setValue(objJson.LEGENDALIGN);
+        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("STACKED")).setValue(boolen2yn(objJson.STACKED));        
+    }
+
 
     function search1(){
         //폼값 밸리데이션
@@ -1181,17 +1337,27 @@
 
 
 
-    function view1(){
-        if(isView1){
-            isView1 = false;
-            mygridGrp.setColumnHidden(0,true); //PJTSEQ
-            mygridGrp.setColumnHidden(1,true); //PGMSEQ
-            mygridGrp.setColumnHidden(2,true); //GRPSEQ
+    function viewGrp(){ 
+        if(isViewGrp || isViewGrp == null){
+            isViewGrp = false;
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("PJTSEQ"),true); //PJTSEQ
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("PGMSEQ"),true); //PGMSEQ
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("GRPSEQ"),true); //GRPSEQ
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("FREEZECNT"),true); //그리드용
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("COLSIZETYPE"),true); //그리드용
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("LEGENDALIGN"),true); //챠트
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("STACKED"),true); //챠트
+    
         }else{
-            isView1 = true;
-            mygridGrp.setColumnHidden(0,false); //PJTSEQ
-            mygridGrp.setColumnHidden(1,false); //PGMSEQ
-            mygridGrp.setColumnHidden(2,false); //GRPSEQ
+            isViewGrp = true;
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("PJTSEQ"),false); //PJTSEQ
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("PGMSEQ"),false); //PGMSEQ
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("GRPSEQ"),false); //GRPSEQ
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("FREEZECNT"),false); //그리드용
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("COLSIZETYPE"),false); //그리드용
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("LEGENDALIGN"),false); //챠트
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("STACKED"),false); //챠트
+    
         }
 
     }
@@ -1624,17 +1790,17 @@
     }
 
 
-    function view4(){
+    function viewIo(){
 
-        if(isView1){
-            isView1 = false;
+        if(isViewIo || isViewIo == null){
+            isViewIo = false;
             mygridIo.setColumnHidden(0,true); //PJTSEQ
             mygridIo.setColumnHidden(1,true); //PGMSEQ
             mygridIo.setColumnHidden(2,true); //GRPSEQ
             mygridIo.setColumnHidden(3,true); //IOSEQ
             mygridIo.setColumnHidden(4,true); //DDSEQ
         }else{
-            isView1 = true;
+            isViewIo = true;
             mygridIo.setColumnHidden(0,false); //PJTSEQ
             mygridIo.setColumnHidden(1,false); //PGMSEQ
             mygridIo.setColumnHidden(2,false); //GRPSEQ
@@ -1706,81 +1872,38 @@
 
 
 
-
-    //정적 변수 선언
-    var cm;//codemirror
-	var popSelectLayout; //레이아웃용
-    var myCalendar;
-    var lastCondition;
-    var mygridGrp,dp1,addstatusyn1,lastinput1,lastinput1json,lastrowid1,isView1;
-    var mygridSql,dp2,addstatusyn2,lastinput2,lastinput2json,lastrowid2,isView2;
-    var mygridCol,dp3,addstatusyn3,lastinput3,lastinput3json,lastrowid3,isView3;
-    var mygridIo,dp4,addstatusyn4,lastinput4,lastinput4json,lastrowid4,isView4;
-    var mygridFnc,dp5,addstatusyn5,lastinput5,lastinput5json,lastrowid5,isView5;
-    var mygridInherit,dp6,addstatusyn6,lastinput6,lastinput6json,lastrowid6,isView6;
-    var mygridSqlR,dp7,addstatusyn7,lastinput7,lastinput7json,lastrowid7,isView7;
-    var mygrid8,dp8,addstatusyn8,lastinput8,lastinput8json,lastrowid8,isView8;
-    var mygridSvc,dp9,addstatusyn9,lastinput9,lastinput9json,lastrowid9,isView9;
-    var mygridPgm,addstatusynPgm,lastinputPgm,lastinputPgmjson,lastrowidPgm;
-    var mygridGrp_url = "cg_pgminfo_crud3.php?F_GRPID=1&";
-    var mygridSql_url = "cg_pgminfo_crud3.php?F_GRPID=2&";
-    var mygridCol_url = "cg_pgminfo_crud3.php?F_GRPID=3&";
-    var mygridIo_url = "cg_pgminfo_crud3.php?F_GRPID=4&";
-    var mygridFnc_url = "cg_pgminfo_crud3.php?F_GRPID=5&";
-    var mygridInherit_url = "cg_pgminfo_crud3.php?F_GRPID=6&";
-    var mygridSqlR_url = "cg_pgminfo_crud3.php?F_GRPID=7&";
-    var mygrid8_url = "cg_pgminfo_crud3.php?F_GRPID=8&";
-    var mygridSvc_url = "cg_pgminfo_crud3.php?F_GRPID=9&";
-    var mygridGrp0_url = "cg_pgminfo_crud3.php?F_GRPID=10&";
-    var mygridGrp1_url = "cg_pgminfo_crud3.php?F_GRPID=11&"; //IO그리드, COL그리드에서 상속받기
-    var mygridGrp2_url = "cg_pgminfo_crud3.php?F_GRPID=12&"; //VALID
-    var mygridGrp3_url = "cg_pgminfo_crud3.php?F_GRPID=13&"; //SVC
-    var mygridPgm_url = "cg_pgminfo_crud3.php?F_GRPID=PGM&"; //팝업윈도우 프로그램 검색
-    var validmsg = jQuery.parseJSON('{"REQUARED":"[0]는 반드시 입력바랍니다.", "MIN":"this는 [0]이상 입력바랍니다."}');
-
-	var isLayoutLoaded = false;
-	var myWins;
-
-    //동적 변수 선언
-    var obj_condition_valid = jQuery.parseJSON( '{"__NAME":"obj_condition_valid"' +
-        ' ,"F_PJTID": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
-        ' ,"F_PGMID": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
-        '}');
-    var obj_G4_valid = jQuery.parseJSON( '{"__NAME":"obj_G4_valid"' +
-        ' ,"OBJTYPE": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
-        ' ,"F_PGMID": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
-        '}');
-
     
     //프로그램 검색
-    function grpPropertyGrid(tDivNm,tJson){
+    function grpPropertyGrid(tDivNm,tWindowTitle,x,y){
         //alert( "#F_PGMNM for .change() called." );
         //alert($("#F_PGMNM").val());
 
-        $("#divPgGrid").css("display","");
+        //$("#" + tDivNm).css("display","");
         if(myWins && myWins.window("grpPropertyWindow")){
             //alert("show");
-            myWins.window("grpPropertyWindow").show();
+            //myWins.window("grpPropertyWindow").attachObject(tDivNm);
+            //myWins.window("grpPropertyWindow").show();
         }else{
             //alert("new");
             myWins = new dhtmlXWindows();
 
             myWins.createWindow({
                 id:"grpPropertyWindow",
-                left:20,
-                top:30,
-                width:400,
+                left:x,
+                top:y,
+                width:300,
                 height:200,
-                caption:"프로퍼티 그리드"
+                caption:tWindowTitle
             });
             //myWins.window("pgmwindow").hideHeader();
 
             myWins.window("grpPropertyWindow").attachEvent("onClose", function(win){
                 //alert(1);
-                myWins.window("grpPropertyWindow").hide();
-                return false;
+                myWins.window("grpPropertyWindow").detachObject(tDivNm); //윈도우 객체 안에서 분리해서 윈도우 밖으로 div를 반환한다.
+                //myWins.window("grpPropertyWindow").close();
+                return true;
             });
-            myWins.window("grpPropertyWindow").attachObject("divPgGrid");
+            myWins.window("grpPropertyWindow").attachObject(tDivNm); //div 오브젝트 자체가 윈도우 안으로 이동해서 기존 div객체는 윈도우 안에서 움직임
         }
 
     }
@@ -2034,11 +2157,11 @@
         mygridGrp = new dhtmlXGridObject('grid1');
 		mygridGrp.setUserData("","gridTitle","grid1 : group list"); //글로별 변수에 그리드 타이블 넣기
         mygridGrp.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,PROPERTY,ADDDT,MODDT");
-        mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,PROPERTY,ADDDT,MODDT");
-        mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,30,50,50")
-        mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,button,ro,ro");
-		mygridGrp.setColSorting("str,str,str,str,str,int,int,int,int,str,str,str,str,str,str,str,str");
+        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,ADDDT,MODDT");
+        mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,ADDDT,MODDT");
+        mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,30,30,50,50")
+        mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,ed,button,ro,ro");
+		mygridGrp.setColSorting("str,str,str,str,str,int,int,int,int,str,str,str,str,str,str,str,str,str");
 
 		mygridGrp.enableSmartRendering(false);
         mygridGrp.enableMultiselect(true);
@@ -2051,9 +2174,8 @@
         mygridGrp.splitAt(5);//'freezes' 0 columns // ROW선택 이벤트
         mygridGrp.init();
 
-        mygridGrp.setColumnHidden(0,true); //PJTSEQ
-        mygridGrp.setColumnHidden(1,true); //PGMSEQ
-        mygridGrp.setColumnHidden(2,true); //GRPSEQ
+        //숨기기
+        viewGrp();
 
         mygridGrp.attachEvent("onRowSelect",function(rowID,celInd){
             alog("mygridGrp - onRowSelect ----------start");
@@ -3027,9 +3149,9 @@
 
 
         //Grp에 따른 프로퍼티 그리드 초기화
-        propertyGridInit();
+        //propertyGridInit();
 
-        grpPropertyGrid();
+        //grpPropertyGrid();
         
 		alog("initBody-----------------------------end");
 

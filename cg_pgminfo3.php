@@ -149,7 +149,7 @@ header("Pragma:no-cache");
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanGrpCnt">N</span>
                     <input type="checkbox" name="GRP_EDIT_MODE" id="GRP_EDIT_MODE" value="Y" style="vertical-align:middle;">Edit<input 
-                    type="button" name="some_name" value="V" onclick="view1();"><input 
+                    type="button" name="some_name" value="V" onclick="viewGrp();"><input 
                     type="button" name="some_name" value="S" onclick="save1();"><input 
                     type="button" name="select_Layout" value="select Layout" onclick="selectLayout(this);"><input 
                     type="button" name="add" value="+" onclick="addRow1();"><input 
@@ -186,7 +186,7 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* 오브젝트</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanIoCnt">N</span>
-                    <input type="button" name="some_name" value="V" onclick="view4();">                
+                    <input type="button" name="some_name" value="V" onclick="viewIo();">                
 				    <input type="button" name="some_name" value="S" onclick="save4();">
 					<input type="button" name="ttt" value="C" onclick="getColOutput();">
 					<input type="button" name="add" value="+" onclick="addRow4();">
@@ -362,8 +362,8 @@ header("Pragma:no-cache");
     </div>
 
     <!--그룹타입에 따른 프로퍼티 그리드-->
-    <div id="divPgGrid" style="position:absolute;top:0px;left:0px;display: none;z-index;5"></div>
-    <div id="divPgChart" style="position:absolute;top:0px;left:0px;display: none;z-index;5"></div>
+    <div id="divPgGrid" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
+    <div id="divPgChart" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
 
 </div>
 

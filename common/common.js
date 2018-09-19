@@ -54,7 +54,7 @@ function eXcell_button(cell){ //the eXcell name is defined here
 			alog("cell.cellIndex = " + colIndex);
 			//alog("this.grid.getUserData(GRPID) = " + this.grid.getUserData("","GRPID"));	
 			tStr += "<span  id=\"" + tValue + "\" >" + tText + "</span>";
-			tStr += "<input type=\"image\" src=\"/c.g/img/search.png\" height=20 style=\"vertical-align:middle;\" onclick=\"goGridPopOpen('" + tGrpId + "','" + rowId + "','" + colIndex + "','" +  tValue + "','" + tText + "')\">";
+			tStr += "<input type=\"image\" src=\"/c.g/img/search.png\" height=20 style=\"vertical-align:middle;\" onclick=\"goGridPopOpen('" + tGrpId + "','" + rowId + "','" + colIndex + "','" +  tValue + "','" + tText + "',this)\">";
 			
 			this.setCValue(tStr,tValue);//NM,CD
 		}else{
@@ -774,4 +774,22 @@ var color = Chart.helpers.color;
 //2018.08.29
 function formatNumber(a){
 	return String(a).replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+}
+
+//2018.09.19
+function boolen2yn(tmp){
+	if(tmp){
+		return "Y";
+	}else{
+		return "N";
+	}
+}
+
+//2018.09.19
+function yn2boolen(tmp){
+	if(tmp == "Y"){
+		return true;
+	}else{
+		return false;
+	}
 }
