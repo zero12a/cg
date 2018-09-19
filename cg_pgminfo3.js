@@ -1880,31 +1880,31 @@
 
         //$("#" + tDivNm).css("display","");
         if(myWins && myWins.window("grpPropertyWindow")){
-            //alert("show");
-            //myWins.window("grpPropertyWindow").attachObject(tDivNm);
-            //myWins.window("grpPropertyWindow").show();
-        }else{
-            //alert("new");
-            myWins = new dhtmlXWindows();
-
-            myWins.createWindow({
-                id:"grpPropertyWindow",
-                left:x,
-                top:y,
-                width:300,
-                height:200,
-                caption:tWindowTitle
-            });
-            //myWins.window("pgmwindow").hideHeader();
-
-            myWins.window("grpPropertyWindow").attachEvent("onClose", function(win){
-                //alert(1);
-                myWins.window("grpPropertyWindow").detachObject(tDivNm); //윈도우 객체 안에서 분리해서 윈도우 밖으로 div를 반환한다.
-                //myWins.window("grpPropertyWindow").close();
-                return true;
-            });
-            myWins.window("grpPropertyWindow").attachObject(tDivNm); //div 오브젝트 자체가 윈도우 안으로 이동해서 기존 div객체는 윈도우 안에서 움직임
+            myWins.window("grpPropertyWindow").close();
         }
+        
+
+        //alert("new");
+        myWins = new dhtmlXWindows();
+
+        myWins.createWindow({
+            id:"grpPropertyWindow",
+            left:x,
+            top:y,
+            width:300,
+            height:200,
+            caption:tWindowTitle
+        });
+        //myWins.window("pgmwindow").hideHeader();
+
+        myWins.window("grpPropertyWindow").attachEvent("onClose", function(win){
+            //alert(1);
+            myWins.window("grpPropertyWindow").detachObject(tDivNm); //윈도우 객체 안에서 분리해서 윈도우 밖으로 div를 반환한다.
+            //myWins.window("grpPropertyWindow").close();
+            return true;
+        });
+        myWins.window("grpPropertyWindow").attachObject(tDivNm); //div 오브젝트 자체가 윈도우 안으로 이동해서 기존 div객체는 윈도우 안에서 움직임
+
 
     }
         
