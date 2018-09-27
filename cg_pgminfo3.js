@@ -254,7 +254,7 @@
 			'}');
 
         //그리드 조회
-        gridSearch1(ConAllData);
+        grpSearch(ConAllData);
 
         //그리드 조회
         gridSearch2(ConAllData);
@@ -917,8 +917,8 @@
 
 
     //그리드 조회
-    function gridSearch1(tinput){
-        alog("gridSearch1()------------start");
+    function grpSearch(tinput){
+        alog("grpSearch()------------start");
 
         //그리드 초기화
         mygridGrp.clearAll();
@@ -931,7 +931,7 @@
             dataType: "json",
             async: true,
             success: function(data){
-                alog("   gridSearch1 json return----------------------");
+                alog("   grpSearch json return----------------------");
                 alog("   json data : " + data);
                 alog("   json RTN_CD : " + data.RTN_CD);
                 alog("   json ERR_CD : " + data.ERR_CD);
@@ -962,7 +962,7 @@
             }
         });
 
-        alog("gridSearch1()------------end");
+        alog("grpSearch()------------end");
     }
 
     //그리드 조회
@@ -1377,8 +1377,8 @@
 
     }
 
-    function save1(){
-        alog("save1()------------start");
+    function grpSave(){
+        alog("grpSave()------------start");
         //serialize user data or not,
         //serialize 'selected' attribute for the rows tags,
         //serialize grid structure info,
@@ -1392,33 +1392,23 @@
         //mygridIo.serialize();
         var myXmlString = tgrid.serialize();
 
-        tgrid.setSerializationLevel(true,false,false,false,false,false);
-        //mygridIo.serialize();
-        var myXmlString2 = tgrid.serialize();
-
-        //alog("xml : " + myXmlString);
-
         //컨디션 데이터 모두 말기
         var ConAllData = $( "#condition1" ).serialize();
         alog("   ConAllData = " + ConAllData);
 
         var xml = myXmlString;
-        xml = xml.replace(new RegExp("<row","g"),"\n<row");
-        xml = xml.replace(new RegExp("</row","g"),"\n</row");
-        xml = xml.replace(new RegExp("<cell","g"),"\n\t<cell");
+        //xml = xml.replace(new RegExp("<row","g"),"\n<row");
+        //xml = xml.replace(new RegExp("</row","g"),"\n</row");
+        //xml = xml.replace(new RegExp("<cell","g"),"\n\t<cell");
 
-        var xml2 = myXmlString2;
-        xml2 = xml2.replace(new RegExp("<row","g"),"\n<row");
-        xml2 = xml2.replace(new RegExp("</row","g"),"\n</row");
-        xml2 = xml2.replace(new RegExp("<cell","g"),"\n\t<cell");
 
        //$("#tt").val(xml);
         //$("#tt2").val(xml2);
 
         $.ajax({
             type : "POST",
-            url : mygridGrp_url+"&G1_CRUD_MODE=SAVE&" + lastinput2 ,
-            data : {xmldata : myXmlString},
+            url : mygridGrp_url+"&CTLFNC=SAVE&" + lastinput2 ,
+            data : {"GRP-XML" : myXmlString},
             dataType: "json",
             async: false,
             success: function(data){
@@ -1429,7 +1419,7 @@
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
                 //그리드에 데이터 반영
-                saveToGrid(tgrid,data);
+                saveToGrid(tgrid,data.GRP_DATA[0]);
 
             },
             error: function(error){
@@ -1439,7 +1429,7 @@
         });
 
         addstatusyn2 = false;
-        alog("save1()------------end");
+        alog("grpSave()------------end");
     }
 
 

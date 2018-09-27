@@ -111,6 +111,15 @@
     $REQ["searchdd"]    = $_POST['searchdd'];
 
 
+    $REQ["GRP-XML"] = getXml2Array($_POST["GRP-XML"]);//GRP
+    $REQ["FNC-XML"] = getXml2Array($_POST["FNC-XML"]);//FNC
+    $REQ["IO-XML"] = getXml2Array($_POST["IO-XML"]);//IO
+    $REQ["INHERIT-XML"] = getXml2Array($_POST["INHERIT-XML"]);//INHERIT
+    $REQ["SVC-XML"] = getXml2Array($_POST["SVC-XML"]);//SVC
+    $REQ["SQLR-XML"] = getXml2Array($_POST["SQLR-XML"]);//SQLR
+    $REQ["SQL-XML"] = getXml2Array($_POST["SQL-XML"]);//SQL
+    $REQ["SQLD-XML"] = getXml2Array($_POST["SQLD-XML"]);//SQLD
+
     //서비스 클래스 생성
     $objService = new cg_pgminfo_svc();
 
@@ -130,30 +139,54 @@
         case "GRP_SEARCH" :
             echo $objService->goGrpSearch(); //
             break;
+        case "GRP_SAVE" :
+            echo $objService->goGrpSave(); //
+            break;            
         case "SQL_SEARCH" :
             echo $objService->goSqlSearch(); //
             break;
+        case "SQL_SAVE" :
+            echo $objService->goSqlSave(); //
+            break;      
         case "FNC_SEARCH" :
             echo $objService->goFncSearch(); //
             break;
+        case "FNC_SAVE" :
+            echo $objService->goFncSave(); //
+            break;            
         case "IO_SEARCH" :
             echo $objService->goIoSearch(); //
             break;
+        case "IO_SAVE" :
+            echo $objService->goIoSave(); //
+            break;            
         case "IOCD_SEARCH" :
             echo $objService->goIocdSearch(); //
             break;            
         case "INHERIT_SEARCH" :
             echo $objService->goInheritSearch(); //
             break;
+        case "INHERIT_SAVE" :
+            echo $objService->goInheritSave(); //
+            break;            
         case "SVC_SEARCH" :
             echo $objService->goSvcSearch(); //
-            break;           
+            break;      
+        case "SVC_SAVE" :
+            echo $objService->goSvcSave(); //
+            break;   
         case "SQLR_SEARCH" :
             echo $objService->goSqlrSearch(); //
             break;
+        case "SQLR_SAVE" :
+            echo $objService->goSqlrSave(); //
+            break;            
         case "SQLD_SEARCH" :
             echo $objService->goSqldSearch(); //
-            break;          
+            break;        
+        case "SQLD_SAVE" :
+            echo $objService->goSqldSave(); //
+            break;      
         case "PGM_SEARCH" :
             echo $objService->goPgmSearch(); //
             break;     
@@ -175,55 +208,6 @@
     }
 exit;
 
-
-
-
-if($F_GRPID == "1"){
-    alog("---------------GRP G1 ---------------------START");
-    alog("        G1_CRUD_MODE : " .$G2_CRUD_MODE);
-    alog("        xmldata : " .$_POST["xmldata"]);
-
-	$xml_array = getXml2Array($_POST["xmldata"]);
-
-    $colord = "PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,ADDDT,MODDT";
-
-	$sql_inserted = "
-	  insert into CG_PGMGRP (
-			PJTSEQ,PGMSEQ,GRPID,GRPNM,GRPTYPE
-            ,GRPORD,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT
-            ,BRYN,FREEZECNT,COLSIZETYPE,LEGENDALIGN,STACKED
-			,ADDDT
-		) values (
-			#PJTSEQ#, #PGMSEQ#, #GRPID#, #GRPNM#, #GRPTYPE#
-            ,#GRPORD#, #REFGRPID#, #VBOX#, #GRPWIDTH#, #GRPHEIGHT#
-            ,#BRYN#, #FREEZECNT#, if(#COLSIZETYPE#='','X',#COLSIZETYPE#),#LEGENDALIGN#,#STACKED#
-			,date_format(sysdate(),'%Y%m%d%H%i%s')
-		)
-	";
-	$sql_inserted_coltype = "iisss issss sissss";
-
-	$sql_deleted = "
-		delete from  CG_PGMGRP  where PJTSEQ = #PJTSEQ# and PGMSEQ = #PGMSEQ# and GRPSEQ = #GRPSEQ#	
-	";
-	$sql_deleted_coltype = "iii";
-
-	$sql_updated = "
-		update CG_PGMGRP set
-            GRPID = #GRPID#, GRPNM =#GRPNM#, GRPTYPE = #GRPTYPE#, GRPORD = #GRPORD#, REFGRPID = #REFGRPID#
-            , GRPWIDTH = #GRPWIDTH#, GRPHEIGHT = #GRPHEIGHT#, BRYN = #BRYN#, FREEZECNT = #FREEZECNT#, COLSIZETYPE = #COLSIZETYPE#
-            , VBOX = #VBOX#, LEGENDALIGN = #LEGENDALIGN#, STACKED = #STACKED#
-            , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
-		where PJTSEQ = #PJTSEQ# and PGMSEQ = #PGMSEQ# and GRPSEQ = #GRPSEQ#
-	";
-	$sql_updated_coltype = "sssis sssis sss iii";
-
-
-	echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","GRPSEQ");
-
-    $db->close();
-
-
-}
 
 
 

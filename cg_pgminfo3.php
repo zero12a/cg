@@ -150,7 +150,7 @@ header("Pragma:no-cache");
                     <span id="spanGrpCnt">N</span>
                     <input type="checkbox" name="GRP_EDIT_MODE" id="GRP_EDIT_MODE" value="Y" style="vertical-align:middle;">Edit<input 
                     type="button" name="some_name" value="V" onclick="viewGrp();"><input 
-                    type="button" name="some_name" value="S" onclick="save1();"><input 
+                    type="button" name="some_name" value="S" onclick="grpSave();"><input 
                     type="button" name="select_Layout" value="select Layout" onclick="selectLayout(this);"><input 
                     type="button" name="add" value="+" onclick="addRow1();"><input 
                     type="button" name="delete" value="-" onclick="delRow(mygridGrp);">  

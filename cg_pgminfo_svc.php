@@ -55,6 +55,8 @@ class cg_pgminfo_svc
 		echo json_encode($rtnVal);
 		alog("cg_pgminfo_svc-goDdSearch________________________end");
 	}	
+	
+
 	public function goIocdSearch(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -350,6 +352,44 @@ class cg_pgminfo_svc
 		alog("cg_pgminfo_svc-goFncSearch________________________end");
 	}
 
+
+
+	public function goFncSave(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("PGMMNGService-goFncSave________________________start");
+		//GRID_SAVE____________________________start
+		$grpId="FNC";
+		$GRID["XML"]=$REQ[$grpId."-XML"];
+		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		//암호화컬럼
+		$GRID["COLCRYPT"] = array();	
+		$GRID["KEYCOLID"] = "FNCSEQ";  //KEY컬럼 COLID, 0
+		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
+		//저장
+		$GRID["SQL"]["D"] = $this->DAO->fncDel($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["U"] = $this->DAO->fncUpd($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["C"] = $this->DAO->fncIns($REQ); // SAVE, 저장, PJT
+
+		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME GRP]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_SAVE____________________________end
+
+
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("PGMMNGService-goFncSave________________________end");
+	}	
+
 	public function goGrpSearch(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -375,6 +415,43 @@ class cg_pgminfo_svc
 		echo json_encode($rtnVal);
 		alog("cg_pgminfo_svc-goGrpSearch________________________end");
 	}
+
+
+	public function goGrpSave(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("PGMMNGService-goGrpSave________________________start");
+		//GRID_SAVE____________________________start
+		$grpId="GRP";
+		$GRID["XML"]=$REQ[$grpId."-XML"];
+		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		//암호화컬럼
+		$GRID["COLCRYPT"] = array();	
+		$GRID["KEYCOLID"] = "GRPSEQ";  //KEY컬럼 COLID, 0
+		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
+		//저장
+		$GRID["SQL"]["D"] = $this->DAO->grpDel($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["U"] = $this->DAO->grpUpd($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["C"] = $this->DAO->grpIns($REQ); // SAVE, 저장, PJT
+
+		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME GRP]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_SAVE____________________________end
+
+
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("PGMMNGService-goGrpSave________________________end");
+	}	
 	
 	public function goSqlSearch(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
@@ -402,6 +479,41 @@ class cg_pgminfo_svc
 		alog("cg_pgminfo_svc-goSqlSearch________________________end");
 	}
 	
+	public function goSqlSave(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("PGMMNGService-goSqlSave________________________start");
+		//GRID_SAVE____________________________start
+		$grpId="FNC";
+		$GRID["XML"]=$REQ[$grpId."-XML"];
+		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,SQLTXT,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		//암호화컬럼
+		$GRID["COLCRYPT"] = array();	
+		$GRID["KEYCOLID"] = "SQLSEQ";  //KEY컬럼 COLID, 0
+		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
+		//저장
+		$GRID["SQL"]["D"] = $this->DAO->sqlDel($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["U"] = $this->DAO->sqlUpd($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["C"] = $this->DAO->sqlIns($REQ); // SAVE, 저장, PJT
+
+		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME SQL]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_SAVE____________________________end
+
+
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("PGMMNGService-goSqlSave________________________end");
+	}		
 }
                                                              
 ?>

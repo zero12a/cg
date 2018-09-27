@@ -242,6 +242,51 @@ class cg_pgminfo_dao
 	}  
 
 
+	public function fncIns($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		insert into CG_PGMFNC (
+			PJTSEQ,PGMSEQ,GRPSEQ,FNCID,FNCCD
+			,FNCNM,FNCTYPE,USEYN,FNCORD
+			,ADDDT
+		) values (
+			#{F_PJTSEQ},#{F_PGMSEQ},#{G1-GRPSEQ},#{FNCID},#{FNCCD}
+			,#{FNCNM},#{FNCTYPE},case #{USEYN} when 1 then 'Y' else 'N' end,#{FNCORD}
+			,date_format(sysdate(),'%Y%m%d%H%i%s')
+		)
+		";
+		$RtnVal["BINDTYPE"] = "iiiss sssi";
+		return $RtnVal;
+    }  
+	public function fncUpd($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+	update CG_PGMFNC set
+		FNCID = #{FNCID}, FNCCD = #{FNCCD}, FNCNM = #{FNCNM}, FNCTYPE = #{FNCTYPE}, USEYN = case #{USEYN} when 1 then 'Y' else 'N' end
+		, FNCORD = #{FNCORD}
+		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
+  	where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ} and FNCSEQ = #{FNCSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "sssss i iiii";
+		return $RtnVal;
+    }  
+	public function fncDel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		delete from CG_PGMFNC where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ} and FNCSEQ = #{FNCSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "iiii";
+		return $RtnVal;
+    }  
 
 	public function sqlSearch($req){
 		//조회
@@ -258,6 +303,52 @@ class cg_pgminfo_dao
 		return $RtnVal;
     }  
    
+	public function sqlIns($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		insert into CG_PGMSQL (
+			PJTSEQ,PGMSEQ,SQLID,SQLNM,SVRSEQ
+			,CRUD,RTN_TYPE,SQLORD,SQLTXT
+			,ADDDT
+		) values (
+			#{PJTSEQ},#{PGMSEQ},#{SQLID},#{SQLNM},#{SVRSEQ}
+			,#{CRUD},#{RTN_TYPE},#{SQLORD},#{SQLTXT}
+			,date_format(sysdate(),'%Y%m%d%H%i%s')
+		)
+		";
+		$RtnVal["BINDTYPE"] = "iissi ssis";
+		return $RtnVal;
+    }  
+	public function sqlUpd($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		update CG_PGMSQL set
+			SQLID = #{SQLID}, SQLNM = #{SQLNM}, SVRSEQ = #{SVRSEQ}, CRUD = #{CRUD} , RTN_TYPE = #{RTN_TYPE}
+			, SQLTXT = #{SQLTXT}, SQLORD = #{SQLORD}	,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
+		where PJTSEQ = #{PJTSEQ}  and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} 
+		";
+		$RtnVal["BINDTYPE"] = "ssiss si iii";
+		return $RtnVal;
+    }  
+	public function sqlDel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		delete from CG_PGMSQL where PJTSEQ=#{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "iii";
+		return $RtnVal;
+	}  
+	
+
 	public function grpSearch($req){
 		//조회
 		$RtnVal = null;
@@ -273,6 +364,55 @@ class cg_pgminfo_dao
 		return $RtnVal;
     }  
 	
+	public function grpIns($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		insert into CG_PGMGRP (
+			PJTSEQ,PGMSEQ,GRPID,GRPNM,GRPTYPE
+            ,GRPORD,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT
+            ,BRYN,FREEZECNT,COLSIZETYPE,LEGENDALIGN,STACKED
+			,ADDDT
+		) values (
+			#{PJTSEQ}, #{PGMSEQ}, #{GRPID}, #{GRPNM}, #{GRPTYPE}
+            ,#{GRPORD}, #{REFGRPID}, #{VBOX}, #{GRPWIDTH}, #{GRPHEIGHT}
+            ,#{BRYN}, #{FREEZECNT}, if(#{COLSIZETYPE}='','X',#{COLSIZETYPE}),#{LEGENDALIGN},#{STACKED}
+			,date_format(sysdate(),'%Y%m%d%H%i%s')
+		)
+		";
+		$RtnVal["BINDTYPE"] = "iisss issss sissss";
+		return $RtnVal;
+    }  
+	public function grpUpd($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		update CG_PGMGRP set
+            GRPID = #{GRPID}, GRPNM = #{GRPNM}, GRPTYPE = #{GRPTYPE}, GRPORD = #{GRPORD}, REFGRPID = #{REFGRPID}
+            , GRPWIDTH = #{GRPWIDTH}, GRPHEIGHT = #{GRPHEIGHT}, BRYN = #{BRYN}, FREEZECNT = #{FREEZECNT}, COLSIZETYPE = #{COLSIZETYPE}
+            , VBOX = #{VBOX}, LEGENDALIGN = #{LEGENDALIGN}, STACKED = #{STACKED}
+            , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
+		where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "sssis sssis sss iii";
+		return $RtnVal;
+    }  
+	public function grpDel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		delete from  CG_PGMGRP  where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ}	
+		";
+		$RtnVal["BINDTYPE"] = "iii";
+		return $RtnVal;
+    }  
+
 }
                                                              
 ?>
