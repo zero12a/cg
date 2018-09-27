@@ -16,20 +16,21 @@
     var mygrid8,dp8,addstatusyn8,lastinput8,lastinput8json,lastrowid8,isView8;
     var mygridSvc,dp9,addstatusyn9,lastinput9,lastinput9json,lastrowid9,isView9;
     var mygridPgm,addstatusynPgm,lastinputPgm,lastinputPgmjson,lastrowidPgm;
-    var mygridGrp_url = "cg_pgminfo_crud3.php?F_GRPID=1&";
-    var mygridSql_url = "cg_pgminfo_crud3.php?F_GRPID=2&";
-    var mygridCol_url = "cg_pgminfo_crud3.php?F_GRPID=3&";
-    var mygridIo_url = "cg_pgminfo_crud3.php?F_GRPID=4&";
-    var mygridFnc_url = "cg_pgminfo_crud3.php?F_GRPID=5&";
-    var mygridInherit_url = "cg_pgminfo_crud3.php?F_GRPID=6&";
-    var mygridSqlR_url = "cg_pgminfo_crud3.php?F_GRPID=7&";
-    var mygrid8_url = "cg_pgminfo_crud3.php?F_GRPID=8&";
-    var mygridSvc_url = "cg_pgminfo_crud3.php?F_GRPID=9&";
-    var mygridGrp0_url = "cg_pgminfo_crud3.php?F_GRPID=10&";
-    var mygridGrp1_url = "cg_pgminfo_crud3.php?F_GRPID=11&"; //IO그리드, COL그리드에서 상속받기
-    var mygridGrp2_url = "cg_pgminfo_crud3.php?F_GRPID=12&"; //VALID
-    var mygridGrp3_url = "cg_pgminfo_crud3.php?F_GRPID=13&"; //SVC
-    var mygridPgm_url = "cg_pgminfo_crud3.php?F_GRPID=PGM&"; //팝업윈도우 프로그램 검색
+    var mygridGrp_url = "cg_pgminfo_crud3.php?CTLGRP=GRP&";
+    var mygridSql_url = "cg_pgminfo_crud3.php?CTLGRP=SQL&";
+    var mygridCol_url = "cg_pgminfo_crud3.php?CTLGRP=SQLD&";
+    var mygridIo_url = "cg_pgminfo_crud3.php?CTLGRP=IO&";
+    var mygridIocd_url = "cg_pgminfo_crud3.php?CTLGRP=IOCD&"; //IO그리드, COL그리드에서 상속받기    
+    var mygridDd_url = "cg_pgminfo_crud3.php?CTLGRP=DD&";
+    var mygridInherit_url = "cg_pgminfo_crud3.php?CTLGRP=INHERIT&";
+    var mygridFnc_url = "cg_pgminfo_crud3.php?CTLGRP=FNC&";
+    var mygridFnccd_url = "cg_pgminfo_crud3.php?CTLGRP=FNCCD&";
+    var mygridSqlR_url = "cg_pgminfo_crud3.php?CTLGRP=SQLR&";
+    var mygridLayout_url = "cg_pgminfo_crud3.php?CTLGRP=LAYOUT&";
+    var mygridLayoutD_url = "cg_pgminfo_crud3.php?CTLGRP=LAYOUTD&";
+
+    var mygridSvc_url = "cg_pgminfo_crud3.php?CTLGRP=SVC&"; //SVC
+    var mygridPgm_url = "cg_pgminfo_crud3.php?CTLGRP=PGM&"; //팝업윈도우 프로그램 검색
     var validmsg = jQuery.parseJSON('{"REQUARED":"[0]는 반드시 입력바랍니다.", "MIN":"this는 [0]이상 입력바랍니다."}');
 
 	var isLayoutLoaded = false;
@@ -196,6 +197,13 @@
         var objJson = $('#divPgGrid').jqPropertyGrid('get');
         mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("FREEZECNT")).setValue(objJson.FREEZECNT);
         mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("COLSIZETYPE")).setValue(objJson.COLSIZETYPE);
+
+        if(mygridGrp.getUserData(lastSelectGrpRowId,"!nativeeditor_status") == ""){
+            mygridGrp.setUserData(lastSelectGrpRowId,"!nativeeditor_status","updated");
+            mygridGrp.setRowTextBold(lastSelectGrpRowId);
+            mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("FREEZECNT")).cell.wasChanged = true;	
+            mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("COLSIZETYPE")).cell.wasChanged = true;	
+        }
     }
 
     function pgChartChange(grid, name, value) {
@@ -205,7 +213,14 @@
         //오브젝트 모든 정보 가져와서 행의 값 변경하기
         var objJson = $('#divPgChart').jqPropertyGrid('get');
         mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("LEGENDALIGN")).setValue(objJson.LEGENDALIGN);
-        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("STACKED")).setValue(boolen2yn(objJson.STACKED));        
+        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("STACKED")).setValue(boolen2yn(objJson.STACKED));  
+        
+        if(mygridGrp.getUserData(lastSelectGrpRowId,"!nativeeditor_status") == ""){
+            mygridGrp.setUserData(lastSelectGrpRowId,"!nativeeditor_status","updated");
+            mygridGrp.setRowTextBold(lastSelectGrpRowId);
+            mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("LEGENDALIGN")).cell.wasChanged = true;	
+            mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("STACKED")).cell.wasChanged = true;	
+        }        
     }
 
 
@@ -374,7 +389,7 @@
 			//불러오기
 			$.ajax({
 				type : "POST",
-				url : mygridInherit_url+"&G6_CRUD_MODE=read&" + lastCondition ,
+				url : mygridLayout_url+"&CTLFNC=SEARCH&" + lastCondition ,
 				data : {xmldata : ""},
 				dataType: "json",
 				async: true,
@@ -450,7 +465,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridInherit_url+"&G6_CRUD_MODE=read2&" + lastCondition ,
+            url : mygridLayoutD_url+"&CTLFNC=SEARCH&" + lastCondition ,
             data : {xmldata : "", F_LAYOUTID : tlayoutid},
             dataType: "json",
             async: true,
@@ -538,7 +553,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygrid8_url+"&G8_CRUD_MODE=read&" + lastinput5 + "&G1_PCD=FNC" + tFnc ,
+            url : mygridFnccd_url+"&CTLFNC=SEARCH&" + lastinput5 + "&G1-PCD=FNC" + tFnc ,
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -671,7 +686,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridGrp1_url+"&G11_CRUD_MODE=read&" + lastinput4 + "&G2_SQLSEQ=" + sqlGrid.getSelectedRowId(),
+            url : mygridIocd_url+"&CTLFNC=SEARCH&" + lastinput4 + "&G2-SQLSEQ=" + sqlGrid.getSelectedRowId(),
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -847,7 +862,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridPgm_url+"&PGM_CRUD_MODE=read&" + tinput ,
+            url : mygridPgm_url+"&CTLFNC=SEARCH&" + tinput ,
             data : {POP_PJTSEQ : $("#POP_PJTSEQ").val(),POP_PGMID : $("#POP_PGMID").val(),POP_PGMNM : $("#POP_PGMNM").val(),},
             dataType: "json",
             async: true,
@@ -911,7 +926,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridGrp_url+"&G1_CRUD_MODE=read&" + tinput ,
+            url : mygridGrp_url+"&CTLFNC=SEARCH&" + tinput ,
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -960,7 +975,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridSql_url+"&G2_CRUD_MODE=read&" + tinput ,
+            url : mygridSql_url+"&CTLFNC=SEARCH&" + tinput ,
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -1008,7 +1023,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridCol_url+"&G3_CRUD_MODE=read&" + tinput ,
+            url : mygridCol_url+"&CTLFNC=SEARCH&" + tinput ,
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -1068,7 +1083,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridIo_url+"&G4_CRUD_MODE=read&" + tinput ,
+            url : mygridIo_url+"&CTLFNC=SEARCH&" + tinput ,
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -1128,7 +1143,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridSqlR_url+"&G7_CRUD_MODE=read&" + tinput ,
+            url : mygridFnc_url+"&CTLFNC=SEARCH&" + tinput ,
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -1180,7 +1195,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridSvc_url+"&G9_CRUD_MODE=read&" + tinput ,
+            url : mygridInherit_url+"&CTLFNC=SEARCH&" + tinput ,
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -1231,7 +1246,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridGrp0_url+"&G10_CRUD_MODE=read&" + tinput ,
+            url : mygridSqlR_url+"&CTLFNC=SEARCH&" + tinput ,
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -1281,7 +1296,7 @@
         //불러오기
         $.ajax({
             type : "POST",
-            url : mygridGrp3_url+"&G13_CRUD_MODE=read&" + tinput ,
+            url : mygridSvc_url+"&CTLFNC=SEARCH&" + tinput ,
             data : {xmldata : ""},
             dataType: "json",
             async: true,
@@ -1466,7 +1481,7 @@
 
         $.ajax({
             type : "POST",
-            url : mygridSql_url+"&G2_CRUD_MODE=SAVE&" + lastinput2 ,
+            url : mygridSql_url+"&CTLFNC=SAVE&" + lastinput2 ,
             data : {xmldata : myXmlString},
             dataType: "json",
             async: false,
@@ -1522,7 +1537,7 @@
 
         $.ajax({
             type : "POST",
-            url : mygridCol_url+"&G3_CRUD_MODE=SAVE&" + lastinput3 ,
+            url : mygridCol_url+"&CTLFNC=SAVE&" + lastinput3 ,
             data : {xmldata : myXmlString},
             dataType: "json",
             async: false,
@@ -1584,7 +1599,7 @@
 
         $.ajax({
             type : "POST",
-            url : mygridSqlR_url+"&G7_CRUD_MODE=SAVE&" + lastinput5 ,
+            url : mygridFnc_url+"&CTLFNC=SAVE&" + lastinput5 ,
             data : {xmldata : myXmlString},
             dataType: "json",
             async: false,
@@ -1612,8 +1627,8 @@
 
 
 
-    function save6(){
-        alog("save6()------------start");
+    function saveInherit(){
+        alog("saveInherit()------------start");
 
         mygridInherit.setSerializationLevel(true,false,false,false,true,false);
         var myXmlString = mygridInherit.serialize();
@@ -1631,7 +1646,7 @@
 
         $.ajax({
             type : "POST",
-            url : mygridSvc_url+"&G9_CRUD_MODE=SAVE&" + lastinput5 ,
+            url : mygridInterit_url+"&CTNFNC=SAVE&" + lastinput5 ,
             data : {xmldata : myXmlString},
             dataType: "json",
             async: false,
@@ -1652,7 +1667,7 @@
         });
 
         addstatusyn6 = false;
-        alog("save6()------------end");
+        alog("saveInherit()------------end");
     }
 
 
@@ -1675,7 +1690,7 @@
 
         $.ajax({
             type : "POST",
-            url : mygridGrp0_url+"&G10_CRUD_MODE=SAVE&" + lastinput5 ,
+            url : mygridSqlR_url+"&CTLFNC=SAVE&" + lastinput5 ,
             data : {xmldata : myXmlString},
             dataType: "json",
             async: false,
@@ -1700,50 +1715,6 @@
     }
 
 
-    function save8(){
-        alog("save8()------------start");
-
-        mygrid8.setSerializationLevel(true,false,false,false,true,false);
-        var myXmlString = mygrid8.serialize();
-
-		//컨디션 데이터 모두 말기
-        var ConAllData = $( "#condition1" ).serialize();
-        alog("   ConAllData = " + ConAllData);
-
-        var xml = myXmlString;
-        xml = xml.replace(new RegExp("<row","g"),"\n<row");
-        xml = xml.replace(new RegExp("</row","g"),"\n</row");
-        xml = xml.replace(new RegExp("<cell","g"),"\n\t<cell");
-
-        //$("#tt").val(xml);
-
-        $.ajax({
-            type : "POST",
-            url : mygridGrp2_url+"&G12_CRUD_MODE=SAVE&" + lastinput8 ,
-            data : {xmldata : myXmlString},
-            dataType: "json",
-            async: false,
-            success: function(data){
-                alog("   json return----------------------");
-                alog("   json data : " + data);
-                alog("   json RTN_CD : " + data.RTN_CD);
-                alog("   json ERR_CD : " + data.ERR_CD);
-                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-                //그리드에 데이터 반영
-                saveToGrid(mygridSqlR,data);
-            },
-            error: function(error){
-				msgError("[VALID] Ajax http 500 error ( " + error + " )",3);
-                alog("[VALID] Ajax http 500 error ( " + error + " )");
-            }
-        });
-
-        addstatusyn8 = false;
-        alog("save8()------------end");
-    }
-
-
 
 	//SVC
     function save9(){
@@ -1765,7 +1736,7 @@
 
         $.ajax({
             type : "POST",
-            url : mygridGrp3_url+"&G13_CRUD_MODE=SAVE&" + lastinput9 ,
+            url : mygridSvc_url+"&CTLFNC=SAVE&" + lastinput9 ,
             data : {xmldata : myXmlString},
             dataType: "json",
             async: false,
@@ -1843,7 +1814,7 @@
 
         $.ajax({
             type : "POST",
-            url : mygridIo_url+"&G4_CRUD_MODE=save&" + lastinput4 ,
+            url : mygridIo_url+"&CTLFNC=SAVE&" + lastinput4 ,
             data : {xmldata : myXmlString},
             dataType: "json",
             async: false,
@@ -2950,7 +2921,7 @@
 				//서버에서 DD가져오기
 				$.ajax({
 					type : "POST",
-					url : mygridFnc_url+"&G5_CRUD_MODE=read&" + lastinput5 + "&G1_GRPTYPE=" + lastinput4json.GRPTYPE,
+					url : mygridDd_url+"&CTLFNC=SEARCH&" + lastinput5 + "&G1_GRPTYPE=" + lastinput4json.GRPTYPE,
 					data : { searchdd :  nValue },
 					dataType: "json",
 					success: function(data){

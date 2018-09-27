@@ -204,7 +204,7 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* 상속</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanInheritCnt">N</span>
-                    <input type="button" name="some_name" value="S" onclick="save6();"><input 
+                    <input type="button" name="some_name" value="S" onclick="saveInherit();"><input 
                     type="button" name="add" value="+" onclick="addRow6();"><input 
                     type="button" name="delete" value="-" onclick="delRow(mygridInherit);"><input 
                     type="button" name="reload" value="R" onclick="gridReload6()">

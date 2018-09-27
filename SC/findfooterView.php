@@ -65,7 +65,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
 	</div>
 	<!--G.GRPID : G2-->
-	<div class="GRP_OBJECT" style="width:100%;height:200px;">
+	<div class="GRP_OBJECT" style="width:100%;height:800px;">
 		<div class="GRID_LABELGRP">
 			<div class="GRID_LABEL"  style="">
 					* 팀별 현황 (보안취약점 갯수)				</div>	
@@ -73,7 +73,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 			<div class="GRID_OBJECT" style="border-radius:3px;-moz-border-radius: 3px;">
-				<canvas id="canvasG2" style="width:100%;height:178px"></canvas>
+				<canvas id="canvasG2" style="width:100%;height:778px"></canvas>
 		</div>
 		</div>
 	<!--

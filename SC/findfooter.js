@@ -87,25 +87,19 @@ function G2_INIT(){
 		type: 'bar', //일단 선언해 줘야 함                
 		data: chartG2Data,                
 		options: {
-			layout: {
-					padding: {
-						left: 0,
-						right: 0,
-						top: 10,
-						bottom: 0
-					}
-			},
 			responsive: true,
 			maintainAspectRatio: false,  				
 			legend: {
 				position: 'right',
-			},
-			scales:{
-				yAxes:[
-					{type:'linear', display:true, position:'left', id:'y-left'}
-					,{type:'linear', display:true, position:'right', id:'y-right',gridLines:{ drawOnChartArea:false}}
-				]
 			}
+				,scales: {
+						xAxes: [{
+							stacked: true,
+						}],
+						yAxes: [{
+							stacked: true
+						}]
+					}
 		}
 	});
 	$("#canvasG2").on('click', function (e) {
@@ -129,7 +123,7 @@ function G2_INIT(){
 		//G1_SEARCH(lastinput,uuidv4());
 	});
 }
-	//팀별 현황 (보안취약점 갯수) 그리드 초기화
+		//팀별 현황 (보안취약점 갯수) 그리드 초기화
 function G3_INIT(){
   alog("G3_INIT()-------------------------start");
 
@@ -627,14 +621,13 @@ function G1_SEARCHALL(token){
             nowCol++;
             var dsColor = window.chartColors[colorNames[nowCol-1]];                 
             var newDataset = {
-                type : 'line',                
+                type : 'bar',                
 				label: '유형수',
 				colid : 'TYPE_CNT',
 				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
 				borderColor: dsColor,
 				borderWidth: 1,
-				data: [],
-				yAxisID: 'y-left'
+				data: []
             };
             for(i=0;i<resData.RTN_DATA.rows.length;i++){
                 newDataset.data.push(resData.RTN_DATA.rows[i].data[nowCol]);
@@ -651,8 +644,7 @@ function G1_SEARCHALL(token){
 				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
 				borderColor: dsColor,
 				borderWidth: 1,
-				data: [],
-				yAxisID: 'y-right'
+				data: []
             };
             for(i=0;i<resData.RTN_DATA.rows.length;i++){
                 newDataset.data.push(resData.RTN_DATA.rows[i].data[nowCol]);
@@ -786,18 +778,6 @@ function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");
   G4_SEARCH(lastinputG4,token);
 }
-    function G4_VIEWHIDDEN(){
-		alog("G4_VIEWHIDDEN()..................start");
-        if(isToggleHiddenColG4){
-            isToggleHiddenColG4 = false;            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
-            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),true); //TEAM_NM
-     }else{
-            isToggleHiddenColG4 = true;
-            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
-            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),false); //TEAM_NM
-        }
-		alog("G4_VIEWHIDDEN()..................end");
-    }
 
 
 
@@ -860,27 +840,23 @@ function G4_RELOAD(token){
         alog("G4_SEARCH()------------end");
     }
 
+    function G4_VIEWHIDDEN(){
+		alog("G4_VIEWHIDDEN()..................start");
+        if(isToggleHiddenColG4){
+            isToggleHiddenColG4 = false;            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
+            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),true); //TEAM_NM
+     }else{
+            isToggleHiddenColG4 = true;
+            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
+            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),false); //TEAM_NM
+        }
+		alog("G4_VIEWHIDDEN()..................end");
+    }
 //새로고침	
 function G5_RELOAD(token){
   alog("G5_RELOAD-----------------start");
   G5_SEARCH(lastinputG5,token);
 }
-    function G5_HIDDENCOL(){
-		alog("G5_HIDDENCOL()..................start");
-        if(isToggleHiddenColG5){
-            isToggleHiddenColG5 = false;            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),true); //TEAM_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),true); //SYS_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),true); //SUBSYS_NM
-     }else{
-            isToggleHiddenColG5 = true;
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),false); //TEAM_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),false); //SYS_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),false); //SUBSYS_NM
-        }
-		alog("G5_HIDDENCOL()..................end");
-    }
 
 
 
@@ -943,3 +919,19 @@ function G5_RELOAD(token){
         alog("G5_SEARCH()------------end");
     }
 
+    function G5_HIDDENCOL(){
+		alog("G5_HIDDENCOL()..................start");
+        if(isToggleHiddenColG5){
+            isToggleHiddenColG5 = false;            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),true); //TEAM_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),true); //SYS_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),true); //SUBSYS_NM
+     }else{
+            isToggleHiddenColG5 = true;
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),false); //TEAM_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),false); //SYS_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),false); //SUBSYS_NM
+        }
+		alog("G5_HIDDENCOL()..................end");
+    }

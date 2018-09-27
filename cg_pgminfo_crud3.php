@@ -4,12 +4,15 @@
     header("Pragma:no-cache");
 
 
-    require_once("./include/incUtil.php");
-    require_once("./incConfig.php");
-    require_once("./include/incDB.php");
-    require_once("./include/incUser.php");
+    include_once("./include/incUtil.php");
+	include_once('./include/incRequest.php');//CG REQUEST    
+    include_once("./incConfig.php");
+    include_once("./include/incDB.php");
+    include_once("./include/incUser.php");
+	include_once('./include/incSEC.php');//CG SEC
+    include_once("./cg_pgminfo_svc.php");
 
-    require_once("./lib/PHP-SQL-Parser/src/PHPSQLParser.php");
+    include_once("./lib/PHP-SQL-Parser/src/PHPSQLParser.php");
 
 	
 
@@ -108,52 +111,74 @@
     $REQ["searchdd"]    = $_POST['searchdd'];
 
 
-if($F_GRPID == "PGM" && $REQ["PGM_CRUD_MODE"] == "read"){
-	alog("---------------GRP PGM ---------------------START");
+    //서비스 클래스 생성
+    $objService = new cg_pgminfo_svc();
 
-    $to_coltype = "isss";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-      select
-        a.PJTSEQ, c.PJTID, a.PGMSEQ, a.PGMID, a.PGMNM, a.VIEWURL, a.PGMTYPE
-        ,b.VERDT, b.DEGREE, a.ADDDT, a.MODDT
-      from 
-		CG_PGMINFO a
-            left outer join CG_PGMVER b on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and b.ACTIVEYN='Y'
-            join CG_PJTINFO c on a.PJTSEQ = c.PJTSEQ
-      where a.PJTSEQ = #POP_PJTSEQ# and (a.PGMID = #POP_PGMID# or a.PGMNM LIKE #POP_PGMNM# or a.PGMTYPE LIKE #POP_PGMTYPE#)
-      order by a.PGMSEQ desc
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)   JsonMsg("500","108","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-    echo make_grid_read_json($stmt,2);
-    $db->close();
+    //컨트롤 명령 받기
+    $ctl = "";
+    $ctl1 = reqGetString("CTLGRP",50);
+    $ctl2 = reqGetString("CTLFNC",50);
+    
+    if($ctl1 == "" || $ctl2 == ""){
+        JsonMsg("500","100","처리 명령이 잘못되었습니다.(no input ctl)");
+    }else{
+        $ctl = $ctl1 . "_" . $ctl2;
+    }
 
-    //var_dump($RtnVal);
-}
+    alog("ctl:" . $ctl);
+    switch ($ctl){
+        case "GRP_SEARCH" :
+            echo $objService->goGrpSearch(); //
+            break;
+        case "SQL_SEARCH" :
+            echo $objService->goSqlSearch(); //
+            break;
+        case "FNC_SEARCH" :
+            echo $objService->goFncSearch(); //
+            break;
+        case "IO_SEARCH" :
+            echo $objService->goIoSearch(); //
+            break;
+        case "IOCD_SEARCH" :
+            echo $objService->goIocdSearch(); //
+            break;            
+        case "INHERIT_SEARCH" :
+            echo $objService->goInheritSearch(); //
+            break;
+        case "SVC_SEARCH" :
+            echo $objService->goSvcSearch(); //
+            break;           
+        case "SQLR_SEARCH" :
+            echo $objService->goSqlrSearch(); //
+            break;
+        case "SQLD_SEARCH" :
+            echo $objService->goSqldSearch(); //
+            break;          
+        case "PGM_SEARCH" :
+            echo $objService->goPgmSearch(); //
+            break;     
+        case "LAYOUT_SEARCH" :
+            echo $objService->goLayoutSearch(); //
+            break;  
+        case "LAYOUTD_SEARCH" :
+            echo $objService->goLayoutdSearch(); //
+            break;     
+        case "FNCCD_SEARCH" :
+            echo $objService->goFnccdSearch(); //
+            break;  
+        case "DD_SEARCH" :
+            echo $objService->goDdSearch(); //
+            break;                                            
+        default:
+            JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");
+            break;
+    }
+exit;
 
 
 
-if($F_GRPID == "1" && $REQ["G1_CRUD_MODE"] == "read"){
 
-    $to_coltype = "ii";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-      select
-        PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,concat(GRPID,' - ',GRPNM,'^^GRP') as PROPERTY,ADDDT,MODDT
-      from CG_PGMGRP where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ#
-      order by GRPORD
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)   JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-    echo make_grid_read_json($stmt,2);
-    $db->close();
-
-    //var_dump($RtnVal);
-
-}else if($F_GRPID == "1"){
+if($F_GRPID == "1"){
     alog("---------------GRP G1 ---------------------START");
     alog("        G1_CRUD_MODE : " .$G2_CRUD_MODE);
     alog("        xmldata : " .$_POST["xmldata"]);
@@ -190,7 +215,7 @@ if($F_GRPID == "1" && $REQ["G1_CRUD_MODE"] == "read"){
             , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
 		where PJTSEQ = #PJTSEQ# and PGMSEQ = #PGMSEQ# and GRPSEQ = #GRPSEQ#
 	";
-	$sql_updated_coltype = "sssis sssis ss iii";
+	$sql_updated_coltype = "sssis sssis sss iii";
 
 
 	echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","GRPSEQ");
@@ -202,27 +227,7 @@ if($F_GRPID == "1" && $REQ["G1_CRUD_MODE"] == "read"){
 
 
 
-if($F_GRPID == "2" && $REQ["G2_CRUD_MODE"] == "read"){
-
-
-    $to_coltype = "ii";
-    $sql = "
-    select PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,SQLTXT,ADDDT,MODDT 
-	from CG_PGMSQL 
-	where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# 
-          ";
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)  JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-	$t = make_grid_read_json($stmt,2);
-	alog($t);
-    echo $t;
-    $db->close();
-
-
-    //var_dump($RtnVal);
-
-}else if($F_GRPID == "2"){
+if($F_GRPID == "2"){
     alog("---------------GRP G2 ---------------------START");
     alog("        G2_CRUD_MODE : " .$G2_CRUD_MODE);
     alog("        xmldata : " .$_POST["xmldata"]);
@@ -435,26 +440,7 @@ if($F_GRPID == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 }
 
 
-if($F_GRPID == "3" && $REQ["G3_CRUD_MODE"] == "read"){
-    $to_coltype = "iii";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "select 
-				a.COLSEQ, a.PJTSEQ, a.PGMSEQ, a.SQLSEQ, a.DDCOLID, a.COLID, b.DATATYPE, a.SQLGBN, a.ORD, a.ADDDT, a.MODDT 
-            from CG_PGMSQLD a
-                left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.DDCOLID = b.COLID
-            where a.PJTSEQ=#G2-PJTSEQ# and a.PGMSEQ = #G2-PGMSEQ# and a.SQLSEQ = #G2-SQLSEQ#
-            order by a.SQLGBN,a.ORD asc
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-    echo make_grid_read_json($stmt,0);
-    $db->close();
-
-    //var_dump($RtnVal);
-
-}else if($F_GRPID == "3"){
+if($F_GRPID == "3"){
     alog("---------------GRP G3 ---------------------START");
     alog("        G3_CRUD_MODE : " .$G4_CRUD_MODE);
     alog("        xmldata : " .$_POST["xmldata"]);
@@ -505,38 +491,7 @@ if($F_GRPID == "3" && $REQ["G3_CRUD_MODE"] == "read"){
 
 
 
-if($F_GRPID == "4" && $REQ["G4_CRUD_MODE"] == "read"){
-    alog("---------------GRP G4 ---------------------START");
-    alog("        G4_CRUD_MODE : " . $REQ["G4_CRUD_MODE"]);
-
-
-    //$colord = "COLID,ORD,ADDDT,MODDT";
-
-    $to_coltype = "iii";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-        select
-		  a.PJTSEQ, a.PGMSEQ, a.GRPSEQ, a.IOSEQ, b.DDSEQ
-          , a.COLID, a.COLORD, a.COLNM, a.DATATYPE,ifnull(a.VALIDSEQ,'') AS VALIDSEQ
-          , a.DATASIZE, a.OBJTYPE, a.POPUP, a.BRYN, a.LBLHIDDENYN
-          , a.LBLWIDTH, a.LBLALIGN, a.OBJWIDTH, a.OBJHEIGHT, a.OBJALIGN
-          , a.KEYYN, a.SEQYN, a.HIDDENYN, a.EDITYN, a.FNINIT, a.FORMAT, a.FOOTERNM
-          , ifnull(a.FOOTERMATH,'') as FOOTERMATH
-          , a.ADDDT, a.MODDT
-        from CG_PGMIO a
-            left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.COLID = b.COLID
-        where a.PJTSEQ=#F_PJTSEQ# and a.PGMSEQ = #F_PGMSEQ# and a.GRPSEQ = #G1-GRPSEQ#
-        ORDER BY a.COLORD ASC
-        ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-    echo make_grid_read_json($stmt,3);
-    $db->close();
-
-
-    //var_dump($RtnVal);
-}else if($F_GRPID == "4"){
+if($F_GRPID == "4"){
     alog("---------------GRP G4 ---------------------START");
     alog("        G4_CRUD_MODE : " .$G4_CRUD_MODE);
     alog("        xmldata : " .$_POST["xmldata"]);
@@ -722,112 +677,10 @@ function updateDd($xml_array,$colord,&$db,$REQ){
 
 
 
-if($F_GRPID == "5" && $REQ["G5_CRUD_MODE"] == "read"){
-    alog("---------------GRP G5 ---------------------START");
-    alog("        G5_CRUD_MODE : " . $REQ["G5_CRUD_MODE"]);
-
-
-    //$colord = "COLID,ORD,ADDDT,MODDT";
-
-    $to_coltype = "sis";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-        select
-          a.PJTSEQ, a.DDSEQ,a.COLID,a.COLNM,a.DATATYPE,a.DATASIZE
-          ,ifnull(b.OBJTYPE,'') as OBJTYPE, a.POPUP, a.LBLWIDTH,a.LBLHEIGHT,a.OBJWIDTH
-          ,a.OBJHEIGHT,a.VALIDSEQ, a.LBLALIGN, a.OBJALIGN
-		  ,a.ADDDT,a.MODDT
-        from CG_DD a
-            left outer join CG_DDOBJ b on a.DDSEQ = b.DDSEQ and b.GRPTYPE = #G1-GRPTYPE#
-        where a.PJTSEQ=#F_PJTSEQ# and a.COLID = #searchdd#
-        ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-
-    echo make_grid_read_json($stmt,0);
-
-}
-
-
-if($F_GRPID == "6" && $REQ["G6_CRUD_MODE"] == "read"){
-    alog("---------------GRP G6 ---------------------START");
-    alog("        G6_CRUD_MODE : " . $REQ["G6_CRUD_MODE"]);
-
-
-    //$colord = "COLID,ORD,ADDDT,MODDT";
-
-    $to_coltype = "s";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-        select
-          LAYOUTID,GRPCNT
-        from CG_LAYOUT
-        where PJTSEQ=#F_PJTID# or 1=1
-        order by GRPCNT asc,LAYOUTID asc
-        ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt){
-        JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-    }
-
-
-    echo make_grid_read_json($stmt,0);
-
-}
-
-if($F_GRPID == "6" && $REQ["G6_CRUD_MODE"] == "read2"){
-    alog("---------------GRP G6 ---------------------START");
-    alog("        G6_CRUD_MODE : " . $REQ["G6_CRUD_MODE"]);
-
-
-    //$colord = "COLID,ORD,ADDDT,MODDT";
-
-    $to_coltype = "ss";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-        select
-          GRPID,GRPTYPE,ORD,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT
-        from CG_LAYOUTD
-        where ( PJTSEQ=#F_PJTSEQ# or 1=1 ) and LAYOUTID = #F_LAYOUTID#
-        order by ORD desc
-        ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-   
-
-
-    echo make_grid_read_json($stmt,0);
-
-}
 
 
 
-
-
-
-if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "read"){
-    alog("---------------GRP G7 ---------------------START");
-    alog("        G7_CRUD_MODE : " . $REQ["G7_CRUD_MODE"]);
-
-    $to_coltype = "sss";
-    $sql = "
-          select
-            PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,IF(USEYN='Y',1,0) AS USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,ADDDT,MODDT
-          from CG_PGMFNC where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1-GRPSEQ#
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)   JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-    echo make_grid_read_json($stmt,3);
-
-    $db->close();
-
-}else if($REQ["F_GRPID"] == "7"){
+if($REQ["F_GRPID"] == "7"){
     alog("---------------GRP G7 ---------------------START");
     alog("        G7_CRUD_MODE : " . $REQ["G7_CRUD_MODE"]);
     alog("        xmldata : " .$_POST["xmldata"]);
@@ -877,51 +730,7 @@ if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "read"){
 
 
 
-if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "read"){
-    alog("---------------GRP G8 ---------------------START");
-    alog("        G8_CRUD_MODE : " . $REQ["G8_CRUD_MODE"]);
-
-    $to_coltype = "s";
-    $sql = "
-			select a.CD,b.NM,a.CDVAL
-			from CG_CODED a join CG_CODED b on  a.CD = b.CD 
-			where a.PCD = #G1-PCD# and b.PCD = 'FNC'
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)   JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-    echo make_grid_read_json($stmt,3);
-
-    $db->close();
-
-}
-
-
-
-
-
-
-
-if($REQ["F_GRPID"] == "9" && $REQ["G9_CRUD_MODE"] == "read"){
-    alog("---------------GRP G9 ---------------------START");
-    alog("        G9_CRUD_MODE : " . $REQ["G9_CRUD_MODE"]);
-
-    $to_coltype = "iii";
-    $sql = "
-          select
-			INHERITSEQ,PJTSEQ,PGMSEQ,GRPSEQ,COLID,CHILDGRPID,ADDDT,MODDT
-          from CG_PGMINHERIT where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and GRPSEQ = #G1-GRPSEQ#
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)   JsonMsg("500","901","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-    echo make_grid_read_json($stmt,0);
-
-    $db->close();
-
-}else if($REQ["F_GRPID"] == "9"){
+if($REQ["F_GRPID"] == "9"){
     alog("---------------GRP G9 ---------------------START");
     alog("        G9_CRUD_MODE : " . $REQ["G9_CRUD_MODE"]);
     alog("        xmldata : " .$_POST["xmldata"]);
@@ -971,26 +780,7 @@ if($REQ["F_GRPID"] == "9" && $REQ["G9_CRUD_MODE"] == "read"){
 
 
 //CG_PGMSQLR
-if($REQ["F_GRPID"] == "10" && $REQ["G10_CRUD_MODE"] == "read"){
-    alog("---------------GRP G9 ---------------------START");
-    alog("        G10_CRUD_MODE : " . $REQ["G10_CRUD_MODE"]);
-
-    $to_coltype = "iii";
-    $sql = "
-          select
-			SQLRSEQ,PJTSEQ,PGMSEQ,SVCSEQ,SQLID,ORD,ADDDT,MODDT
-          from CG_PGMSQLR where PJTSEQ = #F_PJTSEQ# and PGMSEQ = #F_PGMSEQ# and SVCSEQ = #G9-SVCSEQ#
-		  order by ORD asc
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)   JsonMsg("500","901","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-    echo make_grid_read_json($stmt,0);
-
-    $db->close();
-
-}else if($REQ["F_GRPID"] == "10"){
+if($REQ["F_GRPID"] == "10"){
     alog("---------------GRP G10 ---------------------START");
     alog("        G10_CRUD_MODE : " . $REQ["G10_CRUD_MODE"]);
     alog("        xmldata : " .$_POST["xmldata"]);
@@ -1147,29 +937,7 @@ if($REQ["F_GRPID"] == "12" && $REQ["G12_CRUD_MODE"] == "read"){
 
 
 
-
-//SVC
-if($REQ["F_GRPID"] == "13" && $REQ["G13_CRUD_MODE"] == "read"){
-    alog("---------------GRP G13 ---------------------START");
-    alog("        G13_CRUD_MODE : " . $REQ["G13_CRUD_MODE"]);
-
-    $to_coltype = "iiii";
-    $sql = "
-          select
-			SVCSEQ,PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,ORD,SVCGRPID,ADDDT,MODDT
-          from CG_PGMSVC 
-		  where PJTSEQ = #G5-PJTSEQ# and PGMSEQ = #G5-PGMSEQ# and GRPSEQ = #G5-GRPSEQ# and FNCSEQ = #G5-FNCSEQ#
-		  order by ORD desc
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)   JsonMsg("500","912","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-    echo make_grid_read_json($stmt,0);
-
-    $db->close();
-
-}else if($REQ["F_GRPID"] == "13"){
+if($REQ["F_GRPID"] == "13"){
     alog("---------------GRP G13 ---------------------START");
     alog("        G12_CRUD_MODE : " . $REQ["G13_CRUD_MODE"]);
     alog("        xmldata : " .$_POST["xmldata"]);

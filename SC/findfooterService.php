@@ -51,17 +51,17 @@ class findfooterService
 		$rtnVal->GRP_DATA = array();
 
 		alog("findFooterService-goG2Search________________________start");
-		//CHARTBAR2Y SEARCH____________________________start
+		//CHARTBAR SEARCH____________________________start
 		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
 
 		//조회
 		//V_GRPNM : 팀별 현황 (보안취약점 갯수)
 		$GRID["SQL"]["R"] = $this->DAO->sTeamChart($REQ); //SEARCH, 조회,TEAM
-		//암호화컬럼
+	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
-		//CHARTBAR2Y_SEARCH____________________________end
+		//CHARTBAR_SEARCH____________________________end
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
