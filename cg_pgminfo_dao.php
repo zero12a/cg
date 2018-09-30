@@ -169,7 +169,11 @@ class cg_pgminfo_dao
 	}  
 
 
-
+	/*
+	######################################################
+	##	SVC
+	######################################################
+	*/
 	public function svcSearch($req){
 		//조회
 		$RtnVal = null;
@@ -187,6 +191,57 @@ class cg_pgminfo_dao
 		return $RtnVal;
 	}  
 
+	public function svcIns($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		insert into CG_PGMSVC (
+			PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,ORD
+			,SVCGRPID
+			,ADDDT
+		) values (
+			#{PJTSEQ},#{PGMSEQ},#{GRPSEQ},#{FNCSEQ},#{ORD}
+			,#{SVCGRPID}
+			,date_format(sysdate(),'%Y%m%d%H%i%s')
+		)
+		";
+		$RtnVal["BINDTYPE"] = "iiiii s";
+		return $RtnVal;
+    }  
+	public function svcUpd($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		update CG_PGMSVC set
+		ORD = #{ORD}, SVCGRPID = #{SVCGRPID}
+		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
+  		where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SVCSEQ = #{SVCSEQ} 
+		";
+		$RtnVal["BINDTYPE"] = "is iii";
+		return $RtnVal;
+    }  
+	public function svcDel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		delete from CG_PGMSVC where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SVCSEQ = #{SVCSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "ssi";
+		return $RtnVal;
+    }  
+
+
+	/*
+	######################################################
+	##	INHERIT
+	######################################################
+	*/
 	public function inheritSearch($req){
 		//조회
 		$RtnVal = null;
@@ -201,6 +256,52 @@ class cg_pgminfo_dao
 
 		return $RtnVal;
 	}  
+
+
+	public function inheritIns($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		insert into CG_PGMINHERIT (
+			PJTSEQ,PGMSEQ,GRPSEQ,COLID,CHILDGRPID
+			,ADDDT
+		) values (
+			#{PJTSEQ},#{PGMSEQ},#{GRPSEQ},#{COLID},#{CHILDGRPID}
+			,date_format(sysdate(),'%Y%m%d%H%i%s')
+		)
+		";
+		$RtnVal["BINDTYPE"] = "iiiss";
+		return $RtnVal;
+    }  
+	public function inheritUpd($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		update CG_PGMINHERIT set
+		COLID = #{COLID}, CHILDGRPID = #{CHILDGRPID}
+		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
+ 		 where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and INHERITSEQ = #{INHERITSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "ss iii";
+		return $RtnVal;
+    }  
+	public function inheritDel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		delete from CG_PGMINHERIT where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and INHERITSEQ = #{INHERITSEQ} 
+		";
+		$RtnVal["BINDTYPE"] = "iii";
+		return $RtnVal;
+    }  
+
+
 
 	public function ioSearch($req){
 		//조회

@@ -16,14 +16,14 @@
     var mygrid8,dp8,addstatusyn8,lastinput8,lastinput8json,lastrowid8,isView8;
     var mygridSvc,dp9,addstatusyn9,lastinput9,lastinput9json,lastrowid9,isView9;
     var mygridPgm,addstatusynPgm,lastinputPgm,lastinputPgmjson,lastrowidPgm;
-    var mygridGrp_url = "cg_pgminfo_crud3.php?CTLGRP=GRP&";
-    var mygridSql_url = "cg_pgminfo_crud3.php?CTLGRP=SQL&";
+    var mygridGrp_url = "cg_pgminfo_crud3.php?CTLGRP=GRP&";//완
+    var mygridSql_url = "cg_pgminfo_crud3.php?CTLGRP=SQL&";//완
     var mygridCol_url = "cg_pgminfo_crud3.php?CTLGRP=SQLD&";
     var mygridIo_url = "cg_pgminfo_crud3.php?CTLGRP=IO&";
     var mygridIocd_url = "cg_pgminfo_crud3.php?CTLGRP=IOCD&"; //IO그리드, COL그리드에서 상속받기    
     var mygridDd_url = "cg_pgminfo_crud3.php?CTLGRP=DD&";
     var mygridInherit_url = "cg_pgminfo_crud3.php?CTLGRP=INHERIT&";
-    var mygridFnc_url = "cg_pgminfo_crud3.php?CTLGRP=FNC&";
+    var mygridFnc_url = "cg_pgminfo_crud3.php?CTLGRP=FNC&";//완
     var mygridFnccd_url = "cg_pgminfo_crud3.php?CTLGRP=FNCCD&";
     var mygridSqlR_url = "cg_pgminfo_crud3.php?CTLGRP=SQLR&";
     var mygridLayout_url = "cg_pgminfo_crud3.php?CTLGRP=LAYOUT&";
@@ -1472,7 +1472,7 @@
         $.ajax({
             type : "POST",
             url : mygridSql_url+"&CTLFNC=SAVE&" + lastinput2 ,
-            data : {xmldata : myXmlString},
+            data : {"SQL-XML" : myXmlString},
             dataType: "json",
             async: false,
             success: function(data){
@@ -1483,7 +1483,7 @@
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
                 //그리드에 데이터 반영
-                saveToGrid(mygridSql,data);
+                saveToGrid(mygridSql,data.GRP_DATA[0]);
 
             },
             error: function(error){
@@ -1570,8 +1570,8 @@
         }
     }
 
-    function save5(){
-        alog("save5()------------start");
+    function fncSave(){
+        alog("fncSave()------------start");
 
         mygridFnc.setSerializationLevel(true,false,false,false,true,false);
         var myXmlString = mygridFnc.serialize();
@@ -1590,7 +1590,7 @@
         $.ajax({
             type : "POST",
             url : mygridFnc_url+"&CTLFNC=SAVE&" + lastinput5 ,
-            data : {xmldata : myXmlString},
+            data : {"FNC-XML" : myXmlString},
             dataType: "json",
             async: false,
             success: function(data){
@@ -1601,7 +1601,7 @@
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
                 //그리드에 데이터 반영
-                saveToGrid(mygridFnc,data);
+                saveToGrid(mygridFnc,data.GRP_DATA[0]);
             },
             error: function(error){
 				msgError("Ajax http 500 error ( " + error + " )");
@@ -1610,7 +1610,7 @@
         });
 
         addstatusyn3 = false;
-        alog("save3()------------end");
+        alog("fncSave()------------end");
     }
 
 
@@ -1636,8 +1636,8 @@
 
         $.ajax({
             type : "POST",
-            url : mygridInterit_url+"&CTNFNC=SAVE&" + lastinput5 ,
-            data : {xmldata : myXmlString},
+            url : mygridInherit_url+"&CTLFNC=SAVE&" + lastinput5 ,
+            data : {"INHERIT-XML" : myXmlString},
             dataType: "json",
             async: false,
             success: function(data){
@@ -1648,7 +1648,11 @@
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
                 //그리드에 데이터 반영
-                saveToGrid(mygridInherit,data);
+                if(data.RTN_CD == "200"){
+                    saveToGrid(mygridInherit,data.GRP_DATA[0]);
+                }else{
+                    msgError("[INHERIT SAVE] " + data.RTN_MSG,3);
+                }
             },
             error: function(error){
 				msgError("[INHERIT SAVE] Ajax http 500 error ( " + error + " )",3);
@@ -1727,7 +1731,7 @@
         $.ajax({
             type : "POST",
             url : mygridSvc_url+"&CTLFNC=SAVE&" + lastinput9 ,
-            data : {xmldata : myXmlString},
+            data : {"SVC-XML" : myXmlString},
             dataType: "json",
             async: false,
             success: function(data){
@@ -1738,7 +1742,12 @@
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
                 //그리드에 데이터 반영
-                saveToGrid(mygridSvc,data);
+                if(data.RTN_CD == "200"){
+                    saveToGrid(mygridSvc,data.GRP_DATA[0]);
+                }else{
+                    msgError("[SVC SAVE] " + data.RTN_MSG,3);
+                }
+                
             },
             error: function(error){
 				msgError("[SVC] Ajax http 500 error ( " + error + " )",3);

@@ -168,7 +168,7 @@ header("Pragma:no-cache");
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanFncCnt">N</span>
                     <input type="button" name="some_name" value="V" onclick="view5();">
-					<input type="button" name="some_name" value="S" onclick="save5();">
+					<input type="button" name="some_name" value="S" onclick="fncSave();">
 					<input type="button" name="getfnccode" value="C" onclick="getFncCode();">
 					<input type="button" name="add" value="+" onclick="addRow5();">
 					<input type="button" name="delete" value="-" onclick="delRow(mygridFnc);">

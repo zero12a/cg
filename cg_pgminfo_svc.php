@@ -270,6 +270,45 @@ class cg_pgminfo_svc
 		alog("cg_pgminfo_svc-goSvcSearch________________________end");
 	}
 
+	public function goSvcSave(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("PGMMNGService-goSvcSave________________________start");
+		//GRID_SAVE____________________________start
+		$grpId="SVC";
+		$GRID["XML"]=$REQ[$grpId."-XML"];
+		$GRID["COLORD"] = "SVCSEQ,PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,ORD,SVCGRPID,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		//암호화컬럼
+		$GRID["COLCRYPT"] = array();	
+		$GRID["KEYCOLID"] = "SVCSEQ";  //KEY컬럼 COLID, 0
+		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
+		//저장
+		$GRID["SQL"]["D"] = $this->DAO->svcDel($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["U"] = $this->DAO->svcUpd($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["C"] = $this->DAO->svcIns($REQ); // SAVE, 저장, PJT
+
+		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME SVC]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_SAVE____________________________end
+
+
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("PGMMNGService-goSvcSave________________________end");
+	}	
+
+
+
+
 
 	public function goInheritSearch(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
@@ -297,6 +336,43 @@ class cg_pgminfo_svc
 		alog("cg_pgminfo_svc-goInheritSearch________________________end");
 	}
 
+
+
+	public function goInheritSave(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("PGMMNGService-goInheritSave________________________start");
+		//GRID_SAVE____________________________start
+		$grpId="INHERIT";
+		$GRID["XML"]=$REQ[$grpId."-XML"];
+		$GRID["COLORD"] = "INHERITSEQ,PJTSEQ,PGMSEQ,GRPSEQ,COLID,CHILDGRPID,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		//암호화컬럼
+		$GRID["COLCRYPT"] = array();	
+		$GRID["KEYCOLID"] = "INHERITSEQ";  //KEY컬럼 COLID, 0
+		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
+		//저장
+		$GRID["SQL"]["D"] = $this->DAO->inheritDel($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["U"] = $this->DAO->inheritUpd($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["C"] = $this->DAO->inheritIns($REQ); // SAVE, 저장, PJT
+
+		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME INHERIT]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_SAVE____________________________end
+
+
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("PGMMNGService-goInheritSave________________________end");
+	}	
 
 
 	public function goIoSearch(){
@@ -488,7 +564,7 @@ class cg_pgminfo_svc
 
 		alog("PGMMNGService-goSqlSave________________________start");
 		//GRID_SAVE____________________________start
-		$grpId="FNC";
+		$grpId="SQL";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
 		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,SQLTXT,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 		//암호화컬럼
