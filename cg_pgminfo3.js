@@ -1528,7 +1528,7 @@
         $.ajax({
             type : "POST",
             url : mygridCol_url+"&CTLFNC=SAVE&" + lastinput3 ,
-            data : {xmldata : myXmlString},
+            data : {"SQLD-XML" : myXmlString},
             dataType: "json",
             async: false,
             success: function(data){
@@ -1539,7 +1539,12 @@
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
                 //그리드에 데이터 반영
-                saveToGrid(mygridCol,data);
+                if(data.RTN_CD == "200"){
+                    saveToGrid(mygridCol,data.GRP_DATA[0]);
+                }else{
+                    msgError("[SQLD SAVE]  " + data.RTN_MSG,3);
+                }
+                
 
             },
             error: function(error){
@@ -1685,7 +1690,7 @@
         $.ajax({
             type : "POST",
             url : mygridSqlR_url+"&CTLFNC=SAVE&" + lastinput5 ,
-            data : {xmldata : myXmlString},
+            data : {"SQLR-XML" : myXmlString},
             dataType: "json",
             async: false,
             success: function(data){
@@ -1696,7 +1701,12 @@
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
                 //그리드에 데이터 반영
-                saveToGrid(mygridSqlR,data);
+                if(data.RTN_CD == "200"){
+                    saveToGrid(mygridSqlR,data.GRP_DATA[0]);
+                }else{
+                    msgError("[SQLR SAVE] " + data.RTN_MSG,3);
+                }
+                
             },
             error: function(error){
 				msgError("[SQLR SAVE] Ajax http 500 error ( " + error + " )",3);
@@ -1814,7 +1824,7 @@
         $.ajax({
             type : "POST",
             url : mygridIo_url+"&CTLFNC=SAVE&" + lastinput4 ,
-            data : {xmldata : myXmlString},
+            data : {"IO-XML" : myXmlString},
             dataType: "json",
             async: false,
             success: function(data){
@@ -1822,11 +1832,14 @@
                 alog("   json data : " + data);
                 alog("   json RTN_CD : " + data.RTN_CD);
                 alog("   json ERR_CD : " + data.ERR_CD);
-                alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
                 //그리드에 데이터 반영
-                saveToGrid(mygridIo,data);
-
+                if(data.RTN_CD == "200"){
+                    saveToGrid(mygridIo,data.GRP_DATA[0]);
+                }else{
+                    msgError("[IO SAVE] " + data.RTN_MSG,3);
+                }
+                
             },
             error: function(error){
 				msgError("Ajax http 500 error ( " + error + " )");

@@ -134,6 +134,12 @@ class cg_pgminfo_dao
 		return $RtnVal;
 	}  
 
+
+	/*
+	######################################################
+	##	SQLD
+	######################################################
+	*/
 	public function sqldSearch($req){
 		//조회
 		$RtnVal = null;
@@ -152,6 +158,55 @@ class cg_pgminfo_dao
 		return $RtnVal;
 	}  
 
+	public function sqldIns($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		insert into CG_PGMSQLD (
+			PJTSEQ, PGMSEQ, SQLSEQ, COLID, SQLGBN
+			, DDCOLID, ORD
+			,ADDDT
+		) values (
+			#{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{COLID}, #{SQLGBN}
+			, #{DDCOLID}, #{ORD}
+			,date_format(sysdate(),'%Y%m%d%H%i%s')
+		)
+		";
+		$RtnVal["BINDTYPE"] = "iiiss si";
+		return $RtnVal;
+    }  
+	public function sqldUpd($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		update CG_PGMSQLD set
+		ORD = #{ORD}, SQLGBN = #{SQLGBN}, COLID = #{COLID}, DDCOLID = #{DDCOLID}
+		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
+  		where PJTSEQ=#{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and COLSEQ = #{COLSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "isss iiii";
+		return $RtnVal;
+    }  
+	public function sqldDel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		delete from CG_PGMSQLD where PJTSEQ=#{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and COLSEQ = #{COLSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "iiii";
+		return $RtnVal;
+    }  
+	/*
+	######################################################
+	##	SQLR
+	######################################################
+	*/
 	public function sqlrSearch($req){
 		//조회
 		$RtnVal = null;
@@ -168,6 +223,49 @@ class cg_pgminfo_dao
 		return $RtnVal;
 	}  
 
+
+	public function sqlrIns($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		insert into CG_PGMSQLR (
+			PJTSEQ,PGMSEQ,SVCSEQ,SQLID,ORD
+			,ADDDT
+		) values (
+			#{PJTSEQ},#{PGMSEQ},#{SVCSEQ},#{SQLID},#{ORD}
+			,date_format(sysdate(),'%Y%m%d%H%i%s')
+		)
+		";
+		$RtnVal["BINDTYPE"] = "iiisi";
+		return $RtnVal;
+    }  
+	public function sqlrUpd($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		update CG_PGMSQLR set
+		SQLID = #{SQLID}, ORD = #{ORD}
+		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
+  		where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLRSEQ = #{SQLRSEQ} 
+		";
+		$RtnVal["BINDTYPE"] = "si iii";
+		return $RtnVal;
+    }  
+	public function sqlrDel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		delete from CG_PGMSQLR where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLRSEQ = #{SQLRSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "iii";
+		return $RtnVal;
+    }  
 
 	/*
 	######################################################
@@ -302,7 +400,11 @@ class cg_pgminfo_dao
     }  
 
 
-
+	/*
+	######################################################
+	##	IO
+	######################################################
+	*/
 	public function ioSearch($req){
 		//조회
 		$RtnVal = null;
@@ -327,6 +429,67 @@ class cg_pgminfo_dao
 		return $RtnVal;
 	}  
 
+
+	public function ioIns($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		insert into CG_PGMIO (
+			PJTSEQ,PGMSEQ,GRPSEQ,COLID,COLORD
+			,COLNM,DATATYPE,DATASIZE,OBJTYPE,LBLHIDDENYN
+			,LBLWIDTH, LBLALIGN, OBJWIDTH,OBJHEIGHT,OBJALIGN
+			,HIDDENYN,EDITYN,FNINIT,KEYYN,SEQYN
+			,VALIDSEQ,POPUP,FORMAT,FOOTERNM,FOOTERMATH
+			,ADDDT,ADDID
+		) values (
+			#{F_PJTSEQ},#{F_PGMSEQ},#{G1-GRPSEQ},#{COLID},#{COLORD}
+			,#{COLNM},#{DATATYPE},#{DATASIZE},#{OBJTYPE},#{LBLHIDDENYN}
+			,#{LBLWIDTH}, #{LBLALIGN}, #{OBJWIDTH}, #{OBJHEIGHT}, #{OBJALIGN}
+			,#{HIDDENYN},if(#{EDITYN}='','Y',#{EDITYN}),#{FNINIT},#{KEYYN},#{SEQYN}
+			,#{VALIDSEQ},#{POPUP}, #{FORMAT}, #{FOOTERNM}, #{FOOTERMATH}
+			,date_format(sysdate(),'%Y%m%d%H%i%s'),#{ADDID}
+		)
+		";
+		$RtnVal["BINDTYPE"] = "iiisi ssiss sssss ssssss issss i";
+		return $RtnVal;
+    }  
+	public function ioUpd($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		update CG_PGMIO set
+		COLID = #{COLID}, COLORD=#{COLORD}, COLNM=#{COLNM}, DATATYPE=#{DATATYPE}, DATASIZE=#{DATASIZE}
+		,OBJTYPE = #{OBJTYPE}, LBLHIDDENYN=#{LBLHIDDENYN}, LBLWIDTH=#{LBLWIDTH}, LBLALIGN=#{LBLALIGN}, OBJWIDTH=#{OBJWIDTH}
+		, OBJHEIGHT=#{OBJHEIGHT}, OBJALIGN=#{OBJALIGN}, HIDDENYN=#{HIDDENYN}, EDITYN=#{EDITYN}, FNINIT=#{FNINIT}
+		, KEYYN=#{KEYYN}, SEQYN = #{SEQYN}, BRYN=#{BRYN}, VALIDSEQ = #{VALIDSEQ}, POPUP = #{POPUP}
+		, FORMAT = #{FORMAT}, FOOTERNM = #{FOOTERNM}, FOOTERMATH = #{FOOTERMATH}
+		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{MODID}
+  		where PJTSEQ=#{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ} and GRPSEQ = #{G1-GRPSEQ} and IOSEQ = #{IOSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "sissi sssss sssss sssis sss i iiii";
+		return $RtnVal;
+    }  
+	public function ioDel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		delete from CG_PGMIO where PJTSEQ=#{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ} and GRPSEQ = #{G1-GRPSEQ} and IOSEQ = #{IOSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "iiii";
+		return $RtnVal;
+	}  
+	
+	/*
+	######################################################
+	##	FNC
+	######################################################
+	*/
 	public function fncSearch($req){
 		//조회
 		$RtnVal = null;

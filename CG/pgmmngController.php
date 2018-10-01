@@ -37,7 +37,7 @@ if($ctl1 == "" || $ctl2 == ""){
 }else{
 	$ctl = $ctl1 . "_" . $ctl2;
 }
-//권한정보 검사하기 in_array("aix", $os)
+//로그인 : 권한정보 검사하기 in_array("aix", $os)
 if(!isLogin()){
 	JsonMsg("500","110"," 로그아웃되었습니다.");
 }else if(!$objAuth->isOneConnection()){
