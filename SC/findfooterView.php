@@ -35,7 +35,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 
 <div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
 	<!--G.GRPID : G1-->
-	<div class="GRP_OBJECT" style="width:100%;height:70px;border-radius:3px;-moz-border-radius: 3px;">
+	<div class="GRP_OBJECT" style="width:100%;height:90px;border-radius:3px;-moz-border-radius: 3px;">
 	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 			<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
@@ -46,7 +46,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
 			</div>
 		</div>
-		<div style="height:28px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:48px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 			<!--D101: STARTTXT, TAG-->

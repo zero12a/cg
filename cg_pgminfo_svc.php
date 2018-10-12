@@ -512,7 +512,7 @@ class cg_pgminfo_svc
 
 
 		//데이터 딕셔너리에 추가/수정해 주기
-		updateDd($GRID["XML"],$GRID["COLORD"],$this->DB["CG"],$REQ);
+		$this->updateDd($GRID["XML"],$GRID["COLORD"],$this->DB["CG"],$REQ);
 
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";

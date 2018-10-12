@@ -92,14 +92,6 @@ function G2_INIT(){
 			legend: {
 				position: 'right',
 			}
-				,scales: {
-						xAxes: [{
-							stacked: true,
-						}],
-						yAxes: [{
-							stacked: true
-						}]
-					}
 		}
 	});
 	$("#canvasG2").on('click', function (e) {
@@ -651,6 +643,23 @@ function G1_SEARCHALL(token){
             }      
             chartG2Data.datasets.push(newDataset);
 														 
+            //두번째 컬럼부터 
+            nowCol++;
+            var dsColor = window.chartColors[colorNames[nowCol-1]];                 
+            var newDataset = {
+                type : 'bar',                
+				label: 'ADD_DT22',
+				colid : 'ADD_DT2',
+				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+				borderColor: dsColor,
+				borderWidth: 1,
+				data: []
+            };
+            for(i=0;i<resData.RTN_DATA.rows.length;i++){
+                newDataset.data.push(resData.RTN_DATA.rows[i].data[nowCol]);
+            }      
+            chartG2Data.datasets.push(newDataset);
+														 
 			window.myBarG2.update();     //업데이트
 						
 					}
@@ -668,11 +677,6 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG2()------------end");
     }
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
-}
 
 
 
@@ -721,7 +725,10 @@ function G3_RELOAD(token){
 							//특정 컬럼 평균 구하기. 팀별 현황 (보안취약점 갯수).
 							var out = 0, ind=mygridG3.getColIndexById("PRIORITY_1");
 							for(var i=0;i<mygridG3.getRowsNum();i++){
-								out+= parseFloat(mygridG3.cells2(i,ind).getValue())
+								tmp = mygridG3.cells2(i,ind).getValue();
+								if($.isNumeric(tmp)){																			 
+									out+= parseFloat(tmp);
+								}
 							}
 							out = Math.round(out/mygridG3.getRowsNum());
 												 
@@ -729,8 +736,9 @@ function G3_RELOAD(token){
 							//특정 컬럼 최소값 구하기. 팀별 현황 (보안취약점 갯수).
 							var out = 0, ind=mygridG3.getColIndexById("PRIORITY_2");
 							for(var i=0;i<mygridG3.getRowsNum();i++){
-								if( out > parseFloat(mygridG3.cells2(i,ind).getValue()) ){
-									out = parseFloat(mygridG3.cells2(i,ind).getValue());
+								tmp = mygridG3.cells2(i,ind).getValue();
+								if($.isNumeric(tmp) && out > parseFloat(tmp) ){																			 
+									out = parseFloat(tmp);
 								}
 							}
 							//천단위 금액 표기
@@ -739,8 +747,9 @@ function G3_RELOAD(token){
 							$("#G3-PRIORITY_2_SUM").text(out);							//특정 컬럼 최대값 구하기. 팀별 현황 (보안취약점 갯수).
 							var out = 0, ind=mygridG3.getColIndexById("PRIORITY_3");
 							for(var i=0;i<mygridG3.getRowsNum();i++){
-								if( out < parseFloat(mygridG3.cells2(i,ind).getValue()) ){
-									out = parseFloat(mygridG3.cells2(i,ind).getValue());
+								tmp = mygridG3.cells2(i,ind).getValue();
+								if($.isNumeric(tmp) && out < parseFloat(tmp) ){
+									out = parseFloat(tmp);
 								}
 							}
 							//천단위 금액 표기
@@ -749,7 +758,10 @@ function G3_RELOAD(token){
 							$("#G3-PRIORITY_3_SUM").text(out);							//특정 컬럼 합계 구하기. 팀별 현황 (보안취약점 갯수).
 							var out = 0, ind=mygridG3.getColIndexById("VUL_CNT");
 							for(var i=0;i<mygridG3.getRowsNum();i++){
-								out+= parseFloat(mygridG3.cells2(i,ind).getValue())
+								tmp = mygridG3.cells2(i,ind).getValue();
+								if($.isNumeric(tmp)){
+									out+= parseFloat(tmp);
+								}
 							}
 							//천단위 금액 표기
 							out = formatNumber(out);
@@ -773,6 +785,11 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
 //새로고침	
 function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");

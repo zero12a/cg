@@ -64,6 +64,8 @@ $REQ["G2-TYPE_CNT"] = reqPostNumber("G2-TYPE_CNT",30);//유형수
 $REQ["G2-TYPE_CNT"] = getFilter($REQ["G2-TYPE_CNT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-VUL_CNT"] = reqPostNumber("G2-VUL_CNT",30);//취약점갯수	
 $REQ["G2-VUL_CNT"] = getFilter($REQ["G2-VUL_CNT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G2-ADD_DT2"] = reqPostNumber("G2-ADD_DT2",0);//ADD_DT22	
+$REQ["G2-ADD_DT2"] = getFilter($REQ["G2-ADD_DT2"],"","//");	
 
 //G3, 팀별 현황 (보안취약점 갯수)
 $REQ["G3-UUID_SEQ"] = reqPostNumber("G3-UUID_SEQ",100);//UUID_SEQ	

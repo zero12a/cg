@@ -37,9 +37,6 @@
     //컬럼ROW받기 GRPID,GRPTYPE,GRPNM,GRPORD,BRCNT,REFGRPID,GRPWIDTH,GRPHEIGHT,
  
 
-    $G2_CRUD_MODE = $_GET['G2_CRUD_MODE'];
-    $G4_CRUD_MODE = $_GET['G4_CRUD_MODE'];
-
 
     //로그인 정보
     $REQ["ADDID"] = getUserSeq();

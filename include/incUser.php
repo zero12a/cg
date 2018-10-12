@@ -71,6 +71,8 @@ function logOut(){
 	$_SESSION['CG_USR_ID'] = null;	
 	$_SESSION['CG_USR_SEQ'] = null;
 	$_SESSION['CG_AUTH'] = null;
+	$_SESSION['CG_USR_NM'] = null;
+	$_SESSION['CG_INTRO_URL'] = null;
 
 	session_destroy();
 }

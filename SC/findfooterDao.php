@@ -22,7 +22,7 @@ class findfooterDao
 , sum( case when priority = 1 then 1 else 0 end ) as PRIORITY_1
 , sum( case when priority = 2 then 1 else 0 end ) as PRIORITY_2
 , sum( case when priority = 3 then 1 else 0 end ) as PRIORITY_3
-, count(b.LOADD_SEQ) as vul_cnt
+, count(b.LOADD_SEQ) as vul_cnt  
 from 
 	TEAMINFO c
 	left outer join FILELOAD a on c.TEAM_NM = a.TEAM_NM
