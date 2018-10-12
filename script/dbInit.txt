@@ -2,7 +2,7 @@
 
 ## 1. 사용자 생성
 insert into user (Host, User, Password) values 
-('localhost', 'usr_zero12a', password('cg1234qwer'));
+('localhost', 'usr_zero12a', password(''));
 
 ## 2. 데이터배이스 생성
 CREATE DATABASE db_zero12a;
