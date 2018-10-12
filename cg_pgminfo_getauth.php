@@ -8,12 +8,38 @@
     require_once("./include/incUtil.php");
     require_once("./incConfig.php");
     require_once("./include/incDB.php");
-
+    require_once("./include/incAuth.php");
+    
+    //마지막 로그인 세션id기록용
+    $objAuth= new authObject();	
+    
     $db=db_m_open();
 
     //그룹ID받기
     $REQ["PJTSEQ"] = $_GET['PJTSEQ'];
     $REQ["PGMSEQ"] = $_GET['PGMSEQ'];
+
+    //PJT정보 가져오기
+    $to_coltype = "i";
+    $sql = " 
+    SELECT 
+        *
+    FROM 
+        CG.CG_PJTINFO 
+    WHERE PJTSEQ = #PJTSEQ#
+    ";    
+    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);    
+    if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+
+    $tPjt =  getStmtArray($stmt);
+    $stmt->close();
+    
+    //로그인 처리 (임의 유저 세팅하기)
+    alog("세션부여 : " . $tPjt[0]["PJTID"] . "_USR_SEQ");
+    $_SESSION[ $tPjt[0]["PJTID"] . "_USR_SEQ"] = 0;
+
+    //마지막 로그인세션 기록용(중복로그인 방지)
+    $objAuth->setLastSession(0,session_id());
 
     //PGM정보 가져오기
     $to_coltype = "ii";
@@ -28,6 +54,7 @@
     if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
     $tPgm =  getStmtArray($stmt);
+    $stmt->close();
 
     //SVC에서 사용할 GRP목록 가져오기
     $to_coltype = "ii";
@@ -53,6 +80,8 @@
     if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
     $tArr =  getStmtArray($stmt);
+    $stmt->close();
+
     $lastPgmid = "";
     $rtnVal = null;
     $sqlVal = null;

@@ -12,5 +12,6 @@
 
 # config
 incConfig.php
+incConfig.*.php
 
 
