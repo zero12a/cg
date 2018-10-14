@@ -170,7 +170,7 @@ class cg_pgminfo_svc
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("cg_pgminfo_svc-goSqldSearch________________________start");
+		alog("cg_pgminfo_svc-goPgmSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
 		$GRID["KEYCOLIDX"] = 2; // KEY 컬럼, 
 
@@ -186,7 +186,7 @@ class cg_pgminfo_svc
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("cg_pgminfo_svc-goSqldSearch________________________end");
+		alog("cg_pgminfo_svc-goPgmSearch________________________end");
 	}	
 
 	public function goSqldSearch(){
@@ -205,6 +205,16 @@ class cg_pgminfo_svc
 		$GRID["SQL"]["R"] = $this->DAO->sqldSearch($REQ); //SEARCH, 조회,TEAM
 		//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
+
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//CHARTBAR_SEARCH____________________________end
@@ -227,7 +237,7 @@ class cg_pgminfo_svc
 		//GRID_SAVE____________________________start
 		$grpId="SQLD";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "COLSEQ,PJTSEQ,PGMSEQ,SQLSEQ,DDCOLID,COLID,DATATYPE,SQLGBN,ORD,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "COLSEQ,PJTSEQ,PGMSEQ,SQLSEQ,DDCOLID,COLID,DATATYPE,SQLGBN,REQUIREYN,ORD,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 		//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
 		$GRID["KEYCOLID"] = "COLSEQ";  //KEY컬럼 COLID, 0
@@ -238,16 +248,25 @@ class cg_pgminfo_svc
 		$GRID["SQL"]["U"] = $this->DAO->sqldUpd($REQ); // SAVE, 저장, PJT
 		$GRID["SQL"]["C"] = $this->DAO->sqldIns($REQ); // SAVE, 저장, PJT
 
+		//필수 여부 검사
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
+
+		//그리드 처리
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME SQLD]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;
 		array_push($rtnVal->GRP_DATA, $tmpVal);
+		
+
 		//GRID_SAVE____________________________end
 
-
-
-		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
@@ -775,6 +794,11 @@ class cg_pgminfo_svc
 		alog("PGMMNGService-goGrpSave________________________end");
 	}	
 	
+	/*
+	######################################################
+	##	SQL
+	######################################################
+	*/	
 	public function goSqlSearch(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;

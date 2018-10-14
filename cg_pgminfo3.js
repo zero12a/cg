@@ -1461,10 +1461,6 @@
         xml = xml.replace(new RegExp("</row","g"),"\n</row");
         xml = xml.replace(new RegExp("<cell","g"),"\n\t<cell");
 
-        var xml2 = myXmlString2;
-        xml2 = xml2.replace(new RegExp("<row","g"),"\n<row");
-        xml2 = xml2.replace(new RegExp("</row","g"),"\n</row");
-        xml2 = xml2.replace(new RegExp("<cell","g"),"\n\t<cell");
 
         //$("#tt").val(xml);
         //$("#tt2").val(xml2);
@@ -1482,8 +1478,12 @@
                 alog("   json ERR_CD : " + data.ERR_CD);
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
-                //그리드에 데이터 반영
-                saveToGrid(mygridSql,data.GRP_DATA[0]);
+                if(data.RTN_CD == "200"){
+                    saveToGrid(mygridSql,data.GRP_DATA[0]);
+                }else{
+                    msgError("[SQLD SAVE]  " + data.RTN_MSG,3);
+                }
+
 
             },
             error: function(error){
@@ -2788,13 +2788,13 @@
         mygridCol = new dhtmlXGridObject('grid3');
 		mygridCol.setUserData("","gridTitle","grid3 : sql column list"); //글로별 변수에 그리드 타이블 넣기
         mygridCol.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridCol.setHeader("COLSEQ,PJTSEQ,PGMSEQ,SQLSEQ,DDCOLID,COLID,DD_DATATYPE,SQLGBN,ORD,ADDDT,MODDT");
-        mygridCol.setColumnIds("COLSEQ,PJTSEQ,PGMSEQ,SQLSEQ,DDCOLID,COLID,DATATYPE,SQLGBN,ORD,ADDDT,MODDT");
+        mygridCol.setHeader("COLSEQ,PJTSEQ,PGMSEQ,SQLSEQ,DDCOLID,COLID,DD_DATATYPE,SQLGBN,필수YN,ORD,ADDDT,MODDT");
+        mygridCol.setColumnIds("COLSEQ,PJTSEQ,PGMSEQ,SQLSEQ,DDCOLID,COLID,DATATYPE,SQLGBN,REQUIREYN,ORD,ADDDT,MODDT");
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygridCol.setInitWidths("50,50,50,50,50,50,50,50,50,50,60");
-        mygridCol.setColTypes("ro,ed,ed,ro,ed,ed,ed,coro,ed,ro,ro");
-        mygridCol.setColAlign("left,left,left,left,left,left,left,left,left,left,left");
-		mygridCol.setColSorting("int,int,int,int,str,str,str,str,int,str,str");
+        mygridCol.setInitWidths("50,50,50,50,50,50,50,50,50,50,50,60");
+        mygridCol.setColTypes("ro,ed,ed,ro,ed,ed,ed,coro,ed,ed,ro,ro");
+        mygridCol.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left");
+		mygridCol.setColSorting("int,int,int,int,str,str,str,str,str,int,str,str");
 
         mygridCol.enableSmartRendering(false);
         mygridCol.enableMultiselect(true);

@@ -1391,6 +1391,181 @@ end
 	}
 
 
+
+
+
+	function requireGridSave($colord,$xml,$sql){
+        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        
+        //ar_dump($sql["U"]);
+        //exit;
+        $RtnVal = null;
+        $RtnVal->GRP_TYPE = "GRID";
+        if(!(
+              ( is_array($sql["C"]["REQUIRE"]) && sizeof($sql["C"]["REQUIRE"]) > 0 )
+                || ( is_array($sql["U"]["REQUIRE"]) && sizeof($sql["U"]["REQUIRE"]) > 0 )
+                || ( is_array($sql["D"]["REQUIRE"]) && sizeof($sql["D"]["REQUIRE"]) > 0 )
+            )
+        ){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+            return $RtnVal;
+        }
+
+        $isRequireResult = true;
+
+        $colord_array = explode(",",$colord);
+
+		$xml_array_last = null;
+        alog("requireGrid is_assoc : " . is_assoc($xml) );
+        alog("requireGrid count : " . count($xml["row"]) );
+        alog("requireGrid sizeof : " . sizeof($xml["row"]) );
+		if(is_assoc($xml["row"]) == 1) {
+			//alog(" Y " );
+			$xml_array_last[0] = $xml["row"];
+		}else{
+			//alog(" N " );
+
+			$xml_array_last = $xml["row"];
+		}
+		//var_dump($xml_array_last);
+
+
+		$RtnCnt = 0;
+		//alog("xml sizeof : " . sizeof($xml_array_last));
+		for($i=0;$i<sizeof($xml_array_last) && $isRequireResult;$i++){
+
+			$row = $xml_array_last[$i];
+			//alog("        i : " . $i);
+			//alog("        @attributes : " . $row["@attributes"]["id"]);
+			//alog("        userdata : " . $row["userdata"]);
+
+			//현재 그리드 line을 bind 배열에 담기
+			$to_row = null;
+			$to_coltype = null;
+			for($j=0;$j<sizeof($row["cell"]);$j++){
+				$col = $row["cell"][$j];
+				if(is_array($col)){
+					$to_row[trim($colord_array[$j])] = "";
+				}else{
+                    $to_row[trim($colord_array[$j])] = $col;
+				}
+			}
+
+            $tArr = array_merge($REQ,$to_row);
+
+			if($row["userdata"] == "inserted"  ){
+                //alog("        inserted : " );
+                if ( is_array($sql["C"]["REQUIRE"]) && sizeof($sql["C"]["REQUIRE"]) > 0 ){
+                    //require 필드 갯수 만큼 루프 돌면서 검사
+                    for($k=0;$k<sizeof($sql["C"]["REQUIRE"]);$k++){
+                        $requireCol = $sql["C"]["REQUIRE"][$k];
+                        if($tArr[$requireCol] == ""){
+                            $isRequireResult = false; //필수값이 비여있음
+                            $RtnVal->RTN_MSG = $requireCol . " DB insert시 필수 값입니다.";
+                            break;
+                        }
+                    }
+                }
+
+			}else if($row["userdata"] == "updated"){
+                //alog("        updated : " );
+
+                if( is_array($sql["U"]["REQUIRE"]) && sizeof($sql["U"]["REQUIRE"]) > 0 ){
+                    //require 필드 갯수 만큼 루프 돌면서 검사   
+                    for($k=0;$k<sizeof($sql["U"]["REQUIRE"]);$k++){
+                        $requireCol = $sql["U"]["REQUIRE"][$k];
+                        if($tArr[$requireCol] == ""){
+                            $isRequireResult = false; //필수값이 비여있음
+                            $RtnVal->RTN_MSG = $requireCol . " DB update시 필수 값입니다.";                        
+                            break;
+                        }
+                    }
+                }
+
+			}else if($row["userdata"] == "deleted" ){
+                //alog("        deleted : " );
+                if( is_array($sql["D"]["REQUIRE"]) && sizeof($sql["D"]["REQUIRE"]) > 0  ){
+                    //require 필드 갯수 만큼 루프 돌면서 검사
+                    for($k=0;$k<sizeof($sql["D"]["REQUIRE"]);$k++){
+                        $requireCol = $sql["D"]["REQUIRE"][$k];
+                        if($tArr[$requireCol] == ""){
+                            $isRequireResult = false; //필수값이 비여있음
+                            $RtnVal->RTN_MSG = $requireCol . " DB delete시 필수 값입니다.";                        
+                            break;
+                        }
+                    }
+                }
+            }else{
+                alog("         userdata no match : " . $row["userdata"]);
+            }
+
+		}
+
+		//결과 JSON 화면 출력
+
+        if($isRequireResult){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+        }else{
+            $RtnVal->RTN_CD = "500";
+            $RtnVal->ERR_CD = "333";            
+        }
+
+		//$RtnVal = json_encode($RtnVal);
+		return $RtnVal;
+
+	}
+
+
+
+
+	function requireGridSearch($colord,$xml,$sql){
+        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        alog("requireGridSearch ");
+        //ar_dump($sql["U"]);
+        //exit;
+        $RtnVal = null;
+        $RtnVal->GRP_TYPE = "GRID";
+        if(!(
+                is_array($sql["R"]["REQUIRE"]) && sizeof($sql["R"]["REQUIRE"]) > 0
+            )
+        ){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+            return $RtnVal;
+        }
+
+        $isRequireResult = true;
+
+        //SQL에서 입력값 추출하기
+        for($k=0;$k<sizeof($sql["R"]["REQUIRE"]);$k++){
+            $requireCol = $sql["R"]["REQUIRE"][$k];
+            alog(" $k  " . $requireCol . " = " . $REQ[$requireCol]);
+            if($REQ[$requireCol] == ""){
+                $isRequireResult = false; //필수값이 비여있음
+                $RtnVal->RTN_MSG = $requireCol . " DB조회시 필수 값입니다.";                        
+                break;
+            }
+        }
+		//결과 JSON 화면 출력
+
+        if($isRequireResult){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+        }else{
+            $RtnVal->RTN_CD = "500";
+            $RtnVal->ERR_CD = "333";            
+        }
+
+		//$RtnVal = json_encode($RtnVal);
+		return $RtnVal;
+
+	}
+
+
+
+
 	function makeGridSaveJson($map,&$db){
         global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
         

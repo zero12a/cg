@@ -50,8 +50,8 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //로그인정보 및 환경경수 받기
 
 //FILE먼저 : G1, 
-//FILE먼저 : G2, 팀별 현황 (보안취약점 갯수)
-//FILE먼저 : G3, 팀별 현황 (보안취약점 갯수)
+//FILE먼저 : G2, 팀별 현황 (보안취약점 갯수)1
+//FILE먼저 : G3, 팀별 현황 (보안취약점 갯수)2
 //FILE먼저 : G4, 시스템별 현황
 //FILE먼저 : G5, 취약점별 현황
 
@@ -59,7 +59,7 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 $REQ["G1-EX_TEAM_NM"] = reqPostString("G1-EX_TEAM_NM",100);//그래프 제외 팀명	
 $REQ["G1-EX_TEAM_NM"] = getFilter($REQ["G1-EX_TEAM_NM"],"CLEARTEXT","/--미 정의--/");	
 
-//G2, 팀별 현황 (보안취약점 갯수)
+//G2, 팀별 현황 (보안취약점 갯수)1
 $REQ["G2-TYPE_CNT"] = reqPostNumber("G2-TYPE_CNT",30);//유형수	
 $REQ["G2-TYPE_CNT"] = getFilter($REQ["G2-TYPE_CNT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-VUL_CNT"] = reqPostNumber("G2-VUL_CNT",30);//취약점갯수	
@@ -67,7 +67,7 @@ $REQ["G2-VUL_CNT"] = getFilter($REQ["G2-VUL_CNT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G2-ADD_DT2"] = reqPostNumber("G2-ADD_DT2",0);//ADD_DT22	
 $REQ["G2-ADD_DT2"] = getFilter($REQ["G2-ADD_DT2"],"","//");	
 
-//G3, 팀별 현황 (보안취약점 갯수)
+//G3, 팀별 현황 (보안취약점 갯수)2
 $REQ["G3-UUID_SEQ"] = reqPostNumber("G3-UUID_SEQ",100);//UUID_SEQ	
 $REQ["G3-UUID_SEQ"] = getFilter($REQ["G3-UUID_SEQ"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-TEAM_NM"] = reqPostString("G3-TEAM_NM",300);//TEAM_NM	
@@ -106,7 +106,7 @@ $REQ["G5-RULESET"] = reqPostString("G5-RULESET",300);//RUESET
 $REQ["G5-RULESET"] = getFilter($REQ["G5-RULESET"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G5-VUL_CNT"] = reqPostNumber("G5-VUL_CNT",30);//취약점갯수	
 $REQ["G5-VUL_CNT"] = getFilter($REQ["G5-VUL_CNT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//팀별 현황 (보안취약점 갯수)	
+$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//팀별 현황 (보안취약점 갯수)2	
 	$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//시스템별 현황	
 	$REQ["G5-XML"] = getXml2Array($_POST["G5-XML"]);//취약점별 현황	
 	//,  입력값 필터 
@@ -191,10 +191,10 @@ switch ($ctl){
   		echo $objService->goG1Searchall(); //, 조회(전체)
   		break;
 	case "G2_SEARCH" :
-  		echo $objService->goG2Search(); //팀별 현황 (보안취약점 갯수), 조회
+  		echo $objService->goG2Search(); //팀별 현황 (보안취약점 갯수)1, 조회
   		break;
 	case "G3_SEARCH" :
-  		echo $objService->goG3Search(); //팀별 현황 (보안취약점 갯수), 조회
+  		echo $objService->goG3Search(); //팀별 현황 (보안취약점 갯수)2, 조회
   		break;
 	case "G4_SEARCH" :
   		echo $objService->goG4Search(); //시스템별 현황, 조회

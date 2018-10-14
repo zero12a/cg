@@ -48,6 +48,7 @@ class authObject
     
     //마지막 로그인 세션 세팅
     function setLastSession($userSeq, $sessionId){
+        alog("setLastSession() " . $this->PREFIX_SESSION_ID . strval($userSeq) . " = " . $sessionId);
         if($this->REDIS)$this->REDIS->set($this->PREFIX_SESSION_ID . strval($userSeq),$sessionId);
     }
 

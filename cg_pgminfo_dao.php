@@ -19,6 +19,7 @@ class cg_pgminfo_dao
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		
 		$RtnVal["SQLTXT"] = "
 		select
 		a.PJTSEQ, a.DDSEQ,a.COLID,a.COLNM,a.DATATYPE,a.DATASIZE
@@ -145,9 +146,10 @@ class cg_pgminfo_dao
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["REQUIRE"] = array("G2-SQLSEQ");
 		$RtnVal["SQLTXT"] = "
 		select 
-			a.COLSEQ, a.PJTSEQ, a.PGMSEQ, a.SQLSEQ, a.DDCOLID, a.COLID, b.DATATYPE, a.SQLGBN, a.ORD, a.ADDDT, a.MODDT 
+			a.COLSEQ, a.PJTSEQ, a.PGMSEQ, a.SQLSEQ, a.DDCOLID, a.COLID, b.DATATYPE, a.SQLGBN, a.REQUIREYN, a.ORD, a.ADDDT, a.MODDT 
 		from CG_PGMSQLD a
 			left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.DDCOLID = b.COLID
 		where a.PJTSEQ=#{G2-PJTSEQ} and a.PGMSEQ = #{G2-PGMSEQ} and a.SQLSEQ = #{G2-SQLSEQ}
@@ -166,15 +168,15 @@ class cg_pgminfo_dao
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMSQLD (
 			PJTSEQ, PGMSEQ, SQLSEQ, COLID, SQLGBN
-			, DDCOLID, ORD
+			, DDCOLID, REQUIREYN, ORD
 			,ADDDT
 		) values (
 			#{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{COLID}, #{SQLGBN}
-			, #{DDCOLID}, #{ORD}
+			, #{DDCOLID}, #{REQUIREYN}, #{ORD}
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 		";
-		$RtnVal["BINDTYPE"] = "iiiss si";
+		$RtnVal["BINDTYPE"] = "iiiss ssi";
 		return $RtnVal;
     }  
 	public function sqldUpd($req){
@@ -182,13 +184,14 @@ class cg_pgminfo_dao
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["REQUIRE"] = array("SQLGBN", "REQUIREYN");		
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMSQLD set
-		ORD = #{ORD}, SQLGBN = #{SQLGBN}, COLID = #{COLID}, DDCOLID = #{DDCOLID}
+		ORD = #{ORD}, SQLGBN = #{SQLGBN}, COLID = #{COLID}, DDCOLID = #{DDCOLID}, REQUIREYN = #{REQUIREYN}
 		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
   		where PJTSEQ=#{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and COLSEQ = #{COLSEQ}
 		";
-		$RtnVal["BINDTYPE"] = "isss iiii";
+		$RtnVal["BINDTYPE"] = "issss iiii";
 		return $RtnVal;
     }  
 	public function sqldDel($req){

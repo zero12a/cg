@@ -10,8 +10,7 @@
     require_once("./include/incDB.php");
     require_once("./include/incAuth.php");
     
-    //마지막 로그인 세션id기록용
-    $objAuth= new authObject();	
+
     
     $db=db_m_open();
 
@@ -39,6 +38,11 @@
     $_SESSION[ $tPjt[0]["PJTID"] . "_USR_SEQ"] = 0;
 
     //마지막 로그인세션 기록용(중복로그인 방지)
+    $CFG_SID_PREFIX = $tPjt[0]["PJTID"];
+
+    //마지막 로그인 세션id기록용
+    $objAuth= new authObject();	
+    
     $objAuth->setLastSession(0,session_id());
 
     //PGM정보 가져오기

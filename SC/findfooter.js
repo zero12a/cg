@@ -78,10 +78,10 @@ function G1_INIT(){
   alog("G1_INIT()-------------------------end");
 }
 
-//팀별 현황 (보안취약점 갯수) 그리드 초기화
+//팀별 현황 (보안취약점 갯수)1 그리드 초기화
 function G2_INIT(){
   alog("G2_INIT()-------------------------start");
-		//챠트 팀별 현황 (보안취약점 갯수) 초기화
+		//챠트 팀별 현황 (보안취약점 갯수)1 초기화
 	var ctx = $('#canvasG2')[0].getContext('2d');
 	window.myBarG2 = new Chart(ctx, {
 		type: 'bar', //일단 선언해 줘야 함                
@@ -115,7 +115,7 @@ function G2_INIT(){
 		//G1_SEARCH(lastinput,uuidv4());
 	});
 }
-		//팀별 현황 (보안취약점 갯수) 그리드 초기화
+		//팀별 현황 (보안취약점 갯수)2 그리드 초기화
 function G3_INIT(){
   alog("G3_INIT()-------------------------start");
 
@@ -123,7 +123,7 @@ function G3_INIT(){
         mygridG3 = new dhtmlXGridObject('gridG3');
         mygridG3.setDateFormat("%Y%m%d");
         mygridG3.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-		mygridG3.setUserData("","gridTitle","G3 : 팀별 현황 (보안취약점 갯수)"); //글로별 변수에 그리드 타이블 넣기
+		mygridG3.setUserData("","gridTitle","G3 : 팀별 현황 (보안취약점 갯수)2"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
         mygridG3.setHeader("UUID_SEQ,TEAM_NM,위험 상,위험 중,위험 하,취약점갯수");
 		mygridG3.setColumnIds("UUID_SEQ,TEAM_NM,PRIORITY_1,PRIORITY_2,PRIORITY_3,VUL_CNT");
@@ -549,8 +549,8 @@ function G1_SEARCHALL(token){
 	//폼의 모든값 구하기
 	var ConAllData = $( "#condition" ).serialize();
 	alog("ConAllData:" + ConAllData);
-	lastinputG2 = new FormData(); //팀별 현황 (보안취약점 갯수)
-	lastinputG3 = new FormData(); //팀별 현황 (보안취약점 갯수)
+	lastinputG2 = new FormData(); //팀별 현황 (보안취약점 갯수)1
+	lastinputG3 = new FormData(); //팀별 현황 (보안취약점 갯수)2
 	//json : G1
             lastinputG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +'}');
             lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +'}');
@@ -560,7 +560,7 @@ function G1_SEARCHALL(token){
 	G3_SEARCH(lastinputG3,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-    //그리드 조회(팀별 현황 (보안취약점 갯수))	
+    //그리드 조회(팀별 현황 (보안취약점 갯수)1)	
     function G2_SEARCH(tinput,token){
         alog("G2_SEARCH()------------start");
 
@@ -663,15 +663,15 @@ function G1_SEARCHALL(token){
 			window.myBarG2.update();     //업데이트
 						
 					}
-					msgNotice("[팀별 현황 (보안취약점 갯수)] 조회 성공했습니다. ("+row_cnt+"건)",1);
+					msgNotice("[팀별 현황 (보안취약점 갯수)1] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
                 }else{
-                    msgError("[팀별 현황 (보안취약점 갯수)] 서버 조회중 에러가 발생했습니다.RTN_CD : " + resData.RTN_CD + "ERR_CD : " + resData.ERR_CD + "RTN_MSG :" + resData.RTN_MSG,3);
+                    msgError("[팀별 현황 (보안취약점 갯수)1] 서버 조회중 에러가 발생했습니다.RTN_CD : " + resData.RTN_CD + "ERR_CD : " + resData.ERR_CD + "RTN_MSG :" + resData.RTN_MSG,3);
                 }
             },
             error: function(error){
-				msgError("[팀별 현황 (보안취약점 갯수)] Ajax http 500 error ( " + error + " )",3);
-                alog("[팀별 현황 (보안취약점 갯수)] Ajax http 500 error ( " + error + " )");
+				msgError("[팀별 현황 (보안취약점 갯수)1] Ajax http 500 error ( " + error + " )",3);
+                alog("[팀별 현황 (보안취약점 갯수)1] Ajax http 500 error ( " + error + " )");
             }
         });
 
@@ -685,7 +685,7 @@ function G1_SEARCHALL(token){
 
 
 
-    //그리드 조회(팀별 현황 (보안취약점 갯수))	
+    //그리드 조회(팀별 현황 (보안취약점 갯수)2)	
     function G3_SEARCH(tinput,token){
         alog("G3_SEARCH()------------start");
 
@@ -722,7 +722,7 @@ function G1_SEARCHALL(token){
 						$("#spanG3Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
-							//특정 컬럼 평균 구하기. 팀별 현황 (보안취약점 갯수).
+							//특정 컬럼 평균 구하기. 팀별 현황 (보안취약점 갯수)2.
 							var out = 0, ind=mygridG3.getColIndexById("PRIORITY_1");
 							for(var i=0;i<mygridG3.getRowsNum();i++){
 								tmp = mygridG3.cells2(i,ind).getValue();
@@ -733,7 +733,7 @@ function G1_SEARCHALL(token){
 							out = Math.round(out/mygridG3.getRowsNum());
 												 
 							$("#G3-PRIORITY_1_SUM").text(out);
-							//특정 컬럼 최소값 구하기. 팀별 현황 (보안취약점 갯수).
+							//특정 컬럼 최소값 구하기. 팀별 현황 (보안취약점 갯수)2.
 							var out = 0, ind=mygridG3.getColIndexById("PRIORITY_2");
 							for(var i=0;i<mygridG3.getRowsNum();i++){
 								tmp = mygridG3.cells2(i,ind).getValue();
@@ -744,7 +744,7 @@ function G1_SEARCHALL(token){
 							//천단위 금액 표기
 							out = formatNumber(out);
 																			 
-							$("#G3-PRIORITY_2_SUM").text(out);							//특정 컬럼 최대값 구하기. 팀별 현황 (보안취약점 갯수).
+							$("#G3-PRIORITY_2_SUM").text(out);							//특정 컬럼 최대값 구하기. 팀별 현황 (보안취약점 갯수)2.
 							var out = 0, ind=mygridG3.getColIndexById("PRIORITY_3");
 							for(var i=0;i<mygridG3.getRowsNum();i++){
 								tmp = mygridG3.cells2(i,ind).getValue();
@@ -755,7 +755,7 @@ function G1_SEARCHALL(token){
 							//천단위 금액 표기
 							out = formatNumber(out);
 																			 
-							$("#G3-PRIORITY_3_SUM").text(out);							//특정 컬럼 합계 구하기. 팀별 현황 (보안취약점 갯수).
+							$("#G3-PRIORITY_3_SUM").text(out);							//특정 컬럼 합계 구하기. 팀별 현황 (보안취약점 갯수)2.
 							var out = 0, ind=mygridG3.getColIndexById("VUL_CNT");
 							for(var i=0;i<mygridG3.getRowsNum();i++){
 								tmp = mygridG3.cells2(i,ind).getValue();
@@ -771,15 +771,15 @@ function G1_SEARCHALL(token){
 																			 						},"json");
 						
 					}
-					msgNotice("[팀별 현황 (보안취약점 갯수)] 조회 성공했습니다. ("+row_cnt+"건)",1);
+					msgNotice("[팀별 현황 (보안취약점 갯수)2] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
                 }else{
-                    msgError("[팀별 현황 (보안취약점 갯수)] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
+                    msgError("[팀별 현황 (보안취약점 갯수)2] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
                 }
             },
             error: function(error){
-				msgError("[팀별 현황 (보안취약점 갯수)] Ajax http 500 error ( " + error + " )",3);
-                alog("[팀별 현황 (보안취약점 갯수)] Ajax http 500 error ( " + error + " )");
+				msgError("[팀별 현황 (보안취약점 갯수)2] Ajax http 500 error ( " + error + " )",3);
+                alog("[팀별 현황 (보안취약점 갯수)2] Ajax http 500 error ( " + error + " )");
             }
         });
         alog("G3_SEARCH()------------end");
@@ -789,11 +789,6 @@ function G1_SEARCHALL(token){
 function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
   G3_SEARCH(lastinputG3,token);
-}
-//새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
 }
 
 
@@ -869,6 +864,11 @@ function G4_RELOAD(token){
         }
 		alog("G4_VIEWHIDDEN()..................end");
     }
+//새로고침	
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
+}
 //새로고침	
 function G5_RELOAD(token){
   alog("G5_RELOAD-----------------start");
