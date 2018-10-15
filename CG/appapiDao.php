@@ -98,7 +98,7 @@ WHERE API_SEQ = #{F4-API_SEQ} ";
 	,#{F4-REQ_ENCTYPE},#{F4-RES_BODY}, #{F4-MYFILE_name}, #{F4-MYFILE_svr_name}
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 ) ";
-	$RtnVal["REQUIRE"] = array(	);
+	$RtnVal["REQUIRE"] = array("F4-API_NM"	);
 		$RtnVal["BINDTYPE"] = "sssssssss";
 		return $RtnVal;
     }  
@@ -139,7 +139,7 @@ WHERE API_SEQ = #{API_SEQ} ";
 	,#{REQ_ENCTYPE},#{RES_BODY}, #{MYFILE}, #{MYFILESVRNM}
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
-	$RtnVal["REQUIRE"] = array(	);
+	$RtnVal["REQUIRE"] = array("API_NM"	);
 		$RtnVal["BINDTYPE"] = "sssssssss";
 		return $RtnVal;
     }  
