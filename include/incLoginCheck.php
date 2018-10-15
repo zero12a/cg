@@ -1,4 +1,4 @@
 <?
 //로그인 검사
-if(!isLogin())MsgExit("Check login");
+if(!isLogin())JsonMsg("500","999","로그인 후 이용해 주세요.");
 ?>

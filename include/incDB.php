@@ -1228,7 +1228,11 @@ end
 	}
 
 
-
+    /*
+    ###################################################################
+    ##  Grid
+    ###################################################################
+    */
 	function makeGridSearchJson($map,&$db){
 		global $REQ, $CFG_SEC_KEY, $CFG_SEC_SALT, $PGM_CFG;
 		alog("StdService-makeGridSearchJson");
@@ -1527,10 +1531,7 @@ end
         //exit;
         $RtnVal = null;
         $RtnVal->GRP_TYPE = "GRID";
-        if(!(
-                is_array($sql["R"]["REQUIRE"]) && sizeof($sql["R"]["REQUIRE"]) > 0
-            )
-        ){
+        if(!( is_array($sql["R"]["REQUIRE"]) && sizeof($sql["R"]["REQUIRE"]) > 0 ) ){
             $RtnVal->RTN_CD = "200";
             $RtnVal->ERR_CD = "200";
             return $RtnVal;
@@ -1548,8 +1549,8 @@ end
                 break;
             }
         }
-		//결과 JSON 화면 출력
 
+		//결과 JSON 화면 출력
         if($isRequireResult){
             $RtnVal->RTN_CD = "200";
             $RtnVal->ERR_CD = "200";
@@ -1776,7 +1777,121 @@ end
         return $RtnVal;
     }
 
+    /*
+    ###################################################################
+    ##  FormView
+    ###################################################################
+    */
+	function requireFormviewSearch($sql){
+        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        alog("requireFormviewSearch ");
+        //ar_dump($sql["U"]);
+        //exit;
+        $RtnVal = null;
+        $RtnVal->GRP_TYPE = "FORMVIEW";
+        if(!( is_array($sql["R"]["REQUIRE"]) && sizeof($sql["R"]["REQUIRE"]) > 0 ) ){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+            return $RtnVal;
+        }
 
+        $isRequireResult = true;
+
+        //SQL에서 입력값 추출하기
+        for($k=0;$k<sizeof($sql["R"]["REQUIRE"]);$k++){
+            $requireCol = $sql["R"]["REQUIRE"][$k];
+            alog(" $k  " . $requireCol . " = " . $REQ[$requireCol]);
+            if($REQ[$requireCol] == ""){
+                $isRequireResult = false; //필수값이 비여있음
+                $RtnVal->RTN_MSG = $requireCol . " DB조회시 필수 값입니다.";                        
+                break;
+            }
+        }
+
+		//결과 JSON 화면 출력
+        if($isRequireResult){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+        }else{
+            $RtnVal->RTN_CD = "500";
+            $RtnVal->ERR_CD = "333";            
+        }
+
+		//$RtnVal = json_encode($RtnVal);
+		return $RtnVal;
+
+	}
+
+
+
+	function requireFormviewSave($sql,$fnctype){
+        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        alog("requireFormviewSave ");
+        //ar_dump($sql["U"]);
+        //exit;
+        $RtnVal = null;
+        $RtnVal->GRP_TYPE = "FORMVIEW";
+        if($fnctype == "C" && (!is_array($sql["C"]["REQUIRE"]) || sizeof($sql["C"]["REQUIRE"]) < 1) ){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+            return $RtnVal;
+        }
+        if($fnctype == "U" && (!is_array($sql["U"]["REQUIRE"]) || sizeof($sql["U"]["REQUIRE"]) < 1) ){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+            return $RtnVal;
+        }
+        if($fnctype == "D" && (!is_array($sql["D"]["REQUIRE"]) || sizeof($sql["D"]["REQUIRE"]) < 1) ){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+            return $RtnVal;
+        }
+
+        $isRequireResult = true;
+
+        $require = null;
+		switch ($fnctype){
+            case "C" :
+                $require = $sql["C"]["REQUIRE"];
+				break;
+
+            case "U" :
+                $require = $sql["U"]["REQUIRE"];
+				break;
+
+            case "D" :
+                $require = $sql["D"]["REQUIRE"];
+				break;
+
+			default:
+				return "FNCTYPE 없음(".$map["FNCTYPE"].")";
+		}
+
+        //SQL에서 입력값 추출하기
+        for($k=0;$k<sizeof($require);$k++){
+            $requireCol = $require[$k];
+            alog(" $k  " . $requireCol . " = " . $REQ[$requireCol]);
+            if($REQ[$requireCol] == ""){
+                $isRequireResult = false; //필수값이 비여있음
+                $RtnVal->RTN_MSG = $requireCol . " DB저장시 필수 값입니다.";                        
+                break;
+            }
+        }
+
+		//결과 JSON 화면 출력
+        if($isRequireResult){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+        }else{
+            $RtnVal->RTN_CD = "500";
+            $RtnVal->ERR_CD = "333";            
+        }
+
+		//$RtnVal = json_encode($RtnVal);
+		return $RtnVal;
+
+    }
+    
 	function makeFormviewSearchJson($map,&$db){
         global $REQ, $CFG_SEC_KEY, $CFG_SEC_SALT, $PGM_CFG;
         

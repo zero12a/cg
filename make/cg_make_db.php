@@ -960,7 +960,7 @@ function getInput($input,$filetype,$param,$G){
               a.*
               ,b.*
             from CG_PGMIO a
-                join CG_OBJINFOD b on a.OBJTYPE = b.OBJTYPE and a.PJTSEQ = b.PJTSEQ
+                join CG_OBJINFOD b on a.OBJTYPE = b.OBJTYPE
             where a.PJTSEQ = %d and a.PGMSEQ = %d and a.GRPSEQ = %d %s
 			order by a.COLORD asc, a.COLID asc
             "
@@ -969,6 +969,7 @@ function getInput($input,$filetype,$param,$G){
             ,$G["V"]["GRPSEQ"]
             ,$AddSql
         );
+        //alog("LINE 972 : SQL (input " . $input . ") : \n" .$T_SQL);
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
 
 		$result = $db[$svrid]->query($T_SQL) or ServerMsg("500","335", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;

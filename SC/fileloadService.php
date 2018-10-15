@@ -75,6 +75,14 @@ class fileloadService
 		$GRID["SQL"]["R"] = $this->DAO->sLoad($REQ); //SEARCH, 조회,LOAD
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -103,6 +111,13 @@ class fileloadService
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		$GRID["SQL"]["U"] = $this->DAO->uLoad($REQ); // SAVE, 저장, LOAD
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
@@ -177,6 +192,14 @@ class fileloadService
 		$GRID["SQL"]["R"] = $this->DAO->sLoadD($REQ); //SEARCH, 조회,LOADD
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end

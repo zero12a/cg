@@ -59,6 +59,14 @@ class findanalService
 		$GRID["SQL"]["R"] = $this->DAO->sTeamChart($REQ); //SEARCH, 조회,TEAM
 		//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//CHARTBAR2Y_SEARCH____________________________end
@@ -83,9 +91,17 @@ class findanalService
 
 		//조회
 		//V_GRPNM : 팀별 현황 (보안취약점 갯수)
-		$GRID["SQL"]["R"] = $this->DAO->sTeam($REQ); //SEARCH, 조회,TEAM
+		$GRID["SQL"]["R"] = $this->DAO->sTeam($REQ); //SEARCH, 조회,TEAM2
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -113,6 +129,14 @@ class findanalService
 		$GRID["SQL"]["R"] = $this->DAO->sSys($REQ); //SEARCH, 조회,SYS
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -140,6 +164,14 @@ class findanalService
 		$GRID["SQL"]["R"] = $this->DAO->sRule($REQ); //SEARCH, 조회,RULESET
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G5]",microtime(true)));
 		//GRID_SEARCH____________________________end

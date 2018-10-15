@@ -12,7 +12,7 @@ class findanalDao
 	function __toString(){
 		alog("FindanalDao-__toString");
 	}
-	//TEAM    
+	//TEAM2    
 	public function sTeam($req){
 		//조회
 		$RtnVal = null;
@@ -29,6 +29,7 @@ from
     left outer join  FILELOADD b on a.load_seq = b.LOAD_SEQ
 group by c.TEAM_NM
 order by ifnull(count(b.LOADD_SEQ),0) desc";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  
@@ -45,6 +46,7 @@ from
 where a.TEAM_NM  = #{G3-TEAM_NM}
 group by TEAM_NM, SYS_NM, SUBSYS_NM
 order by count(b.LOADD_SEQ) desc";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -67,6 +69,7 @@ where a.TEAM_NM = #{G4-TEAM_NM} and
 	and a.SYS_NM = #{G4-SYS_NM} 
 group by TEAM_NM, SYS_NM, SUBSYS_NM, b.TYPE
 order by count(b.LOADD_SEQ) desc";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssss";
 		return $RtnVal;
     }  
@@ -88,6 +91,7 @@ case when #{G1-EX_TEAM_NM} <> '' then c.TEAM_NM <> #{G1-EX_TEAM_NM}
 	end
 group by c.TEAM_NM
 order by ifnull(count(b.LOADD_SEQ),0) desc";
+	$RtnVal["REQUIRE"] = array("G1-EX_TEAM_NM"	);
 		$RtnVal["BINDTYPE"] = "ss";
 		return $RtnVal;
     }  

@@ -85,6 +85,14 @@ function G2_INIT(){
 		type: 'bar', //일단 선언해 줘야 함                
 		data: chartG2Data,                
 		options: {
+			layout: {
+					padding: {
+						left: 0,
+						right: 0,
+						top: 10,
+						bottom: 0
+					}
+			},
 			responsive: true,
 			maintainAspectRatio: false,  				
 			legend: {
@@ -133,29 +141,18 @@ function G3_INIT(){
 		mygridG3.setColumnIds("UUID_SEQ,TEAM_NM,PRIORITY_1,PRIORITY_2,PRIORITY_3,VUL_CNT");
 		mygridG3.setInitWidths("60,100,60,60,60,60");
 		mygridG3.setColTypes("ro,ro,ron,ron,ron,ron");
-	//가로 정렬
+	//가로 정렬	
 		mygridG3.setColAlign("left,left,right,right,right,right");
-		mygridG3.setColSorting("int,str,int,int,int,int");		//렌더링
+		mygridG3.setColSorting("int,str,int,int,int,int");		//렌더링	
 		mygridG3.enableSmartRendering(false);
 		mygridG3.enableMultiselect(true);
-
-		mygridG3.attachFooter(
-			"1,합계,<div id='PRIORITY_1_SUM'></div>,<div id='PRIORITY_2_SUM'></div>,<div id='PRIORITY_3_SUM'></div>,<div id='VUL_CNT_SUM'></div>",
-			["text-align:center;","text-align:center;","text-align:right;","text-align:right;","text-align:right;"]
-		);
-
 		//mygridG3.setColValidators("G3_UUID_SEQ,G3_TEAM_NM,G3_PRIORITY_1,G3_PRIORITY_2,G3_PRIORITY_3,G3_VUL_CNT");
 		mygridG3.splitAt(0);//'freezes' 0 columns 
 		mygridG3.init();
-
-
-
-
-		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_1"));//1456.789 => 1'456,789
-		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_2"));//1456.789 => 1'456,789
-		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_3"));//1456.789 => 1'456,789
-		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("VUL_CNT"));//1456.789 => 1'456,789
-		
+		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_1")); // 위험 상
+		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_2")); // 위험 중
+		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_3")); // 위험 하
+		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("VUL_CNT")); // 취약점갯수
 		//블럭선택 및 복사
 		mygridG3.enableBlockSelection(true);
 		mygridG3.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -220,7 +217,6 @@ function G3_INIT(){
 			RowEditStatus = mygridG3.getUserData(rowID,"!nativeeditor_status");
 			if(RowEditStatus == "inserted"){return false;}
 			//GRIDRowSelect30(rowID,celInd);
-			//var RowAllData = getRowsColid(mygridG3,rowID,"G3");
 			//팝업오프너 호출
 			//CD[필수], NM 정보가 있는 경우 팝업 오프너에게 값 전달
 			popG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
@@ -287,19 +283,15 @@ function G4_INIT(){
         mygridG4.setHeader("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,취약점갯수");
 		mygridG4.setColumnIds("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,VUL_CNT");
 		mygridG4.setInitWidths("60,60,120,60,60");
-		mygridG4.setColTypes("ro,ro,ro,ro,ro");
-	//가로 정렬
+		mygridG4.setColTypes("ro,ro,ro,ro,ron");
+	//가로 정렬	
 		mygridG4.setColAlign("left,left,left,left,left");
-		mygridG4.setColSorting("int,str,str,str,int");		//렌더링
+		mygridG4.setColSorting("int,str,str,str,int");		//렌더링	
 		mygridG4.enableSmartRendering(false);
 		mygridG4.enableMultiselect(true);
-
-
 		//mygridG4.setColValidators("G4_UUID_SEQ,G4_TEAM_NM,G4_SYS_NM,G4_SUBSYS_NM,G4_VUL_CNT");
 		mygridG4.splitAt(0);//'freezes' 0 columns 
 		mygridG4.init();
-
-				
 		//블럭선택 및 복사
 		mygridG4.enableBlockSelection(true);
 		mygridG4.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -363,7 +355,6 @@ function G4_INIT(){
 			RowEditStatus = mygridG4.getUserData(rowID,"!nativeeditor_status");
 			if(RowEditStatus == "inserted"){return false;}
 			//GRIDRowSelect40(rowID,celInd);
-			//var RowAllData = getRowsColid(mygridG4,rowID,"G4");
 			//팝업오프너 호출
 			//CD[필수], NM 정보가 있는 경우 팝업 오프너에게 값 전달
 			popG4json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
@@ -435,18 +426,14 @@ function G5_INIT(){
 		mygridG5.setColumnIds("UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,RULESET,VUL_CNT");
 		mygridG5.setInitWidths("60,60,120,60,180,60");
 		mygridG5.setColTypes("ro,ro,ro,ro,ro,ro");
-	//가로 정렬
+	//가로 정렬	
 		mygridG5.setColAlign("left,left,left,left,left,left");
-		mygridG5.setColSorting("int,str,str,str,str,int");		//렌더링
+		mygridG5.setColSorting("int,str,str,str,str,int");		//렌더링	
 		mygridG5.enableSmartRendering(false);
 		mygridG5.enableMultiselect(true);
-
-
 		//mygridG5.setColValidators("G5_UUID_SEQ,G5_TEAM_NM,G5_SYS_NM,G5_SUBSYS_NM,G5_RULESET,G5_VUL_CNT");
 		mygridG5.splitAt(0);//'freezes' 0 columns 
 		mygridG5.init();
-
-				
 		//블럭선택 및 복사
 		mygridG5.enableBlockSelection(true);
 		mygridG5.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -511,7 +498,6 @@ function G5_INIT(){
 			RowEditStatus = mygridG5.getUserData(rowID,"!nativeeditor_status");
 			if(RowEditStatus == "inserted"){return false;}
 			//GRIDRowSelect50(rowID,celInd);
-			//var RowAllData = getRowsColid(mygridG5,rowID,"G5");
 			//팝업오프너 호출
 			//CD[필수], NM 정보가 있는 경우 팝업 오프너에게 값 전달
 			popG5json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
@@ -683,11 +669,14 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG2()------------end");
     }
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
-}
+
+
+
+
+
+
+
+
     //그리드 조회(팀별 현황 (보안취약점 갯수))	
     function G3_SEARCH(tinput,token){
         alog("G3_SEARCH()------------start");
@@ -695,15 +684,12 @@ function G3_RELOAD(token){
 		var tGrid = mygridG3;
 
         //그리드 초기화
-        tGrid.clearAll();
-
-        //post 만들기
+        tGrid.clearAll();        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		for(var pair of tinput.entries()) {
 			sendFormData.append(pair[0],pair[1]);
    			//console.log(pair[0]+ ', '+ pair[1]); 
 		}
-
         //불러오기
         $.ajax({
             type : "POST",
@@ -714,7 +700,7 @@ function G3_RELOAD(token){
             dataType: "json",
             async: true,
             success: function(data){
-                alog("   gridSearch6 json return----------------------");
+                alog("   gridG3 json return----------------------");
                 alog("   json data : " + data);
                 alog("   json RTN_CD : " + data.RTN_CD);
                 alog("   json ERR_CD : " + data.ERR_CD);
@@ -725,53 +711,9 @@ function G3_RELOAD(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG3Cnt").text(row_cnt);
+						$("#spanG3Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+							//푸터 합계 처리	
 
-						tGrid.parse(data.RTN_DATA,function(){
-							
-							//합계, 평균, 최대, 최소, %(이건 어떻게?? 행의 마지막값에 대하여 나의값의 비율 정도?)
-
-							//특정 컬럼 합계 구하기.
-							var out = 0, ind=2;
-							for(var i=0;i<mygridG3.getRowsNum();i++){
-								out+= parseFloat(mygridG3.cells2(i,ind).getValue())
-							}
-							//천단위 금액 표기
-							out = String(out).replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
-					
-							$("#PRIORITY_1_SUM").text(out);
-						
-							//특정 컬럼 합계 구하기.
-							var out = 0, ind=3;
-							for(var i=0;i<mygridG3.getRowsNum();i++){
-								out+= parseFloat(mygridG3.cells2(i,ind).getValue())
-							}
-							//천단위 금액 표기
-							out = String(out).replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
-					
-							$("#PRIORITY_2_SUM").text(out);
-							
-							//특정 컬럼 합계 구하기.
-							var out = 0, ind=4;
-							for(var i=0;i<mygridG3.getRowsNum();i++){
-								out+= parseFloat(mygridG3.cells2(i,ind).getValue())
-							}
-							//천단위 금액 표기
-							out = String(out).replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
-					
-							$("#PRIORITY_3_SUM").text(out);
-							
-							//특정 컬럼 합계 구하기.
-							var out = 0, ind=5;
-							for(var i=0;i<mygridG3.getRowsNum();i++){
-								out+= parseFloat(mygridG3.cells2(i,ind).getValue())
-							}
-							//천단위 금액 표기
-							out = String(out).replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
-					
-							$("#VUL_CNT_SUM").text(out);
-							
-							
 						},"json");
 						
 					}
@@ -786,10 +728,21 @@ function G3_RELOAD(token){
                 alog("[팀별 현황 (보안취약점 갯수)] Ajax http 500 error ( " + error + " )");
             }
         });
-
         alog("G3_SEARCH()------------end");
-	}
-	
+    }
+
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
+
+
+
+
+
+
+
 
     //그리드 조회(시스템별 현황)	
     function G4_SEARCH(tinput,token){
@@ -798,15 +751,12 @@ function G3_RELOAD(token){
 		var tGrid = mygridG4;
 
         //그리드 초기화
-        tGrid.clearAll();
-
-        //post 만들기
+        tGrid.clearAll();        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		for(var pair of tinput.entries()) {
 			sendFormData.append(pair[0],pair[1]);
    			//console.log(pair[0]+ ', '+ pair[1]); 
 		}
-
         //불러오기
         $.ajax({
             type : "POST",
@@ -817,7 +767,7 @@ function G3_RELOAD(token){
             dataType: "json",
             async: true,
             success: function(data){
-                alog("   gridSearch6 json return----------------------");
+                alog("   gridG4 json return----------------------");
                 alog("   json data : " + data);
                 alog("   json RTN_CD : " + data.RTN_CD);
                 alog("   json ERR_CD : " + data.ERR_CD);
@@ -828,9 +778,10 @@ function G3_RELOAD(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG4Cnt").text(row_cnt);
+						$("#spanG4Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+							//푸터 합계 처리	
 
-						tGrid.parse(data.RTN_DATA,"json");
+						},"json");
 						
 					}
 					msgNotice("[시스템별 현황] 조회 성공했습니다. ("+row_cnt+"건)",1);
@@ -844,9 +795,9 @@ function G3_RELOAD(token){
                 alog("[시스템별 현황] Ajax http 500 error ( " + error + " )");
             }
         });
-
         alog("G4_SEARCH()------------end");
     }
+
     function G4_VIEWHIDDEN(){
 		alog("G4_VIEWHIDDEN()..................start");
         if(isToggleHiddenColG4){
@@ -864,62 +815,6 @@ function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");
   G4_SEARCH(lastinputG4,token);
 }
-    //그리드 조회(취약점별 현황)	
-    function G5_SEARCH(tinput,token){
-        alog("G5_SEARCH()------------start");
-
-		var tGrid = mygridG5;
-
-        //그리드 초기화
-        tGrid.clearAll();
-
-        //post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-		for(var pair of tinput.entries()) {
-			sendFormData.append(pair[0],pair[1]);
-   			//console.log(pair[0]+ ', '+ pair[1]); 
-		}
-
-        //불러오기
-        $.ajax({
-            type : "POST",
-            url : url_G5_SEARCH+"&TOKEN=" + token + " &G5_CRUD_MODE=read" ,
-            data : sendFormData,
-			processData: false,
-			contentType: false,
-            dataType: "json",
-            async: true,
-            success: function(data){
-                alog("   gridSearch6 json return----------------------");
-                alog("   json data : " + data);
-                alog("   json RTN_CD : " + data.RTN_CD);
-                alog("   json ERR_CD : " + data.ERR_CD);
-                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-                //그리드에 데이터 반영
-                if(data.RTN_CD == "200"){
-					var row_cnt = 0;
-					if(data.RTN_DATA){
-						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG5Cnt").text(row_cnt);
-
-						tGrid.parse(data.RTN_DATA,"json");
-						
-					}
-					msgNotice("[취약점별 현황] 조회 성공했습니다. ("+row_cnt+"건)",1);
-
-                }else{
-                    msgError("[취약점별 현황] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
-                }
-            },
-            error: function(error){
-				msgError("[취약점별 현황] Ajax http 500 error ( " + error + " )",3);
-                alog("[취약점별 현황] Ajax http 500 error ( " + error + " )");
-            }
-        });
-
-        alog("G5_SEARCH()------------end");
-    }
 //새로고침	
 function G5_RELOAD(token){
   alog("G5_RELOAD-----------------start");
@@ -941,3 +836,65 @@ function G5_RELOAD(token){
         }
 		alog("G5_HIDDENCOL()..................end");
     }
+
+
+
+
+
+
+
+
+    //그리드 조회(취약점별 현황)	
+    function G5_SEARCH(tinput,token){
+        alog("G5_SEARCH()------------start");
+
+		var tGrid = mygridG5;
+
+        //그리드 초기화
+        tGrid.clearAll();        //post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+		for(var pair of tinput.entries()) {
+			sendFormData.append(pair[0],pair[1]);
+   			//console.log(pair[0]+ ', '+ pair[1]); 
+		}
+        //불러오기
+        $.ajax({
+            type : "POST",
+            url : url_G5_SEARCH+"&TOKEN=" + token + " &G5_CRUD_MODE=read" ,
+            data : sendFormData,
+			processData: false,
+			contentType: false,
+            dataType: "json",
+            async: true,
+            success: function(data){
+                alog("   gridG5 json return----------------------");
+                alog("   json data : " + data);
+                alog("   json RTN_CD : " + data.RTN_CD);
+                alog("   json ERR_CD : " + data.ERR_CD);
+                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+                //그리드에 데이터 반영
+                if(data.RTN_CD == "200"){
+					var row_cnt = 0;
+					if(data.RTN_DATA){
+						row_cnt = data.RTN_DATA.rows.length;
+						$("#spanG5Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+							//푸터 합계 처리	
+
+						},"json");
+						
+					}
+					msgNotice("[취약점별 현황] 조회 성공했습니다. ("+row_cnt+"건)",1);
+
+                }else{
+                    msgError("[취약점별 현황] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
+                }
+            },
+            error: function(error){
+				msgError("[취약점별 현황] Ajax http 500 error ( " + error + " )",3);
+                alog("[취약점별 현황] Ajax http 500 error ( " + error + " )");
+            }
+        });
+        alog("G5_SEARCH()------------end");
+    }
+

@@ -27,6 +27,7 @@ from
 	FILELOADD
 where LOAD_SEQ = #{G2-LOAD_SEQ}
 order by LOADD_SEQ desc";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -53,6 +54,7 @@ where file_nm like concat('%',#{G1-FILE_NM},'%')
 order by LOAD_SEQ desc
 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssss";
 		return $RtnVal;
     }  
@@ -63,6 +65,7 @@ order by LOAD_SEQ desc
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
 		$RtnVal["SVRID"] = "SC";
 		$RtnVal["SQLTXT"] = "delete from FILELOAD where LOAD_SEQ = #{LOAD_SEQ}";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -79,6 +82,7 @@ set
 	, SUBSYS_NM = #{SUBSYS_NM}
 	, MOD_DT = date_format(sysdate(),'%Y%m%d%H%i%s')
 where LOAD_SEQ = #{LOAD_SEQ}";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssi";
 		return $RtnVal;
     }  
