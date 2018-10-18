@@ -276,7 +276,7 @@ alog("실행시간 (seconds) : " . number_format($time,2) );
 //}
 //echo "</table>";
 
-JsonMsg("200","200",$F_PGMTYPE . " 실행시간 (seconds) : " . number_format($time,2));
+JsonMsg("200",$rtnMap["LINECOUNT"],$F_PGMTYPE . " 실행시간 (seconds) : " . number_format($time,2));
 
 
 

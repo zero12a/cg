@@ -3,6 +3,7 @@
 
     //정적 변수 선언
     var cm;//codemirror
+    var makeSyncFileLineSum;
 	var popSelectLayout; //레이아웃용
     var myCalendar;
     var lastCondition;
@@ -58,7 +59,7 @@
 
         //불러오기
         var types = ["HTML","HTMLJS","SVRCTL","SVRSVC","SVRDAO"];
-
+        makeSyncFileLineSum = 0;
         //요청 토큰
         //var token = uuidv4();
 
@@ -75,12 +76,29 @@
                 success: function(data){
                     alog(" Return : " + data.RTN_CD + " / " + data.RTN_MSG);
 
-                    if(data.RTN_MSG.indexOf("HTML") != -1) $("#makeHTML").text("R");
-                    if(data.RTN_MSG.indexOf("HTMLJS") != -1) $("#makeHTMLJS").text("R");
-                    if(data.RTN_MSG.indexOf("SVRCTL") != -1) $("#makeSVRCTL").text("R");
-                    if(data.RTN_MSG.indexOf("SVRSVC") != -1) $("#makeSVRSVC").text("R");
-                    if(data.RTN_MSG.indexOf("SVRDAO") != -1) $("#makeSVRDAO").text("R");
+                    if(data.RTN_CD == "200"){
+                        if(data.RTN_MSG.indexOf("HTMLJS") != -1) $("#makeHTMLJS").text("R");
+                        if(data.RTN_MSG.indexOf("HTML") != -1) $("#makeHTML").text("R");                    
+                        if(data.RTN_MSG.indexOf("SVRCTL") != -1) $("#makeSVRCTL").text("R");
+                        if(data.RTN_MSG.indexOf("SVRSVC") != -1) $("#makeSVRSVC").text("R");
+                        if(data.RTN_MSG.indexOf("SVRDAO") != -1) $("#makeSVRDAO").text("R");
 
+                        makeSyncFileLineSum = makeSyncFileLineSum + parseInt(data.ERR_CD);
+                        alog("makeHTMLJS = " + $("#makeHTMLJS").text() );
+                        alog("makeHTML = " + $("#makeHTMLJS").text() );
+                        alog("makeSVRCTL = " + $("#makeHTMLJS").text() );
+                        alog("makeSVRSVC = " + $("#makeHTMLJS").text() );
+                        alog("makeSVRSVC = " + $("#makeHTMLJS").text() );                        
+                        if($("#makeHTMLJS").text() == "R"
+                            && $("#makeHTML").text() == "R"
+                            && $("#makeSVRCTL").text() == "R"
+                            && $("#makeSVRSVC").text() == "R"
+                            && $("#makeSVRDAO").text() == "R"
+                        ){
+                            alert("생성된 파일의 라인수 합계는 " + makeSyncFileLineSum);
+                        };
+                        
+                    }
                     msgNotice(data.RTN_MSG,10);
                 },
                 error: function(error){

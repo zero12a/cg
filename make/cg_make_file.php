@@ -54,9 +54,20 @@ function saveFile2($filetype,$filenm){
     fclose($handle);
     chmod($filename,0766);
 
+    //파일 라인수 구하기
+    $linecount = 0;
+    $handle = fopen($filename, "r");
+    while(!feof($handle)){
+        $line = fgets($handle, 4096);
+        $linecount = $linecount + substr_count($line, PHP_EOL);
+    }
+    fclose($handle);
+    //echo $linecount;
+
+
     alog("Success, wrote ($somecontent) to file ($filename)");
 
-    return array("FILEHASH" => md5_file($filename), "FILESIZE" => filesize($filename)); 
+    return array("LINECOUNT" => $linecount, "FILEHASH" => md5_file($filename), "FILESIZE" => filesize($filename)); 
     //JsonMsg("200","200","Success, wrote ($somecontent) to file ($filename)");
 
 }
