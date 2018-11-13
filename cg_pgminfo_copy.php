@@ -423,6 +423,7 @@
         $map["BRYN"]            = $grps["BRYN"];
         $map["COLSIZETYPE"]     = $grps["COLSIZETYPE"];
         $map["LEGENDALIGN"]     = $grps["LEGENDALIGN"];
+        $map["STACKED"]         = $grps["STACKED"];
 
         $coltype = "iisss iisis sssss ss";
         $sql = "
