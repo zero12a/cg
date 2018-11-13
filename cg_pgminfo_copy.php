@@ -424,18 +424,18 @@
         $map["COLSIZETYPE"]     = $grps["COLSIZETYPE"];
         $map["LEGENDALIGN"]     = $grps["LEGENDALIGN"];
 
-        $coltype = "iisss iisis sssss s";
+        $coltype = "iisss iisis sssss ss";
         $sql = "
             insert into CG_PGMGRP (
                 PJTSEQ, PGMSEQ, GRPID, GRPTYPE, GRPNM
                 , GRPORD, FREEZECNT, VBOX, COLBRCNT, REFGRPID
                 , GRPWIDTH, GRPHEIGHT, GRPPADDING, BRYN, COLSIZETYPE
-                , LEGENDALIGN, ADDDT
+                , LEGENDALIGN, STACKED, ADDDT
             ) values (
                 #{PJTSEQ}, #{PGMSEQ}, #{GRPID}, #{GRPTYPE}, #{GRPNM} 
                 , #{GRPORD}, #{FREEZECNT}, #{VBOX}, #{COLBRCNT}, #{REFGRPID}
                 , #{GRPWIDTH}, #{GRPHEIGHT}, #{GRPPADDING}, #{BRYN}, #{COLSIZETYPE}
-                , #{LEGENDALIGN}, date_format(sysdate(),'%Y%m%d%H%i%s')
+                , #{LEGENDALIGN}, #{STACKED}, date_format(sysdate(),'%Y%m%d%H%i%s')
             )
         ";
     
