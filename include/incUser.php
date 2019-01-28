@@ -22,6 +22,16 @@ function getUserSeq(){
 	return $_SESSION[ $CFG_SID_PREFIX . "_USR_SEQ"];
 }
 
+function setTeamSeq($tSeq){
+	global $_SESSION, $CFG_SID_PREFIX;
+    $_SESSION[ $CFG_SID_PREFIX . "_TEAM_SEQ"] = $tSeq;
+}
+
+function getTeamSeq(){
+	global $_SESSION, $CFG_SID_PREFIX;
+	return $_SESSION[ $CFG_SID_PREFIX . "_TEAM_SEQ"];
+}
+
 function getUserId(){
 	global $_SESSION, $CFG_SID_PREFIX;
 	return $_SESSION[ $CFG_SID_PREFIX . "_USR_ID"];

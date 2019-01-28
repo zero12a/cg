@@ -669,6 +669,11 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG2()------------end");
     }
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
 
 
 
@@ -686,10 +691,13 @@ function G1_SEARCHALL(token){
         //그리드 초기화
         tGrid.clearAll();        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
-		for(var pair of tinput.entries()) {
-			sendFormData.append(pair[0],pair[1]);
-   			//console.log(pair[0]+ ', '+ pair[1]); 
+		if(typeof tinput != "undefined"){
+			for(var pair of tinput.entries()) {
+				sendFormData.append(pair[0],pair[1]);
+				//console.log(pair[0]+ ', '+ pair[1]); 
+			}
 		}
+
         //불러오기
         $.ajax({
             type : "POST",
@@ -732,9 +740,9 @@ function G1_SEARCHALL(token){
     }
 
 //새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
 }
 
 
@@ -753,10 +761,13 @@ function G3_RELOAD(token){
         //그리드 초기화
         tGrid.clearAll();        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
-		for(var pair of tinput.entries()) {
-			sendFormData.append(pair[0],pair[1]);
-   			//console.log(pair[0]+ ', '+ pair[1]); 
+		if(typeof tinput != "undefined"){
+			for(var pair of tinput.entries()) {
+				sendFormData.append(pair[0],pair[1]);
+				//console.log(pair[0]+ ', '+ pair[1]); 
+			}
 		}
+
         //불러오기
         $.ajax({
             type : "POST",
@@ -811,11 +822,6 @@ function G3_RELOAD(token){
 		alog("G4_VIEWHIDDEN()..................end");
     }
 //새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
-}
-//새로고침	
 function G5_RELOAD(token){
   alog("G5_RELOAD-----------------start");
   G5_SEARCH(lastinputG5,token);
@@ -853,10 +859,13 @@ function G5_RELOAD(token){
         //그리드 초기화
         tGrid.clearAll();        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
-		for(var pair of tinput.entries()) {
-			sendFormData.append(pair[0],pair[1]);
-   			//console.log(pair[0]+ ', '+ pair[1]); 
+		if(typeof tinput != "undefined"){
+			for(var pair of tinput.entries()) {
+				sendFormData.append(pair[0],pair[1]);
+				//console.log(pair[0]+ ', '+ pair[1]); 
+			}
 		}
+
         //불러오기
         $.ajax({
             type : "POST",
