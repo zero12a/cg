@@ -91,7 +91,7 @@ case when #{G1-EX_TEAM_NM} <> '' then c.TEAM_NM <> #{G1-EX_TEAM_NM}
 	end
 group by c.TEAM_NM
 order by ifnull(count(b.LOADD_SEQ),0) desc";
-	$RtnVal["REQUIRE"] = array("G1-EX_TEAM_NM"	);
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ss";
 		return $RtnVal;
     }  

@@ -739,11 +739,6 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
-//새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
-}
 
 
 
@@ -822,9 +817,9 @@ function G4_RELOAD(token){
 		alog("G4_VIEWHIDDEN()..................end");
     }
 //새로고침	
-function G5_RELOAD(token){
-  alog("G5_RELOAD-----------------start");
-  G5_SEARCH(lastinputG5,token);
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
 }
     function G5_HIDDENCOL(){
 		alog("G5_HIDDENCOL()..................start");
@@ -907,3 +902,8 @@ function G5_RELOAD(token){
         alog("G5_SEARCH()------------end");
     }
 
+//새로고침	
+function G5_RELOAD(token){
+  alog("G5_RELOAD-----------------start");
+  G5_SEARCH(lastinputG5,token);
+}
