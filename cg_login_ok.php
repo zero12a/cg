@@ -1,4 +1,4 @@
-<?
+<?php
 
 header("Content-Type: text/html; charset=UTF-8");
 if(!include_once './include/incUtil.php')		echo "include fail(3)";

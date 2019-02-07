@@ -1,4 +1,4 @@
-<?
+<?php
 //echo "session_status:" . session_status();
 //php5.4이상 echo "ession_status : " . session_status();
 if( !isset($_SESSION) ){

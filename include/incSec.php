@@ -1,4 +1,4 @@
-<?
+<?php
 
 function sec_decrypt($tmp){
 	return $tmp;

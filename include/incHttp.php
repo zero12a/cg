@@ -1,4 +1,4 @@
-<?
+<?php
 
 
 //if(!include_once '../include/classCurl.php')	echo "include fail(5)";

@@ -1,4 +1,4 @@
-<?
+<?php
 class dbServer
 {
     // 프로퍼티 정의

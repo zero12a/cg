@@ -1,4 +1,4 @@
-<?
+<?php
 libxml_use_internal_errors(true);
 
 //에러 핸들러
