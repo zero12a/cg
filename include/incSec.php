@@ -30,8 +30,42 @@ function aes_encrypt_old($encrypt,$key) {
 } 
 
 
-//Encrypt Function 
+function pkcs5_pad($text, $blocksize = 16) {
+	$pad = $blocksize - (strlen($text) % $blocksize);
+	return $text . str_repeat(chr($pad), $pad);
+}
+
+function pkcs5_unpad($text) {
+	$pad = ord($text{strlen($text)-1});
+	if ($pad > strlen($text)) {
+	  return $text;
+	}
+	if (!strspn($text, chr($pad), strlen($text) - $pad)) {
+	  return $text;
+	}
+	return substr($text, 0, -1 * $pad);
+  }
+
+
+//$ivlen = openssl_cipher_iv_length($cipher);
+//$iv = openssl_random_pseudo_bytes($ivlen);
+//echo "<br> iv = " . base64_encode($iv);
+
 function aes_encrypt($tencrypt,$tkey) { 
+	global $CFG_SEC_IV;
+	$cipher = "aes-256-cbc";
+	//$ivlen = openssl_cipher_iv_length($cipher);
+	//$iv = openssl_random_pseudo_bytes($ivlen);
+	$iv = base64_decode($CFG_SEC_IV);
+    return base64_encode(openssl_encrypt(pkcs5_pad($tencrypt), $cipher, $tkey, OPENSSL_RAW_DATA, $iv));
+    //store $cipher, $iv, and $tag for decryption later
+    //$original_plaintext = openssl_decrypt($ciphertext, $cipher, $key, $options=0, $iv, $tag);
+	//echo $original_plaintext."\n";
+}
+
+
+//Encrypt Function 
+function aes_encrypt_good($tencrypt,$tkey) { 
 
 	
 	$key = pack('H*', $tkey);
@@ -89,8 +123,20 @@ function is_base64($str){
     }
 }
 
-
 function aes_decrypt($decrypt,$tkey) {
+	global $CFG_SEC_IV;
+
+	$cipher = "aes-256-cbc";
+	//$ivlen = openssl_cipher_iv_length($cipher);
+	//$iv = openssl_random_pseudo_bytes($ivlen);
+	$iv = base64_decode($CFG_SEC_IV);	
+	//echo "<br> aes_decrypt.iv = " . $iv;	
+	//$ciphertext = openssl_encrypt($tencrypt, $cipher, $tkey, $options=0, $iv, $tag=null);
+	//store $cipher, $iv, and $tag for decryption later
+	return pkcs5_unpad(openssl_decrypt(base64_decode($decrypt), $cipher, $tkey, OPENSSL_RAW_DATA, $iv));
+}
+
+function aes_decrypt_good($decrypt,$tkey) {
 	
 	
 	if(!is_base64($decrypt))return "";
