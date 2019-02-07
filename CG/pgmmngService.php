@@ -45,6 +45,14 @@ class pgmmngService
 		$GRID["SQL"]["R"] = $this->DAO->sql1($REQ); //SEARCH, 조회,PJT
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -75,6 +83,13 @@ class pgmmngService
 		$GRID["SQL"]["D"] = $this->DAO->sql2($REQ); // SAVE, 저장, PJT
 		$GRID["SQL"]["U"] = $this->DAO->sql3($REQ); // SAVE, 저장, PJT
 		$GRID["SQL"]["C"] = $this->DAO->sql4($REQ); // SAVE, 저장, PJT
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 
@@ -107,6 +122,14 @@ class pgmmngService
 		$GRID["SQL"]["R"] = $this->DAO->sql6($REQ); //SEARCH, 조회,PGM
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -137,6 +160,13 @@ class pgmmngService
 		$GRID["SQL"]["C"] = $this->DAO->sql7($REQ); // SAVE, 저장, PGM
 		$GRID["SQL"]["U"] = $this->DAO->sql8($REQ); // SAVE, 저장, PGM
 		$GRID["SQL"]["D"] = $this->DAO->sql9($REQ); // SAVE, 저장, PGM
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 
@@ -169,6 +199,14 @@ class pgmmngService
 		$GRID["SQL"]["R"] = $this->DAO->sql10($REQ); //SEARCH, 조회,DD
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G5]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -199,6 +237,13 @@ class pgmmngService
 		$GRID["SQL"]["C"] = $this->DAO->sql11($REQ); // SAVE, 저장, DD
 		$GRID["SQL"]["U"] = $this->DAO->sql12($REQ); // SAVE, 저장, DD
 		$GRID["SQL"]["D"] = $this->DAO->sql13($REQ); // SAVE, 저장, DD
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G5]",microtime(true)));
 
@@ -246,6 +291,14 @@ class pgmmngService
 		$GRID["SQL"]["R"] = $this->DAO->impR($REQ); //SEARCH, 조회,CONFIG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G6]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -276,6 +329,13 @@ class pgmmngService
 		$GRID["SQL"]["C"] = $this->DAO->impC($REQ); // SAVE, 저장, CONFIG
 		$GRID["SQL"]["U"] = $this->DAO->impU($REQ); // SAVE, 저장, CONFIG
 		$GRID["SQL"]["D"] = $this->DAO->impD($REQ); // SAVE, 저장, CONFIG
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G6]",microtime(true)));
 
@@ -338,6 +398,14 @@ class pgmmngService
 		$GRID["SQL"]["R"] = $this->DAO->fileR($REQ); //SEARCH, 조회,FILE
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G7]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -366,6 +434,13 @@ class pgmmngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		$GRID["SQL"]["C"] = $this->DAO->fileC($REQ); // SAVE, 저장, FILE
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G7]",microtime(true)));
 

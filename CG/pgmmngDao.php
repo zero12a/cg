@@ -26,6 +26,7 @@ from
  CG_PJTINFO	
 where DELYN = 'N'
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  
@@ -37,6 +38,7 @@ where DELYN = 'N'
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "update CG_PJTINFO set DELYN = 'Y' where PJTSEQ = #{PJTSEQ} 
 ";
+	$RtnVal["REQUIRE"] = array("PJTSEQ"	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -54,6 +56,7 @@ PJTID = #{PJTID}, PJTNM = #{PJTNM},FILECHARSET = #{FILECHARSET}, UITOOL = #{UITO
 where PJTSEQ = #{PJTSEQ} 
 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssssssssii";
 		return $RtnVal;
     }  
@@ -73,6 +76,7 @@ where PJTSEQ = #{PJTSEQ}
 	,date_format(sysdate(),'%Y%m%d%H%i%s'),#{USER.SEQ}
 	)
 	";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssssssssi";
 		return $RtnVal;
     }  
@@ -87,6 +91,7 @@ from
  CG_PGMINFO	
 where PJTSEQ = #{G3-PJTSEQ} 
  ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -106,6 +111,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 	 ,date_format(sysdate(),'%Y%m%d%H%i%s'),#{USER.SEQ}
 ) 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "issssssssi";
 		return $RtnVal;
     }  
@@ -123,6 +129,7 @@ set
  , MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssssssssiii";
 		return $RtnVal;
     }  
@@ -135,6 +142,7 @@ where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ}
 		$RtnVal["SQLTXT"] = "delete from CG_PGMINFO
 where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ii";
 		return $RtnVal;
     }  
@@ -155,6 +163,7 @@ from CG_DD a
 	left outer join CG_DDOBJ c on a.DDSEQ = c.DDSEQ and c.GRPTYPE = 'GRID'
 where PJTSEQ = #{G3-PJTSEQ} 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -177,6 +186,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 	,date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 ) 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "issssissssssssissi";
 		return $RtnVal;
     }  
@@ -195,6 +205,7 @@ set
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ}
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssssissssssssisiii";
 		return $RtnVal;
     }  
@@ -207,6 +218,7 @@ where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ}
 		$RtnVal["SQLTXT"] = "delete from CG_DD 
 where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ} 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ii";
 		return $RtnVal;
     }  
@@ -221,6 +233,7 @@ where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ}
 from CG_PJTCFG
 where PJTSEQ = #{G3-PJTSEQ} 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -240,6 +253,7 @@ where PJTSEQ = #{G3-PJTSEQ}
  , date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 ) 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "issssisi";
 		return $RtnVal;
     }  
@@ -255,6 +269,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssssiiii";
 		return $RtnVal;
     }  
@@ -267,6 +282,7 @@ where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 		$RtnVal["SQLTXT"] = "delete from CG_PJTCFG
 where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ} 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ii";
 		return $RtnVal;
     }  
@@ -280,6 +296,7 @@ where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 FROM CG_PJTFILE
 WHERE PJTSEQ = #{G3-PJTSEQ}
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -296,6 +313,7 @@ WHERE PJTSEQ = #{G3-PJTSEQ}
 	#{PJTSEQ}, #{MKFILETYPE}, #{MKFILETYPENM}, #{MKFILEFORMAT}, #{MKFILEEXT}
 	,#{TEMPLATE}, #{FILEORD}, #{USEYN}, date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 )";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "isssssssi";
 		return $RtnVal;
     }  
@@ -311,6 +329,7 @@ WHERE PJTSEQ = #{G3-PJTSEQ}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 WHERE PJTSEQ = #{PJTSEQ} AND FILESEQ = #{FILESEQ}
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssssssiis";
 		return $RtnVal;
     }  

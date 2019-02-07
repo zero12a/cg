@@ -43,7 +43,7 @@ alog("---------------GRP PGM ---------------------START");
     foreach($tResultArray->RTN_DATA->data as $tMap) {
         ?>
         <item   text="<?=$tMap["PJTNM"]?>" id="<?=$tMap["PJTID"]?>" open="1">
-        <?
+        <?php
 
         $REQ["PJTSEQ"] = $tMap["PJTSEQ"];
         $to_coltype = "i";
@@ -62,11 +62,11 @@ alog("---------------GRP PGM ---------------------START");
         if($subItemCnt == 0){
         ?>
         <item text="-" id="<?=$REQ["PJTSEQ"]?>:-"></item>
-        <?
+        <?php
         }
         ?>
         </item>
-        <?
+        <?php
     }
     $db->close();
 ?>        

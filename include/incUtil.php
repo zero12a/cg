@@ -917,7 +917,7 @@ function MsgExit($tmp){
 	<script language=javascript>
 		alert("<?=$tmp?>");
 	</script>
-	<?
+	<?php
 	exit;
 }
 
@@ -929,7 +929,7 @@ function MsgBack($tmp){
 		alert("<?=$tmp?>");
 		history.back();
 	</script>
-	<?
+	<?php
 	exit;
 }
 
@@ -939,7 +939,7 @@ function MsgGo($tmp,$url){
 		alert("<?=$tmp?>");
 		location = "<?=$url?>";
 	</script>
-	<?
+	<?php
 	exit;
 }
 
@@ -949,7 +949,7 @@ function MsgClose($tmp){
 		alert("<?=$tmp?>");
 		window.close();
 	</script>
-	<?
+	<?php
 	exit;
 }
 
@@ -962,7 +962,7 @@ function MsgOpenerReload($tmp){
 		}
 		self.close();
 	</script>
-	<?
+	<?php
 	exit;
 }
 
@@ -974,7 +974,7 @@ function MsgOpenerGo($tmp,$url){
 			opener.location = "<?=$url?>";
 		}
 	</script>
-	<?
+	<?php
 	exit;
 }
 
