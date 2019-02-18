@@ -75,6 +75,14 @@ class codemngService
 		$GRID["SQL"]["R"] = $this->DAO->selMasG($REQ); //SEARCH, 조회,MAS
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -105,6 +113,13 @@ class codemngService
 		$GRID["SQL"]["C"] = $this->DAO->insMasG($REQ); // SAVE, 저장, MAS
 		$GRID["SQL"]["U"] = $this->DAO->updMasG($REQ); // SAVE, 저장, MAS
 		$GRID["SQL"]["D"] = $this->DAO->delMasG($REQ); // SAVE, 저장, MAS
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
@@ -167,6 +182,14 @@ class codemngService
 		$GRID["SQL"]["R"] = $this->DAO->selDtlG($REQ); //SEARCH, 조회,DTL
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -197,6 +220,13 @@ class codemngService
 		$GRID["SQL"]["C"] = $this->DAO->insDtlG($REQ); // SAVE, 저장, DTL
 		$GRID["SQL"]["U"] = $this->DAO->updDtlG($REQ); // SAVE, 저장, DTL
 		$GRID["SQL"]["D"] = $this->DAO->delDtlG($REQ); // SAVE, 저장, DTL
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 

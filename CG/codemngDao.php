@@ -25,6 +25,7 @@ class codemngDao
 from 
 	CG_CODE
 order by ORD asc";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  
@@ -42,6 +43,7 @@ order by ORD asc";
 from CG_CODED
 where PCD = #{G2-PCD}
 order by ORD ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -60,6 +62,7 @@ order by ORD ";
 	,#{UITOOL},if(#{USEYN}='','Y',#{USEYN}),if(#{DELYN}='','N',#{DELYN})
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssiisssss";
 		return $RtnVal;
     }  
@@ -80,6 +83,7 @@ order by ORD ";
 	,#{DATATYPE},#{EDITYN},#{FORMATYN},if(#{USEYN}='','Y',#{USEYN}),if(#{DELYN}='','N',#{DELYN})
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssssiisssssssssss";
 		return $RtnVal;
     }  
@@ -95,6 +99,7 @@ order by ORD ";
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
 where PCD = #{PCD}
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssissss";
 		return $RtnVal;
     }  
@@ -111,6 +116,7 @@ where PCD = #{PCD}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
 where  PCD = #{PCD} and CD = #{CD}
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssisssssssssss";
 		return $RtnVal;
     }  
@@ -123,6 +129,7 @@ where  PCD = #{PCD} and CD = #{CD}
 		$RtnVal["SQLTXT"] = "delete from CG_CODED 
 where PCD = #{PCD} and CD = #{CD}
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ss";
 		return $RtnVal;
     }  
@@ -135,6 +142,7 @@ where PCD = #{PCD} and CD = #{CD}
 		$RtnVal["SQLTXT"] = "delete from CG_CODE
 where PCD = #{PCD} 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  

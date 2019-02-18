@@ -1,6 +1,6 @@
 <?php
-//PGMID : CODEMNG
-//PGMNM : 코드관리
+//PGMID : DEPLOYMNG
+//PGMNM : 배포관리자
 header("Content-Type: text/html; charset=UTF-8"); //HTML
 
 require_once("../include/incUtil.php");
@@ -8,7 +8,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>	
-<title>코드관리</title>
+<title>배포관리자</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
 <script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
@@ -21,7 +21,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
-<script src="codemng.js?<?=getRndVal(10)?>"></script>
+<script src="deploymng.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
 <script>
 	//팝업창인 경우 오프너에게서 파라미터 받기
@@ -39,7 +39,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 			<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
-				<b>* 코드관리</b>	
+				<b>* 배포관리자</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
@@ -51,6 +51,17 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<div style="height:38px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : PJTSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:px;text-align:left;">
+						PJTSEQ
+					</div>
+					<!-- style="width:40px;"-->
+					<div class="CON_OBJECT">
+	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G1-PJTSEQ" value="<?=getFilter(reqPostString("PJTSEQ",20),"SAFEECHO","")?>" id="G1-PJTSEQ" style="width:40px;">
+					</div>
+				</div>
 			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
@@ -60,26 +71,54 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:30%;height:500px;">
+	<div class="GRP_OBJECT" style="width:50%;height:510px;">
 
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
-	  				* 마스터      
+	  				* 파일      
 			</div>
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
 <input type="button" name="BTN_G2_SAVE" value="저장" onclick="G2_SAVE(uuidv4());">
-<input type="button" name="BTN_G2_ROWDELETE" value="-" onclick="G2_ROWDELETE(uuidv4());">
-<input type="button" name="BTN_G2_ROWBULKADD" value="++" onclick="G2_ROWBULKADD(uuidv4());">
-<input type="button" name="BTN_G2_ROWADD" value="+" onclick="G2_ROWADD(uuidv4());">
-<input type="button" name="BTN_G2_RELOAD" value="R" onclick="G2_RELOAD(uuidv4());">
-<input type="button" name="BTN_G2_HIDDENCOL" value="v" onclick="G2_HIDDENCOL(uuidv4());">
+<input type="button" name="BTN_G2_RELOAD" value="새로고침" onclick="G2_RELOAD(uuidv4());">
+<input type="button" name="BTN_G2_HIDDENCOL" value="숨김필드보기" onclick="G2_HIDDENCOL(uuidv4());">
 <input type="button" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
 <input type="button" name="BTN_G2_CHKSAVE" value="선택저장" onclick="G2_CHKSAVE(uuidv4());">
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:478px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:488px;width:100%;"></div>
+		</div>
+	</div>
+	<!--
+	#####################################################
+	## 그리드 - END
+	#####################################################
+	-->
+	<!--VBOX START-->
+	<div class="GRP_OBJECT_VBOX" style="width:50%;">
+	<!--
+	#####################################################
+	## 그리드 - START
+	#####################################################
+	-->
+	<div class="GRP_OBJECT" style="width:100%;height:250px;">
+
+		<div  class="GRID_LABELGRP">
+  			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
+	  				* SQL PGM      
+			</div>
+			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
+				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
+<input type="button" name="BTN_G3_SAVE" value="저장" onclick="G3_SAVE(uuidv4());">
+<input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
+<input type="button" name="BTN_G3_HIDDENCOL" value="숨김필드보기" onclick="G3_HIDDENCOL(uuidv4());">
+<input type="button" name="BTN_G3_EXCEL" value="엑셀다운로드" onclick="G3_EXCEL(uuidv4());">
+<input type="button" name="BTN_G3_CHKSAVE" value="선택저장" onclick="G3_CHKSAVE(uuidv4());">
+			</div>
+		</div>
+		<div  class="GRID_OBJECT"  style="">
+			<div id="gridG3"  style="background-color:white;overflow:hidden;height:228px;width:100%;"></div>
 		</div>
 	</div>
 	<!--
@@ -92,26 +131,23 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:70%;height:500px;">
+	<div class="GRP_OBJECT" style="width:100%;height:250px;">
 
 		<div  class="GRID_LABELGRP">
-  			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
-	  				* 상세      
+  			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
+	  				* SQL AUTH      
 			</div>
-			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
-				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
-<input type="button" name="BTN_G3_SAVE" value="저장" onclick="G3_SAVE(uuidv4());">
-<input type="button" name="BTN_G3_ROWDELETE" value="행삭제" onclick="G3_ROWDELETE(uuidv4());">
-<input type="button" name="BTN_G3_ROWBULKADD" value="행대량추가" onclick="G3_ROWBULKADD(uuidv4());">
-<input type="button" name="BTN_G3_ROWADD" value="행추가" onclick="G3_ROWADD(uuidv4());">
-<input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
-<input type="button" name="BTN_G3_HIDDENCOL" value="숨김필드보기" onclick="G3_HIDDENCOL(uuidv4());">
-<input type="button" name="BTN_G3_EXCEL" value="엑셀다운로드" onclick="G3_EXCEL(uuidv4());">
-<input type="button" name="BTN_G3_CHKSAVE" value="선택저장" onclick="G3_CHKSAVE(uuidv4());">
+			<div id="div_gridG4_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
+				<span id="spanG4Cnt" name="그리드 ROW 갯수">N</span>
+<input type="button" name="BTN_G4_SAVE" value="저장" onclick="G4_SAVE(uuidv4());">
+<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">
+<input type="button" name="BTN_G4_HIDDENCOL" value="숨김필드보기" onclick="G4_HIDDENCOL(uuidv4());">
+<input type="button" name="BTN_G4_EXCEL" value="엑셀다운로드" onclick="G4_EXCEL(uuidv4());">
+<input type="button" name="BTN_G4_CHKSAVE" value="선택저장" onclick="G4_CHKSAVE(uuidv4());">
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:478px;width:100%;"></div>
+			<div id="gridG4"  style="background-color:white;overflow:hidden;height:228px;width:100%;"></div>
 		</div>
 	</div>
 	<!--
@@ -119,7 +155,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - END
 	#####################################################
 	-->
-<div style="width:0px;height:0px;overflow: hidden">
+	</div>
+	<!--VBOX END--><div style="width:0px;height:0px;overflow: hidden">
 	<form name="excelDownForm" id="excelDownForm">
 	<input type="hidden" name="DATA_HEADERS" id="DATA_HEADERS">
 	<input type="hidden" name="DATA_WIDTHS" id="DATA_WIDTHS">

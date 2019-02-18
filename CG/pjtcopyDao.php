@@ -22,6 +22,7 @@ class pjtcopyDao
  PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT
 from CG_PJTCFG
 where PJTSEQ = #{G1-TO_PJTSEQ} ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -36,6 +37,7 @@ where PJTSEQ = #{G1-TO_PJTSEQ} ";
 from CG_PJTCFG
 where PJTSEQ = #{G1-FROM_PJTSEQ} 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -50,6 +52,7 @@ where PJTSEQ = #{G1-FROM_PJTSEQ}
 FROM CG_PJTFILE
 WHERE PJTSEQ = #{G1-FROM_PJTSEQ}
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -63,6 +66,7 @@ WHERE PJTSEQ = #{G1-FROM_PJTSEQ}
 FROM CG_PJTFILE
 WHERE PJTSEQ = #{G1-TO_PJTSEQ}
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -79,6 +83,7 @@ WHERE PJTSEQ = #{G1-TO_PJTSEQ}
 	#{G1-TO_PJTSEQ}, #{MKFILETYPE}, #{MKFILETYPENM}, #{MKFILEFORMAT}, #{MKFILEEXT}
 	,#{TEMPLATE}, #{FILEORD}, #{USEYN}, date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 )";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "isssssssi";
 		return $RtnVal;
     }  
@@ -98,6 +103,7 @@ WHERE PJTSEQ = #{G1-TO_PJTSEQ}
  , date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 ) 
 ";
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "issssisi";
 		return $RtnVal;
     }  

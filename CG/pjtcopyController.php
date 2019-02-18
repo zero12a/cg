@@ -12,7 +12,7 @@ include_once('../include/incUtil.php');//CG UTIL
 	include_once('../include/incDB.php');//CG DB
 	include_once('../include/incSEC.php');//CG SEC
 	include_once('../include/incAuth.php');//CG AUTH
-	include_once('../incConfig.php');//CG CONFIG
+	include_once('./incConfig.CG.php');//CG CONFIG
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
@@ -37,7 +37,7 @@ if($ctl1 == "" || $ctl2 == ""){
 }else{
 	$ctl = $ctl1 . "_" . $ctl2;
 }
-//권한정보 검사하기 in_array("aix", $os)
+//로그인 : 권한정보 검사하기 in_array("aix", $os)
 if(!isLogin()){
 	JsonMsg("500","110"," 로그아웃되었습니다.");
 }else if(!$objAuth->isOneConnection()){
@@ -159,7 +159,7 @@ $REQ["G5-MKFILEEXT"] = reqPostString("G5-MKFILEEXT",0);//확장자
 $REQ["G5-MKFILEEXT"] = getFilter($REQ["G5-MKFILEEXT"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G5-TEMPLATE"] = reqPostString("G5-TEMPLATE",0);//템플릿	
 $REQ["G5-TEMPLATE"] = getFilter($REQ["G5-TEMPLATE"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G5-FILEORD"] = reqPostString("G5-FILEORD",0);//순번	
+$REQ["G5-FILEORD"] = reqPostString("G5-FILEORD",10);//순번	
 $REQ["G5-FILEORD"] = getFilter($REQ["G5-FILEORD"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G5-USEYN"] = reqPostString("G5-USEYN",1);//사용	
 $REQ["G5-USEYN"] = getFilter($REQ["G5-USEYN"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
@@ -287,7 +287,7 @@ $REQ["G5-XML"] = filterGridXml(
 			,"MKFILEFORMAT"=>array("STRING",0)	
 			,"MKFILEEXT"=>array("STRING",0)	
 			,"TEMPLATE"=>array("STRING",0)	
-			,"FILEORD"=>array("STRING",0)	
+			,"FILEORD"=>array("STRING",10)	
 			,"USEYN"=>array("STRING",1)	
 			,"ADDDT"=>array("STRING",14)	
 			,"MODDT"=>array("STRING",14)	

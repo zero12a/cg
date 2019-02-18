@@ -75,6 +75,14 @@ class pjtcopyService
 		$GRID["SQL"]["R"] = $this->DAO->sFromCFG($REQ); //SEARCH, 조회,FromCfg
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -103,6 +111,13 @@ class pjtcopyService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//Copy
 		$GRID["SQL"]["U"] = $this->DAO->iFromCFG($REQ); // SAVE, Copy, CopyCFG
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
@@ -135,6 +150,14 @@ class pjtcopyService
 		$GRID["SQL"]["R"] = $this->DAO->sFromFile($REQ); //SEARCH, 조회,FromFile
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -163,6 +186,13 @@ class pjtcopyService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//Copy
 		$GRID["SQL"]["U"] = $this->DAO->iFromFile($REQ); // SAVE, Copy, CopyFile
+		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 
@@ -195,6 +225,14 @@ class pjtcopyService
 		$GRID["SQL"]["R"] = $this->DAO->sToCFG($REQ); //SEARCH, 조회,ToCfg
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//GRID_SEARCH____________________________end
@@ -252,6 +290,14 @@ class pjtcopyService
 		$GRID["SQL"]["R"] = $this->DAO->sToFile($REQ); //SEARCH, 조회,ToFile
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
+		//필수 여부 검사
+		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G5]",microtime(true)));
 		//GRID_SEARCH____________________________end

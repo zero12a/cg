@@ -12,7 +12,7 @@ include_once('../include/incUtil.php');//CG UTIL
 	include_once('../include/incDB.php');//CG DB
 	include_once('../include/incSEC.php');//CG SEC
 	include_once('../include/incAuth.php');//CG AUTH
-	include_once('../incConfig.php');//CG CONFIG
+	include_once('./incConfig.CG.php');//CG CONFIG
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
@@ -37,7 +37,7 @@ if($ctl1 == "" || $ctl2 == ""){
 }else{
 	$ctl = $ctl1 . "_" . $ctl2;
 }
-//권한정보 검사하기 in_array("aix", $os)
+//로그인 : 권한정보 검사하기 in_array("aix", $os)
 if(!isLogin()){
 	JsonMsg("500","110"," 로그아웃되었습니다.");
 }else if(!$objAuth->isOneConnection()){
