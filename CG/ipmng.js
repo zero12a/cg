@@ -1,27 +1,27 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "poppjtController?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "poppjtController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_RESET = "poppjtController?CTLGRP=G1&CTLFNC=RESET";//조건 변수 선언	
+var url_G1_SEARCHALL = "ipmngController?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_SAVE = "ipmngController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_RESET = "ipmngController?CTLGRP=G1&CTLFNC=RESET";//조건 변수 선언	
 //그리드 변수 초기화	
 //컨트롤러 경로
-var url_G2_SEARCH = "poppjtController?CTLGRP=G2&CTLFNC=SEARCH";
+var url_G2_SEARCH = "ipmngController?CTLGRP=G2&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G2_SAVE = "poppjtController?CTLGRP=G2&CTLFNC=SAVE";
+var url_G2_SAVE = "ipmngController?CTLGRP=G2&CTLFNC=SAVE";
 //컨트롤러 경로
-var url_G2_ROWDELETE = "poppjtController?CTLGRP=G2&CTLFNC=ROWDELETE";
+var url_G2_ROWDELETE = "ipmngController?CTLGRP=G2&CTLFNC=ROWDELETE";
 //컨트롤러 경로
-var url_G2_ROWBULKADD = "poppjtController?CTLGRP=G2&CTLFNC=ROWBULKADD";
+var url_G2_ROWBULKADD = "ipmngController?CTLGRP=G2&CTLFNC=ROWBULKADD";
 //컨트롤러 경로
-var url_G2_ROWADD = "poppjtController?CTLGRP=G2&CTLFNC=ROWADD";
+var url_G2_ROWADD = "ipmngController?CTLGRP=G2&CTLFNC=ROWADD";
 //컨트롤러 경로
-var url_G2_RELOAD = "poppjtController?CTLGRP=G2&CTLFNC=RELOAD";
+var url_G2_RELOAD = "ipmngController?CTLGRP=G2&CTLFNC=RELOAD";
 //컨트롤러 경로
-var url_G2_HIDDENCOL = "poppjtController?CTLGRP=G2&CTLFNC=HIDDENCOL";
+var url_G2_HIDDENCOL = "ipmngController?CTLGRP=G2&CTLFNC=HIDDENCOL";
 //컨트롤러 경로
-var url_G2_EXCEL = "poppjtController?CTLGRP=G2&CTLFNC=EXCEL";
+var url_G2_EXCEL = "ipmngController?CTLGRP=G2&CTLFNC=EXCEL";
 //컨트롤러 경로
-var url_G2_CHKSAVE = "poppjtController?CTLGRP=G2&CTLFNC=CHKSAVE";
+var url_G2_CHKSAVE = "ipmngController?CTLGRP=G2&CTLFNC=CHKSAVE";
 //그리드 객체
 var mygridG2,isToggleHiddenColG2,lastinputG2,lastinputG2json,lastrowidG2;
 var lastselectG2json;//화면 초기화	
@@ -64,7 +64,7 @@ function G1_INIT(){
   alog("G1_INIT()-------------------------end");
 }
 
-	//프로젝트 그리드 초기화
+	//IP목록 그리드 초기화
 function G2_INIT(){
   alog("G2_INIT()-------------------------start");
 
@@ -72,18 +72,18 @@ function G2_INIT(){
         mygridG2 = new dhtmlXGridObject('gridG2');
         mygridG2.setDateFormat("%Y%m%d");
         mygridG2.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-		mygridG2.setUserData("","gridTitle","G2 : 프로젝트"); //글로별 변수에 그리드 타이블 넣기
+		mygridG2.setUserData("","gridTitle","G2 : IP목록"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
-        mygridG2.setHeader("PJTSEQ,프로젝트ID,프로젝트명,파일 CHARSET,UITOOL,서버언어,DEPLOYKEY,패키지ROOT,시작일,종료일,삭제YN,ADDDT,MODDT");
-		mygridG2.setColumnIds("PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT,DELYN,ADDDT,MODDT");
-		mygridG2.setInitWidths("20,60,60,60,30,40,50,60,40,40,40,60,60");
-		mygridG2.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,dhxCalendar,dhxCalendar,ed,ro,ro");
+        mygridG2.setHeader("IP_SEQ,PGMTYPE,IP,DESC,ADD,ADD_ID,MOD,MOD_ID");
+		mygridG2.setColumnIds("IP_SEQ,PGMTYPE,IP,IP_DESC,ADD_DT,ADD_ID,MOD_DT,MOD_ID");
+		mygridG2.setInitWidths("60,60,60,80,60,60,120,60");
+		mygridG2.setColTypes("ro,ed,ed,ed,ro,ro,ro,ro");
 	//가로 정렬	
-		mygridG2.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left");
-		mygridG2.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str");		//렌더링	
+		mygridG2.setColAlign("left,left,left,left,left,left,left,left");
+		mygridG2.setColSorting("int,str,str,str,str,str,str,str");		//렌더링	
 		mygridG2.enableSmartRendering(false);
 		mygridG2.enableMultiselect(true);
-		//mygridG2.setColValidators("G2_PJTSEQ,G2_PJTID,G2_PJTNM,G2_FILECHARSET,G2_UITOOL,G2_SVRLANG,G2_DEPLOYKEY,G2_PKGROOT,G2_STARTDT,G2_ENDDT,G2_DELYN,G2_ADDDT,G2_MODDT");
+		//mygridG2.setColValidators("G2_IP_SEQ,G2_PGMTYPE,G2_IP,G2_IP_DESC,G2_ADD_DT,G2_ADD_ID,G2_MOD_DT,G2_MOD_ID");
 		mygridG2.splitAt(0);//'freezes' 0 columns 
 		mygridG2.init();
 		//블럭선택 및 복사
@@ -123,19 +123,14 @@ function G2_INIT(){
 				return false;
 			}
 		});
-		 // IO : PJTSEQ초기화	
-		 // IO : 프로젝트ID초기화	
-		 // IO : 프로젝트명초기화	
-		 // IO : 파일 CHARSET초기화	
-		 // IO : UITOOL초기화	
-		 // IO : 서버언어초기화	
-		 // IO : DEPLOYKEY초기화	
-		 // IO : 패키지ROOT초기화	
-		 // IO : 시작일초기화	
-		 // IO : 종료일초기화	
-		 // IO : 삭제YN초기화	
-		 // IO : ADDDT초기화	
-		 // IO : MODDT초기화	
+		 // IO : IP_SEQ초기화	
+		 // IO : PGMTYPE초기화	
+		 // IO : IP초기화	
+		 // IO : DESC초기화	
+		 // IO : ADD초기화	
+		 // IO : ADD_ID초기화	
+		 // IO : MOD초기화	
+		 // IO : MOD_ID초기화	
 	//onCheck
 		mygridG2.attachEvent("onCheck",function(rowId, cellInd, state){
 			//onCheck is void return event
@@ -168,19 +163,14 @@ function G2_INIT(){
 			}
 			//LAST SELECT ROW
 			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "PJTSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PJTSEQ")).getValue()) + '"' +
-			//', "PJTID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PJTID")).getValue()) + '"' +
-			//', "PJTNM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PJTNM")).getValue()) + '"' +
-			//', "FILECHARSET" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILECHARSET")).getValue()) + '"' +
-			//', "UITOOL" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("UITOOL")).getValue()) + '"' +
-			//', "SVRLANG" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("SVRLANG")).getValue()) + '"' +
-			//', "DEPLOYKEY" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("DEPLOYKEY")).getValue()) + '"' +
-			//', "PKGROOT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PKGROOT")).getValue()) + '"' +
-			//', "STARTDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("STARTDT")).getValue()) + '"' +
-			//', "ENDDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ENDDT")).getValue()) + '"' +
-			//', "DELYN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("DELYN")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MODDT")).getValue()) + '"' +
+			//', "IP_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("IP_SEQ")).getValue()) + '"' +
+			//', "PGMTYPE" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PGMTYPE")).getValue()) + '"' +
+			//', "IP" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("IP")).getValue()) + '"' +
+			//', "IP_DESC" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("IP_DESC")).getValue()) + '"' +
+			//', "ADD_DT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADD_DT")).getValue()) + '"' +
+			//', "ADD_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADD_ID")).getValue()) + '"' +
+			//', "MOD_DT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MOD_DT")).getValue()) + '"' +
+			//', "MOD_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MOD_ID")).getValue()) + '"' +
 			//'}');
 		//A124
 		});
@@ -255,7 +245,7 @@ function G1_SEARCHALL(token){
 	//폼의 모든값 구하기
 	var ConAllData = $( "#condition" ).serialize();
 	alog("ConAllData:" + ConAllData);
-	lastinputG2 = new FormData(); //프로젝트
+	lastinputG2 = new FormData(); //IP목록
 	//json : G1
             lastinputG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +'}');
 	//  호출
@@ -275,18 +265,18 @@ function G2_EXCEL(){
 
 	mygridG2.setSerializationLevel(true,false,false,false,false,false);
 	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT,DELYN,ADDDT,MODDT");
-	$("#DATA_WIDTHS").val("20,60,60,60,30,40,50,60,40,40,40,60,60");
+	$("#DATA_HEADERS").val("IP_SEQ,PGMTYPE,IP,IP_DESC,ADD_DT,ADD_ID,MOD_DT,MOD_ID");
+	$("#DATA_WIDTHS").val("60,60,60,80,60,60,120,60");
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
 }
-//행추가3 (프로젝트)	
-//그리드 행추가 : 프로젝트
+//행추가3 (IP목록)	
+//그리드 행추가 : IP목록
 	function G2_ROWADD(){
 		if( !(lastinputG2)){
 			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
 		}else{
-			var tCols = ["","","","","","","","","","","","",""];//초기값
+			var tCols = ["","","","","","","",""];//초기값
 			addRow(mygridG2,tCols);
 		}
 	}
@@ -297,7 +287,7 @@ function G2_EXCEL(){
 
 
 
-    //그리드 조회(프로젝트)	
+    //그리드 조회(IP목록)	
     function G2_SEARCH(tinput,token){
         alog("G2_SEARCH()------------start");
 
@@ -340,15 +330,15 @@ function G2_EXCEL(){
 						},"json");
 						
 					}
-					msgNotice("[프로젝트] 조회 성공했습니다. ("+row_cnt+"건)",1);
+					msgNotice("[IP목록] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
                 }else{
-                    msgError("[프로젝트] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
+                    msgError("[IP목록] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
                 }
             },
             error: function(error){
-				msgError("[프로젝트] Ajax http 500 error ( " + error + " )",3);
-                alog("[프로젝트] Ajax http 500 error ( " + data.RTN_MSG + " )");
+				msgError("[IP목록] Ajax http 500 error ( " + error + " )",3);
+                alog("[IP목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
             }
         });
         alog("G2_SEARCH()------------end");
@@ -449,12 +439,12 @@ function G2_CHKSAVE(){
         delRow(mygridG2);
         alog("G2_ROWDELETE()------------start");
     }
-//그리드 행추가 : 프로젝트
+//그리드 행추가 : IP목록
 	function G2_ROWBULKADD(){
 		if( !(lastinputG2json)){
 			msgError("조회 후에 행추가 가능합니다",3);
 		}else{
-			var tCols = ["","","","","","","","","","","","",""];//초기값
+			var tCols = ["","","","","","","",""];//초기값
 
 	var rowcnt = prompt("Please enter row's count", "input number");
 	if($.isNumeric(rowcnt)){

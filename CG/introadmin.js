@@ -530,6 +530,8 @@ function G6_INIT(){
         //그리드 초기화
         mygridG6 = new dhtmlXGridObject('gridG6');
         mygridG6.setDateFormat("%Y%m%d");
+        mygridG6.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+		mygridG6.setUserData("","gridTitle","G6 : 권한없는접근"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
         mygridG6.setHeader("USR_ID,AUTH_CNT");
 		mygridG6.setColumnIds("USR_ID,AUTH_CNT");
@@ -1072,6 +1074,11 @@ function G2_NEW(){
 	$("#G2-CFM_DESC").val("");//CFM_DESC 신규초기화	
        alog("DETAILNew20---------------end");
 }
+//새로고침	
+function G8_RELOAD(token){
+  alog("G8_RELOAD-----------------start");
+  G8_SEARCH(lastinputG8,token);
+}
 //엑셀다운		
 function G8_EXCEL(){	
 	alog("G8_EXCEL-----------------start");
@@ -1155,11 +1162,6 @@ function G8_EXCEL(){
         alog("G8_SEARCH()------------end");
     }
 
-//새로고침	
-function G8_RELOAD(token){
-  alog("G8_RELOAD-----------------start");
-  G8_SEARCH(lastinputG8,token);
-}
 //새로고침	
 function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
@@ -1512,11 +1514,6 @@ function G7_RELOAD(token){
         alog("G7_SEARCH()------------end");
     }
 
-//새로고침	
-function G9_RELOAD(token){
-  alog("G9_RELOAD-----------------start");
-  G9_SEARCH(lastinputG9,token);
-}
 //엑셀다운		
 function G9_EXCEL(){	
 	alog("G9_EXCEL-----------------start");
@@ -1600,3 +1597,8 @@ function G9_EXCEL(){
         alog("G9_SEARCH()------------end");
     }
 
+//새로고침	
+function G9_RELOAD(token){
+  alog("G9_RELOAD-----------------start");
+  G9_SEARCH(lastinputG9,token);
+}

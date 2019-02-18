@@ -285,8 +285,13 @@ alog("실행시간 (seconds) : " . number_format($time,2) );
 //    echo "<tr><td>" . $key . "</td><td>" . $tarr["HIT"] . "</td><td>arraysize:" . sizeof($tarr["DATA"]) . "</td></tr>";
 //}
 //echo "</table>";
+alog("HTTP_REFERER = " . strpos($_SERVER['HTTP_REFERER'],"cg_pgmmng.php"));
+if(strpos($_SERVER['HTTP_REFERER'],"cg_pgmmng.php")){
+    JsonMsg("200",$F_PGMSEQ,$F_PGMTYPE . " 실행시간 (seconds) : " . number_format($time,2));
+}else{
+    JsonMsg("200",$rtnMap["LINECOUNT"],$F_PGMTYPE . " 실행시간 (seconds) : " . number_format($time,2));
+}
 
-JsonMsg("200",$rtnMap["LINECOUNT"],$F_PGMTYPE . " 실행시간 (seconds) : " . number_format($time,2));
 
 
 

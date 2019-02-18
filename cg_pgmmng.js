@@ -59,6 +59,8 @@
                     alog(" Return : " + data.RTN_CD + " / " + data.RTN_MSG);
 
                     if(data.RTN_CD == "200"){
+                        old = mygridPgm.cells(data.ERR_CD, mygridPgm.getColIndexById("STATUS")).getValue();
+                        mygridPgm.cells(data.ERR_CD, mygridPgm.getColIndexById("STATUS")).setValue(old + "■");
                         msgNotice(data.RTN_MSG,10);
                     }else{
                         msgError("에러 발생  ( " + data.RTN_MSG + " )");
@@ -94,6 +96,7 @@
         var requestQueue = new Array();
         for ( var k in chkArr ) {
             for(i=0;i<types.length;i++){
+                mygridPgm.cells(chkArr[k], mygridPgm.getColIndexById("STATUS")).setValue("");
                 var tempArr = [
                     mygridPgm.cells(chkArr[k], mygridPgm.getColIndexById("PJTSEQ")).getValue()
                     ,mygridPgm.cells(chkArr[k], mygridPgm.getColIndexById("PGMSEQ")).getValue()
@@ -233,11 +236,11 @@
         mygridPgm = new dhtmlXGridObject('gridPgm');
 		mygridPgm.setUserData("","gridTitle","pgm : pgm list"); //글로별 변수에 그리드 타이블 넣기
         mygridPgm.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridPgm.setHeader("#master_checkbox,PJTSEQ,PJTID,PGMSEQ,PGMID,PGMNM,URL,PGMTYPE,VERDT,차수,MAKEDT,ADDDT,MODDT");
-        mygridPgm.setColumnIds("CHK,PJTSEQ,PJTID,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,VERDT,DEGREE,MAKEDT,ADDDT,MODDT");
-        mygridPgm.setInitWidths("50,50,50,70,70,*,100,60,50,40,50,70,70")
-        mygridPgm.setColTypes("ch,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
-		mygridPgm.setColSorting("str,int,str,int,str,str,str,str,str,int,str,str,str");
+        mygridPgm.setHeader("#master_checkbox,PJTSEQ,PJTID,PGMSEQ,STATUS,PGMID,PGMNM,URL,PGMTYPE,VERDT,차수,MAKEDT,ADDDT,MODDT");
+        mygridPgm.setColumnIds("CHK,PJTSEQ,PJTID,PGMSEQ,STATUS,PGMID,PGMNM,VIEWURL,PGMTYPE,VERDT,DEGREE,MAKEDT,ADDDT,MODDT");
+        mygridPgm.setInitWidths("50,50,50,70,60,70,*,100,60,50,40,50,70,70")
+        mygridPgm.setColTypes("ch,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+		mygridPgm.setColSorting("str,int,str,int,str,str,str,str,str,str,int,str,str,str");
 
 		mygridPgm.enableSmartRendering(false);
         mygridPgm.enableMultiselect(true);
@@ -248,26 +251,6 @@
         //mygridPgm.setColumnHidden(0,true); //PJTSEQ
         //mygridPgm.setColumnHidden(1,true); //PGMSEQ
 
-        
-
-        mygridPgm.attachEvent("onRowDblClicked",function(rowID,celInd){
-            alog("mygridPgm - onRowDblClicked ----------start");
-            alog("   rowID = " + rowID);
-            alog("   celInd = " + celInd);
-			
-
-
-			$("#F_PJTID").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PJTID")).getValue()));
-			$("#F_PGMSEQ").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PGMSEQ")).getValue()));
-			$("#F_PGMID").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PGMID")).getValue()));
-			$("#F_PGMNM").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PGMNM")).getValue()));
-            $("#F_PGMURL").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("VIEWURL")).getValue()));
-            $("#F_PGMTYPE").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PGMTYPE")).getValue()));
-
-			if(myWins && myWins.window("pgmwindow"))myWins.window("pgmwindow").hide();
-			
-			return true;
-        });
         mygridPgm.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
 
             RowEditStatus = mygridPgm.getUserData(rId,"!nativeeditor_status");

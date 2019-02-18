@@ -21,7 +21,7 @@ class cg_pgminfo_dao
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "
 		select
-			0, a.PJTSEQ, c.PJTID, a.PGMSEQ, a.PGMID, a.PGMNM, a.VIEWURL, a.PGMTYPE
+			0, a.PJTSEQ, c.PJTID, a.PGMSEQ, '-' as STATUS, a.PGMID, a.PGMNM, a.VIEWURL, a.PGMTYPE
 			,b.VERDT, b.DEGREE, b.ADDDT as MAKEDT, a.ADDDT, a.MODDT
 		from 
 			CG_PGMINFO a
