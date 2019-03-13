@@ -12,9 +12,15 @@
 	include_once('./include/incSEC.php');//CG SEC
     include_once("./cg_pgminfo_svc.php");
 
+    alog("aaaa");
+    //exit;
+
+    //php 7.3에서 동작안함..ㅠㅠ
+    //https://github.com/soundintheory/php-sql-parser
+    //https://code.google.com/archive/p/php-sql-parser/downloads
     include_once("./lib/PHP-SQL-Parser/src/PHPSQLParser.php");
 
-	
+    alog("bbbb");
 
     //ServerViewTxt("N","N","Y","Y");
 

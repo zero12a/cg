@@ -7,7 +7,7 @@ class dbServer
     public $MYSQL_PW = "";
     public $MYSQL_DB = "";
 
-	function dbServer() {
+	function __construct() {
 		alog("dbServer class 생성됨 ");
 	}
 }

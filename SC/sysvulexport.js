@@ -210,6 +210,11 @@ function G2_INIT(){
         alog("G2_INIT()-------------------------end");
      }
 //D146 그룹별 기능 함수 출력		
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -256,11 +261,11 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
+    function G2_ROWDELETE(){	
+        alog("G2_ROWDELETE()------------start");
+        delRow(mygridG2);
+        alog("G2_ROWDELETE()------------start");
+    }
 function G2_CHKSAVE(){
 	alog("G2_CHKSAVE()------------start");
 	tgrid = mygridG2;
@@ -375,10 +380,13 @@ function G2_EXCEL(){
         //그리드 초기화
         tGrid.clearAll();        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
-		for(var pair of tinput.entries()) {
-			sendFormData.append(pair[0],pair[1]);
-   			//console.log(pair[0]+ ', '+ pair[1]); 
+		if(typeof tinput != "undefined"){
+			for(var pair of tinput.entries()) {
+				sendFormData.append(pair[0],pair[1]);
+				//console.log(pair[0]+ ', '+ pair[1]); 
+			}
 		}
+
         //불러오기
         $.ajax({
             type : "POST",
@@ -414,7 +422,7 @@ function G2_EXCEL(){
             },
             error: function(error){
 				msgError("[] Ajax http 500 error ( " + error + " )",3);
-                alog("[] Ajax http 500 error ( " + error + " )");
+                alog("[] Ajax http 500 error ( " + data.RTN_MSG + " )");
             }
         });
         alog("G2_SEARCH()------------end");
@@ -460,8 +468,3 @@ function G2_EXCEL(){
 	
 	alog("G2_SAVE()------------end");
 }
-    function G2_ROWDELETE(){	
-        alog("G2_ROWDELETE()------------start");
-        delRow(mygridG2);
-        alog("G2_ROWDELETE()------------start");
-    }

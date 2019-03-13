@@ -1,36 +1,36 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "findfooterController?CTLGRP=G1&CTLFNC=SEARCHALL";// 변수 선언	
+var url_G1_SEARCHALL = "testcopy2Controller?CTLGRP=G1&CTLFNC=SEARCHALL";// 변수 선언	
 var obj_G1_EX_TEAM_NM_valid = jQuery.parseJSON( '{ "G1_EX_TEAM_NM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":100,  "DATATYPE":"STRING"} }' );  //그래프 제외 팀명  밸리데이션
 var obj_G1_EX_TEAM_NM; // 그래프 제외 팀명 변수선언//컨트롤러 경로
-var url_G2_SEARCH = "findfooterController?CTLGRP=G2&CTLFNC=SEARCH";
+var url_G2_SEARCH = "testcopy2Controller?CTLGRP=G2&CTLFNC=SEARCH";
 			//G.GRPID 챠트 데이터
 		var chartG2Data = { labels : [], datasets: [] };
 //그리드 변수 초기화	
 //컨트롤러 경로
-var url_G3_SEARCH = "findfooterController?CTLGRP=G3&CTLFNC=SEARCH";
+var url_G3_SEARCH = "testcopy2Controller?CTLGRP=G3&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G3_RELOAD = "findfooterController?CTLGRP=G3&CTLFNC=RELOAD";
+var url_G3_RELOAD = "testcopy2Controller?CTLGRP=G3&CTLFNC=RELOAD";
 //컨트롤러 경로
-var url_G3_EDITMD = "findfooterController?CTLGRP=G3&CTLFNC=EDITMD";
+var url_G3_EDITMD = "testcopy2Controller?CTLGRP=G3&CTLFNC=EDITMD";
 //그리드 객체
 var mygridG3,isToggleHiddenColG3,lastinputG3,lastinputG3json,lastrowidG3;
 var lastselectG3json;//그리드 변수 초기화	
 //컨트롤러 경로
-var url_G4_SEARCH = "findfooterController?CTLGRP=G4&CTLFNC=SEARCH";
+var url_G4_SEARCH = "testcopy2Controller?CTLGRP=G4&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G4_RELOAD = "findfooterController?CTLGRP=G4&CTLFNC=RELOAD";
+var url_G4_RELOAD = "testcopy2Controller?CTLGRP=G4&CTLFNC=RELOAD";
 //컨트롤러 경로
-var url_G4_VIEWHIDDEN = "findfooterController?CTLGRP=G4&CTLFNC=VIEWHIDDEN";
+var url_G4_VIEWHIDDEN = "testcopy2Controller?CTLGRP=G4&CTLFNC=VIEWHIDDEN";
 //그리드 객체
 var mygridG4,isToggleHiddenColG4,lastinputG4,lastinputG4json,lastrowidG4;
 var lastselectG4json;//그리드 변수 초기화	
 //컨트롤러 경로
-var url_G5_SEARCH = "findfooterController?CTLGRP=G5&CTLFNC=SEARCH";
+var url_G5_SEARCH = "testcopy2Controller?CTLGRP=G5&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G5_RELOAD = "findfooterController?CTLGRP=G5&CTLFNC=RELOAD";
+var url_G5_RELOAD = "testcopy2Controller?CTLGRP=G5&CTLFNC=RELOAD";
 //컨트롤러 경로
-var url_G5_HIDDENCOL = "findfooterController?CTLGRP=G5&CTLFNC=HIDDENCOL";
+var url_G5_HIDDENCOL = "testcopy2Controller?CTLGRP=G5&CTLFNC=HIDDENCOL";
 //그리드 객체
 var mygridG5,isToggleHiddenColG5,lastinputG5,lastinputG5json,lastrowidG5;
 var lastselectG5json;//화면 초기화	

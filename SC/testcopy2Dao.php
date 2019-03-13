@@ -1,16 +1,16 @@
 <?php
 //DAO
  
-class findfooterDao
+class testcopy2Dao
 {
 	function __construct(){
-		alog("FindfooterDao-__construct");
+		alog("Testcopy2Dao-__construct");
 	}
 	function __destruct(){
-		alog("FindfooterDao-__destruct");
+		alog("Testcopy2Dao-__destruct");
 	}
 	function __toString(){
-		alog("FindfooterDao-__toString");
+		alog("Testcopy2Dao-__toString");
 	}
 	//TEAM1    
 	public function sTeam($req){
@@ -28,8 +28,7 @@ from
 	left outer join FILELOAD a on c.TEAM_NM = a.TEAM_NM
     left outer join  FILELOADD b on a.load_seq = b.LOAD_SEQ
 group by c.TEAM_NM
-order by ifnull(count(b.LOADD_SEQ),0) desc
-";
+order by ifnull(count(b.LOADD_SEQ),0) desc";
 	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
@@ -46,8 +45,7 @@ from
     join  FILELOADD b on a.load_seq = b.LOAD_SEQ
 where a.TEAM_NM  = #{G3-TEAM_NM}
 group by TEAM_NM, SYS_NM, SUBSYS_NM
-order by count(b.LOADD_SEQ) desc
-";
+order by count(b.LOADD_SEQ) desc";
 	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
@@ -95,7 +93,7 @@ group by c.TEAM_NM
 order by ifnull(count(b.LOADD_SEQ),0) desc
 
 ";
-	$RtnVal["REQUIRE"] = array("G1-EX_TEAM_NM"	);
+	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ss";
 		return $RtnVal;
     }  

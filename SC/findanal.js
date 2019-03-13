@@ -669,11 +669,6 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG2()------------end");
     }
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
-}
 
 
 
@@ -733,12 +728,22 @@ function G3_RELOAD(token){
             },
             error: function(error){
 				msgError("[팀별 현황 (보안취약점 갯수)] Ajax http 500 error ( " + error + " )",3);
-                alog("[팀별 현황 (보안취약점 갯수)] Ajax http 500 error ( " + error + " )");
+                alog("[팀별 현황 (보안취약점 갯수)] Ajax http 500 error ( " + data.RTN_MSG + " )");
             }
         });
         alog("G3_SEARCH()------------end");
     }
 
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
+//새로고침	
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
+}
 
 
 
@@ -798,7 +803,7 @@ function G3_RELOAD(token){
             },
             error: function(error){
 				msgError("[시스템별 현황] Ajax http 500 error ( " + error + " )",3);
-                alog("[시스템별 현황] Ajax http 500 error ( " + error + " )");
+                alog("[시스템별 현황] Ajax http 500 error ( " + data.RTN_MSG + " )");
             }
         });
         alog("G4_SEARCH()------------end");
@@ -817,9 +822,9 @@ function G3_RELOAD(token){
 		alog("G4_VIEWHIDDEN()..................end");
     }
 //새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
+function G5_RELOAD(token){
+  alog("G5_RELOAD-----------------start");
+  G5_SEARCH(lastinputG5,token);
 }
     function G5_HIDDENCOL(){
 		alog("G5_HIDDENCOL()..................start");
@@ -896,14 +901,9 @@ function G4_RELOAD(token){
             },
             error: function(error){
 				msgError("[취약점별 현황] Ajax http 500 error ( " + error + " )",3);
-                alog("[취약점별 현황] Ajax http 500 error ( " + error + " )");
+                alog("[취약점별 현황] Ajax http 500 error ( " + data.RTN_MSG + " )");
             }
         });
         alog("G5_SEARCH()------------end");
     }
 
-//새로고침	
-function G5_RELOAD(token){
-  alog("G5_RELOAD-----------------start");
-  G5_SEARCH(lastinputG5,token);
-}
