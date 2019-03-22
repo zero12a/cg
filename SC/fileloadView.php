@@ -14,6 +14,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="../lib/jquery-ui-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
+<script src="/lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASH MAP-->
 <script src="../lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
 <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
