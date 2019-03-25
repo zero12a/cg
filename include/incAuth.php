@@ -12,11 +12,11 @@ class authObject
 
 	//생성자
 	function __construct(){
-        global $CFG_AUTH_LOG, $CFG_AUTH_REDIS;
+        global $CFG_AUTH_LOG, $CFG_AUTH_REDIS, $CFG_SID_PREFIX;
 
 		alog("authLog-__construct");
 
-        $this->PREFIX_SESSION_ID = "SID_";//세션유저 프리픽스
+        $this->PREFIX_SESSION_ID = "SID_" . $CFG_SID_PREFIX . "_";//세션유저 프리픽스
 
         if($CFG_AUTH_LOG == "DB"){
             $this->DB = db_obj_open(getDbSvrInfo("DATING"));
@@ -48,6 +48,7 @@ class authObject
     
     //마지막 로그인 세션 세팅
     function setLastSession($userSeq, $sessionId){
+        alog("setLastSession() " . $this->PREFIX_SESSION_ID . strval($userSeq) . " = " . $sessionId);
         if($this->REDIS)$this->REDIS->set($this->PREFIX_SESSION_ID . strval($userSeq),$sessionId);
     }
 

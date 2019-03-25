@@ -7,8 +7,11 @@
  */
 
 function isFilter($G, $tFilter){
-    //alog("isFilter()..................................start : " . $tFilter);
+    alog("isFilter()..................................start : " . $tFilter);
     $isAndOper = null;
+
+    $tFilter = str_replace("&amp;","&",$tFilter);//그리드에서 & 입력시 자꾸 &amp;로 변경되서 이거 처리 함
+
     if(strpos($tFilter,"&&") > 0){
         $tarr = explode("&&",$tFilter);
         $isAndOper = true;
@@ -22,28 +25,34 @@ function isFilter($G, $tFilter){
 
     $SuccessCnt = 0;
     $FailCnt = 0;
-    //alog("  필터갯수 : " . sizeof($tarr));
+    alog("  필터갯수 : " . sizeof($tarr));
     for($u=0;$u<sizeof($tarr);$u++){
         $tFilter2 = $tarr[$u];
         if(strpos($tFilter2,"!=") > 0){
             list($tname,$tvalue) = explode("!=",$tFilter2);
             $tarr2 = explode(".",$tname);
-            if( $G[$tarr2[0]][$tarr2[1]] != $tvalue ){
-                //alog("  [Y] 필터 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );
+            if( strtoupper($tvalue) == "NULL" && $G[$tarr2[0]][$tarr2[1]] != ""){
+                $SuccessCnt++;
+                alog("  [Y] '!=' 필터1 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );                
+            }else if( strtoupper($tvalue) != "NULL" &&  $G[$tarr2[0]][$tarr2[1]] != $tvalue ){
+                alog("  [Y] '!=' 필터2 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );
                 $SuccessCnt++;
             }else{
-                //alog("  [N] 필터 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );
+                alog("  [N] '!=' 필터3 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );
                 $FailCnt++;
             }
 
         }else if(strpos($tFilter2,"=") > 0){
             list($tname,$tvalue) = explode("=",$tFilter2);
             $tarr2 = explode(".",$tname);
-            if( $G[$tarr2[0]][$tarr2[1]] == $tvalue ){
-                //alog("  [Y] 필터 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );
+            if( strtoupper($tvalue) == "NULL" && $G[$tarr2[0]][$tarr2[1]] == ""){
+                $SuccessCnt++;
+                alog("  [Y] '=' 필터4 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );
+            }else if( strtoupper($tvalue) != "NULL"  && $G[$tarr2[0]][$tarr2[1]] == $tvalue ){
+                alog("  [Y] '=' 필터5 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );
                 $SuccessCnt++;
             }else{
-                //alog("  [N] 필터 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );
+                alog("  [N] '=' 필터6 tname = $tname, tvalue = $tvalue, G[" . $tarr2[0] . "][" . $tarr2[1] .  "] = " . $G[$tarr2[0]][$tarr2[1]] );
                 $FailCnt++;
             }                    
         }else{
@@ -52,18 +61,18 @@ function isFilter($G, $tFilter){
     }
     if($isAndOper && sizeof($tarr) > 0){
         if($SuccessCnt == sizeof($tarr)){
-            //alog("  isFilter() And 필터 성공");
+            alog("  isFilter() And 필터 성공");
             return true;
         }else{
-            //alog("  isFilter() And 필터 실패");
+            alog("  isFilter() And 필터 실패");
             return false;
         }
     }else if(!$isAndOper && sizeof($tarr) > 0){
         if($SuccessCnt >= 1){
-            //alog("  isFilter() Or 필터 성공");
+            alog("  isFilter() Or 필터 성공");
             return true;
         }else{
-            //alog("  isFilter() Or 필터 실패");
+            alog("  isFilter() Or 필터 실패");
             return false;
         }
     }else{

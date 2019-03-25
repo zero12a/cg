@@ -1,4 +1,4 @@
-<?
+<?php
 
 
 //if(!include_once '../include/classCurl.php')	echo "include fail(5)";
@@ -328,7 +328,7 @@ function getUrlOld($F_FULL_URL){
 
          ?>
          <BR><img src="<?=$faviconURL?>"><?=$title?>
-         <?
+         <?php
 
     } else {
       echo "<BR>Curl error: " . curl_error($tuCurl);

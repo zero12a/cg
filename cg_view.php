@@ -13,6 +13,7 @@ if(!include_once './incConfig.php')	        echo "include fail(1)";
 if(!include_once './include/incDB.php')			echo "include fail(2)";
 if(!include_once './include/incUtil.php')		echo "include fail(3)";
 if(!include_once './include/incSec.php')		echo "include fail(4)";
+if(!include_once './include/incRequest.php')		echo "include fail(5)";
 
 ?>
 <html>
@@ -70,7 +71,7 @@ if(!include_once './include/incSec.php')		echo "include fail(4)";
 	</script>
 </head>
 <body onload="initBody()" style="background-color:green;">
-<textarea style="width:100%;height:100%;" id="code2" name="code2"><?
+<textarea style="width:100%;height:100%;" id="code2" name="code2"><?php
 
 //SeverView();
 
@@ -81,8 +82,8 @@ $db = db_m_open();
 //전체 리플레서 정보
 $G = null;
 
-$F_PJTSEQ = 3;
-$F_PGMSEQ = $_POST["pgmseq"];
+$F_PJTSEQ = reqPostNumber("pjtseq",10);
+$F_PGMSEQ = reqPostNumber("pgmseq",10);
 $F_FILETYPE = $_POST["filetype"];
 $RstCnt = 0;
 $NowFileType = "";

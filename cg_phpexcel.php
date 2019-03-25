@@ -34,11 +34,26 @@ $widths = $DATA_WIDTHS; //포멧 ( 10,20,30 )이므로 PX는 제거
 $rows = array();
 //echo "<BR>sizeof = " . sizeof($DATA_ROWS["row"]);
 //echo "<BR>count = " . count($DATA_ROWS["row"]);
-for($i=0;$i<count($DATA_ROWS["row"]);$i++){
+
+
+$xml_array_last = null;
+alog("is_assoc : " . is_assoc($DATA_ROWS["row"]) );
+alog("is_assoc row id: " . $DATA_ROWS["row"][0]["row id"] );
+if(is_assoc($DATA_ROWS["row"]) == 1) {
+	alog(" Y " );
+	$xml_array_last[0] = $DATA_ROWS["row"];
+}else{
+	alog(" N " );
+
+	$xml_array_last = $DATA_ROWS["row"];
+}
+
+
+for($i=0;$i<count($xml_array_last);$i++){
 
 	$cols = array();
-	for($t=0;$t<count($DATA_ROWS["row"][$i]["cell"]);$t++){
-		$tCol = $DATA_ROWS["row"][$i]["cell"][$t];
+	for($t=0;$t<count($xml_array_last[$i]["cell"]);$t++){
+		$tCol = $xml_array_last[$i]["cell"][$t];
 		if(is_array($tCol)){
 			//echo "<br>array";
 			array_push($cols,"");

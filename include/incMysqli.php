@@ -1,4 +1,4 @@
-<?
+<?php
 
 function getSQL($tmp){
 	return str_replace("\'","''",$tmp);

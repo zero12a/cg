@@ -1,4 +1,4 @@
-<?
+<?php
 header("Content-Type: text/html; charset=UTF-8");
 header("Cache-Control:no-cache");
 header("Pragma:no-cache");
@@ -29,8 +29,9 @@ header("Pragma:no-cache");
     <script src="./lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
 
-    <!--공통-->
-    <script src="./rst/common.js?11" type="text/javascript" charset="utf-8"></script>
+    <!--chart-->
+    <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
     <link rel=stylesheet href="./lib/codemirror/doc/docs.css">
@@ -40,7 +41,16 @@ header("Pragma:no-cache");
     <script src="./lib/codemirror/mode/sql/sql.js"></script>
     <script src="./lib/codemirror/addon/selection/active-line.js"></script>
 
+    <!--프로퍼티 그리드-->
+    <script src="/lib/jqPropertyGrid.js"></script>  
+    <link href="/lib/jqPropertyGrid.css" rel="stylesheet" type="text/css" />
+
+    <!--공통-->
+    <script src="./common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
     <link href="./common/common.css" rel="stylesheet" type="text/css" />
+
+    
+
     <style>
         .CodeMirror {
             border-top: 1px solid black;
@@ -68,9 +78,16 @@ header("Pragma:no-cache");
 			<!--reload--><a href="javascript:location.reload();"><img src="./img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 		</div>
 		<div  class="GRID_LABELBTN"  >
+            <!--"HTML","HTMLJS","SVRCTL","SVRSVC","SVRDAO"-->
+            <span id="makeHTML"></span>
+            <span id="makeHTMLJS"></span>
+            <span id="makeSVRCTL"></span>
+            <span id="makeSVRSVC"></span>
+            <span id="makeSVRDAO"></span>
             <input 
             type="button" name="some_name" value="Search1" onclick="search1();"><input 
-            type="button" name="some_name" value="SaveAll" onclick="saveAll();"><input 
+            type="button" name="some_name" value="Copy" id="btnCopyPgm"><input 
+            type="button" name="some_name" value="Del" id="btnDelPgm"><input 
             type="button" name="some_name" value="Make" onclick="Make('');"><input 
             type="button" name="some_name" value="MakeAsync" onclick="MakeAsync(uuidv4());"><input 
             type="button" name="some_name" value="V" onclick="Make('HTML');"><input 
@@ -132,8 +149,8 @@ header("Pragma:no-cache");
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanGrpCnt">N</span>
                     <input type="checkbox" name="GRP_EDIT_MODE" id="GRP_EDIT_MODE" value="Y" style="vertical-align:middle;">Edit<input 
-                    type="button" name="some_name" value="V" onclick="view1();"><input 
-                    type="button" name="some_name" value="S" onclick="save1();"><input 
+                    type="button" name="some_name" value="V" onclick="viewGrp();"><input 
+                    type="button" name="some_name" value="S" onclick="grpSave();"><input 
                     type="button" name="select_Layout" value="select Layout" onclick="selectLayout(this);"><input 
                     type="button" name="add" value="+" onclick="addRow1();"><input 
                     type="button" name="delete" value="-" onclick="delRow(mygridGrp);">  
@@ -151,7 +168,7 @@ header("Pragma:no-cache");
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanFncCnt">N</span>
                     <input type="button" name="some_name" value="V" onclick="view5();">
-					<input type="button" name="some_name" value="S" onclick="save5();">
+					<input type="button" name="some_name" value="S" onclick="fncSave();">
 					<input type="button" name="getfnccode" value="C" onclick="getFncCode();">
 					<input type="button" name="add" value="+" onclick="addRow5();">
 					<input type="button" name="delete" value="-" onclick="delRow(mygridFnc);">
@@ -169,7 +186,7 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* 오브젝트</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanIoCnt">N</span>
-                    <input type="button" name="some_name" value="V" onclick="view4();">                
+                    <input type="button" name="some_name" value="V" onclick="viewIo();">                
 				    <input type="button" name="some_name" value="S" onclick="save4();">
 					<input type="button" name="ttt" value="C" onclick="getColOutput();">
 					<input type="button" name="add" value="+" onclick="addRow4();">
@@ -187,7 +204,7 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* 상속</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanInheritCnt">N</span>
-                    <input type="button" name="some_name" value="S" onclick="save6();"><input 
+                    <input type="button" name="some_name" value="S" onclick="saveInherit();"><input 
                     type="button" name="add" value="+" onclick="addRow6();"><input 
                     type="button" name="delete" value="-" onclick="delRow(mygridInherit);"><input 
                     type="button" name="reload" value="R" onclick="gridReload6()">
@@ -323,11 +340,33 @@ header("Pragma:no-cache");
         <div id="gridPgm" width="660px" height="400px" style="background-color:white;z-index:30;"></div>
     </div>
 
+
+    <!--프로그램 COPY 팝업 윈도우 WINSOWS-->
+    <div style="position:absolute;top:0px;left:0px;display: none;width:700px;height:400px;z-index;5" id="divPgmCopy">
+        <div class="CON_LINE" style=""><form name="pgmCopyForm">
+            <div class="CON_OBJGRP" style="">
+                <div class="CON_LABEL" style="width:80px;">to PJTSEQ</div>
+                <div class="CON_OBJECT" style="width:100px;"><input type="text" name="TO_PJTSEQ" value="" id="TO_PJTSEQ" style="width:80px;"></div>
+            </div>
+            <div class="CON_OBJGRP" style="">
+                <div class="CON_LABEL" style="width:80px;">to PGMID</div>
+                <div class="CON_OBJECT" style="width:100px;"><input type="text" name="TO_PGMID" value="" id="TO_PGMID" style="width:80px;"></div>
+            </div>  
+            <div class="CON_OBJGRP" style="">
+                <div class="CON_OBJECT" style="width:150px;">
+                    <input type="button" name="some_name" value="Copy" onclick="popCopyPgm();">
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <!--그룹타입에 따른 프로퍼티 그리드-->
+    <div id="divPgGrid" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
+    <div id="divPgChart" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
+
 </div>
 
-<!--
-<textarea style="width:100%;height:300px;font-size:9pt;" id="tt"></textarea>
-<textarea style="width:100%;height:300px;font-size:9pt;" id="tt2"></textarea>
--->
+
 </body>
 </html>

@@ -256,7 +256,17 @@ for($j=0;$j<sizeof($arrFileList);$j++){
 }
 
 
-
+//900 마시작 새성 시간 처리하기
+/*
+$map["FNCTYPE"] = "U";
+$map["SQL"]["U"]["SVRID"] = $svrid;        
+$map["SQL"]["U"]["BINDTYPE"] = "ii";
+$map["SQL"]["U"]["SQLTXT"] = "
+update CG_PGMINFO set    LSTMKDT = date_format(NOW(),'%Y%m%d%H%i%s') 
+where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ}
+";
+$rtnVal = makeFormviewSaveJson($map,$db);
+*/
 
 //캐쉬 클로즈
 if($reqToken != ""){
@@ -275,8 +285,13 @@ alog("실행시간 (seconds) : " . number_format($time,2) );
 //    echo "<tr><td>" . $key . "</td><td>" . $tarr["HIT"] . "</td><td>arraysize:" . sizeof($tarr["DATA"]) . "</td></tr>";
 //}
 //echo "</table>";
+alog("HTTP_REFERER = " . strpos($_SERVER['HTTP_REFERER'],"cg_pgmmng.php"));
+if(strpos($_SERVER['HTTP_REFERER'],"cg_pgmmng.php")){
+    JsonMsg("200",$F_PGMSEQ,$F_PGMTYPE . " 실행시간 (seconds) : " . number_format($time,2));
+}else{
+    JsonMsg("200",$rtnMap["LINECOUNT"],$F_PGMTYPE . " 실행시간 (seconds) : " . number_format($time,2));
+}
 
-JsonMsg("200","200",$F_PGMTYPE . " 실행시간 (seconds) : " . number_format($time,2));
 
 
 

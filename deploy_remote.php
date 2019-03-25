@@ -97,6 +97,7 @@ if($REQ["FILE_LIST_YN"] =="Y"){
         CG.CG_RSTFILE a
         join CG_PGMINFO b on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ
     WHERE a.PJTSEQ = %d and a.ACTIVEYN = 'Y'
+    ORDER BY a.ADDDT DESC
     ", addSqlSlashes($REQ["PJTSEQ"]));
     $result = $db->query($T_SQL) or JsonMsg("500","300", "FILE_LIST_YN [" . $db->errno . "] " . $db->error) ;
 

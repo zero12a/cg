@@ -1,4 +1,4 @@
-<?
+<?php
 function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {  
     $earth_radius = 6371;  // 킬로미터, For miles, divide km by 1.609344
 

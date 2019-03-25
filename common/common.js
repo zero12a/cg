@@ -54,7 +54,7 @@ function eXcell_button(cell){ //the eXcell name is defined here
 			alog("cell.cellIndex = " + colIndex);
 			//alog("this.grid.getUserData(GRPID) = " + this.grid.getUserData("","GRPID"));	
 			tStr += "<span  id=\"" + tValue + "\" >" + tText + "</span>";
-			tStr += "<input type=\"image\" src=\"../img/search.png\" height=20 style=\"vertical-align:middle;\" onclick=\"goGridPopOpen('" + tGrpId + "','" + rowId + "','" + colIndex + "','" +  tValue + "','" + tText + "')\">";
+			tStr += "<input type=\"image\" src=\"/c.g/img/search.png\" height=20 style=\"vertical-align:middle;\" onclick=\"goGridPopOpen('" + tGrpId + "','" + rowId + "','" + colIndex + "','" +  tValue + "','" + tText + "',this)\">";
 			
 			this.setCValue(tStr,tValue);//NM,CD
 		}else{
@@ -174,6 +174,73 @@ function addRowLast(tGrid,tCols){
 }
 
 
+function setCodeYN(tGrptype, tCombo, tPcd){
+	alog("   setGridCombo----------------------start");
+	//alog("		tPcd = " + tPcd);
+	
+	//alert(tCombo);
+
+	if(!tCombo)return;
+
+	
+
+
+	var data = {
+			"RTN_DATA":
+				{"rows":
+					[
+						{"data":["Y","Y"]}
+						,{"data":["N","N"]}
+					]
+				}
+			};
+
+	if(tGrptype == "GRID"){
+		if(!data.RTN_DATA)return;
+		//alog("	코드수 : " + data.RTN_DATA.rows.length);
+		
+		tCombo.clear(); //비우기
+		tCombo.put("","");
+
+		for(var i=0;i<data.RTN_DATA.rows.length;i++){
+			alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
+
+			tCombo.put(data.RTN_DATA.rows[i].data[0],data.RTN_DATA.rows[i].data[1]);
+		}
+	}else if(tGrptype == "CONDITION"){
+		if(!data.RTN_DATA)return;
+		//alog("	코드수 : " + data.RTN_DATA.rows.length);
+		
+		tCombo.empty(); //비우기
+		tCombo.append("<option value=''></option>"); //빈라인 추가
+
+		for(var i=0;i<data.RTN_DATA.rows.length;i++){
+			//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
+
+			tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1] + "</option>");
+		}
+	}else if(tGrptype == "FORMVIEW"){
+		if(!data.RTN_DATA)return;
+		//alog("	코드수 : " + data.RTN_DATA.rows.length);
+		
+		tCombo.empty(); //비우기
+		tCombo.append("<option value=''></option>"); //빈라인 추가
+
+		for(var i=0;i<data.RTN_DATA.rows.length;i++){
+			//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
+
+			tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1] + "</option>");
+		}
+	}else{
+		alog("	그룹 타입이 없습니다");
+	}
+
+		
+	//alog("   setGridCombo----------------------end");
+
+}
+
+
 function setCodeCombo(tGrptype, tCombo, tPcd){
 	//alog("   setGridCombo----------------------start");
 	//alog("		tPcd = " + tPcd);
@@ -249,6 +316,81 @@ function setCodeCombo(tGrptype, tCombo, tPcd){
 
 }
 
+
+function setCodeComboSvc(tGrptype, tCombo, tPcd, tFristNm){
+	//alog("   setGridCombo----------------------start");
+	//alog("		tPcd = " + tPcd);
+
+	if(!tCombo)return;
+
+	//불러오기
+	$.ajax({
+		type : "GET",
+		url : "/c.g/cg_code_json.php",
+		data : {PJTSEQ : 3,PCD : tPcd},
+		dataType: "json",
+		async: false,
+		success: function(data){
+			//alog("   getCodeJson json return----------------------");
+			//alog("   json data : " + JSON.stringify(data.RTN_DATA));
+			//alog("   json RTN_CD : " + data.RTN_CD);
+			//alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			if(data.RTN_CD == "200"){
+				if(tGrptype == "GRID"){
+					if(!data.RTN_DATA)return;
+					//alog("	코드수 : " + data.RTN_DATA.rows.length);
+					
+					tCombo.clear(); //비우기
+					tCombo.put("",tFristNm);
+
+					for(var i=0;i<data.RTN_DATA.rows.length;i++){
+						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
+
+						tCombo.put(data.RTN_DATA.rows[i].data[0],data.RTN_DATA.rows[i].data[1]);
+					}
+				}else if(tGrptype == "CONDITION"){
+					if(!data.RTN_DATA)return;
+					//alog("	코드수 : " + data.RTN_DATA.rows.length);
+					
+					tCombo.empty(); //비우기
+					tCombo.append("<option value=''>" + tFristNm  + "</option>"); //빈라인 추가
+
+					for(var i=0;i<data.RTN_DATA.rows.length;i++){
+						//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
+
+						tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[2] + "</option>");
+					}
+				}else if(tGrptype == "FORMVIEW"){
+					if(!data.RTN_DATA)return;
+					//alog("	코드수 : " + data.RTN_DATA.rows.length);
+					
+					tCombo.empty(); //비우기
+					tCombo.append("<option value=''>" + tFristNm + "</option>"); //빈라인 추가
+
+					for(var i=0;i<data.RTN_DATA.rows.length;i++){
+						//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
+
+						tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1] + "</option>");
+					}
+				}else{
+					alog("	그룹 타입이 없습니다");
+				}
+
+			}else{
+				alert("서버 조회중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG);
+			}
+		},
+		error: function(error){
+			alert("Error:" + error);
+		}
+	});
+
+	//alog("   setGridCombo----------------------end");
+
+}
 
 
 
@@ -614,6 +756,7 @@ Map.prototype = {
     }
 };
 
+
 //var map = new Map();
 //map.put("user_id", "atspeed");
 //map.get("user_id");
@@ -626,3 +769,27 @@ function uuidv4() {
   
 //Chart.js
 var color = Chart.helpers.color;
+
+
+//2018.08.29
+function formatNumber(a){
+	return String(a).replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+}
+
+//2018.09.19
+function boolen2yn(tmp){
+	if(tmp){
+		return "Y";
+	}else{
+		return "N";
+	}
+}
+
+//2018.09.19
+function yn2boolen(tmp){
+	if(tmp == "Y"){
+		return true;
+	}else{
+		return false;
+	}
+}

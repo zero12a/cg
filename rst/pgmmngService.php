@@ -43,6 +43,8 @@ class pgmmngService
 		//조회
 		//V_GRPNM : PJT
 		$GRID["SQL"]["R"] = $this->DAO->sql1($REQ); //SEARCH, 조회,PJT
+		//V_GRPNM : PJT
+		$GRID["SQL"]["R"] = $this->DAO->sql1($REQ); //SEARCH, 조회,PJT
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
@@ -75,6 +77,9 @@ class pgmmngService
 		$GRID["SQL"]["D"] = $this->DAO->sql2($REQ); // SAVE, 저장, PJT
 		$GRID["SQL"]["U"] = $this->DAO->sql3($REQ); // SAVE, 저장, PJT
 		$GRID["SQL"]["C"] = $this->DAO->sql4($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["D"] = $this->DAO->sql2($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["U"] = $this->DAO->sql3($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["C"] = $this->DAO->sql4($REQ); // SAVE, 저장, PJT
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 
@@ -103,6 +108,8 @@ class pgmmngService
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PGMSEQ
 
 		//조회
+		//V_GRPNM : PGM
+		$GRID["SQL"]["R"] = $this->DAO->sql6($REQ); //SEARCH, 조회,PGM
 		//V_GRPNM : PGM
 		$GRID["SQL"]["R"] = $this->DAO->sql6($REQ); //SEARCH, 조회,PGM
 	//암호화컬럼
@@ -137,6 +144,9 @@ class pgmmngService
 		$GRID["SQL"]["C"] = $this->DAO->sql7($REQ); // SAVE, 저장, PGM
 		$GRID["SQL"]["U"] = $this->DAO->sql8($REQ); // SAVE, 저장, PGM
 		$GRID["SQL"]["D"] = $this->DAO->sql9($REQ); // SAVE, 저장, PGM
+		$GRID["SQL"]["C"] = $this->DAO->sql7($REQ); // SAVE, 저장, PGM
+		$GRID["SQL"]["U"] = $this->DAO->sql8($REQ); // SAVE, 저장, PGM
+		$GRID["SQL"]["D"] = $this->DAO->sql9($REQ); // SAVE, 저장, PGM
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 
@@ -165,6 +175,8 @@ class pgmmngService
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, DDSEQ
 
 		//조회
+		//V_GRPNM : DD
+		$GRID["SQL"]["R"] = $this->DAO->sql10($REQ); //SEARCH, 조회,DD
 		//V_GRPNM : DD
 		$GRID["SQL"]["R"] = $this->DAO->sql10($REQ); //SEARCH, 조회,DD
 	//암호화컬럼
@@ -196,6 +208,9 @@ class pgmmngService
 		$GRID["KEYCOLID"] = "DDSEQ";  //KEY컬럼 COLID, 1
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
+		$GRID["SQL"]["C"] = $this->DAO->sql11($REQ); // SAVE, 저장, DD
+		$GRID["SQL"]["U"] = $this->DAO->sql12($REQ); // SAVE, 저장, DD
+		$GRID["SQL"]["D"] = $this->DAO->sql13($REQ); // SAVE, 저장, DD
 		$GRID["SQL"]["C"] = $this->DAO->sql11($REQ); // SAVE, 저장, DD
 		$GRID["SQL"]["U"] = $this->DAO->sql12($REQ); // SAVE, 저장, DD
 		$GRID["SQL"]["D"] = $this->DAO->sql13($REQ); // SAVE, 저장, DD
@@ -244,6 +259,8 @@ class pgmmngService
 		//조회
 		//V_GRPNM : CONFIG
 		$GRID["SQL"]["R"] = $this->DAO->impR($REQ); //SEARCH, 조회,CONFIG
+		//V_GRPNM : CONFIG
+		$GRID["SQL"]["R"] = $this->DAO->impR($REQ); //SEARCH, 조회,CONFIG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
@@ -273,6 +290,9 @@ class pgmmngService
 		$GRID["KEYCOLID"] = "CFGSEQ";  //KEY컬럼 COLID, 1
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
+		$GRID["SQL"]["C"] = $this->DAO->impC($REQ); // SAVE, 저장, CONFIG
+		$GRID["SQL"]["U"] = $this->DAO->impU($REQ); // SAVE, 저장, CONFIG
+		$GRID["SQL"]["D"] = $this->DAO->impD($REQ); // SAVE, 저장, CONFIG
 		$GRID["SQL"]["C"] = $this->DAO->impC($REQ); // SAVE, 저장, CONFIG
 		$GRID["SQL"]["U"] = $this->DAO->impU($REQ); // SAVE, 저장, CONFIG
 		$GRID["SQL"]["D"] = $this->DAO->impD($REQ); // SAVE, 저장, CONFIG
@@ -336,6 +356,8 @@ class pgmmngService
 		//조회
 		//V_GRPNM : FILE
 		$GRID["SQL"]["R"] = $this->DAO->fileR($REQ); //SEARCH, 조회,FILE
+		//V_GRPNM : FILE
+		$GRID["SQL"]["R"] = $this->DAO->fileR($REQ); //SEARCH, 조회,FILE
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
@@ -365,6 +387,7 @@ class pgmmngService
 		$GRID["KEYCOLID"] = "FILESEQ";  //KEY컬럼 COLID, 1
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
+		$GRID["SQL"]["C"] = $this->DAO->fileC($REQ); // SAVE, 저장, FILE
 		$GRID["SQL"]["C"] = $this->DAO->fileC($REQ); // SAVE, 저장, FILE
 		$tmpVal = makeGridSaveJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G7]",microtime(true)));

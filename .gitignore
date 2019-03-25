@@ -10,4 +10,8 @@
 /lib
 /BACKUP
 
+# config
+incConfig.php
+incConfig.*.php
+
 

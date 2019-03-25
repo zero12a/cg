@@ -19,8 +19,10 @@ input[type=text]:read-only {
     background-color: silver;
 }
 
-.BODY_BOX {overflow:visible;width:100%;background-color:blue;padding:0px 0px 0px 0px;margin:0px 0px 0px 0px;z-index:1}
+.BODY_BOX {overflow:visible;width:100%;background-color:rgb(98, 166, 245);padding:0px 0px 0px 0px;margin:0px 0px 0px 0px;z-index:1}
 .BODY_BOX_TOP {height:48px;background-color:silver;padding:5px 5px 0px 5px;z-index:1}
+
+.OBJ_BR {position: relative;width:100%;overflow:auto;z-index:20;height:3px}
 
 .CON_LINE {position: relative;width:100%;overflow:auto;z-index:20;}
 .CON_OBJGRP {position: relative;float:left;background-color: #eeeeee;vertical-align:middle ;overflow:auto;z-index:25;}
