@@ -68,7 +68,7 @@ class codemngService
 		alog("CODEMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PCD
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, PCD
 
 		//조회
 		//V_GRPNM : 마스터
@@ -96,10 +96,10 @@ class codemngService
 		//GRID_SAVE____________________________start
 		$grpId="G2";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "PJTSEQ,PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
-		$GRID["KEYCOLID"] = "PCD";  //KEY컬럼 COLID, 1
+		$GRID["KEYCOLID"] = "PCD";  //KEY컬럼 COLID, 0
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		$GRID["SQL"]["C"] = $this->DAO->insMasG($REQ); // SAVE, 저장, MAS
@@ -160,7 +160,7 @@ class codemngService
 		alog("CODEMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, CD
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, CD
 
 		//조회
 		//V_GRPNM : 상세
@@ -188,10 +188,10 @@ class codemngService
 		//GRID_SAVE____________________________start
 		$grpId="G3";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "PJTSEQ,CD,NM,CDDESC,PCD,ORD,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "CD,NM,CDDESC,PCD,ORD,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
-		$GRID["KEYCOLID"] = "CD";  //KEY컬럼 COLID, 1
+		$GRID["KEYCOLID"] = "CD";  //KEY컬럼 COLID, 0
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		$GRID["SQL"]["C"] = $this->DAO->insDtlG($REQ); // SAVE, 저장, DTL

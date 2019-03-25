@@ -66,8 +66,6 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //G1, 1
 
 //G2, 마스터
-$REQ["G2-PJTSEQ"] = reqPostNumber("G2-PJTSEQ",20);//PJTSEQ	
-$REQ["G2-PJTSEQ"] = getFilter($REQ["G2-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-PCD"] = reqPostString("G2-PCD",30);//PCD	
 $REQ["G2-PCD"] = getFilter($REQ["G2-PCD"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-PNM"] = reqPostString("G2-PNM",100);//PNM	
@@ -88,8 +86,6 @@ $REQ["G2-MODDT"] = reqPostString("G2-MODDT",14);//MODDT
 $REQ["G2-MODDT"] = getFilter($REQ["G2-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G3, 상세
-$REQ["G3-PJTSEQ"] = reqPostNumber("G3-PJTSEQ",20);//PJTSEQ	
-$REQ["G3-PJTSEQ"] = getFilter($REQ["G3-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-CD"] = reqPostString("G3-CD",30);//CD	
 $REQ["G3-CD"] = getFilter($REQ["G3-CD"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-NM"] = reqPostString("G3-NM",100);//NM	
@@ -128,11 +124,10 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"PJTSEQ,PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT"
+		,"COLORD"=>"PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT"
 		,"VALID"=>
 			array(
-			"PJTSEQ"=>array("NUMBER",20)	
-			,"PCD"=>array("STRING",30)	
+			"PCD"=>array("STRING",30)	
 			,"PNM"=>array("STRING",100)	
 			,"PCDDESC"=>array("STRING",500)	
 			,"ORD"=>array("NUMBER",10)	
@@ -144,8 +139,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터
 					)
 		,"FILTER"=>
 			array(
-			"PJTSEQ"=>array("REGEXMAT","/^[0-9]+$/")
-			,"PCD"=>array("CLEARTEXT","/--미 정의--/")
+			"PCD"=>array("CLEARTEXT","/--미 정의--/")
 			,"PNM"=>array("SAFETEXT","/--미 정의--/")
 			,"PCDDESC"=>array("CLEARTEXT","/--미 정의--/")
 			,"ORD"=>array("REGEXMAT","/^[0-9]+$/")
@@ -160,11 +154,10 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터
 $REQ["G3-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G3-XML"]
-		,"COLORD"=>"PJTSEQ,CD,NM,CDDESC,PCD,ORD,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN,ADDDT,MODDT"
+		,"COLORD"=>"CD,NM,CDDESC,PCD,ORD,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN,ADDDT,MODDT"
 		,"VALID"=>
 			array(
-			"PJTSEQ"=>array("NUMBER",20)	
-			,"CD"=>array("STRING",30)	
+			"CD"=>array("STRING",30)	
 			,"NM"=>array("STRING",100)	
 			,"CDDESC"=>array("STRING",200)	
 			,"PCD"=>array("STRING",30)	
@@ -183,8 +176,7 @@ $REQ["G3-XML"] = filterGridXml(
 					)
 		,"FILTER"=>
 			array(
-			"PJTSEQ"=>array("REGEXMAT","/^[0-9]+$/")
-			,"CD"=>array("CLEARTEXT","/--미 정의--/")
+			"CD"=>array("CLEARTEXT","/--미 정의--/")
 			,"NM"=>array("SAFETEXT","/--미 정의--/")
 			,"CDDESC"=>array("SAFETEXT","/--미 정의--/")
 			,"PCD"=>array("CLEARTEXT","/--미 정의--/")

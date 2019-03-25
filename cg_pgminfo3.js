@@ -2037,7 +2037,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
 
@@ -2065,7 +2065,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),true);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
 

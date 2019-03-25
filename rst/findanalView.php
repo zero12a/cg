@@ -70,7 +70,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			<div class="GRID_LABEL"  style="">
 					* 팀별 현황 (보안취약점 갯수)				</div>	
 				<div class="GRID_LABELBTN">
-				<input type="button" name="BTN_G2_SEARCH" value="조회" onclick="G2_SEARCH(uuidv4());">
+				<input type="button" name="BTN_G2_" value="" onclick="G2_(uuidv4());">
 			</div>
 		</div>
 			<div class="GRID_OBJECT" style="border-radius:3px;-moz-border-radius: 3px;">

@@ -164,10 +164,14 @@ for($j=0;$j<sizeof($arrFileList);$j++){
 	//$MAKE_FILE_NM = str_replace("{","{P.",$arrFileList[$j]["MKFILEFORMAT"]);
 	$MAKE_FILE_NM = $arrFileList[$j]["MKFILEFORMAT"];
 	//blog("MAKE_FILE_NM1 = ". $MAKE_FILE_NM );
-	$MAKE_FILE_NM = R($MAKE_FILE_NM,$G) . "." . $arrFileList[$j]["MKFILEEXT"];
+    $MAKE_FILE_NM = R($MAKE_FILE_NM,$G) . "." . $arrFileList[$j]["MKFILEEXT"];
+    $MAKE_FILE_NM_NO_EXT = R($MAKE_FILE_NM,$G);
 	alog("MAKE_FILE_TYPE = ". $arrFileList[$j]["MKFILETYPE"] );
-	alog("TEMPLATE = ". $arrFileList[$j]["TEMPLATE"] );
-	alog("MAKE_FILE_NM = ". $MAKE_FILE_NM );
+    alog("TEMPLATE = ". $arrFileList[$j]["TEMPLATE"] );
+    alog("MKFILEFORMAT = ". $arrFileList[$j]["MKFILEFORMAT"] );    
+    alog("MKFILEEXT = ". $arrFileList[$j]["MKFILEEXT"] );
+    alog("MAKE_FILE_NM = ". $MAKE_FILE_NM );
+    alog("MAKE_FILE_NM_NO_EXT = ". $MAKE_FILE_NM_NO_EXT );
 
 	$NowFileType =  $arrFileList[$j]["MKFILETYPE"]; //makeRst(db저장 할때 사용)
 
@@ -217,13 +221,16 @@ for($j=0;$j<sizeof($arrFileList);$j++){
 		)
 		";
 		$REQ["FILETYPE"] = $arrFileList[$j]["MKFILETYPE"];
-        $REQ["FILENM"] = $MAKE_FILE_NM;
+        $REQ["FILENM"] = $MAKE_FILE_NM; 
         
         //alog("FILEHASH 3: " . $map["FILEHASH"]);        
         $rtnVal = makeFormviewSaveJson($map,$db);
         
         //070 프로그램 viewurl 업데이트
         if(($F_PGMTYPE == "" || $F_PGMTYPE == "HTML" ) && strlen($REQ["FILENM"])>4){
+
+            $REQ["FILENM"] = $MAKE_FILE_NM_NO_EXT; // view url용
+
             $map["FNCTYPE"] = "U";
             $map["SQL"]["U"]["SVRID"] = $svrid;            
             $map["SQL"]["U"]["BINDTYPE"] = "si";
@@ -233,7 +240,7 @@ for($j=0;$j<sizeof($arrFileList);$j++){
                     , MODDT = date_format(NOW(),'%Y%m%d%H%i%s') 
                 where PGMSEQ = #{PGMSEQ}
             ";
-            mlog("#################뷰 파일명 변경됨 : " . $REQ["FILETYPE"] . "/" . $REQ["FILENM"]);
+            alog("#################뷰 파일명 변경됨 : " . $REQ["FILETYPE"] . "/" . $REQ["FILENM"]);
             $rtnVal = makeFormviewSaveJson($map,$db);
         }
 

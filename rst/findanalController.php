@@ -70,22 +70,24 @@ $REQ["G1-EX_TEAM_NM"] = reqPostString("G1-EX_TEAM_NM",100);//그래프 제외 �
 $REQ["G1-EX_TEAM_NM"] = getFilter($REQ["G1-EX_TEAM_NM"],"CLEARTEXT","/--미 정의--/");	
 
 //G2, 팀별 현황 (보안취약점 갯수)
-$REQ["G2-vul_cnt"] = reqPostNumber("G2-vul_cnt",0);//취약점수	
-$REQ["G2-vul_cnt"] = getFilter($REQ["G2-vul_cnt"],"","//");	
+$REQ["G2-TYPE_CNT"] = reqPostNumber("G2-TYPE_CNT",0);//유형수	
+$REQ["G2-TYPE_CNT"] = getFilter($REQ["G2-TYPE_CNT"],"","//");	
+$REQ["G2-VUL_CNT"] = reqPostNumber("G2-VUL_CNT",30);//취약점갯수	
+$REQ["G2-VUL_CNT"] = getFilter($REQ["G2-VUL_CNT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G3, 팀별 현황 (보안취약점 갯수)
 $REQ["G3-UUID_SEQ"] = reqPostNumber("G3-UUID_SEQ",100);//UUID_SEQ	
 $REQ["G3-UUID_SEQ"] = getFilter($REQ["G3-UUID_SEQ"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-TEAM_NM"] = reqPostString("G3-TEAM_NM",300);//TEAM_NM	
 $REQ["G3-TEAM_NM"] = getFilter($REQ["G3-TEAM_NM"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G3-PRIORITY_1"] = reqPostNumber("G3-PRIORITY_1",30);//PRIORITY_1	
+$REQ["G3-PRIORITY_1"] = reqPostNumber("G3-PRIORITY_1",30);//위험 상	
 $REQ["G3-PRIORITY_1"] = getFilter($REQ["G3-PRIORITY_1"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-PRIORITY_2"] = reqPostNumber("G3-PRIORITY_2",30);//PRIORITY_2	
+$REQ["G3-PRIORITY_2"] = reqPostNumber("G3-PRIORITY_2",30);//위험 중	
 $REQ["G3-PRIORITY_2"] = getFilter($REQ["G3-PRIORITY_2"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-PRIORITY_3"] = reqPostNumber("G3-PRIORITY_3",30);//PRIORITY_3	
+$REQ["G3-PRIORITY_3"] = reqPostNumber("G3-PRIORITY_3",30);//위험 하	
 $REQ["G3-PRIORITY_3"] = getFilter($REQ["G3-PRIORITY_3"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-vul_cnt"] = reqPostNumber("G3-vul_cnt",30);//취약점수	
-$REQ["G3-vul_cnt"] = getFilter($REQ["G3-vul_cnt"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G3-VUL_CNT"] = reqPostNumber("G3-VUL_CNT",30);//취약점갯수	
+$REQ["G3-VUL_CNT"] = getFilter($REQ["G3-VUL_CNT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G4, 시스템별 현황
 $REQ["G4-UUID_SEQ"] = reqPostNumber("G4-UUID_SEQ",100);//UUID_SEQ	
@@ -96,8 +98,8 @@ $REQ["G4-SYS_NM"] = reqPostString("G4-SYS_NM",1000);//SYS_NM
 $REQ["G4-SYS_NM"] = getFilter($REQ["G4-SYS_NM"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G4-SUBSYS_NM"] = reqPostString("G4-SUBSYS_NM",1000);//SUBSYS_NM	
 $REQ["G4-SUBSYS_NM"] = getFilter($REQ["G4-SUBSYS_NM"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G4-vul_cnt"] = reqPostNumber("G4-vul_cnt",30);//취약점수	
-$REQ["G4-vul_cnt"] = getFilter($REQ["G4-vul_cnt"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G4-VUL_CNT"] = reqPostNumber("G4-VUL_CNT",30);//취약점갯수	
+$REQ["G4-VUL_CNT"] = getFilter($REQ["G4-VUL_CNT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G5, 취약점별 현황
 $REQ["G5-UUID_SEQ"] = reqPostNumber("G5-UUID_SEQ",100);//UUID_SEQ	
@@ -110,8 +112,8 @@ $REQ["G5-SUBSYS_NM"] = reqPostString("G5-SUBSYS_NM",1000);//SUBSYS_NM
 $REQ["G5-SUBSYS_NM"] = getFilter($REQ["G5-SUBSYS_NM"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G5-RULESET"] = reqPostString("G5-RULESET",300);//RUESET	
 $REQ["G5-RULESET"] = getFilter($REQ["G5-RULESET"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G5-vul_cnt"] = reqPostNumber("G5-vul_cnt",30);//취약점수	
-$REQ["G5-vul_cnt"] = getFilter($REQ["G5-vul_cnt"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G5-VUL_CNT"] = reqPostNumber("G5-VUL_CNT",30);//취약점갯수	
+$REQ["G5-VUL_CNT"] = getFilter($REQ["G5-VUL_CNT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//팀별 현황 (보안취약점 갯수)	
 	$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//시스템별 현황	
 	$REQ["G5-XML"] = getXml2Array($_POST["G5-XML"]);//취약점별 현황	
@@ -119,7 +121,7 @@ $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//팀별 현황 (보안취약점
 	$REQ["G3-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G3-XML"]
-		,"COLORD"=>"UUID_SEQ,TEAM_NM,PRIORITY_1,PRIORITY_2,PRIORITY_3,vul_cnt"
+		,"COLORD"=>"UUID_SEQ,TEAM_NM,PRIORITY_1,PRIORITY_2,PRIORITY_3,VUL_CNT"
 		,"VALID"=>
 			array(
 			"UUID_SEQ"=>array("NUMBER",100)	
@@ -127,7 +129,7 @@ $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//팀별 현황 (보안취약점
 			,"PRIORITY_1"=>array("NUMBER",30)	
 			,"PRIORITY_2"=>array("NUMBER",30)	
 			,"PRIORITY_3"=>array("NUMBER",30)	
-			,"vul_cnt"=>array("NUMBER",30)	
+			,"VUL_CNT"=>array("NUMBER",30)	
 					)
 		,"FILTER"=>
 			array(
@@ -136,21 +138,21 @@ $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//팀별 현황 (보안취약점
 			,"PRIORITY_1"=>array("REGEXMAT","/^[0-9]+$/")
 			,"PRIORITY_2"=>array("REGEXMAT","/^[0-9]+$/")
 			,"PRIORITY_3"=>array("REGEXMAT","/^[0-9]+$/")
-			,"vul_cnt"=>array("REGEXMAT","/^[0-9]+$/")
+			,"VUL_CNT"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
 $REQ["G4-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G4-XML"]
-		,"COLORD"=>"UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,vul_cnt"
+		,"COLORD"=>"UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,VUL_CNT"
 		,"VALID"=>
 			array(
 			"UUID_SEQ"=>array("NUMBER",100)	
 			,"TEAM_NM"=>array("STRING",300)	
 			,"SYS_NM"=>array("STRING",1000)	
 			,"SUBSYS_NM"=>array("STRING",1000)	
-			,"vul_cnt"=>array("NUMBER",30)	
+			,"VUL_CNT"=>array("NUMBER",30)	
 					)
 		,"FILTER"=>
 			array(
@@ -158,14 +160,14 @@ $REQ["G4-XML"] = filterGridXml(
 			,"TEAM_NM"=>array("CLEARTEXT","/--미 정의--/")
 			,"SYS_NM"=>array("CLEARTEXT","/--미 정의--/")
 			,"SUBSYS_NM"=>array("CLEARTEXT","/--미 정의--/")
-			,"vul_cnt"=>array("REGEXMAT","/^[0-9]+$/")
+			,"VUL_CNT"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
 $REQ["G5-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G5-XML"]
-		,"COLORD"=>"UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,RULESET,vul_cnt"
+		,"COLORD"=>"UUID_SEQ,TEAM_NM,SYS_NM,SUBSYS_NM,RULESET,VUL_CNT"
 		,"VALID"=>
 			array(
 			"UUID_SEQ"=>array("NUMBER",100)	
@@ -173,7 +175,7 @@ $REQ["G5-XML"] = filterGridXml(
 			,"SYS_NM"=>array("STRING",1000)	
 			,"SUBSYS_NM"=>array("STRING",1000)	
 			,"RULESET"=>array("STRING",300)	
-			,"vul_cnt"=>array("NUMBER",30)	
+			,"VUL_CNT"=>array("NUMBER",30)	
 					)
 		,"FILTER"=>
 			array(
@@ -182,7 +184,7 @@ $REQ["G5-XML"] = filterGridXml(
 			,"SYS_NM"=>array("CLEARTEXT","/--미 정의--/")
 			,"SUBSYS_NM"=>array("CLEARTEXT","/--미 정의--/")
 			,"RULESET"=>array("CLEARTEXT","/--미 정의--/")
-			,"vul_cnt"=>array("REGEXMAT","/^[0-9]+$/")
+			,"VUL_CNT"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
