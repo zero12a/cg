@@ -30,7 +30,7 @@ ORDER BY substring(add_dt,1,8)
 		return $RtnVal;
     }  
 	//Pie    
-	public function sPie($req){
+	public function sPieD($req){
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
@@ -45,6 +45,22 @@ ORDER BY substring(add_dt,1,8)
 ";
 	$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
+		return $RtnVal;
+    }  
+	//PIE    
+	public function sPieSel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLTXT"] = "SELECT substring(add_dt,1,8) as LOGIN_DT
+	, count(login_seq) as LOGIN_CNT 
+		, count(login_seq)+10 as LOGIN_CNT2
+FROM CMN_LOG_LOGIN
+GROUP BY substring(add_dt,1,8)
+ORDER BY substring(add_dt,1,8)";
+	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  
 }

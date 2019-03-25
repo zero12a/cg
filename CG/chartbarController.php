@@ -68,12 +68,16 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //G1, 컨디션
 
 //G2, 챠트
+$REQ["G2-LOGIN_DT"] = reqPostString("G2-LOGIN_DT",20);//LOGIN_DT	
+$REQ["G2-LOGIN_DT"] = getFilter($REQ["G2-LOGIN_DT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-LOGIN_CNT"] = reqPostNumber("G2-LOGIN_CNT",20);//LOGIN_CNT	
 $REQ["G2-LOGIN_CNT"] = getFilter($REQ["G2-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-LOGIN_CNT2"] = reqPostNumber("G2-LOGIN_CNT2",0);//LOGIN_CNT2	
-$REQ["G2-LOGIN_CNT2"] = getFilter($REQ["G2-LOGIN_CNT2"],"","//");	
+$REQ["G2-LOGIN_CNT2"] = reqPostNumber("G2-LOGIN_CNT2",20);//LOGIN_CNT2	
+$REQ["G2-LOGIN_CNT2"] = getFilter($REQ["G2-LOGIN_CNT2"],"REGEXMAT","/^[0-9]+$/");	
 
 //G3, PIE
+$REQ["G3-LOGIN_DT"] = reqPostString("G3-LOGIN_DT",20);//LOGIN_DT	
+$REQ["G3-LOGIN_DT"] = getFilter($REQ["G3-LOGIN_DT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-LOGIN_CNT"] = reqPostNumber("G3-LOGIN_CNT",20);//LOGIN_CNT	
 $REQ["G3-LOGIN_CNT"] = getFilter($REQ["G3-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
 
@@ -83,7 +87,7 @@ $REQ["G4-LOGIN_DT"] = getFilter($REQ["G4-LOGIN_DT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G4-LOGIN_CNT"] = reqPostNumber("G4-LOGIN_CNT",20);//LOGIN_CNT	
 $REQ["G4-LOGIN_CNT"] = getFilter($REQ["G4-LOGIN_CNT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G4-LOGIN_CNT2"] = reqPostNumber("G4-LOGIN_CNT2",20);//LOGIN_CNT2	
-$REQ["G4-LOGIN_CNT2"] = getFilter($REQ["G4-LOGIN_CNT2"],"","//");	
+$REQ["G4-LOGIN_CNT2"] = getFilter($REQ["G4-LOGIN_CNT2"],"REGEXMAT","/^[0-9]+$/");	
 
 //G5, PIE상속
 $REQ["G5-LOGIN_DT"] = reqPostString("G5-LOGIN_DT",20);//LOGIN_DT	
@@ -109,6 +113,7 @@ $REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//BAR상속
 			array(
 			"LOGIN_DT"=>array("REGEXMAT","/^[0-9]+$/")
 			,"LOGIN_CNT"=>array("REGEXMAT","/^[0-9]+$/")
+			,"LOGIN_CNT2"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );

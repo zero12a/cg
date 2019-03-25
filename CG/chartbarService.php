@@ -105,7 +105,7 @@ class chartbarService
 
 		//조회
 		//V_GRPNM : PIE
-		$GRID["SQL"]["R"] = $this->DAO->sLogin($REQ); //SEARCH, 조회,LOGIN
+		$GRID["SQL"]["R"] = $this->DAO->sPieSel($REQ); //SEARCH, 조회,PIE
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -190,7 +190,7 @@ class chartbarService
 
 		//조회
 		//V_GRPNM : PIE상속
-		$GRID["SQL"]["R"] = $this->DAO->sPie($REQ); //SEARCH, 조회,Pie
+		$GRID["SQL"]["R"] = $this->DAO->sPieD($REQ); //SEARCH, 조회,Pie
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
