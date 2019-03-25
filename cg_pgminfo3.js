@@ -2335,7 +2335,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),true);   
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
 
@@ -2367,7 +2367,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),true);   
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
 
@@ -2400,14 +2400,14 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);   
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   //Y축 좌/우 설정 필요
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
 
                     
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);   
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),true); 
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); //데이터 입력은 없으나 하위그룹 상속때문에 필요 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); //데이터 입력은 없으나 하위그룹 상속때문에 필요 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),true); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),true);                     
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),true); 
