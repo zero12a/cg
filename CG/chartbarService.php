@@ -66,13 +66,13 @@ class chartbarService
 		$rtnVal->GRP_DATA = array();
 
 		alog("CHARTBARService-goG2Search________________________start");
-		//CHARTBAR SEARCH____________________________start
+		//CHARTBAR2Y SEARCH____________________________start
 		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
 
 		//조회
 		//V_GRPNM : 챠트
 		$GRID["SQL"]["R"] = $this->DAO->sLogin($REQ); //SEARCH, 조회,LOGIN
-	//암호화컬럼
+		//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
 		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
@@ -84,7 +84,7 @@ class chartbarService
 		}
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
-		//CHARTBAR_SEARCH____________________________end
+		//CHARTBAR2Y_SEARCH____________________________end
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";

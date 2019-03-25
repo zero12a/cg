@@ -78,15 +78,22 @@ function G2_INIT(){
 		//챠트 챠트 초기화
 	var ctx = $('#canvasG2')[0].getContext('2d');
 	window.myBarG2 = new Chart(ctx, {
-		type: 'bar', //일단 선언해 줘야 함                
-		data: chartG2Data,                
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,  				
-			legend: {
+		type: 'bar' //일단 선언해 줘야 함                
+		,data: chartG2Data
+		,options: {
+			responsive: true
+			,maintainAspectRatio: false			
+			,legend: {
 				position: 'right',
 			}
-		}
+			,layout : {
+				padding: {
+                	left: 0,
+               	 	right: 0,
+               	 	top: 20,
+                	bottom: 0
+            	}	
+			}		}
 	});
 	$("#canvasG2").on('click', function (e) {
 		//alert(e);
@@ -121,12 +128,18 @@ function G3_INIT(){
 		//챠트 PIE 초기화
 	var ctx = $('#canvasG3')[0].getContext('2d');
 	window.myBarG3 = new Chart(ctx, {
-		type: 'pie', //일단 선언해 줘야 함                
-		data: chartG3Data,                
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,  				
-			legend: {
+		type: 'pie' //일단 선언해 줘야 함                
+		,data: chartG3Data             
+		,options: {
+			responsive: true
+			,maintainAspectRatio: false
+			,padding: {
+                left: 0,
+                right: 0,
+                top: 10,
+                bottom: 0
+            }
+			,legend: {
 				position: 'right',
 			}
 		}
@@ -407,27 +420,6 @@ function G5_INIT(){
         alog("G5_INIT()-------------------------end");
      }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //챠트
-			lastinputG3 = new HashMap(); //PIE
-	//  호출
-	G2_SEARCH(lastinputG2,token);
-	//  호출
-	G3_SEARCH(lastinputG3,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
 //컨디션, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -459,6 +451,27 @@ function G1_SAVE(){
 		}
 	});
 	alog("G1_SAVE-------------------end");	
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //챠트
+			lastinputG3 = new HashMap(); //PIE
+	//  호출
+	G2_SEARCH(lastinputG2,token);
+	//  호출
+	G3_SEARCH(lastinputG3,token);
+	alog("G1_SEARCHALL--------------------------end");
 }
     //그리드 조회(챠트)	
     function G2_SEARCH(tinput,token){
@@ -658,6 +671,58 @@ function G1_SAVE(){
 
         alog("gridSearchG3()------------end");
     }
+	function G4_SAVE(token){
+	alog("G4_SAVE()------------start");
+	tgrid = mygridG4;
+
+	tgrid.setSerializationLevel(true,false,false,false,true,false);
+	var myXmlString = tgrid.serialize();
+        //post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+		//for(var pair of lastinputG4.entries()) {
+		//	sendFormData.append(pair[0],pair[1]);
+   		//	//console.log(pair[0]+ ', '+ pair[1]); 
+		//}
+
+		if(typeof lastinputG4 != "undefined"){
+			var tKeys = lastinputG4.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG4.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG4.get(tKeys[i])); 
+			}
+		}	sendFormData.append("G4-XML" , myXmlString);
+	$.ajax({
+		type : "POST",
+		url : url_G4_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G4_SAVE()------------end");
+}
+//새로고침	
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
+}
 
 
 
@@ -724,58 +789,6 @@ function G1_SAVE(){
         alog("G4_SEARCH()------------end");
     }
 
-	function G4_SAVE(token){
-	alog("G4_SAVE()------------start");
-	tgrid = mygridG4;
-
-	tgrid.setSerializationLevel(true,false,false,false,true,false);
-	var myXmlString = tgrid.serialize();
-        //post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-		//for(var pair of lastinputG4.entries()) {
-		//	sendFormData.append(pair[0],pair[1]);
-   		//	//console.log(pair[0]+ ', '+ pair[1]); 
-		//}
-
-		if(typeof lastinputG4 != "undefined"){
-			var tKeys = lastinputG4.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],lastinputG4.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ lastinputG4.get(tKeys[i])); 
-			}
-		}	sendFormData.append("G4-XML" , myXmlString);
-	$.ajax({
-		type : "POST",
-		url : url_G4_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G4_SAVE()------------end");
-}
-//새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
-}
 	function G5_SAVE(token){
 	alog("G5_SAVE()------------start");
 	tgrid = mygridG5;
