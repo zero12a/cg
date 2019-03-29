@@ -95,7 +95,7 @@ $REQ["G2-USE_YN"] = reqPostString("G2-USE_YN",1);//USE_YN
 $REQ["G2-USE_YN"] = getFilter($REQ["G2-USE_YN"],"SAFETEXT","/--미 정의--/");	
 $REQ["G2-ADD_DT"] = reqPostString("G2-ADD_DT",14);//ADD	
 $REQ["G2-ADD_DT"] = getFilter($REQ["G2-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-MOD_DT"] = reqPostString("G2-MOD_DT",50);//MOD	
+$REQ["G2-MOD_DT"] = reqPostString("G2-MOD_DT",14);//MOD	
 $REQ["G2-MOD_DT"] = getFilter($REQ["G2-MOD_DT"],"SAFETEXT","/--미 정의--/");	
 
 //G3, 회원상세
@@ -115,7 +115,7 @@ $REQ["G3-LAST_STATUS"] = reqPostString("G3-LAST_STATUS",40);//LAST_STATUS
 $REQ["G3-LAST_STATUS"] = getFilter($REQ["G3-LAST_STATUS"],"SAFETEXT","/--미 정의--/");	
 $REQ["G3-ADD_DT"] = reqPostString("G3-ADD_DT",14);//ADD	
 $REQ["G3-ADD_DT"] = getFilter($REQ["G3-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-MOD_DT"] = reqPostString("G3-MOD_DT",50);//MOD	
+$REQ["G3-MOD_DT"] = reqPostString("G3-MOD_DT",14);//MOD	
 $REQ["G3-MOD_DT"] = getFilter($REQ["G3-MOD_DT"],"SAFETEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//회원목록	
 	//,  입력값 필터 
@@ -135,7 +135,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//회원목록
 			,"LAST_STATUS"=>array("STRING",40)	
 			,"USE_YN"=>array("STRING",1)	
 			,"ADD_DT"=>array("STRING",14)	
-			,"MOD_DT"=>array("STRING",50)	
+			,"MOD_DT"=>array("STRING",14)	
 					)
 		,"FILTER"=>
 			array(
