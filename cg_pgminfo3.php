@@ -65,7 +65,8 @@ header("Pragma:no-cache");
     </style>
 
     <script src="cg_pgminfo3.js?<?=getRndVal(10)?>"></script>
-
+    <script src="cg_pgminfo3_bodyinit.js?<?=getRndVal(10)?>"></script>
+    <script src="cg_pgminfo3_pg.js?<?=getRndVal(10)?>"></script>
 
 </head>
 <body onload="initBody();" class="HTML_BODY">
@@ -362,8 +363,9 @@ header("Pragma:no-cache");
     </div>
 
     <!--그룹타입에 따른 프로퍼티 그리드-->
-    <div id="divPgGrid" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
-    <div id="divPgChart" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
+    <div id="divPgGrpGrid" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
+    <div id="divPgGrpChart" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
+    <div id="divPgFncUserdefJS" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
 
 </div>
 
