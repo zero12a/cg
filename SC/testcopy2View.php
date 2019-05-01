@@ -14,6 +14,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="../lib/jquery-ui-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
+<script src="/lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASH MAP-->
 <script src="../lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
 <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
@@ -91,7 +92,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
 <input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
 <input type="checkbox" name="G3-EDITMD_EDIT_MODE" id="G3-EDITMD_EDIT_MODE" value="Y" style="vertical-align:middle;">편집모드
-				</div>
+	<input type="button" name="BTN_G3_myFunction" value="내함수임" onclick="G3_myFunction(uuidv4());">
+			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG3"  style="background-color:white;overflow:hidden;height:378px;width:100%;"></div>

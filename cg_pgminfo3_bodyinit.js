@@ -669,7 +669,7 @@
 		mygridFnc.setColumnHidden(1,true); //PGMSEQ
         mygridFnc.setColumnHidden(2,true); //GRPSEQ
         mygridFnc.setColumnHidden(3,true); //FNCSEQ
-        //mygridFnc.setColumnHidden(mygridFnc.getColIndexById("USERDEFJS"),true); //USERDEFJS
+        mygridFnc.setColumnHidden(mygridFnc.getColIndexById("USERDEFJS"),true); //USERDEFJS
 
 		mygridFnc.attachEvent("onCheck", function(rId,cInd,state){
 			// your code here
