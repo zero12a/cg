@@ -44,12 +44,15 @@
 
         //날짜 박스 초기
         alog("initBody()---------start")
+        
         myCalendar = new dhtmlXCalendarObject([{input:"F_START_DT",
             button:"F_START_DT_ICON"},{input:"F_END_DT",
             button:"F_END_DT_ICON"}]);
 
+
+                
         //코드 미러 초기화
-        cm = CodeMirror.fromTextArea(document.getElementById('codem'), {
+        cmSql = CodeMirror.fromTextArea(document.getElementById('codemSql'), {
             mode: "text/x-sql",
             styleActiveLine: true,
             indentWithTabs: true,
@@ -66,10 +69,9 @@
 			  countries: {name: null, population: null, size: null}
 			}}
         });
-
-        cm.on("change", function(cm, change) {
-            alog("cm change -------------------------------start");
-            alog("    cm.getValue :  (" + cm.getValue() + ")");
+        cmSql.on("change", function(cmSql, change) {
+            alog("cmSql change -------------------------------start");
+            alog("    cmSql.getValue :  (" + cmSql.getValue() + ")");
             alog("    change.origin : (" + change.origin + ")");
             alog("    change.from : (" + change.to + ")");
             alog("    change.text : (" + change.text + ")");
@@ -83,7 +85,7 @@
                 rid = mygridSql.getSelectedId();
                 cidx = mygridSql.getColIndexById("SQLTXT");
                 alog("        " + rid + "," + cidx);
-                mygridSql.cells(rid,cidx).setValue(cm.getValue());
+                mygridSql.cells(rid,cidx).setValue(cmSql.getValue());
                 mygridSql.cells(rid,cidx).cell.wasChanged = true;
 	            RowEditStatus = mygridSql.getUserData(rid,"!nativeeditor_status");
 				if( RowEditStatus != "inserted" && RowEditStatus != "deleted"){
@@ -93,25 +95,70 @@
             }
 
         });
-        cm.on("focus", function() {
-            alog("cm focus -------------------------------start");
+        cmSql.on("focus", function() {
+            alog("cmSql focus -------------------------------start");
             rid = mygridSql.getSelectedId();
 
             alog("       rid : " + rid);
 
             if(rid == null){
-                cm.setOption("readOnly",true);
+                cmSql.setOption("readOnly",true);
             }else{
-                cm.setOption("readOnly",false);
+                cmSql.setOption("readOnly",false);
             }
         });
 
-        cm.on("blur", function() {
-            alog("cm blur -------------------------------start");
+        cmSql.on("blur", function() {
+            alog("cmSql blur -------------------------------start");
         });
 
 
 
+        cmFnc = CodeMirror.fromTextArea(document.getElementById('codemFnc'), {
+            mode: "javascript",
+            styleActiveLine: true,
+            indentWithTabs: true,
+            smartIndent: true,
+            lineNumbers: true,
+            matchBrackets : true,
+            tabSize: 4,
+            indentUnit: 4,
+            indentWithTabs: true,
+            extraKeys: {"Ctrl-Space": "autocomplete"},
+            readOnly: false,
+			hintOptions: {tables: {
+			  users: {name: null, score: null, birthDate: null},
+			  countries: {name: null, population: null, size: null}
+			}}
+        });        
+        cmFnc.on("change", function(cmFnc, change) {
+            alog("cmFnc change -------------------------------start");
+            alog("    cmFnc.getValue :  (" + cmFnc.getValue() + ")");
+            alog("    change.origin : (" + change.origin + ")");
+            alog("    change.from : (" + change.to + ")");
+            alog("    change.text : (" + change.text + ")");
+            alog("    change.removed : (" + change.removed + ")");
+            alog("    change.to : (" + change.to + ")");
+
+            //바인드 정보로 리턴하기
+            if(change.origin != "setValue"){
+
+                alog("    mygridFnc USERDEFJS 변경 상태 업데이트. ");
+                //rid = mygridFnc.getSelectedId();
+                rid = lastSelectPgRowId;
+
+                cidx = mygridFnc.getColIndexById("USERDEFJS");
+                alog("        " + rid + "," + cidx);
+                mygridFnc.cells(rid,cidx).setValue(cmFnc.getValue());
+                mygridFnc.cells(rid,cidx).cell.wasChanged = true;
+	            RowEditStatus = mygridFnc.getUserData(rid,"!nativeeditor_status");
+				if( RowEditStatus != "inserted" && RowEditStatus != "deleted"){
+					mygridFnc.setUserData(rid,"!nativeeditor_status","updated");
+					mygridFnc.setRowTextBold(rid);
+				}	
+            }
+
+        });
 
 
         //그리드 초기화(PGM)
@@ -558,7 +605,7 @@
             alog("   cidx = " + cidx);
 
 			//alert(mygridSql.cells(rowID,cidx-1).getValue());
-            cm.setValue(mygridSql.cells(rowID,cidx).getValue());
+            cmSql.setValue(mygridSql.cells(rowID,cidx).getValue());
 
             //그리드 3번 조회
             gridSearch3(lastinput3);
@@ -603,7 +650,7 @@
         mygridFnc.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USE,FNCID,FNCCD,FNCNM,FNCTYPE,ORD,PROPERTY,UESRDEFJS,ADDDT,MODDT");
         mygridFnc.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,PROPERTY,USERDEFJS,ADDDT,MODDT");
         mygridFnc.setInitWidths("50,50,50,35,30,50,50,50,30,50,40,50,50,50");
-        mygridFnc.setColTypes("ed,ed,ed,ro,ch,ed,coro,ed,ed,ed,button,ro,ro,ro");
+        mygridFnc.setColTypes("ed,ed,ed,ro,ch,ed,coro,ed,ed,ed,button,txttxt,ro,ro");
         mygridFnc.setColAlign("left,left,left,left,center,left,left,left,left,left,left,left,left,left");
 		mygridFnc.setColSorting("str,str,str,str,str,str,str,str,str,int,str,str,str,str");
 

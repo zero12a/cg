@@ -34,12 +34,12 @@ header("Pragma:no-cache");
     <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
-    <link rel=stylesheet href="./lib/codemirror/doc/docs.css">
-    <link rel=stylesheet href="./lib/codemirror/lib/codemirror.css">
+    <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
 
-    <script src="./lib/codemirror/lib/codemirror.js"></script>
-    <script src="./lib/codemirror/mode/sql/sql.js"></script>
-    <script src="./lib/codemirror/addon/selection/active-line.js"></script>
+    <script src="/lib/codemirror/lib/codemirror.js"></script>
+    <script src="/lib/codemirror/mode/sql/sql.js"></script>
+    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>    
+    <script src="/lib/codemirror/addon/selection/active-line.js"></script>
 
     <!--프로퍼티 그리드-->
     <script src="/lib/jqPropertyGrid.js"></script>  
@@ -49,7 +49,6 @@ header("Pragma:no-cache");
     <script src="./common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
     <link href="./common/common.css" rel="stylesheet" type="text/css" />
 
-    
 
     <style>
         .CodeMirror {
@@ -288,7 +287,7 @@ header("Pragma:no-cache");
                 </div>
             </div>
             <div class="GRID_OBJECT" >
-                <textarea id="codem" name="codem"></textarea>
+                <textarea id="codemSql" name="codemSql"></textarea>
             </div>
         </div>
         <div class="GRP_OBJECT" style="width:15%;">
@@ -365,7 +364,9 @@ header("Pragma:no-cache");
     <!--그룹타입에 따른 프로퍼티 그리드-->
     <div id="divPgGrpGrid" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
     <div id="divPgGrpChart" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
-    <div id="divPgFncUserdefJS" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
+    <div id="divPgFncUserdefJS" style="position:absolute;top:0px;left:0px;width:100%;height:321px;display: none;z-index;35">
+        <textarea id="codemFnc" name="codemFnc"></textarea>
+    </div>
 
 </div>
 

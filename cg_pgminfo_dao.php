@@ -517,15 +517,15 @@ class cg_pgminfo_dao
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMFNC (
 			PJTSEQ,PGMSEQ,GRPSEQ,FNCID,FNCCD
-			,FNCNM,FNCTYPE,USEYN,FNCORD
+			,FNCNM,FNCTYPE,USEYN,FNCORD,USERDEFJS
 			,ADDDT
 		) values (
 			#{F_PJTSEQ},#{F_PGMSEQ},#{G1-GRPSEQ},#{FNCID},#{FNCCD}
-			,#{FNCNM},#{FNCTYPE},case #{USEYN} when 1 then 'Y' else 'N' end,#{FNCORD}
+			,#{FNCNM},#{FNCTYPE},case #{USEYN} when 1 then 'Y' else 'N' end,#{FNCORD},#{USERDEFJS}
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 		";
-		$RtnVal["BINDTYPE"] = "iiiss sssi";
+		$RtnVal["BINDTYPE"] = "iiiss sssis";
 		return $RtnVal;
     }  
 	public function fncUpd($req){
@@ -536,11 +536,11 @@ class cg_pgminfo_dao
 		$RtnVal["SQLTXT"] = "
 	update CG_PGMFNC set
 		FNCID = #{FNCID}, FNCCD = #{FNCCD}, FNCNM = #{FNCNM}, FNCTYPE = #{FNCTYPE}, USEYN = case #{USEYN} when 1 then 'Y' else 'N' end
-		, FNCORD = #{FNCORD}
+		, FNCORD = #{FNCORD}, USERDEFJS = #{USERDEFJS}
 		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
   	where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ} and FNCSEQ = #{FNCSEQ}
 		";
-		$RtnVal["BINDTYPE"] = "sssss i iiii";
+		$RtnVal["BINDTYPE"] = "sssss is iiii";
 		return $RtnVal;
     }  
 	public function fncDel($req){

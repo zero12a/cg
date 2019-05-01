@@ -9,11 +9,11 @@
         },
         textarea: {
             html: function(elemId, name, value, meta) {
-                var html = '<textarea id="' + elemId + '" rows=6 style="overflow-x: auto; width:100%">';
+                var html = '<div name="' + elemId + '" id="aceEditorObj" rows=6 style="overflow-x: auto; width:100%">';
                 if (value instanceof Array) {
                     html += value.join("\n");
                 }
-                html += '</textarea>';
+                html += '</div>';
                 return html;
             },
             makeValueFn: function(elemId, name, value, meta) {
@@ -29,7 +29,7 @@
     function goGridPopOpen(tGrpId,rowId,colIndex,tValue,tText,tObject){
         alog("goGridPopOpen() tGrpId=" + tGrpId + ", rowId=" + rowId + ", colIndex=" + colIndex + ", tValue=" + tValue + ", tText=" + tText);
         
-        lastSelectGrpRowId = rowId;
+        lastSelectPgRowId = rowId;
 
         var groupNm = tText + "(" + tValue + ")";
         
@@ -46,32 +46,24 @@
         $("#divPgFncUserdefJS").css("display","none");
         
         if(tGrpId =="FNC"){
+            //$("#divPgFncUserdefJS").css("display","");
+
             //mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue() 
             var fncCd = mygridFnc.cells(rowId,mygridFnc.getColIndexById("FNCCD")).getValue();
             alog("fncCd=" + fncCd);
             if(fncCd == "USERDEF"){
+
                 var userDefJs = mygridFnc.cells(rowId,mygridFnc.getColIndexById("USERDEFJS")).getValue();
+                //userDefJs = userDefJs + " my script";
+                cmFnc.setValue(userDefJs);
+                cmFnc.refresh();//이거 안하면 코드미러 깨짐.
 
-                var setObj = {
-                    USERDEFJS: userDefJs
-                    ,FREEZECNT: 0
-                };
-        
-                var metaObj = {
-                    USERDEFJS: {group :groupNm , name : '사용자정의JS',  type: 'text', colspan2 : true}
-                    ,FREEZECNT: {group :groupNm , name : '좌측 고정 컬럼(숫자)',  type: 'text'}
-                };
-
-                // Lets create the grid for it
-                $('#divPgFncUserdefJS').jqPropertyGrid(setObj, {meta: metaObj, customTypes: theCustomTypes, isCollapsible: true, callback: pgFncChange});
-
-                grpPropertyGrid("divPgFncUserdefJS","(FNC) 그리드",x,y);
+                grpPropertyGrid("divPgFncUserdefJS","(FNC) 그리드",x,y,500,365);
 
             }else{
                 msgError(fncCd + "의 프로퍼티 레이어가 정의되지 않았습니다.",3);
             }
             
-
         }else if(tGrpId =="GRP"){
             //mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue() 
             var grpType = mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue();
@@ -103,7 +95,8 @@
                 // Lets create the grid for it
                 $('#divPgGrpGrid').jqPropertyGrid(setObj, {meta: metaObj, callback: pgGrpGridChange});
 
-                grpPropertyGrid("divPgGrpGrid","(GRP) 그리드",x,y);
+                grpPropertyGrid("divPgGrpGrid","(GRP) 그리드",x,y,300,200);
+
 
             }else if(grpType == "CHARTBAR" || grpType == "CHARTPIE" || grpType == "CHARTBAR2Y"){
                 
@@ -129,7 +122,7 @@
                     STACKED: {group: groupNm, name : '스택으로 쌓기', type: 'boolean'}
                 };
                 $('#divPgGrpChart').jqPropertyGrid(setObj2, {meta: metaObj2, callback: pgGrpChartChange});
-                grpPropertyGrid("divPgChart","(GRP) 챠트",x,y);
+                grpPropertyGrid("divPgChart","(GRP) 챠트",x,y,300,200);
             }else{
                 msgError(grpType + "의 프로퍼티 레이어가 정의되지 않았습니다.",3);
             }
@@ -147,12 +140,12 @@
         var objJson = $('#divPgFncUserdefJS').jqPropertyGrid('get');
         alog("  USERDEFJS=" + objJson.USERDEFJS);
         alog("  FREEZECNT=" + objJson.FREEZECNT);
-        mygridFnc.cells(lastSelectGrpRowId,mygridFnc.getColIndexById("USERDEFJS")).setValue(objJson.USERDEFJS);
+        mygridFnc.cells(lastSelectPgRowId,mygridFnc.getColIndexById("USERDEFJS")).setValue(objJson.USERDEFJS);
 
-        if(mygridFnc.getUserData(lastSelectGrpRowId,"!nativeeditor_status") == ""){
-            mygridFnc.setUserData(lastSelectGrpRowId,"!nativeeditor_status","updated");
-            mygridFnc.setRowTextBold(lastSelectGrpRowId);
-            mygridFnc.cells(lastSelectGrpRowId,mygridFnc.getColIndexById("USERDEFJS")).cell.wasChanged = true;	
+        if(mygridFnc.getUserData(lastSelectPgRowId,"!nativeeditor_status") == ""){
+            mygridFnc.setUserData(lastSelectPgRowId,"!nativeeditor_status","updated");
+            mygridFnc.setRowTextBold(lastSelectPgRowId);
+            mygridFnc.cells(lastSelectPgRowId,mygridFnc.getColIndexById("USERDEFJS")).cell.wasChanged = true;	
         }
     }
 
@@ -162,14 +155,14 @@
 
         //오브젝트 모든 정보 가져와서 행의 값 변경하기
         var objJson = $('#divPgGrpGrid').jqPropertyGrid('get');
-        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("FREEZECNT")).setValue(objJson.FREEZECNT);
-        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("COLSIZETYPE")).setValue(objJson.COLSIZETYPE);
+        mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("FREEZECNT")).setValue(objJson.FREEZECNT);
+        mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("COLSIZETYPE")).setValue(objJson.COLSIZETYPE);
 
-        if(mygridGrp.getUserData(lastSelectGrpRowId,"!nativeeditor_status") == ""){
-            mygridGrp.setUserData(lastSelectGrpRowId,"!nativeeditor_status","updated");
-            mygridGrp.setRowTextBold(lastSelectGrpRowId);
-            mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("FREEZECNT")).cell.wasChanged = true;	
-            mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("COLSIZETYPE")).cell.wasChanged = true;	
+        if(mygridGrp.getUserData(lastSelectPgRowId,"!nativeeditor_status") == ""){
+            mygridGrp.setUserData(lastSelectPgRowId,"!nativeeditor_status","updated");
+            mygridGrp.setRowTextBold(lastSelectPgRowId);
+            mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("FREEZECNT")).cell.wasChanged = true;	
+            mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("COLSIZETYPE")).cell.wasChanged = true;	
         }
     }
 
@@ -179,14 +172,14 @@
 
         //오브젝트 모든 정보 가져와서 행의 값 변경하기
         var objJson = $('#divPgGrpChart').jqPropertyGrid('get');
-        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("LEGENDALIGN")).setValue(objJson.LEGENDALIGN);
-        mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("STACKED")).setValue(boolen2yn(objJson.STACKED));  
+        mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("LEGENDALIGN")).setValue(objJson.LEGENDALIGN);
+        mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("STACKED")).setValue(boolen2yn(objJson.STACKED));  
         
-        if(mygridGrp.getUserData(lastSelectGrpRowId,"!nativeeditor_status") == ""){
-            mygridGrp.setUserData(lastSelectGrpRowId,"!nativeeditor_status","updated");
-            mygridGrp.setRowTextBold(lastSelectGrpRowId);
-            mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("LEGENDALIGN")).cell.wasChanged = true;	
-            mygridGrp.cells(lastSelectGrpRowId,mygridGrp.getColIndexById("STACKED")).cell.wasChanged = true;	
+        if(mygridGrp.getUserData(lastSelectPgRowId,"!nativeeditor_status") == ""){
+            mygridGrp.setUserData(lastSelectPgRowId,"!nativeeditor_status","updated");
+            mygridGrp.setRowTextBold(lastSelectPgRowId);
+            mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("LEGENDALIGN")).cell.wasChanged = true;	
+            mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("STACKED")).cell.wasChanged = true;	
         }        
     }
 
@@ -194,7 +187,7 @@
     
     
     //프로퍼티 팝업띄우기
-    function grpPropertyGrid(tDivNm,tWindowTitle,x,y){
+    function grpPropertyGrid(tDivNm,tWindowTitle,x,y,tmpWidth,tmpHeight){
         //alert( "#F_PGMNM for .change() called." );
         //alert($("#F_PGMNM").val());
 
@@ -211,8 +204,8 @@
             id:"grpPropertyWindow",
             left:x,
             top:y,
-            width:300,
-            height:200,
+            width:tmpWidth,
+            height:tmpHeight,
             caption:tWindowTitle
         });
         //myWins.window("pgmwindow").hideHeader();

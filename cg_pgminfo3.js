@@ -2,7 +2,7 @@
 
 
     //정적 변수 선언
-    var cm;//codemirror
+    var cmSql, cmFnc;//codemirror
     var makeSyncFileLineSum;
 	var popSelectLayout; //레이아웃용
     var myCalendar;
@@ -47,7 +47,7 @@
         ' ,"F_PGMID": {"REQUARED":"N",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
         '}');
 
-    var lastSelectGrpRowId; //마지막 선택한 그리드 프로퍼티 row
+    var lastSelectPgRowId; //마지막 선택한 그리드 프로퍼티 row
 
     
     function Make(pgmtype) {
@@ -167,9 +167,9 @@
     }
 
     function codemirrorInit(){
-        if(cm){
-            cm.setValue("");;
-            cm.setOption("readOnly",true);
+        if(cmSql){
+            cmSql.setValue("");;
+            cmSql.setOption("readOnly",true);
         }
     }
 
@@ -1915,8 +1915,8 @@
     }
     
     function goSqlChange(tmp){
-        alert(cm.getValue());
-        cm.setValue(tmp);
+        alert(cmSql.getValue());
+        cmSql.setValue(tmp);
         alert("goSqlChange2");
     }
 
@@ -1940,7 +1940,7 @@
 
     function insertText(data) {
         //var cm = $(".CodeMirror")[0].CodeMirror;
-        var doc = cm.getDoc();
+        var doc = cmSql.getDoc();
         var cursor = doc.getCursor(); // gets the line number in the cursor position
         var line = doc.getLine(cursor.line); // get the line contents
         var pos = {

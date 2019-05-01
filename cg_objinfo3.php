@@ -52,23 +52,22 @@ header("Pragma:no-cache");
 
 
     <!--codemirror-->
-    <link rel=stylesheet href="./lib/codemirror/doc/docs.css">
-    <link rel=stylesheet href="./lib/codemirror/lib/codemirror.css">
+    <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
 
-    <script src="./lib/codemirror/lib/codemirror.js"></script>
-    <script src="./lib/codemirror/mode/php/php.js"></script>
-    <script src="./lib/codemirror/mode/sql/sql.js"></script>
-    <script src="./lib/codemirror/addon/selection/active-line.js"></script>
+    <script src="/lib/codemirror/lib/codemirror.js"></script>
+    <script src="/lib/codemirror/mode/php/php.js"></script>
+    <script src="/lib/codemirror/mode/sql/sql.js"></script>
+    <script src="/lib/codemirror/addon/selection/active-line.js"></script>
 
-    <script src="./lib/codemirror/mode/xml/xml.js"></script>
-    <script src="./lib/codemirror/mode/javascript/javascript.js"></script>
-    <script src="./lib/codemirror/mode/css/css.js"></script>
-    <script src="./lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="/lib/codemirror/mode/xml/xml.js"></script>
+    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/lib/codemirror/mode/css/css.js"></script>
+    <script src="/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
-    <script src="./lib/codemirror/addon/edit/matchbrackets.js"></script>
-    <script src="./lib/codemirror/addon/comment/continuecomment.js"></script>
-    <script src="./lib/codemirror/addon/comment/comment.js"></script>
-    <script src="./lib/codemirror/mode/clike/clike.js"></script>
+    <script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="/lib/codemirror/addon/comment/continuecomment.js"></script>
+    <script src="/lib/codemirror/addon/comment/comment.js"></script>
+    <script src="/lib/codemirror/mode/clike/clike.js"></script>
 
 
     <!--공통-->

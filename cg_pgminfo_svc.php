@@ -706,7 +706,7 @@ class cg_pgminfo_svc
 		//GRID_SAVE____________________________start
 		$grpId="FNC";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,PROPERTY,USERDEFJS,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 		//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
 		$GRID["KEYCOLID"] = "FNCSEQ";  //KEY컬럼 COLID, 0

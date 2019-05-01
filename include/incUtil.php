@@ -155,8 +155,8 @@ function alog($tStr){
     global $CFG_LOG_PATH;
 
     $s = session_id();
-
-    error_log(PHP_EOL .date("y.m.d H:i:s") . " [" . $s . "]" . sprintf(" %-20s : %s", $_SERVER["PHP_SELF"] , $tStr) , 3, $CFG_LOG_PATH);
+    $t = $_SERVER["PHP_SELF"];
+    error_log(PHP_EOL .date("y.m.d H:i:s") . " [" . $s . "]" . sprintf(" %-20s : %s", substr($t,0,strlen($t)-4) , $tStr) , 3, $CFG_LOG_PATH);
 }
 
 
