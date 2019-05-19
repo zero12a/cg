@@ -102,7 +102,7 @@ $REQ["G3-MYFILESVRNM"] = reqPostString("G3-MYFILESVRNM",40);//MYFILESVRNM
 $REQ["G3-MYFILESVRNM"] = getFilter($REQ["G3-MYFILESVRNM"],"","//");	
 $REQ["G3-ADD_DT"] = reqPostString("G3-ADD_DT",14);//ADD	
 $REQ["G3-ADD_DT"] = getFilter($REQ["G3-ADD_DT"],"","//");	
-$REQ["G3-MOD_DT"] = reqPostString("G3-MOD_DT",50);//MOD	
+$REQ["G3-MOD_DT"] = reqPostString("G3-MOD_DT",14);//MOD	
 $REQ["G3-MOD_DT"] = getFilter($REQ["G3-MOD_DT"],"","//");	
 $REQ["G3-CHK"] = reqPostNumber("G3-CHK",1);//CHK	
 $REQ["G3-CHK"] = getFilter($REQ["G3-CHK"],"","//");	
@@ -132,7 +132,7 @@ $REQ["F4-MYFILE_VIEWER"] = reqPostString("F4-MYFILE_VIEWER",100);//이미지뷰�
 $REQ["F4-MYFILE_VIEWER"] = getFilter($REQ["F4-MYFILE_VIEWER"],"SAFETEXT","/--미 정의--/");	
 $REQ["F4-ADD_DT"] = reqPostString("F4-ADD_DT",14);//ADD	
 $REQ["F4-ADD_DT"] = getFilter($REQ["F4-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["F4-MOD_DT"] = reqPostString("F4-MOD_DT",50);//MOD	
+$REQ["F4-MOD_DT"] = reqPostString("F4-MOD_DT",14);//MOD	
 $REQ["F4-MOD_DT"] = getFilter($REQ["F4-MOD_DT"],"SAFETEXT","/--미 정의--/");	
 $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//그리드1	
 	//,  입력값 필터 
@@ -154,7 +154,7 @@ $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//그리드1
 			,"MYFILE"=>array("STRING",40)	
 			,"MYFILESVRNM"=>array("STRING",40)	
 			,"ADD_DT"=>array("STRING",14)	
-			,"MOD_DT"=>array("STRING",50)	
+			,"MOD_DT"=>array("STRING",14)	
 			,"CHK"=>array("NUMBER",1)	
 					)
 		,"FILTER"=>

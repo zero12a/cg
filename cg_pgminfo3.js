@@ -228,8 +228,12 @@
 		if( !(lastinput6json) || !(lastinput6json.PJTSEQ) || !(lastinput6json.PGMSEQ)  || !(lastinput6json.GRPSEQ)  ){
 			msgError("조회 후에 행추가 가능합니다",3);
 		}else{
-			var tCols = ["",lastinput6json.PJTSEQ,lastinput6json.PGMSEQ,lastinput6json.GRPSEQ];//초기값
-			addRow(mygridInherit,tCols);
+            if(lastinput6json.GRPTYPE == "CONDITION"){
+                msgError("컨디션은 무조건 모든 필드 상속되기 때문에 지정 불필요합니다",3);
+            }else{
+                var tCols = ["",lastinput6json.PJTSEQ,lastinput6json.PGMSEQ,lastinput6json.GRPSEQ];//초기값
+                addRow(mygridInherit,tCols);
+            }
 		}
 	}
 
@@ -1341,6 +1345,8 @@
         //serialize the 'changed' attribute for the cells tags,
         //include just changed rows to serialization,
         //serialize cell values as CDATA sections
+
+
 
         mygridSql.setSerializationLevel(true,false,false,false,true,false);
         //mygridIo.serialize();

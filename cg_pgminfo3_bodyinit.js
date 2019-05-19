@@ -167,7 +167,7 @@
         mygridPgm.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
         mygridPgm.setHeader("PJTSEQ,PJTID,PGMSEQ,PGMID,PGMNM,URL,PGMTYPE,VERDT,차수,ADDDT,MODDT");
         mygridPgm.setColumnIds("PJTSEQ,PJTID,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,VERDT,DEGREE,ADDDT,MODDT");
-        mygridPgm.setInitWidths("50,50,70,70,*,100,60,50,40,70,70")
+        mygridPgm.setInitWidths("40,40,40,60,*,100,60,50,40,70,70")
         mygridPgm.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
 		mygridPgm.setColSorting("int,str,int,str,str,str,str,str,int,str,str");
 
@@ -275,22 +275,24 @@
 
             //KEY컬럼만 자식에게 전달
             lastinput6json = jQuery.parseJSON('{ "__NAME":"lastinput6json"' +
-                ', "PJTSEQ" : "' + q(mygridGrp.cells(lastrowid1,0).getValue()) + '"' +
-                ', "PGMSEQ" : "' + q(mygridGrp.cells(lastrowid1,1).getValue()) + '"' +
-                ', "GRPSEQ" : "' + q(mygridGrp.cells(lastrowid1,2).getValue()) + '"' +
+                ', "PJTSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PJTSEQ")).getValue()) + '"' +
+                ', "PGMSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PGMSEQ")).getValue()) + '"' +
+                ', "GRPSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPSEQ")).getValue()) + '"' +
+                ', "GRPTYPE" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPTYPE")  ).getValue()) + '"' +              
                 '}');
 
             lastinput5json = jQuery.parseJSON('{ "__NAME":"lastinput5json"' +
-                ', "PJTSEQ" : "' + q(mygridGrp.cells(lastrowid1,0).getValue()) + '"' +
-                ', "PGMSEQ" : "' + q(mygridGrp.cells(lastrowid1,1).getValue()) + '"' +
-                ', "GRPSEQ" : "' + q(mygridGrp.cells(lastrowid1,2).getValue()) + '"' +
+                ', "PJTSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PJTSEQ")).getValue()) + '"' +
+                ', "PGMSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PGMSEQ")).getValue()) + '"' +
+                ', "GRPSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPSEQ")).getValue()) + '"' +
+                ', "GRPTYPE" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPTYPE")  ).getValue()) + '"' +                  
                 '}');
 
             lastinput4json = jQuery.parseJSON('{ "__NAME":"lastinput4json"' +
-                ', "PJTSEQ" : "' + q(mygridGrp.cells(lastrowid1,0).getValue()) + '"' +
-                ', "PGMSEQ" : "' + q(mygridGrp.cells(lastrowid1,1).getValue()) + '"' +
-                ', "GRPSEQ" : "' + q(mygridGrp.cells(lastrowid1,2).getValue()) + '"' +
-                ', "GRPTYPE" : "' + q(mygridGrp.cells(lastrowid1,4).getValue()) + '"' +
+                ', "PJTSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PJTSEQ")).getValue()) + '"' +
+                ', "PGMSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PGMSEQ")).getValue()) + '"' +
+                ', "GRPSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPSEQ")).getValue()) + '"' +
+                ', "GRPTYPE" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPTYPE")  ).getValue()) + '"' +   
                 '}');
 
             

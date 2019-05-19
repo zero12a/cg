@@ -14,6 +14,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="../lib/jquery-ui-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
+<script src="/lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 <script src="../lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
 <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
@@ -43,7 +44,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
-			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_C2_SEARCHALL" value="조회(전체)" onclick="C2_SEARCHALL(uuidv4());">
+			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_C2_sss" value="" onclick="C2_sss(uuidv4());">
+				<input type="button" name="BTN_C2_SEARCHALL" value="조회(전체)" onclick="C2_SEARCHALL(uuidv4());">
 				<input type="button" name="BTN_C2_SAVE" value="저장" onclick="C2_SAVE(uuidv4());">
 				<input type="button" name="BTN_C2_RESET" value="검색조건 초기화" onclick="C2_RESET(uuidv4());">
 			</div>
@@ -145,7 +147,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				* 폼뷰1
 			</div>
 			<div class="DETAIL_LABELBTN"  style="">
-				<input type="button" name="BTN_F4_SAVE" value="저장" onclick="F4_SAVE(uuidv4());">				<input type="button" name="BTN_F4_RELOAD" value="새로고침" onclick="F4_RELOAD(uuidv4());">				<input type="button" name="BTN_F4_NEW" value="신규" onclick="F4_NEW(uuidv4());">				<input type="button" name="BTN_F4_DELETE" value="삭제" onclick="F4_DELETE(uuidv4());">				<input type="button" name="BTN_F4_MOD" value="수정" onclick="F4_MOD(uuidv4());">			</div>
+				<input type="button" name="BTN_F4_" value="" onclick="F4_(uuidv4());">				<input type="button" name="BTN_F4_SAVE" value="저장" onclick="F4_SAVE(uuidv4());">				<input type="button" name="BTN_F4_RELOAD" value="새로고침" onclick="F4_RELOAD(uuidv4());">				<input type="button" name="BTN_F4_NEW" value="신규" onclick="F4_NEW(uuidv4());">				<input type="button" name="BTN_F4_DELETE" value="삭제" onclick="F4_DELETE(uuidv4());">				<input type="button" name="BTN_F4_MOD" value="수정" onclick="F4_MOD(uuidv4());">			</div>
 		</div>
 		<div style="height:408px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
@@ -269,7 +271,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 					</div>
 				</div>
 				</DIV>
-			<DIV class="CON_LINE" style="height:3px;">
+			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 		<!--D101: STARTTXT, TAG-->
 		<!--I.COLID : MYFILE-->

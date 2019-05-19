@@ -911,12 +911,38 @@ class cg_pgminfo_svc
 			
 			$sql_row = null;
 	
-			//기존꺼 지우기
-			$sql = "delete from CG_PGMSQLD where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ}  ";
+			//기존정보 ouptput 가져오기 ( 나중에 삭제 후에 필수여부는 다시 update 해주기 )
+			$sql = " 
+			select COLSEQ, COLID, REQUIREYN, ORD, ADDDT 
+			from CG_PGMSQLD 
+			where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and SQLGBN = 'O'
+			order by ORD asc ";
+			$to_coltype = "iii";
+			$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
+			$arrOutputCols = getStmtArray($stmt);
+			$stmt->close();
+			//echo json_encode($arrOutputCols);
+
+			//기존정보 input 가져오기 ( 나중에 삭제 후에 필수여부는 다시 update 해주기 )
+			$sql = " 
+			select COLSEQ, COLID, REQUIREYN, ORD, ADDDT 
+			from CG_PGMSQLD 
+			where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and SQLGBN = 'I'
+			order by ORD asc ";
+			$to_coltype = "iii";
+			$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
+			$arrInputCols = getStmtArray($stmt);
+			$stmt->close();
+			//echo json_encode($arrOutputCols);
+
+			
+			//기존꺼 output 지우기
+			$sql = "delete from CG_PGMSQLD where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ}";
 			$to_coltype = "iii";
 			
 			$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row));
-			//$stmt = make_stmt($db,$sql, $to_coltype, array_merge($REQ,$to_row));
 			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
 			$stmt->execute();
 			//echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
@@ -946,7 +972,27 @@ class cg_pgminfo_svc
 				alog("            OUTPUT 절 $s :  " . $sql_row["COLID"] );
 				$sql_row["SQLGBN"] = "O";
 				$sql_row["ORD"] = ($s+1) * 10;
-				$sql = "insert into CG_PGMSQLD (
+
+				//기존 순번째와 신규순번째의 colid가 일치하는 경우 필수 여부 그대로 넣어주기
+				if($sql_row["COLID"] == $arrOutputCols[$s]["COLID"]){
+					$sql_row["REQUIREYN"] = $arrOutputCols[$s]["REQUIREYN"];
+					$sql_row["ADDDT"] = $arrOutputCols[$s]["ADDDT"];
+					
+					//insert 이지만 update인것처럼 처리
+					$sql = "insert into CG_PGMSQLD (
+						PJTSEQ, PGMSEQ, SQLSEQ, SQLGBN, COLID
+						, DDCOLID, ORD, REQUIREYN
+						, ADDDT, MODDT
+					)values(
+						#{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{SQLGBN}, #{COLID}
+						, #{DDCOLID}, #{ORD}, #{REQUIREYN}
+						, #{ADDDT}, date_format(sysdate(),'%Y%m%d%H%i%s')
+					)
+					";
+					$to_coltype = "iiiss sis s";
+				}else{
+					//insert 처리
+					$sql = "insert into CG_PGMSQLD (
 						PJTSEQ, PGMSEQ, SQLSEQ, SQLGBN, COLID
 						, DDCOLID, ORD
 						, ADDDT
@@ -955,8 +1001,11 @@ class cg_pgminfo_svc
 						, #{DDCOLID}, #{ORD}
 						, date_format(sysdate(),'%Y%m%d%H%i%s')
 					)
-				";
-				$to_coltype = "iiiss si";
+					";
+					$to_coltype = "iiiss si";
+				}
+
+
 	
 				$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
 				if(!$stmt)JsonMsg("500","102","stmt 생성 실패" . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
@@ -967,6 +1016,11 @@ class cg_pgminfo_svc
 	
 			}
 	
+
+
+
+
+
 			//WHERE절이 있을 경우에만
 			$to_sql = $to_row["SQLTXT"];
 			$s=0;
@@ -988,17 +1042,37 @@ class cg_pgminfo_svc
 				alog("            INPUT 절 $s :  " . $sql_row["COLID"] );
 				$sql_row["SQLGBN"] = "I";
 				$sql_row["ORD"] = ($s+1) * 10;
-				$sql = "insert into CG_PGMSQLD (
+
+
+				//기존 순번째와 신규순번째의 colid가 일치하는 경우 필수 여부 그대로 넣어주기
+				if($sql_row["COLID"] == $arrInputCols[$s]["COLID"]){
+					$sql_row["REQUIREYN"] = $arrInputCols[$s]["REQUIREYN"];
+					$sql_row["ADDDT"] = $arrInputCols[$s]["ADDDT"];
+
+					$sql = "insert into CG_PGMSQLD (
+							PJTSEQ,PGMSEQ,SQLSEQ,SQLGBN,COLID
+							, DDCOLID, ORD, REQUIREYN
+							, ADDDT, MODDT
+						)values(
+							#{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{SQLGBN}, #{COLID}
+							, #{DDCOLID}, #{ORD}, #{REQUIREYN}
+							, #{ADDDT}, date_format(sysdate(),'%Y%m%d%H%i%s')
+						)
+					";
+					$to_coltype = "iiiss siss";
+				}else{
+					$sql = "insert into CG_PGMSQLD (
 						PJTSEQ,PGMSEQ,SQLSEQ,SQLGBN,COLID
 						, DDCOLID, ORD
-						,ADDDT
+						, ADDDT
 					)values(
-						#{PJTSEQ},#{PGMSEQ},#{SQLSEQ},#{SQLGBN},#{COLID}
+						#{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{SQLGBN}, #{COLID}
 						, #{DDCOLID}, #{ORD}
-						,date_format(sysdate(),'%Y%m%d%H%i%s')
+						, date_format(sysdate(),'%Y%m%d%H%i%s')
 					)
-				";
-				$to_coltype = "iiiss si";
+					";
+					$to_coltype = "iiiss si";					
+				}
 	
 				$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
 				if(!$stmt) JsonMsg("500","103","stmt 생성 실패 " . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
