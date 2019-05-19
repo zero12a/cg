@@ -577,17 +577,17 @@
 
         mygridSql.attachEvent("onRowSelect",function(rowID,celInd){
             alog("mygridSql - onRowSelect ----------start");
-            alog("   rowID = " + rowID);
-            alog("   celInd = " + celInd);
+            //alog("   rowID = " + rowID);
+            //alog("   celInd = " + celInd);
 
             lastrowid2 = rowID;
 
 
             var RowAllData = getRowsColid(mygridSql,rowID,"G2");
-            alog("   RowAllData = " + RowAllData);
+            //alog("   RowAllData = " + RowAllData);
 
             var ConAllData = $( "#condition1" ).serialize();
-            alog("   ConAllData = " + ConAllData);
+            //alog("   ConAllData = " + ConAllData);
 
             //마지막 선송 정보 저장
             lastinput3 = RowAllData + "&" + ConAllData;
@@ -609,15 +609,18 @@
 			//alert(mygridSql.cells(rowID,cidx-1).getValue());
             cmSql.setValue(mygridSql.cells(rowID,cidx).getValue());
 
+            //행추가 시에는 하위 컬럼 정보 조회 하지 않음.
+            RowEditStatus = mygridSql.getUserData(rowID,"!nativeeditor_status");
+
             //그리드 3번 조회
-            gridSearch3(lastinput3);
+            if(RowEditStatus != "inserted" && RowEditStatus != "updated")gridSearch3(lastinput3);
 
             alog("mygridSql - onRowSelect ----------end");
         });
 
         mygridSql.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
 
-            //alog("mygridSql  onEditCell ------------------start");
+            alog("mygridSql  onEditCell ------------------start");
             //alog("       stage : " + stage);
             //alog("       rId : " + rId);
             //alog("       cInd : " + cInd);
@@ -625,6 +628,7 @@
             //alog("       oValue : " + oValue);
 
             RowEditStatus = mygridSql.getUserData(rId,"!nativeeditor_status");
+            alog("       RowEditStatus : " + RowEditStatus);            
             if(stage == 2
                 && RowEditStatus != "inserted"
                 && RowEditStatus != "deleted"
@@ -636,6 +640,20 @@
                 }
                 mygridSql.cells(rId,cInd).cell.wasChanged = true;
             }
+
+            //CRUD변경시 자동으로 RTN_TYPE맞춰 주기
+            RowEditStatus = mygridSql.getUserData(rId,"!nativeeditor_status");
+            if(stage == 2 
+                && (RowEditStatus == "inserted" || RowEditStatus == "updated")
+                && cInd == mygridSql.getColIndexById("C핑RUD")){
+                crudVal = mygridSql.cells(rId,cInd).getValue();
+                //alog("       crudVal : " + crudVal);
+
+                if(crudVal == "C" || crudVal == "U" || crudVal == "D"){
+                    mygridSql.cells(rId,mygridSql.getColIndexById("RTN_TYPE")).setValue("RTN_INT");//INT리턴
+                }
+            }
+                        
             return true;
 
         });
