@@ -620,7 +620,7 @@
 
         mygridSql.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
 
-            alog("mygridSql  onEditCell ------------------start");
+            //alog("mygridSql  onEditCell ------------------start");
             //alog("       stage : " + stage);
             //alog("       rId : " + rId);
             //alog("       cInd : " + cInd);
@@ -628,7 +628,7 @@
             //alog("       oValue : " + oValue);
 
             RowEditStatus = mygridSql.getUserData(rId,"!nativeeditor_status");
-            alog("       RowEditStatus : " + RowEditStatus);            
+            //alog("       RowEditStatus : " + RowEditStatus);            
             if(stage == 2
                 && RowEditStatus != "inserted"
                 && RowEditStatus != "deleted"
@@ -645,7 +645,7 @@
             RowEditStatus = mygridSql.getUserData(rId,"!nativeeditor_status");
             if(stage == 2 
                 && (RowEditStatus == "inserted" || RowEditStatus == "updated")
-                && cInd == mygridSql.getColIndexById("C핑RUD")){
+                && cInd == mygridSql.getColIndexById("CRUD")){
                 crudVal = mygridSql.cells(rId,cInd).getValue();
                 //alog("       crudVal : " + crudVal);
 
@@ -903,7 +903,7 @@
 
         mygridCol.enableSmartRendering(false);
         mygridCol.enableMultiselect(true);
-        mygridCol.splitAt(5);//'freezes' 0 columns // ROW선택 이벤트        
+        mygridCol.splitAt(6);//'freezes' 0 columns // ROW선택 이벤트        
         
         mygridCol.init();
         isView3=false;
