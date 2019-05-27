@@ -80,7 +80,7 @@ function setG($G, $input, $tarray){
 		//PGMSVC.OBJD는 SVC서비스 하위 SQLID갯수 만큼 ROW 반환
 		//PGMSVC.LIST는 FNC에 물려있는 SVC리스트만 반환
         $GS = "V";
-    }else if($input == "PGMIO" || $input == "PGMIO.CONDITION" || $input == "PGMIO.OBJ" ||  $input == "PGMIO.CHILD" 
+    }else if($input == "PGMIO" || $input == "PGMIO.CONDITION"  || $input == "PGMIO.CONDITION.OBJ" || $input == "PGMIO.OBJ" ||  $input == "PGMIO.CHILD" 
             ||  $input == "PGMIO.PARENT" ||  $input == "PGMIO.ADDROWS" || $input == "PGMIO.KEYCOL" || $input == "PGMIO.KEYCOL.SVC"
             || $input == "PGMIO.SVC" || $input == "PGMIO.OBJ.SVC" || $input == "PGMIO.SEQYN" 
 			){

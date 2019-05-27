@@ -302,11 +302,6 @@ setCodeCombo("FORMVIEW",$("#F4-REQ_DATATYPE"),"REQDATATYPE");
 	//ADD_DT, ADD 초기화		//MOD_DT, MOD 초기화	  alog("F4_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function C2_RESET(){
-	alog("C2_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 //컨디션1, 저장	
 function C2_SAVE(){
  alog("C2_SAVE-------------------start");
@@ -367,19 +362,14 @@ function C2_SEARCHALL(token){
 	alog("ConAllData:" + ConAllData);
 	//json : C2
 			lastinputG3 = new HashMap(); //그리드1
-	//  호출
+		//  호출
 	G3_SEARCH(lastinputG3,token);
 	alog("C2_SEARCHALL--------------------------end");
 }
-    function G3_ROWDELETE(){	
-        alog("G3_ROWDELETE()------------start");
-        delRow(mygridG3);
-        alog("G3_ROWDELETE()------------start");
-    }
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
+//검색조건 초기화
+function C2_RESET(){
+	alog("C2_RESET--------------------------start");
+	$('#condition')[0].reset();
 }
     function G3_HIDDENCOL(){
 		alog("G3_HIDDENCOL()..................start");
@@ -573,6 +563,100 @@ function G3_EXCEL(){
         alog("G3_SEARCH()------------end");
     }
 
+    function G3_ROWDELETE(){	
+        alog("G3_ROWDELETE()------------start");
+        delRow(mygridG3);
+        alog("G3_ROWDELETE()------------start");
+    }
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
+//F4_SAVE
+//IO_FILE_YN = Y	
+function F4_SAVE(token){	
+	alog("F4_SAVE---------------start");
+
+	if( !( $("#F4-CTLCUD").val() == "C" || $("#F4-CTLCUD").val() == "U") ){
+		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
+		return;
+	}
+
+	//전송용 데이터 생성하기
+	var sendFormData = new FormData($("#formviewF4")[0]);
+
+	//컨디션 데이터 추가하기
+	conditionData = new FormData($("#condition")[0]);
+	for(var pair of conditionData.entries()) {
+		sendFormData.append(pair[0],pair[1]);
+		//console.log(pair[0]+ ', '+ pair[1]); 
+	}
+
+
+	$.ajax({
+		type : "POST",
+		url : url_F4_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 저장되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
+}
+//새로고침	
+function F4_RELOAD(token){
+	alog("F4_RELOAD-----------------start");
+	F4_SEARCH(lastinputF4,token);
+}//	
+function F4_NEW(){
+       alog("[FromView] F4_NEW---------------start");
+	$("#F4-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#F4-API_SEQ").val("");//SEQ 신규초기화	
+	$("#F4-API_NM").val("");//NM 신규초기화	
+	$("#F4-PGM_ID").val("");//ID 신규초기화	
+	$("#F4-URL").val("");//URL 신규초기화	
+	$("#F4-REQ_BODY").val("");//REQBODY 신규초기화
+	$("#F4-RES_BODY").val("");//RESBODY 신규초기화
+	$("#F4-MYFILESVRNM").val("");//MYFILESVRNM 신규초기화	
+	$("#F4-MYFILE").val("");//MYFILE 신규초기화	
+	$("#F4-MYFILE_VIEWER").html("");
+	$("#F4-ADD_DT").text("");//ADD 신규초기화		$("#F4-MOD_DT").text("");//MOD 신규초기화	       alog("DETAILNew30---------------end");
+}
+function F4_MOD(){
+       alog("[FromView] F4_MOD---------------start");
+	if( $("#F4-CTLCUD").val() == "C" ){
+		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+	if( $("#F4-CTLCUD").val() == "D" ){
+		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+
+	$("#F4-CTLCUD").val("U");
+       alog("[FromView] F4_MOD---------------end");
+}
+//사용자정의함수 : 
+function F4_(token){
+	alog("F4_-----------------start");
+alert("hi 1");// haha
+alert("hi 2");
+	alog("F4_-----------------end");
+}
 //디테일 검색	
 function F4_SEARCH(tinput,token){
        alog("(FORMVIEW) F4_SEARCH---------------start");
@@ -689,88 +773,4 @@ function F4_DELETE(){
 			alog(error);
 		}
 	});
-}
-//F4_SAVE
-//IO_FILE_YN = Y	
-function F4_SAVE(token){	
-	alog("F4_SAVE---------------start");
-
-	if( !( $("#F4-CTLCUD").val() == "C" || $("#F4-CTLCUD").val() == "U") ){
-		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
-		return;
-	}
-
-	//전송용 데이터 생성하기
-	var sendFormData = new FormData($("#formviewF4")[0]);
-
-	//컨디션 데이터 추가하기
-	conditionData = new FormData($("#condition")[0]);
-	for(var pair of conditionData.entries()) {
-		sendFormData.append(pair[0],pair[1]);
-		//console.log(pair[0]+ ', '+ pair[1]); 
-	}
-
-
-	$.ajax({
-		type : "POST",
-		url : url_F4_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 저장되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
-}
-//새로고침	
-function F4_RELOAD(token){
-	alog("F4_RELOAD-----------------start");
-	F4_SEARCH(lastinputF4,token);
-}//	
-function F4_NEW(){
-       alog("[FromView] F4_NEW---------------start");
-	$("#F4-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#F4-API_SEQ").val("");//SEQ 신규초기화	
-	$("#F4-API_NM").val("");//NM 신규초기화	
-	$("#F4-PGM_ID").val("");//ID 신규초기화	
-	$("#F4-URL").val("");//URL 신규초기화	
-	$("#F4-REQ_BODY").val("");//REQBODY 신규초기화
-	$("#F4-RES_BODY").val("");//RESBODY 신규초기화
-	$("#F4-MYFILESVRNM").val("");//MYFILESVRNM 신규초기화	
-	$("#F4-MYFILE").val("");//MYFILE 신규초기화	
-	$("#F4-MYFILE_VIEWER").html("");
-	$("#F4-ADD_DT").text("");//ADD 신규초기화		$("#F4-MOD_DT").text("");//MOD 신규초기화	       alog("DETAILNew30---------------end");
-}
-function F4_MOD(){
-       alog("[FromView] F4_MOD---------------start");
-	if( $("#F4-CTLCUD").val() == "C" ){
-		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-	if( $("#F4-CTLCUD").val() == "D" ){
-		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-
-	$("#F4-CTLCUD").val("U");
-       alog("[FromView] F4_MOD---------------end");
-}
-//사용자정의함수 : 
-function F4_(token){
-	alog("F4_-----------------start");
-alert("hi 1");// haha
-alert("hi 2");
-	alog("F4_-----------------end");
 }

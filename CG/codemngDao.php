@@ -146,6 +146,22 @@ where PCD = #{PCD}
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
+	//MAS    
+	public function selMasD($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "select 
+	'LINESTART' as MYRADIO, 'LINESTART,LINEEND' as MYCHECK, '20191212' as ADD_DT
+from 
+	CG_CODE
+where PCD = #{G2-PCD}
+order by ORD asc";
+	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "s";
+		return $RtnVal;
+    }  
 }
                                                              
 ?>

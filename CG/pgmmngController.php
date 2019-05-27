@@ -72,6 +72,8 @@ $REQ["G2-PJTID"] = reqPostString("G2-PJTID",30);//프로젝트ID
 $REQ["G2-PJTID"] = getFilter($REQ["G2-PJTID"],"","//");	
 $REQ["G2-ADDDT"] = reqPostString("G2-ADDDT",14);//생성일	
 $REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"","//");	
+$REQ["G2-MYRADIO"] = reqPostString("G2-MYRADIO",30);//나의라디오	
+$REQ["G2-MYRADIO"] = getFilter($REQ["G2-MYRADIO"],"","//");	
 
 //G3, PJT
 $REQ["G3-PJTSEQ"] = reqPostNumber("G3-PJTSEQ",20);//SEQ	

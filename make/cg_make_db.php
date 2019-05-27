@@ -726,7 +726,7 @@ function getInput($input,$filetype,$param,$G){
     }else if($input == "PGMINFO"){
         //IO_SAFEHTML_YN가 Y일때만 PURIFIER라이브러리 로딩 처리
         $T_SQL = sprintf("
-            select a.*,b.*,e.IO_SAFEHTML_YN
+            select a.*,b.*,e.IO_SAFEHTML_YN,g.GRPID as CONDITION_GRPID
 			from 
 				CG_PJTINFO a 
                 join CG_PGMINFO b on a.PJTSEQ = %d and b.PGMSEQ = %d and a.PJTSEQ = b.PJTSEQ
@@ -736,6 +736,7 @@ function getInput($input,$filetype,$param,$G){
                                 and c.VALIDSEQ = d.VALIDSEQ
                                 and d.VALIDTYPE='SAFEHTML'
                     ) e
+                left outer join CG_PGMGRP g on b.PJTSEQ = g.PJTSEQ and b.PGMSEQ = g.PGMSEQ and g.GRPTYPE = 'CONDITION'
             "
             ,$F_PJTSEQ
             ,$F_PGMSEQ
@@ -846,9 +847,10 @@ function getInput($input,$filetype,$param,$G){
 
     }else if($input == "PGMIO.CHILD"){ //자식에게 내려줄 IO들 (부모1 자식N)
         $T_SQL = sprintf("
-            select *
-            from CG_PGMINHERIT
-            where PJTSEQ = %d and PGMSEQ = %d and GRPSEQ = %d and CHILDGRPID = '%s' %s
+            select h.*, i.OBJTYPE
+            from CG_PGMINHERIT h
+                join CG_PGMIO i on h.PJTSEQ = i.PJTSEQ and h.PGMSEQ = i.PGMSEQ and h.GRPSEQ = i.GRPSEQ and h.COLID = i.COLID
+            where h.PJTSEQ = %d and h.PGMSEQ = %d and h.GRPSEQ = %d and h.CHILDGRPID = '%s' %s
             "
             ,addSqlSlashes($F_PJTSEQ)
             ,addSqlSlashes($F_PGMSEQ)
@@ -986,6 +988,35 @@ function getInput($input,$filetype,$param,$G){
               ,ifnull(b.CDVAL,'na') as COLSORT
             from CG_PGMIO a
               left outer join CG_CODED b on a.DATATYPE = b.CD and b.PCD='GRIDSORT' 
+            where a.PJTSEQ = %d and a.PGMSEQ = %d
+              and a.GRPSEQ = (select GRPSEQ from CG_PGMGRP where PJTSEQ = %d and PGMSEQ = %d and GRPTYPE = 'CONDITION' )
+              %s
+            "
+            ,addSqlSlashes($F_PJTSEQ)
+            ,addSqlSlashes($F_PGMSEQ)
+            ,addSqlSlashes($F_PJTSEQ)
+            ,addSqlSlashes($F_PGMSEQ)
+            ,$AddSql
+        );
+        //echo "<br>getInput $input :  ". $T_SQL;
+		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
+
+        $result = $db[$svrid]->query($T_SQL) or ServerMsg("500","340", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
+
+        //$line2 = null;
+        $RtnVal = fetch_all($result,MYSQLI_ASSOC);
+        //$RtnVal = fetch_all($result,MYSQLI_ASSOC);
+        $result->close();
+
+    }else if($input == "PGMIO.CONDITION.OBJ"){
+        $T_SQL = sprintf("
+            select
+              a.*
+              ,ifnull(b.CDVAL,'na') as COLSORT
+              ,c.*
+            from CG_PGMIO a
+              left outer join CG_CODED b on a.DATATYPE = b.CD and b.PCD='GRIDSORT' 
+              join CG_OBJINFOD c on a.OBJTYPE = c.OBJTYPE
             where a.PJTSEQ = %d and a.PGMSEQ = %d
               and a.GRPSEQ = (select GRPSEQ from CG_PGMGRP where PJTSEQ = %d and PGMSEQ = %d and GRPTYPE = 'CONDITION' )
               %s

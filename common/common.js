@@ -317,6 +317,134 @@ function setCodeCombo(tGrptype, tCombo, tPcd){
 }
 
 
+
+function setCodeCheck(tGrptype, tCheckNm, tPcd){
+	alog("   setCodeCheck----------------------start");
+	alog("		tGrptype = " + tGrptype);		
+	alog("		tCheckNm = " + tCheckNm);	
+	alog("		tPcd = " + tPcd);
+
+	if(tCheckNm == "")return;
+
+	//불러오기
+	$.ajax({
+		type : "GET",
+		url : "/c.g/cg_code_json.php",
+		data : {PJTSEQ : 3,PCD : tPcd},
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   getCodeJson json return----------------------");
+			//alog("   json data : " + JSON.stringify(data.RTN_DATA));
+			//alog("   json RTN_CD : " + data.RTN_CD);
+			//alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			if(data.RTN_CD == "200"){
+				if(tGrptype == "GRID"){
+					alert("GRID는 지원하지 않는 타입입니다.")
+				}else if(tGrptype == "CONDITION"){
+					if(!data.RTN_DATA)return;
+					alog("	코드수 : " + data.RTN_DATA.rows.length);
+					//$("#" + tCheckNm + "_holder").html(""); //비우기
+
+					for(var i=0;i<data.RTN_DATA.rows.length;i++){
+						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tCheckNm + "_holder").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1]);
+					}
+				}else if(tGrptype == "FORMVIEW"){
+					if(!data.RTN_DATA)return;
+					alog("	코드수 : " + data.RTN_DATA.rows.length);
+					//$("#" + tCheckNm + "_holder").html(""); //비우기
+
+					for(var i=0;i<data.RTN_DATA.rows.length;i++){
+						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tCheckNm + "_holder").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1]);
+					}
+				}else{
+					alog("	그룹 타입이 없습니다");
+				}
+
+			}else{
+				alert("서버 조회중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG);
+			}
+		},
+		error: function(error){
+			alert("Error:" + error);
+		}
+	});
+
+	//alog("   setGridCombo----------------------end");
+
+}
+
+
+
+
+function setCodeRadio(tGrptype, tRadioNm, tPcd){
+	alog("   setCodeRadio----------------------start");
+	alog("		tGrptype = " + tGrptype);		
+	alog("		tRadioNm = " + tRadioNm);	
+	alog("		tPcd = " + tPcd);
+
+	if(tRadioNm == "")return;
+
+	//불러오기
+	$.ajax({
+		type : "GET",
+		url : "/c.g/cg_code_json.php",
+		data : {PJTSEQ : 3,PCD : tPcd},
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   getCodeJson json return----------------------");
+			//alog("   json data : " + JSON.stringify(data.RTN_DATA));
+			//alog("   json RTN_CD : " + data.RTN_CD);
+			//alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			if(data.RTN_CD == "200"){
+				if(tGrptype == "GRID"){
+					alert("GRID는 지원하지 않는 타입입니다.")
+				}else if(tGrptype == "CONDITION"){
+					if(!data.RTN_DATA)return;
+					alog("	코드수 : " + data.RTN_DATA.rows.length);
+					//$("#" + tRadioNm + "_holder").html(""); //비우기
+
+					for(var i=0;i<data.RTN_DATA.rows.length;i++){
+						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tRadioNm + "_holder").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1]);
+					}
+				}else if(tGrptype == "FORMVIEW"){
+					if(!data.RTN_DATA)return;
+					alog("	코드수 : " + data.RTN_DATA.rows.length);
+					//$("#" + tRadioNm + "_holder").html(""); //비우기
+
+					for(var i=0;i<data.RTN_DATA.rows.length;i++){
+						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tRadioNm + "_holder").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1]);
+					}
+				}else{
+					alog("	그룹 타입이 없습니다");
+				}
+
+			}else{
+				alert("서버 조회중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG);
+			}
+		},
+		error: function(error){
+			alert("Error:" + error);
+		}
+	});
+
+	//alog("   setGridCombo----------------------end");
+
+}
+
+
+
 function setCodeComboSvc(tGrptype, tCombo, tPcd, tFristNm){
 	//alog("   setGridCombo----------------------start");
 	//alog("		tPcd = " + tPcd);

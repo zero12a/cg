@@ -229,11 +229,13 @@
 			msgError("조회 후에 행추가 가능합니다",3);
 		}else{
             if(lastinput6json.GRPTYPE == "CONDITION"){
-                msgError("컨디션은 무조건 모든 필드 상속되기 때문에 지정 불필요합니다",3);
-            }else{
+                msgError("컨디션은 RADIO외 모든 필드가 상속되기 때문에 지정 불필요합니다",3);
+            }
+            
+            //else{
                 var tCols = ["",lastinput6json.PJTSEQ,lastinput6json.PGMSEQ,lastinput6json.GRPSEQ];//초기값
                 addRow(mygridInherit,tCols);
-            }
+            //}
 		}
 	}
 
