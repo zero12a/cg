@@ -278,13 +278,15 @@ function makeStmt($db,$sql,$coltype,$map){
     $tParamColids = array(); //G3-COLID를 그대로 저장
     //$tDdColids = ""; //G3-COLID일때 G3은 제거
 
-    $k = 0;
+    $k = 0;//본 sql
+    $d = 0;//디버그 sql
     $to_map = array();
     $to_sql = $sql;
     $debug_sql = $sql;
     //$to_coltype = $coltype;
-    //LogMaster::log("        coltype : " . $coltype);
+
     $to_coltype = str_replace(" ","",$coltype,$count);
+    alog("        to_coltype before : " . $to_coltype);    
     //echo "\n to_coltype replace:" . $count;
     //LogMaster::log("        to_coltype : " . $to_coltype);
 
@@ -298,22 +300,70 @@ function makeStmt($db,$sql,$coltype,$map){
         //echo "\n<br>매칭3 : " . $mat[3];
         //echo "<br>매칭4 : " . $mat[4];
         //alog( sprintf("%3s %1s - %20s = [%s]", $k, substr($to_coltype,$k,1), $mat[2] , $map[$mat[2]]) );
-        if(substr($to_coltype,$k,1) == "i" || substr($to_coltype,$k,1) == "d"){
-            //echo "<br>       $k ". substr($to_coltype,$k,1). " " . $mat[1].$mat[2].$mat[3] . " = " . $map[$mat[2]];
-            $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], addSqlSlashes( $map[$mat[2]] ) ,$debug_sql);
-        }else if(substr($to_coltype,$k,1) == "t"){
-			//alog( "isDate " . isDate($map[$mat[2]]) );
-			if( isDate($map[$mat[2]]) ){
-				//echo "<br>       $k ". substr($to_coltype,$k,1). " " . $mat[1].$mat[2].$mat[3] . " = " . $map[$mat[2]];
-				$debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], "'" . addSqlSlashes( $map[$mat[2]] )  . "'",$debug_sql);
-			}else{
-				$debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], "null" ,$to_sql);
-			}
+
+        $tColtype = substr($to_coltype,$d,1) ;
+        if(is_array($map[$mat[2]])){
+            //멀티 값 처리
+            if(sizeof($map[$mat[2]]) >= 1){
+                //배열인데 값이 1개 이상일때
+                $inSql = "";
+                $add_coltype = "";
+                for($j=0;$j<sizeof($map[$mat[2]]);$j++){
+                    $tVal = $map[$mat[2]][$j];
+
+                    if($tColtype == "i" || $tColtype == "d"){
+                        $inSql .= ($inSql != "")? ", " . addSqlSlashes( $tVal ) : addSqlSlashes( $tVal ); 
+                    }else if($tColtype == "t"){
+                        if( isDate($tVal) ){
+                            $inSql .= ($inSql != "")? ", '" . addSqlSlashes( $tVal ) . "'" : "'". addSqlSlashes( $tVal ) . "'";                             
+                        }else{
+                            $inSql .= ($inSql != "")? ", null" : "null";                             
+                        }
+                    }else{
+                        $inSql .= ($inSql != "")? ", '" . addSqlSlashes( $tVal ) . "'" : "'". addSqlSlashes( $tVal ) . "'"; 
+                    }
+                    $add_coltype .= ($j>0)? $tColtype : "";
+                }
+
+                //1보다 큰 경우 타입 자동으로 복제 추가
+                //alog( " coltype left = " . substr($to_coltype,0,$d+1));                            
+                //alog( " add_coltype = " . $add_coltype);
+                //alog( " coltype right = " . substr($to_coltype,$d+1,strlen($to_coltype)));     
+                $to_coltype = substr($to_coltype,0,$d+1) . $add_coltype . substr($to_coltype,$d+1,strlen($to_coltype)); 
+
+                $inSql = "(" . $inSql . ")";
+
+                $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], $inSql ,$debug_sql);
+            }else{
+                //배열인데, 값이 전혀 없을때
+                if($tColtype == "i" || $tColtype == "d"){
+                   $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], "(null)" ,$debug_sql);
+                }else if($tColtype == "t"){
+                   if( isDate($map[$mat[2]]) ){
+                        $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], "('')",$debug_sql);
+                    }else{
+                        $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], "null" ,$debug_sql);
+                    }
+                }else{
+                    $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3],"('')",$debug_sql);
+                }
+            }
+
         }else{
-            //echo "<br>       $k ". substr($to_coltype,$k,1) . " " .  $mat[1].$mat[2].$mat[3] . " = '" . $map[$mat[2]] . "'";
-            $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3],"'".  addSqlSlashes( $map[$mat[2]] ) ."'",$debug_sql);
+            if($tColtype == "i" || $tColtype == "d"){
+                $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], addSqlSlashes( $map[$mat[2]] ) ,$debug_sql);
+            }else if($tColtype == "t"){
+                if( isDate($map[$mat[2]]) ){
+                    $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], "'" . addSqlSlashes( $map[$mat[2]] )  . "'",$debug_sql);
+                }else{
+                    $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], "null" ,$debug_sql);
+                }
+            }else{
+                $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3],"'".  addSqlSlashes( $map[$mat[2]] ) ."'",$debug_sql);
+            }
         }
 
+        $d++;
 
 
 
@@ -322,22 +372,58 @@ function makeStmt($db,$sql,$coltype,$map){
         }else{
             //LogMaster::log("       $k ". substr($to_coltype,$k,1) . " " .  $mat[1].$mat[2].$mat[3] . " = '" . $map[$mat[2]] . "'");
         }
-        //$to_sql = str_replace($mat[1].$mat[2].$mat[3],"?",$to_sql);
-        $to_sql = str_replace_once($mat[1].$mat[2].$mat[3],"?",$to_sql);
+        //값이 배열이면 " in ? " ==>  " in ( a, b, c ) "로 만든기
+        alog($mat[2] . " sizeof = " . sizeof($map[$mat[2]]));
 
-        //[로그 저장용]
-        array_push($tParamColids,$mat[2]);
+        if(is_array($map[$mat[2]])){
+            //멀티 값 처리
+            if(sizeof($map[$mat[2]]) >= 1){
+                //배열인데 값이 1개 이상일때
+                $inSql = "";
+                for($j=0;$j<sizeof($map[$mat[2]]);$j++){
+                    $tVal = $map[$mat[2]][$j];
+                    $inSql .= ($inSql != "")? ", ?" : "?"; 
+    
+                    //[로그 저장용]
+                    array_push($tParamColids,$mat[2]);
+    
+                    $to_map[$k] = $tVal;
+                    $k++;
+                }
+                $inSql = "(" . $inSql . ")";
+            }else{
+                //배열인데, 값이 전혀 없을때
+                $to_map[$k] = "";
+                $k++;                
+                $inSql = "(?)";
+
+                //[로그 저장용]
+                array_push($tParamColids,"");                
+            }
+
+            $to_sql = str_replace_once($mat[1].$mat[2].$mat[3],$inSql,$to_sql);
+        }else{
+            //단일 값 처리
+            //$to_sql = str_replace($mat[1].$mat[2].$mat[3],"?",$to_sql);
+            $to_sql = str_replace_once($mat[1].$mat[2].$mat[3],"?",$to_sql);
+
+            //[로그 저장용]
+            array_push($tParamColids,$mat[2]);
+            
+            //$tDdColids .= ($tDdColids != "")? "," : "";
+            //$tDdColids .=(strpos($mat[2],"-")>0)?explode("-",$mat[2])[1]:$mat[2];
+
+            $to_map[$k] = $map[$mat[2]];
+            $k++;
+        }
+
         
-        //$tDdColids .= ($tDdColids != "")? "," : "";
-        //$tDdColids .=(strpos($mat[2],"-")>0)?explode("-",$mat[2])[1]:$mat[2];
-
-        $to_map[$k] = $map[$mat[2]];
-        $k++;
         //echo "\ntosql : " . $tosql;
         //exit;
     }
 
     //최종
+    alog("        to_coltype after : " . $to_coltype);    
 	alog("prepare sql : " . $to_sql);
     alog("full sql : " . $debug_sql);
 

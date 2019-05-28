@@ -4,7 +4,7 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 $_RTIME = array();
 array_push($_RTIME,array("[TIME 00.START]",microtime(true)));
-include_once('codemngService.php');
+include_once('codetestService.php');
 
 array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
 include_once('../include/incUtil.php');//CG UTIL
@@ -16,7 +16,7 @@ include_once('../include/incUtil.php');//CG UTIL
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
-alog("CodemngControl___________________________start");
+alog("CodetestControl___________________________start");
 
 $reqToken = reqGetString("TOKEN",37);
 $resToken = uniqid();
@@ -43,10 +43,10 @@ if(!isLogin()){
 }else if(!$objAuth->isOneConnection()){
 	logOut();
 	JsonMsg("500","120"," 다른기기(PC,브라우저 등)에서 로그인하였습니다. 다시로그인 후 사용해 주세요.");
-}else if($objAuth->isAuth("CODEMNG",$ctl)){
-	$objAuth->LAUTH_SEQ = $objAuth->logUsrAuth($reqToken,$resToken,"CODEMNG",$ctl,"Y");
+}else if($objAuth->isAuth("CODETEST",$ctl)){
+	$objAuth->LAUTH_SEQ = $objAuth->logUsrAuth($reqToken,$resToken,"CODETEST",$ctl,"Y");
 }else{
-	$objAuth->logUsrAuth($reqToken,$resToken,"CODEMNG",$ctl,"N");
+	$objAuth->logUsrAuth($reqToken,$resToken,"CODETEST",$ctl,"N");
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
 		//사용자 정보 가져오기
@@ -208,21 +208,21 @@ $REQ["G3-XML"] = filterGridXml(
 	)
 );
 $REQ["G1-MYCHECK"] = $_POST["G1-MYCHECK"];	//checkbox 받기
-$REQ["G1-MYCHECK"] = filterGridChk($REQ["G1-MYCHECK"],"STRING",11,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
+$REQ["G1-MYCHECK"] = filterGridChk($REQ["G1-MYCHECK"],"STRING",110,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
 $REQ["G4-MYCHECK"] = $_POST["G4-MYCHECK"];	//checkbox 받기
-$REQ["G4-MYCHECK"] = filterFormviewChk($REQ["G4-MYCHECK"],"STRING",11,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
+$REQ["G4-MYCHECK"] = filterFormviewChk($REQ["G4-MYCHECK"],"STRING",110,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
 	
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
-$objService = new codemngService();
+$objService = new codetestService();
 	//컨트롤 명령별 분개처리
 alog("ctl:" . $ctl);
 switch ($ctl){
-			case "G1_SAVE" :
-  		echo $objService->goG1Save(); //1, 저장
-  		break;
-	case "G1_SEARCHALL" :
+			case "G1_SEARCHALL" :
   		echo $objService->goG1Searchall(); //1, 조회(전체)
+  		break;
+	case "G1_SAVE" :
+  		echo $objService->goG1Save(); //1, 저장
   		break;
 	case "G2_SEARCH" :
   		echo $objService->goG2Search(); //마스터, 조회
@@ -274,6 +274,6 @@ for($j=1;$j<sizeof($_RTIME);$j++){
 unset($objService);
 unset($objAuth);
 
-alog("CodemngControl___________________________end");
+alog("CodetestControl___________________________end");
 
 ?>	

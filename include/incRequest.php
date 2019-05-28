@@ -108,6 +108,38 @@ function getFilter($tInput,$tValidType,$tValidRule){
     return $RtnVal;
 }
 
+
+function filterFormviewChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule){
+    //alog("filterGridChk()................................start : tStr = " . $tStr . ", tDataType = " . $tDataType);
+    $RtnVal = "";
+    $tArr = explode(",",$tStr);
+    for($i=0;$i<sizeof($tArr);$i++){
+        $colBefore = $tArr[$i];
+
+        //valid
+        if($tDataType == "DATE"){
+            $colAfter1 = getValidDate($colBefore,$tDataSize);
+        }else if($tDataType == "STRING"){
+            $colAfter1 = getValidString($colBefore,$tDataSize);
+        }else if($tDataType == "NUMBER"){
+            $colAfter1 = getValidNumber($colBefore,$tDataSize);    
+        }else{
+            $colAfter1 = $colBefore;
+        }
+        //alog("      valid  : " . $colBefore . " ===> " . $colAfter1);   
+
+        //FILTER
+        $colAfter2 = getFilter($colAfter1,$tValidType,$tValidRule);
+        //alog("      filter " . $tValidType . " " . $tValidRule . " : " . $colAfter1 . " ===> " . $colAfter2);           
+
+        //배열에 추가
+        $RtnVal .= ($RtnVal == "")? $colAfter2 : "," . $colAfter2;
+    }
+
+    return $RtnVal;
+}
+
+
 function filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule){
     //alog("filterGridChk()................................start : tStr = " . $tStr . ", tDataType = " . $tDataType);
     $RtnVal = array();

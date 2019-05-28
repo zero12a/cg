@@ -1,69 +1,69 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "codemngController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_RESET = "codemngController?CTLGRP=G1&CTLFNC=RESET";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "codemngController?CTLGRP=G1&CTLFNC=SEARCHALL";//1 변수 선언	
+var url_G1_SEARCHALL = "codetestController?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_SAVE = "codetestController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_RESET = "codetestController?CTLGRP=G1&CTLFNC=RESET";//1 변수 선언	
 var obj_G1_MYRADIO; // 나의라디오 변수선언var obj_G1_ADD_DT; // ADD 변수선언var obj_G1_MYCHECK; // 체크 변수선언//그리드 변수 초기화	
 //컨트롤러 경로
-var url_G2_SEARCH = "codemngController?CTLGRP=G2&CTLFNC=SEARCH";
+var url_G2_SEARCH = "codetestController?CTLGRP=G2&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G2_SAVE = "codemngController?CTLGRP=G2&CTLFNC=SAVE";
+var url_G2_SAVE = "codetestController?CTLGRP=G2&CTLFNC=SAVE";
 //컨트롤러 경로
-var url_G2_ROWDELETE = "codemngController?CTLGRP=G2&CTLFNC=ROWDELETE";
+var url_G2_ROWDELETE = "codetestController?CTLGRP=G2&CTLFNC=ROWDELETE";
 //컨트롤러 경로
-var url_G2_ROWBULKADD = "codemngController?CTLGRP=G2&CTLFNC=ROWBULKADD";
+var url_G2_ROWBULKADD = "codetestController?CTLGRP=G2&CTLFNC=ROWBULKADD";
 //컨트롤러 경로
-var url_G2_ROWADD = "codemngController?CTLGRP=G2&CTLFNC=ROWADD";
+var url_G2_ROWADD = "codetestController?CTLGRP=G2&CTLFNC=ROWADD";
 //컨트롤러 경로
-var url_G2_RELOAD = "codemngController?CTLGRP=G2&CTLFNC=RELOAD";
+var url_G2_RELOAD = "codetestController?CTLGRP=G2&CTLFNC=RELOAD";
 //컨트롤러 경로
-var url_G2_HIDDENCOL = "codemngController?CTLGRP=G2&CTLFNC=HIDDENCOL";
+var url_G2_HIDDENCOL = "codetestController?CTLGRP=G2&CTLFNC=HIDDENCOL";
 //컨트롤러 경로
-var url_G2_EXCEL = "codemngController?CTLGRP=G2&CTLFNC=EXCEL";
+var url_G2_EXCEL = "codetestController?CTLGRP=G2&CTLFNC=EXCEL";
 //컨트롤러 경로
-var url_G2_CHKSAVE = "codemngController?CTLGRP=G2&CTLFNC=CHKSAVE";
+var url_G2_CHKSAVE = "codetestController?CTLGRP=G2&CTLFNC=CHKSAVE";
 //그리드 객체
 var mygridG2,isToggleHiddenColG2,lastinputG2,lastinputG2json,lastrowidG2;
 var lastselectG2json;//그리드 변수 초기화	
 //컨트롤러 경로
-var url_G3_SEARCH = "codemngController?CTLGRP=G3&CTLFNC=SEARCH";
+var url_G3_SEARCH = "codetestController?CTLGRP=G3&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G3_SAVE = "codemngController?CTLGRP=G3&CTLFNC=SAVE";
+var url_G3_SAVE = "codetestController?CTLGRP=G3&CTLFNC=SAVE";
 //컨트롤러 경로
-var url_G3_ROWDELETE = "codemngController?CTLGRP=G3&CTLFNC=ROWDELETE";
+var url_G3_ROWDELETE = "codetestController?CTLGRP=G3&CTLFNC=ROWDELETE";
 //컨트롤러 경로
-var url_G3_ROWBULKADD = "codemngController?CTLGRP=G3&CTLFNC=ROWBULKADD";
+var url_G3_ROWBULKADD = "codetestController?CTLGRP=G3&CTLFNC=ROWBULKADD";
 //컨트롤러 경로
-var url_G3_ROWADD = "codemngController?CTLGRP=G3&CTLFNC=ROWADD";
+var url_G3_ROWADD = "codetestController?CTLGRP=G3&CTLFNC=ROWADD";
 //컨트롤러 경로
-var url_G3_RELOAD = "codemngController?CTLGRP=G3&CTLFNC=RELOAD";
+var url_G3_RELOAD = "codetestController?CTLGRP=G3&CTLFNC=RELOAD";
 //컨트롤러 경로
-var url_G3_HIDDENCOL = "codemngController?CTLGRP=G3&CTLFNC=HIDDENCOL";
+var url_G3_HIDDENCOL = "codetestController?CTLGRP=G3&CTLFNC=HIDDENCOL";
 //컨트롤러 경로
-var url_G3_EXCEL = "codemngController?CTLGRP=G3&CTLFNC=EXCEL";
+var url_G3_EXCEL = "codetestController?CTLGRP=G3&CTLFNC=EXCEL";
 //컨트롤러 경로
-var url_G3_CHKSAVE = "codemngController?CTLGRP=G3&CTLFNC=CHKSAVE";
+var url_G3_CHKSAVE = "codetestController?CTLGRP=G3&CTLFNC=CHKSAVE";
 //그리드 객체
 var mygridG3,isToggleHiddenColG3,lastinputG3,lastinputG3json,lastrowidG3;
 var lastselectG3json;//디테일 변수 초기화	
 
-var obj_G4_MYCHECK_valid = jQuery.parseJSON( '{ "G4_MYCHECK": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":11,  "DATATYPE":"STRING"} }' );   // 체크 밸리데이션 선언
+var obj_G4_MYCHECK_valid = jQuery.parseJSON( '{ "G4_MYCHECK": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":110,  "DATATYPE":"STRING"} }' );   // 체크 밸리데이션 선언
 var obj_G4_ADD_DT_valid = jQuery.parseJSON( '{ "G4_ADD_DT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // ADD 밸리데이션 선언
 var obj_G4_MYRADIO_valid = jQuery.parseJSON( '{ "G4_MYRADIO": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 나의라디오 밸리데이션 선언
 //폼뷰 컨트롤러 경로
-var url_G4_USERDEF = "codemngController?CTLGRP=G4&CTLFNC=USERDEF";
+var url_G4_USERDEF = "codetestController?CTLGRP=G4&CTLFNC=USERDEF";
 //폼뷰 컨트롤러 경로
-var url_G4_SEARCH = "codemngController?CTLGRP=G4&CTLFNC=SEARCH";
+var url_G4_SEARCH = "codetestController?CTLGRP=G4&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로
-var url_G4_SAVE = "codemngController?CTLGRP=G4&CTLFNC=SAVE";
+var url_G4_SAVE = "codetestController?CTLGRP=G4&CTLFNC=SAVE";
 //폼뷰 컨트롤러 경로
-var url_G4_RELOAD = "codemngController?CTLGRP=G4&CTLFNC=RELOAD";
+var url_G4_RELOAD = "codetestController?CTLGRP=G4&CTLFNC=RELOAD";
 //폼뷰 컨트롤러 경로
-var url_G4_NEW = "codemngController?CTLGRP=G4&CTLFNC=NEW";
+var url_G4_NEW = "codetestController?CTLGRP=G4&CTLFNC=NEW";
 //폼뷰 컨트롤러 경로
-var url_G4_MODIFY = "codemngController?CTLGRP=G4&CTLFNC=MODIFY";
+var url_G4_MODIFY = "codetestController?CTLGRP=G4&CTLFNC=MODIFY";
 //폼뷰 컨트롤러 경로
-var url_G4_DELETE = "codemngController?CTLGRP=G4&CTLFNC=DELETE";
+var url_G4_DELETE = "codetestController?CTLGRP=G4&CTLFNC=DELETE";
 var obj_G4_MYCHECK;   // 체크 글로벌 변수 선언
 var obj_G4_ADD_DT;   // ADD 글로벌 변수 선언
 var obj_G4_MYRADIO;   // 나의라디오 글로벌 변수 선언
@@ -107,7 +107,7 @@ function G1_INIT(){
   alog("G1_INIT()-------------------------start	");
 setCodeRadio("CONDITION", "G1-MYRADIO", "BRGRP");
 
-setCodeCheck("CONDITION", "G1-MYCHECK", "BRGRP");
+setCodeCheck("CONDITION", "G1-MYCHECK", "BRGRP","");
 	//각 폼 오브젝트들 초기화
 	//ADD_DT, ADD 초기화	
 	//G1-MYCHECK check 초기화 할게 있나.
@@ -421,9 +421,9 @@ function G3_INIT(){
 //상세폼 폼뷰 초기화
 function G4_INIT(){
   alog("G4_INIT()-------------------------start");
-setCodeCheck("FORMVIEW", "G4-MYCHECK", "BRGRP");
+setCodeCheck("FORMVIEW", "G4-MYCHECK", "BRGRP","");
 
-setCodeRadio("FORMVIEW", "G4-MYRADIO", "BRGRP");
+setCodeRadio("FORMVIEW", "G4-MYRADIO", "BRGRP","LINEEND");
 	//컬럼 초기화
 	//G4-MYCHECK check 초기화 할게 있나.
 	//ADD_DT, ADD 초기화	
@@ -431,6 +431,20 @@ setCodeRadio("FORMVIEW", "G4-MYRADIO", "BRGRP");
   alog("G4_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //마스터
+				lastinputG2.set("G1-MYRADIO", $('input[name="G1-MYRADIO"]:checked').val());
+	//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("G1_SEARCHALL--------------------------end");
+}
 //검색조건 초기화
 function G1_RESET(){
 	alog("G1_RESET--------------------------start");
@@ -468,21 +482,16 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //마스터
-				lastinputG2.set("G1-MYRADIO", $('input[name="G1-MYRADIO"]:checked').val());
-	//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
-function G2_CHKSAVE(){
+//행추가3 (마스터)	
+//그리드 행추가 : 마스터
+	function G2_ROWADD(){
+		if( !(lastinputG2)|| lastinputG2.get("G2-MYRADIO") == ""){
+			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
+		}else{
+			var tCols = ["","","","","","","","",""];//초기값
+			addRow(mygridG2,tCols);
+		}
+	}function G2_CHKSAVE(){
 	alog("G2_CHKSAVE()------------start");
 	tgrid = mygridG2;
 
@@ -548,6 +557,16 @@ function G2_CHKSAVE(){
 				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
 			}
 		}
+	sendFormData.append("G1-MYRADIO",$('input[name="G1-MYRADIO"]:checked').val());//radio 선택값 가져오기.
+		var tmpCheckVal = "";
+		$('input:checkbox[name="G1-MYCHECK"]').each(function() {
+			if(this.checked){//checked 처리된 항목의 값
+			if(tmpCheckVal !="") tmpCheckVal +=",";
+				tmpCheckVal += this.value;
+			}
+		});
+
+		sendFormData.append("G1-MYCHECK",tmpCheckVal);//checkbox 선택값 가져오기.
 
         //불러오기
         $.ajax({
@@ -650,21 +669,6 @@ function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
 }
-//그리드 행추가 : 마스터
-	function G2_ROWBULKADD(){
-		if( !(lastinputG2json)|| !(lastinputG2json.MYRADIO) ){
-			msgError("조회 후에 행추가 가능합니다",3);
-		}else{
-			var tCols = ["","","","","","","","",""];//초기값
-
-	var rowcnt = prompt("Please enter row's count", "input number");
-	if($.isNumeric(rowcnt)){
-		for(k=0;k<rowcnt;k++){
-			addRow(mygridG2,tCols);  
-		}
-	}
-			}
-	}
 //엑셀다운		
 function G2_EXCEL(){	
 	alog("G2_EXCEL-----------------start");
@@ -683,21 +687,40 @@ function G2_EXCEL(){
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
 }
+//그리드 행추가 : 마스터
+	function G2_ROWBULKADD(){
+		if( !(lastinputG2json)|| !(lastinputG2json.MYRADIO) ){
+			msgError("조회 후에 행추가 가능합니다",3);
+		}else{
+			var tCols = ["","","","","","","","",""];//초기값
+
+	var rowcnt = prompt("Please enter row's count", "input number");
+	if($.isNumeric(rowcnt)){
+		for(k=0;k<rowcnt;k++){
+			addRow(mygridG2,tCols);  
+		}
+	}
+			}
+	}
     function G2_ROWDELETE(){	
         alog("G2_ROWDELETE()------------start");
         delRow(mygridG2);
         alog("G2_ROWDELETE()------------start");
     }
-//행추가3 (마스터)	
-//그리드 행추가 : 마스터
-	function G2_ROWADD(){
-		if( !(lastinputG2)|| lastinputG2.get("G2-MYRADIO") == ""){
-			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
-		}else{
-			var tCols = ["","","","","","","","",""];//초기값
-			addRow(mygridG2,tCols);
-		}
-	}	function G3_SAVE(token){
+    function G3_HIDDENCOL(){
+		alog("G3_HIDDENCOL()..................start");
+        if(isToggleHiddenColG3){
+            isToggleHiddenColG3 = false;     }else{
+            isToggleHiddenColG3 = true;
+        }
+		alog("G3_HIDDENCOL()..................end");
+    }
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
+	function G3_SAVE(token){
 	alog("G3_SAVE()------------start");
 	tgrid = mygridG3;
 
@@ -857,6 +880,16 @@ function G3_EXCEL(){
 				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
 			}
 		}
+	sendFormData.append("G1-MYRADIO",$('input[name="G1-MYRADIO"]:checked').val());//radio 선택값 가져오기.
+		var tmpCheckVal = "";
+		$('input:checkbox[name="G1-MYCHECK"]').each(function() {
+			if(this.checked){//checked 처리된 항목의 값
+			if(tmpCheckVal !="") tmpCheckVal +=",";
+				tmpCheckVal += this.value;
+			}
+		});
+
+		sendFormData.append("G1-MYCHECK",tmpCheckVal);//checkbox 선택값 가져오기.
 
         //불러오기
         $.ajax({
@@ -899,20 +932,26 @@ function G3_EXCEL(){
         alog("G3_SEARCH()------------end");
     }
 
-    function G3_HIDDENCOL(){
-		alog("G3_HIDDENCOL()..................start");
-        if(isToggleHiddenColG3){
-            isToggleHiddenColG3 = false;     }else{
-            isToggleHiddenColG3 = true;
-        }
-		alog("G3_HIDDENCOL()..................end");
-    }
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
+//사용자정의함수 : 사용자정의
+function G4_USERDEF(token){
+	alog("G4_USERDEF-----------------start");
+
+	alog("G4_USERDEF-----------------end");
 }
-function G4_MODIFY(){
+//	
+function G4_NEW(){
+       alog("[FromView] G4_NEW---------------start");
+	$("#G4-CTLCUD").val("C");
+	//PMGIO 로직
+	//G4-MYCHECK  NEW 신규일때 할게 있나?	$("#G4-ADD_DT").val("");//ADD 신규초기화	
+	$("#G4-MYRADIO").val("");//나의라디오 신규초기화	
+       alog("DETAILNew40---------------end");
+}
+//새로고침	
+function G4_RELOAD(token){
+	alog("G4_RELOAD-----------------start");
+	G4_SEARCH(lastinputG4,token);
+}function G4_MODIFY(){
        alog("[FromView] G4_MODIFY---------------start");
 	if( $("#G4-CTLCUD").val() == "C" ){
 		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
@@ -1020,7 +1059,7 @@ function G4_SAVE(token){
 			}
 		});
 
-		sendFormData.append("P.CONDITION_GRPID}-MYCHECK",tmpCheckVal);//checkbox 선택값 가져오기.
+		sendFormData.append("G1-MYCHECK",tmpCheckVal);//checkbox 선택값 가져오기.
 
 	$.ajax({
 		type : "POST",
@@ -1087,24 +1126,4 @@ function G4_DELETE(){
 			alog(error);
 		}
 	});
-}
-//사용자정의함수 : 사용자정의
-function G4_USERDEF(token){
-	alog("G4_USERDEF-----------------start");
-
-	alog("G4_USERDEF-----------------end");
-}
-//	
-function G4_NEW(){
-       alog("[FromView] G4_NEW---------------start");
-	$("#G4-CTLCUD").val("C");
-	//PMGIO 로직
-	//G4-MYCHECK  NEW 신규일때 할게 있나?	$("#G4-ADD_DT").val("");//ADD 신규초기화	
-	$("#G4-MYRADIO").val("");//나의라디오 신규초기화	
-       alog("DETAILNew40---------------end");
-}
-//새로고침	
-function G4_RELOAD(token){
-	alog("G4_RELOAD-----------------start");
-	G4_SEARCH(lastinputG4,token);
 }
