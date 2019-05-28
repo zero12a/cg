@@ -72,6 +72,8 @@ $REQ["G1-ADD_DT"] = reqPostString("G1-ADD_DT",14);//ADD_DT
 $REQ["G1-ADD_DT"] = getFilter($REQ["G1-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G2, 3
+$REQ["G2-CAL"] = reqPostString("G2-CAL",70);//CAL	
+$REQ["G2-CAL"] = getFilter($REQ["G2-CAL"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-LOAD_SEQ"] = reqPostNumber("G2-LOAD_SEQ",30);//SEQ	
 $REQ["G2-LOAD_SEQ"] = getFilter($REQ["G2-LOAD_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-FILE_NM"] = reqPostString("G2-FILE_NM",1000);//FILE_NM	
@@ -152,10 +154,11 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//3
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"CHK,LOAD_SEQ,FILE_NM,TEAM_NM,TEAM_NM_LEN,SYS_NM,SYS_NM_LEN,SUBSYS_NM,SUBSYS_NM_LEN,FILE_HASH,XML_VERSION,XML_TIMESTAMP,XML_ANAL_TIMESTAMP,XML_DT,XML_ANAL_DT,BUG_CNT,LOAD_END_DT,ADD_DT,MOD_DT"
+		,"COLORD"=>"CHK,CAL,LOAD_SEQ,FILE_NM,TEAM_NM,TEAM_NM_LEN,SYS_NM,SYS_NM_LEN,SUBSYS_NM,SUBSYS_NM_LEN,FILE_HASH,XML_VERSION,XML_TIMESTAMP,XML_ANAL_TIMESTAMP,XML_DT,XML_ANAL_DT,BUG_CNT,LOAD_END_DT,ADD_DT,MOD_DT"
 		,"VALID"=>
 			array(
 			"CHK"=>array("STRING",30)	
+			,"CAL"=>array("STRING",70)	
 			,"LOAD_SEQ"=>array("NUMBER",30)	
 			,"FILE_NM"=>array("STRING",1000)	
 			,"TEAM_NM"=>array("STRING",300)	
@@ -178,6 +181,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//3
 		,"FILTER"=>
 			array(
 			"CHK"=>array("REGEXMAT","/^[0-9]+$/")
+			,"CAL"=>array("CLEARTEXT","/--미 정의--/")
 			,"LOAD_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"FILE_NM"=>array("CLEARTEXT","/--미 정의--/")
 			,"TEAM_NM"=>array("CLEARTEXT","/--미 정의--/")

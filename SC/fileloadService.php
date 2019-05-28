@@ -68,7 +68,7 @@ class fileloadService
 		alog("fileLoadService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
-		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, LOAD_SEQ
+		$GRID["KEYCOLIDX"] = 2; // KEY 컬럼, LOAD_SEQ
 
 		//조회
 		//V_GRPNM : 3
@@ -104,10 +104,10 @@ class fileloadService
 		//GRID_SAVE____________________________start
 		$grpId="G2";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "CHK,LOAD_SEQ,FILE_NM,TEAM_NM,TEAM_NM_LEN,SYS_NM,SYS_NM_LEN,SUBSYS_NM,SUBSYS_NM_LEN,FILE_HASH,XML_VERSION,XML_TIMESTAMP,XML_ANAL_TIMESTAMP,XML_DT,XML_ANAL_DT,BUG_CNT,LOAD_END_DT,ADD_DT,MOD_DT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "CHK,CAL,LOAD_SEQ,FILE_NM,TEAM_NM,TEAM_NM_LEN,SYS_NM,SYS_NM_LEN,SUBSYS_NM,SUBSYS_NM_LEN,FILE_HASH,XML_VERSION,XML_TIMESTAMP,XML_ANAL_TIMESTAMP,XML_DT,XML_ANAL_DT,BUG_CNT,LOAD_END_DT,ADD_DT,MOD_DT"; //그리드 컬럼순서(Hidden컬럼포함)
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
-		$GRID["KEYCOLID"] = "LOAD_SEQ";  //KEY컬럼 COLID, 1
+		$GRID["KEYCOLID"] = "LOAD_SEQ";  //KEY컬럼 COLID, 2
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		$GRID["SQL"]["U"] = $this->DAO->uLoad($REQ); // SAVE, 저장, LOAD
@@ -159,7 +159,7 @@ class fileloadService
 		//GRID_CHK_SAVE____________________________start
 		$grpId="G2";
 		$GRID["CHK"]=$REQ[$grpId."-CHK"];
-		$GRID["KEYCOLID"] = "LOAD_SEQ";  //KEY컬럼 COLID, 1
+		$GRID["KEYCOLID"] = "LOAD_SEQ";  //KEY컬럼 COLID, 2
 		//선택삭제	
 		$GRID["SQL"] = $this->DAO->dLoad($REQ); // CHKSAVE, 선택삭제, LOAD
 			$tmpVal = makeGridChkJson($GRID,$this->DB);

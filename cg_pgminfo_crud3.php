@@ -121,6 +121,8 @@
     $REQ["SVC-XML"] = getXml2Array($_POST["SVC-XML"]);//SVC
     $REQ["SQLR-XML"] = getXml2Array($_POST["SQLR-XML"]);//SQLR
     $REQ["SQL-XML"] = getXml2Array($_POST["SQL-XML"]);//SQL
+
+    //var_dump($REQ["SQL-XML"]);
     $REQ["SQLD-XML"] = getXml2Array($_POST["SQLD-XML"]);//SQLD
 
     //서비스 클래스 생성

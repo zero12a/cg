@@ -56,18 +56,14 @@ if(!isLogin()){
 $PGM_CFG["SECTYPE"] = "NORMAL";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
-$REQ["G4-CTLCUD"] = reqPostString("G4-CTLCUD",2);
 
 //로그인정보 및 환경경수 받기
 
 //FILE먼저 : G1, 1
 //FILE먼저 : G2, 마스터
 //FILE먼저 : G3, 상세
-//FILE먼저 : G4, 상세폼
 
 //G1, 1
-$REQ["G1-MYRADIO"] = reqPostString("G1-MYRADIO",30);//나의라디오	
-$REQ["G1-MYRADIO"] = getFilter($REQ["G1-MYRADIO"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G1-ADD_DT"] = reqPostString("G1-ADD_DT",14);//ADD	
 $REQ["G1-ADD_DT"] = getFilter($REQ["G1-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 
@@ -124,12 +120,6 @@ $REQ["G3-ADDDT"] = reqPostString("G3-ADDDT",14);//ADDDT
 $REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//MODDT	
 $REQ["G3-MODDT"] = getFilter($REQ["G3-MODDT"],"REGEXMAT","/^[0-9]+$/");	
-
-//G4, 상세폼
-$REQ["G4-ADD_DT"] = reqPostString("G4-ADD_DT",14);//ADD	
-$REQ["G4-ADD_DT"] = getFilter($REQ["G4-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G4-MYRADIO"] = reqPostString("G4-MYRADIO",30);//나의라디오	
-$REQ["G4-MYRADIO"] = getFilter($REQ["G4-MYRADIO"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터	
 	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//상세	
 	//,  입력값 필터 
@@ -207,10 +197,6 @@ $REQ["G3-XML"] = filterGridXml(
 					)
 	)
 );
-$REQ["G1-MYCHECK"] = $_POST["G1-MYCHECK"];	//checkbox 받기
-$REQ["G1-MYCHECK"] = filterGridChk($REQ["G1-MYCHECK"],"STRING",11,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
-$REQ["G4-MYCHECK"] = $_POST["G4-MYCHECK"];	//checkbox 받기
-$REQ["G4-MYCHECK"] = filterFormviewChk($REQ["G4-MYCHECK"],"STRING",11,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
 	
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
@@ -247,15 +233,6 @@ switch ($ctl){
   		break;
 	case "G3_CHKSAVE" :
   		echo $objService->goG3Chksave(); //상세, 선택저장
-  		break;
-	case "G4_SEARCH" :
-  		echo $objService->goG4Search(); //상세폼, 조회
-  		break;
-	case "G4_SAVE" :
-  		echo $objService->goG4Save(); //상세폼, 저장
-  		break;
-	case "G4_DELETE" :
-  		echo $objService->goG4Delete(); //상세폼, 삭제
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");

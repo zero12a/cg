@@ -12,12 +12,12 @@ $F_PASSWD = trim( $_POST["pw"] );
 if($F_PASSWD == "") 	MsgBack("empty");
 
 //비밀번호 맞는지 검사
-if( $F_PASSWD == "kimsclub" ){
+if( $F_PASSWD == "1234" ){
 	echo "22";
 	//로그인 처리
 	$_SESSION["CG_USR_SEQ"] = 1;
 	
-	MsgGo("good","bo_menu.php");
+	MsgGo("good","bo_menu");
 		
 }
 else

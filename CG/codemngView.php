@@ -63,30 +63,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<!--ADD_DT오브젝트출력-->						<input type="text" name="G1-ADD_DT" value="<?=getFilter(reqPostString("ADD_DT",14),"SAFEECHO","")?>" id="G1-ADD_DT" style="width:60px;">
 					</div>
 				</div>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : MYCHECK-->
-				<div class="CON_OBJGRP" style="display:none					<div class="CON_LABEL" style="width:100px;text-align:left;">
- 						체크
- 					</div>
- 					<!-- style="width:400px;"-->
-					<div class="CON_OBJECT">
- 	<!--MYCHECK오브젝트출력 checkbox-->
-	<div name="G1-MYCHECK_holder" id="G1-MYCHECK_holder"  style="width:400px;"></div>
-					</div>
- 				</div>
- 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : MYRADIO-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:100px;text-align:left;">
- 						나의라디오
- 					</div>
- 					<!-- style="width:400px;"-->
-					<div class="CON_OBJECT">
- 	<!--MYRADIO오브젝트출력 radio-->
-	<div name="G1-MYRADIO_holder" id="G1-MYRADIO_holder"  style="width:400px;"></div>
-					</div>
- 				</div>
- 			</div><!-- is_br_tag end -->
+			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
 	</div>
@@ -152,69 +129,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<!--
 	#####################################################
 	## 그리드 - END
-	#####################################################
-	-->
-	<!--
-	#####################################################
-	## 폼뷰 - START
-	#####################################################
-	-->
-	<div class="GRP_OBJECT" style="width:100%;height:200px;">
-		<div sty_le="width:0px;height:0px;overflow: hidden">
-			<form id="formviewG4" name="formviewG4" method="post" enctype="multipart/form-data"  onsubmit="return false;">
-			<input type="hidden" name="G4-CTLCUD"  id="G4-CTLCUD" value="">
-		</div>	
-		<div class="DETAIL_LABELGRP">
-			<div class="DETAIL_LABEL"  style="">
-				* 상세폼
-			</div>
-			<div class="DETAIL_LABELBTN"  style="">
-				<input type="button" name="BTN_G4_USERDEF" value="사용자정의" onclick="G4_USERDEF(uuidv4());">				<input type="button" name="BTN_G4_SAVE" value="저장" onclick="G4_SAVE(uuidv4());">				<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">				<input type="button" name="BTN_G4_NEW" value="신규" onclick="G4_NEW(uuidv4());">				<input type="button" name="BTN_G4_MODIFY" value="수정" onclick="G4_MODIFY(uuidv4());">				<input type="button" name="BTN_G4_DELETE" value="삭제" onclick="G4_DELETE(uuidv4());">			</div>
-		</div>
-		<div style="height:158px;" class="DETAIL_OBJECT">
-			<DIV class="CON_LINE" is_br_tag>
-			<!--OBJECT LIST PRINT.-->
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : MYCHECK-->
-				<div class="CON_OBJGRP" style="display:none					<div class="CON_LABEL" style="width:100px;text-align:left;">
- 						체크
- 					</div>
- 					<!-- style="width:400px;"-->
-					<div class="CON_OBJECT">
- 	<!--MYCHECK오브젝트출력 checkbox-->
-	<div name="G4-MYCHECK_holder" id="G4-MYCHECK_holder"  style="width:400px;"></div>
-					</div>
- 				</div>
- 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : ADD_DT-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:120px;text-align:left;">
-						ADD
-					</div>
-					<!-- style="width:60px;"-->
-					<div class="CON_OBJECT">
-	<!--ADD_DT오브젝트출력-->						<input type="text" name="G4-ADD_DT" value="" id="G4-ADD_DT" style="width:60px;">
-					</div>
-				</div>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : MYRADIO-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:100px;text-align:left;">
- 						나의라디오
- 					</div>
- 					<!-- style="width:400px;"-->
-					<div class="CON_OBJECT">
- 	<!--MYRADIO오브젝트출력 radio-->
-	<div name="G4-MYRADIO_holder" id="G4-MYRADIO_holder"  style="width:400px;"></div>
-					</div>
- 				</div>
- 			</DIV><!--is_br_tab end-->
-		</div>
-		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
-	</div>
-	<!--
-	#####################################################
-	## 폼뷰 - END
 	#####################################################
 	-->
 <div style="width:0px;height:0px;overflow: hidden">
