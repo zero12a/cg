@@ -35,7 +35,8 @@
     var validmsg = jQuery.parseJSON('{"REQUARED":"[0]는 반드시 입력바랍니다.", "MIN":"this는 [0]이상 입력바랍니다."}');
 
 	var isLayoutLoaded = false;
-	var myWins;
+    var myWins;
+    var codeMirrorSqlFontSize = 11;
 
     //동적 변수 선언
     var obj_condition_valid = jQuery.parseJSON( '{"__NAME":"obj_condition_valid"' +
@@ -54,9 +55,19 @@
         window.open( "./make/cg_make.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
 
-    function changeCodemirrorFontSize(size){
-        alog("changeCodemirrorFontSize..........start " + size);
-        cmSql.getWrapperElement().style["font-size"] = size+"px";
+    function changeCodemirrorFontSize(sizeCmd){
+        alog("changeCodemirrorFontSize..........start " + sizeCmd);
+
+        if(sizeCmd == "+"){
+            codeMirrorSqlFontSize = codeMirrorSqlFontSize + 2;
+        }else{
+            codeMirrorSqlFontSize = codeMirrorSqlFontSize - 2;
+        }
+    
+        $(".CodeMirror").css('font-size',codeMirrorSqlFontSize + "px");
+
+        //cmSql.getWrapperElement().style["font-size"] = size+"px";
+        //cmSql.getWrapperElement().style.fontsize = size+"px";
         cmSql.refresh();
         alog("changeCodemirrorFontSize..........end");   
     }

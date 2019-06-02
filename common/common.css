@@ -5,7 +5,13 @@ body {background-color:gray; font-family: "Nanum Gothic", sans-serif;}
 
 .HTML_BODY {margin:0px;padding:5px;}
 
+
+/*
 div,input,textarea,select,span {font-family: "Nanum Gothic", sans-serif;font-size: 11px;}
+
+codemirror 폰트 사이즈 문제로 전체 오브젝트 적용은 없앴음.
+*/
+
 
 #F_START_DT, #F_END_DT {
     border: 1px solid #909090;
@@ -19,7 +25,9 @@ input[type=text]:read-only {
     background-color: silver;
 }
 
-.BODY_BOX {overflow:visible;width:100%;background-color:rgb(98, 166, 245);padding:0px 0px 0px 0px;margin:0px 0px 0px 0px;z-index:1}
+.BODY_BOX {overflow:visible;width:100%;background-color:rgb(98, 166, 245);padding:0px 0px 0px 0px;margin:0px 0px 0px 0px;z-index:1;
+    font-family: "Nanum Gothic", sans-serif;font-size: 11px;
+    }
 .BODY_BOX_TOP {height:48px;background-color:silver;padding:5px 5px 0px 5px;z-index:1}
 
 .OBJ_BR {position: relative;width:100%;overflow:auto;z-index:20;height:3px}

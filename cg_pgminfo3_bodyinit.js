@@ -57,6 +57,7 @@
             styleActiveLine: true,
             indentWithTabs: true,
             smartIndent: true,
+            lineWrapping: true,
             lineNumbers: true,
             matchBrackets : true,
             tabSize: 4,
