@@ -1357,6 +1357,29 @@
     }
 
 
+    function xmlCdataAdd(tmp){
+        return "<![CDATA[" + tmp + "]]>";
+    }
+
+    function xmlCdataRemove(tmp){
+        var returnValue = "";
+        //alert(tmp.substring(0,9));
+        //alert(tmp.length);
+        //alert(tmp.substring(tmp.length-3,tmp.length));
+
+        returnValue = tmp;
+
+        //alert(tmp);
+        if(tmp.substring(0,9) == "<![CDATA["){
+            returnValue = tmp.substring(9,tmp.length);
+        }
+        if(returnValue.substring(returnValue.length-3,returnValue.length) == "]]>"){
+            returnValue = returnValue.substring(0,returnValue.length-3);
+        }
+        //alert(returnValue);
+        return returnValue;
+    }
+
     function saveSql(){
         alog("saveSql()------------start");
         //serialize user data or not,
@@ -1373,8 +1396,9 @@
         var myXmlString = mygridSql.serialize();
 
         var xml = myXmlString;
-        xml = xml.replace(new RegExp("<=","g"),"<![CDATA[<=]]>"); // <= 를 <![CDATA[<=]]>
-        xml = xml.replace(new RegExp("<>","g"),"<![CDATA[<>]]>"); // <> 를  <![CDATA[<>]]>
+        //xml = "<![CDATA[" + xml + "]]>";
+        //xml = xml.replace(new RegExp("<","g"),"<![CDATA[<]]>"); // <= 를 <![CDATA[<=]]>
+        //xml = xml.replace(new RegExp("<>","g"),"<![CDATA[<>]]>"); // <> 를  <![CDATA[<>]]>
 
         //$("#tt").val(xml);
         //$("#tt2").val(xml2);
