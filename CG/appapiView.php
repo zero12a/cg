@@ -166,6 +166,15 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<!--API_SEQ오브젝트출력-->						<input type="text" name="F4-API_SEQ" value="" id="F4-API_SEQ" style="width:120px;">
 					</div>
 				</div>
+		<!--D101: STARTTXT, TAG-->
+		<!--I.COLID : CAL-->
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:120px;text-align:left;">
+				달력
+			</div>
+		<div class="CON_OBJECT">
+			<input type="text" name="F4-CAL" value="" id="F4-CAL" style="width:120px;">
+		</div>
+	</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>

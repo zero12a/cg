@@ -55,6 +55,7 @@ header("Pragma:no-cache");
             border-top: 1px solid black;
             border-bottom: 1px solid black;
             width:100%;height:321px;
+            font-size: 24px;
         }
         .cm-tab {
             background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
@@ -259,7 +260,7 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* SQL</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanSqlCnt">N</span>
-					<input type="button" name="some_name" value="S" onclick="save2();"><input 
+					<input type="button" name="some_name" value="S" onclick="saveSql();"><input 
                     type="button" name="add" value="+" onclick="addRow2();"><input 
                     type="button" name="delete" value="-" onclick="delRow(mygridSql);"><input 
                     type="button" name="reload" value="R" onclick="gridReload2();"><input 
@@ -280,14 +281,16 @@ header("Pragma:no-cache");
                         <option value="#{SERVER.REMOTE_ADDR}">접속자IP</option>
                         <option value="date_format(sysdate(),'%Y%m%d%H%i%s')">현재날짜</option>  
                         <option value="concat(CD,'^',NM,'^','GRPID')">그리드:버튼</option>
-                        <option value="<![CDATA[SomeText]]>">CDATA</option>                        
+                        <option value="<![CDATA[SomeText]]>">CDATA (no used)</option>                        
                     </select>
+                    <input type="button" name="bigFont" value="+" onclick="changeCodemirrorFontSize(20)">
+                    <input type="button" name="bigFont" value="-" onclick="changeCodemirrorFontSize(8)">
                     <input type="button" name="SqlSearch" value="Sql검색" onclick="goSqlSearch();">
                     <input type="button" name="SqlPreview" value="Preview" onclick="goSqlpreview();">
                 </div>
             </div>
             <div class="GRID_OBJECT" >
-                <textarea id="codemSql" name="codemSql"></textarea>
+                <textarea id="codemSql" name="codemSql" style="font-size:30px"></textarea>
             </div>
         </div>
         <div class="GRP_OBJECT" style="width:15%;">

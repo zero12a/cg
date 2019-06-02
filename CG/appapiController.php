@@ -108,6 +108,8 @@ $REQ["G3-CHK"] = reqPostNumber("G3-CHK",1);//CHK
 $REQ["G3-CHK"] = getFilter($REQ["G3-CHK"],"","//");	
 
 //F4, 폼뷰1
+$REQ["F4-CAL"] = reqPostString("F4-CAL",40);//달력	
+$REQ["F4-CAL"] = getFilter($REQ["F4-CAL"],"CLEARTEXT","/--미 정의--/");	
 $REQ["F4-API_SEQ"] = reqPostString("F4-API_SEQ",10);//SEQ	
 $REQ["F4-API_SEQ"] = getFilter($REQ["F4-API_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["F4-API_NM"] = reqPostString("F4-API_NM",50);//NM	

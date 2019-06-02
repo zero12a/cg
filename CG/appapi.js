@@ -25,6 +25,7 @@ var url_G3_ROWADD = "appapiController?CTLGRP=G3&CTLFNC=ROWADD";
 var mygridG3,isToggleHiddenColG3,lastinputG3,lastinputG3json,lastrowidG3;
 var lastselectG3json;//디테일 변수 초기화	
 
+var obj_F4_CAL_valid = jQuery.parseJSON( '{ "F4_CAL": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":40,  "DATATYPE":"STRING"} }' );   // 달력 밸리데이션 선언
 var obj_F4_API_SEQ_valid = jQuery.parseJSON( '{ "F4_API_SEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // SEQ 밸리데이션 선언
 var obj_F4_API_NM_valid = jQuery.parseJSON( '{ "F4_API_NM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":50,  "DATATYPE":"STRING"} }' );   // NM 밸리데이션 선언
 var obj_F4_PGM_ID_valid = jQuery.parseJSON( '{ "F4_PGM_ID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":50,  "DATATYPE":"STRING"} }' );   // ID 밸리데이션 선언
@@ -52,6 +53,7 @@ var url_F4_NEW = "appapiController?CTLGRP=F4&CTLFNC=NEW";
 var url_F4_DELETE = "appapiController?CTLGRP=F4&CTLFNC=DELETE";
 //폼뷰 컨트롤러 경로
 var url_F4_MOD = "appapiController?CTLGRP=F4&CTLFNC=MOD";
+var obj_F4_CAL;   // 달력 글로벌 변수 선언
 var obj_F4_API_SEQ;   // SEQ 글로벌 변수 선언
 var obj_F4_API_NM;   // NM 글로벌 변수 선언
 var obj_F4_PGM_ID;   // ID 글로벌 변수 선언
@@ -127,7 +129,7 @@ function G3_INIT(){
         mygridG3.setHeader("#master_checkbox,SEQ,NM,ID,URL,REQENCTYPE,REQDATATYPE,img:[../img/crypt_shield.png]REQBODY,img:[../img/crypt_shield.png]RESBODY,MYFILE,MYFILESVRNM,ADD,MOD,CHK");
 		mygridG3.setColumnIds("ROWCHK,API_SEQ,API_NM,PGM_ID,URL,REQ_ENCTYPE,REQ_DATATYPE,REQ_BODY,RES_BODY,MYFILE,MYFILESVRNM,ADD_DT,MOD_DT,CHK");
 		mygridG3.setInitWidths("40,60,60,60,60,120px,60,100,100,120px,60px,60,60px,50");
-		mygridG3.setColTypes("ch,ed,ed,ed,ed,co,co,txttxt,txttxt,ed,ed,ro,ro,ch");
+		mygridG3.setColTypes("ch,ed,ed,dhxCalendar,ed,co,co,txttxt,txttxt,ed,ed,ro,ro,ch");
 	//가로 정렬	
 		mygridG3.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left");
 		mygridG3.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,int");		//렌더링	
@@ -136,6 +138,8 @@ function G3_INIT(){
 		//mygridG3.setColValidators("G3_ROWCHK,G3_API_SEQ,G3_API_NM,G3_PGM_ID,G3_URL,G3_REQ_ENCTYPE,G3_REQ_DATATYPE,G3_REQ_BODY,G3_RES_BODY,G3_MYFILE,G3_MYFILESVRNM,G3_ADD_DT,G3_MOD_DT,G3_CHK");
 		mygridG3.splitAt(3);//'freezes' 3 columns 
 		mygridG3.init();
+
+		mygridG3.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG3.enableBlockSelection(true);
 		mygridG3.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -282,6 +286,7 @@ function F4_INIT(){
 
 
 
+
 setCodeCombo("FORMVIEW",$("#F4-REQ_ENCTYPE"),"FORMENCTYPE");
 setCodeCombo("FORMVIEW",$("#F4-REQ_DATATYPE"),"REQDATATYPE");
 
@@ -293,6 +298,8 @@ setCodeCombo("FORMVIEW",$("#F4-REQ_DATATYPE"),"REQDATATYPE");
 
 	//컬럼 초기화
 	//API_SEQ, SEQ 초기화	
+	//달력 CAL, 달력
+	$( "#F4-CAL" ).datepicker(dateFormatJson);
 	//API_NM, NM 초기화	
 	//PGM_ID, ID 초기화	
 	//URL, URL 초기화	
@@ -302,6 +309,31 @@ setCodeCombo("FORMVIEW",$("#F4-REQ_DATATYPE"),"REQDATATYPE");
 	//ADD_DT, ADD 초기화		//MOD_DT, MOD 초기화	  alog("F4_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//사용자정의함수 : 
+function C2_sss(token){
+	alog("C2_sss-----------------start");
+alert("hi condition");
+
+	alog("C2_sss-----------------end");
+}
+// CONDITIONSearch	
+function C2_SEARCHALL(token){
+	alog("C2_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : C2
+			lastinputG3 = new HashMap(); //그리드1
+		//  호출
+	G3_SEARCH(lastinputG3,token);
+	alog("C2_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function C2_RESET(){
+	alog("C2_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 //컨디션1, 저장	
 function C2_SAVE(){
  alog("C2_SAVE-------------------start");
@@ -319,7 +351,7 @@ function C2_SAVE(){
 	if($("#F4_MYFILE").val() != ""){
 		formData.append("F4-MYFILE",$("input[name=F4-MYFILE]")[0].files[0]);
 	}
-//var params = { CTL : "C2_SAVE", G3_XML : paramsG3		, F4-API_SEQ : , F4-API_NM : , F4-PGM_ID : , F4-URL : , F4-REQ_ENCTYPE : , F4-REQ_DATATYPE : , F4-REQ_BODY : , F4-RES_BODY : , F4-MYFILESVRNM : , F4-MYFILE : , F4-MYFILE_VIEWER : , F4-ADD_DT : , F4-MOD_DT : };
+//var params = { CTL : "C2_SAVE", G3_XML : paramsG3		, F4-CAL : , F4-API_SEQ : , F4-API_NM : , F4-PGM_ID : , F4-URL : , F4-REQ_ENCTYPE : , F4-REQ_DATATYPE : , F4-REQ_BODY : , F4-RES_BODY : , F4-MYFILESVRNM : , F4-MYFILE : , F4-MYFILE_VIEWER : , F4-ADD_DT : , F4-MOD_DT : };
 	$.ajax({	
 		type : "POST",
 		url : url_C2_SAVE  ,
@@ -346,51 +378,7 @@ function C2_SAVE(){
 	});
 	alog("C2_SAVE-------------------end");	
 }
-//사용자정의함수 : 
-function C2_sss(token){
-	alog("C2_sss-----------------start");
-alert("hi condition");
-
-	alog("C2_sss-----------------end");
-}
-// CONDITIONSearch	
-function C2_SEARCHALL(token){
-	alog("C2_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : C2
-			lastinputG3 = new HashMap(); //그리드1
-		//  호출
-	G3_SEARCH(lastinputG3,token);
-	alog("C2_SEARCHALL--------------------------end");
-}
-//검색조건 초기화
-function C2_RESET(){
-	alog("C2_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-    function G3_HIDDENCOL(){
-		alog("G3_HIDDENCOL()..................start");
-        if(isToggleHiddenColG3){
-            isToggleHiddenColG3 = false;            mygridG3.setColumnHidden(mygridG3.getColIndexById("API_SEQ"),true); //SEQ
-     }else{
-            isToggleHiddenColG3 = true;
-            mygridG3.setColumnHidden(mygridG3.getColIndexById("API_SEQ"),false); //SEQ
-        }
-		alog("G3_HIDDENCOL()..................end");
-    }
-//행추가3 (그리드1)	
-//그리드 행추가 : 그리드1
-	function G3_ROWADD(){
-		if( !(lastinputG3)){
-			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
-		}else{
-			var tCols = ["","","","","","","","","","","","","",""];//초기값
-			addRow(mygridG3,tCols);
-		}
-	}	function G3_SAVE(token){
+	function G3_SAVE(token){
 	alog("G3_SAVE()------------start");
 	tgrid = mygridG3;
 
@@ -573,8 +561,27 @@ function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
   G3_SEARCH(lastinputG3,token);
 }
-//F4_SAVE
-//IO_FILE_YN = Y	
+    function G3_HIDDENCOL(){
+		alog("G3_HIDDENCOL()..................start");
+        if(isToggleHiddenColG3){
+            isToggleHiddenColG3 = false;            mygridG3.setColumnHidden(mygridG3.getColIndexById("API_SEQ"),true); //SEQ
+     }else{
+            isToggleHiddenColG3 = true;
+            mygridG3.setColumnHidden(mygridG3.getColIndexById("API_SEQ"),false); //SEQ
+        }
+		alog("G3_HIDDENCOL()..................end");
+    }
+//행추가3 (그리드1)	
+//그리드 행추가 : 그리드1
+	function G3_ROWADD(){
+		if( !(lastinputG3)){
+			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
+		}else{
+			var tCols = ["","","","","","","","","","","","","",""];//초기값
+			addRow(mygridG3,tCols);
+		}
+	}//F4_SAVE
+	//IO_FILE_YN = Y	
 function F4_SAVE(token){	
 	alog("F4_SAVE---------------start");
 
@@ -583,7 +590,7 @@ function F4_SAVE(token){
 		return;
 	}
 
-	//전송용 데이터 생성하기
+	//전송 데이터 객체 만들기
 	var sendFormData = new FormData($("#formviewF4")[0]);
 
 	//컨디션 데이터 추가하기
@@ -592,7 +599,6 @@ function F4_SAVE(token){
 		sendFormData.append(pair[0],pair[1]);
 		//console.log(pair[0]+ ', '+ pair[1]); 
 	}
-
 
 	$.ajax({
 		type : "POST",
@@ -697,6 +703,7 @@ function F4_SEARCH(tinput,token){
             $("#F4-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
 			$("#F4-API_SEQ").val(data.RTN_DATA.API_SEQ);//SEQ 변수세팅
+	$("#F4-CAL").val(data.RTN_DATA.CAL);//달력 오브젝트 값 세팅
 			$("#F4-API_NM").val(data.RTN_DATA.API_NM);//NM 변수세팅
 			$("#F4-PGM_ID").val(data.RTN_DATA.PGM_ID);//ID 변수세팅
 			$("#F4-URL").val(data.RTN_DATA.URL);//URL 변수세팅

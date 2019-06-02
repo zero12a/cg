@@ -54,6 +54,13 @@
         window.open( "./make/cg_make.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
 
+    function changeCodemirrorFontSize(size){
+        alog("changeCodemirrorFontSize..........start " + size);
+        cmSql.getWrapperElement().style["font-size"] = size+"px";
+        cmSql.refresh();
+        alog("changeCodemirrorFontSize..........end");   
+    }
+
 
     function MakeAsync(token){
 
@@ -1339,8 +1346,8 @@
     }
 
 
-    function save2(){
-        alog("save2()------------start");
+    function saveSql(){
+        alog("saveSql()------------start");
         //serialize user data or not,
         //serialize 'selected' attribute for the rows tags,
         //serialize grid structure info,
@@ -1354,21 +1361,9 @@
         //mygridIo.serialize();
         var myXmlString = mygridSql.serialize();
 
-        mygridSql.setSerializationLevel(true,false,false,false,false,false);
-        //mygridIo.serialize();
-        var myXmlString2 = mygridSql.serialize();
-
-        //alog("xml : " + myXmlString);
-
-        //컨디션 데이터 모두 말기
-        var ConAllData = $( "#condition1" ).serialize();
-        alog("   ConAllData = " + ConAllData);
-
         var xml = myXmlString;
-        xml = xml.replace(new RegExp("<row","g"),"\n<row");
-        xml = xml.replace(new RegExp("</row","g"),"\n</row");
-        xml = xml.replace(new RegExp("<cell","g"),"\n\t<cell");
-
+        xml = xml.replace(new RegExp("<=","g"),"<![CDATA[<=]]>"); // <= 를 <![CDATA[<=]]>
+        xml = xml.replace(new RegExp("<>","g"),"<![CDATA[<>]]>"); // <> 를  <![CDATA[<>]]>
 
         //$("#tt").val(xml);
         //$("#tt2").val(xml2);
@@ -1376,7 +1371,7 @@
         $.ajax({
             type : "POST",
             url : mygridSql_url+"&CTLFNC=SAVE&" + lastinput2 ,
-            data : {"SQL-XML" : myXmlString},
+            data : {"SQL-XML" : xml},
             dataType: "json",
             async: false,
             success: function(data){
@@ -1401,7 +1396,7 @@
         });
 
         addstatusyn2 = false;
-        alog("save2()------------end");
+        alog("saveSql()------------end");
     }
 
 

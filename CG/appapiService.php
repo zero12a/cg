@@ -66,7 +66,7 @@ class appapiService
 		//FORMVIEW SAVE
 		$grpId="F4";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
-		$GRID["KEYCOLID"] = "API_SEQ";  //KEY컬럼 COLID, 0
+		$GRID["KEYCOLID"] = "API_SEQ";  //KEY컬럼 COLID, 1
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array("REQ_BODY"=>"CRYPT","RES_BODY"=>"CRYPT");	
@@ -293,7 +293,7 @@ class appapiService
 		//FORMVIEW SAVE
 		$grpId="F4";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
-		$GRID["KEYCOLID"] = "API_SEQ";  //KEY컬럼 COLID, 0
+		$GRID["KEYCOLID"] = "API_SEQ";  //KEY컬럼 COLID, 1
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array("REQ_BODY"=>"CRYPT","RES_BODY"=>"CRYPT");	
