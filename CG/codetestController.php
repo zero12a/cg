@@ -208,7 +208,7 @@ $REQ["G3-XML"] = filterGridXml(
 	)
 );
 $REQ["G1-MYCHECK"] = $_POST["G1-MYCHECK"];	//checkbox 받기
-$REQ["G1-MYCHECK"] = filterGridChk($REQ["G1-MYCHECK"],"STRING",110,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
+$REQ["G1-MYCHECK"] = filterGridChk($REQ["G1-MYCHECK"],"STRING",11,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
 $REQ["G4-MYCHECK"] = $_POST["G4-MYCHECK"];	//checkbox 받기
 $REQ["G4-MYCHECK"] = filterFormviewChk($REQ["G4-MYCHECK"],"STRING",110,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
 	
@@ -250,9 +250,6 @@ switch ($ctl){
   		break;
 	case "G4_SEARCH" :
   		echo $objService->goG4Search(); //상세폼, 조회
-  		break;
-	case "G4_SAVE" :
-  		echo $objService->goG4Save(); //상세폼, 저장
   		break;
 	case "G4_DELETE" :
   		echo $objService->goG4Delete(); //상세폼, 삭제

@@ -1154,10 +1154,11 @@ function getInput($input,$filetype,$param,$G){
         $result->close();
     }else if($input == "PGMSQLR"){
         $T_SQL = sprintf("
-            select a.*,b.SQLNM,b.CRUD,b.SQLTXT,b.SVRSEQ
+            select a.*,b.SQLNM,b.CRUD,b.SQLTXT,b.SVRSEQ, b.SQLID
 			from CG_PGMSQLR a 
-                left outer join CG_PGMSQL b	on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and a.SQLID = b.SQLID
-			where a.PJTSEQ = %d and a.PGMSEQ = %d and a.SVCSEQ = %s %s
+                left outer join CG_PGMSQL b	on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and (a.SQLSEQ = b.SQLSEQ or a.SQLSEQ = b.PSQLSEQ)
+            where a.PJTSEQ = %d and a.PGMSEQ = %d and a.SVCSEQ = %s %s            
+            order by b.SQLORD asc
             "
             ,addSqlSlashes($F_PJTSEQ)
             ,addSqlSlashes($F_PGMSEQ)
@@ -1176,12 +1177,13 @@ function getInput($input,$filetype,$param,$G){
         $result->close();
     }else if($input == "PGMSQL"){
         $T_SQL = sprintf("
-            select a.*, b.CDVAL as RTN_TYPE_NM, s.SVRID
+            select a.*, b.CDVAL as RTN_TYPE_NM, s.SVRID, p.CRUD as PARENT_CRUD
 			from 
 				CG_PGMSQL a 
 				left outer join CG_CODED b
                     ON b.PCD = 'RTN_TYPE' and a.RTN_TYPE = b.CD
                 left outer join CG_SVR s on a.SVRSEQ = s.SVRSEQ
+                left outer join CG_PGMSQL p on a.PJTSEQ = p.PJTSEQ and a.PGMSEQ = p.PGMSEQ and a.PSQLSEQ = p.SQLSEQ
 			where a.PJTSEQ = %d and a.PGMSEQ = %d %s
             "
             ,addSqlSlashes($F_PJTSEQ)
@@ -1203,7 +1205,7 @@ function getInput($input,$filetype,$param,$G){
 			select a.*
 			from 
 				CG_PGMSQLR a 
-				join CG_PGMSQL b ON a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and a.SQLID = b.SQLID
+				join CG_PGMSQL b ON a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and a.SQLSEQ = b.SQLSEQ
 			where a.PJTSEQ = %d and a.PGMSEQ = %d and a.SVCSEQ = %d 
 				and a.PJTSEQ= b.PJTSEQ
             "

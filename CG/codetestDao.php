@@ -25,7 +25,8 @@ class codetestDao
 from 
 	CG_CODE
 order by ORD asc";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  
@@ -43,7 +44,8 @@ order by ORD asc";
 from CG_CODED
 where PCD = #{G2-PCD}
 order by ORD ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -62,7 +64,8 @@ order by ORD ";
 	,#{UITOOL},if(#{USEYN}='','Y',#{USEYN}),if(#{DELYN}='','N',#{DELYN})
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssiisssss";
 		return $RtnVal;
     }  
@@ -83,7 +86,8 @@ order by ORD ";
 	,#{DATATYPE},#{EDITYN},#{FORMATYN},if(#{USEYN}='','Y',#{USEYN}),if(#{DELYN}='','N',#{DELYN})
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssssiisssssssssss";
 		return $RtnVal;
     }  
@@ -99,7 +103,8 @@ order by ORD ";
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
 where PCD = #{PCD}
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssissss";
 		return $RtnVal;
     }  
@@ -112,12 +117,13 @@ where PCD = #{PCD}
 		$RtnVal["SQLTXT"] = "update  CG_CODED set
 	NM = #{NM}, CDDESC = #{CDDESC},ORD = #{ORD}, CDVAL = #{CDVAL}, CDVAL2 = #{CDVAL2}
 	, CDMIN = #{CDMIN}, CDMAX = #{CDMAX}, DATATYPE = #{DATATYPE}, EDITYN = #{EDITYN}, FORMATYN = #{FORMATYN}
-	, USEYN = #{USEYN}, DELYN = #{DELYN}, MYCHECK = #{G4-MYCHECK}
+	, USEYN = #{USEYN}, DELYN = #{DELYN}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
 where  PCD = #{PCD} and CD = #{CD}
 ";
-	$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "ssissssssssssss";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "ssisssssssssss";
 		return $RtnVal;
     }  
 	//DTL    
@@ -129,7 +135,8 @@ where  PCD = #{PCD} and CD = #{CD}
 		$RtnVal["SQLTXT"] = "delete from CG_CODED 
 where PCD = #{PCD} and CD = #{CD}
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ss";
 		return $RtnVal;
     }  
@@ -142,7 +149,8 @@ where PCD = #{PCD} and CD = #{CD}
 		$RtnVal["SQLTXT"] = "delete from CG_CODE
 where PCD = #{PCD} 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -158,8 +166,46 @@ from
 	CG_CODE
 where PCD = #{G2-PCD}
 order by ORD asc";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
+		return $RtnVal;
+    }  
+	//aa    
+	public function aa($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "aaaa";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "";
+		return $RtnVal;
+    }  
+	//MAS    
+	public function hitMasG($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "update CG_CODE set ORD = ORD + 1";
+		$RtnVal["PARENT_FNCTYPE"] = "R"; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "";
+		return $RtnVal;
+    }  
+	//DTL    
+	public function hitDtlG($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "update CG_CODED set ORD = ORD + 1 where CD = #{CD} and PCD = #{PCD}
+";
+		$RtnVal["PARENT_FNCTYPE"] = "U"; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "ss";
 		return $RtnVal;
     }  
 }

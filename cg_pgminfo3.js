@@ -916,8 +916,24 @@
 					if(data.RTN_DATA){
                         $("#spanSqlCnt").text(data.RTN_DATA.rows.length);
 
+                        //PSQLSEQ 코드 콤보 완성 시키기
+                        tCombo = mygridSql.getCombo(mygridSql.getColIndexById("PSQLSEQ"))
+                        tCombo.clear(); //비우기
+                        tCombo.put("","");
+    
+                        for(var i=0;i<data.RTN_DATA.rows.length;i++){
+                            tcd = data.RTN_DATA.rows[i].data[mygridSql.getColIndexById("SQLSEQ")];
+                            tnm = data.RTN_DATA.rows[i].data[mygridSql.getColIndexById("SQLID")]
+                            alog( tcd + "=" + tnm);
+    
+                            tCombo.put(tcd,tnm);
+                        }
+
+                        //그리드에 데이터 부어 넣기.
 						mygridSql.parse(data.RTN_DATA,"json");
-						row_cnt = data.RTN_DATA.rows.length;
+                        row_cnt = data.RTN_DATA.rows.length;
+                        
+                        
 					}
 
 					msgNotice("[SQL] 조회 성공했습니다. ("+row_cnt+"건)",1);

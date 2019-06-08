@@ -1403,6 +1403,114 @@ end
 	}
 
 
+	function makeGridSearchJsonArray($map,&$db){
+		global $REQ, $CFG_SEC_KEY, $CFG_SEC_SALT, $PGM_CFG;
+		alog("makeGridSearchJsonArray..................................start");
+
+        //main/sub sql 갯수 만큼 루프돌면서 처리하기
+        alog("  sql sizeof : " . sizeof($map["SQL"]));
+        for($s=0;$s<sizeof($map["SQL"]);$s++){
+            $tmpSql = $map["SQL"][$s];
+
+            //main/sub 구분에 따라 처리
+            alog("  sql[" . $s . "] PSQLSEQ = ". $tmpSql["PSQLSEQ"]);            
+            alog("      SVRID = " . $tmpSql["SVRID"]);
+            alog("      SQLTXT = " . $tmpSql["SQLTXT"]);
+            alog("      BINDTYPE = " . $tmpSql["BINDTYPE"]);
+            
+            if( $tmpSql["PARENT_FNCTYPE"] != ""){
+                //sub는 CUD만 존재
+
+                $stmt = makeStmt($db[$tmpSql["SVRID"]], $tmpSql["SQLTXT"], $tmpSql["BINDTYPE"], $REQ);
+                if(!$stmt)   JsonMsg("500","111","(makeGridSearchJsonArray) stmt 생성 실패 " . $db->errno . " -> " . $db->error);
+    
+                if(!$stmt->execute())JsonMsg("500","121","(makeGridSearchJsonArray) stmt 실행 실패 " . $stmt->error);
+            }else{
+
+                $stmt = makeStmt($db[$tmpSql["SVRID"]], $tmpSql["SQLTXT"], $tmpSql["BINDTYPE"], $REQ);
+                if(!$stmt)   JsonMsg("500","112","(makeGridSearchJsonArray) stmt 생성 실패 " . $db->errno . " -> " . $db->error);
+    
+                if(!$stmt->execute())JsonMsg("500","122","(makeGridSearchJsonArray) stmt 실행 실패 " . $stmt->error);
+    
+                //$colcrypt_array = explode(",",$map["COLCRYPT"]);   
+                $colcrypt_array =$map["COLCRYPT"];  
+    
+                //$map["SQLTXT"] = "1111";
+                //alog("makeGridSearchJson() SQLTXT = " . $map["SQLTXT"]);
+    
+                $stmt->store_result();
+                
+                //num_rows는 store_result실행 후에 해야함.
+                alog("stmt.num_rows = " . $stmt->num_rows);
+    
+                //[로그 저장용]
+                $PGM_CFG["SQLTXT"][sizeof($PGM_CFG["SQLTXT"])-1]["ROW_CNT"] = $stmt->num_rows;
+    
+                $variables = array();
+                $data = array();
+                $meta = $stmt->result_metadata();
+                while($field = $meta->fetch_field())
+                {
+                    $variables[] = &$data[$field->name];
+                }
+                call_user_func_array(array($stmt, 'bind_result'), $variables);
+                $i=0;
+                while($stmt->fetch())
+                {
+                        $array[$i] = array();
+                        $one_row = array();
+                        $j = 0;
+                        foreach($data as $k=>$v){
+                            //암호화 컬럼에 존재 하는지 확인
+                            if( $colcrypt_array[trim($k)] == "CRYPT" ){
+                                //양방향 암호화
+                                alog("  crypt 전 col/key: " . $v . "/" . $CFG_SEC_KEY);
+                                alog("  cyrpt 후 : [" .  aes_decrypt($v,$CFG_SEC_KEY) . "]");                        
+    
+                                //$array[$i][$k] = aes_decrypt($v,$CFG_SEC_KEY);
+    
+                                array_push($one_row, aes_decrypt($v,$CFG_SEC_KEY) );
+                            }else if( $colcrypt_array[trim($k)] == "HASH" ){
+                                //일방향 암호화
+                                alog("  hash 전 col/key: " . $v . "/" . $CFG_SEC_SALT);
+                                //$array[$i][$k] = aes_decrypt($v,$CFG_SEC_KEY);
+    
+                                array_push($one_row, $v );
+                            }else{
+                                //평문
+                                array_push($one_row, $v );
+                            }
+                            
+                            
+                            if($j == $map["KEYCOLIDX"])$id_col_value = $v;
+                            $j++;
+                        }
+                        $RtnVal->RTN_DATA->rows[$i]['id']=$id_col_value;
+                        $RtnVal->RTN_DATA->rows[$i]['data']=$one_row;
+                        //alog($i);
+                        $i++;
+                }
+                $stmt->close();
+            }
+
+            
+
+        }
+
+
+		//$result_array = fetch_all($result,MYSQLI_NUM);//indDB.php
+		//결과 JSON 화면 출력
+		$RtnVal->RTN_CD = "200";
+		$RtnVal->ERR_CD = "200";
+		//var_dump($RtnVal);
+	
+        //$RtnVal = json_encode($RtnVal)
+        
+		alog("makeGridSearchJsonArray..................................end");        
+		return  $RtnVal;
+
+	}
+
 
 
 	function makeGridChkJson($map,&$db){
@@ -1609,6 +1717,133 @@ end
 
 
 
+	function requireGridSaveArray($colord,$xml,$sql){
+        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        
+        //ar_dump($sql["U"]);
+        //exit;
+        $RtnVal = null;
+        $RtnVal->GRP_TYPE = "GRID";
+
+        //관련 모든 SQL에 REQUIRE이 하나도 없으면 검사 패스
+        $isRequireOverOne = false;
+        for($s = 0; $s < sizeof($sql) ; $s++){
+            $tmpSql = $sql[$s];
+            if(sizeof($tmpSql["REQUIRE"]) > 0) $isRequireOverOne = true;
+        }
+        if(!$isRequireOverOne){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+            return $RtnVal;
+        }
+
+        $isRequireResult = true;
+
+        $colord_array = explode(",",$colord);
+
+		$xml_array_last = null;
+        alog("requireGrid is_assoc : " . is_assoc($xml) );
+        alog("requireGrid count : " . count($xml["row"]) );
+        alog("requireGrid sizeof : " . sizeof($xml["row"]) );
+		if(is_assoc($xml["row"]) == 1) {
+			//alog(" Y " );
+			$xml_array_last[0] = $xml["row"];
+		}else{
+			//alog(" N " );
+
+			$xml_array_last = $xml["row"];
+		}
+		//var_dump($xml_array_last);
+
+
+		$RtnCnt = 0;
+		//alog("xml sizeof : " . sizeof($xml_array_last));
+		for($i=0;$i<sizeof($xml_array_last) && $isRequireResult;$i++){
+
+			$row = $xml_array_last[$i];
+			//alog("        i : " . $i);
+			//alog("        @attributes : " . $row["@attributes"]["id"]);
+			//alog("        userdata : " . $row["userdata"]);
+
+			//현재 그리드 line을 bind 배열에 담기
+			$to_row = null;
+			$to_coltype = null;
+			for($j=0;$j<sizeof($row["cell"]);$j++){
+				$col = $row["cell"][$j];
+				if(is_array($col)){
+					$to_row[trim($colord_array[$j])] = "";
+				}else{
+                    $to_row[trim($colord_array[$j])] = $col;
+				}
+			}
+
+            $tArr = array_merge($REQ,$to_row);
+
+			if($row["userdata"] == "inserted"  ){
+                //alog("        inserted : " );
+                if ( is_array($sql["C"]["REQUIRE"]) && sizeof($sql["C"]["REQUIRE"]) > 0 ){
+                    //require 필드 갯수 만큼 루프 돌면서 검사
+                    for($k=0;$k<sizeof($sql["C"]["REQUIRE"]);$k++){
+                        $requireCol = $sql["C"]["REQUIRE"][$k];
+                        if($tArr[$requireCol] == ""){
+                            $isRequireResult = false; //필수값이 비여있음
+                            $RtnVal->RTN_MSG = $requireCol . " DB insert시 필수 값입니다.";
+                            break;
+                        }
+                    }
+                }
+
+			}else if($row["userdata"] == "updated"){
+                //alog("        updated : " );
+
+                if( is_array($sql["U"]["REQUIRE"]) && sizeof($sql["U"]["REQUIRE"]) > 0 ){
+                    //require 필드 갯수 만큼 루프 돌면서 검사   
+                    for($k=0;$k<sizeof($sql["U"]["REQUIRE"]);$k++){
+                        $requireCol = $sql["U"]["REQUIRE"][$k];
+                        if($tArr[$requireCol] == ""){
+                            $isRequireResult = false; //필수값이 비여있음
+                            $RtnVal->RTN_MSG = $requireCol . " DB update시 필수 값입니다.";                        
+                            break;
+                        }
+                    }
+                }
+
+			}else if($row["userdata"] == "deleted" ){
+                //alog("        deleted : " );
+                if( is_array($sql["D"]["REQUIRE"]) && sizeof($sql["D"]["REQUIRE"]) > 0  ){
+                    //require 필드 갯수 만큼 루프 돌면서 검사
+                    for($k=0;$k<sizeof($sql["D"]["REQUIRE"]);$k++){
+                        $requireCol = $sql["D"]["REQUIRE"][$k];
+                        if($tArr[$requireCol] == ""){
+                            $isRequireResult = false; //필수값이 비여있음
+                            $RtnVal->RTN_MSG = $requireCol . " DB delete시 필수 값입니다.";                        
+                            break;
+                        }
+                    }
+                }
+            }else{
+                alog("         userdata no match : " . $row["userdata"]);
+            }
+
+		}
+
+		//결과 JSON 화면 출력
+
+        if($isRequireResult){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+        }else{
+            $RtnVal->RTN_CD = "500";
+            $RtnVal->ERR_CD = "333";            
+        }
+
+		//$RtnVal = json_encode($RtnVal);
+		return $RtnVal;
+
+	}
+
+
+
 
 	function requireGridSearch($colord,$xml,$sql){
         global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
@@ -1650,6 +1885,48 @@ end
 
 	}
 
+
+	function requireGridSearchArray($colord,$xml,$sql){
+        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        alog("requireGridSearchArray ");
+        //ar_dump($sql["U"]);
+        //exit;
+        $RtnVal = null;
+        $RtnVal->GRP_TYPE = "GRID";
+
+        $isRequireResult = true;
+
+
+        //main/sub sql 갯수만큼 루프 돌기
+        for($i=0;$i<sizeof($sql);$i++){
+            $tmpSql = $sql[$i];
+
+            //SQL에서 입력값 추출하기
+            for($k=0;$k<sizeof($tmpSql["REQUIRE"]);$k++){
+                $requireCol = $tmpSql["REQUIRE"][$k];
+                alog(" $k  " . $requireCol . " = " . $REQ[$requireCol]);
+                if($REQ[$requireCol] == ""){
+                    $isRequireResult = false; //필수값이 비여있음
+                    $RtnVal->RTN_MSG = $requireCol . " DB조회시 필수 값입니다.";                        
+                    break;
+                }
+            }            
+        }
+
+
+		//결과 JSON 화면 출력
+        if($isRequireResult){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+        }else{
+            $RtnVal->RTN_CD = "500";
+            $RtnVal->ERR_CD = "333";            
+        }
+
+		//$RtnVal = json_encode($RtnVal);
+		return $RtnVal;
+
+	}
 
 
 
@@ -1793,6 +2070,172 @@ end
 		return $RtnVal;
 
 	}
+
+
+
+
+	function makeGridSaveJsonArray($map,&$db){
+        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        
+        //alog("^^^ COLORD : " . $map["COLORD"]);
+        $colord_array = explode(",",$map["COLORD"]);
+        //$colcrypt_array = explode(",",$map["COLCRYPT"]);        
+        $colcrypt_array = $map["COLCRYPT"];
+        //alog("^^^ colord_array count : " . count($colord_array));
+
+		$xml_array_last = null;
+        alog("makeGridSaveJsonArray is_assoc : " . is_assoc($map["XML"]) );
+        alog("makeGridSaveJsonArray count : " . count($map["XML"]["row"]) );
+        alog("makeGridSaveJsonArray sizeof : " . sizeof($map["XML"]["row"]) );
+		if(is_assoc($map["XML"]["row"]) == 1) {
+			alog(" Y " );
+			$xml_array_last[0] = $map["XML"]["row"];
+		}else{
+			alog(" N " );
+
+			$xml_array_last = $map["XML"]["row"];
+		}
+		//var_dump($xml_array_last);
+
+		$RtnVal = null;
+		$RtnCnt = 0;
+		alog("xml sizeof : " . sizeof($xml_array_last));
+		for($i=0;$i<sizeof($xml_array_last);$i++){
+
+			$row = $xml_array_last[$i];
+			alog("        i : " . $i);
+			alog("        @attributes : " . $row["@attributes"]["id"]);
+			alog("        userdata : " . $row["userdata"]);
+
+			//현재 그리드 line을 bind 배열에 담기
+			$to_row = null;
+			$to_coltype = null;
+			$sql = null;
+			for($j=0;$j<sizeof($row["cell"]);$j++){
+				$col = $row["cell"][$j];
+				if(is_array($col)){
+					$to_row[trim($colord_array[$j])] = "";
+				}else{
+                    //암호화 컬럼에 존재 하는지 확인
+                    if($colcrypt_array[trim($colord_array[$j])] == "CRYPT" ){
+                        //양방향 암호화
+                        alog("  crypt 전 col/key: [" . $col . "]/" . $CFG_SEC_KEY);
+                        alog("  crypt 후 : [" .  aes_encrypt($col,$CFG_SEC_KEY) . "]");                        
+                        $to_row[trim($colord_array[$j])] = aes_encrypt($col,$CFG_SEC_KEY);
+                    }else if($colcrypt_array[trim($colord_array[$j])] == "HASH" ){
+                        //일방향 암호화
+                        alog("  hash 전 col/salt: [" . $col . "]/" . $CFG_SEC_SALT);
+                        alog("  hash 후 : [" .  pwd_hash($col,$CFG_SEC_SALT) . "]");                        
+                        $to_row[trim($colord_array[$j])] = pwd_hash($col,$CFG_SEC_SALT);
+                    }else{
+                        //평문
+                        //alog("  [평문] " . trim($colord_array[$j]) . " = " . $col);
+                        $to_row[trim($colord_array[$j])] = $col;
+                    }
+				}
+			}
+
+            //SQL 갯수만큼 루프
+            for($k=0;$k<sizeof($map["SQL"]);$k++){
+                $tmpSql = $map["SQL"][$k];
+                $sql = null;
+                if($row["userdata"] == "inserted" && (   
+                        ($tmpSql["FNCTYPE"] == "C" && $tmpSql["PARENT_FNCTYPE"] == "") ||
+                        $tmpSql["PARENT_FNCTYPE"] == "C"
+                    ) ){
+                    $to_coltype = $tmpSql["BINDTYPE"];
+                    //LogMaster::log("        to_coltype : " . $to_coltype);
+                    $svrid = $tmpSql["SVRID"];
+                    $sql = $tmpSql["SQLTXT"];
+                    alog("        inserted : " );
+                }else if($row["userdata"] == "updated" && (   
+                        ($tmpSql["FNCTYPE"] == "U" && $tmpSql["PARENT_FNCTYPE"] == "") ||
+                        $tmpSql["PARENT_FNCTYPE"] == "U"
+                    ) ){
+                    $to_coltype = $tmpSql["BINDTYPE"];
+                    $svrid = $tmpSql["SVRID"];
+                    $sql = $tmpSql["SQLTXT"];
+                    alog("        updated : " );
+                }else if($row["userdata"] == "deleted" && (   
+                        ($tmpSql["FNCTYPE"] == "D" && $tmpSql["PARENT_FNCTYPE"] == "") ||
+                        $tmpSql["PARENT_FNCTYPE"] == "D"
+                )){
+                    $to_coltype = $tmpSql["BINDTYPE"];
+                    $svrid = $tmpSql["SVRID"];
+                    $sql = $tmpSql["SQLTXT"];
+                    alog("        deleted : " );
+                }else{
+                    alog("         userdata no match : " . $row["userdata"]);
+                    continue;
+                }
+    
+    
+                if($sql != null ){
+                    //LogMaster::log("        to_coltype : " . $to_coltype);
+                
+                    if( getParamCnt($sql) != strlen(str_replace(" ","",$to_coltype)) )JsonMsg("500","190","(makeGridSaveJsonArray) sql파라미터와 파라미터타입수가 불일치.");
+    
+                    alog("svrid : " . $svrid);
+                    //alog("  REQ.URL : " . $REQ["URL"]);             
+                    //alog("  to_row.URL : " . $to_row["URL"]);             
+                     
+    
+                    $tArr = array_merge($REQ,$to_row);
+                    //alog("  array_merge() tArr.URL : " . $tArr["URL"]);
+    
+                    $stmt = makeStmt($db[$svrid], $sql, $to_coltype, array_merge($REQ,$to_row));
+                   
+                    if(!$stmt) JsonMsg("500","200","(makeGridSaveJsonArray) stmt 생성 실패 " . $db->errno . " -> " . $db->error);
+                   
+                    if(!$stmt->execute())JsonMsg("500","210","(makeGridSaveJsonArray) stmt 실행 실패 " . $stmt->error);
+    
+                    //SUB 쿼리는 리턴정보에 넣지 않음.
+                    alog("  PARENT_FNCTYPE = " . $tmpSql["PARENT_FNCTYPE"]);                    
+                    if($tmpSql["PARENT_FNCTYPE"] == ""){
+                        //echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
+                        $to_affected_rows = $db[$svrid]->affected_rows;
+                    
+                        //[로그 저장용]
+                        $PGM_CFG["SQLTXT"][sizeof($PGM_CFG["SQLTXT"])-1]["ROW_CNT"] = $to_affected_rows;                
+                    
+                        $to_row["COLID"] = "";
+                        if($row["userdata"] == "inserted"){
+                            if($map["SEQYN"] == "Y"){
+                                alog("SEQYN Y : " . $db[$svrid]->insert_id);
+                                $to_row["COLID"]=$db[$svrid]->insert_id; //insert문인 경우 insert id받기
+                            }else{
+                                alog("SEQYN N : " . $to_row[$map["KEYCOLID"]]);
+                                $to_row["COLID"]=$to_row[$map["KEYCOLID"]]; //사용자 입력 key컬럼을 rowid 로
+                            }
+                        }
+
+                        $tarr = array("OLD_ID"=>$row["@attributes"]["id"],"NEW_ID"=>$to_row["COLID"],"USER_DATA"=>$row["userdata"],"AFFECTED_ROWS"=>$to_affected_rows);
+        
+                        $RtnVal->ROWS[$RtnCnt] = $tarr;
+                        $RtnCnt++;
+                    }
+                    $stmt->close();
+    
+                }else{
+                    JsonMsg("500","220","(makeGridSaveJsonArray) 데이터 처리 요청 " . $row["userdata"] . "에  해당하는 sql문이 없습니다.");
+                }
+
+            }
+			
+
+
+		}
+
+		//결과 JSON 화면 출력
+		$RtnVal->GRP_TYPE = "GRID";
+	    $RtnVal->SEQ_COLID = ($map["SEQYN"] == "Y")?$map["KEYCOLID"]:"";
+
+		//$RtnVal = json_encode($RtnVal);
+		return $RtnVal;
+
+	}
+
+
 
 
     function makeParamEnc($tSql, $tReq, $colcrypt_array){

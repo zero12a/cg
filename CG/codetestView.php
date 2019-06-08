@@ -64,17 +64,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : MYCHECK-->
-				<div class="CON_OBJGRP" style="display:none					<div class="CON_LABEL" style="width:100px;text-align:left;">
- 						체크
- 					</div>
- 					<!-- style="width:400px;"-->
-					<div class="CON_OBJECT">
- 	<!--MYCHECK오브젝트출력 checkbox-->
-	<div name="G1-MYCHECK_holder" id="G1-MYCHECK_holder"  style="width:400px;"></div>
-					</div>
- 				</div>
- 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : MYRADIO-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
@@ -84,6 +73,17 @@ include_once('../include/incRequest.php');//CG REQUEST
 					<div class="CON_OBJECT">
  	<!--MYRADIO오브젝트출력 radio-->
 	<div name="G1-MYRADIO_holder" id="G1-MYRADIO_holder"  style="width:400px;"></div>
+					</div>
+ 				</div>
+ 			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : MYCHECK-->
+				<div class="CON_OBJGRP" style="display:none					<div class="CON_LABEL" style="width:100px;text-align:left;">
+ 						체크
+ 					</div>
+ 					<!-- style="width:400px;"-->
+					<div class="CON_OBJECT">
+ 	<!--MYCHECK오브젝트출력 checkbox-->
+	<div name="G1-MYCHECK_holder" id="G1-MYCHECK_holder"  style="width:400px;"></div>
 					</div>
  				</div>
  			</div><!-- is_br_tag end -->
@@ -169,7 +169,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				* 상세폼
 			</div>
 			<div class="DETAIL_LABELBTN"  style="">
-				<input type="button" name="BTN_G4_USERDEF" value="사용자정의" onclick="G4_USERDEF(uuidv4());">				<input type="button" name="BTN_G4_SAVE" value="저장" onclick="G4_SAVE(uuidv4());">				<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">				<input type="button" name="BTN_G4_NEW" value="신규" onclick="G4_NEW(uuidv4());">				<input type="button" name="BTN_G4_MODIFY" value="수정" onclick="G4_MODIFY(uuidv4());">				<input type="button" name="BTN_G4_DELETE" value="삭제" onclick="G4_DELETE(uuidv4());">			</div>
+				<input type="button" name="BTN_G4_USERDEF" value="사용자정의" onclick="G4_USERDEF(uuidv4());">				<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">				<input type="button" name="BTN_G4_NEW" value="신규" onclick="G4_NEW(uuidv4());">				<input type="button" name="BTN_G4_MODIFY" value="수정" onclick="G4_MODIFY(uuidv4());">				<input type="button" name="BTN_G4_DELETE" value="삭제" onclick="G4_DELETE(uuidv4());">			</div>
 		</div>
 		<div style="height:158px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>

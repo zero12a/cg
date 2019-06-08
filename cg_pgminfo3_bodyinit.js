@@ -548,13 +548,13 @@
         mygridSql = new dhtmlXGridObject('grid2');
 		mygridSql.setUserData("","gridTitle","grid2 : sql list"); //글로별 변수에 그리드 타이블 넣기
         mygridSql.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridSql.setHeader("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,SQLTXT,ADDDT,MODDT");
-        mygridSql.setColumnIds("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,SQLTXT,ADDDT,MODDT");
+        mygridSql.setHeader("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,PSQLID,SQLTXT,ADDDT,MODDT");
+        mygridSql.setColumnIds("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,PSQLSEQ,SQLTXT,ADDDT,MODDT");
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygridSql.setInitWidths("50,50,50,50,50,40,40,50,50,50,50,50")
-        mygridSql.setColTypes("ro,ed,ro,ed,ed,coro,coro,coro,ed,txt,ro,ro");
-        mygridSql.setColAlign("left,left,left,left,left,left,left,,left,left,left,left,left")
-		mygridSql.setColSorting("str,str,int,str,str,str,str,str,int,str,str,str");
+        mygridSql.setInitWidths("50,50,50,50,50,40,40,50,50,50,50,50,50")
+        mygridSql.setColTypes("ro,ed,ro,ed,ed,coro,coro,coro,ed,coro,txt,ro,ro");
+        mygridSql.setColAlign("left,left,left,left,left,left,left,,left,left,left,left,left,left")
+		mygridSql.setColSorting("str,str,int,str,str,str,str,str,int,str,str,str,str");
 
         //mygridSql.setColumnHidden(0,true);
         //mygridSql.isColumnHidden(0);//PJTID숨기기
@@ -569,7 +569,8 @@
         //GRPTYPE 콤보
 		setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("SVRSEQ")),"SVRSEQ");
 		setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("CRUD")),"CRUD");
-		setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("RTN_TYPE")),"RTN_TYPE");        
+        setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("RTN_TYPE")),"RTN_TYPE");     
+        //setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("PSQLSEQ")),"PSQLSEQ");        
 
         mygridSql.setColumnHidden(0,true); //PJTSEQ
         mygridSql.setColumnHidden(1,true); //PGMSEQ
@@ -842,7 +843,7 @@
 		mygridSqlR.setUserData("","gridTitle","gridSQLR : fnc list"); //글로별 변수에 그리드 타이블 넣기
         mygridSqlR.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
         mygridSqlR.setHeader("SEQ,PJTSEQ,PGMSEQ,SVCSEQ,SQLID,ORD,ADDDT,MODDT");
-        mygridSqlR.setColumnIds("SQLRSEQ,PJTSEQ,PGMSEQ,SVCSEQ,SQLID,ORD,ADDDT,MODDT");
+        mygridSqlR.setColumnIds("SQLRSEQ,PJTSEQ,PGMSEQ,SVCSEQ,SQLSEQ,ORD,ADDDT,MODDT");
         mygridSqlR.setInitWidths("50,50,50,50,50,50,50,50");
         mygridSqlR.setColTypes("ed,ed,ed,ed,coro,ed,ro,ro");
         mygridSqlR.setColAlign("left,left,left,left,left,left,left,left");
@@ -1199,7 +1200,7 @@
 
 
             //(SQR의 SQL컬럼) 콤보세팅
-            setGridSql("GRID",mygridSqlR.getCombo(mygridSqlR.getColIndexById("SQLID")),$("#F_PJTSEQ").val(),$("#F_PGMSEQ").val(),mygridSvc.cells(lastrowid5,0).getValue());
+            setGridSql("GRID",mygridSqlR.getCombo(mygridSqlR.getColIndexById("SQLSEQ")),$("#F_PJTSEQ").val(),$("#F_PGMSEQ").val(),mygridSvc.cells(lastrowid5,0).getValue());
             
             //(SQLR) 그리드 조회
             gridSearch7(lastinput7);

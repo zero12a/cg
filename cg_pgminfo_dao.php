@@ -217,7 +217,7 @@ class cg_pgminfo_dao
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "
 		select
-			SQLRSEQ,PJTSEQ,PGMSEQ,SVCSEQ,SQLID,ORD,ADDDT,MODDT
+			SQLRSEQ,PJTSEQ,PGMSEQ,SVCSEQ,ifnull(SQLSEQ,0) as SQLSEQ,ORD,ADDDT,MODDT
 		from CG_PGMSQLR where PJTSEQ = #{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ} and SVCSEQ = #{G9-SVCSEQ}
 		order by ORD asc
 		";
@@ -234,14 +234,14 @@ class cg_pgminfo_dao
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMSQLR (
-			PJTSEQ,PGMSEQ,SVCSEQ,SQLID,ORD
+			PJTSEQ,PGMSEQ,SVCSEQ,SQLSEQ,ORD
 			,ADDDT
 		) values (
-			#{PJTSEQ},#{PGMSEQ},#{SVCSEQ},#{SQLID},#{ORD}
+			#{PJTSEQ},#{PGMSEQ},#{SVCSEQ},#{SQLSEQ},#{ORD}
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 		";
-		$RtnVal["BINDTYPE"] = "iiisi";
+		$RtnVal["BINDTYPE"] = "iiiii";
 		return $RtnVal;
     }  
 	public function sqlrUpd($req){
@@ -251,7 +251,7 @@ class cg_pgminfo_dao
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMSQLR set
-		SQLID = #{SQLID}, ORD = #{ORD}
+		SQLSEQ = #{SQLSEQ}, ORD = #{ORD}
 		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
   		where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLRSEQ = #{SQLRSEQ} 
 		";
@@ -561,7 +561,7 @@ class cg_pgminfo_dao
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "
-		select PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,SQLTXT,ADDDT,MODDT 
+		select PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,ifnull(PSQLSEQ,0) as PSQLSEQ,SQLTXT,ADDDT,MODDT 
 		from CG_PGMSQL 
 		where PJTSEQ = #{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ}
 		";
@@ -578,15 +578,15 @@ class cg_pgminfo_dao
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMSQL (
 			PJTSEQ,PGMSEQ,SQLID,SQLNM,SVRSEQ
-			,CRUD,RTN_TYPE,SQLORD,SQLTXT
+			,CRUD,RTN_TYPE,SQLORD,SQLTXT,PSQLSEQ
 			,ADDDT
 		) values (
 			#{PJTSEQ},#{PGMSEQ},#{SQLID},#{SQLNM},#{SVRSEQ}
-			,#{CRUD},#{RTN_TYPE},#{SQLORD},#{SQLTXT}
+			,#{CRUD},#{RTN_TYPE},#{SQLORD},#{SQLTXT},ifnull(#{PSQLSEQ},0)
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 		";
-		$RtnVal["BINDTYPE"] = "iissi ssis";
+		$RtnVal["BINDTYPE"] = "iissi ssisi";
 		return $RtnVal;
     }  
 	public function sqlUpd($req){
@@ -597,10 +597,11 @@ class cg_pgminfo_dao
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMSQL set
 			SQLID = #{SQLID}, SQLNM = #{SQLNM}, SVRSEQ = #{SVRSEQ}, CRUD = #{CRUD} , RTN_TYPE = #{RTN_TYPE}
-			, SQLTXT = #{SQLTXT}, SQLORD = #{SQLORD}	,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
+			, SQLTXT = #{SQLTXT}, SQLORD = #{SQLORD}, PSQLSEQ = ifnull(#{PSQLSEQ},0)
+			, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
 		where PJTSEQ = #{PJTSEQ}  and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} 
 		";
-		$RtnVal["BINDTYPE"] = "ssiss si iii";
+		$RtnVal["BINDTYPE"] = "ssiss sii iii";
 		return $RtnVal;
     }  
 	public function sqlDel($req){

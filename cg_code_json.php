@@ -48,6 +48,14 @@
             "
             );
 
+    }else if($REQ["PCD"] =="PSQLSEQ" ){
+        $to_coltype = "ii";
+        $sql = sprintf("
+            select SQLSEQ as CD, SQLID as NM from CG_PGMSQL 
+            where PJTSEQ = #PJTSEQ# and PGMSEQ = #PGMSEQ# order by SQLORD asc
+            "
+            );
+
     }else if($REQ["FNCSEQ"] !="" || $REQ["GRPSEQ"] !="" ){
         //SVC에서 사용할 GRP목록 가져오기
         $to_coltype = "ii";
@@ -56,7 +64,7 @@
     }else if($REQ["SVCSEQ"] !="" ){
         //SQLR에서 사용할 SQL목록 가져오기
         $to_coltype = "ii";
-        $sql = " select SQLID as CD,SQLID as NM from CG_PGMSQL where PJTSEQ = #PJTSEQ# and PGMSEQ = #PGMSEQ#  ORDER BY SQLORD ASC   ";
+        $sql = " select SQLSEQ as CD,SQLID as NM from CG_PGMSQL where PJTSEQ = #PJTSEQ# and PGMSEQ = #PGMSEQ# and (PSQLSEQ is null or PSQLSEQ = 0) ORDER BY SQLORD ASC   ";
 
     }else{
         //일반 코드가져오기
