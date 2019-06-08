@@ -105,11 +105,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
 <input type="button" name="BTN_G2_SAVE" value="저장" onclick="G2_SAVE(uuidv4());">
 <input type="button" name="BTN_G2_ROWDELETE" value="-" onclick="G2_ROWDELETE(uuidv4());">
-<input type="button" name="BTN_G2_ROWBULKADD" value="++" onclick="G2_ROWBULKADD(uuidv4());">
 <input type="button" name="BTN_G2_ROWADD" value="+" onclick="G2_ROWADD(uuidv4());">
 <input type="button" name="BTN_G2_RELOAD" value="R" onclick="G2_RELOAD(uuidv4());">
 <input type="button" name="BTN_G2_HIDDENCOL" value="v" onclick="G2_HIDDENCOL(uuidv4());">
-<input type="button" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
 <input type="button" name="BTN_G2_CHKSAVE" value="선택저장" onclick="G2_CHKSAVE(uuidv4());">
 			</div>
 		</div>
@@ -169,7 +167,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				* 상세폼
 			</div>
 			<div class="DETAIL_LABELBTN"  style="">
-				<input type="button" name="BTN_G4_USERDEF" value="사용자정의" onclick="G4_USERDEF(uuidv4());">				<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">				<input type="button" name="BTN_G4_NEW" value="신규" onclick="G4_NEW(uuidv4());">				<input type="button" name="BTN_G4_MODIFY" value="수정" onclick="G4_MODIFY(uuidv4());">				<input type="button" name="BTN_G4_DELETE" value="삭제" onclick="G4_DELETE(uuidv4());">			</div>
+				<input type="button" name="BTN_G4_USERDEF" value="사용자정의" onclick="G4_USERDEF(uuidv4());">				<input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">				<input type="button" name="BTN_G4_NEW" value="신규" onclick="G4_NEW(uuidv4());">				<input type="button" name="BTN_G4_MODIFY" value="수정" onclick="G4_MODIFY(uuidv4());">				<input type="button" name="BTN_G4_DELETE" value="삭제" onclick="G4_DELETE(uuidv4());">				<input type="button" name="BTN_G4_save" value="저장" onclick="G4_save(uuidv4());">			</div>
 		</div>
 		<div style="height:158px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>

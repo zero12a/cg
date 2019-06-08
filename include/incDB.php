@@ -1781,46 +1781,61 @@ end
 
 			if($row["userdata"] == "inserted"  ){
                 //alog("        inserted : " );
-                if ( is_array($sql["C"]["REQUIRE"]) && sizeof($sql["C"]["REQUIRE"]) > 0 ){
-                    //require 필드 갯수 만큼 루프 돌면서 검사
-                    for($k=0;$k<sizeof($sql["C"]["REQUIRE"]);$k++){
-                        $requireCol = $sql["C"]["REQUIRE"][$k];
-                        if($tArr[$requireCol] == ""){
-                            $isRequireResult = false; //필수값이 비여있음
-                            $RtnVal->RTN_MSG = $requireCol . " DB insert시 필수 값입니다.";
-                            break;
+
+                //require 필드 갯수 만큼 루프 돌면서 검사
+                for($k=0;$k<sizeof($sql);$k++){
+                    $tmpSql = $sql[$k];
+
+                    if( ($tmpSql["FNCTYPE"] == "C" && $tmpSql["FNCTYPE"] != "") || $tmpSql["PARENT_FNCTYPE"] == "C" ){
+                        for($r=0;$r<sizeof($tmpSql["REQUIRE"]);$r++){
+                            $requireCol = $tmpSql["REQUIRE"][$r];
+                            if($tArr[$requireCol] == ""){
+                                $isRequireResult = false; //필수값이 비여있음
+                                $RtnVal->RTN_MSG = $requireCol . "는 DB insert시 필수 값입니다.";
+                                break;
+                            }
                         }
+
                     }
+
                 }
 
 			}else if($row["userdata"] == "updated"){
                 //alog("        updated : " );
 
-                if( is_array($sql["U"]["REQUIRE"]) && sizeof($sql["U"]["REQUIRE"]) > 0 ){
-                    //require 필드 갯수 만큼 루프 돌면서 검사   
-                    for($k=0;$k<sizeof($sql["U"]["REQUIRE"]);$k++){
-                        $requireCol = $sql["U"]["REQUIRE"][$k];
-                        if($tArr[$requireCol] == ""){
-                            $isRequireResult = false; //필수값이 비여있음
-                            $RtnVal->RTN_MSG = $requireCol . " DB update시 필수 값입니다.";                        
-                            break;
+                //require 필드 갯수 만큼 루프 돌면서 검사
+                for($k=0;$k<sizeof($sql);$k++){
+                    $tmpSql = $sql[$k];
+
+                    if( ($tmpSql["FNCTYPE"] == "U" && $tmpSql["FNCTYPE"] != "") || $tmpSql["PARENT_FNCTYPE"] == "U" ){
+                        for($r=0;$r<sizeof($tmpSql["REQUIRE"]);$r++){
+                            $requireCol = $tmpSql["REQUIRE"][$r];
+                            if($tArr[$requireCol] == ""){
+                                $isRequireResult = false; //필수값이 비여있음
+                                $RtnVal->RTN_MSG = $requireCol . "는 DB update시 필수 값입니다.";
+                                break;
+                            }
                         }
+
                     }
+
                 }
 
 			}else if($row["userdata"] == "deleted" ){
                 //alog("        deleted : " );
-                if( is_array($sql["D"]["REQUIRE"]) && sizeof($sql["D"]["REQUIRE"]) > 0  ){
-                    //require 필드 갯수 만큼 루프 돌면서 검사
-                    for($k=0;$k<sizeof($sql["D"]["REQUIRE"]);$k++){
-                        $requireCol = $sql["D"]["REQUIRE"][$k];
+
+                if( ($tmpSql["FNCTYPE"] == "D" && $tmpSql["FNCTYPE"] != "") || $tmpSql["PARENT_FNCTYPE"] == "D" ){
+                    for($r=0;$r<sizeof($tmpSql["REQUIRE"]);$r++){
+                        $requireCol = $tmpSql["REQUIRE"][$r];
                         if($tArr[$requireCol] == ""){
                             $isRequireResult = false; //필수값이 비여있음
-                            $RtnVal->RTN_MSG = $requireCol . " DB delete시 필수 값입니다.";                        
+                            $RtnVal->RTN_MSG = $requireCol . "는 DB delete시 필수 값입니다.";
                             break;
                         }
                     }
+
                 }
+
             }else{
                 alog("         userdata no match : " . $row["userdata"]);
             }
@@ -1907,7 +1922,7 @@ end
                 alog(" $k  " . $requireCol . " = " . $REQ[$requireCol]);
                 if($REQ[$requireCol] == ""){
                     $isRequireResult = false; //필수값이 비여있음
-                    $RtnVal->RTN_MSG = $requireCol . " DB조회시 필수 값입니다.";                        
+                    $RtnVal->RTN_MSG = $requireCol . "는 DB조회시 필수 값입니다.";                        
                     break;
                 }
             }            
@@ -2352,6 +2367,55 @@ end
 	}
 
 
+	function requireFormviewSearchArray($sql){
+        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        alog("requireFormviewSearchArray...............................start");
+        //ar_dump($sql["U"]);
+        //exit;
+        $RtnVal = null;
+        $RtnVal->GRP_TYPE = "FORMVIEW";
+        if(!( is_array($sql["R"]["REQUIRE"]) && sizeof($sql["R"]["REQUIRE"]) > 0 ) ){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+            return $RtnVal;
+        }
+
+        $isRequireResult = true;
+
+
+
+        //main/sub sql 갯수만큼 루프 돌기
+        for($i=0;$i<sizeof($sql);$i++){
+            $tmpSql = $sql[$i];
+
+            //SQL에서 입력값 추출하기
+            for($k=0;$k<sizeof($tmpSql["REQUIRE"]);$k++){
+                $requireCol = $tmpSql["REQUIRE"][$k];
+                alog(" $k  " . $requireCol . " = " . $REQ[$requireCol]);
+                if($REQ[$requireCol] == ""){
+                    $isRequireResult = false; //필수값이 비여있음
+                    $RtnVal->RTN_MSG = $requireCol . "는 DB조회시 필수 값입니다.";                        
+                    break;
+                }
+            }            
+        }
+
+		//결과 JSON 화면 출력
+        if($isRequireResult){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+        }else{
+            $RtnVal->RTN_CD = "500";
+            $RtnVal->ERR_CD = "333";            
+        }
+
+        //$RtnVal = json_encode($RtnVal);
+        
+        alog("requireFormviewSearchArray...............................end");
+		return $RtnVal;
+
+	}
+
 
 	function requireFormviewSave($sql,$fnctype){
         global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
@@ -2420,6 +2484,124 @@ end
 		return $RtnVal;
 
     }
+
+
+
+	function requireFormviewSaveArray($sql,$fnctype){
+        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        alog("requireFormviewSaveArray ..................................start");
+        //ar_dump($sql["U"]);
+        //exit;
+        $RtnVal = null;
+        $RtnVal->GRP_TYPE = "FORMVIEW";
+
+
+
+        //관련 모든 SQL에 REQUIRE이 하나도 없으면 검사 패스
+        $isRequireOverOne = false;
+        for($s = 0; $s < sizeof($sql) ; $s++){
+            $tmpSql = $sql[$s];
+            if(sizeof($tmpSql["REQUIRE"]) > 0) $isRequireOverOne = true;
+        }
+        if(!$isRequireOverOne){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+            return $RtnVal;
+        }
+
+
+        $isRequireResult = true;
+
+        $require = null;
+
+        //main/sub sql 갯수만큼 루프 돌기
+        for($i=0;$i<sizeof($sql);$i++){
+            $tmpSql = $sql[$i];
+
+            //SQL에서 입력값 추출하기
+            if(
+                ( $fnctype == "C" && 
+                    ( 
+                        ( $tmpSql["FNCTYPE"] == "C" && $tmpSql["PARENT_FNCTYPE"] == "" )
+                        ||
+                        ( $tmpSql["PARENT_FNCTYPE"] == "C" )
+                    )
+                ) 
+                || 
+                ( $fnctype == "U" && 
+                    ( 
+                        ( $tmpSql["FNCTYPE"] == "U" && $tmpSql["PARENT_FNCTYPE"] == "" )
+                        ||
+                        ( $tmpSql["PARENT_FNCTYPE"] == "U" )
+                    )
+                )
+                ||
+                ( $fnctype == "D" && 
+                    ( 
+                        ( $tmpSql["FNCTYPE"] == "D" && $tmpSql["PARENT_FNCTYPE"] == "" )
+                        ||
+                        ( $tmpSql["PARENT_FNCTYPE"] == "D" )
+                    )       
+                )         
+            ){
+
+                for($k=0;$k<sizeof($tmpSql["REQUIRE"]);$k++){
+                    $requireCol = $tmpSql["REQUIRE"][$k];
+                    alog(" $k  " . $requireCol . " = " . $REQ[$requireCol]);
+                    if($REQ[$requireCol] == ""){
+                        $isRequireResult = false; //필수값이 비여있음
+                        $RtnVal->RTN_MSG = $requireCol . "는 DB조회시 필수 값입니다.";                        
+                        break;
+                    }
+                }      
+
+            }
+      
+        }
+
+
+        switch ($fnctype){
+            case "C" :
+                $require = $sql["C"]["REQUIRE"];
+				break;
+
+            case "U" :
+                $require = $sql["U"]["REQUIRE"];
+				break;
+
+            case "D" :
+                $require = $sql["D"]["REQUIRE"];
+				break;
+
+			default:
+				return "FNCTYPE 없음(".$map["FNCTYPE"].")";
+		}
+
+        //SQL에서 입력값 추출하기
+        for($k=0;$k<sizeof($require);$k++){
+            $requireCol = $require[$k];
+            alog(" $k  " . $requireCol . " = " . $REQ[$requireCol]);
+            if($REQ[$requireCol] == ""){
+                $isRequireResult = false; //필수값이 비여있음
+                $RtnVal->RTN_MSG = $requireCol . " DB저장시 필수 값입니다.";                        
+                break;
+            }
+        }
+
+		//결과 JSON 화면 출력
+        if($isRequireResult){
+            $RtnVal->RTN_CD = "200";
+            $RtnVal->ERR_CD = "200";
+        }else{
+            $RtnVal->RTN_CD = "500";
+            $RtnVal->ERR_CD = "333";            
+        }
+
+        //$RtnVal = json_encode($RtnVal);
+        alog("requireFormviewSaveArray ..................................end");        
+		return $RtnVal;
+
+    }    
     
 	function makeFormviewSearchJson($map,&$db){
         global $REQ, $CFG_SEC_KEY, $CFG_SEC_SALT, $PGM_CFG;
@@ -2466,6 +2648,76 @@ end
 		$RtnVal->RTN_CD = "200";
 		$RtnVal->ERR_CD = "200";
 		//alog("	result json : " . json_encode($RtnVal));
+		return  $RtnVal;
+		//var_dump($RtnVal);
+	}
+
+
+	function makeFormviewSearchJsonArray($map,&$db){
+        global $REQ, $CFG_SEC_KEY, $CFG_SEC_SALT, $PGM_CFG;
+        alog("makeFormviewSearchJsonArray...........................start");
+
+        //암호화컬럼
+        $colcrypt_array = $map["COLCRYPT"];   
+
+
+        //main/sub sql 갯수 만큼 루프돌면서 처리하기
+        alog("  sql sizeof : " . sizeof($map["SQL"]));
+        for($s=0;$s<sizeof($map["SQL"]);$s++){
+             $tmpSql = $map["SQL"][$s];
+ 
+             //main/sub 구분에 따라 처리
+             alog("  sql[" . $s . "] PARENT_FNCTYPE = ". $tmpSql["PARENT_FNCTYPE"]);            
+             alog("      SVRID = " . $tmpSql["SVRID"]);
+             alog("      SQLTXT = " . $tmpSql["SQLTXT"]);
+             alog("      BINDTYPE = " . $tmpSql["BINDTYPE"]);
+
+            //폼 입력값에 암호화 컬럼 있는지 검사해서 암호화 처리
+            $tParamEnc = makeParamEnc($tmpSql["SQLTXT"], $REQ, $colcrypt_array);
+
+            $stmt = makeStmt($db[$tmpSql["SVRID"]],$tmpSql["SQLTXT"], $tmpSql["BINDTYPE"], $tParamEnc);
+            if(!$stmt)   JsonMsg("500","300","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+
+            //alog("make_detail_read_json-------------------------------start");
+            if(!$stmt->execute())JsonMsg("500","310","stmt 실행 실패" . $db->errno . " -> " . $db->error);
+
+            //main인 경우만
+            if( $tmpSql["PARENT_FNCTYPE"] == ""){
+
+                $stmt->store_result();
+                //$colcrypt_array = explode(",",$map["COLCRYPT"]);   
+
+                $PGM_CFG["SQLTXT"][sizeof($PGM_CFG["SQLTXT"])-1]["ROW_CNT"] = $stmt->num_rows;
+
+                $cols = null; //결과 
+                $meta = $stmt->result_metadata(); 
+                while ($field = $meta->fetch_field()) 
+                { 
+                    $params[] = &$row[$field->name]; 
+                } 
+                call_user_func_array(array($stmt, 'bind_result'), $params); 
+
+
+                //alog("	fetch out");
+                if($stmt->fetch()) {
+                    //alog("	fetch in");
+                    foreach( $row as $key=>$value )
+                    {
+                        //alog("	fetch foreach : $key = $value");
+                        $RtnVal->RTN_DATA[$key] = makeParamDec($key, $value, $colcrypt_array);		
+                    }
+                } 
+            }
+            $stmt->close();
+        }
+
+		//$result_array = fetch_all($result,MYSQLI_NUM);//indDB.php
+		//결과 JSON 화면 출력
+		$RtnVal->RTN_CD = "200";
+		$RtnVal->ERR_CD = "200";
+        //alog("	result json : " . json_encode($RtnVal));
+        
+        alog("makeFormviewSearchJsonArray...........................end");        
 		return  $RtnVal;
 		//var_dump($RtnVal);
 	}
@@ -2547,6 +2799,82 @@ end
 		return $RtnVal;
     }
     
+
+	function makeFormviewSaveJsonArray($map,&$db){
+		global $REQ, $PGM_CFG;
+
+		alog("makeFormviewSaveJsonArray----------------------------------------start");
+		alog("	FNCTYPE : " . $map["FNCTYPE"]);
+
+        $svrid = "";
+		$sqltxt = "";
+		$bindtype = "";
+		switch ($map["FNCTYPE"]){
+            case "C" :
+                    $svrid		= $map["SQL"]["C"]["SVRID"];
+					$sqltxt		= $map["SQL"]["C"]["SQLTXT"];
+					$bindtype	= $map["SQL"]["C"]["BINDTYPE"];
+				break;
+
+            case "U" :
+                    $svrid		= $map["SQL"]["U"]["SVRID"];            
+					$sqltxt		= $map["SQL"]["U"]["SQLTXT"];
+					$bindtype	= $map["SQL"]["U"]["BINDTYPE"];
+				break;
+
+            case "D" :
+                    $svrid		= $map["SQL"]["D"]["SVRID"];            
+					$sqltxt		= $map["SQL"]["D"]["SQLTXT"];
+					$bindtype	= $map["SQL"]["D"]["BINDTYPE"];
+				break;
+
+			default:
+				return "FNCTYPE 없음(".$map["FNCTYPE"].")";
+		}
+
+        alog("sql ---------------------------\n" . $sqltxt);
+        alog("bindtype ---------------------------\n" . $bindtype);
+        
+
+        //폼 입력값에 암호화 컬럼 있는지 검사해서 암호화 처리
+        $colcrypt_array = $map["COLCRYPT"];           
+        $tParamEnc = makeParamEnc($sqltxt, $REQ, $colcrypt_array);
+
+		$stmt = makeStmt($db[$svrid], $sqltxt, $bindtype, $tParamEnc);
+		if(!$stmt)  JsonMsg("500","400","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+		
+		if(!$stmt->execute())JsonMsg("500","410","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+		
+        //echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
+
+        $to_affected_rows = $db->affected_rows;
+        alog("  to_affected_rows = ". $to_affected_rows);
+
+        $PGM_CFG["SQLTXT"][sizeof($PGM_CFG["SQLTXT"])-1]["ROW_CNT"] = $to_affected_rows;
+
+        if($map["FNCTYPE"] == "C" && $map["SEQYN"] == "Y"){
+            alog("SEQYN Y : " . $db->insert_id);
+            $RtnVal->COLID = $db->insert_id;//insert문인 경우 insert id받기
+        }
+
+		$stmt->close();
+
+		//$tarr = array("OLD_ID"=>$row["@attributes"]["id"],"NEW_ID"=>$to_row["COLID"],"USER_DATA"=>$row["userdata"],"AFFECTED_ROWS"=>$to_affected_rows);
+
+		$RtnVal->RTN_DATA = $to_affected_rows;
+
+		//결과 JSON 화면 출력
+		//$RtnVal["RTN_CD"] = "200";
+		//$RtnVal["ERR_CD"] = "200";
+
+		$RtnVal->GRP_TYPE = "FORMVIEW";
+	    $RtnVal->SEQ_COLID = ($map["SEQYN"] == "Y")?$map["KEYCOLID"]:"";
+
+		//$RtnVal = json_encode($RtnVal);
+		alog("makeFormviewSaveJsonArray----------------------------------------end");
+		return $RtnVal;
+    }
+
 
     function getSqlSelect2Array($tSql){
         include_once("../c.g/lib/PHP-SQL-Parser/src/PHPSQLParser.php");

@@ -230,9 +230,6 @@ switch ($ctl){
 	case "G2_SAVE" :
   		echo $objService->goG2Save(); //마스터, 저장
   		break;
-	case "G2_EXCEL" :
-  		echo $objService->goG2Excel(); //마스터, 엑셀다운로드
-  		break;
 	case "G2_CHKSAVE" :
   		echo $objService->goG2Chksave(); //마스터, 선택저장
   		break;
@@ -253,6 +250,9 @@ switch ($ctl){
   		break;
 	case "G4_DELETE" :
   		echo $objService->goG4Delete(); //상세폼, 삭제
+  		break;
+	case "G4_save" :
+  		echo $objService->goG4Save(); //상세폼, 저장
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");

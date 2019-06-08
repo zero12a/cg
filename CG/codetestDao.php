@@ -42,7 +42,7 @@ order by ORD asc";
 	,EDITYN,FORMATYN,USEYN,DELYN
 	,ADDDT,MODDT
 from CG_CODED
-where PCD = #{G2-PCD}
+where PCD = #{G2-PCD} 
 order by ORD ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
@@ -122,7 +122,7 @@ where PCD = #{PCD}
 where  PCD = #{PCD} and CD = #{CD}
 ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
-		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["REQUIRE"] = array("CDMIN"	);
 		$RtnVal["BINDTYPE"] = "ssisssssssssss";
 		return $RtnVal;
     }  
@@ -189,10 +189,10 @@ order by ORD asc";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
-		$RtnVal["SQLTXT"] = "update CG_CODE set ORD = ORD + 1";
+		$RtnVal["SQLTXT"] = "update CG_CODE set ORD = ORD + 1  where PCD = #{G2-PCD}";
 		$RtnVal["PARENT_FNCTYPE"] = "R"; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "";
+		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
 	//DTL    
@@ -201,9 +201,25 @@ order by ORD asc";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
-		$RtnVal["SQLTXT"] = "update CG_CODED set ORD = ORD + 1 where CD = #{CD} and PCD = #{PCD}
+		$RtnVal["SQLTXT"] = "update CG_CODED set ORD = ORD + 1 where CD = #{CD} and PCD = #{PCD}  and ORD = #{ORD}
 ";
 		$RtnVal["PARENT_FNCTYPE"] = "U"; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array("ORD"	);
+		$RtnVal["BINDTYPE"] = "ssi";
+		return $RtnVal;
+    }  
+	//MASD    
+	public function updMasD($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "update
+	CG_CODE
+set
+	PCDDESC = #{G4-ADD_DT}
+where PCD = #{G4-PCD}";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ss";
 		return $RtnVal;

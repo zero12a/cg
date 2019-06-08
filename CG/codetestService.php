@@ -73,8 +73,6 @@ class codetestService
 
 		//조회
 		//V_GRPNM : 마스터
-		array_push($GRID["SQL"], $this->DAO->hitMasG($REQ)); //SEARCH, 조회,MAS
-		//V_GRPNM : 마스터
 		array_push($GRID["SQL"], $this->DAO->selMasG($REQ)); //SEARCH, 조회,MAS
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
@@ -115,11 +113,11 @@ class codetestService
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 마스터
+		array_push($GRID["SQL"], $this->DAO->insMasG($REQ)); //SAVE, 저장,MAS
+		//V_GRPNM : 마스터
 		array_push($GRID["SQL"], $this->DAO->delMasG($REQ)); //SAVE, 저장,MAS
 		//V_GRPNM : 마스터
 		array_push($GRID["SQL"], $this->DAO->updMasG($REQ)); //SAVE, 저장,MAS
-		//V_GRPNM : 마스터
-		array_push($GRID["SQL"], $this->DAO->insMasG($REQ)); //SAVE, 저장,MAS
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -140,21 +138,6 @@ class codetestService
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
 		alog("CODETESTService-goG2Save________________________end");
-	}
-	//마스터, 엑셀다운로드
-	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("CODETESTService-goG2Excel________________________start");
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("CODETESTService-goG2Excel________________________end");
 	}
 	//마스터, 선택저장
 	public function goG2Chksave(){
@@ -227,9 +210,9 @@ class codetestService
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 상세
-		array_push($GRID["SQL"], $this->DAO->delDtlG($REQ)); //SAVE, 저장,DTL
-		//V_GRPNM : 상세
 		array_push($GRID["SQL"], $this->DAO->insDtlG($REQ)); //SAVE, 저장,DTL
+		//V_GRPNM : 상세
+		array_push($GRID["SQL"], $this->DAO->delDtlG($REQ)); //SAVE, 저장,DTL
 		//V_GRPNM : 상세
 		array_push($GRID["SQL"], $this->DAO->updDtlG($REQ)); //SAVE, 저장,DTL
 		//V_GRPNM : 상세
@@ -297,18 +280,21 @@ class codetestService
 //FORMVIEW SEARCH
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array();
-// SQL LOOP
+		$FORMVIEW["SQL"] = array();
+	// SQL LOOP
 		// MAS
-		$FORMVIEW["SQL"]["R"] = $this->DAO->selMasD($REQ); 
+		array_push($FORMVIEW["SQL"], $this->DAO->selMasD($REQ)); 
+		// MAS
+		array_push($FORMVIEW["SQL"], $this->DAO->hitMasG($REQ)); 
 		//필수 여부 검사
-		$tmpVal = requireFormviewSearch($FORMVIEW["SQL"]);
+		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeFormviewSearchJson($FORMVIEW,$this->DB);
+		$rtnVal = makeFormviewSearchJsonArray($FORMVIEW,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
@@ -330,6 +316,50 @@ class codetestService
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
 		alog("CODETESTService-goG4Delete________________________end");
+	}
+	//상세폼, 저장
+	public function goG4Save(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("CODETESTService-goG4Save________________________start");
+		//FORMVIEW SAVE
+		$grpId="G4";
+		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
+		$GRID["KEYCOLID"] = "";  //KEY컬럼 COLID, -1
+		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
+	//암호화컬럼
+		$FORMVIEW["COLCRYPT"] = array();	
+			//CTLCUD 명령어에 따른 분개 처리
+		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
+
+		$FORMVIEW["SQL"] = array();
+			array_push($FORMVIEW["SQL"],$this->DAO->updMasD($REQ)); 
+			//필수 여부 검사
+			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
+			if($tmpVal->RTN_CD == "500"){
+				alog("requireFormview - fail.");
+				$tmpVal->GRPID = $grpId;
+				echo json_encode($tmpVal);
+				exit;
+			}
+			$tmpVal = makeFormviewSaveJsonArray($FORMVIEW,$this->DB);
+			array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
+
+			$al->GRPID = $grpId;
+			array_push($rtnVal->GRP_DATA, $tmpVal);
+
+			//$rtnVal = makeFormviewSaveJson($FORMVIEW,$this->DB);
+
+		}//C,U 일때만 DB처리
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("CODETESTService-goG4Save________________________end");
 	}
 }
                                                              
