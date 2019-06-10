@@ -24,6 +24,12 @@ header("Pragma:no-cache");
             border: 1px solid #909090;
         }
 
+        /*탭 아이콘 보이게 표시*/
+        .cm-tab {
+         background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+         background-position: right;
+         background-repeat: no-repeat;
+        }
 
         .BODY_BOX {100%;background-color:yellowgreen;padding:5px 5px 5px 5px;}
 

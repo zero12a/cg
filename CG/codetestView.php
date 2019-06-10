@@ -86,7 +86,18 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<div name="G1-MYCHECK_holder" id="G1-MYCHECK_holder"  style="width:400px;"></div>
 					</div>
  				</div>
- 			</div><!-- is_br_tag end -->
+ 			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : PNM-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						PNM
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--PNM오브젝트출력-->						<input type="text" name="G1-PNM" value="<?=getFilter(reqPostString("PNM",100),"SAFEECHO","")?>" id="G1-PNM" style="width:60px;">
+					</div>
+				</div>
+			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
 	</div>
@@ -109,7 +120,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G2_RELOAD" value="R" onclick="G2_RELOAD(uuidv4());">
 <input type="button" name="BTN_G2_HIDDENCOL" value="v" onclick="G2_HIDDENCOL(uuidv4());">
 <input type="button" name="BTN_G2_CHKSAVE" value="선택저장" onclick="G2_CHKSAVE(uuidv4());">
-			</div>
+<input type="checkbox" name="G2-edit_EDIT_MODE" id="G2-edit_EDIT_MODE" value="Y" style="vertical-align:middle;">편집모드
+				</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG2"  style="background-color:white;overflow:hidden;height:478px;width:100%;"></div>
@@ -206,7 +218,18 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<div name="G4-MYRADIO_holder" id="G4-MYRADIO_holder"  style="width:400px;"></div>
 					</div>
  				</div>
- 			</DIV><!--is_br_tab end-->
+ 			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : PCD-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						PCD
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--PCD오브젝트출력-->						<input type="text" name="G4-PCD" value="" id="G4-PCD" style="width:60px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
 	</div>

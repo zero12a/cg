@@ -1155,8 +1155,14 @@ function getInput($input,$filetype,$param,$G){
     }else if($input == "PGMSQLR"){
         $T_SQL = sprintf("
             select a.*,b.SQLNM,b.CRUD,b.SQLTXT,b.SVRSEQ, b.SQLID
+                , case when b.PSQLSEQ is null or b.PSQLSEQ = 0 then
+                    b.CRUD 
+                else
+                    p.CRUD
+                end LAST_CRUD 
 			from CG_PGMSQLR a 
                 left outer join CG_PGMSQL b	on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and (a.SQLSEQ = b.SQLSEQ or a.SQLSEQ = b.PSQLSEQ)
+                left outer join CG_PGMSQL p on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and b.PSQLSEQ = p.SQLSEQ
             where a.PJTSEQ = %d and a.PGMSEQ = %d and a.SVCSEQ = %s %s            
             order by b.SQLORD asc
             "
@@ -1165,7 +1171,7 @@ function getInput($input,$filetype,$param,$G){
             ,$G["V"]["SVCSEQ"]
             ,$AddSql
         );
-        //alog("SQL 1059 (input " . $input . ") : " .$T_SQL);
+        alog("SQL 1174 (input " . $input . ") : " .$T_SQL);
         //echo "<br>getInput $input :  ". $T_SQL;
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
 

@@ -70,6 +70,8 @@ $REQ["G1-MYRADIO"] = reqPostString("G1-MYRADIO",30);//나의라디오
 $REQ["G1-MYRADIO"] = getFilter($REQ["G1-MYRADIO"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G1-ADD_DT"] = reqPostString("G1-ADD_DT",14);//ADD	
 $REQ["G1-ADD_DT"] = getFilter($REQ["G1-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G1-PNM"] = reqPostString("G1-PNM",100);//PNM	
+$REQ["G1-PNM"] = getFilter($REQ["G1-PNM"],"SAFETEXT","/--미 정의--/");	
 
 //G2, 마스터
 $REQ["G2-PCD"] = reqPostString("G2-PCD",30);//PCD	
@@ -130,16 +132,19 @@ $REQ["G4-ADD_DT"] = reqPostString("G4-ADD_DT",14);//ADD
 $REQ["G4-ADD_DT"] = getFilter($REQ["G4-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G4-MYRADIO"] = reqPostString("G4-MYRADIO",30);//나의라디오	
 $REQ["G4-MYRADIO"] = getFilter($REQ["G4-MYRADIO"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G4-PCD"] = reqPostString("G4-PCD",30);//PCD	
+$REQ["G4-PCD"] = getFilter($REQ["G4-PCD"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터	
 	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//상세	
 	//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT"
+		,"COLORD"=>"CHK,PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT"
 		,"VALID"=>
 			array(
-			"PCD"=>array("STRING",30)	
+			"CHK"=>array("NUMBER",1)	
+			,"PCD"=>array("STRING",30)	
 			,"PNM"=>array("STRING",100)	
 			,"PCDDESC"=>array("STRING",500)	
 			,"ORD"=>array("NUMBER",10)	
@@ -151,7 +156,8 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터
 					)
 		,"FILTER"=>
 			array(
-			"PCD"=>array("CLEARTEXT","/--미 정의--/")
+			"CHK"=>array("REGEXMAT","/^([0-9a-zA-Z]|,)+$/")
+			,"PCD"=>array("CLEARTEXT","/--미 정의--/")
 			,"PNM"=>array("SAFETEXT","/--미 정의--/")
 			,"PCDDESC"=>array("CLEARTEXT","/--미 정의--/")
 			,"ORD"=>array("REGEXMAT","/^[0-9]+$/")
@@ -212,7 +218,10 @@ $REQ["G1-MYCHECK"] = filterGridChk($REQ["G1-MYCHECK"],"STRING",11,"CLEARTEXT","/
 $REQ["G4-MYCHECK"] = $_POST["G4-MYCHECK"];	//checkbox 받기
 $REQ["G4-MYCHECK"] = filterFormviewChk($REQ["G4-MYCHECK"],"STRING",110,"CLEARTEXT","/--미 정의--/");//MYCHECK 입력값검증
 	
-array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
+$REQ["G2-CHK"] = $_POST["G2-CHK"];//CHK 받기
+//filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
+$REQ["G2-CHK"] = filterGridChk($REQ["G2-CHK"],"STRING",30,"CLEARTEXT","/--미 정의--/");//PCD 입력값검증
+	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new codetestService();
 	//컨트롤 명령별 분개처리

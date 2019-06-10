@@ -69,7 +69,7 @@ class codetestService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
-		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, PCD
+		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PCD
 
 		//조회
 		//V_GRPNM : 마스터
@@ -103,21 +103,25 @@ class codetestService
 
 		alog("CODETESTService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
-		$GRID["SQL"] = array();
+		$GRID["SQL"]["C"] = array();
+		$GRID["SQL"]["U"] = array();
+		$GRID["SQL"]["D"] = array();
 		$grpId="G2";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "CHK,PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
-		$GRID["KEYCOLID"] = "PCD";  //KEY컬럼 COLID, 0
+		$GRID["KEYCOLID"] = "PCD";  //KEY컬럼 COLID, 1
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 마스터
-		array_push($GRID["SQL"], $this->DAO->insMasG($REQ)); //SAVE, 저장,MAS
+		array_push($GRID["SQL"]["D"], $this->DAO->delMasG($REQ)); //SAVE, 저장,MAS
 		//V_GRPNM : 마스터
-		array_push($GRID["SQL"], $this->DAO->delMasG($REQ)); //SAVE, 저장,MAS
+		array_push($GRID["SQL"]["U"], $this->DAO->updMasG($REQ)); //SAVE, 저장,MAS
 		//V_GRPNM : 마스터
-		array_push($GRID["SQL"], $this->DAO->updMasG($REQ)); //SAVE, 저장,MAS
+		array_push($GRID["SQL"]["C"], $this->DAO->insMasG($REQ)); //SAVE, 저장,MAS
+		//V_GRPNM : 마스터
+		array_push($GRID["SQL"]["U"], $this->DAO->hitMasG2($REQ)); //SAVE, 저장,MAS
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -148,6 +152,20 @@ class codetestService
 		$rtnVal->GRP_DATA = array();
 
 		alog("CODETESTService-goG2Chksave________________________start");
+		//GRID_CHK_SAVE____________________________start
+		$GRID["SQL"] = array();
+		$grpId="G2";
+		$GRID["CHK"]=$REQ[$grpId."-CHK"];
+		$GRID["KEYCOLID"] = "PCD";  //KEY컬럼 COLID, 1
+		//선택저장	
+		array_push($GRID["SQL"], $this->DAO->chkMasG($REQ)); // CHKSAVE, 선택저장, MAS
+		array_push($GRID["SQL"], $this->DAO->chkHitMasG($REQ)); // CHKSAVE, 선택저장, MAS
+		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_CHK_SAVE____________________________end
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
@@ -199,39 +217,44 @@ class codetestService
 		$rtnVal->GRP_DATA = array();
 
 		alog("CODETESTService-goG3Save________________________start");
-		//GRID_SAVE____________________________start
-		$GRID["SQL"] = array();
-		$grpId="G3";
-		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "CD,NM,CDDESC,PCD,ORD,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
-	//암호화컬럼
-		$GRID["COLCRYPT"] = array();	
-		$GRID["KEYCOLID"] = "CD";  //KEY컬럼 COLID, 0
+		//FORMVIEW SAVE
+		$grpId="G4";
+		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
+		$GRID["KEYCOLID"] = "";  //KEY컬럼 COLID, -1
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
-		//저장
-		//V_GRPNM : 상세
-		array_push($GRID["SQL"], $this->DAO->insDtlG($REQ)); //SAVE, 저장,DTL
-		//V_GRPNM : 상세
-		array_push($GRID["SQL"], $this->DAO->delDtlG($REQ)); //SAVE, 저장,DTL
-		//V_GRPNM : 상세
-		array_push($GRID["SQL"], $this->DAO->updDtlG($REQ)); //SAVE, 저장,DTL
-		//V_GRPNM : 상세
-		array_push($GRID["SQL"], $this->DAO->hitDtlG($REQ)); //SAVE, 저장,DTL
-		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
-		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
-			$tmpVal->GRPID = $grpId;
-			echo json_encode($tmpVal);
-			exit;
-		}
-		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
+	//암호화컬럼
+		$FORMVIEW["COLCRYPT"] = array();	
+			//CTLCUD 명령어에 따른 분개 처리
+		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
 
-		$tmpVal->GRPID = $grpId;
-		array_push($rtnVal->GRP_DATA, $tmpVal);
-		//GRID_SAVE____________________________end
+			$FORMVIEW["SQL"] = array();
+			switch($FORMVIEW["FNCTYPE"]){
+				case "C":
+					break;
+				case "U":
+					array_push($FORMVIEW["SQL"],$this->DAO->updDtlF($REQ));
+					array_push($FORMVIEW["SQL"],$this->DAO->hitDtlF($REQ));
+					break;
+				default : 
+					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
+			}
+			//필수 여부 검사
+			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
+			if($tmpVal->RTN_CD == "500"){
+				alog("requireFormview - fail.");
+				$tmpVal->GRPID = $grpId;
+				echo json_encode($tmpVal);
+				exit;
+			}
+			$tmpVal = makeFormviewSaveJsonArray($FORMVIEW,$this->DB);
+			array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 
+			$al->GRPID = $grpId;
+			array_push($rtnVal->GRP_DATA, $tmpVal);
 
+			//$rtnVal = makeFormviewSaveJson($FORMVIEW,$this->DB);
+
+		}//C,U 일때만 DB처리
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
@@ -278,6 +301,7 @@ class codetestService
 
 		alog("CODETESTService-goG4Search________________________start");
 //FORMVIEW SEARCH
+		$grpId="G4";
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array();
 		$FORMVIEW["SQL"] = array();
@@ -336,8 +360,17 @@ class codetestService
 			//CTLCUD 명령어에 따른 분개 처리
 		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
 
-		$FORMVIEW["SQL"] = array();
-			array_push($FORMVIEW["SQL"],$this->DAO->updMasD($REQ)); 
+			$FORMVIEW["SQL"] = array();
+			switch($FORMVIEW["FNCTYPE"]){
+				case "C":
+					break;
+				case "U":
+					array_push($FORMVIEW["SQL"],$this->DAO->updDtlF($REQ));
+					array_push($FORMVIEW["SQL"],$this->DAO->hitDtlF($REQ));
+					break;
+				default : 
+					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
+			}
 			//필수 여부 검사
 			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
 			if($tmpVal->RTN_CD == "500"){

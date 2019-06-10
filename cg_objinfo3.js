@@ -666,11 +666,11 @@
             styleActiveLine: true,
             indentWithTabs: true,
             smartIndent: true,
+            lineWrapping: true,            
             lineNumbers: true,
             matchBrackets : true,
             tabSize: 4,
-            indentUnit: 4,
-            indentWithTabs: true
+            indentUnit: 4
         });
 
         cm2.on("change", function(cm, change) {

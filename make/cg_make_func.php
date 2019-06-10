@@ -19,7 +19,7 @@ function makeRst($line,$type,$G){
 	$rsttxt = R($line["SRCTXT"],$G);
     
     if($ENV["MAKE_DEBUG"]){
-        echo "<tr>";
+        echo "<table border=1 style='font-size:8pt'><tr>";
         echo "<td>" . $type . "</td>";
         echo "<td>" . $line["OBJTYPE"] . "</td>";
         echo "<td>" . $line["OBJVAL"] . "</td>";
@@ -33,12 +33,12 @@ function makeRst($line,$type,$G){
         echo "<td style='width:50%;word-wrap:break-word;font-size:10pt;'><pre>" . HtmlEncode( $rsttxt ) . "</pre></td>";
         if($line["DEBUGYN"] != "N"){
             echo "<td><textarea onclick='alert(this.value)' style='width:30px;height:30px;'>" . $line["DEBUGYN"] . "\n";
-            print_r($G[$line["DEBUGYN"]]);
+            print_r($G);
             echo "</textarea></td>";
         }else{
             echo "<td>" . $line["DEBUGYN"] . "</td>";
         }
-        echo "</tr>";
+        echo "</tr></table>";
     }
 
 	

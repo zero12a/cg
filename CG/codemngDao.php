@@ -18,6 +18,7 @@ class codemngDao
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "selMasG";
 		$RtnVal["SQLTXT"] = "select 
 	PCD,PNM,PCDDESC,ORD
 	,UITOOL,USEYN,DELYN
@@ -25,7 +26,8 @@ class codemngDao
 from 
 	CG_CODE
 order by ORD asc";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  
@@ -35,6 +37,7 @@ order by ORD asc";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "selDtlG";
 		$RtnVal["SQLTXT"] = "select
 	CD,NM,CDDESC,PCD,ORD
 	,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE
@@ -43,7 +46,8 @@ order by ORD asc";
 from CG_CODED
 where PCD = #{G2-PCD}
 order by ORD ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -53,6 +57,7 @@ order by ORD ";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "insMasG";
 		$RtnVal["SQLTXT"] = "insert into CG_CODE (
 	PCD,PNM,PCDDESC,ORD
 	,UITOOL,USEYN,DELYN
@@ -62,7 +67,8 @@ order by ORD ";
 	,#{UITOOL},if(#{USEYN}='','Y',#{USEYN}),if(#{DELYN}='','N',#{DELYN})
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssiisssss";
 		return $RtnVal;
     }  
@@ -72,6 +78,7 @@ order by ORD ";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "insDtlG";
 		$RtnVal["SQLTXT"] = "insert into CG_CODED (
 	CD,NM,CDDESC,PCD
 	,ORD,CDVAL,CDVAL2,CDMIN,CDMAX
@@ -83,7 +90,8 @@ order by ORD ";
 	,#{DATATYPE},#{EDITYN},#{FORMATYN},if(#{USEYN}='','Y',#{USEYN}),if(#{DELYN}='','N',#{DELYN})
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssssiisssssssssss";
 		return $RtnVal;
     }  
@@ -93,13 +101,15 @@ order by ORD ";
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "updMasG";
 		$RtnVal["SQLTXT"] = "update CG_CODE set
 	PNM = #{PNM}, PCDDESC = #{PCDDESC}, ORD = #{ORD}, UITOOL = #{UITOOL}, USEYN = #{USEYN}
 	, DELYN = #{DELYN}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
 where PCD = #{PCD}
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssissss";
 		return $RtnVal;
     }  
@@ -109,6 +119,7 @@ where PCD = #{PCD}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "updDtlG";
 		$RtnVal["SQLTXT"] = "update  CG_CODED set
 	NM = #{NM}, CDDESC = #{CDDESC},ORD = #{ORD}, CDVAL = #{CDVAL}, CDVAL2 = #{CDVAL2}
 	, CDMIN = #{CDMIN}, CDMAX = #{CDMAX}, DATATYPE = #{DATATYPE}, EDITYN = #{EDITYN}, FORMATYN = #{FORMATYN}
@@ -116,7 +127,8 @@ where PCD = #{PCD}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
 where  PCD = #{PCD} and CD = #{CD}
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssisssssssssss";
 		return $RtnVal;
     }  
@@ -126,10 +138,12 @@ where  PCD = #{PCD} and CD = #{CD}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "delDtlG";
 		$RtnVal["SQLTXT"] = "delete from CG_CODED 
 where PCD = #{PCD} and CD = #{CD}
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ss";
 		return $RtnVal;
     }  
@@ -139,10 +153,12 @@ where PCD = #{PCD} and CD = #{CD}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "delMasG";
 		$RtnVal["SQLTXT"] = "delete from CG_CODE
 where PCD = #{PCD} 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -152,13 +168,15 @@ where PCD = #{PCD}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "selMasD";
 		$RtnVal["SQLTXT"] = "select 
 	'LINESTART' as MYRADIO, 'LINESTART,LINEEND' as MYCHECK, '20191212' as ADD_DT
 from 
 	CG_CODE
 where PCD = #{G2-PCD}
 order by ORD asc";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  

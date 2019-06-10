@@ -3,7 +3,7 @@
 var url_G1_SEARCHALL = "codetestController?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 그룹쪽에서 컨틀롤러 호출
 var url_G1_SAVE = "codetestController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
 var url_G1_RESET = "codetestController?CTLGRP=G1&CTLFNC=RESET";//1 변수 선언	
-var obj_G1_MYRADIO; // 나의라디오 변수선언var obj_G1_ADD_DT; // ADD 변수선언var obj_G1_MYCHECK; // 체크 변수선언//그리드 변수 초기화	
+var obj_G1_MYRADIO; // 나의라디오 변수선언var obj_G1_ADD_DT; // ADD 변수선언var obj_G1_MYCHECK; // 체크 변수선언var obj_G1_PNM; // PNM 변수선언//그리드 변수 초기화	
 //컨트롤러 경로
 var url_G2_SEARCH = "codetestController?CTLGRP=G2&CTLFNC=SEARCH";
 //컨트롤러 경로
@@ -18,6 +18,8 @@ var url_G2_RELOAD = "codetestController?CTLGRP=G2&CTLFNC=RELOAD";
 var url_G2_HIDDENCOL = "codetestController?CTLGRP=G2&CTLFNC=HIDDENCOL";
 //컨트롤러 경로
 var url_G2_CHKSAVE = "codetestController?CTLGRP=G2&CTLFNC=CHKSAVE";
+//컨트롤러 경로
+var url_G2_edit = "codetestController?CTLGRP=G2&CTLFNC=edit";
 //그리드 객체
 var mygridG2,isToggleHiddenColG2,lastinputG2,lastinputG2json,lastrowidG2;
 var lastselectG2json;//그리드 변수 초기화	
@@ -46,6 +48,7 @@ var lastselectG3json;//디테일 변수 초기화
 var obj_G4_MYCHECK_valid = jQuery.parseJSON( '{ "G4_MYCHECK": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":110,  "DATATYPE":"STRING"} }' );   // 체크 밸리데이션 선언
 var obj_G4_ADD_DT_valid = jQuery.parseJSON( '{ "G4_ADD_DT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // ADD 밸리데이션 선언
 var obj_G4_MYRADIO_valid = jQuery.parseJSON( '{ "G4_MYRADIO": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 나의라디오 밸리데이션 선언
+var obj_G4_PCD_valid = jQuery.parseJSON( '{ "G4_PCD": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // PCD 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G4_USERDEF = "codetestController?CTLGRP=G4&CTLFNC=USERDEF";
 //폼뷰 컨트롤러 경로
@@ -63,6 +66,7 @@ var url_G4_save = "codetestController?CTLGRP=G4&CTLFNC=save";
 var obj_G4_MYCHECK;   // 체크 글로벌 변수 선언
 var obj_G4_ADD_DT;   // ADD 글로벌 변수 선언
 var obj_G4_MYRADIO;   // 나의라디오 글로벌 변수 선언
+var obj_G4_PCD;   // PCD 글로벌 변수 선언
 //화면 초기화	
 function initBody(){
      alog("initBody()-----------------------start");
@@ -104,10 +108,12 @@ function G1_INIT(){
 setCodeRadio("CONDITION", "G1-MYRADIO", "BRGRP");
 
 setCodeCheck("CONDITION", "G1-MYCHECK", "BRGRP","");
+
 	//각 폼 오브젝트들 초기화
 	//ADD_DT, ADD 초기화	
 	//MYRADIO, 나의라디오 초기화	
 	//G1-MYCHECK check 초기화 할게 있나.
+	//PNM, PNM 초기화	
   alog("G1_INIT()-------------------------end");
 }
 
@@ -121,16 +127,16 @@ function G2_INIT(){
         mygridG2.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG2.setUserData("","gridTitle","G2 : 마스터"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
-        mygridG2.setHeader("PCD,PNM,PCDDESC,ORD,UITOOL,사용,삭제YN,ADDDT,MODDT");
-		mygridG2.setColumnIds("PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT");
-		mygridG2.setInitWidths("60,60,60,30,30,50,40,80,80");
-		mygridG2.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,ed");
+        mygridG2.setHeader("#master_checkbox,PCD,PNM,PCDDESC,ORD,UITOOL,사용,삭제YN,ADDDT,MODDT");
+		mygridG2.setColumnIds("CHK,PCD,PNM,PCDDESC,ORD,UITOOL,USEYN,DELYN,ADDDT,MODDT");
+		mygridG2.setInitWidths("30,60,60,60,30,30,50,40,80,80");
+		mygridG2.setColTypes("ch,ed,ed,ed,ed,ed,ed,ed,ed,ed");
 	//가로 정렬	
-		mygridG2.setColAlign("left,left,left,left,left,left,left,left,left");
-		mygridG2.setColSorting("str,str,str,int,str,str,str,str,str");		//렌더링	
+		mygridG2.setColAlign("left,left,left,left,left,left,left,left,left,left");
+		mygridG2.setColSorting("int,str,str,str,int,str,str,str,str,str");		//렌더링	
 		mygridG2.enableSmartRendering(false);
 		mygridG2.enableMultiselect(true);
-		//mygridG2.setColValidators("G2_PCD,G2_PNM,G2_PCDDESC,G2_ORD,G2_UITOOL,G2_USEYN,G2_DELYN,G2_ADDDT,G2_MODDT");
+		//mygridG2.setColValidators("G2_CHK,G2_PCD,G2_PNM,G2_PCDDESC,G2_ORD,G2_UITOOL,G2_USEYN,G2_DELYN,G2_ADDDT,G2_MODDT");
 		mygridG2.splitAt(0);//'freezes' 0 columns 
 		mygridG2.init();
 
@@ -172,6 +178,7 @@ function G2_INIT(){
 				return false;
 			}
 		});
+		 // IO : CHK초기화	
 		 // IO : PCD초기화	
 		 // IO : PNM초기화	
 		 // IO : PCDDESC초기화	
@@ -185,6 +192,10 @@ function G2_INIT(){
 		mygridG2.attachEvent("onCheck",function(rowId, cellInd, state){
 			//onCheck is void return event
 			alog(rowId + " is onCheck.");
+			//ROW 마스터 체크 박스는 변경이면 실제 row 안함
+			if(  mygridG2.getColumnId(cellInd) == "ROWCHK" ){
+					mygridG2.cells(rowId,cellInd).cell.wasChanged = false;	
+			}	
 			//일반 체크 박스는 변경이면 실제 row 변경
 			if( 1 == 2 
 				){
@@ -202,6 +213,8 @@ function G2_INIT(){
 			RowEditStatus = mygridG2.getUserData(rowID,"!nativeeditor_status");
 			if(RowEditStatus == "inserted"){return false;}
 			//GRIDRowSelect20(rowID,celInd);
+            //편집모드 일때는 하위 새로고침 안하게 하기
+            if($("#G2-edit_EDIT_MODE") && $("#G2-edit_EDIT_MODE").is(":checked"))return false;
 			//팝업오프너 호출
 			//CD[필수], NM 정보가 있는 경우 팝업 오프너에게 값 전달
 			popG2json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
@@ -213,6 +226,7 @@ function G2_INIT(){
 			}
 			//LAST SELECT ROW
 			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
+			//', "CHK" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("CHK")).getValue()) + '"' +
 			//', "PCD" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PCD")).getValue()) + '"' +
 			//', "PNM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PNM")).getValue()) + '"' +
 			//', "PCDDESC" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PCDDESC")).getValue()) + '"' +
@@ -424,10 +438,12 @@ function G4_INIT(){
 setCodeCheck("FORMVIEW", "G4-MYCHECK", "BRGRP","");
 
 setCodeRadio("FORMVIEW", "G4-MYRADIO", "BRGRP","LINEEND");
+
 	//컬럼 초기화
 	//G4-MYCHECK check 초기화 할게 있나.
 	//ADD_DT, ADD 초기화	
 	//MYRADIO, 나의라디오 초기화	
+	//PCD, PCD 초기화	
   alog("G4_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
@@ -488,7 +504,7 @@ function G1_SEARCHALL(token){
 		if( !(lastinputG2)|| lastinputG2.get("G2-MYRADIO") == ""){
 			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
 		}else{
-			var tCols = ["","","","","","","","",""];//초기값
+			var tCols = ["","","","","","","","","",""];//초기값
 			addRow(mygridG2,tCols);
 		}
 	}
@@ -552,6 +568,8 @@ function G1_SEARCHALL(token){
 
 						},"json");
 						
+					}else{
+						$("#spanG2Cnt").text("-");
 					}
 					msgNotice("[마스터] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -869,6 +887,8 @@ function G3_EXCEL(){
 
 						},"json");
 						
+					}else{
+						$("#spanG3Cnt").text("-");
 					}
 					msgNotice("[상세] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -991,6 +1011,7 @@ function G4_SEARCH(tinput,token){
             }
 			$("#G4-ADD_DT").val(data.RTN_DATA.ADD_DT);//ADD 변수세팅
 			$('input:radio[name="G4-MYRADIO"][value=' + data.RTN_DATA.MYRADIO + ']').click();
+			$("#G4-PCD").val(data.RTN_DATA.PCD);//PCD 변수세팅
         },
         error: function(error){
             alog("Error:");
@@ -1092,5 +1113,6 @@ function G4_NEW(){
 	//PMGIO 로직
 	//G4-MYCHECK  NEW 신규일때 할게 있나?	$("#G4-ADD_DT").val("");//ADD 신규초기화	
 	$("#G4-MYRADIO").val("");//나의라디오 신규초기화	
+	$("#G4-PCD").val("");//PCD 신규초기화	
        alog("DETAILNew40---------------end");
 }
