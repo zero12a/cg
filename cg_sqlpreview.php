@@ -28,7 +28,10 @@ header("Pragma:no-cache");
 
     //sqlcol문에서 input 컬럼 목록 가져오기
 	$map["SQL"]["R"]["SVRID"] = $svrid;    
-	$map["SQL"]["R"]["SQLTXT"] = "select * from CG_PGMSQLD where SQLSEQ = #{SQLSEQ} and SQLGBN='I' order by ORD ASC ";
+    $map["SQL"]["R"]["SQLTXT"] = "
+        select a.COLID, ifnull(b.DATATYPE,'STRING') as DATATYPE from 
+            CG_PGMSQLD a left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.COLID = b.COLID
+        where SQLSEQ = #{SQLSEQ} and SQLGBN='I' order by ORD ASC ";
 	$map["SQL"]["R"]["BINDTYPE"] = "i";
 	$rstInputList = makeDataviewSearchJson($map,$db);
 
@@ -79,19 +82,27 @@ header("Pragma:no-cache");
 	<script src="./lib/json2.min.js"></script>
 
 	<!--dhmltx-->
-    <script src="./lib/dhtmlxSuite/codebase/dhtmlx461_beautify.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
 
-    <!--공통-->
-    <script src="./rst/common.js" type="text/javascript" charset="utf-8"></script>
+    <!--chart-->
+    <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
-    <link rel=stylesheet href="./lib/codemirror/doc/docs.css">
-    <link rel=stylesheet href="./lib/codemirror/lib/codemirror.css">
+    <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
 
-    <script src="./lib/codemirror/lib/codemirror.js"></script>
-    <script src="./lib/codemirror/mode/sql/sql.js"></script>
-    <script src="./lib/codemirror/addon/selection/active-line.js"></script>
+    <script src="/lib/codemirror/lib/codemirror.js"></script>
+    <script src="/lib/codemirror/mode/sql/sql.js"></script>
+    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>    
+    <script src="/lib/codemirror/addon/selection/active-line.js"></script>
+
+    <!--공통-->
+    <script src="./common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
+    <link href="./common/common.css" rel="stylesheet" type="text/css" />
+
+
+
     <style>
         .CodeMirror {
             border-top: 1px solid black;
@@ -114,6 +125,7 @@ header("Pragma:no-cache");
     <script>
 
     //정적 변수 선언
+    var colords;//서버에 컬럼 목록 전송용.
 	var popSelectLayout; //레이아웃용
     var myCalendar;
     var lastCondition;
@@ -184,37 +196,41 @@ header("Pragma:no-cache");
 		mygrid2.setUserData("","gridTitle","grid1 : group list"); //글로별 변수에 그리드 타이블 넣기
         mygrid2.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
 
-        mygrid2.setHeader("<?
+        mygrid2.setHeader("<?php
 		//파라미터 갯수만큼 loop돌면서 출력	
 		for($i=0;$i<count($rstOutputList);$i++){
 			if($i>0){ echo ","; }
 			echo $rstOutputList[$i]["COLID"];
 		}
-		?>");
-        mygrid2.setColumnIds("<?
-		//파라미터 갯수만큼 loop돌면서 출력	
+        ?>");
+        
+        mygrid2.setColumnIds("<?php
+        //파라미터 갯수만큼 loop돌면서 출력	
+        $tCols = "";
 		for($i=0;$i<count($rstOutputList);$i++){
-			if($i>0){ echo ","; }
-			echo $rstOutputList[$i]["COLID"];
+			if($i>0){ $tCols .= ","; }
+			$tCols .= $rstOutputList[$i]["COLID"];
 		}
+        echo $tCols;
+        ?>");
+        
+        colords = "<?=$tCols?>";//서버에 전송용.
 
-		?>");
-
-        mygrid2.setInitWidthsP("<?
+        mygrid2.setInitWidthsP("<?php
 		//파라미터 갯수만큼 loop돌면서 100%/갯수 출력	
 		for($i=0;$i<count($rstOutputList);$i++){
 			if($i>0){ echo ","; }
 			echo round(100/count($rstOutputList), 0, PHP_ROUND_HALF_DOWN) ;
 		}
 		?>")
-        mygrid2.setColTypes("<?
+        mygrid2.setColTypes("<?php
 		//파라미터 갯수만큼 loop돌면서 ro 출력	
 		for($i=0;$i<count($rstOutputList);$i++){
 			if($i>0){ echo ","; }
 			echo "ro";
 		}
 		?>");
-		mygrid2.setColSorting("<?
+		mygrid2.setColSorting("<?php
 		//파라미터 갯수만큼 loop돌면서 str 출력	
 		for($i=0;$i<count($rstOutputList);$i++){
 			if($i>0){ echo ","; }
@@ -237,14 +253,14 @@ header("Pragma:no-cache");
 
 	function mygrid1_addparam(){
 		var tCols;
-		<?
+		<?php
 		//파라미터 갯수만큼 loop돌면서 str 출력	
 		for($i=0;$i<count($rstInputList);$i++){
 			?>
 		tCols = ["<?=$i+1?>","<?=$rstInputList[$i]["COLID"]?>","<?=$rstInputList[$i]["DATATYPE"]?>","?"];//초기값
 		addRowLast(mygrid1,tCols,false);//행추가				
 			
-			<?
+			<?php
 		}
 		?>	
 	}
@@ -263,22 +279,29 @@ header("Pragma:no-cache");
 
 		var tGrid = mygrid2;
 
+        var crud = "<?=$rstMap->RTN_DATA["CRUD"]?>";
+
         //그리드 초기화
         tGrid.clearAll();
 
 
-        var myJsonString = mygrid1.serializeJson();
-		alog("	serializeJson:" + myJsonString);
+        //var myJsonString = mygrid1.serializeJson();
+        
+        mygrid1.setSerializationLevel(true,false,false,false,true,false);
+        //mygridIo.serialize();
+        var myXmlString = mygrid1.serialize();
+        alog("myXmlString=" + myXmlString);
 
+
+		//alog("	serializeJson:" + myJsonString);
 		tinput = "&SQLSEQ=<?=$REQ["SQLSEQ"]?>";
-
 
 		//alert($("#code").val());
         //불러오기
         $.ajax({
             type : "POST",
             url : mygrid2_url+"&G2_CRUD_MODE=read&" + tinput ,
-            data : {jsondata : myJsonString, sqltxt : $("#code").val()},
+            data : {"PARAM-XML" : myXmlString, sqltxt : $("#code").val(), colords : colords, crud : crud},
             dataType: "json",
             async: true,
             success: function(data){
@@ -292,10 +315,19 @@ header("Pragma:no-cache");
                 if(data.RTN_CD == "200"){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
-						tGrid.parse(data.RTN_DATA,"json");
-						row_cnt = data.RTN_DATA.rows.length;
-					}
-					msgNotice("[SELECT RESULT] 조회 성공했습니다. ("+row_cnt+"건)",1);
+
+                        if(crud == "R"){
+                            tGrid.parse(data.RTN_DATA,"json");
+                            row_cnt = data.RTN_DATA.rows.length;
+                            msgNotice("[SELECT RESULT] 조회 성공했습니다. ("+row_cnt+"건)",3);
+                        }else{
+                            msgNotice(dat.RTN_MSG,3);
+                        }
+
+                    }else{
+                        msgNotice(dat.RTN_MSG,3);
+                    }
+
 
                 }else{
                     msgError("[SELECT RESULT] 서버 조회중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG,3);
@@ -335,7 +367,7 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* COL</div>
                 <div  class="GRID_LABELBTN"  >
                 <input type="button" name="add" value="+" onclick="addRow();">
-                <input type="button" name="delete" value="-" onclick="delRow(mygrid3);">
+                <input type="button" name="delete" value="-" onclick="delRow(mygrid1);">
                 </div>
             </div>
 

@@ -16,6 +16,10 @@
     //ServerViewTxt("N","N","Y","Y");
 	//외부 파라미터 받기
 	$REQ["SQLSEQ"] = $_GET["SQLSEQ"];
+	$REQ["crud"] = $_POST["crud"];	
+	
+	$map["XML"] = getXml2Array($_POST["PARAM-XML"]);//GRP
+	//$REQ["colords"] = $_POST["colords"];
 
 	$svrid = "CG";
     $db[$svrid]=db_m_open();
@@ -47,31 +51,76 @@
 
 if($F_GRPID == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 
-	$json_array = json_decode($_POST["jsondata"],true);
-	alog("	json_array.COLS count = " . count($json_array["REQ_DATA"]["COLS"]) );
-	alog("	json_array.ROWS count = " . count($json_array["REQ_DATA"]["ROWS"]) );
-	alog("	json_array.error : " . json_last_error()); // 4 (JSON_ERROR_SYNTAX)
-	alog("	json_array.error_msg : " .json_last_error_msg()); // unexpected character 
+    $sql = $F_SQLTXT;
+
+	if(is_assoc($map["XML"]["row"]) == 1) {
+		alog(" Y " );
+		$xml_array_last[0] = $map["XML"]["row"];
+	}else{
+		alog(" N " );
+
+		$xml_array_last = $map["XML"]["row"];
+	}
+	//var_dump($xml_array_last);
+	alog("xml sizeof : " . sizeof($xml_array_last));
+
+	$colord_array = explode(",","NO,NAME,DATATYPE,VALUE");
 
 	$to_coltype = "";
-	for($i=0;$i<count($json_array["REQ_DATA"]["ROWS"]);$i++){
-	    alog("        datatype : " . $json_array["REQ_DATA"]["ROWS"][$i]["cell"][2]);
+	for($i=0;$i<sizeof($xml_array_last);$i++){
 
-		if($json_array["REQ_DATA"]["ROWS"][$i]["cell"][2] == "STRING"){
-			$to_coltype .= "s";
-		}else{
-			$to_coltype .= "i";
+		$row = $xml_array_last[$i];
+		//alog("        i : " . $i);
+		//alog("        @attributes : " . $row["@attributes"]["id"]);
+		//alog("        userdata : " . $row["userdata"]);
+
+		//현재 그리드 line을 bind 배열에 담기
+		$to_row = null;
+
+		for($j=0;$j<sizeof($row["cell"]);$j++){
+			$col = $row["cell"][$j];
+			if(is_array($col)){
+				$to_row[trim($colord_array[$j])] = "";
+			}else{
+				//암호화 컬럼에 존재 하는지 확인
+				if($colcrypt_array[trim($colord_array[$j])] == "CRYPT" ){
+					//양방향 암호화
+					alog("  crypt 전 col/key: [" . $col . "]/" . $CFG_SEC_KEY);
+					alog("  crypt 후 : [" .  aes_encrypt($col,$CFG_SEC_KEY) . "]");                        
+					$to_row[trim($colord_array[$j])] = aes_encrypt($col,$CFG_SEC_KEY);
+				}else if($colcrypt_array[trim($colord_array[$j])] == "HASH" ){
+					//일방향 암호화
+					alog("  hash 전 col/salt: [" . $col . "]/" . $CFG_SEC_SALT);
+					alog("  hash 후 : [" .  pwd_hash($col,$CFG_SEC_SALT) . "]");                        
+					$to_row[trim($colord_array[$j])] = pwd_hash($col,$CFG_SEC_SALT);
+				}else{
+					//평문
+					//alog("  [평문] " . trim($colord_array[$j]) . " = " . $col);
+					$to_row[trim($colord_array[$j])] = $col;
+				}
+			}
+			
 		}
-		$REQ[$json_array["REQ_DATA"]["ROWS"][$i]["cell"][1]] = $json_array["REQ_DATA"]["ROWS"][$i]["cell"][3];
+		$to_coltype .= ($to_row["DATATYPE"]=="NUMBER")?"i":"s";
+		$REQ[$to_row["NAME"]] = $to_row["VALUE"];
+		alog("param " . $to_row["NAME"] . "=" . $to_row["VALUE"]);
 	}
-    alog("        to_coltype : " . $to_coltype);
-    $sql = $F_SQLTXT;
-    alog("        selected : " );
-    $stmt = makeStmt($db2,$sql, $to_coltype, $REQ);
-    if(!$stmt)   JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-    echo make_grid_read_json($stmt,2);
+	//alog("to_coltype=" . $to_coltype);
 
-    $db2->close();
+    $stmt = makeStmt($db2,$sql, $to_coltype, $REQ);
+	if(!$stmt)   JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+	
+	if($REQ["crud"] =="R"){
+		echo make_grid_read_json($stmt,2);
+		$db2->close();
+	}else{
+		if(!$stmt->execute())JsonMsg("500","410","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+		$db2->close();
+		JsonMsg("200","200","처리 성공");
+	}
+
+
+
 
 }
 
