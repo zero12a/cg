@@ -285,7 +285,7 @@ function setCodeCombo(tGrptype, tCombo, tPcd){
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
 
-						tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[2] + "</option>");
+						tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1] + "</option>");
 					}
 				}else if(tGrptype == "FORMVIEW"){
 					if(!data.RTN_DATA)return;
@@ -493,7 +493,7 @@ function setCodeCheckSvc(tGrptype, tCheckNm, tPcd, tCheckVal){
 	//불러오기
 	$.ajax({
 		type : "GET",
-		url : "/c.g/cg_code_json.php",
+		url : "/r.d/rd_code_json.php",
 		data : {PJTSEQ : 3,PCD : tPcd},
 		dataType: "json",
 		async: false,
@@ -567,7 +567,7 @@ function setCodeRadioSvc(tGrptype, tRadioNm, tPcd, tCheckVal){
 	//불러오기
 	$.ajax({
 		type : "GET",
-		url : "/c.g/cg_code_json.php",
+		url : "/r.d/rd_code_json.php",
 		data : {PJTSEQ : 3,PCD : tPcd},
 		dataType: "json",
 		async: false,
@@ -637,7 +637,7 @@ function setCodeComboSvc(tGrptype, tCombo, tPcd, tFristNm){
 	//불러오기
 	$.ajax({
 		type : "GET",
-		url : "/c.g/cg_code_json.php",
+		url : "/r.d/rd_code_json.php",
 		data : {PJTSEQ : 3,PCD : tPcd},
 		dataType: "json",
 		async: false,
@@ -672,7 +672,7 @@ function setCodeComboSvc(tGrptype, tCombo, tPcd, tFristNm){
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
 
-						tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[2] + "</option>");
+						tCombo.append("<option value='" + data.RTN_DATA.rows[i].data[0] + "'>" + data.RTN_DATA.rows[i].data[1] + "</option>");
 					}
 				}else if(tGrptype == "FORMVIEW"){
 					if(!data.RTN_DATA)return;
