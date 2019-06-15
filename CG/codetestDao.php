@@ -170,7 +170,7 @@ where PCD = #{PCD}
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "selMasD";
 		$RtnVal["SQLTXT"] = "select 
-	'LINESTART' as MYRADIO, 'LINESTART,LINEEND' as MYCHECK, '20191212' as ADD_DT, PCD
+	'LINESTART' as MYRADIO, 'LINESTART,LINEEND' as MYCHECK, '20191212' as ADD_DT, PCD, 'http://www.naver.com^네이버' as HIDDENLINK, 'http://localhost:8080/c.g/img/popup.png^http://localhost:8080/c.g/img/popup.png,http://localhost:8080/c.g/img/reload.png^http://localhost:8080/c.g/img/reload.png' as IMG
 from 
 	CG_CODE
 where PCD = #{G2-PCD} 

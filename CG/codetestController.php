@@ -132,8 +132,12 @@ $REQ["G4-ADD_DT"] = reqPostString("G4-ADD_DT",14);//ADD
 $REQ["G4-ADD_DT"] = getFilter($REQ["G4-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G4-MYRADIO"] = reqPostString("G4-MYRADIO",30);//나의라디오	
 $REQ["G4-MYRADIO"] = getFilter($REQ["G4-MYRADIO"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G4-HIDDENLINK"] = reqPostString("G4-HIDDENLINK",50);//히든링크	
+$REQ["G4-HIDDENLINK"] = getFilter($REQ["G4-HIDDENLINK"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G4-PCD"] = reqPostString("G4-PCD",30);//PCD	
 $REQ["G4-PCD"] = getFilter($REQ["G4-PCD"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G4-IMG"] = reqPostString("G4-IMG",200);//이미지뷰어	
+$REQ["G4-IMG"] = getFilter($REQ["G4-IMG"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터	
 	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//상세	
 	//,  입력값 필터 

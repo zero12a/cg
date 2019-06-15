@@ -72,18 +72,19 @@ include_once('../include/incRequest.php');//CG REQUEST
  					<!-- style="width:400px;"-->
 					<div class="CON_OBJECT">
  	<!--MYRADIO오브젝트출력 radio-->
-	<div name="G1-MYRADIO_holder" id="G1-MYRADIO_holder"  style="width:400px;"></div>
+	<div name="G1-MYRADIO-HOLDER" id="G1-MYRADIO-HOLDER"  style="width:400px;"></div>
 					</div>
  				</div>
  			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : MYCHECK-->
-				<div class="CON_OBJGRP" style="display:none					<div class="CON_LABEL" style="width:100px;text-align:left;">
+				<div class="CON_OBJGRP" style="">
+						<div class="CON_LABEL" style="width:100px;text-align:left;">
  						체크
  					</div>
  					<!-- style="width:400px;"-->
 					<div class="CON_OBJECT">
  	<!--MYCHECK오브젝트출력 checkbox-->
-	<div name="G1-MYCHECK_holder" id="G1-MYCHECK_holder"  style="width:400px;"></div>
+	<div name="G1-MYCHECK-HOLDER" id="G1-MYCHECK-HOLDER"  style="width:400px;"></div>
 					</div>
  				</div>
  			<!--D101: STARTTXT, TAG-->
@@ -186,13 +187,14 @@ include_once('../include/incRequest.php');//CG REQUEST
 			<!--OBJECT LIST PRINT.-->
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : MYCHECK-->
-				<div class="CON_OBJGRP" style="display:none					<div class="CON_LABEL" style="width:100px;text-align:left;">
+				<div class="CON_OBJGRP" style="">
+						<div class="CON_LABEL" style="width:100px;text-align:left;">
  						체크
  					</div>
  					<!-- style="width:400px;"-->
 					<div class="CON_OBJECT">
  	<!--MYCHECK오브젝트출력 checkbox-->
-	<div name="G4-MYCHECK_holder" id="G4-MYCHECK_holder"  style="width:400px;"></div>
+	<div name="G4-MYCHECK-HOLDER" id="G4-MYCHECK-HOLDER"  style="width:400px;"></div>
 					</div>
  				</div>
  			<!--D101: STARTTXT, TAG-->
@@ -206,6 +208,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<!--ADD_DT오브젝트출력-->						<input type="text" name="G4-ADD_DT" value="" id="G4-ADD_DT" style="width:60px;">
 					</div>
 				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : MYRADIO-->
 				<div class="CON_OBJGRP" style="">
@@ -215,10 +220,27 @@ include_once('../include/incRequest.php');//CG REQUEST
  					<!-- style="width:400px;"-->
 					<div class="CON_OBJECT">
  	<!--MYRADIO오브젝트출력 radio-->
-	<div name="G4-MYRADIO_holder" id="G4-MYRADIO_holder"  style="width:400px;"></div>
+	<div name="G4-MYRADIO-HOLDER" id="G4-MYRADIO-HOLDER"  style="width:400px;"></div>
 					</div>
  				</div>
- 			<!--D101: STARTTXT, TAG-->
+ 				</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : HIDDENLINK-->
+				<div  id="DIV_G4-HIDDENLINK" class="CON_OBJGRP" style="display:none">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+							히든링크
+						</div>
+						<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+<a href="" target="_blank" name="G4-HIDDENLINK-LINK" id="G4-HIDDENLINK-LINK"><span id="G4-HIDDENLINK-NM" name="G4-HIDDENLINK-NM"></span></a>
+			</div>	
+		</div>	
+				</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : PCD-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
@@ -229,6 +251,17 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<!--PCD오브젝트출력-->						<input type="text" name="G4-PCD" value="" id="G4-PCD" style="width:60px;">
 					</div>
 				</div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : IMG-->
+				<div class="CON_OBJGRP" style="">
+				<div class="CON_LABEL" style="width:100px;text-align:left;">	
+					이미지뷰어	
+				</div>	
+				<!-- style="width:200;"-->
+				<div class="CON_OBJECT">
+					<div name="G4-IMG-HOLDER" id="G4-IMG-HOLDER" class="FORMVIEW_IMGVIEWER" style="width:200px;">
+				</div>
+			</div>
 			</DIV><!--is_br_tab end-->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    

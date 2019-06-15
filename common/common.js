@@ -357,7 +357,7 @@ function setCodeCheck(tGrptype, tCheckNm, tPcd, tCheckVal){
 				}else if(tGrptype == "CONDITION"){
 					if(!data.RTN_DATA)return;
 					alog("	코드수 : " + data.RTN_DATA.rows.length);
-					//$("#" + tCheckNm + "_holder").html(""); //비우기
+					//$("#" + tCheckNm + "-HOLDER").html(""); //비우기
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
@@ -365,12 +365,12 @@ function setCodeCheck(tGrptype, tCheckNm, tPcd, tCheckVal){
 						for(var k=0;k<arrCheckVal.length;k++){
 							if(arrCheckVal[k] == data.RTN_DATA.rows[i].data[0])chkText = "checked";
 						}
-						$("#" + tCheckNm + "_holder").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tCheckNm + "-HOLDER").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
 					}
 				}else if(tGrptype == "FORMVIEW"){
 					if(!data.RTN_DATA)return;
 					alog("	코드수 : " + data.RTN_DATA.rows.length);
-					//$("#" + tCheckNm + "_holder").html(""); //비우기
+					//$("#" + tCheckNm + "-HOLDER").html(""); //비우기
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
@@ -380,7 +380,7 @@ function setCodeCheck(tGrptype, tCheckNm, tPcd, tCheckVal){
 							if(arrCheckVal[k] == data.RTN_DATA.rows[i].data[0])chkText = "checked";
 						}
 												
-						$("#" + tCheckNm + "_holder").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tCheckNm + "-HOLDER").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
 					}
 				}else{
 					alog("	그룹 타입이 없습니다");
@@ -431,7 +431,7 @@ function setCodeRadio(tGrptype, tRadioNm, tPcd, tCheckVal){
 				}else if(tGrptype == "CONDITION"){
 					if(!data.RTN_DATA)return;
 					alog("	코드수 : " + data.RTN_DATA.rows.length);
-					//$("#" + tRadioNm + "_holder").html(""); //비우기
+					//$("#" + tRadioNm + "-HOLDER").html(""); //비우기
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
@@ -439,12 +439,12 @@ function setCodeRadio(tGrptype, tRadioNm, tPcd, tCheckVal){
 						var chkText = "";
 						if(tCheckVal == data.RTN_DATA.rows[i].data[0])chkText = "checked";
 
-						$("#" + tRadioNm + "_holder").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tRadioNm + "-HOLDER").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
 					}
 				}else if(tGrptype == "FORMVIEW"){
 					if(!data.RTN_DATA)return;
 					alog("	코드수 : " + data.RTN_DATA.rows.length);
-					//$("#" + tRadioNm + "_holder").html(""); //비우기
+					//$("#" + tRadioNm + "-HOLDER").html(""); //비우기
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
@@ -452,7 +452,7 @@ function setCodeRadio(tGrptype, tRadioNm, tPcd, tCheckVal){
 						var chkText = "";
 						if(tCheckVal == data.RTN_DATA.rows[i].data[0])chkText = "checked";
 
-						$("#" + tRadioNm + "_holder").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tRadioNm + "-HOLDER").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
 					}
 				}else{
 					alog("	그룹 타입이 없습니다");
@@ -511,7 +511,7 @@ function setCodeCheckSvc(tGrptype, tCheckNm, tPcd, tCheckVal){
 				}else if(tGrptype == "CONDITION"){
 					if(!data.RTN_DATA)return;
 					alog("	코드수 : " + data.RTN_DATA.rows.length);
-					//$("#" + tCheckNm + "_holder").html(""); //비우기
+					//$("#" + tCheckNm + "-HOLDER").html(""); //비우기
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
@@ -519,12 +519,12 @@ function setCodeCheckSvc(tGrptype, tCheckNm, tPcd, tCheckVal){
 						for(var k=0;k<arrCheckVal.length;k++){
 							if(arrCheckVal[k] == data.RTN_DATA.rows[i].data[0])chkText = "checked";
 						}
-						$("#" + tCheckNm + "_holder").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tCheckNm + "-HOLDER").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
 					}
 				}else if(tGrptype == "FORMVIEW"){
 					if(!data.RTN_DATA)return;
 					alog("	코드수 : " + data.RTN_DATA.rows.length);
-					//$("#" + tCheckNm + "_holder").html(""); //비우기
+					//$("#" + tCheckNm + "-HOLDER").html(""); //비우기
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
@@ -534,7 +534,7 @@ function setCodeCheckSvc(tGrptype, tCheckNm, tPcd, tCheckVal){
 							if(arrCheckVal[k] == data.RTN_DATA.rows[i].data[0])chkText = "checked";
 						}
 												
-						$("#" + tCheckNm + "_holder").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tCheckNm + "-HOLDER").append("<input type=checkbox name='" + tCheckNm + "' id='" + tCheckNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
 					}
 				}else{
 					alog("	그룹 타입이 없습니다");
@@ -585,7 +585,7 @@ function setCodeRadioSvc(tGrptype, tRadioNm, tPcd, tCheckVal){
 				}else if(tGrptype == "CONDITION"){
 					if(!data.RTN_DATA)return;
 					alog("	코드수 : " + data.RTN_DATA.rows.length);
-					//$("#" + tRadioNm + "_holder").html(""); //비우기
+					//$("#" + tRadioNm + "-HOLDER").html(""); //비우기
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
@@ -593,12 +593,12 @@ function setCodeRadioSvc(tGrptype, tRadioNm, tPcd, tCheckVal){
 						var chkText = "";
 						if(tCheckVal == data.RTN_DATA.rows[i].data[0])chkText = "checked";
 
-						$("#" + tRadioNm + "_holder").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tRadioNm + "-HOLDER").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
 					}
 				}else if(tGrptype == "FORMVIEW"){
 					if(!data.RTN_DATA)return;
 					alog("	코드수 : " + data.RTN_DATA.rows.length);
-					//$("#" + tRadioNm + "_holder").html(""); //비우기
+					//$("#" + tRadioNm + "-HOLDER").html(""); //비우기
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						alog(data.RTN_DATA.rows[i].data[0] + "=" + data.RTN_DATA.rows[i].data[1]);
@@ -606,7 +606,7 @@ function setCodeRadioSvc(tGrptype, tRadioNm, tPcd, tCheckVal){
 						var chkText = "";
 						if(tCheckVal == data.RTN_DATA.rows[i].data[0])chkText = "checked";
 
-						$("#" + tRadioNm + "_holder").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
+						$("#" + tRadioNm + "-HOLDER").append("<input type=radio name='" + tRadioNm + "' id='" + tRadioNm + "' value='" + data.RTN_DATA.rows[i].data[0] + "' " + chkText + ">" + data.RTN_DATA.rows[i].data[1]);
 					}
 				}else{
 					alog("	그룹 타입이 없습니다");
