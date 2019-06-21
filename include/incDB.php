@@ -1375,6 +1375,9 @@ end
                         //$array[$i][$k] = aes_decrypt($v,$CFG_SEC_KEY);
 
                         array_push($one_row, $v );
+                    }else if( $colcrypt_array[trim($k)] == "CDATA" ){
+                        //Tag가 있는 컬럼.(Cdata더하기)
+                        array_push($one_row, xmlCdataAdd($v) );
                     }else{
                         //평문
                         array_push($one_row, $v );

@@ -1,6 +1,11 @@
 <?php
 libxml_use_internal_errors(true);
 
+
+function xmlCdataAdd($tmp){
+	return "<![CDATA[" . $tmp . "]]>";
+}
+
 //에러 핸들러
 function xhandler($errno,$string, $file, $line, $context){
 	global $xhandler_unique_id;

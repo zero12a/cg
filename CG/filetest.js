@@ -23,6 +23,8 @@ var lastselectG2json;//디테일 변수 초기화
 
 var obj_G3_FILESEQ_valid = jQuery.parseJSON( '{ "G3_FILESEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // FILESEQ 밸리데이션 선언
 var obj_G3_FILE1_valid = jQuery.parseJSON( '{ "G3_FILE1": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":100,  "DATATYPE":"STRING"} }' );   // 파일1 밸리데이션 선언
+var obj_G3_LINKVIEW_valid = jQuery.parseJSON( '{ "G3_LINKVIEW": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // 링크뷰 밸리데이션 선언
+var obj_G3_HIDDENLINK_valid = jQuery.parseJSON( '{ "G3_HIDDENLINK": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":50,  "DATATYPE":"STRING"} }' );   // 히든링크 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G3_USERDEF = "filetestController?CTLGRP=G3&CTLFNC=USERDEF";
 //폼뷰 컨트롤러 경로
@@ -33,6 +35,8 @@ var url_G3_SAVE = "filetestController?CTLGRP=G3&CTLFNC=SAVE";
 var url_G3_NEW2 = "filetestController?CTLGRP=G3&CTLFNC=NEW2";
 var obj_G3_FILESEQ;   // FILESEQ 글로벌 변수 선언
 var obj_G3_FILE1;   // 파일1 글로벌 변수 선언
+var obj_G3_LINKVIEW;   // 링크뷰 글로벌 변수 선언
+var obj_G3_HIDDENLINK;   // 히든링크 글로벌 변수 선언
 //화면 초기화	
 function initBody(){
      alog("initBody()-----------------------start");
@@ -84,16 +88,16 @@ function G2_INIT(){
         mygridG2.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG2.setUserData("","gridTitle","G2 : "); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
-        mygridG2.setHeader("FILESEQ,FILESVRNM,FILENM");
-		mygridG2.setColumnIds("FILESEQ,FILESVRNM,FILENM");
-		mygridG2.setInitWidths("50,60,60");
-		mygridG2.setColTypes("ed,ed,ro");
+        mygridG2.setHeader("FILESEQ,FILESVRNM,FILENM,FILETYPE");
+		mygridG2.setColumnIds("FILESEQ,FILESVRNM,FILENM,FILETYPE");
+		mygridG2.setInitWidths("50,60,60,60");
+		mygridG2.setColTypes("ed,ed,ro,ed");
 	//가로 정렬	
-		mygridG2.setColAlign("left,left,left");
-		mygridG2.setColSorting("str,str,str");		//렌더링	
+		mygridG2.setColAlign("left,left,left,left");
+		mygridG2.setColSorting("str,str,str,str");		//렌더링	
 		mygridG2.enableSmartRendering(false);
 		mygridG2.enableMultiselect(true);
-		//mygridG2.setColValidators("G2_FILESEQ,G2_FILESVRNM,G2_FILENM");
+		//mygridG2.setColValidators("G2_FILESEQ,G2_FILESVRNM,G2_FILENM,G2_FILETYPE");
 		mygridG2.splitAt(0);//'freezes' 0 columns 
 		mygridG2.init();
 
@@ -138,6 +142,7 @@ function G2_INIT(){
 		 // IO : FILESEQ초기화	
 		 // IO : FILESVRNM초기화	
 		 // IO : FILENM초기화	
+		 // IO : FILETYPE초기화	
 	//onCheck
 		mygridG2.attachEvent("onCheck",function(rowId, cellInd, state){
 			//onCheck is void return event
@@ -173,6 +178,7 @@ function G2_INIT(){
 			//', "FILESEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILESEQ")).getValue()) + '"' +
 			//', "FILESVRNM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILESVRNM")).getValue()) + '"' +
 			//', "FILENM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILENM")).getValue()) + '"' +
+			//', "FILETYPE" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILETYPE")).getValue()) + '"' +
 			//'}');
 		//A124
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
@@ -214,9 +220,13 @@ function G3_INIT(){
   alog("G3_INIT()-------------------------start");
 
 
+
+
 	//컬럼 초기화
 	//FILESEQ, FILESEQ 초기화	
 	//FILE1, 파일1 초기화	
+	//LINKVIEW, 링크뷰 초기화	
+	//HIDDENLINK, 히든링크 초기화	
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
@@ -328,7 +338,7 @@ function G1_USERDEF(token){
 		if( !(lastinputG2json)){
 			msgError("조회 후에 행추가 가능합니다",3);
 		}else{
-			var tCols = ["","",""];//초기값
+			var tCols = ["","","",""];//초기값
 
 	var rowcnt = prompt("Please enter row's count", "input number");
 	if($.isNumeric(rowcnt)){
@@ -423,7 +433,7 @@ function G2_USERDEF(token){
 		if( !(lastinputG2)){
 			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
 		}else{
-			var tCols = ["","",""];//초기값
+			var tCols = ["","","",""];//초기값
 			addRow(mygridG2,tCols);
 		}
 	}//G3_SAVE
@@ -476,6 +486,13 @@ function G3_NEW2(){
 	$("#G3-FILESEQ").val("");//FILESEQ 신규초기화	
 				$("#G3-FILE1-LINK").attr("href","");//파일1 NEW
 				$("#G3-FILE1-NM").text("");//파일1 NEW
+			$("#G3-LINKVIEW-LINK").attr("href","");//링크뷰 신규
+			$("#G3-LINKVIEW-NM").text("");//링크뷰 신규
+			$("#DIV_G3-LINKVIEW").css("display", "none");
+			$("#G3-HIDDENLINK-LINK").attr("href","");//히든링크 신규
+			$("#G3-HIDDENLINK-NM").text("");//히든링크 신규
+			$("#DIV_G3-HIDDENLINK").css("display", "none");
+
        alog("DETAILNew30---------------end");
 }
 //사용자정의함수 : 사용자정의
@@ -536,6 +553,33 @@ function G3_SEARCH(tinput,token){
 		}else{
 			$("#DIV_G3-FILE1").css("display", "none"); //영역숨기기
 			alert("G3-FILE1 값이 없습니다..");
+		}
+		var tArr = data.RTN_DATA.LINKVIEW.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-LINKVIEW-LINK").attr("href",tArr[0]);//링크뷰 변수세팅
+				$("#G3-LINKVIEW-NM").text(tArr[1]);//링크뷰 변수세팅
+			}else{
+				alog("LINKVIEW의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("LINKVIEW 컬럼이 없습니다.");
+		}
+		var tArr = data.RTN_DATA.HIDDENLINK.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				if(tArr[1] != ""){
+					$("#DIV_G3-HIDDENLINK").css("display", ""); //영역보이게
+					$("#G3-HIDDENLINK-LINK").attr("href",tArr[0]);//히든링크 변수세팅
+					$("#G3-HIDDENLINK-NM").text(tArr[1]);//히든링크 변수세팅
+				}else{
+					$("#DIV_G3-HIDDENLINK").css("display", "none"); //영역숨기기
+				}
+			}else{
+				alog("HIDDENLINK의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("HIDDENLINK 컬럼이 없습니다.");
 		}
         },
         error: function(error){

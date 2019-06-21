@@ -48,4 +48,4 @@
 라디오 : 1개 값
 체크박스 : 1개 값(값1,값2,값3)
 이미지뷰어 : -
-파일 : 1개 (서버이름:GRPID-COLID-SVRNM, 원본이름:GRPID-COLID-NM )
+파일 : 1개 (서버이름:GRPID-COLID-SVRNM, 원본이름:GRPID-COLID-NM , 파일사이즈:GRPID-COLID-SIZE )

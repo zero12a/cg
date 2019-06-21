@@ -86,7 +86,7 @@
                 rid = mygridSql.getSelectedId();
                 cidx = mygridSql.getColIndexById("SQLTXT");
                 alog("        " + rid + "," + cidx);
-                mygridSql.cells(rid,cidx).setValue(xmlCdataAdd(cmSql.getValue()));
+                mygridSql.cells(rid,cidx).setValue(cmSql.getValue());
                 mygridSql.cells(rid,cidx).cell.wasChanged = true;
 	            RowEditStatus = mygridSql.getUserData(rid,"!nativeeditor_status");
 				if( RowEditStatus != "inserted" && RowEditStatus != "deleted"){
@@ -609,7 +609,7 @@
             alog("   cidx = " + cidx);
 
 			//alert(mygridSql.cells(rowID,cidx-1).getValue());
-            cmSql.setValue(xmlCdataRemove(mygridSql.cells(rowID,cidx).getValue()));
+            cmSql.setValue(mygridSql.cells(rowID,cidx).getValue());
 
             //행추가 시에는 하위 컬럼 정보 조회 하지 않음.
             RowEditStatus = mygridSql.getUserData(rowID,"!nativeeditor_status");

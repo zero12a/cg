@@ -56,6 +56,9 @@ header("Pragma:no-cache");
     <script src="./lib/dhtmlxSuite/codebase/dhtmlx461_beautify.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
 
+    <!--chart-->
+    <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
     <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
@@ -75,9 +78,10 @@ header("Pragma:no-cache");
     <script src="/lib/codemirror/addon/comment/comment.js"></script>
     <script src="/lib/codemirror/mode/clike/clike.js"></script>
 
+    <script src="/lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 
     <!--공통-->
-    <script src="./rst/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>
 
 
 
@@ -93,7 +97,7 @@ header("Pragma:no-cache");
 
 
 
-    <script src="cg_objinfo3.js?s4" type="text/javascript" charset="utf-8"></script>
+    <script src="cg_objinfo3.js??<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>
 
 
 </head>

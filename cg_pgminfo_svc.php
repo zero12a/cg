@@ -814,7 +814,7 @@ class cg_pgminfo_svc
 		//V_GRPNM : 팀별 현황 (보안취약점 갯수)
 		$GRID["SQL"]["R"] = $this->DAO->sqlSearch($REQ); //SEARCH, 조회,TEAM
 		//암호화컬럼
-		$GRID["COLCRYPT"] = array();
+		$GRID["COLCRYPT"] = array();//sql에 <>를 처리하기 위함 ( 기존에 <>데이터가 있는경우, 다른 컬럼 변경후 저장시 에러 문제)
 		$rtnVal = makeGridSearchJson($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//CHARTBAR_SEARCH____________________________end

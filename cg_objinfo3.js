@@ -3,12 +3,10 @@
         //폼값 밸리데이션
         if( !jsonFormValid(obj_condition_valid.PJTID, "F_PJTID", "프로젝트ID", $("#F_PJTID").val()) ){return false;};
 
-        //폼의 모든값 구하기
-        var ConAllData = $( "#condition1" ).serialize();
-        alog("ConAllData:" + ConAllData);
 
-
-        lastinput1 = ConAllData;
+        lastinput1 = new HashMap();
+        lastinput1.set("F_PJTID",$("#F_PJTID").val());
+        
 
 		//파일 타입에 따른 콤보 변경
 		//alert($(':radio[name="F_FILETYPE"]:checked').val());
@@ -61,7 +59,7 @@
         tgrid = mygrid2;
 
         var id=tgrid.uid();
-        tgrid.addRow(id,[,lastinput2json.OBJTYPE],0);
+        tgrid.addRow(id,[,lastinput2.get("G1_OBJTYPE")],0);
         tgrid.showRow(id);
         tgrid.selectRow(0);
         tgrid.cells(id,0).cell.wasChanged = true;
@@ -76,7 +74,7 @@
         tgrid = mygrid3;
 
         var id=tgrid.uid();
-        tgrid.addRow(id,["",lastinput3json.OBJTYPE,lastinput3json.OBJDSEQ],0);
+        tgrid.addRow(id,["",lastinput3.get("G2_OBJTYPE"),lastinput3.get("G2_OBJDSEQ")],0);
         tgrid.showRow(id);
         tgrid.selectRow(0);
         tgrid.cells(id,0).cell.wasChanged = true;
@@ -94,7 +92,7 @@
         tgrid = mygrid4;
 
         var id=tgrid.uid();
-        tgrid.addRow(id,["",lastinput4json.OBJTYPE,lastinput4json.OBJASEQ],0);
+        tgrid.addRow(id,["",lastinput4.get("G3_OBJTYPE"),lastinput4.get("G3_OBJASEQ")],0);
         tgrid.showRow(id);
         tgrid.selectRow(0);
         tgrid.cells(id,0).cell.wasChanged = true;
@@ -209,30 +207,30 @@
 
     function save1(){
         alog("save1()------------start");
-        //serialize user data or not,
-        //serialize 'selected' attribute for the rows tags,
-        //serialize grid structure info,
-        //serialize the 'changed' attribute for the cells tags,
-        //include just changed rows to serialization,
-        //serialize cell values as CDATA sections
+
 
         tgrid = mygrid1;
 
         tgrid.setSerializationLevel(true,false,false,false,true,true);
+        var myXmlString = tgrid.serialize();
 
-        var myJsonString = tgrid.serializeJson();
-		alog("	serializeJson:" + myJsonString);
-
-        //컨디션 데이터 모두 말기
-        var ConAllData = $( "#condition1" ).serialize();
-        alog("   ConAllData = " + ConAllData);
-
-
+        sendFormData = new FormData($("#condition1")[0]);
+		if(typeof lastinput1 != "undefined"){
+			var tKeys = lastinput1.keys();
+			for(i=0;i<tKeys.length;i++) {
+                //alog(tKeys[i] + "=" + tinput.get(tKeys[i]));
+				sendFormData.append(tKeys[i],lastinput1.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+			}
+        }
+        sendFormData.append("xmldata",myXmlString);
 
         $.ajax({
             type : "POST",
-            url : url_1+"&G1_CRUD_MODE=SAVE&" + lastinput1 ,
-            data : {jsondata : myJsonString},
+            url : url_1+"&G1_CRUD_MODE=SAVE&" ,
+            data : sendFormData,
+			processData: false,
+            contentType: false, 
             dataType: "json",
             async:false,
             success: function(data){
@@ -269,22 +267,28 @@
         tgrid = mygrid2;
 
         tgrid.setSerializationLevel(true,false,false,false,true,true);
+        var myXmlString = tgrid.serialize();
 
-        var myJsonString = tgrid.serializeJson();
-		alog("	serializeJson:" + myJsonString);
+        sendFormData = new FormData($("#condition1")[0]);
+		if(typeof lastinput1 != "undefined"){
+			var tKeys = lastinput1.keys();
+			for(i=0;i<tKeys.length;i++) {
+                //alog(tKeys[i] + "=" + tinput.get(tKeys[i]));
+				sendFormData.append(tKeys[i],lastinput1.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+			}
+        }
+        sendFormData.append("xmldata",myXmlString);
 
 
-        //alog("xml : " + myXmlString);
-
-        //컨디션 데이터 모두 말기
-        var ConAllData = $( "#condition1" ).serialize();
-        alog("   ConAllData = " + ConAllData);
 
 
         $.ajax({
             type : "POST",
-            url : url_2+"&G2_CRUD_MODE=SAVE&" + lastinput2 ,
-            data : {jsondata : myJsonString},
+            url : url_2+"&G2_CRUD_MODE=SAVE&",
+            data : sendFormData,
+			processData: false,
+            contentType: false, 
             dataType: "json",
             async:false,
             success: function(data){
@@ -319,24 +323,27 @@
         //serialize cell values as CDATA sections
 
         tgrid = mygrid3;
+
         tgrid.setSerializationLevel(true,false,false,false,true,true);
+        var myXmlString = tgrid.serialize();
 
-        var myJsonString = tgrid.serializeJson();
-        alog(" serializeJson:" + myJsonString);
-
-        //var myJsonString =  myJsonString.replace(/\n/g,"\\n").replace(/\t/g,"\\t");
-        //var myJsonString =  myJsonString.replace(/\n/g,"\\n").replace(/\t/g,"\\t");
-        alog(" serializeJson(clear):" + myJsonString);
-
-
-        //컨디션 데이터 모두 말기
-        var ConAllData = $( "#condition1" ).serialize();
-        alog("   ConAllData = " + ConAllData);
+        sendFormData = new FormData($("#condition1")[0]);
+		if(typeof lastinput1 != "undefined"){
+			var tKeys = lastinput1.keys();
+			for(i=0;i<tKeys.length;i++) {
+                //alog(tKeys[i] + "=" + tinput.get(tKeys[i]));
+				sendFormData.append(tKeys[i],lastinput1.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+			}
+        }
+        sendFormData.append("xmldata",myXmlString);
 
         $.ajax({
             type : "POST",
-            url : url_3+"&G3_CRUD_MODE=SAVE&" + lastinput3 ,
-            data : {jsondata : myJsonString},
+            url : url_3+"&G3_CRUD_MODE=SAVE&" ,
+            data : sendFormData,
+			processData: false,
+            contentType: false, 
             dataType: "json",
             async:false,
             success: function(data){
@@ -365,23 +372,26 @@
         alog("save4()------------start");
 
         tgrid = mygrid4;
-
         tgrid.setSerializationLevel(true,false,false,false,true,true);
+        var myXmlString = tgrid.serialize();
 
-        var myJsonString = tgrid.serializeJson();
-		alog("	serializeJson:" + myJsonString);
-
-
-
-        //컨디션 데이터 모두 말기
-        var ConAllData = $( "#condition1" ).serialize();
-        alog("   ConAllData = " + ConAllData);
-
+        sendFormData = new FormData($("#condition1")[0]);
+		if(typeof lastinput1 != "undefined"){
+			var tKeys = lastinput1.keys();
+			for(i=0;i<tKeys.length;i++) {
+                //alog(tKeys[i] + "=" + tinput.get(tKeys[i]));
+				sendFormData.append(tKeys[i],lastinput1.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+			}
+        }
+        sendFormData.append("xmldata",myXmlString);
 
         $.ajax({
             type : "POST",
-            url : url_5+"&G5_CRUD_MODE=SAVE&" + lastinput3 ,
-            data : {jsondata : myJsonString},
+            url : url_5+"&G5_CRUD_MODE=SAVE&" ,
+            data : sendFormData,
+			processData: false,
+            contentType: false, 
             dataType: "json",
             async:false,
             success: function(data){
@@ -451,7 +461,7 @@
 
                 //그리드에 데이터 반영
                 if(data.RTN_CD == "200"){
-                    alog(JSON.stringify(data.RTN_DATA));
+                    //alog(JSON.stringify(data.RTN_DATA));
 
                     tgrid.parse(data.RTN_DATA,"json");
 
@@ -472,7 +482,7 @@
 
     //그리드 조회
     function gridSearch2(tinput){
-        alog("gridSearch2()------------start");
+        alog("gridSearch2()------------start :" + tinput);
 
         //처리할 그리드
         tgrid = mygrid2;
@@ -480,11 +490,24 @@
         //그리드 초기화
         tgrid.clearAll();
 
+        sendFormData = new FormData($("#condition1")[0]);
+		if(typeof tinput != "undefined"){
+			var tKeys = tinput.keys();
+			for(i=0;i<tKeys.length;i++) {
+                //alog(tKeys[i] + "=" + tinput.get(tKeys[i]));
+				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+			}
+		}
+
+
         //불러오기
         $.ajax({
             type : "POST",
-            url : url_2+"&G2_CRUD_MODE=read&" + tinput ,
-            data : {xmldata : ""},
+            url : url_2+"&G2_CRUD_MODE=read&" ,
+            data : sendFormData,
+			processData: false,
+			contentType: false,            
             dataType: "json",
             async: true,
             success: function(data){
@@ -526,11 +549,24 @@
 		//그리드 초기화
         tgrid.clearAll();
 
+        sendFormData = new FormData($("#condition1")[0]);
+		if(typeof tinput != "undefined"){
+			var tKeys = tinput.keys();
+			for(i=0;i<tKeys.length;i++) {
+                //alog(tKeys[i] + "=" + tinput.get(tKeys[i]));
+				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+			}
+		}
+
+
         //불러오기
         $.ajax({
             type : "POST",
-            url : url_3+"&G3_CRUD_MODE=read&" + tinput ,
-            data : {xmldata : ""},
+            url : url_3+"&G3_CRUD_MODE=read&" ,
+            data : sendFormData,
+			processData: false,
+			contentType: false,   
             dataType: "json",
             async: true,
             success: function(data){
@@ -577,11 +613,29 @@
         //그리드 초기화
         tgrid.clearAll();
 
+
+        //그리드 초기화
+        tgrid.clearAll();
+
+        sendFormData = new FormData($("#condition1")[0]);
+        if(typeof tinput != "undefined"){
+            var tKeys = tinput.keys();
+            for(i=0;i<tKeys.length;i++) {
+                //alog(tKeys[i] + "=" + tinput.get(tKeys[i]));
+                sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+                //console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+            }
+        }
+
+
+            
         //불러오기
         $.ajax({
             type : "POST",
-            url : url_5+"&G5_CRUD_MODE=read&" + tinput ,
-            data : {xmldata : ""},
+            url : url_5+"&G5_CRUD_MODE=read&",
+            data : sendFormData,
+            processData: false,
+            contentType: false,  
             dataType: "json",
             async: true,
             success: function(data){
@@ -686,7 +740,8 @@
             if(change.origin != "setValue"){
                 rid = mygrid2.getSelectedId();
                 cidx = mygrid2.getColIndexById("SRCTXT");
-                mygrid2.cells(rid,cidx).setValue(cm.getValue().replace(/\n/g,"\\n").replace(/\t/g,"\\t"));
+                //mygrid2.cells(rid,cidx).setValue(xmlCdataAdd(cm.getValue().replace(/\n/g,"\\n").replace(/\t/g,"\\t")));
+                mygrid2.cells(rid,cidx).setValue(cm.getValue());
                 mygrid2.cells(rid,cidx).cell.wasChanged = true;
             
 				RowEditStatus = mygrid2.getUserData(rid,"!nativeeditor_status");
@@ -745,7 +800,8 @@
             if(change.origin != "setValue"){
                 rid = mygrid3.getSelectedId();
                 cidx = mygrid3.getColIndexById("SRCTXT");
-                mygrid3.cells(rid,cidx).setValue(cm.getValue().replace(/\n/g,"\\n").replace(/\t/g,"\\t"));
+                //mygrid3.cells(rid,cidx).setValue(xmlCdataAdd(cm.getValue().replace(/\n/g,"\\n").replace(/\t/g,"\\t")));
+                mygrid3.cells(rid,cidx).setValue(cm.getValue());
                 mygrid3.cells(rid,cidx).cell.wasChanged = true;
 
 				RowEditStatus = mygrid3.getUserData(rid,"!nativeeditor_status");
@@ -805,7 +861,8 @@
             if(change.origin != "setValue"){
                 rid = mygrid4.getSelectedId();
                 cidx = mygrid4.getColIndexById("SRCTXT");
-                mygrid4.cells(rid,cidx).setValue(cm.getValue().replace(/\n/g,"\\n").replace(/\t/g,"\\t"));
+                //mygrid4.cells(rid,cidx).setValue(xmlCdataAdd(cm.getValue().replace(/\n/g,"\\n").replace(/\t/g,"\\t")));
+                mygrid4.cells(rid,cidx).setValue(cm.getValue());
                 mygrid4.cells(rid,cidx).cell.wasChanged = true;
 
 				RowEditStatus = mygrid4.getUserData(rid,"!nativeeditor_status");
@@ -887,28 +944,8 @@
 
             selrowid1 = rowID;
 
-            //선택된 ROW의 모든컬럼 추출하기
-            var RowAllData;
-            RowAllData = getRowsColid(mygrid1,rowID,"G1",["OBJTYPE"]);
-            alog("   RowAllData = " + RowAllData);
-
-            var ConAllData = $( "#condition1" ).serialize();
-            alog("   ConAllData = " + ConAllData);
-
-            //alert( mygrid1.cells(rowID,celInd).getValue() );
-
-            lastinput2 = ConAllData + RowAllData;
-            lastinput4 = ConAllData + RowAllData;
-
-            //디테일 4 조회
-            //detailSearch4(lastinput4);
-
-			//alert(q(mygrid1.cells(rowID,1).getValue()));
-			//alert(q(mygrid1.cells(rowID,2).getValue()));
-            lastinput2json = jQuery.parseJSON('{ "__NAME":"lastinput2json"' +
-                ', "OBJTYPE" : "' + q(mygrid1.cells(rowID,mygrid1.getColIndexById("OBJTYPE")).getValue()) + '"' +
-                '}');
-
+            lastinput2 = new HashMap(); // 
+            lastinput2.set("G1_OBJTYPE",mygrid1.cells(rowID,mygrid1.getColIndexById("OBJTYPE")).getValue())
 
             //그리드 2 조회
             gridSearch2(lastinput2);
@@ -980,26 +1017,10 @@
             //그리드 3처리
             mygrid3.clearAll();
 
-            //선택된 ROW의 모든컬럼 추출하기
-            var RowAllData;
-            var RowAllData1;
-            RowAllData1 = getRowsColid(mygrid1,selrowid1,"G1");
-            var RowAllData2;
-            RowAllData2 = getRowsColid(mygrid2,rowID,"G2");
-            RowAllData = RowAllData1 + RowAllData2;
-            alog("   RowAllData = " + RowAllData);
 
-            var ConAllData = $( "#condition1" ).serialize();
-            alog("   ConAllData = " + ConAllData);
-
-            //alert( mygrid1.cells(rowID,celInd).getValue() );
-
-            lastinput3 = ConAllData + RowAllData;
-
-            lastinput3json = jQuery.parseJSON('{ "__NAME":"lastinput3json"' +
-                ', "OBJDSEQ" : "' + q(mygrid2.cells(rowID,mygrid2.getColIndexById("OBJDSEQ")).getValue()) + '"' +
-                ', "OBJTYPE" : "' + q(mygrid2.cells(rowID,mygrid2.getColIndexById("OBJTYPE")).getValue()) + '"' +
-                '}');
+            lastinput3 = new HashMap();
+            lastinput3.set("G2_OBJDSEQ",mygrid2.cells(rowID,mygrid2.getColIndexById("OBJDSEQ")).getValue());
+            lastinput3.set("G2_OBJTYPE",mygrid2.cells(rowID,mygrid2.getColIndexById("OBJTYPE")).getValue());
 
 
             //그리드 2 조회
@@ -1009,8 +1030,8 @@
             //세팅하기
             //alert(mygrid2.cells(rowID,celInd).getValue());
             cidx = mygrid2.getColIndexById("SRCTXT");
-            cm2.setValue(mygrid2.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t"));
-
+            //cm2.setValue(xmlCdataRemove(mygrid2.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t")));
+            cm2.setValue(mygrid2.cells(rowID,cidx).getValue());
 
 
 
@@ -1081,23 +1102,9 @@
             //그리드 3처리
             mygrid4.clearAll();
 
-            //선택된 ROW의 모든컬럼 추출하기
-            var RowAllData;
-            RowAllData = getRowsColid(mygrid3,rowID,"G3");
-            alog("   RowAllData = " + RowAllData);
-            var ConAllData = $( "#condition1" ).serialize();
-            alog("   ConAllData = " + ConAllData);
-
-            //alert( mygrid1.cells(rowID,celInd).getValue() );
-
-            lastinput4 = ConAllData + RowAllData;
-
-
-            lastinput4json = jQuery.parseJSON('{ "__NAME":"lastinput4json"' +
-                ', "OBJASEQ" : "' + q(mygrid3.cells(rowID,mygrid3.getColIndexById("OBJASEQ")).getValue()) + '"' +
-                ', "OBJTYPE" : "' + q(mygrid3.cells(rowID,mygrid3.getColIndexById("OBJTYPE")).getValue()) + '"' +
-                '}');
-
+            lastinput4 = new HashMap();
+            lastinput4.set("G3_OBJASEQ",mygrid3.cells(rowID,mygrid3.getColIndexById("OBJASEQ")).getValue());
+            lastinput4.set("G3_OBJTYPE",mygrid3.cells(rowID,mygrid3.getColIndexById("OBJTYPE")).getValue());
 
             //그리드 2 조회
             gridSearch4(lastinput4);
@@ -1106,10 +1113,8 @@
             //세팅하기
             //alert(mygrid2.cells(rowID,celInd).getValue());
             cidx = mygrid3.getColIndexById("SRCTXT");
-            cm3.setValue(mygrid3.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t"));
-
-
-
+           // cm3.setValue(xmlCdataRemove(mygrid3.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t")));
+            cm3.setValue(mygrid3.cells(rowID,cidx).getValue());
 
             alog("mygrid3 - onRowSelect ----------end");
         });
@@ -1165,7 +1170,8 @@
             //세팅하기
             //alert(mygrid2.cells(rowID,celInd).getValue());
             cidx = mygrid4.getColIndexById("SRCTXT");
-            cm4.setValue(mygrid4.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t"));
+            //cm4.setValue(xmlCdataRemove(mygrid4.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t")));
+            cm4.setValue(mygrid4.cells(rowID,cidx).getValue());
 
 
         });

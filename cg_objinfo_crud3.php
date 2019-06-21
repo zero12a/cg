@@ -10,7 +10,7 @@
     require_once("./include/incDB.php");
 
     //ServerViewTxt("N","N","Y","Y");
-    $db=db_m_open();
+    $db["cg"]=db_m_open();
 
 
     //그룹ID받기
@@ -31,21 +31,21 @@
     $G1_PARAM = $_GET['G1_PARAM'];
     $G1_SRCTYPE = $_GET['G1_SRCTYPE'];
 
-    $G2_OBJDSEQ = $_GET['G2_OBJDSEQ'];
+    $G2_OBJDSEQ = $_POST['G2_OBJDSEQ'];
 
 
 
     //그룹ID받기
     $REQ["F_GRPID"] = $_GET['F_GRPID'];
-    $REQ["F_PJTID"] = $_GET['F_PJTID'];
-    $REQ["F_FILETYPE"] = $_GET['F_FILETYPE'];
-    $REQ["F_OBJTYPE"] = $_GET['F_OBJTYPE'];
-    $REQ["F_DT_TYPE"] = $_GET['F_DT_TYPE'];
-    $REQ["F_START_DT"] = str_replace("-","",$_GET['F_START_DT']); //날짜 타입은 - 제거
-    $REQ["F_END_DT"] = str_replace("-","",$_GET['F_END_DT']); //날짜 타입은 - 제거
+    $REQ["F_PJTID"] = $_POST['F_PJTID'];
+    $REQ["F_FILETYPE"] = $_POST['F_FILETYPE'];
+    $REQ["F_OBJTYPE"] = $_POST['F_OBJTYPE'];
+    $REQ["F_DT_TYPE"] = $_POST['F_DT_TYPE'];
+    $REQ["F_START_DT"] = str_replace("-","",$_POST['F_START_DT']); //날짜 타입은 - 제거
+    $REQ["F_END_DT"] = str_replace("-","",$_POST['F_END_DT']); //날짜 타입은 - 제거
 
     //컬럼ROW받기 (REFGRID의 컬럼 정보 받기)
-    $REQ["G1_OBJTYPE"] = $_GET['G1_OBJTYPE'];
+    $REQ["G1_OBJTYPE"] = $_POST['G1_OBJTYPE'];
     $REQ["G1_LBLTXT"] = $_GET['G1_LBLTXT'];
     $REQ["G1_OBJTXT"] = $_GET['G1_OBJTXT'];
     $REQ["G1_SRCTXT"] = $_GET['G1_SRCTXT'];
@@ -54,8 +54,8 @@
     $REQ["G1_PARAM"] = $_GET['G1_PARAM'];
     $REQ["G1_SRCTYPE"] = $_GET['G1_SRCTYPE'];
 
-    $REQ["G2_OBJDSEQ"] = $_GET['G2_OBJDSEQ'];
-    $REQ["G3_OBJASEQ"] = $_GET['G3_OBJASEQ'];
+    $REQ["G2_OBJDSEQ"] = $_POST['G2_OBJDSEQ'];
+    $REQ["G3_OBJASEQ"] = $_POST['G3_OBJASEQ'];
 
 
     //폼뷰
@@ -78,82 +78,6 @@
     $REQ["G5_CRUD_MODE"]    = $_GET['G5_CRUD_MODE'];
 
 
-if($REQ["F_GRPID"] == "4" && $REQ["F4_CRUD_MODE"] == "read"){
-
-    $to_coltype = "ss";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-          select
-            OBJTYPE,STARTTXT,LBLSTARTTXT,LBLTXT,LBLENDTXT,OBJSTARTTXT,OBJTXT,OBJENDTXT,ENDTXT,USEYN,a.ADDDT,a.MODDT
-          from CG_OBJINFO a 
-		  where a.DELYN='N' and a.OBJTYPE = #G1_OBJTYPE#
-          limit 1
-          ";
-
-    alog("        selected : " . $sql);
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)  JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-    echo make_detail_read_json($stmt);
-    $db->close();
-
-}else if($REQ["F_GRPID"] == "4"){
-    alog("---------------GRP G4 ---------------------START");
-    alog("        F4_CRUD_MODE : " .$F4_CRUD_MODE);
-    alog("        xmldata : " .$_POST["xmldata"]);
-	
-	$xml_array = getXml2Array($_POST["xmldata"]);
-
-
-    $sql_inserted = "
-                insert into CG_OBJINFO (
-                    OBJTYPE,USEYN,DELYN
-                    ,ADDDT
-                ) values (
-                    #OBJTYPE#,#USEYN#,'N'
-                    ,date_format(sysdate(),'%Y%m%d%H%i%s')
-                )
-    ";
-    $sql_inserted_coltype = "ss";
-
-    $sql_deleted = "update  CG_OBJINFO set DELYN='Y' where  OBJTYPE = #OBJTYPE# ";
-    $sql_deleted_coltype = "s";
-
-    $sql_updated = "
-                update CG_OBJINFO set
-                    USEYN = #USEYN#
-                    , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
-                where OBJTYPE = #OBJTYPE#
-    ";
-    $sql_updated_coltype = "s s";
-
-
-    $sql=null;
-    $coltype=null;
-    if($REQ["F4_CRUD_MODE"] == "new"){
-        $sql = $sql_inserted;
-        $coltype = $sql_inserted_coltype;
-    }
-    if($REQ["F4_CRUD_MODE"] == "update"){
-        $sql = $sql_updated;
-        $coltype = $sql_updated_coltype;
-    }
-    if($REQ["F4_CRUD_MODE"] == "delete"){
-        $sql = $sql_deleted;
-        $coltype = $sql_deleted_coltype;
-    }
-
-    echo make_detail_save_json($db,$REQ,$sql,$coltype);
-
-    //echo "\n\n\n xml to array : ";
-    //var_dump($xml_array);
-    $db->close();
-}
-
-
-
-
-
 if($REQ["F_GRPID"] == "1" && $REQ["G1_CRUD_MODE"] == "read"){
 
     $to_coltype = "s";
@@ -170,61 +94,76 @@ if($REQ["F_GRPID"] == "1" && $REQ["G1_CRUD_MODE"] == "read"){
     }
 
 
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt) JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
-    echo make_grid_read_json($stmt,1);
-    $db->close();
+
+    //V_GRPNM : 팀별 현황 (보안취약점 갯수)
+    $GRID["SQL"]["R"]["FNCTYPE"] = "R";
+    $GRID["SQL"]["R"]["SQLTXT"] = "
+        select
+            OBJTYPE as OLD_OBJTYPE,OBJTYPE,a.USEYN,a.ADDDT,a.MODDT
+        from CG_OBJINFO a
+        where a.DELYN='N' 
+        ";
+    $GRID["SQL"]["R"]["BINDTYPE"] = $to_coltype;
+    $GRID["SQL"]["R"]["SVRID"] = "cg";
+    $GRID["COLCRYPT"] = array();//xml컬럼 자동으로 cdata 붙이기.
+
+    $rtnVal = makeGridSearchJson($GRID,$db);
+
+    //처리 결과 리턴
+    $rtnVal->RTN_CD = "200";
+    $rtnVal->ERR_CD = "200";
+    echo json_encode($rtnVal);
+    
+    $db["cg"]->close();
 
 }else if($REQ["F_GRPID"] == "1"){
     alog("---------------GRP G1 ---------------------START");
     alog("        G1_CRUD_MODE : " .$G1_CRUD_MODE);
-    alog("        jsondata : " .$_POST["jsondata"]);
+    alog("        xmldata : " .$_POST["xmldata"]);
 
 
-	$json_array = json_decode($_POST["jsondata"],true);
-	alog("	json_array.COLS count = " . count($json_array["REQ_DATA"]["COLS"]) );
-	alog("	json_array.ROWS count = " . count($json_array["REQ_DATA"]["ROWS"]) );
-	alog("	json_array.error : " . json_last_error()); // 4 (JSON_ERROR_SYNTAX)
-	alog("	json_array.error_msg : " .json_last_error_msg()); // unexpected character 
+    $GRID["XML"] = getXml2Array($_POST["xmldata"]);//
 
-	//$xml_array = getXml2Array($_POST["xmldata"]);
-    //$colord = "OLD_OBJTYPE,OBJTYPE,STARTTXT,LBLSTARTTXT,LBLTXT,LBLENDTXT,OBJSTARTTXT,OBJTXT,OBJENDTXT,ENDTXT,USEYN,ADDDT,MODDT";
+    $GRID["COLORD"] = "OLD_OBJTYPE,OBJTYPE,USEYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 
+    $GRID["COLCRYPT"] = array();
+    $GRID["KEYCOLID"] = "OBJTYPE";  //KEY컬럼 COLID, 0
+    $GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 
-    $sql_inserted = "
+    $GRID["SQL"]["C"]["SQLTXT"] = "
                 insert into CG_OBJINFO (
                     OBJTYPE,USEYN
                     ,ADDDT
                 ) values (
-                    #OBJTYPE#,#USEYN#
+                    #{OBJTYPE},#{USEYN}
                     ,date_format(sysdate(),'%Y%m%d%H%i%s')
                 )
     ";
-    $sql_inserted_coltype = "ss";
+    $GRID["SQL"]["C"]["BINDTYPE"] = "ss";
+    $GRID["SQL"]["C"]["SVRID"] = "cg";
 
-    $sql_deleted = "update   CG_OBJINFO set DELYN='Y' where OBJTYPE = #OBJTYPE# ";
-    $sql_deleted_coltype = "s";
+    $GRID["SQL"]["D"]["SQLTXT"] = "update   CG_OBJINFO set DELYN='Y' where OBJTYPE = #{OBJTYPE} ";
+    $GRID["SQL"]["D"]["BINDTYPE"] = "s";
+    $GRID["SQL"]["D"]["SVRID"] = "cg";
 
-    $sql_updated = "
+    $GRID["SQL"]["U"]["SQLTXT"] = "
                 update CG_OBJINFO set
-                    OBJTYPE = #OBJTYPE#, USEYN = #USEYN#
+                    OBJTYPE = #{OBJTYPE}, USEYN = #{USEYN}
                     , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
-                where OBJTYPE = #OLD_OBJTYPE#
+                where OBJTYPE = #{OLD_OBJTYPE}
     ";
-    $sql_updated_coltype = "ss s";
+    $GRID["SQL"]["U"]["BINDTYPE"] = "ss s";
+    $GRID["SQL"]["U"]["SVRID"] = "cg";
 
 
-    //echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype);
-    
-	echo make_grid_save_json_new($db,$REQ,$json_array["REQ_DATA"]["COLS"],$json_array["REQ_DATA"]["ROWS"]
-		,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,$ai_yn='N',$key_colid="OBJTYPE");
+    $rtnVal = makeGridSaveJson($GRID,$db);
 
+    $rtnVal->RTN_CD = "200";
+    $rtnVal->ERR_CD = "200";
+    echo json_encode($rtnVal);
 
-    //echo "\n\n\n xml to array : ";
-    //var_dump($xml_array);
-    $db->close();
+    $db["cg"]->close();
 }
 
 
@@ -239,81 +178,85 @@ if($REQ["F_GRPID"] == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 	$add_sql = "";
     $to_coltype = "s";
     if($REQ["F_FILETYPE"] != "") {
-        $add_sql = " and FILETYPE = #F_FILETYPE# ";
+        $add_sql = " and FILETYPE = #{F_FILETYPE} ";
         $to_coltype .= "s";
     }
-    $sql = "
-          select
-             OBJDSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
-          from 
-			CG_OBJINFOD a 		  
-		  where OBJTYPE = #G1_OBJTYPE# $add_sql
-		  order by OBJDORD asc
-          ";
-    alog("        to_coltype : " . $to_coltype);
+    //V_GRPNM : 팀별 현황 (보안취약점 갯수)
+    $GRID["SQL"]["R"]["FNCTYPE"] = "R";
+    $GRID["SQL"]["R"]["SQLTXT"] = "
+            select
+                OBJDSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
+            from 
+            CG_OBJINFOD a 		  
+            where OBJTYPE = #{G1_OBJTYPE} $add_sql
+            order by OBJDORD asc
+        ";
+    $GRID["SQL"]["R"]["BINDTYPE"] = $to_coltype;
+    $GRID["SQL"]["R"]["SVRID"] = "cg";
+    $GRID["COLCRYPT"] = array();//xml컬럼 자동으로 cdata 붙이기.
 
-    alog("        selected SQL : " . $sql);
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)    JsonMsg("500","109","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+    $rtnVal = makeGridSearchJson($GRID,$db);
 
-    echo make_grid_read_json($stmt,0);
-    $db->close();
+    //처리 결과 리턴
+    $rtnVal->RTN_CD = "200";
+    $rtnVal->ERR_CD = "200";
+    echo json_encode($rtnVal);
+    
+    $db["cg"]->close();
 
 }else if($REQ["F_GRPID"] == "2"){
     alog("---------------GRP G2 ---------------------START");
     alog("        G2_CRUD_MODE : " .$REQ["G2_CRUD_MODE"]);
     alog("        xmldata : " .$_POST["xmldata"]);
-    alog("        jsondata : " .$_POST["jsondata"]);
 
-	//$xml_array = getXml2Array($_POST["xmldata"]);
-	$json_array = json_decode($_POST["jsondata"],true);
+    $GRID["XML"] = getXml2Array($_POST["xmldata"]);//
 
+    $GRID["COLORD"] = "OBJDSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN"; //그리드 컬럼순서(Hidden컬럼포함)
 
-	alog("	json_array.COLS count = " . count($json_array["REQ_DATA"]["COLS"]) );
-	alog("	json_array.ROWS count = " . count($json_array["REQ_DATA"]["ROWS"]) );
-	alog("	json_array.error : " . json_last_error()); // 4 (JSON_ERROR_SYNTAX)
-	alog("	json_array.error_msg : " .json_last_error_msg()); // unexpected character 
+    $GRID["COLCRYPT"] = array();
+    $GRID["KEYCOLID"] = "OBJDSEQ";  //KEY컬럼 COLID, 0
+    $GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 
-
-    //$colord = "OBJDSEQ,OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE,OBJVALNM,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT";
-
-
-    $sql_inserted = "
+    $GRID["SQL"]["C"]["SQLTXT"] = "
                insert into CG_OBJINFOD (
                                     OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE
                                     ,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT
                                     ,INPUT,PARAM,SRCTYPE,FILTER,DEBUGYN
                                     ,ADDDT
                ) values (
-                                    #OBJTYPE#,#FILETYPE#,#OBJVAL#,#OBJDORD#,#OBJVALTYPE#
-                                    ,#UILANG#,#OBJVALNM#,#OBJDESC#,#SRCTXT#,#SPTTXT#
-                                    ,#INPUT#,#PARAM#,#SRCTYPE#,#FILTER#,#DEBUGYN#
+                                    #{OBJTYPE},#{FILETYPE},#{OBJVAL},#{OBJDORD},#{OBJVALTYPE}
+                                    ,#{UILANG},#{OBJVALNM},#{OBJDESC},#{SRCTXT},#{SPTTXT}
+                                    ,#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER},#{DEBUGYN}
                                     ,date_format(sysdate(),'%Y%m%d%H%i%s')
                )
     ";
-    $sql_inserted_coltype = "sssis sssss sssss";
+    $GRID["SQL"]["C"]["BINDTYPE"] = "sssis sssss sssss";
+    $GRID["SQL"]["C"]["SVRID"] = "cg";
 
-    $sql_deleted = " delete from CG_OBJINFOD where  OBJTYPE = #G1_OBJTYPE# and OBJDSEQ = #OBJDSEQ# ";
-    $sql_deleted_coltype = "si";
+    $GRID["SQL"]["D"]["SQLTXT"] = " delete from CG_OBJINFOD where  OBJTYPE = #{OBJTYPE} and OBJDSEQ = #{OBJDSEQ} ";
+    $GRID["SQL"]["D"]["BINDTYPE"] = "si";
+    $GRID["SQL"]["D"]["SVRID"] = "cg";
 
-    $sql_updated = "
+    $GRID["SQL"]["U"]["SQLTXT"] = "
                update CG_OBJINFOD set
-                    OBJTYPE = #OBJTYPE#, FILETYPE = #FILETYPE#, OBJVAL = #OBJVAL#, OBJVALNM = #OBJVALNM#, OBJDORD = #OBJDORD#
-					, OBJVALTYPE = #OBJVALTYPE#, UILANG = #UILANG#,  OBJDESC = #OBJDESC#, SRCTXT = #SRCTXT#, SPTTXT = #SPTTXT#
-					, INPUT = #INPUT#, PARAM = #PARAM#, SRCTYPE = #SRCTYPE#, FILTER = #FILTER#, DEBUGYN = #DEBUGYN#
+                    OBJTYPE = #{OBJTYPE}, FILETYPE = #{FILETYPE}, OBJVAL = #{OBJVAL}, OBJVALNM = #{OBJVALNM}, OBJDORD = #{OBJDORD}
+					, OBJVALTYPE = #{OBJVALTYPE}, UILANG = #{UILANG},  OBJDESC = #{OBJDESC}, SRCTXT = #{SRCTXT}, SPTTXT = #{SPTTXT}
+					, INPUT = #{INPUT}, PARAM = #{PARAM}, SRCTYPE = #{SRCTYPE}, FILTER = #{FILTER}, DEBUGYN = #{DEBUGYN}
                     ,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-                where OBJDSEQ = #OBJDSEQ#
+                where OBJDSEQ = #{OBJDSEQ}
     ";
-    $sql_updated_coltype = "ssssi sssss sssss i";
+    $GRID["SQL"]["U"]["BINDTYPE"] = "ssssi sssss sssss i";
+    $GRID["SQL"]["U"]["SVRID"] = "cg";
 
 
+    
+    $rtnVal = makeGridSaveJson($GRID,$db);
 
+    $rtnVal->RTN_CD = "200";
+    $rtnVal->ERR_CD = "200";
+    echo json_encode($rtnVal);
 
-    //echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","OBJDSEQ");
-	echo make_grid_save_json_new($db,$REQ,$json_array["REQ_DATA"]["COLS"],$json_array["REQ_DATA"]["ROWS"]
-		,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","OBJDSEQ");
-	
-	$db->close();
+	$db["cg"]->close();
 }
 
 
@@ -324,82 +267,83 @@ if($REQ["F_GRPID"] == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 
 if($REQ["F_GRPID"] == "3" && $REQ["G3_CRUD_MODE"] == "read"){
 
-    $to_coltype = "i";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-          select
+
+    $GRID["SQL"]["R"]["FNCTYPE"] = "R";
+    $GRID["SQL"]["R"]["SQLTXT"] = "
+        select
             OBJASEQ,OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
-          from CG_OBJINFOA a
-		  where  OBJDSEQ = #G2_OBJDSEQ#
-		  order by OBJAORD asc
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)    JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+        from CG_OBJINFOA a
+        where  OBJDSEQ = #{G2_OBJDSEQ}
+        order by OBJAORD asc
+        ";
+    $GRID["SQL"]["R"]["BINDTYPE"] = "i";
+    $GRID["SQL"]["R"]["SVRID"] = "cg";
+    $GRID["COLCRYPT"] = array();//xml컬럼 자동으로 cdata 붙이기.
 
-    echo make_grid_read_json($stmt,0);
+    $rtnVal = makeGridSearchJson($GRID,$db);
 
-    $db->close();
+    //처리 결과 리턴
+    $rtnVal->RTN_CD = "200";
+    $rtnVal->ERR_CD = "200";
+    echo json_encode($rtnVal);
+    
+    $db["cg"]->close();
+
 
 }else if($REQ["F_GRPID"] == "3"){
     alog("---------------GRP G3 ---------------------START");
     alog("        G3_CRUD_MODE : " .$REQ["G3_CRUD_MODE"]);
     alog("        xmldata : " .$_POST["xmldata"]);
-    alog("        jsondata : " .$_POST["jsondata"]);
 
-	//$tstr = '{"REQ_DATA":"11"}';
+    $GRID["XML"] = getXml2Array($_POST["xmldata"]);//
 
+    $GRID["COLORD"] = "OBJASEQ,OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN"; //그리드 컬럼순서(Hidden컬럼포함)
 
+    $GRID["COLCRYPT"] = array();
+    $GRID["KEYCOLID"] = "OBJDSEQ";  //KEY컬럼 COLID, 0
+    $GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 
-    $json_array = json_decode($_POST["jsondata"],true); //true는 stdClass로 리턴
-    //$json_array = json_decode($_POST["jsondata"]);
-
-	alog("	json_array.COLS count = " . count($json_array["REQ_DATA"]["COLS"]) );
-	alog("	json_array.ROWS count = " . count($json_array["REQ_DATA"]["ROWS"]) );
-	alog("	json_array.error : " . json_last_error()); // 4 (JSON_ERROR_SYNTAX)
-	alog("	json_array.error_msg : " .json_last_error_msg()); // unexpected character 
-
-	//exit;
-
-
-    //$colord = "OBJASEQ,OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT";
-
-
-    $sql_inserted = "
+    $GRID["SQL"]["C"]["SQLTXT"] = "
                insert into CG_OBJINFOA (
                                     OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT
                                     ,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER
                                     ,DEBUGYN
                                     ,ADDDT
                ) values (
-                                    #OBJTYPE#,#OBJDSEQ#,#OBJAORD#,#OBJDESC#,#SRCTXT#
-                                    ,#SPTTXT#,#INPUT#,#PARAM#,#SRCTYPE#,#FILTER#
-                                    ,#DEBUGYN#
+                                    #{OBJTYPE},#{OBJDSEQ},#{OBJAORD},#{OBJDESC},#{SRCTXT}
+                                    ,#{SPTTXT},#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER}
+                                    ,#{DEBUGYN}
                                     ,date_format(sysdate(),'%Y%m%d%H%i%s')
                )
     ";
-    $sql_inserted_coltype = "siiss sssss s";
+    $GRID["SQL"]["C"]["BINDTYPE"] = "siiss sssss s";
+    $GRID["SQL"]["C"]["SVRID"] = "cg";
 
-    $sql_deleted = " delete from CG_OBJINFOA where OBJASEQ = #OBJASEQ# ";
-    $sql_deleted_coltype = "i";
+    $GRID["SQL"]["D"]["SQLTXT"] = " delete from CG_OBJINFOA where OBJASEQ = #{OBJASEQ} ";
+    $GRID["SQL"]["D"]["BINDTYPE"] = "i";
+    $GRID["SQL"]["D"]["SVRID"] = "cg";
 
-    $sql_updated = "
+    $GRID["SQL"]["U"]["SQLTXT"] = "
               update CG_OBJINFOA set
-                    OBJTYPE = #OBJTYPE#, OBJDSEQ = #OBJDSEQ#, OBJDESC = #OBJDESC#, OBJAORD = #OBJAORD#, SRCTXT = #SRCTXT#
-                    , SPTTXT = #SPTTXT#, INPUT = #INPUT#, PARAM = #PARAM#, SRCTYPE = #SRCTYPE#, FILTER = #FILTER#
-                    , DEBUGYN = #DEBUGYN#
+                    OBJTYPE = #{OBJTYPE}, OBJDSEQ = #{OBJDSEQ}, OBJDESC = #{OBJDESC}, OBJAORD = #{OBJAORD}, SRCTXT = #{SRCTXT}
+                    , SPTTXT = #{SPTTXT}, INPUT = #{INPUT}, PARAM = #{PARAM}, SRCTYPE = #{SRCTYPE}, FILTER = #{FILTER}
+                    , DEBUGYN = #{DEBUGYN}
                     ,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-                where  OBJASEQ = #OBJASEQ#
+                where  OBJASEQ = #{OBJASEQ}
     ";
-    $sql_updated_coltype = "sisis sssss s i";
+    $GRID["SQL"]["U"]["BINDTYPE"] = "sisis sssss s i";
+    $GRID["SQL"]["U"]["SVRID"] = "cg";
 
 
-    echo make_grid_save_json_new($db,$REQ,$json_array["REQ_DATA"]["COLS"],$json_array["REQ_DATA"]["ROWS"]
-		,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","OBJASEQ");
 
-    //echo "\n\n\n xml to array : ";
-    //var_dump($xml_array);
-    $db->close();
+    $rtnVal = makeGridSaveJson($GRID,$db);
+
+    $rtnVal->RTN_CD = "200";
+    $rtnVal->ERR_CD = "200";
+    echo json_encode($rtnVal);
+
+    $db["cg"]->close();
+
 }
 
 
@@ -408,74 +352,79 @@ if($REQ["F_GRPID"] == "3" && $REQ["G3_CRUD_MODE"] == "read"){
 
 if($REQ["F_GRPID"] == "5" && $REQ["G5_CRUD_MODE"] == "read"){
     alog("---------------GRP G5 ---------------------START");
-    $to_coltype = "i";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-          select
+
+    $GRID["SQL"]["R"]["FNCTYPE"] = "R";
+    $GRID["SQL"]["R"]["SQLTXT"] = "
+        select
             OBJBSEQ,OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,a.ADDDT,a.MODDT,DEBUGYN
-          from CG_OBJINFOB a
-		  where  OBJASEQ = #G3_OBJASEQ#
-		  order by OBJBORD asc
-          ";
-    alog("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)    JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+        from CG_OBJINFOB a
+        where  OBJASEQ = #{G3_OBJASEQ}
+        order by OBJBORD asc
+        ";
+    $GRID["SQL"]["R"]["BINDTYPE"] = "i";
+    $GRID["SQL"]["R"]["SVRID"] = "cg";
+    $GRID["COLCRYPT"] = array();//xml컬럼 자동으로 cdata 붙이기.
 
-    echo make_grid_read_json($stmt,0);
+    $rtnVal = makeGridSearchJson($GRID,$db);
 
-    $db->close();
+    //처리 결과 리턴
+    $rtnVal->RTN_CD = "200";
+    $rtnVal->ERR_CD = "200";
+    echo json_encode($rtnVal);
+    
+    $db["cg"]->close();
 
 }else if($REQ["F_GRPID"] == "5"){
     alog("---------------GRP G5 ---------------------START");
     alog("        G5_CRUD_MODE : " .$REQ["G5_CRUD_MODE"]);
     alog("        xmldata : " .$_POST["xmldata"]);
 
-	//$xml_array = getXml2Array($_POST["xmldata"]);
-    //$colord = "OBJBSEQ,OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT";
+    $GRID["XML"] = getXml2Array($_POST["xmldata"]);//
 
-	$json_array = json_decode($_POST["jsondata"],true);
-	alog("	json_array.COLS count = " . count($json_array["REQ_DATA"]["COLS"]) );
-	alog("	json_array.ROWS count = " . count($json_array["REQ_DATA"]["ROWS"]) );
-	alog("	json_array.error : " . json_last_error()); // 4 (JSON_ERROR_SYNTAX)
-	alog("	json_array.error_msg : " .json_last_error_msg()); // unexpected character 
+    $GRID["COLORD"] = "OBJBSEQ,OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER,ADDDT,MODDT,DEBUGYN"; //그리드 컬럼순서(Hidden컬럼포함)
 
+    $GRID["COLCRYPT"] = array();
+    $GRID["KEYCOLID"] = "OBJBSEQ";  //KEY컬럼 COLID, 0
+    $GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 
 
-    $sql_inserted = "
+    $GRID["SQL"]["C"]["SQLTXT"] = "
                insert into CG_OBJINFOB (
                                     OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT
                                     ,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER
                                     ,DEBUGYN
                                     ,ADDDT
                ) values (
-                                    #OBJTYPE#,#OBJASEQ#,#OBJBORD#,#OBJDESC#,#SRCTXT#
-                                    ,#SPTTXT#,#INPUT#,#PARAM#,#SRCTYPE#,#FILTER#
-                                    ,#DEBUGYN#
+                                    #{OBJTYPE},#{OBJASEQ},#{OBJBORD},#{OBJDESC},#{SRCTXT}
+                                    ,#{SPTTXT},#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER}
+                                    ,#{DEBUGYN}
                                     ,date_format(sysdate(),'%Y%m%d%H%i%s')
                )
     ";
-    $sql_inserted_coltype = "siiss sssss s";
+    $GRID["SQL"]["C"]["BINDTYPE"] = "siiss sssss s";
+    $GRID["SQL"]["C"]["SVRID"] = "cg";
 
-    $sql_deleted = " delete from CG_OBJINFOB where  OBJBSEQ = #OBJBSEQ# ";
-    $sql_deleted_coltype = "i";
+    $GRID["SQL"]["D"]["SQLTXT"] = " delete from CG_OBJINFOB where  OBJBSEQ = #{OBJBSEQ} ";
+    $GRID["SQL"]["D"]["BINDTYPE"] = "i";
+    $GRID["SQL"]["D"]["SVRID"] = "cg";
 
-    $sql_updated = "
+    $GRID["SQL"]["U"]["SQLTXT"] = "
               update CG_OBJINFOB set
-                    OBJTYPE = #OBJTYPE#, OBJDESC = #OBJDESC#, OBJBORD = #OBJBORD#, SRCTXT = #SRCTXT#, SPTTXT = #SPTTXT#
-					, INPUT = #INPUT#, PARAM = #PARAM#, SRCTYPE = #SRCTYPE#, FILTER = #FILTER#, DEBUGYN = #DEBUGYN#
+                    OBJTYPE = #{OBJTYPE}, OBJDESC = #{OBJDESC}, OBJBORD = #{OBJBORD}, SRCTXT = #{SRCTXT}, SPTTXT = #{SPTTXT}
+					, INPUT = #{INPUT}, PARAM = #{PARAM}, SRCTYPE = #{SRCTYPE}, FILTER = #{FILTER}, DEBUGYN = #{DEBUGYN}
                     ,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-                where OBJBSEQ = #OBJBSEQ#
+                where OBJBSEQ = #{OBJBSEQ}
     ";
-    $sql_updated_coltype = "ssiss sssss i";
+    $GRID["SQL"]["U"]["BINDTYPE"] = "ssiss sssss i";
+    $GRID["SQL"]["U"]["SVRID"] = "cg";
 
+    $rtnVal = makeGridSaveJson($GRID,$db);
 
-    //echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","OBJBSEQ");
-    echo make_grid_save_json_new($db,$REQ,$json_array["REQ_DATA"]["COLS"],$json_array["REQ_DATA"]["ROWS"]
-		,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","OBJBSEQ");
+    $rtnVal->RTN_CD = "200";
+    $rtnVal->ERR_CD = "200";
+    echo json_encode($rtnVal);
 
-    //echo "\n\n\n xml to array : ";
-    //var_dump($xml_array);
-    $db->close();
+    $db["cg"]->close();
 }
 
 

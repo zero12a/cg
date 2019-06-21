@@ -106,6 +106,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<div style="height:158px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : FILESEQ-->
 				<div class="CON_OBJGRP" style="">
@@ -117,7 +120,10 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<!--FILESEQ오브젝트출력-->						<input type="text" name="G3-FILESEQ" value="" id="G3-FILESEQ" style="width:50px;">
 					</div>
 				</div>
-			<!--D101: STARTTXT, TAG-->
+				</DIV>
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+		<!--D101: STARTTXT, TAG-->
 		<!--I.COLID : FILE1-->
 		<div class="CON_OBJGRP" style="">
 			<div class="CON_LABEL" style="width:100px;text-align:left;">
@@ -132,6 +138,34 @@ include_once('../include/incRequest.php');//CG REQUEST
 		</div>	
 	</div>	
 			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : LINKVIEW-->
+				<div  id="DIV_G3-LINKVIEW" class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						링크뷰
+						</div>
+						<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+					<a href="" target="_blank" name="G3-LINKVIEW-LINK" id="G3-LINKVIEW-LINK"><span id="G3-LINKVIEW-NM" name="G3-LINKVIEW-NM"></span></a>
+					</div>	
+			</div>	
+					</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : HIDDENLINK-->
+				<div  id="DIV_G3-HIDDENLINK" class="CON_OBJGRP" style="display:none">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+							히든링크
+						</div>
+						<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+					<a href="" target="_blank" name="G3-HIDDENLINK-LINK" id="G3-HIDDENLINK-LINK"><span id="G3-HIDDENLINK-NM" name="G3-HIDDENLINK-NM"></span></a>
+			</div>	
+		</div>	
+				</DIV><!--is_br_tab end-->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
 	</div>

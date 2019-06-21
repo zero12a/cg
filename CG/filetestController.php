@@ -78,29 +78,37 @@ $REQ["G2-FILESVRNM"] = reqPostString("G2-FILESVRNM",100);//FILESVRNM
 $REQ["G2-FILESVRNM"] = getFilter($REQ["G2-FILESVRNM"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-FILENM"] = reqPostString("G2-FILENM",30);//FILENM	
 $REQ["G2-FILENM"] = getFilter($REQ["G2-FILENM"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G2-FILETYPE"] = reqPostString("G2-FILETYPE",30);//FILETYPE	
+$REQ["G2-FILETYPE"] = getFilter($REQ["G2-FILETYPE"],"CLEARTEXT","/--미 정의--/");	
 
 //G3, 
 $REQ["G3-FILESEQ"] = reqPostString("G3-FILESEQ",30);//FILESEQ	
 $REQ["G3-FILESEQ"] = getFilter($REQ["G3-FILESEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-FILE1"] = reqPostString("G3-FILE1",100);//파일1	
 $REQ["G3-FILE1"] = getFilter($REQ["G3-FILE1"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-LINKVIEW"] = reqPostString("G3-LINKVIEW",10);//링크뷰	
+$REQ["G3-LINKVIEW"] = getFilter($REQ["G3-LINKVIEW"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-HIDDENLINK"] = reqPostString("G3-HIDDENLINK",50);//히든링크	
+$REQ["G3-HIDDENLINK"] = getFilter($REQ["G3-HIDDENLINK"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//	
 	//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"FILESEQ,FILESVRNM,FILENM"
+		,"COLORD"=>"FILESEQ,FILESVRNM,FILENM,FILETYPE"
 		,"VALID"=>
 			array(
 			"FILESEQ"=>array("STRING",30)	
 			,"FILESVRNM"=>array("STRING",100)	
 			,"FILENM"=>array("STRING",30)	
+			,"FILETYPE"=>array("STRING",30)	
 					)
 		,"FILTER"=>
 			array(
 			"FILESEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"FILESVRNM"=>array("CLEARTEXT","/--미 정의--/")
 			,"FILENM"=>array("CLEARTEXT","/--미 정의--/")
+			,"FILETYPE"=>array("CLEARTEXT","/--미 정의--/")
 					)
 	)
 );
