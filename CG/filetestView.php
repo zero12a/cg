@@ -24,6 +24,22 @@ include_once('../include/incRequest.php');//CG REQUEST
 <link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <script src="filetest.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
+
+
+<script src="/lib/feather.min.js"></script>
+
+  <style>
+.BI_LINE {position: relative;width:100%;overflow:auto;z-index:20;}
+.BI_OBJGRP {border:0px solid black;padding:0px 0px 0px 0px;position: relative;float:left;vertical-align:middle ;overflow:auto;z-index:25;}
+.BI_LABEL {height:22px;position: relative;background-color: #eeeeee;vertical-align:middle ;overflow:auto;z-index:30;}
+.BI_ICON {position: relative;background-color: #eeeeee;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_VALUE {height:47px;position: relative;background-color: #eeeeee;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_VALUE2 {position: relative;background-color: #eeeeee;vertical-align:middle;overflow:auto;z-index:30;}
+
+.BI_LINEPADDING {position: relative;height:5px;overflow:auto;z-index:20;}
+  </style>
+
+
 <script>
 	//팝업창인 경우 오프너에게서 파라미터 받기
     var grpId = "<?=getFilter(reqPostString("GRPID",20),"SAFEECHO","")?>";
@@ -57,6 +73,116 @@ include_once('../include/incRequest.php');//CG REQUEST
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
 	</div>
+
+
+
+
+
+    <!--type1 -->
+
+    <div class="BI_OBJGRP" style="width:25%;">
+        <div style="padding:5px 3px 3px 0px;"><!--흰색 바깥 여백-->
+            <div style="border-radius:5px;padding:5px 5px 5px 5px;background-color:white;height:70px;">
+                <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
+                        <i style="padding-left:5px;padding-top:9px;"
+                        color="green" 
+                        width="50"
+                        height="50"
+                        data-feather="eye"></i>
+                </div>
+                <div class="BI_VALUE"
+                 style="width:70%;font-size:28pt;text-align:left;height:45px">
+                        <b>412</b>
+                </div>
+                <div class="BI_LABEL" style="height:22px;width:70%;font-size:11pt;color:gray;">
+                        desc hahha
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+
+    <!--type2-->
+    <div class="BI_OBJGRP" style="width:25%;">
+        <div style="padding:5px 3px 3px 3px;"><!--흰색 바깥 여백-->
+            <div style="border-radius:5px;padding:5px 5px 5px 5px;background-color:white;height:70px;">
+                <div class="BI_LABEL" style="height:22px;font-size:11pt;width:100%;text-align:left;color:gray;">
+                    title
+                </div>
+                <div class="BI_VALUE" style="height:45px;border:0px dashed red;width:70%;float:left;font-size:28pt;text-align:left;">
+                        <b>407</b>
+                </div>            
+                <div class="BI_ICON" style="border:0px dashed red;width:30%;text-align:right;">
+                        <i style="padding-left:5px;padding-top:0px;"
+                        color="silver" 
+                        width="30"
+                        height="30"
+                        data-feather="eye"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--type3-->
+    <div class="BI_OBJGRP" style="width:25%;">
+        <div style="padding:5px 3px 3px 3px;"><!--흰색 바깥 여백-->
+            <div style="border-radius:5px;padding:5px 5px 5px 5px;background-color:white;height:70px;">
+                <div class="BI_LABEL" style="float:left;font-size:11pt;width:70%;text-align:left;color:gray;">
+                    title
+                </div>
+                <div class="BI_ICON" style="text-align:right;width:30%;">
+                        <i style="padding-right:5px;padding-top:0px;"
+                        color="silver" 
+                        width="22"
+                        height="22"
+                        data-feather="eye"></i>
+                </div>
+                <div class="BI_VALUE" style="float:left;width:70%;font-size:28pt;text-align:left;">
+                        <b>407</b>
+                </div>
+                <div class="BI_VALUE2" style="width:30%;padding-top:12px;font-size:12pt;text-align:right;color:gray;">
+                        <b>12%</b>
+                </div>
+            </div>     
+        </div>
+    </div>
+
+
+    <!--type4-->
+
+    <div class="BI_OBJGRP" style="width:25%;">
+        <div style="padding:5px 0px 3px 3px;"><!--흰색 바깥 여백-->
+            <div style="border-radius:5px;padding:5px 5px 5px 5px;background-color:white;height:70px;">
+
+                <div class="BI_LABEL" style="font-size:11pt;width:100%;text-align:left;color:gray;">
+                    title
+                </div>
+                <div style="float:left;width:80%">
+                    <div class="BI_VALUE" style="float:left;font-size:28pt;text-align:left;">
+                            <b>407</b>
+                    </div>    
+                    <div class="BI_VALUE2" style="color:white;border-radius:5px;float:left;font-size:12pt;text-align:left;margin-top:12pt;background-color:green;">
+                            +12%
+                    </div>   
+                </div>
+                <div class="BI_ICON" styel="text-align:right;width:20%">
+                        <i style="padding-left:5px;padding-top:0px;"
+                        color="silver" 
+                        width="30"
+                        height="30"
+                        data-feather="eye"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 	<!--
 	#####################################################
 	## 그리드 - START
@@ -192,6 +318,15 @@ include_once('../include/incRequest.php');//CG REQUEST
 </div>
 
 
+<script>
+      //feather.icons.circle.toSvg({ 'width': '100px','height': '200px' });
+      //이미지
+      feather.replace();
 
+      //SVG는 불필요
+      //feather.icons.circle.toSvg({ 'stroke-width': 5 });
+
+      //alert(feather.icons.eye.toString());
+    </script>
 </body>
 </html>
