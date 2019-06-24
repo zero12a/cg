@@ -39,7 +39,7 @@ order by ORD asc";
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "selDtlG";
 		$RtnVal["SQLTXT"] = "select
-	CD,NM,CDDESC,PCD,ORD
+	CODED_SEQ,CD,NM,CDDESC,PCD,ORD
 	,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE
 	,EDITYN,FORMATYN,USEYN,DELYN
 	,ADDDT,MODDT
@@ -123,13 +123,13 @@ where PCD = #{PCD}
 		$RtnVal["SQLTXT"] = "update  CG_CODED set
 	NM = #{NM}, CDDESC = #{CDDESC},ORD = #{ORD}, CDVAL = #{CDVAL}, CDVAL2 = #{CDVAL2}
 	, CDMIN = #{CDMIN}, CDMAX = #{CDMAX}, DATATYPE = #{DATATYPE}, EDITYN = #{EDITYN}, FORMATYN = #{FORMATYN}
-	, USEYN = #{USEYN}, DELYN = #{DELYN}
+	, USEYN = #{USEYN}, DELYN = #{DELYN}, PCD = #{PCD}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-where  PCD = #{PCD} and CD = #{CD}
+where  CODED_SEQ = #{CODED_SEQ}
 ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "ssisssssssssss";
+		$RtnVal["BINDTYPE"] = "ssissssssssssi";
 		return $RtnVal;
     }  
 	//DTL    

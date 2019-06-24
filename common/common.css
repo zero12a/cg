@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 html {font-family: "Nanum Gothic", sans-serif;margin:0;padding:0;height:100%;}
-body {background-color:gray; font-family: "Nanum Gothic", sans-serif;}
+body {background-color:rgb(237, 237, 238); font-family: "Nanum Gothic", sans-serif;}
 
 .HTML_BODY {margin:0px;padding:5px;}
 
@@ -46,19 +46,29 @@ input[type=text]:read-only {
 .CONDITION_LABELGRP {position:relative;width:100%;height:22px;z-index:20;}
 .CONDITION_LABEL {position:relative;float:left;width:60%;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
 .CONDITION_LABELBTN {position: relative;float:left;width:40%;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
-.CONDITION_OBJECT {position: relative;background-color:#eeeeee;padding:10px 10px 10px 10px;overflow:auto;}
+.CONDITION_OBJECT {position: relative;background-color:rgb(247, 248, 255);padding:10px 10px 10px 10px;overflow:auto;}
 
 .DETAIL_LABELGRP {position:relative;width:100%;height:22px;z-index:20;}
 .DETAIL_LABEL {position:relative;float:left;width:30%;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
 .DETAIL_LABELBTN {position: relative;float:left;width:70%;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
-.DETAIL_OBJECT {position: relative;background-color:#eeeeee;padding:10px 10px 10px 10px;overflow:auto;}
+.DETAIL_OBJECT {position: relative;background-color:rgb(247, 248, 255);padding:10px 10px 10px 10px;overflow:auto;}
 
 .GRP_LINE {background-color:#eeeeee;position: relative;width:100%;z-index:10;overflow:auto;}
-.GRP_OBJECT {position: relative;float:left;z-index:20;padding:5px 0px 0px 0px}
+.GRP_OBJECT {position: relative;float:left;z-index:20;padding:0px 0px 0px 0px}
 .GRP_OBJECT_VBOX {position: relative;float:left;z-index:20;padding:0px 0px 0px 0px}
+.GRP_GAP {padding:3px 3px 3px 3px;} /*GRP 간의 여백*/
+.GRP_INNER {overflow: visible;background-color: white;border-radius:2px;padding:5px 5px 5px 5px;}
 
 .FORMVIEW_IMGVIEWER {background-color:#e1e1e1;}
 
+.BI_OBJGRP {border:0px solid black;padding:0px 0px 0px 0px;position: relative;float:left;vertical-align:middle ;overflow:auto;z-index:25;}
+.BI_OBJINNER {background-color: white;border-radius:5px;padding:5px 5px 5px 5px;height:70px;}
+.BI_LABEL {height:22px;color:gray;text-align:left;font-size:11pt;height:22px;position: relative;vertical-align:middle ;overflow:auto;z-index:30;}
+.BI_ICON {position: relative;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_VALUE {height:45px;font-weight:bold;text-align:left;font-size:28pt;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_VALUE2 {font-size:11pt;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_VALUE2_TYPE3 {color:gray;width:30%;padding-top:12px;text-align:right;}
+.BI_VALUE2_TYPE4 {color:white;border-radius:5px;float:left;text-align:left;margin-top:12pt;background-color:gray;}
 
 .ui-datepicker{ font-size: 12px; width: 200px; }
 .ui-datepicker select.ui-datepicker-month{ width:60px; font-size: 10px; }

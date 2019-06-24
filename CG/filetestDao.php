@@ -53,9 +53,10 @@ class filetestDao
 		$RtnVal["SQLTXT"] = "select FILESEQ, FILESVRNM, FILENM,'http://www.naver.com^네이버.pdf' as FILE1
 	, 'http://www.naver.com/?2^네이버2.pdf' as LINKVIEW
 	, 'http://www.naver.com/?3^네이버3.pdf' as HIDDENLINK
+	, '99999999999' as BIVAL1A
 from FILETEST 
 where FILESEQ = #{G2-FILESEQ}
-";
+ and 1<>2 ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";

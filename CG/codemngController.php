@@ -88,6 +88,8 @@ $REQ["G2-MODDT"] = reqPostString("G2-MODDT",14);//MODDT
 $REQ["G2-MODDT"] = getFilter($REQ["G2-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G3, 상세
+$REQ["G3-CODED_SEQ"] = reqPostNumber("G3-CODED_SEQ",30);//SEQ	
+$REQ["G3-CODED_SEQ"] = getFilter($REQ["G3-CODED_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-CD"] = reqPostString("G3-CD",30);//CD	
 $REQ["G3-CD"] = getFilter($REQ["G3-CD"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-NM"] = reqPostString("G3-NM",100);//NM	
@@ -156,10 +158,11 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터
 $REQ["G3-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G3-XML"]
-		,"COLORD"=>"CD,NM,CDDESC,PCD,ORD,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN,ADDDT,MODDT"
+		,"COLORD"=>"CODED_SEQ,CD,NM,CDDESC,PCD,ORD,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN,ADDDT,MODDT"
 		,"VALID"=>
 			array(
-			"CD"=>array("STRING",30)	
+			"CODED_SEQ"=>array("NUMBER",30)	
+			,"CD"=>array("STRING",30)	
 			,"NM"=>array("STRING",100)	
 			,"CDDESC"=>array("STRING",200)	
 			,"PCD"=>array("STRING",30)	
@@ -178,7 +181,8 @@ $REQ["G3-XML"] = filterGridXml(
 					)
 		,"FILTER"=>
 			array(
-			"CD"=>array("CLEARTEXT","/--미 정의--/")
+			"CODED_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
+			,"CD"=>array("CLEARTEXT","/--미 정의--/")
 			,"NM"=>array("SAFETEXT","/--미 정의--/")
 			,"CDDESC"=>array("SAFETEXT","/--미 정의--/")
 			,"PCD"=>array("CLEARTEXT","/--미 정의--/")

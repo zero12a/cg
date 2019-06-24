@@ -60,18 +60,33 @@ $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 
 //로그인정보 및 환경경수 받기
 
-//FILE먼저 : G1, 
-//FILE먼저 : G2, 
-//FILE먼저 : G3, 
+//FILE먼저 : G1, 컨디션
+//FILE먼저 : G4, BI뷰
+//FILE먼저 : G5, 1
+//FILE먼저 : G6, 2
+//FILE먼저 : G2, 그리드
+//FILE먼저 : G3, 폼뷰
 $REQ["G3-FILE1-NM"] = $_FILES["G3-FILE1"]["name"];//파일1
 $REQ["G3-FILE1-TYPE"] = $_FILES["G3-FILE1"]["type"];//파일1
 $REQ["G3-FILE1-TMPNM"] = $_FILES["G3-FILE1"]["tmp_name"];//파일1
 $REQ["G3-FILE1-SIZE"] = $_FILES["G3-FILE1"]["size"];//파일1
 $REQ["G3-FILE1-ERROR"] = $_FILES["G3-FILE1"]["error"];//파일1
 
-//G1, 
+//G1, 컨디션
 
-//G2, 
+//G4, BI뷰
+$REQ["G4-BIVAL1A"] = reqPostString("G4-BIVAL1A",100);//BIVAL1A	
+$REQ["G4-BIVAL1A"] = getFilter($REQ["G4-BIVAL1A"],"CLEARTEXT","/--미 정의--/");	
+
+//G5, 1
+$REQ["G5-BIVAL1A"] = reqPostString("G5-BIVAL1A",100);//BIVAL1A	
+$REQ["G5-BIVAL1A"] = getFilter($REQ["G5-BIVAL1A"],"CLEARTEXT","/--미 정의--/");	
+
+//G6, 2
+$REQ["G6-BIVAL1A"] = reqPostString("G6-BIVAL1A",100);//BIVAL1A	
+$REQ["G6-BIVAL1A"] = getFilter($REQ["G6-BIVAL1A"],"CLEARTEXT","/--미 정의--/");	
+
+//G2, 그리드
 $REQ["G2-FILESEQ"] = reqPostString("G2-FILESEQ",30);//FILESEQ	
 $REQ["G2-FILESEQ"] = getFilter($REQ["G2-FILESEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-FILESVRNM"] = reqPostString("G2-FILESVRNM",100);//FILESVRNM	
@@ -81,7 +96,7 @@ $REQ["G2-FILENM"] = getFilter($REQ["G2-FILENM"],"CLEARTEXT","/--미 정의--/");
 $REQ["G2-FILETYPE"] = reqPostString("G2-FILETYPE",30);//FILETYPE	
 $REQ["G2-FILETYPE"] = getFilter($REQ["G2-FILETYPE"],"CLEARTEXT","/--미 정의--/");	
 
-//G3, 
+//G3, 폼뷰
 $REQ["G3-FILESEQ"] = reqPostString("G3-FILESEQ",30);//FILESEQ	
 $REQ["G3-FILESEQ"] = getFilter($REQ["G3-FILESEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-FILE1"] = reqPostString("G3-FILE1",100);//파일1	
@@ -90,7 +105,7 @@ $REQ["G3-LINKVIEW"] = reqPostString("G3-LINKVIEW",10);//링크뷰
 $REQ["G3-LINKVIEW"] = getFilter($REQ["G3-LINKVIEW"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-HIDDENLINK"] = reqPostString("G3-HIDDENLINK",50);//히든링크	
 $REQ["G3-HIDDENLINK"] = getFilter($REQ["G3-HIDDENLINK"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//	
+$REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//그리드	
 	//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
@@ -120,22 +135,25 @@ $objService = new filetestService();
 alog("ctl:" . $ctl);
 switch ($ctl){
 			case "G1_SEARCHALL" :
-  		echo $objService->goG1Searchall(); //, 조회(전체)
+  		echo $objService->goG1Searchall(); //컨디션, 조회(전체)
   		break;
 	case "G1_SAVE" :
-  		echo $objService->goG1Save(); //, 저장
+  		echo $objService->goG1Save(); //컨디션, 저장
+  		break;
+	case "G4_SEARCH" :
+  		echo $objService->goG4Search(); //BI뷰, 조회
   		break;
 	case "G2_SEARCH" :
-  		echo $objService->goG2Search(); //, 조회
+  		echo $objService->goG2Search(); //그리드, 조회
   		break;
 	case "G2_SAVE" :
-  		echo $objService->goG2Save(); //, 저장
+  		echo $objService->goG2Save(); //그리드, 저장
   		break;
 	case "G3_SEARCH" :
-  		echo $objService->goG3Search(); //, 조회
+  		echo $objService->goG3Search(); //폼뷰, 조회
   		break;
 	case "G3_SAVE" :
-  		echo $objService->goG3Save(); //, 저장
+  		echo $objService->goG3Save(); //폼뷰, 저장
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");

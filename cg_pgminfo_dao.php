@@ -420,7 +420,12 @@ class cg_pgminfo_dao
           , a.DATASIZE, a.OBJTYPE, a.POPUP, a.BRYN, a.LBLHIDDENYN
           , a.LBLWIDTH, a.LBLALIGN, a.OBJWIDTH, a.OBJHEIGHT, a.OBJALIGN
           , a.KEYYN, a.SEQYN, a.HIDDENYN, a.EDITYN, a.FNINIT, a.FORMAT, a.FOOTERNM
-          , ifnull(a.FOOTERMATH,'') as FOOTERMATH
+		  , ifnull(a.FOOTERMATH,'') as FOOTERMATH
+		  , ifnull(a.ICONNM,'') as ICONNM
+		  , ifnull(a.ICONSTYLE,'') as ICONSTYLE
+		  , ifnull(a.LBLSTYLE,'') as LBLSTYLE
+		  , ifnull(a.OBJSTYLE,'') as OBJSTYLE
+		  , ifnull(a.OBJ2STYLE,'') as OBJ2STYLE		  
           , a.ADDDT, a.MODDT
         from CG_PGMIO a
             left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.COLID = b.COLID
@@ -445,6 +450,7 @@ class cg_pgminfo_dao
 			,LBLWIDTH, LBLALIGN, OBJWIDTH,OBJHEIGHT,OBJALIGN
 			,HIDDENYN,EDITYN,FNINIT,KEYYN,SEQYN
 			,VALIDSEQ,POPUP,FORMAT,FOOTERNM,FOOTERMATH
+			,ICONNM, ICONSTYLE, LBLSTYLE, OBJSTYLE, OBJ2STYLE
 			,ADDDT,ADDID
 		) values (
 			#{F_PJTSEQ},#{F_PGMSEQ},#{G1-GRPSEQ},#{COLID},#{COLORD}
@@ -452,10 +458,11 @@ class cg_pgminfo_dao
 			,#{LBLWIDTH}, #{LBLALIGN}, #{OBJWIDTH}, #{OBJHEIGHT}, #{OBJALIGN}
 			,#{HIDDENYN},if(#{EDITYN}='','Y',#{EDITYN}),#{FNINIT},#{KEYYN},#{SEQYN}
 			,#{VALIDSEQ},#{POPUP}, #{FORMAT}, #{FOOTERNM}, #{FOOTERMATH}
+			,#{ICONNM}, #{ICONSTYLE}, #{LBLSTYLE}, #{OBJSTYLE}, #{OBJ2STYLE}
 			,date_format(sysdate(),'%Y%m%d%H%i%s'),#{ADDID}
 		)
 		";
-		$RtnVal["BINDTYPE"] = "iiisi ssiss sssss ssssss issss i";
+		$RtnVal["BINDTYPE"] = "iiisi ssiss sssss ssssss issss sssss i";
 		return $RtnVal;
     }  
 	public function ioUpd($req){
@@ -470,10 +477,11 @@ class cg_pgminfo_dao
 		, OBJHEIGHT=#{OBJHEIGHT}, OBJALIGN=#{OBJALIGN}, HIDDENYN=#{HIDDENYN}, EDITYN=#{EDITYN}, FNINIT=#{FNINIT}
 		, KEYYN=#{KEYYN}, SEQYN = #{SEQYN}, BRYN=#{BRYN}, VALIDSEQ = #{VALIDSEQ}, POPUP = #{POPUP}
 		, FORMAT = #{FORMAT}, FOOTERNM = #{FOOTERNM}, FOOTERMATH = #{FOOTERMATH}
+		, ICONNM = #{ICONNM}, ICONSTYLE = #{ICONSTYLE}, LBLSTYLE = #{LBLSTYLE}, OBJSTYLE = #{OBJSTYLE}, OBJ2STYLE = #{OBJ2STYLE}
 		,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{MODID}
   		where PJTSEQ=#{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ} and GRPSEQ = #{G1-GRPSEQ} and IOSEQ = #{IOSEQ}
 		";
-		$RtnVal["BINDTYPE"] = "sissi sssss sssss sssis sss i iiii";
+		$RtnVal["BINDTYPE"] = "sissi sssss sssss sssis sss sssss i  iiii";
 		return $RtnVal;
     }  
 	public function ioDel($req){

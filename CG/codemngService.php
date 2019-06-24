@@ -183,7 +183,7 @@ class codemngService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
-		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, CD
+		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, CODED_SEQ
 
 		//조회
 		//V_GRPNM : 상세
@@ -222,11 +222,11 @@ class codemngService
 		$GRID["SQL"]["D"] = array();
 		$grpId="G3";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "CD,NM,CDDESC,PCD,ORD,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "CODED_SEQ,CD,NM,CDDESC,PCD,ORD,CDVAL,CDVAL2,CDMIN,CDMAX,DATATYPE,EDITYN,FORMATYN,USEYN,DELYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
-		$GRID["KEYCOLID"] = "CD";  //KEY컬럼 COLID, 0
-		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
+		$GRID["KEYCOLID"] = "CODED_SEQ";  //KEY컬럼 COLID, 0
+		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 상세
 		array_push($GRID["SQL"]["D"], $this->DAO->delDtlG($REQ)); //SAVE, 저장,DTL

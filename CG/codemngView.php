@@ -11,6 +11,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <title>코드관리</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
+<script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
 <script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="../lib/jquery-ui-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
@@ -20,6 +21,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
 <script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
+<link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <script src="codemng.js?<?=getRndVal(10)?>"></script>
@@ -34,10 +36,19 @@ include_once('../include/incRequest.php');//CG REQUEST
 </head>
 <body onload="initBody();">
 
-<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
-	<!--G.GRPID : G1-->
+<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--
+	#####################################################
+	## 컨디션 - START G.GRPID : G1-
+	#####################################################
+	-->
+	<!--OLD
 	<div class="GRP_OBJECT" style="width:100%;height:80px;border-radius:3px;-moz-border-radius: 3px;">
-	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
+	-->
+ 	<div class="GRP_OBJECT" style="width:100%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:80px;">	
+		
+	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 			<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
 				<b>* 코드관리</b>	
@@ -66,14 +77,21 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+		</div></div>
 	</div>
 	<!--
 	#####################################################
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:30%;height:500px;">
-
+	<!--OLD
+	<div class="GRP_OBJECT" style="width:30%;height:500px;">-->
+    <div class="GRP_OBJECT" style="width:30%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:500px;">
+		
+		
+		
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
 	  				* 마스터      
@@ -93,6 +111,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG2"  style="background-color:white;overflow:hidden;height:478px;width:100%;"></div>
 		</div>
+		</div></div>
 	</div>
 	<!--
 	#####################################################
@@ -104,8 +123,14 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:70%;height:500px;">
-
+	<!--OLD
+	<div class="GRP_OBJECT" style="width:70%;height:500px;">-->
+    <div class="GRP_OBJECT" style="width:70%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:500px;">
+		
+		
+		
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
 	  				* 상세      
@@ -125,6 +150,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG3"  style="background-color:white;overflow:hidden;height:478px;width:100%;"></div>
 		</div>
+		</div></div>
 	</div>
 	<!--
 	#####################################################

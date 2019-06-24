@@ -490,7 +490,36 @@
 
 
                     break;
+                case "BIVIEW":
+                    //(FNC) FNCTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCBIVIEW");
 
+                    //(IO) OBJTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTBIVIEW");
+
+                    //BRYN, LBLHIDDEN, LBLWIDTH 숨기기
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),false);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),false);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),false);    
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),false);    
+
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),false);                     
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("SEQYN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),false);    
+
+                    //그리드 전용 컬럼 숨기기  
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERNM"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERMATH"),true);   
+                    
+                    break;
                 default:
                     alog("IO의 OBJTYPE 생성을 위한 GRPTYPE이 아닙니다.(" + grptype + ")");
                     break;
@@ -946,15 +975,15 @@
         mygridIo = new dhtmlXGridObject('grid4');
 		mygridIo.setUserData("","gridTitle","grid3 : io list"); //글로별 변수에 그리드 타이블 넣기
         mygridIo.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridIo.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,ORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FORMAT,FOOTERNM,FOOTERMATH,ADDDT,MODDT"); //29
+        mygridIo.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,ORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,ADDDT,MODDT"); //29
 
-        mygridIo.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,COLORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POPUP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FORMAT,FOOTERNM,FOOTERMATH,ADDDT,MODDT"); //29
+        mygridIo.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,COLORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POPUP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,ADDDT,MODDT"); //29
 
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,30,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
-        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,ed,ed,coro,ro,ro"); //29
-        mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
-		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
+        mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,30,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
+        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,ed,ed,coro,ed,ed,ed,ed,ed,ro,ro"); //29
+        mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
+		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
 
         mygridIo.enableSmartRendering(true);
         mygridIo.enableMultiselect(true);

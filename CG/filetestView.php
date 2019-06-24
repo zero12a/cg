@@ -11,6 +11,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <title>폼뷰테스트</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
+<script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
 <script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="../lib/jquery-ui-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
@@ -20,26 +21,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
 <script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
+<link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <script src="filetest.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
-
-
-<script src="/lib/feather.min.js"></script>
-
-  <style>
-.BI_LINE {position: relative;width:100%;overflow:auto;z-index:20;}
-.BI_OBJGRP {border:0px solid black;padding:0px 0px 0px 0px;position: relative;float:left;vertical-align:middle ;overflow:auto;z-index:25;}
-.BI_LABEL {height:22px;position: relative;background-color: #eeeeee;vertical-align:middle ;overflow:auto;z-index:30;}
-.BI_ICON {position: relative;background-color: #eeeeee;vertical-align:middle;overflow:auto;z-index:30;}
-.BI_VALUE {height:47px;position: relative;background-color: #eeeeee;vertical-align:middle;overflow:auto;z-index:30;}
-.BI_VALUE2 {position: relative;background-color: #eeeeee;vertical-align:middle;overflow:auto;z-index:30;}
-
-.BI_LINEPADDING {position: relative;height:5px;overflow:auto;z-index:20;}
-  </style>
-
-
 <script>
 	//팝업창인 경우 오프너에게서 파라미터 받기
     var grpId = "<?=getFilter(reqPostString("GRPID",20),"SAFEECHO","")?>";
@@ -50,10 +36,19 @@ include_once('../include/incRequest.php');//CG REQUEST
 </head>
 <body onload="initBody();">
 
-<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
-	<!--G.GRPID : G1-->
+<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--
+	#####################################################
+	## 컨디션 - START G.GRPID : G1-
+	#####################################################
+	-->
+	<!--OLD
 	<div class="GRP_OBJECT" style="width:100%;height:80px;border-radius:3px;-moz-border-radius: 3px;">
-	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
+	-->
+ 	<div class="GRP_OBJECT" style="width:100%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:80px;">	
+		
+	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 			<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
 				<b>* 폼뷰테스트</b>	
@@ -72,127 +67,102 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+		</div></div>
 	</div>
-
-
-
-
-
-    <!--type1 -->
-
-    <div class="BI_OBJGRP" style="width:25%;">
-        <div style="padding:5px 3px 3px 0px;"><!--흰색 바깥 여백-->
-            <div style="border-radius:5px;padding:5px 5px 5px 5px;background-color:white;height:70px;">
+	<!--
+	#####################################################
+	## BI뷰 - START
+	#####################################################
+	-->
+		<div class="GRP_OBJECT" style="width:33%;">
+			<div class="GRP_GAP"><!--흰색 바깥 여백-->
+				<div class="GRP_INNER" style="height:70px;">
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : BIVAL1A-->
                 <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
-                        <i style="padding-left:5px;padding-top:9px;"
-                        color="green" 
+                        <i style="padding-top:9px;color:yellow;"
                         width="50"
                         height="50"
                         data-feather="eye"></i>
                 </div>
                 <div class="BI_VALUE"
-                 style="width:70%;font-size:28pt;text-align:left;height:45px">
-                        <b>412</b>
+                 style="width:70%;">
+                    <span id="G4-BIVAL1A-VALUE">Value</span>
                 </div>
-                <div class="BI_LABEL" style="height:22px;width:70%;font-size:11pt;color:gray;">
-                        desc hahha
+                <div class="BI_LABEL" style="width:70%;">
+                    <span id="G4-BIVAL1A-LABEL">BIVAL1A</span>
                 </div>
-            </div>
-        </div>
-    </div>
-    
-
-    
-
-    <!--type2-->
-    <div class="BI_OBJGRP" style="width:25%;">
-        <div style="padding:5px 3px 3px 3px;"><!--흰색 바깥 여백-->
-            <div style="border-radius:5px;padding:5px 5px 5px 5px;background-color:white;height:70px;">
-                <div class="BI_LABEL" style="height:22px;font-size:11pt;width:100%;text-align:left;color:gray;">
-                    title
-                </div>
-                <div class="BI_VALUE" style="height:45px;border:0px dashed red;width:70%;float:left;font-size:28pt;text-align:left;">
-                        <b>407</b>
-                </div>            
-                <div class="BI_ICON" style="border:0px dashed red;width:30%;text-align:right;">
-                        <i style="padding-left:5px;padding-top:0px;"
-                        color="silver" 
-                        width="30"
-                        height="30"
+				</div>
+			</div>
+		</div>
+	<!--
+	#####################################################
+	## BI뷰 - START
+	#####################################################
+	-->
+		<div class="GRP_OBJECT" style="width:34%;">
+			<div class="GRP_GAP"><!--흰색 바깥 여백-->
+				<div class="GRP_INNER" style="height:70px;">
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : BIVAL1A-->
+                <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
+                        <i style="padding-top:9px;color:yellow;"
+                        width="50"
+                        height="50"
                         data-feather="eye"></i>
                 </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!--type3-->
-    <div class="BI_OBJGRP" style="width:25%;">
-        <div style="padding:5px 3px 3px 3px;"><!--흰색 바깥 여백-->
-            <div style="border-radius:5px;padding:5px 5px 5px 5px;background-color:white;height:70px;">
-                <div class="BI_LABEL" style="float:left;font-size:11pt;width:70%;text-align:left;color:gray;">
-                    title
+                <div class="BI_VALUE"
+                 style="width:70%;">
+                    <span id="G5-BIVAL1A-VALUE">Value</span>
                 </div>
-                <div class="BI_ICON" style="text-align:right;width:30%;">
-                        <i style="padding-right:5px;padding-top:0px;"
-                        color="silver" 
-                        width="22"
-                        height="22"
+                <div class="BI_LABEL" style="width:70%;">
+                    <span id="G5-BIVAL1A-LABEL">BIVAL1A</span>
+                </div>
+				</div>
+			</div>
+		</div>
+	<!--
+	#####################################################
+	## BI뷰 - START
+	#####################################################
+	-->
+		<div class="GRP_OBJECT" style="width:33%;">
+			<div class="GRP_GAP"><!--흰색 바깥 여백-->
+				<div class="GRP_INNER" style="height:70px;">
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : BIVAL1A-->
+                <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
+                        <i style="padding-top:9px;color:yellow;"
+                        width="50"
+                        height="50"
                         data-feather="eye"></i>
                 </div>
-                <div class="BI_VALUE" style="float:left;width:70%;font-size:28pt;text-align:left;">
-                        <b>407</b>
+                <div class="BI_VALUE"
+                 style="width:70%;">
+                    <span id="G6-BIVAL1A-VALUE">Value</span>
                 </div>
-                <div class="BI_VALUE2" style="width:30%;padding-top:12px;font-size:12pt;text-align:right;color:gray;">
-                        <b>12%</b>
+                <div class="BI_LABEL" style="width:70%;">
+                    <span id="G6-BIVAL1A-LABEL">BIVAL1A</span>
                 </div>
-            </div>     
-        </div>
-    </div>
-
-
-    <!--type4-->
-
-    <div class="BI_OBJGRP" style="width:25%;">
-        <div style="padding:5px 0px 3px 3px;"><!--흰색 바깥 여백-->
-            <div style="border-radius:5px;padding:5px 5px 5px 5px;background-color:white;height:70px;">
-
-                <div class="BI_LABEL" style="font-size:11pt;width:100%;text-align:left;color:gray;">
-                    title
-                </div>
-                <div style="float:left;width:80%">
-                    <div class="BI_VALUE" style="float:left;font-size:28pt;text-align:left;">
-                            <b>407</b>
-                    </div>    
-                    <div class="BI_VALUE2" style="color:white;border-radius:5px;float:left;font-size:12pt;text-align:left;margin-top:12pt;background-color:green;">
-                            +12%
-                    </div>   
-                </div>
-                <div class="BI_ICON" styel="text-align:right;width:20%">
-                        <i style="padding-left:5px;padding-top:0px;"
-                        color="silver" 
-                        width="30"
-                        height="30"
-                        data-feather="eye"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
+				</div>
+			</div>
+		</div>
 	<!--
 	#####################################################
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:200px;">
-
+	<!--OLD
+	<div class="GRP_OBJECT" style="width:50%;height:500px;">-->
+    <div class="GRP_OBJECT" style="width:50%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:500px;">
+		
+		
+		
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
-	  				*       
+	  				* 그리드      
 			</div>
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
@@ -204,8 +174,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:478px;width:100%;"></div>
 		</div>
+		</div></div>
 	</div>
 	<!--
 	#####################################################
@@ -217,19 +188,26 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 폼뷰 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:200px;">
+	<!--OLD
+	<div class="GRP_OBJECT" style="width:50%;height:500px;">
+	-->
+
+    <div class="GRP_OBJECT" style="width:50%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:500px;">
+				
 		<div sty_le="width:0px;height:0px;overflow: hidden">
 			<form id="formviewG3" name="formviewG3" method="post" enctype="multipart/form-data"  onsubmit="return false;">
 			<input type="hidden" name="G3-CTLCUD"  id="G3-CTLCUD" value="">
 		</div>	
 		<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
-				* 
+				* 폼뷰
 			</div>
 			<div class="DETAIL_LABELBTN"  style="">
 				<input type="button" name="BTN_G3_USERDEF" value="사용자정의" onclick="G3_USERDEF(uuidv4());">				<input type="button" name="BTN_G3_SAVE" value="저장" onclick="G3_SAVE(uuidv4());">				<input type="button" name="BTN_G3_NEW2" value="신규" onclick="G3_NEW2(uuidv4());">			</div>
 		</div>
-		<div style="height:158px;" class="DETAIL_OBJECT">
+		<div style="height:458px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 			</DIV><!--is_br_tab end-->
@@ -294,6 +272,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 				</DIV><!--is_br_tab end-->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+		</div>
+		</div>
 	</div>
 	<!--
 	#####################################################
@@ -318,15 +298,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 </div>
 
 
-<script>
-      //feather.icons.circle.toSvg({ 'width': '100px','height': '200px' });
-      //이미지
-      feather.replace();
 
-      //SVG는 불필요
-      //feather.icons.circle.toSvg({ 'stroke-width': 5 });
-
-      //alert(feather.icons.eye.toString());
-    </script>
 </body>
 </html>

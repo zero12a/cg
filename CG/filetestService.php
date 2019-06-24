@@ -27,7 +27,7 @@ class filetestService
 	function __toString(){
 		alog("FiletestService-__toString");
 	}
-	//, 조회(전체)
+	//컨디션, 조회(전체)
 	public function goG1Searchall(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -42,7 +42,7 @@ class filetestService
 		echo json_encode($rtnVal);
 		alog("FILETESTService-goG1Searchall________________________end");
 	}
-	//, 저장
+	//컨디션, 저장
 	public function goG1Save(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -57,7 +57,22 @@ class filetestService
 		echo json_encode($rtnVal);
 		alog("FILETESTService-goG1Save________________________end");
 	}
-	//, 조회
+	//BI뷰, 조회
+	public function goG4Search(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("FILETESTService-goG4Search________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("FILETESTService-goG4Search________________________end");
+	}
+	//그리드, 조회
 	public function goG2Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -72,7 +87,7 @@ class filetestService
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, FILESEQ
 
 		//조회
-		//V_GRPNM : 
+		//V_GRPNM : 그리드
 		array_push($GRID["SQL"], $this->DAO->selG($REQ)); //SEARCH, 조회,selQ
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
@@ -93,7 +108,7 @@ class filetestService
 		echo json_encode($rtnVal);
 		alog("FILETESTService-goG2Search________________________end");
 	}
-	//, 저장
+	//그리드, 저장
 	public function goG2Save(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -108,7 +123,7 @@ class filetestService
 		echo json_encode($rtnVal);
 		alog("FILETESTService-goG2Save________________________end");
 	}
-	//, 조회
+	//폼뷰, 조회
 	public function goG3Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -141,7 +156,7 @@ class filetestService
 		echo json_encode($rtnVal);
 		alog("FILETESTService-goG3Search________________________end");
 	}
-	//, 저장
+	//폼뷰, 저장
 	public function goG3Save(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
