@@ -62,6 +62,32 @@ where FILESEQ = #{G2-FILESEQ}
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
+	//selBI1    
+	public function selBI1($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "SC";
+		$RtnVal["SQLID"] = "selBI1";
+		$RtnVal["SQLTXT"] = "select '값이여라' as BIVAL1A ";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "";
+		return $RtnVal;
+    }  
+	//selBI2    
+	public function selBI2($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "SC";
+		$RtnVal["SQLID"] = "selBI2";
+		$RtnVal["SQLTXT"] = "select '값이여라^두개여라' as BIVAL1A ";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "";
+		return $RtnVal;
+    }  
 }
                                                              
 ?>

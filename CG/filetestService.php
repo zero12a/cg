@@ -57,7 +57,7 @@ class filetestService
 		echo json_encode($rtnVal);
 		alog("FILETESTService-goG1Save________________________end");
 	}
-	//BI뷰, 조회
+	//a, 조회
 	public function goG4Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
 		$rtnVal = null;
@@ -66,11 +66,128 @@ class filetestService
 		$rtnVal->GRP_DATA = array();
 
 		alog("FILETESTService-goG4Search________________________start");
+//BIVIEW SEARCH
+		$grpId="G4";
+	//암호화컬럼
+		$BIVIEW["COLCRYPT"] = array();
+		$BIVIEW["SQL"] = array();
+	// SQL LOOP
+		// selBI1
+		array_push($BIVIEW["SQL"], $this->DAO->selBI1($REQ)); 
+		//필수 여부 검사
+		$tmpVal = requireFormviewSearchArray($BIVIEW["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireBIview - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
+		$rtnVal = makeFormviewSearchJsonArray($BIVIEW,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
 		alog("FILETESTService-goG4Search________________________end");
+	}
+	//b, 조회
+	public function goG5Search(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("FILETESTService-goG5Search________________________start");
+//BIVIEW SEARCH
+		$grpId="G5";
+	//암호화컬럼
+		$BIVIEW["COLCRYPT"] = array();
+		$BIVIEW["SQL"] = array();
+	// SQL LOOP
+		// selBI1
+		array_push($BIVIEW["SQL"], $this->DAO->selBI1($REQ)); 
+		//필수 여부 검사
+		$tmpVal = requireFormviewSearchArray($BIVIEW["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireBIview - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
+		$rtnVal = makeFormviewSearchJsonArray($BIVIEW,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G5]",microtime(true)));
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("FILETESTService-goG5Search________________________end");
+	}
+	//c, 조회
+	public function goG6Search(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("FILETESTService-goG6Search________________________start");
+//BIVIEW SEARCH
+		$grpId="G6";
+	//암호화컬럼
+		$BIVIEW["COLCRYPT"] = array();
+		$BIVIEW["SQL"] = array();
+	// SQL LOOP
+		// selBI2
+		array_push($BIVIEW["SQL"], $this->DAO->selBI2($REQ)); 
+		//필수 여부 검사
+		$tmpVal = requireFormviewSearchArray($BIVIEW["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireBIview - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
+		$rtnVal = makeFormviewSearchJsonArray($BIVIEW,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G6]",microtime(true)));
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("FILETESTService-goG6Search________________________end");
+	}
+	//d, 조회
+	public function goG7Search(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("FILETESTService-goG7Search________________________start");
+//BIVIEW SEARCH
+		$grpId="G7";
+	//암호화컬럼
+		$BIVIEW["COLCRYPT"] = array();
+		$BIVIEW["SQL"] = array();
+	// SQL LOOP
+		// selBI2
+		array_push($BIVIEW["SQL"], $this->DAO->selBI2($REQ)); 
+		//필수 여부 검사
+		$tmpVal = requireFormviewSearchArray($BIVIEW["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireBIview - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
+		$rtnVal = makeFormviewSearchJsonArray($BIVIEW,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G7]",microtime(true)));
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("FILETESTService-goG7Search________________________end");
 	}
 	//그리드, 조회
 	public function goG2Search(){

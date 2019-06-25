@@ -61,9 +61,10 @@ $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 //로그인정보 및 환경경수 받기
 
 //FILE먼저 : G1, 컨디션
-//FILE먼저 : G4, BI뷰
-//FILE먼저 : G5, 1
-//FILE먼저 : G6, 2
+//FILE먼저 : G4, a
+//FILE먼저 : G5, b
+//FILE먼저 : G6, c
+//FILE먼저 : G7, d
 //FILE먼저 : G2, 그리드
 //FILE먼저 : G3, 폼뷰
 $REQ["G3-FILE1-NM"] = $_FILES["G3-FILE1"]["name"];//파일1
@@ -74,17 +75,21 @@ $REQ["G3-FILE1-ERROR"] = $_FILES["G3-FILE1"]["error"];//파일1
 
 //G1, 컨디션
 
-//G4, BI뷰
+//G4, a
 $REQ["G4-BIVAL1A"] = reqPostString("G4-BIVAL1A",100);//BIVAL1A	
 $REQ["G4-BIVAL1A"] = getFilter($REQ["G4-BIVAL1A"],"CLEARTEXT","/--미 정의--/");	
 
-//G5, 1
+//G5, b
 $REQ["G5-BIVAL1A"] = reqPostString("G5-BIVAL1A",100);//BIVAL1A	
 $REQ["G5-BIVAL1A"] = getFilter($REQ["G5-BIVAL1A"],"CLEARTEXT","/--미 정의--/");	
 
-//G6, 2
+//G6, c
 $REQ["G6-BIVAL1A"] = reqPostString("G6-BIVAL1A",100);//BIVAL1A	
 $REQ["G6-BIVAL1A"] = getFilter($REQ["G6-BIVAL1A"],"CLEARTEXT","/--미 정의--/");	
+
+//G7, d
+$REQ["G7-BIVAL1A"] = reqPostString("G7-BIVAL1A",100);//BIVAL1A	
+$REQ["G7-BIVAL1A"] = getFilter($REQ["G7-BIVAL1A"],"CLEARTEXT","/--미 정의--/");	
 
 //G2, 그리드
 $REQ["G2-FILESEQ"] = reqPostString("G2-FILESEQ",30);//FILESEQ	
@@ -141,7 +146,16 @@ switch ($ctl){
   		echo $objService->goG1Save(); //컨디션, 저장
   		break;
 	case "G4_SEARCH" :
-  		echo $objService->goG4Search(); //BI뷰, 조회
+  		echo $objService->goG4Search(); //a, 조회
+  		break;
+	case "G5_SEARCH" :
+  		echo $objService->goG5Search(); //b, 조회
+  		break;
+	case "G6_SEARCH" :
+  		echo $objService->goG6Search(); //c, 조회
+  		break;
+	case "G7_SEARCH" :
+  		echo $objService->goG7Search(); //d, 조회
   		break;
 	case "G2_SEARCH" :
   		echo $objService->goG2Search(); //그리드, 조회

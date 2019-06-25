@@ -74,13 +74,13 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## BI뷰 - START
 	#####################################################
 	-->
-		<div class="GRP_OBJECT" style="width:33%;">
+		<div class="GRP_OBJECT" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
 				<div class="GRP_INNER" style="height:70px;">
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : BIVAL1A-->
                 <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
-                        <i style="padding-top:9px;color:yellow;"
+                        <i style="padding-top:9px;"
                         width="50"
                         height="50"
                         data-feather="eye"></i>
@@ -100,25 +100,24 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## BI뷰 - START
 	#####################################################
 	-->
-		<div class="GRP_OBJECT" style="width:34%;">
+		<div class="GRP_OBJECT" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
 				<div class="GRP_INNER" style="height:70px;">
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : BIVAL1A-->
-                <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
-                        <i style="padding-top:9px;color:yellow;"
-                        width="50"
-                        height="50"
-                        data-feather="eye"></i>
-                </div>
-                <div class="BI_VALUE"
-                 style="width:70%;">
-                    <span id="G5-BIVAL1A-VALUE">Value</span>
-                </div>
-                <div class="BI_LABEL" style="width:70%;">
+                <div class="BI_LABEL" style="width:100%;">
                     <span id="G5-BIVAL1A-LABEL">BIVAL1A</span>
                 </div>
-				</div>
+                <div class="BI_VALUE" style="width:80%;float:left;">
+                    <span id="G5-BIVAL1A-VALUE">Value</span>
+                </div>            
+                <div class="BI_ICON" style="width:20%;text-align:right;">
+                        <i style="padding-left:5px;padding-top:0px;"
+                        color="silver" 
+                        width="30"
+                        height="30"
+                        data-feather="eye"></i>
+                </div>				</div>
 			</div>
 		</div>
 	<!--
@@ -126,25 +125,55 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## BI뷰 - START
 	#####################################################
 	-->
-		<div class="GRP_OBJECT" style="width:33%;">
+		<div class="GRP_OBJECT" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
 				<div class="GRP_INNER" style="height:70px;">
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : BIVAL1A-->
-                <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
-                        <i style="padding-top:9px;color:yellow;"
-                        width="50"
-                        height="50"
-                        data-feather="eye"></i>
-                </div>
-                <div class="BI_VALUE"
-                 style="width:70%;">
-                    <span id="G6-BIVAL1A-VALUE">Value</span>
-                </div>
-                <div class="BI_LABEL" style="width:70%;">
+ 				<div class="BI_LABEL" style="float:left;width:70%;">
                     <span id="G6-BIVAL1A-LABEL">BIVAL1A</span>
                 </div>
-				</div>
+                <div class="BI_ICON" style="text-align:right;width:30%;">
+                        <i style="padding-right:5px;padding-top:0px;"
+                        color="silver" 
+                        width="22"
+                        height="22"
+                        data-feather="eye"></i>
+                </div>
+                <div class="BI_VALUE" style="float:left;width:70%;">
+                    <span id="G6-BIVAL1A-VALUE1">Value1</span>
+                </div>
+                <div class="BI_VALUE2 BI_VALUE2_TYPE3" style="font-width:bold;">
+                    <span id="G6-BIVAL1A-VALUE2">Value2</span>
+                </div>				</div>
+			</div>
+		</div>
+	<!--
+	#####################################################
+	## BI뷰 - START
+	#####################################################
+	-->
+		<div class="GRP_OBJECT" style="width:25%;">
+			<div class="GRP_GAP"><!--흰색 바깥 여백-->
+				<div class="GRP_INNER" style="height:70px;">
+                <div class="BI_LABEL" style="width:100%;">
+                    <span id="G7-BIVAL1A-LABEL">BIVAL1A</span>
+                </div>
+                <div style="float:left;width:80%">
+                    <div class="BI_VALUE" style="float:left;text-align:left;">
+                    	<span id="G7-BIVAL1A-VALUE1">Value1</span>
+                    </div>    
+                    <div class="BI_VALUE2 BI_VALUE2_TYPE4">
+                    	<span id="G7-BIVAL1A-VALUE2">Value2</span>
+                    </div>   
+                </div>
+                <div class="BI_ICON" style="text-align:right;width:20%;">
+                        <i style="padding-left:5px;padding-top:0px;"
+                        color="silver" 
+                        width="30"
+                        height="30"
+                        data-feather="eye"></i>
+                </div>				</div>
 			</div>
 		</div>
 	<!--
