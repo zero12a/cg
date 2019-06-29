@@ -38,18 +38,15 @@ include_once('../include/incRequest.php');//CG REQUEST
 
 <div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--
 	#####################################################
-	## 컨디션 - START G.GRPID : G1-
+	## 컨디션 컨디션 - START G.GRPID : G1-
 	#####################################################
-	-->
-	<!--OLD
-	<div class="GRP_OBJECT" style="width:100%;height:80px;border-radius:3px;-moz-border-radius: 3px;">
 	-->
  	<div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:80px;">	
+            <div class="GRP_INNER" style="height:74px;">	
 		
 	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
-			<div class="DETAIL_LABELGRP">
+		<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
 				<b>* 폼뷰테스트</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
@@ -71,12 +68,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 	</div>
 	<!--
 	#####################################################
-	## BI뷰 - START
+	## BI뷰  a - START
 	#####################################################
 	-->
 		<div class="GRP_OBJECT" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
-				<div class="GRP_INNER" style="height:70px;">
+				<div class="GRP_INNER" style="height:64px;overflow:hidden;">
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : BIVAL1A-->
                 <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
@@ -97,12 +94,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 		</div>
 	<!--
 	#####################################################
-	## BI뷰 - START
+	## BI뷰  b - START
 	#####################################################
 	-->
 		<div class="GRP_OBJECT" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
-				<div class="GRP_INNER" style="height:70px;">
+				<div class="GRP_INNER" style="height:64px;overflow:hidden;">
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : BIVAL1A-->
                 <div class="BI_LABEL" style="width:100%;">
@@ -122,12 +119,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 		</div>
 	<!--
 	#####################################################
-	## BI뷰 - START
+	## BI뷰  c - START
 	#####################################################
 	-->
 		<div class="GRP_OBJECT" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
-				<div class="GRP_INNER" style="height:70px;">
+				<div class="GRP_INNER" style="height:64px;overflow:hidden;">
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : BIVAL1A-->
  				<div class="BI_LABEL" style="float:left;width:70%;">
@@ -150,12 +147,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 		</div>
 	<!--
 	#####################################################
-	## BI뷰 - START
+	## BI뷰  d - START
 	#####################################################
 	-->
 		<div class="GRP_OBJECT" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
-				<div class="GRP_INNER" style="height:70px;">
+				<div class="GRP_INNER" style="height:64px;overflow:hidden;">
                 <div class="BI_LABEL" style="width:100%;">
                     <span id="G7-BIVAL1A-LABEL">BIVAL1A</span>
                 </div>
@@ -181,14 +178,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<!--OLD
-	<div class="GRP_OBJECT" style="width:50%;height:500px;">-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:500px;">
-		
-		
-		
+            <div class="GRP_INNER" style="height:494px;">
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
 	  				* 그리드      
@@ -203,7 +195,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:478px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:472px;width:100%;"></div>
 		</div>
 		</div></div>
 	</div>
@@ -214,16 +206,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
 	<!--
 	#####################################################
-	## 폼뷰 - START
+	## 폼뷰 폼뷰 - START
 	#####################################################
 	-->
-	<!--OLD
-	<div class="GRP_OBJECT" style="width:50%;height:500px;">
-	-->
-
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:500px;">
+            <div class="GRP_INNER" style="height:494px;">
 				
 		<div sty_le="width:0px;height:0px;overflow: hidden">
 			<form id="formviewG3" name="formviewG3" method="post" enctype="multipart/form-data"  onsubmit="return false;">

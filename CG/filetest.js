@@ -5,16 +5,16 @@ var url_G1_SEARCHALL = "filetestController?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 
 var url_G1_SAVE = "filetestController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
 var url_G1_RESET = "filetestController?CTLGRP=G1&CTLFNC=RESET";//컨디션 변수 선언	
 	//a 글로벌 변수 초기화
-//폼뷰 컨트롤러 경로
+//BI뷰 컨트롤러 경로
 var url_G4_SEARCH = "filetestController?CTLGRP=G4&CTLFNC=SEARCH";
 	//b 글로벌 변수 초기화
-//폼뷰 컨트롤러 경로
+//BI뷰 컨트롤러 경로
 var url_G5_SEARCH = "filetestController?CTLGRP=G5&CTLFNC=SEARCH";
 	//c 글로벌 변수 초기화
-//폼뷰 컨트롤러 경로
+//BI뷰 컨트롤러 경로
 var url_G6_SEARCH = "filetestController?CTLGRP=G6&CTLFNC=SEARCH";
 	//d 글로벌 변수 초기화
-//폼뷰 컨트롤러 경로
+//BI뷰 컨트롤러 경로
 var url_G7_SEARCH = "filetestController?CTLGRP=G7&CTLFNC=SEARCH";
 //그리드 변수 초기화	
 //컨트롤러 경로
@@ -95,7 +95,7 @@ function G1_INIT(){
   alog("G1_INIT()-------------------------end");
 }
 
-//a 폼뷰 초기화
+//a BI뷰 초기화
 function G4_INIT(){
   alog("G4_INIT()-------------------------start");
 }
@@ -106,7 +106,7 @@ function G4_INIT(){
 		$("#G4-BIVAL1A-VALUE").text("-");//BIVAL1A 변수세팅
   alog("G4_INIT()-------------------------end");
 }
-//b 폼뷰 초기화
+//b BI뷰 초기화
 function G5_INIT(){
   alog("G5_INIT()-------------------------start");
 }
@@ -117,7 +117,7 @@ function G5_INIT(){
 		$("#G5-BIVAL1A-VALUE").text("-");//BIVAL1A 변수세팅
   alog("G5_INIT()-------------------------end");
 }
-//c 폼뷰 초기화
+//c BI뷰 초기화
 function G6_INIT(){
   alog("G6_INIT()-------------------------start");
 }
@@ -129,7 +129,7 @@ function G6_INIT(){
 			$("#G6-BIVAL1A-VALUE2").text("-");//BIVAL1A NEW
   alog("G6_INIT()-------------------------end");
 }
-//d 폼뷰 초기화
+//d BI뷰 초기화
 function G7_INIT(){
   alog("G7_INIT()-------------------------start");
 }
@@ -293,6 +293,11 @@ function G3_INIT(){
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 //컨디션, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -356,13 +361,8 @@ function G1_SEARCHALL(token){
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 function G4_SEARCH(tinput,token){
-       alog("(FORMVIEW) G4_SEARCH---------------start");
+       alog("(BIVIEW) G4_SEARCH---------------start");
 
 	//post 만들기
 	sendFormData = new FormData($("#condition")[0]);
@@ -386,18 +386,15 @@ function G4_SEARCH(tinput,token){
 
 			if(data && data.RTN_CD == "200"){
 				if(data.RTN_DATA){
-					msgNotice("정상적으로 조회되었습니다.",1);
+					msgNotice("[BI뷰] 정상적으로 조회되었습니다.",1);
 				}else{
-					msgNotice("정상적으로 조회되었으나 데이터가 없습니다.",2);
+					msgNotice("[BI뷰] 정상적으로 조회되었으나 데이터가 없습니다.",2);
 					return;
 				}
 			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+				msgError("[BI뷰] 오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
 				return;
 			}
-
-            //모드 변경하기
-            $("#G4-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
 			if(data.RTN_DATA.BIVAL1A){
 				$("#G4-BIVAL1A-VALUE").text(data.RTN_DATA.BIVAL1A);//BIVAL1A 세팅
@@ -410,11 +407,11 @@ function G4_SEARCH(tinput,token){
             alog(error);
         }
     });
-    alog("(FORMVIEW) G4_SEARCH---------------end");
+    alog("(BIVIEW) G4_SEARCH---------------end");
 
 }
 function G5_SEARCH(tinput,token){
-       alog("(FORMVIEW) G5_SEARCH---------------start");
+       alog("(BIVIEW) G5_SEARCH---------------start");
 
 	//post 만들기
 	sendFormData = new FormData($("#condition")[0]);
@@ -438,18 +435,15 @@ function G5_SEARCH(tinput,token){
 
 			if(data && data.RTN_CD == "200"){
 				if(data.RTN_DATA){
-					msgNotice("정상적으로 조회되었습니다.",1);
+					msgNotice("[BI뷰] 정상적으로 조회되었습니다.",1);
 				}else{
-					msgNotice("정상적으로 조회되었으나 데이터가 없습니다.",2);
+					msgNotice("[BI뷰] 정상적으로 조회되었으나 데이터가 없습니다.",2);
 					return;
 				}
 			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+				msgError("[BI뷰] 오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
 				return;
 			}
-
-            //모드 변경하기
-            $("#G5-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
 			if(data.RTN_DATA.BIVAL1A){
 				$("#G5-BIVAL1A-VALUE").text(data.RTN_DATA.BIVAL1A);//BIVAL1A 세팅
@@ -462,11 +456,11 @@ function G5_SEARCH(tinput,token){
             alog(error);
         }
     });
-    alog("(FORMVIEW) G5_SEARCH---------------end");
+    alog("(BIVIEW) G5_SEARCH---------------end");
 
 }
 function G6_SEARCH(tinput,token){
-       alog("(FORMVIEW) G6_SEARCH---------------start");
+       alog("(BIVIEW) G6_SEARCH---------------start");
 
 	//post 만들기
 	sendFormData = new FormData($("#condition")[0]);
@@ -490,18 +484,15 @@ function G6_SEARCH(tinput,token){
 
 			if(data && data.RTN_CD == "200"){
 				if(data.RTN_DATA){
-					msgNotice("정상적으로 조회되었습니다.",1);
+					msgNotice("[BI뷰] 정상적으로 조회되었습니다.",1);
 				}else{
-					msgNotice("정상적으로 조회되었으나 데이터가 없습니다.",2);
+					msgNotice("[BI뷰] 정상적으로 조회되었으나 데이터가 없습니다.",2);
 					return;
 				}
 			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+				msgError("[BI뷰] 오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
 				return;
 			}
-
-            //모드 변경하기
-            $("#G6-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
 		var tArr = data.RTN_DATA.BIVAL1A.split("^");
 		if(tArr){
@@ -520,11 +511,11 @@ function G6_SEARCH(tinput,token){
             alog(error);
         }
     });
-    alog("(FORMVIEW) G6_SEARCH---------------end");
+    alog("(BIVIEW) G6_SEARCH---------------end");
 
 }
 function G7_SEARCH(tinput,token){
-       alog("(FORMVIEW) G7_SEARCH---------------start");
+       alog("(BIVIEW) G7_SEARCH---------------start");
 
 	//post 만들기
 	sendFormData = new FormData($("#condition")[0]);
@@ -548,18 +539,15 @@ function G7_SEARCH(tinput,token){
 
 			if(data && data.RTN_CD == "200"){
 				if(data.RTN_DATA){
-					msgNotice("정상적으로 조회되었습니다.",1);
+					msgNotice("[BI뷰] 정상적으로 조회되었습니다.",1);
 				}else{
-					msgNotice("정상적으로 조회되었으나 데이터가 없습니다.",2);
+					msgNotice("[BI뷰] 정상적으로 조회되었으나 데이터가 없습니다.",2);
 					return;
 				}
 			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+				msgError("[BI뷰] 오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
 				return;
 			}
-
-            //모드 변경하기
-            $("#G7-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
 		var tArr = data.RTN_DATA.BIVAL1A.split("^");
 		if(tArr){
@@ -578,9 +566,77 @@ function G7_SEARCH(tinput,token){
             alog(error);
         }
     });
-    alog("(FORMVIEW) G7_SEARCH---------------end");
+    alog("(BIVIEW) G7_SEARCH---------------end");
 
 }
+
+
+
+
+
+
+
+
+    //그리드 조회(그리드)	
+    function G2_SEARCH(tinput,token){
+        alog("G2_SEARCH()------------start");
+
+		var tGrid = mygridG2;
+
+        //그리드 초기화
+        tGrid.clearAll();        //post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+		if(typeof tinput != "undefined"){
+			var tKeys = tinput.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+			}
+		}
+
+        //불러오기
+        $.ajax({
+            type : "POST",
+            url : url_G2_SEARCH+"&TOKEN=" + token + " &G2_CRUD_MODE=read" ,
+            data : sendFormData,
+			processData: false,
+			contentType: false,
+            dataType: "json",
+            async: true,
+            success: function(data){
+                alog("   gridG2 json return----------------------");
+                alog("   json data : " + data);
+                alog("   json RTN_CD : " + data.RTN_CD);
+                alog("   json ERR_CD : " + data.ERR_CD);
+                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+                //그리드에 데이터 반영
+                if(data.RTN_CD == "200"){
+					var row_cnt = 0;
+					if(data.RTN_DATA){
+						row_cnt = data.RTN_DATA.rows.length;
+						$("#spanG2Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+							//푸터 합계 처리	
+
+						},"json");
+						
+					}else{
+						$("#spanG2Cnt").text("-");
+					}
+					msgNotice("[그리드] 조회 성공했습니다. ("+row_cnt+"건)",1);
+
+                }else{
+                    msgError("[그리드] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
+                }
+            },
+            error: function(error){
+				msgError("[그리드] Ajax http 500 error ( " + error + " )",3);
+                alog("[그리드] Ajax http 500 error ( " + data.RTN_MSG + " )");
+            }
+        });
+        alog("G2_SEARCH()------------end");
+    }
+
     function G2_ROWDELETE(){	
         alog("G2_ROWDELETE()------------start");
         delRow(mygridG2);
@@ -663,74 +719,12 @@ function G2_USERDEF(token){
 	}
 			}
 	}
+//사용자정의함수 : 사용자정의
+function G3_USERDEF(token){
+	alog("G3_USERDEF-----------------start");
 
-
-
-
-
-
-
-
-    //그리드 조회(그리드)	
-    function G2_SEARCH(tinput,token){
-        alog("G2_SEARCH()------------start");
-
-		var tGrid = mygridG2;
-
-        //그리드 초기화
-        tGrid.clearAll();        //post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-		if(typeof tinput != "undefined"){
-			var tKeys = tinput.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
-			}
-		}
-
-        //불러오기
-        $.ajax({
-            type : "POST",
-            url : url_G2_SEARCH+"&TOKEN=" + token + " &G2_CRUD_MODE=read" ,
-            data : sendFormData,
-			processData: false,
-			contentType: false,
-            dataType: "json",
-            async: true,
-            success: function(data){
-                alog("   gridG2 json return----------------------");
-                alog("   json data : " + data);
-                alog("   json RTN_CD : " + data.RTN_CD);
-                alog("   json ERR_CD : " + data.ERR_CD);
-                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-                //그리드에 데이터 반영
-                if(data.RTN_CD == "200"){
-					var row_cnt = 0;
-					if(data.RTN_DATA){
-						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG2Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
-							//푸터 합계 처리	
-
-						},"json");
-						
-					}else{
-						$("#spanG2Cnt").text("-");
-					}
-					msgNotice("[그리드] 조회 성공했습니다. ("+row_cnt+"건)",1);
-
-                }else{
-                    msgError("[그리드] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
-                }
-            },
-            error: function(error){
-				msgError("[그리드] Ajax http 500 error ( " + error + " )",3);
-                alog("[그리드] Ajax http 500 error ( " + data.RTN_MSG + " )");
-            }
-        });
-        alog("G2_SEARCH()------------end");
-    }
-
+	alog("G3_USERDEF-----------------end");
+}
 //디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
@@ -878,10 +872,4 @@ function G3_NEW2(){
 			$("#DIV_G3-HIDDENLINK").css("display", "none");
 
        alog("DETAILNew30---------------end");
-}
-//사용자정의함수 : 사용자정의
-function G3_USERDEF(token){
-	alog("G3_USERDEF-----------------start");
-
-	alog("G3_USERDEF-----------------end");
 }
