@@ -18,6 +18,7 @@ class pgmmngDao
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql1";
 		$RtnVal["SQLTXT"] = "select
 	PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL
 	,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT
@@ -26,7 +27,8 @@ from
  CG_PJTINFO	
 where DELYN = 'N'
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  
@@ -36,9 +38,11 @@ where DELYN = 'N'
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql2";
 		$RtnVal["SQLTXT"] = "update CG_PJTINFO set DELYN = 'Y' where PJTSEQ = #{PJTSEQ} 
 ";
-	$RtnVal["REQUIRE"] = array("PJTSEQ"	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array("PJTSEQ"	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -48,6 +52,7 @@ where DELYN = 'N'
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql3";
 		$RtnVal["SQLTXT"] = "update CG_PJTINFO set 
 PJTID = #{PJTID}, PJTNM = #{PJTNM},FILECHARSET = #{FILECHARSET}, UITOOL = #{UITOOL}
 , SVRLANG = #{SVRLANG}, STARTDT = #{STARTDT}, ENDDT = #{ENDDT}
@@ -56,7 +61,8 @@ PJTID = #{PJTID}, PJTNM = #{PJTNM},FILECHARSET = #{FILECHARSET}, UITOOL = #{UITO
 where PJTSEQ = #{PJTSEQ} 
 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssssssssii";
 		return $RtnVal;
     }  
@@ -66,6 +72,7 @@ where PJTSEQ = #{PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql4";
 		$RtnVal["SQLTXT"] = "insert into CG_PJTINFO (
 	PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG
 	,DEPLOYKEY,PKGROOT,STARTDT,ENDDT
@@ -76,7 +83,8 @@ where PJTSEQ = #{PJTSEQ}
 	,date_format(sysdate(),'%Y%m%d%H%i%s'),#{USER.SEQ}
 	)
 	";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssssssssi";
 		return $RtnVal;
     }  
@@ -86,12 +94,14 @@ where PJTSEQ = #{PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql6";
 		$RtnVal["SQLTXT"] = "select PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,LOGINYN,ADDDT,MODDT 
 from
  CG_PGMINFO	
 where PJTSEQ = #{G3-PJTSEQ} 
  ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -101,6 +111,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql7";
 		$RtnVal["SQLTXT"] = "insert into CG_PGMINFO(
 	 PJTSEQ, PGMID, PGMNM, PKGGRP, PGMTYPE
 	, POPWIDTH, POPHEIGHT, SECTYPE, LOGINYN
@@ -111,7 +122,8 @@ where PJTSEQ = #{G3-PJTSEQ}
 	 ,date_format(sysdate(),'%Y%m%d%H%i%s'),#{USER.SEQ}
 ) 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "issssssssi";
 		return $RtnVal;
     }  
@@ -121,6 +133,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql8";
 		$RtnVal["SQLTXT"] = "update
  CG_PGMINFO
 set 
@@ -129,7 +142,8 @@ set
  , MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssssssssiii";
 		return $RtnVal;
     }  
@@ -139,10 +153,12 @@ where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql9";
 		$RtnVal["SQLTXT"] = "delete from CG_PGMINFO
 where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ii";
 		return $RtnVal;
     }  
@@ -152,6 +168,7 @@ where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql10";
 		$RtnVal["SQLTXT"] = "select 
  a.PJTSEQ, a.DDSEQ, a.COLID, a.COLNM, a.COLSNM
  ,a.DATATYPE, a.DATASIZE, a.OBJTYPE, b.OBJTYPE as OBJTYPE_FORMVIEW, c.OBJTYPE as OBJTYPE_GRID
@@ -163,7 +180,8 @@ from CG_DD a
 	left outer join CG_DDOBJ c on a.DDSEQ = c.DDSEQ and c.GRPTYPE = 'GRID'
 where PJTSEQ = #{G3-PJTSEQ} 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -173,6 +191,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql11";
 		$RtnVal["SQLTXT"] = "insert into CG_DD (
 	PJTSEQ, COLID, COLNM, COLSNM, DATATYPE
 	, DATASIZE, OBJTYPE, LBLWIDTH, LBLHEIGHT, LBLALIGN,
@@ -186,7 +205,8 @@ where PJTSEQ = #{G3-PJTSEQ}
 	,date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 ) 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "issssissssssssissi";
 		return $RtnVal;
     }  
@@ -196,6 +216,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql12";
 		$RtnVal["SQLTXT"] = "update CG_DD
 set
 	COLID = #{COLID}, COLNM = #{COLNM}, COLSNM = #{COLSNM}, DATATYPE = #{DATATYPE}, DATASIZE = #{DATASIZE}
@@ -205,7 +226,8 @@ set
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ}
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssssissssssssisiii";
 		return $RtnVal;
     }  
@@ -215,10 +237,12 @@ where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sql13";
 		$RtnVal["SQLTXT"] = "delete from CG_DD 
 where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ} 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ii";
 		return $RtnVal;
     }  
@@ -228,12 +252,14 @@ where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "impR";
 		$RtnVal["SQLTXT"] = "select 
  PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT
 from CG_PJTCFG
 where PJTSEQ = #{G3-PJTSEQ} 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -243,6 +269,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "impC";
 		$RtnVal["SQLTXT"] = "insert into CG_PJTCFG (
  PJTSEQ, CFGID, CFGNM, MVCGBN, PATH
  , CFGORD, USEYN
@@ -253,7 +280,8 @@ where PJTSEQ = #{G3-PJTSEQ}
  , date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 ) 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "issssisi";
 		return $RtnVal;
     }  
@@ -263,13 +291,15 @@ where PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "impU";
 		$RtnVal["SQLTXT"] = "update CG_PJTCFG set
 	CFGID = #{CFGID}, CFGNM = #{CFGNM}, MVCGBN = #{MVCGBN}, PATH = #{PATH}, USEYN = #{USEYN}
 	, CFGORD = #{CFGORD}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssssiiii";
 		return $RtnVal;
     }  
@@ -279,10 +309,12 @@ where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "impD";
 		$RtnVal["SQLTXT"] = "delete from CG_PJTCFG
 where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ} 
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ii";
 		return $RtnVal;
     }  
@@ -292,11 +324,13 @@ where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "fileR";
 		$RtnVal["SQLTXT"] = "SELECT PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT
 FROM CG_PJTFILE
 WHERE PJTSEQ = #{G3-PJTSEQ}
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -306,6 +340,7 @@ WHERE PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "fileC";
 		$RtnVal["SQLTXT"] = "INSERT INTO CG_PJTFILE (
 	PJTSEQ, MKFILETYPE, MKFILETYPENM, MKFILEFORMAT, MKFILEEXT
 	, TEMPLATE, FILEORD, USEYN, ADDDT, ADDID
@@ -313,7 +348,8 @@ WHERE PJTSEQ = #{G3-PJTSEQ}
 	#{PJTSEQ}, #{MKFILETYPE}, #{MKFILETYPENM}, #{MKFILEFORMAT}, #{MKFILEEXT}
 	,#{TEMPLATE}, #{FILEORD}, #{USEYN}, date_format(sysdate(),'%Y%m%d%H%i%s'), #{USER.SEQ}
 )";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "isssssssi";
 		return $RtnVal;
     }  
@@ -323,13 +359,15 @@ WHERE PJTSEQ = #{G3-PJTSEQ}
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "fileU";
 		$RtnVal["SQLTXT"] = "UPDATE CG_PJTFILE SET
 	MKFILETYPE = #{MKFILETYPE}, MKFILETYPENM = #{MKFILETYPENM}, MKFILEFORMAT = #{MKFILEFORMAT}, MKFILEEXT = #{MKFILEEXT}, TEMPLATE = #{TEMPLATE}
 	, FILEORD = #{FILEORD}, USEYN = #{USEYN}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{USER.SEQ}
 WHERE PJTSEQ = #{PJTSEQ} AND FILESEQ = #{FILESEQ}
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "sssssssiis";
 		return $RtnVal;
     }  

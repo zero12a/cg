@@ -195,7 +195,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:472px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:470px;width:100%;"></div>
 		</div>
 		</div></div>
 	</div>
@@ -253,8 +253,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<!-- style="width:100;"-->	
 		<div class="CON_OBJECT">
 		<input type="file" name="G3-FILE1" value="" id="G3-FILE1" style="width:100px;">
-		<div  id="DIV-G3-FILE1">
-			<a href="" target="_blank" name="G3-FILE1-LINK" id="G3-FILE1-LINK"><span id="G3-FILE1-NM" name="G3-FILE1-NM"></span></a>
+		<div  id="DIV-G3-FILE1" style="display:none">
+			<a href="" target="_blank" name="G3-FILE1-LINK" id="G3-FILE1-LINK"><span id="G3-FILE1-NM" name="G3-FILE1-NM"></span></a><input type="checkbox" name="G3-FILE1-DEL" id="G3-FILE1-DEL">삭제
 		</div>
 		</div>	
 	</div>	

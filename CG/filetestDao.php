@@ -50,7 +50,7 @@ class filetestDao
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "SC";
 		$RtnVal["SQLID"] = "selF";
-		$RtnVal["SQLTXT"] = "select FILESEQ, FILESVRNM, FILENM,'http://www.naver.com^네이버.pdf' as FILE1
+		$RtnVal["SQLTXT"] = "select FILESEQ, FILESVRNM, FILENM,'http://www.naver.com^ttttt.gif' as FILE1
 	, 'http://www.naver.com/?2^네이버2.pdf' as LINKVIEW
 	, 'http://www.naver.com/?3^네이버3.pdf' as HIDDENLINK
 	, '99999999999' as BIVAL1A

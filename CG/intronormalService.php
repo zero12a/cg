@@ -68,22 +68,23 @@ class intronormalService
 		alog("INTRONORMALService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, LOGIN_SEQ
 
 		//조회
 		//V_GRPNM : 로그인
-		$GRID["SQL"]["R"] = $this->DAO->sLoginG($REQ); //SEARCH, 조회,login
+		array_push($GRID["SQL"], $this->DAO->sLoginG($REQ)); //SEARCH, 조회,login
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -118,22 +119,23 @@ class intronormalService
 		alog("INTRONORMALService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, LOGIN_SEQ
 
 		//조회
 		//V_GRPNM : 잠금
-		$GRID["SQL"]["R"] = $this->DAO->sLockG($REQ); //SEARCH, 조회,lock
+		array_push($GRID["SQL"], $this->DAO->sLockG($REQ)); //SEARCH, 조회,lock
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -168,22 +170,23 @@ class intronormalService
 		alog("INTRONORMALService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, LAUTH_SEQ
 
 		//조회
 		//V_GRPNM : 메뉴이력
-		$GRID["SQL"]["R"] = $this->DAO->sMenuG($REQ); //SEARCH, 조회,menu
+		array_push($GRID["SQL"], $this->DAO->sMenuG($REQ)); //SEARCH, 조회,menu
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴

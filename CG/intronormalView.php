@@ -11,14 +11,17 @@ include_once('../include/incRequest.php');//CG REQUEST
 <title>인트로_일반</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
+<script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
 <script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="../lib/jquery-ui-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
+<script src="/lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 <script src="../lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
 <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
 <script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
+<link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <script src="intronormal.js?<?=getRndVal(10)?>"></script>
@@ -33,11 +36,17 @@ include_once('../include/incRequest.php');//CG REQUEST
 </head>
 <body onload="initBody();">
 
-<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
-	<!--G.GRPID : G1-->
-	<div class="GRP_OBJECT" style="width:100%;height:70px;border-radius:3px;-moz-border-radius: 3px;">
-	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
-			<div class="DETAIL_LABELGRP">
+<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--
+	#####################################################
+	## 컨디션  - START G.GRPID : G1-
+	#####################################################
+	-->
+ 	<div class="GRP_OBJECT" style="width:100%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:64px;">	
+		
+	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
+		<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
 				<b>* 인트로_일반</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
@@ -54,14 +63,16 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+		</div></div>
 	</div>
 	<!--
 	#####################################################
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:305px;">
-
+    <div class="GRP_OBJECT" style="width:50%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:299px;">
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
 	  				* 로그인      
@@ -74,8 +85,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:283px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:275px;width:100%;"></div>
 		</div>
+		</div></div>
 	</div>
 	<!--
 	#####################################################
@@ -89,8 +101,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:100%;height:100px;">
-
+    <div class="GRP_OBJECT" style="width:100%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:94px;">
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
 	  				* 잠금      
@@ -103,8 +116,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:78px;width:100%;"></div>
+			<div id="gridG3"  style="background-color:white;overflow:hidden;height:70px;width:100%;"></div>
 		</div>
+		</div></div>
 	</div>
 	<!--
 	#####################################################
@@ -116,8 +130,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:100%;height:200px;">
-
+    <div class="GRP_OBJECT" style="width:100%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:194px;">
 		<div  class="GRID_LABELGRP">
   			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
 	  				* 메뉴이력      
@@ -130,8 +145,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG4"  style="background-color:white;overflow:hidden;height:178px;width:100%;"></div>
+			<div id="gridG4"  style="background-color:white;overflow:hidden;height:170px;width:100%;"></div>
 		</div>
+		</div></div>
 	</div>
 	<!--
 	#####################################################

@@ -768,15 +768,24 @@ function G3_SEARCH(tinput,token){
 		if(data.RTN_DATA.FILE1){
 			var tarr = data.RTN_DATA.FILE1.split("^");//CD^NM
 			if(tarr.length == 2){
-				$("#G3-FILE1-LINK").attr("href",tarr[0]);//파일1 링크세팅
-				$("#G3-FILE1-NM").text(tarr[1]);//파일1 파일이름세팅
-				$("#DIV_G3-FILE1").css("display", ""); //영역보이기
+				var fileNm = tarr[1] ;
+				if(fileNm != ""){
+					$("#G3-FILE1-LINK").attr("href",tarr[0]);//파일1 링크세팅
+					$("#G3-FILE1-NM").text(fileNm);//파일1 파일이름세팅
+					$("#DIV-G3-FILE1").css("display", ""); //영역보이기
+				}else{
+					alog("FILE1 파일1 파일 이름이 없습니다.");
+				}
 			}else{
 				alert("G3-FILE1 값이 멀티값이 아닙니다.");
 			}
 		}else{
-			$("#DIV_G3-FILE1").css("display", "none"); //영역숨기기
-			alert("G3-FILE1 값이 없습니다..");
+			$("#G3-FILE1").val("");//값 비우기
+			$("#G3-FILE1-LINK").attr("href","");//파일1 링크세팅
+			$("#G3-FILE1-NM").text("");//파일1 파일이름세팅
+
+			$("#DIV-G3-FILE1").css("display", "none"); //영역숨기기
+			alog("G3-FILE1 값이 없습니다..");
 		}
 		var tArr = data.RTN_DATA.LINKVIEW.split("^");
 		if(tArr){
