@@ -276,12 +276,23 @@ header("Pragma:no-cache");
                 <div  class="GRID_LABELBTN"  >
                     <select id="selSqlHint" name="selSqlHint" onchange="addSqlHint()" style="font-size:9pt">
                         <option value="">-힌트 추가-</option>
-                        <option value="#{USER.ID}">유저ID</option>                        
-                        <option value="#{USER.SEQ}">유저SEQ</option>
-                        <option value="#{SERVER.REMOTE_ADDR}">접속자IP</option>
-                        <option value="date_format(sysdate(),'%Y%m%d%H%i%s')">현재날짜</option>  
-                        <option value="concat(CD,'^',NM,'^','GRPID')">그리드:버튼</option>
-                        <option value="<![CDATA[SomeText]]>">CDATA (no used)</option>                        
+                        <option value="date_format(sysdate(),'%Y%m%d%H%i%s')">현재날짜</option>                          
+                        <option value="#{USER.ID}">(입력) 유저ID</option>                        
+                        <option value="#{USER.SEQ}">(입력) 유저SEQ</option>
+                        <option value="#{SERVER.REMOTE_ADDR}">(입력) 접속자IP</option>
+                        <option value="#{GRPID-COLID-DEL}">(입력) 파일삭제(FORM)</option>
+                        <option value="#{GRPID-COLID-NM}">(입력) 파일이름(FORM)</option>
+                        <option value="#{GRPID-COLID-SVRNM}">(입력) 파일서버이름(FORM)</option>
+                        <option value="#{GRPID-COLID-SIZE}">(입력) 파일SIZE(FORM)</option>                        
+                        <option value="#{GRPID-COLID}">(입력) 체크[값1,값2,값3~] (FORM)</option>      
+                        <option value="#{GRPID-COLID}">(입력) 라디오 (FORM)</option>      
+                        <option value="#{GRPID-COLID}">(입력) 코드검색[CD만저장됨] (FORM)</option>            
+                        <option value="CD^NM^GRPID">(출력3V) 코드검색(GRID)</option>
+                        <option value="CD^NM">(출력2V) 코드검색(FORM)</option>
+                        <option value="LINK^NM">(출력2V) 링크뷰(FORM)</option>           
+                        <option value="CHK1,CHK2,CHK3 ~">(출력NV) 체크박스(FORM)</option>        
+                        <option value="LINK1^NM1,LINK2^NM2,LINK3^NM3 ~">(출력NV) 이미지뷰어(FORM)</option>   
+                        <option value="LINK^NM">(출력2V) 파일(FORM)</option>                                    
                     </select>
                     <input type="button" name="bigFont" value="+" onclick="changeCodemirrorFontSize('+')">
                     <input type="button" name="bigFont" value="-" onclick="changeCodemirrorFontSize('-')">
