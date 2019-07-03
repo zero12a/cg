@@ -65,7 +65,7 @@ input[type=text]:read-only {
 .BI_OBJINNER {background-color: white;border-radius:5px;padding:5px 5px 5px 5px;height:70px;}
 .BI_LABEL {height:22px;color:gray;text-align:left;font-size:11pt;height:22px;position: relative;vertical-align:middle ;overflow:auto;z-index:30;}
 .BI_ICON {position: relative;vertical-align:middle;overflow:auto;z-index:30;}
-.BI_VALUE {height:45px;font-weight:bold;text-align:left;font-size:28pt;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_VALUE {height:45px;font-weight:bold;text-align:left;font-size:24pt;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
 .BI_VALUE2 {font-size:11pt;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
 .BI_VALUE2_TYPE3 {color:gray;width:30%;padding-top:12px;text-align:right;}
 .BI_VALUE2_TYPE4 {color:white;border-radius:5px;float:left;text-align:left;margin-top:12pt;background-color:gray;}
