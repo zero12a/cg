@@ -35,6 +35,8 @@
     //100 PGMINFO 가져오기
         //200 SQL 가져오기
             //300 SQlCOL 가져오기
+            //310 SQL CHILD 가져오기
+                //320 SQL CHILD의 SQLCOL 가져오기
         //400 GRP 가져오기
             //500 FNC 가져오기
                 //600 SVC가져오기
@@ -69,14 +71,14 @@
     }
     $result->close();
 
-    //200 SQL 가져오기
+    //200 SQL 가져오기 (부모만 가져오기)
     $coltype = "ii";
     $sql = "
         SELECT
             *
         FROM 
             CG_PGMSQL
-        WHERE PJTSEQ = #{PJTSEQ} AND PGMSEQ = #{PGMSEQ}
+        WHERE PJTSEQ = #{PJTSEQ} AND PGMSEQ = #{PGMSEQ} AND (PSQLSEQ = 0 OR PSQLSEQ IS NULL)
     ";
 
     $stmt = makeStmt($db,$sql,$coltype,$REQ);
@@ -90,7 +92,7 @@
     while($row = $result->fetch_array(MYSQLI_ASSOC))
     {
         //300 SQlCOL 가져오기
-        $REQ["SQLSEQ"] = $row["SQLSEQ"];
+        $REQ["SQLSEQ"] = $row["SQLSEQ"]; //SQL Parent
         $coltype = "iii";
         $sql = "
             SELECT
@@ -101,7 +103,7 @@
         ";
     
         $stmt = makeStmt($db,$sql,$coltype,$REQ);
-        if(!$stmt)JsonMsg("500","300","SQL makeStmt 실패 했습니다.");
+        if(!$stmt)JsonMsg("500","300","300 SQL makeStmt 실패 했습니다.");
         if(!$stmt->execute())JsonMsg("500","100","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
     
         $result2 = $stmt->get_result();
@@ -114,15 +116,74 @@
         }
         $result2->close();
 
+        //SQL의 하위 SQLD를 배열로 저장
         $row["PGMSQLD"] = $tArr;
 
-        array_push($fromArr["PGMSQL"],$row);
+
+
+        //310 하위SQL 있는지 검사해서 하위 SQL의 SQLD도 생성하기
+        $REQ["PSQLSEQ"] = $REQ["SQLSEQ"];
+        $coltype = "iii";
+        $sql = "
+            SELECT
+                *
+            FROM 
+                CG_PGMSQL
+            WHERE PJTSEQ = #{PJTSEQ} AND PGMSEQ = #{PGMSEQ} AND PSQLSEQ = #{PSQLSEQ}
+        ";
+    
+        $stmt = makeStmt($db,$sql,$coltype,$REQ);
+        if(!$stmt)JsonMsg("500","300","310 SQL makeStmt 실패 했습니다.");
+        if(!$stmt->execute())JsonMsg("500","100","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+    
+        $result3 = $stmt->get_result();
+        $stmt->close();
+    
+        $row["PGMSQLCHILD"] = array();
+        while($rowChild = $result3->fetch_array(MYSQLI_ASSOC))
+        {
+
+            //320 SQlCOL 가져오기
+            $REQ["SQLSEQ"] = $rowChild["SQLSEQ"];
+            $coltype = "iii";
+            $sql = "
+                SELECT
+                    *
+                FROM 
+                    CG_PGMSQLD
+                WHERE PJTSEQ = #{PJTSEQ} AND PGMSEQ = #{PGMSEQ} AND SQLSEQ = #{SQLSEQ}
+            ";
+        
+            $stmt = makeStmt($db,$sql,$coltype,$REQ);
+            if(!$stmt)JsonMsg("500","300","320 SQL makeStmt 실패 했습니다.");
+            if(!$stmt->execute())JsonMsg("500","100","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+        
+            $result4 = $stmt->get_result();
+            $stmt->close();
+        
+            $tArr = array();
+            while($rowCol = $result4->fetch_array(MYSQLI_ASSOC))
+            {
+                array_push($tArr,$rowCol);
+            }
+            $result4->close();
+
+            $rowChild["PGMSQLD"] = $tArr;  //하위 SQL의 SQLD 넣어주기.
+
+            array_push($row["PGMSQLCHILD"], $rowChild); //하위 SQL은 멀티개 있을 있음.
+
+        }
+
+
+        array_push($fromArr["PGMSQL"],$row); //마스터SQL에 정보 넣어주기
 
 
         alog("SQLSEQ = " . $row["SQLSEQ"]);
     }
     $result->close();
 
+    //print("<pre>".print_r($fromArr,true)."</pre>");
+    //exit;
 
     //400 GRP 가져오기
     $coltype = "ii";
@@ -135,7 +196,7 @@
     ";
 
     $stmt = makeStmt($db,$sql,$coltype,$REQ);
-    if(!$stmt)JsonMsg("500","300","SQL makeStmt 실패 했습니다.");
+    if(!$stmt)JsonMsg("500","300","400 SQL makeStmt 실패 했습니다.");
     if(!$stmt->execute())JsonMsg("500","100","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
 
     $result = $stmt->get_result();
@@ -306,6 +367,7 @@
 
     $toArr = $fromArr;
 
+    $sqlOldNew = array();//SQL 구 SEQ에 매핑되는 신규 SQLSEQ 저장하기
 
     //100 PGMINFO 넣기
     //200 SQL 넣기
@@ -344,7 +406,8 @@
     //200 SQL 넣기
     for($i=0;$i<count($toArr["PGMSQL"]);$i++){
         $sqls = $toArr["PGMSQL"][$i];
-        $map["PGMSEQ"]      = $toArr["PGMSEQ"];
+        $map["PGMSEQ"]      = $toArr["PGMSEQ"]; //새로 생성된 PGMSEQ
+
         $map["SQLID"]       = $sqls["SQLID"];
         $map["SQLNM"]       = $sqls["SQLNM"];
         $map["SVRSEQ"]      = $sqls["SVRSEQ"];
@@ -352,16 +415,18 @@
         $map["RTN_TYPE"]    = $sqls["RTN_TYPE"];
         $map["SQLORD"]      = $sqls["SQLORD"];
         $map["SQLTXT"]      = $sqls["SQLTXT"];
+        $map["PSQLSEQ"]      = $sqls["PSQLSEQ"];
 
-        $coltype = "iissi ssis";
+        $coltype = "iissi ssisi";
         $sql = "
+            /*200 SQL 넣기*/
             insert into CG_PGMSQL (
                 PJTSEQ, PGMSEQ, SQLID, SQLNM, SVRSEQ
-                , CRUD, RTN_TYPE, SQLORD, SQLTXT
+                , CRUD, RTN_TYPE, SQLORD, SQLTXT, PSQLSEQ
                 , ADDDT
             ) values (
                 #{PJTSEQ}, #{PGMSEQ}, #{SQLID}, #{SQLNM}, #{SVRSEQ}
-                ,#{CRUD}, #{RTN_TYPE}, #{SQLORD}, #{SQLTXT}
+                ,#{CRUD}, #{RTN_TYPE}, #{SQLORD}, #{SQLTXT}, ifnull(#{PSQLSEQ},0)
                 ,date_format(sysdate(),'%Y%m%d%H%i%s')
             )
         ";
@@ -370,6 +435,7 @@
         if(!$stmt)JsonMsg("500","1200","SQL makeStmt 실패 했습니다.");
         if(!$stmt->execute())JsonMsg("500","1200","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
         $toArr["PGMSQL"][$i]["SQLSEQ"] = $db->insert_id;
+        $sqlOldNew[$sqls["SQLSEQ"]] = $db->insert_id;//구SEQ에 매핑되는 신SEQ 넣기
         $stmt->close();
 
         //300 SQlCOL 넣기
@@ -402,6 +468,77 @@
             //$toArr["PGMSQL"][$i]["SQLSEQ"] = $db->insert_id;
             $stmt->close();
         }
+
+
+        //310 SQl CHILD 넣기
+        for($t=0;$t<count($toArr["PGMSQL"][$i]["PGMSQLCHILD"]);$t++){
+            $sqls = $toArr["PGMSQL"][$i]["PGMSQLCHILD"][$t];
+
+            $map["PGMSEQ"]      = $toArr["PGMSEQ"]; //새로 생성된 PGMSEQ
+            $map["PSQLSEQ"]     = $toArr["PGMSQL"][$i]["SQLSEQ"]; //새로 생성된 PGMSEQ            
+            $map["SQLID"]       = $sqls["SQLID"];
+            $map["SQLNM"]       = $sqls["SQLNM"];
+            $map["SVRSEQ"]      = $sqls["SVRSEQ"];
+            $map["CRUD"]        = $sqls["CRUD"];
+            $map["RTN_TYPE"]    = $sqls["RTN_TYPE"];
+            $map["SQLORD"]      = $sqls["SQLORD"];
+            $map["SQLTXT"]      = $sqls["SQLTXT"];
+    
+            $coltype = "iissi ssisi";
+            $sql = "
+                insert into CG_PGMSQL (
+                    PJTSEQ, PGMSEQ, SQLID, SQLNM, SVRSEQ
+                    , CRUD, RTN_TYPE, SQLORD, SQLTXT, PSQLSEQ
+                    , ADDDT
+                ) values (
+                    #{PJTSEQ}, #{PGMSEQ}, #{SQLID}, #{SQLNM}, #{SVRSEQ}
+                    ,#{CRUD}, #{RTN_TYPE}, #{SQLORD}, #{SQLTXT}, #{PSQLSEQ}
+                    ,date_format(sysdate(),'%Y%m%d%H%i%s')
+                )
+            ";
+        
+            $stmt = makeStmt($db,$sql,$coltype,$map);
+            if(!$stmt)JsonMsg("500","1200","SQL makeStmt 실패 했습니다.");
+            if(!$stmt->execute())JsonMsg("500","1200","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+            $toArr["PGMSQL"][$i]["PGMSQLCHILD"][$t]["SQLSEQ"] = $db->insert_id;
+            $stmt->close();
+
+
+            //320 SQLCHILD의 SQlCOL 넣기
+            $tLoopArr = $toArr["PGMSQL"][$i]["PGMSQLCHILD"][$t]["PGMSQLD"];
+            for($h=0;$h<count($tLoopArr);$h++){
+                $cols = $tLoopArr[$h];
+
+                $map["SQLSEQ"]      = $toArr["PGMSQL"][$i]["PGMSQLCHILD"][$t]["SQLSEQ"];//새로 생성된 SQL CHILD SQLSEQ
+                $map["SQLGBN"]      = $cols["SQLGBN"];
+                $map["COLID"]        = $cols["COLID"];
+                $map["DDCOLID"]    = $cols["DDCOLID"];
+                $map["SQLORD"]      = $cols["SQLORD"];
+                $map["ORD"]      = $cols["ORD"];
+
+                $coltype = "iiiss si";
+                $sql = "
+                    insert into CG_PGMSQLD (
+                        SQLSEQ, PJTSEQ, PGMSEQ, SQLGBN, COLID
+                        ,DDCOLID, ORD
+                        , ADDDT
+                    ) values (
+                        #{SQLSEQ}, #{PJTSEQ}, #{PGMSEQ}, #{SQLGBN}, #{COLID}
+                        , #{DDCOLID}, #{ORD}
+                        , date_format(sysdate(),'%Y%m%d%H%i%s')
+                    )
+                ";
+
+                $stmt = makeStmt($db,$sql,$coltype,$map);
+                if(!$stmt)JsonMsg("500","1300","SQL makeStmt 실패 했습니다.");
+                if(!$stmt->execute())JsonMsg("500","1300","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+                //$toArr["PGMSQL"][$i]["SQLSEQ"] = $db->insert_id;
+                $stmt->close();
+            }
+
+
+        }
+
     }
 
     
@@ -510,16 +647,16 @@
                     $sqlrs = $toArr["PGMGRP"][$i]["PGMFNC"][$t]["PGMSVC"][$u]["PGMSQLR"][$v];
         
                     $map["SVCSEQ"]  = $toArr["PGMGRP"][$i]["PGMFNC"][$t]["PGMSVC"][$u]["SVCSEQ"];
-                    $map["SQLID"]   = $sqlrs["SQLID"];
+                    $map["SQLSEQ"]   = $sqlOldNew[$sqlrs["SQLSEQ"]]; //새로 생성된 번호를 알아야 함.
                     $map["ORD"]     = $sqlrs["ORD"];
         
-                    $coltype = "iiisi";
+                    $coltype = "iiiii";
                     $sql = "
                         insert into CG_PGMSQLR (
-                            SVCSEQ, PJTSEQ, PGMSEQ, SQLID, ORD
+                            SVCSEQ, PJTSEQ, PGMSEQ, SQLSEQ, ORD
                             , ADDDT
                         ) values (
-                            #{SVCSEQ}, #{PJTSEQ}, #{PGMSEQ}, #{SQLID}, #{ORD}
+                            #{SVCSEQ}, #{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{ORD}
                             , date_format(sysdate(),'%Y%m%d%H%i%s')
                         )
                     ";
@@ -565,8 +702,13 @@
             $map["FORMAT"]        = $ios["FORMAT"];
             $map["FOOTERNM"]        = $ios["FOOTERNM"];
             $map["FOOTERMATH"]        = $ios["FOOTERMATH"];
+            $map["ICONNM"]        = $ios["ICONNM"];
+            $map["ICONSTYLE"]        = $ios["ICONSTYLE"];
+            $map["LBLSTYLE"]        = $ios["LBLSTYLE"];
+            $map["OBJSTYLE"]        = $ios["OBJSTYLE"];
+            $map["OBJ2STYLE"]        = $ios["OBJ2STYLE"];
 
-            $coltype = "iiiis ssiis sssss sssss sssss s";
+            $coltype = "iiiis ssiis sssss sssss sssss sssss s";
             $sql = "
                 insert into CG_PGMIO (
                     PJTSEQ, PGMSEQ, GRPSEQ, COLORD, COLID
@@ -574,7 +716,8 @@
                     , POPUP, KEYYN, SEQYN, LBLHIDDENYN, LBLWIDTH
                     , LBLALIGN, OBJWIDTH, OBJHEIGHT, OBJALIGN, HIDDENYN
                     , EDITYN, FNINIT, BRYN, FORMAT, FOOTERNM
-                    , FOOTERMATH
+                    , FOOTERMATH, ICONNM, ICONSTYLE, LBLSTYLE, OBJSTYLE
+                    , OBJ2STYLE
                     , ADDDT, ADDID
                 ) values (
                     #{PJTSEQ}, #{PGMSEQ}, #{GRPSEQ}, #{COLORD}, #{COLID}
@@ -582,7 +725,8 @@
                     ,#{POPUP}, #{KEYYN}, #{SEQYN}, #{LBLHIDDENYN}, #{LBLWIDTH}
                     ,#{LBLALIGN}, #{OBJWIDTH}, #{OBJHEIGHT}, #{OBJALIGN}, #{HIDDENYN}
                     ,#{EDITYN}, #{FNINIT}, #{BRYN}, #{FORMAT}, #{FOOTERNM}
-                    ,#{FOOTERMATH}
+                    ,#{FOOTERMATH}, #{ICONNM}, #{ICONSTYLE}, #{LBLSTYLE}, #{OBJSTYLE}
+                    ,#{OBJ2STYLE}
                     , date_format(sysdate(),'%Y%m%d%H%i%s'), 0
                 )
             ";
