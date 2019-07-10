@@ -350,8 +350,14 @@ function makeStmt($db,$sql,$coltype,$map){
             }
 
         }else{
+            //단일 입력값일때 
             if($tColtype == "i" || $tColtype == "d"){
-                $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], addSqlSlashes( $map[$mat[2]] ) ,$debug_sql);
+                if($map[$mat[2]] == ""){
+                    $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], "null" ,$debug_sql);
+                }else{
+                    $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], addSqlSlashes( $map[$mat[2]] ) ,$debug_sql);
+                }
+
             }else if($tColtype == "t"){
                 if( isDate($map[$mat[2]]) ){
                     $debug_sql = str_replace_once($mat[1].$mat[2].$mat[3], "'" . addSqlSlashes( $map[$mat[2]] )  . "'",$debug_sql);
@@ -366,12 +372,6 @@ function makeStmt($db,$sql,$coltype,$map){
         $d++;
 
 
-
-        if(substr($to_coltype,$k,1) == "i" || substr($to_coltype,$k,1) == "d"){
-            ///LogMaster::log("       $k ". substr($to_coltype,$k,1). " " . $mat[1].$mat[2].$mat[3] . " = " . $map[$mat[2]]);
-        }else{
-            //LogMaster::log("       $k ". substr($to_coltype,$k,1) . " " .  $mat[1].$mat[2].$mat[3] . " = '" . $map[$mat[2]] . "'");
-        }
         //값이 배열이면 " in ? " ==>  " in ( a, b, c ) "로 만든기
         alog($mat[2] . " sizeof = " . sizeof($map[$mat[2]]));
 
@@ -413,7 +413,21 @@ function makeStmt($db,$sql,$coltype,$map){
             //$tDdColids .= ($tDdColids != "")? "," : "";
             //$tDdColids .=(strpos($mat[2],"-")>0)?explode("-",$mat[2])[1]:$mat[2];
 
-            $to_map[$k] = $map[$mat[2]];
+            //타입이 number타입인데 값이 없으면  null을 입력해주기.
+            //alog("***   to_coltype = " . substr($to_coltype,$k,1));
+            //alog("***   value = " . $mat[2]);                  
+            //alog("***   value = " . $map[$mat[2]]);            
+            if(
+                ( substr($to_coltype,$k,1) == "i" || substr($to_coltype,$k,1) == "d" )
+                && $map[$mat[2]] == ""
+                ){
+                //숫자 타입인데 값이 없으면 null 문자열 넣어주기.
+                //alog("***   set null");
+                $to_map[$k] = null;
+            }else{
+                //alog("***   set not null");                
+                $to_map[$k] = $map[$mat[2]];
+            }
             $k++;
         }
 
@@ -438,7 +452,7 @@ function makeStmt($db,$sql,$coltype,$map){
     //$stmt->bind_param($to_coltype, $to_map);
 
     if(!$stmt){
-        clog("        stmt error : " . $stmt->errno . " > " . $stmt->error);
+        alog("        stmt error : " . $stmt->errno . " > " . $stmt->error);
         return false;
     }else if($k > 0){
 		//sql문에 bind param이 하나라도 있으면 처리

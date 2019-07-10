@@ -1035,7 +1035,7 @@ class cg_pgminfo_svc
 	
 	
 				$sql_row["COLID"] = $mat[2];
-				$sql_row["DDCOLID"] = ( strpos($sql_row["COLID"],"-") > 0 )?explode("-",$sql_row["COLID"])[1]:$sql_row["COLID"];
+				$sql_row["DDCOLID"] = ( strpos($sql_row["COLID"],"-") > 0 )?explode("-",$sql_row["COLID"],2)[1]:$sql_row["COLID"];
 							
 				$to_sql = str_replace_once($mat[1].$mat[2].$mat[3],"?",$to_sql); //방금 찾은겨 치환
 	

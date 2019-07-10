@@ -100,6 +100,8 @@ $REQ["G2-FILENM"] = reqPostString("G2-FILENM",30);//FILENM
 $REQ["G2-FILENM"] = getFilter($REQ["G2-FILENM"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-FILETYPE"] = reqPostString("G2-FILETYPE",30);//FILETYPE	
 $REQ["G2-FILETYPE"] = getFilter($REQ["G2-FILETYPE"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G2-FILESIZE"] = reqPostNumber("G2-FILESIZE",30);//FILESIZE	
+$REQ["G2-FILESIZE"] = getFilter($REQ["G2-FILESIZE"],"REGEXMAT","/^[0-9]+$/");	
 
 //G3, 폼뷰
 $REQ["G3-FILESEQ"] = reqPostString("G3-FILESEQ",30);//FILESEQ	
@@ -115,13 +117,14 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//그리드
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"FILESEQ,FILESVRNM,FILENM,FILETYPE"
+		,"COLORD"=>"FILESEQ,FILESVRNM,FILENM,FILETYPE,FILESIZE"
 		,"VALID"=>
 			array(
 			"FILESEQ"=>array("STRING",30)	
 			,"FILESVRNM"=>array("STRING",100)	
 			,"FILENM"=>array("STRING",30)	
 			,"FILETYPE"=>array("STRING",30)	
+			,"FILESIZE"=>array("NUMBER",30)	
 					)
 		,"FILTER"=>
 			array(
@@ -129,6 +132,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//그리드
 			,"FILESVRNM"=>array("CLEARTEXT","/--미 정의--/")
 			,"FILENM"=>array("CLEARTEXT","/--미 정의--/")
 			,"FILETYPE"=>array("CLEARTEXT","/--미 정의--/")
+			,"FILESIZE"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
