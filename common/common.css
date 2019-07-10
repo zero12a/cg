@@ -38,9 +38,13 @@ input[type=text]:read-only {
 .CON_OBJECT {position: relative;float:left;background-color: #eeeeee;vertical-align:middle;overflow:auto;z-index:30;}
 .CON_LINEPADDING {position: relative;height:5px;overflow:auto;z-index:20;}
 
+/* 
+줄바꿈금지 = white-space: nowrap; 
+
+*/
 .GRID_LABELGRP {overflow:visible;position:relative;width:100%;height:22px;z-index:20;}
-.GRID_LABEL {overflow:visible;position:relative;float:left;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
-.GRID_LABELBTN {overflow:visible;position: relative;float:right;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
+.GRID_LABEL {white-space: nowrap;overflow:visible;position:relative;float:left;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
+.GRID_LABELBTN {white-space: nowrap;overflow:visible;position: relative;float:right;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
 .GRID_OBJECT {overflow:hidden;background-color: white;position: relative;width:100%;z-index:20;}
 
 .CONDITION_LABELGRP {position:relative;width:100%;height:22px;z-index:20;}

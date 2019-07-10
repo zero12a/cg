@@ -74,8 +74,8 @@ include_once('../include/incRequest.php');//CG REQUEST
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
             <div class="GRP_INNER" style="height:299px;">
 		<div  class="GRID_LABELGRP">
-  			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
-	  				* 로그인      
+  			<div id="div_gridG2_GRID_LABEL" class="GRID_LABEL" style="padding-right:14px;" >
+	  				* 로그인
 			</div>
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
