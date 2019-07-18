@@ -74,6 +74,10 @@ $REQ["G3-FILE1-SIZE"] = $_FILES["G3-FILE1"]["size"];//파일1
 $REQ["G3-FILE1-ERROR"] = $_FILES["G3-FILE1"]["error"];//파일1
 
 //G1, 컨디션
+$REQ["G1-ADDDT"] = reqPostString("G1-ADDDT",14);//ADDDT	
+$REQ["G1-ADDDT"] = getFilter($REQ["G1-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G1-MODDT"] = reqPostString("G1-MODDT",14);//MODDT	
+$REQ["G1-MODDT"] = getFilter($REQ["G1-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G4, a
 $REQ["G4-BIVAL1A"] = reqPostString("G4-BIVAL1A",100);//BIVAL1A	

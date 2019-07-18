@@ -18,6 +18,7 @@ class chartbarDao
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLID"] = "sLogin";
 		$RtnVal["SQLTXT"] = "SELECT substring(add_dt,1,8) as LOGIN_DT
 	, count(login_seq) as LOGIN_CNT 
 	, count(login_seq)+10 as LOGIN_CNT2
@@ -25,7 +26,8 @@ FROM CMN_LOG_LOGIN
 GROUP BY substring(add_dt,1,8)
 ORDER BY substring(add_dt,1,8)
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  
@@ -35,6 +37,7 @@ ORDER BY substring(add_dt,1,8)
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLID"] = "sPieD";
 		$RtnVal["SQLTXT"] = "SELECT substring(add_dt,1,8) as LOGIN_DT
 	, count(login_seq) as LOGIN_CNT 
 	, count(login_seq)+10 as LOGIN_CNT2
@@ -43,7 +46,8 @@ WHERE substring(add_dt,1,8) = #{G3-LOGIN_DT}
 GROUP BY substring(add_dt,1,8)
 ORDER BY substring(add_dt,1,8)
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
@@ -53,13 +57,15 @@ ORDER BY substring(add_dt,1,8)
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLID"] = "sPieSel";
 		$RtnVal["SQLTXT"] = "SELECT substring(add_dt,1,8) as LOGIN_DT
 	, count(login_seq) as LOGIN_CNT 
 		, count(login_seq)+10 as LOGIN_CNT2
 FROM CMN_LOG_LOGIN
 GROUP BY substring(add_dt,1,8)
 ORDER BY substring(add_dt,1,8)";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  

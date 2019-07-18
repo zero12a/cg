@@ -42,26 +42,33 @@ input[type=text]:read-only {
 줄바꿈금지 = white-space: nowrap; 
 
 */
-.GRID_LABELGRP {overflow:visible;position:relative;width:100%;height:22px;z-index:20;}
+.GRID_LABELGRP {overflow:hidden;background-color: white;position:relative;width:100%;height:27px;z-index:20;}
+.GRID_LABELGRP_GAP {padding:5px 5px 0px 5px;}
 .GRID_LABEL {white-space: nowrap;overflow:visible;position:relative;float:left;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
 .GRID_LABELBTN {white-space: nowrap;overflow:visible;position: relative;float:right;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
 .GRID_OBJECT {overflow:hidden;background-color: white;position: relative;width:100%;z-index:20;}
 
-.CONDITION_LABELGRP {position:relative;width:100%;height:22px;z-index:20;}
+.CONDITION_LABELGRP {overflow:hidden;position:relative;width:100%;height:22px;z-index:20;}
 .CONDITION_LABEL {white-space: nowrap;position:relative;float:left;width:60%;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
 .CONDITION_LABELBTN {white-space: nowrap;position: relative;float:left;width:40%;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
-.CONDITION_OBJECT {position: relative;background-color:rgb(247, 248, 255);padding:10px 10px 10px 10px;overflow:auto;}
+.CONDITION_OBJECT {position: relative;background-color:rgb(247, 248, 255);padding:0px 0px 0px 0px;overflow:auto;}
 
-.DETAIL_LABELGRP {position:relative;width:100%;height:22px;z-index:20;}
+.DETAIL_LABELGRP {overflow:hidden;position:relative;width:100%;height:22px;z-index:20;}
 .DETAIL_LABEL {white-space: nowrap;position:relative;float:left;width:30%;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
 .DETAIL_LABELBTN {white-space: nowrap;position: relative;float:left;width:70%;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
-.DETAIL_OBJECT {position: relative;background-color:rgb(247, 248, 255);padding:10px 10px 10px 10px;overflow:auto;}
+.DETAIL_OBJECT {position: relative;background-color:rgb(247, 248, 255);padding:0px 0px 0px 0px;overflow:auto;}
+
+.CHART_LABELGRP {overflow:hidden;position:relative;width:100%;height:22px;z-index:20;}
+.CHART_LABEL {white-space: nowrap;position:relative;float:left;width:30%;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
+.CHART_LABELBTN {white-space: nowrap;position: relative;float:left;width:70%;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
+.CHART_OBJECT {position: relative;background-color:rgb(247, 248, 255);padding:0px 0px 0px 0px;overflow:auto;}
 
 .GRP_LINE {background-color:#eeeeee;position: relative;width:100%;z-index:10;overflow:auto;}
 .GRP_OBJECT {position: relative;float:left;z-index:20;padding:0px 0px 0px 0px}
 .GRP_OBJECT_VBOX {position: relative;float:left;z-index:20;padding:0px 0px 0px 0px}
 .GRP_GAP {padding:3px 3px 3px 3px;} /*GRP 간의 여백*/
-.GRP_INNER {overflow: visible;background-color: white;border-radius:2px;padding:5px 5px 5px 5px;}
+.GRP_INNER {overflow: visible;background-color: white;border-radius:2px;padding:5px 5px 5px 5px;}/*폼뷰, 컨디션, BI뷰*/
+.GRP_INNER_GRID {overflow: visible;background-color: white;border-radius:2px;padding:0px 0px 0px 0px;}
 
 .FORMVIEW_IMGVIEWER {background-color:#e1e1e1;}
 
@@ -82,6 +89,10 @@ input[type=text]:read-only {
 	vertical-align:top;
     }
     
+/* dhtmlx */
+div.gridbox_dhx_skyblue.gridbox{
+    border: 1px solid rgb(211, 210, 210);
+}
 
 /* Chart.js */
 canvas {

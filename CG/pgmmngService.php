@@ -171,9 +171,9 @@ class pgmmngService
 		//V_GRPNM : PGM
 		array_push($GRID["SQL"]["D"], $this->DAO->sql9($REQ)); //SAVE, 저장,PGM
 		//V_GRPNM : PGM
-		array_push($GRID["SQL"]["U"], $this->DAO->sql8($REQ)); //SAVE, 저장,PGM
-		//V_GRPNM : PGM
 		array_push($GRID["SQL"]["C"], $this->DAO->sql7($REQ)); //SAVE, 저장,PGM
+		//V_GRPNM : PGM
+		array_push($GRID["SQL"]["U"], $this->DAO->sql8($REQ)); //SAVE, 저장,PGM
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");

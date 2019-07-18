@@ -102,8 +102,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:244px;">
+            <div class="GRP_INNER_GRID" style="height:223px;">
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
 	  				* PJT      
 			</div>
@@ -114,6 +115,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G3_ROWADD" value="행추가" onclick="G3_ROWADD(uuidv4());">
 <input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG3"  style="background-color:white;overflow:hidden;height:220px;width:100%;"></div>
@@ -132,8 +134,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:244px;">
+            <div class="GRP_INNER_GRID" style="height:223px;">
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
 	  				* PGM      
 			</div>
@@ -145,6 +148,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G4_RELOAD" value="새로고침" onclick="G4_RELOAD(uuidv4());">
 <input type="button" name="BTN_G4_EXCEL" value="엑셀다운로드" onclick="G4_EXCEL(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG4"  style="background-color:white;overflow:hidden;height:220px;width:100%;"></div>
@@ -163,8 +167,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:194px;">
+            <div class="GRP_INNER_GRID" style="height:173px;">
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG5_GRID_LABEL"class="GRID_LABEL" >
 	  				* DD      
 			</div>
@@ -176,6 +181,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G5_RELOAD" value="새로고침" onclick="G5_RELOAD(uuidv4());">
 <input type="button" name="BTN_G5_EXCEL" value="엑셀다운로드" onclick="G5_EXCEL(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG5"  style="background-color:white;overflow:hidden;height:170px;width:100%;"></div>
@@ -194,8 +200,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:244px;">
+            <div class="GRP_INNER_GRID" style="height:223px;">
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG6_GRID_LABEL"class="GRID_LABEL" >
 	  				* CONFIG      
 			</div>
@@ -208,6 +215,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G6_RELOAD" value="새로고침" onclick="G6_RELOAD(uuidv4());">
 <input type="button" name="BTN_G6_EXCEL" value="엑셀다운로드" onclick="G6_EXCEL(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG6"  style="background-color:white;overflow:hidden;height:220px;width:100%;"></div>
@@ -226,8 +234,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:244px;">
+            <div class="GRP_INNER_GRID" style="height:223px;">
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG7_GRID_LABEL"class="GRID_LABEL" >
 	  				* FILE      
 			</div>
@@ -240,6 +249,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G7_RELOAD" value="새로고침" onclick="G7_RELOAD(uuidv4());">
 <input type="button" name="BTN_G7_EXCEL" value="엑셀다운로드" onclick="G7_EXCEL(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 			<div id="gridG7"  style="background-color:white;overflow:hidden;height:220px;width:100%;"></div>

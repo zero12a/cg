@@ -57,7 +57,7 @@ function db_open3(){
 }
 
 function db_m_open(){
-    global $mysql_m_host, $mysql_m_userid, $mysql_m_passwd, $mysql_m_db;
+    global $mysql_m_host, $mysql_m_userid, $mysql_m_passwd, $mysql_m_db, $mysql_m_port;
 
     $db = mysqli_init(); 
     if (!$db) {
@@ -67,8 +67,15 @@ function db_m_open(){
     if (!$db->options(MYSQLI_OPT_CONNECT_TIMEOUT, 1)) {
         JsonMsg("500","997","db_m_open() Setting MYSQLI_OPT_CONNECT_TIMEOUT failed");
     }
+    if($mysql_m_port == "")$mysql_m_port = "3306";
 
-    if(!$db->real_connect($mysql_m_host,$mysql_m_userid, $mysql_m_passwd,$mysql_m_db)){
+    if(!$db->real_connect($mysql_m_host,$mysql_m_userid, $mysql_m_passwd,$mysql_m_db, $mysql_m_port)){
+
+        alog("db_m_open() MYSQL_HOST="    . $mysql_m_host);
+        alog("db_m_open() MYSQL_ID="      . $mysql_m_userid);
+        alog("db_m_open() MYSQL_DB="      . $mysql_m_db);
+        alog("db_m_open() MYSQL_PORT="    . $mysql_m_port);
+
         JsonMsg("500","998","db_m_open() ". $mysql_m_host . "db 연결 실패 : " . $db->connect_error);
     } 
 
@@ -144,7 +151,7 @@ function getDbSvrInfo($tSvrId){
             $RtnVal->MYSQL_DB =  $arr[0]["DBNAME"];
             $RtnVal->MYSQL_ID =  $arr[0]["DBUSRID"];
             $RtnVal->MYSQL_PW =  aes_decrypt($arr[0]["DBUSRPW"],$CFG_SEC_KEY); //비번 복호화             
-
+            $RtnVal->MYSQL_PORT =  ($arr[0]["DBPORT"] == "")?"3306":$arr[0]["DBPORT"];
             break;
 
         case "REAL" :
@@ -167,10 +174,15 @@ function getDbSvrInfo($tSvrId){
 
 function db_obj_open($tOBJ_SERVER){
     //echo "tOBJ_SERVER->MYSQL_DB" . $tOBJ_SERVER->MYSQL_DB;
-    $link = new mysqli($tOBJ_SERVER->MYSQL_HOST, $tOBJ_SERVER->MYSQL_ID, $tOBJ_SERVER->MYSQL_PW, $tOBJ_SERVER->MYSQL_DB)
+    $link = new mysqli($tOBJ_SERVER->MYSQL_HOST, $tOBJ_SERVER->MYSQL_ID, $tOBJ_SERVER->MYSQL_PW, $tOBJ_SERVER->MYSQL_DB, $tOBJ_SERVER->MYSQL_PORT)
     or die("<br> ". $tOBJ_SERVER->MYSQL_HOST . "db 연결 실패 : " . $link->connect_error );
 
 	if (mysqli_connect_errno()) {
+        alog("db_obj_open() MYSQL_HOST="    . $tOBJ_SERVER->MYSQL_HOST);
+        alog("db_obj_open() MYSQL_ID="      . $tOBJ_SERVER->MYSQL_ID);
+        alog("db_obj_open() MYSQL_DB="      . $tOBJ_SERVER->MYSQL_DB);
+        alog("db_obj_open() MYSQL_PORT="    . $tOBJ_SERVER->MYSQL_PORT);
+
 		JsonMsg("500","999","db_obj_open() Connect failed : " .  mysqli_connect_error());
 	    //printf("Connect failed: %s\n", mysqli_connect_error());
 	    exit();

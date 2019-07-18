@@ -43,24 +43,46 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
  	<div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:74px;">	
+            <div class="GRP_INNER" style="height:64px;">	
 		
 	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
-		<div class="DETAIL_LABELGRP">
-			<div class="DETAIL_LABEL"  style="">
+		<div class="CONDITION_LABELGRP">
+			<div class="CONDITION_LABEL"  style="">
 				<b>* 폼뷰테스트</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
-			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_G1_USERDEF" value="사용자정의" onclick="G1_USERDEF(uuidv4());">
+			<div class="CONDITION_LABELBTN">				<input type="button" name="BTN_G1_USERDEF" value="사용자정의" onclick="G1_USERDEF(uuidv4());">
 				<input type="button" name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
 				<input type="button" name="BTN_G1_SAVE" value="저장" onclick="G1_SAVE(uuidv4());">
 				<input type="button" name="BTN_G1_RESET" value="입력 초기화" onclick="G1_RESET(uuidv4());">
 			</div>
 		</div>
-		<div style="height:38px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:42px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : ADDDT-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						ADDDT
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--ADDDT오브젝트출력-->						<input type="text" name="G1-ADDDT" value="<?=getFilter(reqPostString("ADDDT",14),"SAFEECHO","")?>" id="G1-ADDDT" style="width:60px;">
+					</div>
+				</div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : MODDT-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						MODDT
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--MODDT오브젝트출력-->						<input type="text" name="G1-MODDT" value="<?=getFilter(reqPostString("MODDT",14),"SAFEECHO","")?>" id="G1-MODDT" style="width:60px;">
+					</div>
+				</div>
 			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
@@ -180,8 +202,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:494px;">
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
 	  				* 그리드      
 			</div>
@@ -193,11 +215,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G2_ROWBULKADD" value="행대량추가" onclick="G2_ROWBULKADD(uuidv4());">
 <input type="button" name="BTN_G2_ROWADD" value="행추가" onclick="G2_ROWADD(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:470px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:465px;width:100%;"></div>
 		</div>
-		</div></div>
+		</div>
 	</div>
 	<!--
 	#####################################################
@@ -211,12 +234,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:494px;">
+            <div class="GRP_INNER" style="height:484px;">
 				
-		<div sty_le="width:0px;height:0px;overflow: hidden">
-			<form id="formviewG3" name="formviewG3" method="post" enctype="multipart/form-data"  onsubmit="return false;">
-			<input type="hidden" name="G3-CTLCUD"  id="G3-CTLCUD" value="">
-		</div>	
+			<div sty_le="width:0px;height:0px;overflow: hidden">
+				<form id="formviewG3" name="formviewG3" method="post" enctype="multipart/form-data"  onsubmit="return false;">
+				<input type="hidden" name="G3-CTLCUD"  id="G3-CTLCUD" value="">
+			</div>	
 		<div class="DETAIL_LABELGRP">
 			<div class="DETAIL_LABEL"  style="">
 				* 폼뷰
@@ -224,7 +247,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			<div class="DETAIL_LABELBTN"  style="">
 				<input type="button" name="BTN_G3_USERDEF" value="사용자정의" onclick="G3_USERDEF(uuidv4());">				<input type="button" name="BTN_G3_SAVE" value="저장" onclick="G3_SAVE(uuidv4());">				<input type="button" name="BTN_G3_NEW2" value="신규" onclick="G3_NEW2(uuidv4());">			</div>
 		</div>
-		<div style="height:458px;" class="DETAIL_OBJECT">
+		<div style="height:462px;" class="DETAIL_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 			</DIV><!--is_br_tab end-->

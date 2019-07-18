@@ -1119,7 +1119,7 @@ function getInput($input,$filetype,$param,$G){
             ,addSqlSlashes($F_PGMSEQ)
             ,$G["V"]["GRPSEQ"]
         );
-        //mlog("SQL (input " . $input . ") : " .$T_SQL);
+        alog("SQL (input 1122 " . $input . ") : " .$T_SQL);
 
         //echo "<br>getInput $input :  ". $T_SQL;
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
