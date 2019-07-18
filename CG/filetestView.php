@@ -240,14 +240,14 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<form id="formviewG3" name="formviewG3" method="post" enctype="multipart/form-data"  onsubmit="return false;">
 				<input type="hidden" name="G3-CTLCUD"  id="G3-CTLCUD" value="">
 			</div>	
-		<div class="DETAIL_LABELGRP">
-			<div class="DETAIL_LABEL"  style="">
+		<div class="FORMVIEW_LABELGRP">
+			<div class="FORMVIEW_LABEL"  style="">
 				* 폼뷰
 			</div>
-			<div class="DETAIL_LABELBTN"  style="">
+			<div class="FORMVIEW_LABELBTN"  style="">
 				<input type="button" name="BTN_G3_USERDEF" value="사용자정의" onclick="G3_USERDEF(uuidv4());">				<input type="button" name="BTN_G3_SAVE" value="저장" onclick="G3_SAVE(uuidv4());">				<input type="button" name="BTN_G3_NEW2" value="신규" onclick="G3_NEW2(uuidv4());">			</div>
 		</div>
-		<div style="height:462px;" class="DETAIL_OBJECT">
+		<div style="height:462px;" class="FORMVIEW_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 			</DIV><!--is_br_tab end-->
