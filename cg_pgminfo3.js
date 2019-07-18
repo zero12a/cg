@@ -1329,7 +1329,6 @@
 		tgrid = mygridGrp;
 
         tgrid.setSerializationLevel(true,false,false,false,true,false);
-        //mygridIo.serialize();
         var myXmlString = tgrid.serialize();
 
         //컨디션 데이터 모두 말기
@@ -1383,7 +1382,6 @@
         //serialize cell values as CDATA sections
 
         mygridSql.setSerializationLevel(true,false,false,false,true,true);
-        //mygridIo.serialize();
         var myXmlString = mygridSql.serialize();
 
         var xml = myXmlString;
@@ -1436,7 +1434,6 @@
         //serialize cell values as CDATA sections
 
         mygridCol.setSerializationLevel(true,false,false,false,true,false);
-        //mygridIo.serialize();
         var myXmlString = mygridCol.serialize();
 
 
