@@ -44,7 +44,8 @@ function initBody(){
 		G2_INIT();	
 		G3_INIT();	
 		G4_INIT();	
-		alog("initBody()-----------------------end");
+	      feather.replace();
+	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
 	//팝업창 오픈요청
@@ -98,6 +99,8 @@ function G2_INIT(){
 		//mygridG2.setColValidators("G2_GRP_SEQ,G2_GRP_NM,G2_USE_YN,G2_ADD_DT,G2_ADD_ID");
 		mygridG2.splitAt(0);//'freezes' 0 columns 
 		mygridG2.init();
+
+		mygridG2.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG2.enableBlockSelection(true);
 		mygridG2.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -240,6 +243,8 @@ function G3_INIT(){
 		//mygridG3.setColValidators("G3_CHK,G3_GA_SEQ,G3_GRP_SEQ,G3_PGMID,G3_MNU_NM,G3_AUTH_ID,G3_AUTH_NM,G3_ADD_DT,G3_ADD_ID");
 		mygridG3.splitAt(0);//'freezes' 0 columns 
 		mygridG3.init();
+
+		mygridG3.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG3.enableBlockSelection(true);
 		mygridG3.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -382,6 +387,8 @@ function G4_INIT(){
 		//mygridG4.setColValidators("G4_CHK,G4_AUTH_SEQ,G4_PGMID,G4_MNU_NM,G4_AUTH_ID,G4_AUTH_NM,G4_USE_YN,G4_ADD_DT,G4_MOD_DT");
 		mygridG4.splitAt(0);//'freezes' 0 columns 
 		mygridG4.init();
+
+		mygridG4.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG4.enableBlockSelection(true);
 		mygridG4.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -503,11 +510,6 @@ function G4_INIT(){
         alog("G4_INIT()-------------------------end");
      }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -517,9 +519,14 @@ function G1_SEARCHALL(token){
 	alog("ConAllData:" + ConAllData);
 	//json : G1
 			lastinputG2 = new HashMap(); //그룹목록
-	//  호출
+		//  호출
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
 }
 //조회조건, 저장	
 function G1_SAVE(){
@@ -553,6 +560,14 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
+    function G2_HIDDENCOL(){
+		alog("G2_HIDDENCOL()..................start");
+        if(isToggleHiddenColG2){
+            isToggleHiddenColG2 = false;     }else{
+            isToggleHiddenColG2 = true;
+        }
+		alog("G2_HIDDENCOL()..................end");
+    }
 
 
 
@@ -604,6 +619,8 @@ function G1_SAVE(){
 
 						},"json");
 						
+					}else{
+						$("#spanG2Cnt").text("-");
 					}
 					msgNotice("[그룹목록] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -619,65 +636,10 @@ function G1_SAVE(){
         alog("G2_SEARCH()------------end");
     }
 
-    function G2_HIDDENCOL(){
-		alog("G2_HIDDENCOL()..................start");
-        if(isToggleHiddenColG2){
-            isToggleHiddenColG2 = false;     }else{
-            isToggleHiddenColG2 = true;
-        }
-		alog("G2_HIDDENCOL()..................end");
-    }
 //새로고침	
 function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
-}
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
-}
-function G3_CHKSAVE(){
-	alog("G3_CHKSAVE()------------start");
-	tgrid = mygridG3;
-
-	//체크된 ROW의 ID 배열로 불러오기
-	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
-	//alert(arrRows.length);
-
-        //전송용 post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-		for(var pair of lastinputG3.entries()) {
-			sendFormData.append(pair[0],pair[1]);
-   			//console.log(pair[0]+ ', '+ pair[1]); 
-		}	//CHK 배열 합치기
-	sendFormData.append("G3-CHK",arrRows);
-	$.ajax({
-		type : "POST",
-		url : url_G3_CHKSAVE + "&" + lastinputG3 ,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G3_CHKSAVE()------------end");
 }
 
 
@@ -730,6 +692,8 @@ function G3_CHKSAVE(){
 
 						},"json");
 						
+					}else{
+						$("#spanG3Cnt").text("-");
 					}
 					msgNotice("[보유 권한] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -745,6 +709,11 @@ function G3_CHKSAVE(){
         alog("G3_SEARCH()------------end");
     }
 
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
     function G3_HIDDENCOL(){
 		alog("G3_HIDDENCOL()..................start");
         if(isToggleHiddenColG3){
@@ -753,14 +722,9 @@ function G3_CHKSAVE(){
         }
 		alog("G3_HIDDENCOL()..................end");
     }
-//새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
-}
-function G4_CHKSAVE(){
-	alog("G4_CHKSAVE()------------start");
-	tgrid = mygridG4;
+function G3_CHKSAVE(){
+	alog("G3_CHKSAVE()------------start");
+	tgrid = mygridG3;
 
 	//체크된 ROW의 ID 배열로 불러오기
 	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
@@ -768,14 +732,19 @@ function G4_CHKSAVE(){
 
         //전송용 post 만들기
 		sendFormData = new FormData($("#condition")[0]);
-		for(var pair of lastinputG4.entries()) {
-			sendFormData.append(pair[0],pair[1]);
-   			//console.log(pair[0]+ ', '+ pair[1]); 
-		}	//CHK 배열 합치기
-	sendFormData.append("G4-CHK",arrRows);
+
+		if(typeof lastinputG3 != "undefined"){
+			var tKeys = lastinputG3.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
+			}
+		}
+	//CHK 배열 합치기
+	sendFormData.append("G3-CHK",arrRows);
 	$.ajax({
 		type : "POST",
-		url : url_G4_CHKSAVE + "&" + lastinputG4 ,
+		url : url_G3_CHKSAVE + "&" + lastinputG3 ,
 		data : sendFormData,
 		processData: false,
 		contentType: false,
@@ -798,8 +767,21 @@ function G4_CHKSAVE(){
 		}
 	});
 	
-	alog("G4_CHKSAVE()------------end");
+	alog("G3_CHKSAVE()------------end");
 }
+//새로고침	
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
+}
+    function G4_HIDDENCOL(){
+		alog("G4_HIDDENCOL()..................start");
+        if(isToggleHiddenColG4){
+            isToggleHiddenColG4 = false;     }else{
+            isToggleHiddenColG4 = true;
+        }
+		alog("G4_HIDDENCOL()..................end");
+    }
 
 
 
@@ -851,6 +833,8 @@ function G4_CHKSAVE(){
 
 						},"json");
 						
+					}else{
+						$("#spanG4Cnt").text("-");
 					}
 					msgNotice("[미보유 권한] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -866,11 +850,50 @@ function G4_CHKSAVE(){
         alog("G4_SEARCH()------------end");
     }
 
-    function G4_HIDDENCOL(){
-		alog("G4_HIDDENCOL()..................start");
-        if(isToggleHiddenColG4){
-            isToggleHiddenColG4 = false;     }else{
-            isToggleHiddenColG4 = true;
-        }
-		alog("G4_HIDDENCOL()..................end");
-    }
+function G4_CHKSAVE(){
+	alog("G4_CHKSAVE()------------start");
+	tgrid = mygridG4;
+
+	//체크된 ROW의 ID 배열로 불러오기
+	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
+	//alert(arrRows.length);
+
+        //전송용 post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+
+		if(typeof lastinputG4 != "undefined"){
+			var tKeys = lastinputG4.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG4.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG4.get(tKeys[i])); 
+			}
+		}
+	//CHK 배열 합치기
+	sendFormData.append("G4-CHK",arrRows);
+	$.ajax({
+		type : "POST",
+		url : url_G4_CHKSAVE + "&" + lastinputG4 ,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G4_CHKSAVE()------------end");
+}

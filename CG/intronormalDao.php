@@ -12,25 +12,6 @@ class intronormalDao
 	function __toString(){
 		alog("IntronormalDao-__toString");
 	}
-	//login    
-	public function sLoginG($req){
-		//조회
-		$RtnVal = null;
-		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "DATING";
-		$RtnVal["SQLID"] = "sLoginG";
-		$RtnVal["SQLTXT"] = "SELECT
-	LOGIN_SEQ, USR_ID, SESSION_ID, SUCCESS_YN, RESPONSE_MSG
-	, PW_ERR_CNT, LOCKCD, USR_SEQ, SERVER_NAME, REMOTE_ADDR
-	, USER_AGENT, ADD_DT
-FROM CMN_LOG_LOGIN
-WHERE USR_ID = #{USER.ID}
-ORDER BY LOGIN_SEQ DESC";
-		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
-		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "s";
-		return $RtnVal;
-    }  
 	//lock    
 	public function sLockG($req){
 		//조회
@@ -44,6 +25,25 @@ ORDER BY LOGIN_SEQ DESC";
 FROM CMN_LOG_LOGIN
 WHERE LOCKCD IN ('GOLOCK','UNLOCK')
 	AND USR_ID = #{USER.ID}
+ORDER BY LOGIN_SEQ DESC";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "s";
+		return $RtnVal;
+    }  
+	//login    
+	public function sLoginG($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLID"] = "sLoginG";
+		$RtnVal["SQLTXT"] = "SELECT
+	LOGIN_SEQ, USR_ID, SESSION_ID, SUCCESS_YN, RESPONSE_MSG
+	, PW_ERR_CNT, LOCKCD, USR_SEQ, SERVER_NAME, REMOTE_ADDR
+	, USER_AGENT, ADD_DT
+FROM CMN_LOG_LOGIN
+WHERE USR_ID = #{USER.ID}
 ORDER BY LOGIN_SEQ DESC";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);

@@ -34,22 +34,28 @@ include_once('../include/incRequest.php');//CG REQUEST
 </head>
 <body onload="initBody();">
 
-<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
-	<!--G.GRPID : G1-->
-	<div class="GRP_OBJECT" style="width:100%;height:70px;border-radius:3px;-moz-border-radius: 3px;">
-	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
-			<div class="DETAIL_LABELGRP">
-			<div class="DETAIL_LABEL"  style="">
+<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--
+	#####################################################
+	## 컨디션 2 - START G.GRPID : G1-
+	#####################################################
+	-->
+ 	<div class="GRP_OBJECT" style="width:100%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:54px;">	
+		
+	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
+		<div class="CONDITION_LABELGRP">
+			<div class="CONDITION_LABEL"  style="">
 				<b>* 파일 분석</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
-			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
+			<div class="CONDITION_LABELBTN">				<input type="button" name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
 				<input type="button" name="BTN_G1_SAVE" value="저장" onclick="G1_SAVE(uuidv4());">
 				<input type="button" name="BTN_G1_RESET" value="입력 초기화" onclick="G1_RESET(uuidv4());">
 			</div>
 		</div>
-		<div style="height:28px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:32px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 			<!--D101: STARTTXT, TAG-->
@@ -88,15 +94,17 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+		</div></div>
 	</div>
 	<!--
 	#####################################################
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:650px;">
-
+    <div class="GRP_OBJECT" style="width:50%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
 	  				* 3      
 			</div>
@@ -111,9 +119,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
 <input type="button" name="BTN_G2_CHKSAVE" value="선택삭제" onclick="G2_CHKSAVE(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:628px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:615px;width:100%;"></div>
+		</div>
 		</div>
 	</div>
 	<!--
@@ -126,9 +136,10 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:650px;">
-
+    <div class="GRP_OBJECT" style="width:50%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
 	  				* 4      
 			</div>
@@ -143,9 +154,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G3_EXCEL" value="엑셀다운로드" onclick="G3_EXCEL(uuidv4());">
 <input type="button" name="BTN_G3_CHKSAVE" value="선택저장" onclick="G3_CHKSAVE(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:628px;width:100%;"></div>
+			<div id="gridG3"  style="background-color:white;overflow:hidden;height:615px;width:100%;"></div>
+		</div>
 		</div>
 	</div>
 	<!--

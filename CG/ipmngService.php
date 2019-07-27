@@ -68,22 +68,23 @@ class ipmngService
 		alog("IPMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, IP_SEQ
 
 		//조회
 		//V_GRPNM : IP목록
-		$GRID["SQL"]["R"] = $this->DAO->selIpG($REQ); //SEARCH, 조회,IP
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -102,6 +103,9 @@ class ipmngService
 
 		alog("IPMNGService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
+		$GRID["SQL"]["C"] = array();
+		$GRID["SQL"]["U"] = array();
+		$GRID["SQL"]["D"] = array();
 		$grpId="G2";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
 		$GRID["COLORD"] = "IP_SEQ,PGMTYPE,IP,IP_DESC,ADD_DT,ADD_ID,MOD_DT,MOD_ID"; //그리드 컬럼순서(Hidden컬럼포함)
@@ -110,17 +114,20 @@ class ipmngService
 		$GRID["KEYCOLID"] = "IP_SEQ";  //KEY컬럼 COLID, 0
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
-		$GRID["SQL"]["C"] = $this->DAO->insIpG($REQ); // SAVE, 저장, IP
-		$GRID["SQL"]["U"] = $this->DAO->updIpG($REQ); // SAVE, 저장, IP
-		$GRID["SQL"]["D"] = $this->DAO->delIpG($REQ); // SAVE, 저장, IP
-		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		//V_GRPNM : IP목록
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		//V_GRPNM : IP목록
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		//V_GRPNM : IP목록
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;

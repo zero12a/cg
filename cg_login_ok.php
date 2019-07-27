@@ -1,6 +1,9 @@
 <?php
-
 header("Content-Type: text/html; charset=UTF-8");
+header("Cache-Control:no-cache");
+header("Pragma:no-cache");
+
+
 if(!include_once './include/incUtil.php')		echo "include fail(3)";
 require_once("./incConfig.php");
 require_once("./include/incUser.php");

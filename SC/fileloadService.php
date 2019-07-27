@@ -68,22 +68,23 @@ class fileloadService
 		alog("fileLoadService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 2; // KEY 컬럼, LOAD_SEQ
 
 		//조회
 		//V_GRPNM : 3
-		$GRID["SQL"]["R"] = $this->DAO->sLoad($REQ); //SEARCH, 조회,LOAD
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -102,6 +103,9 @@ class fileloadService
 
 		alog("fileLoadService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
+		$GRID["SQL"]["C"] = array();
+		$GRID["SQL"]["U"] = array();
+		$GRID["SQL"]["D"] = array();
 		$grpId="G2";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
 		$GRID["COLORD"] = "CHK,CAL,LOAD_SEQ,FILE_NM,TEAM_NM,TEAM_NM_LEN,SYS_NM,SYS_NM_LEN,SUBSYS_NM,SUBSYS_NM_LEN,FILE_HASH,XML_VERSION,XML_TIMESTAMP,XML_ANAL_TIMESTAMP,XML_DT,XML_ANAL_DT,BUG_CNT,LOAD_END_DT,ADD_DT,MOD_DT"; //그리드 컬럼순서(Hidden컬럼포함)
@@ -110,15 +114,16 @@ class fileloadService
 		$GRID["KEYCOLID"] = "LOAD_SEQ";  //KEY컬럼 COLID, 2
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
-		$GRID["SQL"]["U"] = $this->DAO->uLoad($REQ); // SAVE, 저장, LOAD
-		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		//V_GRPNM : 3
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;
@@ -157,12 +162,13 @@ class fileloadService
 
 		alog("fileLoadService-goG2Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
+		$GRID["SQL"] = array();
 		$grpId="G2";
 		$GRID["CHK"]=$REQ[$grpId."-CHK"];
 		$GRID["KEYCOLID"] = "LOAD_SEQ";  //KEY컬럼 COLID, 2
 		//선택삭제	
-		$GRID["SQL"] = $this->DAO->dLoad($REQ); // CHKSAVE, 선택삭제, LOAD
-			$tmpVal = makeGridChkJson($GRID,$this->DB);
+		array_push($GRID["SQL"], $this->DAO->($REQ)); // CHKSAVE, 선택삭제, 
+		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;
@@ -185,22 +191,23 @@ class fileloadService
 		alog("fileLoadService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, LOADD_SEQ
 
 		//조회
 		//V_GRPNM : 4
-		$GRID["SQL"]["R"] = $this->DAO->sLoadD($REQ); //SEARCH, 조회,LOADD
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴

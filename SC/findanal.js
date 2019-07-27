@@ -1,11 +1,10 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
 var url_G1_SEARCHALL = "findanalController?CTLGRP=G1&CTLFNC=SEARCHALL";// 변수 선언	
-var obj_G1_EX_TEAM_NM_valid = jQuery.parseJSON( '{ "G1_EX_TEAM_NM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":100,  "DATATYPE":"STRING"} }' );  //그래프 제외 팀명  밸리데이션
 var obj_G1_EX_TEAM_NM; // 그래프 제외 팀명 변수선언//컨트롤러 경로
 var url_G2_SEARCH = "findanalController?CTLGRP=G2&CTLFNC=SEARCH";
 			//G.GRPID 챠트 데이터
-		var chartG2Data = { labels : [], datasets: [] };
+		var chartG2Data = { colids : [], labels : [], datasets: [] };
 //그리드 변수 초기화	
 //컨트롤러 경로
 var url_G3_SEARCH = "findanalController?CTLGRP=G3&CTLFNC=SEARCH";
@@ -42,7 +41,8 @@ function initBody(){
 		G3_INIT();	
 		G4_INIT();	
 		G5_INIT();	
-		alog("initBody()-----------------------end");
+	      feather.replace();
+	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
 	//팝업창 오픈요청
@@ -82,23 +82,23 @@ function G2_INIT(){
 		//챠트 팀별 현황 (보안취약점 갯수) 초기화
 	var ctx = $('#canvasG2')[0].getContext('2d');
 	window.myBarG2 = new Chart(ctx, {
-		type: 'bar', //일단 선언해 줘야 함                
-		data: chartG2Data,                
-		options: {
+		type: 'bar' //일단 선언해 줘야 함                
+		,data: chartG2Data            
+		,options: {
 			layout: {
 					padding: {
 						left: 0,
 						right: 0,
-						top: 10,
+						top: 15,
 						bottom: 0
 					}
-			},
-			responsive: true,
-			maintainAspectRatio: false,  				
-			legend: {
+			}
+			,responsive: true
+			,maintainAspectRatio: false	
+			,legend: {
 				position: 'right',
-			},
-			scales:{
+			}
+			,scales:{
 				yAxes:[
 					{type:'linear', display:true, position:'left', id:'y-left'}
 					,{type:'linear', display:true, position:'right', id:'y-right',gridLines:{ drawOnChartArea:false}}
@@ -122,9 +122,6 @@ function G2_INIT(){
 		//alert(firstColLabel);                
 		dataElement = chartG2Data.datasets[element._datasetIndex].data[element._index];
 		//alert(dataElement);
-
-		lastG2input = colid + "=" + firstColLabel;
-		//G1_SEARCH(lastinput,uuidv4());
 	});
 }
 	//팀별 현황 (보안취약점 갯수) 그리드 초기화
@@ -149,6 +146,8 @@ function G3_INIT(){
 		//mygridG3.setColValidators("G3_UUID_SEQ,G3_TEAM_NM,G3_PRIORITY_1,G3_PRIORITY_2,G3_PRIORITY_3,G3_VUL_CNT");
 		mygridG3.splitAt(0);//'freezes' 0 columns 
 		mygridG3.init();
+
+		mygridG3.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_1")); // 위험 상
 		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_2")); // 위험 중
 		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_3")); // 위험 하
@@ -239,9 +238,9 @@ function G3_INIT(){
 			lastinputG4json = jQuery.parseJSON('{ "__NAME":"lastinputG4json"' +
 				', "G3-TEAM_NM" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("TEAM_NM")).getValue()) + '"' +
 			'}');
-		lastinputG4 = new FormData(); // 시스템별 현황
-		lastinputG4.append("G3-TEAM_NM", mygridG3.cells(rowID,mygridG3.getColIndexById("TEAM_NM")).getValue().replace(/&amp;/g, "&")); // 
-		G4_SEARCH(lastinputG4,uuidv4()); //자식그룹 호출 : 시스템별 현황
+		lastinputG4 = new HashMap(); // 시스템별 현황
+		lastinputG4.set("G3-TEAM_NM", mygridG3.cells(rowID,mygridG3.getColIndexById("TEAM_NM")).getValue().replace(/&amp;/g, "&")); // 
+			G4_SEARCH(lastinputG4,uuidv4()); //자식그룹 호출 : 시스템별 현황
 		});
 		mygridG3.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
 
@@ -292,6 +291,8 @@ function G4_INIT(){
 		//mygridG4.setColValidators("G4_UUID_SEQ,G4_TEAM_NM,G4_SYS_NM,G4_SUBSYS_NM,G4_VUL_CNT");
 		mygridG4.splitAt(0);//'freezes' 0 columns 
 		mygridG4.init();
+
+		mygridG4.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG4.enableBlockSelection(true);
 		mygridG4.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -374,15 +375,15 @@ function G4_INIT(){
 			//'}');
 		//A124
 			lastinputG5json = jQuery.parseJSON('{ "__NAME":"lastinputG5json"' +
-				', "G4-SUBSYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue()) + '"' +
-			', "G4-SYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue()) + '"' +
+				', "G4-SYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue()) + '"' +
+			', "G4-SUBSYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue()) + '"' +
 			', "G4-TEAM_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("TEAM_NM")).getValue()) + '"' +
 			'}');
-		lastinputG5 = new FormData(); // 취약점별 현황
-		lastinputG5.append("G4-SUBSYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue().replace(/&amp;/g, "&")); // 
-		lastinputG5.append("G4-SYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue().replace(/&amp;/g, "&")); // 
-		lastinputG5.append("G4-TEAM_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("TEAM_NM")).getValue().replace(/&amp;/g, "&")); // 
-		G5_SEARCH(lastinputG5,uuidv4()); //자식그룹 호출 : 취약점별 현황
+		lastinputG5 = new HashMap(); // 취약점별 현황
+		lastinputG5.set("G4-SYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue().replace(/&amp;/g, "&")); // 
+		lastinputG5.set("G4-SUBSYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue().replace(/&amp;/g, "&")); // 
+		lastinputG5.set("G4-TEAM_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("TEAM_NM")).getValue().replace(/&amp;/g, "&")); // 
+			G5_SEARCH(lastinputG5,uuidv4()); //자식그룹 호출 : 취약점별 현황
 		});
 		mygridG4.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
 
@@ -434,6 +435,8 @@ function G5_INIT(){
 		//mygridG5.setColValidators("G5_UUID_SEQ,G5_TEAM_NM,G5_SYS_NM,G5_SUBSYS_NM,G5_RULESET,G5_VUL_CNT");
 		mygridG5.splitAt(0);//'freezes' 0 columns 
 		mygridG5.init();
+
+		mygridG5.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG5.enableBlockSelection(true);
 		mygridG5.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -556,12 +559,10 @@ function G1_SEARCHALL(token){
 	//폼의 모든값 구하기
 	var ConAllData = $( "#condition" ).serialize();
 	alog("ConAllData:" + ConAllData);
-	lastinputG2 = new FormData(); //팀별 현황 (보안취약점 갯수)
-	lastinputG3 = new FormData(); //팀별 현황 (보안취약점 갯수)
 	//json : G1
-            lastinputG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +'}');
-            lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +'}');
-	//  호출
+			lastinputG2 = new HashMap(); //팀별 현황 (보안취약점 갯수)
+				lastinputG3 = new HashMap(); //팀별 현황 (보안취약점 갯수)
+		//  호출
 	G2_SEARCH(lastinputG2,token);
 	//  호출
 	G3_SEARCH(lastinputG3,token);
@@ -573,15 +574,19 @@ function G1_SEARCHALL(token){
 
         //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
-		for(var pair of tinput.entries()) {
-			sendFormData.append(pair[0],pair[1]);
-   			//console.log(pair[0]+ ', '+ pair[1]); 
+		if(typeof tinput != "undefined"){
+			var tKeys = tinput.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+			}
 		}
+
 
         //불러오기
         $.ajax({
             type : "POST",
-            url : url_G2_SEARCH+"&TOKEN=" + token + " &G2_CRUD_MODE=read" ,
+            url : url_G2_SEARCH+"&TOKEN=" + token  ,
             data : sendFormData,
 			processData: false,
 			contentType: false,
@@ -616,7 +621,12 @@ function G1_SEARCHALL(token){
                 newLabels.push(resData.RTN_DATA.rows[i].data[nowCol]);
             }
             chartG2Data.labels = newLabels;
-														             //두번째 컬럼부터 
+														 				//컬럼ID목록 저장해 두기
+				newColids = [];
+				newColids.push("TYPE_CNT"); // 유형수
+				newColids.push("VUL_CNT"); // 취약점갯수
+				chartG2Data.colids = newColids; // 팀별 현황 (보안취약점 갯수)
+            //두번째 컬럼부터 
             nowCol++;
             var dsColor = window.chartColors[colorNames[nowCol-1]];                 
             var newDataset = {
@@ -633,7 +643,6 @@ function G1_SEARCHALL(token){
                 newDataset.data.push(resData.RTN_DATA.rows[i].data[nowCol]);
             }      
             chartG2Data.datasets.push(newDataset);
-														 
             //두번째 컬럼부터 
             nowCol++;
             var dsColor = window.chartColors[colorNames[nowCol-1]];                 
@@ -651,7 +660,6 @@ function G1_SEARCHALL(token){
                 newDataset.data.push(resData.RTN_DATA.rows[i].data[nowCol]);
             }      
             chartG2Data.datasets.push(newDataset);
-														 
 			window.myBarG2.update();     //업데이트
 						
 					}
@@ -687,9 +695,10 @@ function G1_SEARCHALL(token){
         tGrid.clearAll();        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
-			for(var pair of tinput.entries()) {
-				sendFormData.append(pair[0],pair[1]);
-				//console.log(pair[0]+ ', '+ pair[1]); 
+			var tKeys = tinput.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
 			}
 		}
 
@@ -719,6 +728,8 @@ function G1_SEARCHALL(token){
 
 						},"json");
 						
+					}else{
+						$("#spanG3Cnt").text("-");
 					}
 					msgNotice("[팀별 현황 (보안취약점 갯수)] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -762,9 +773,10 @@ function G4_RELOAD(token){
         tGrid.clearAll();        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
-			for(var pair of tinput.entries()) {
-				sendFormData.append(pair[0],pair[1]);
-				//console.log(pair[0]+ ', '+ pair[1]); 
+			var tKeys = tinput.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
 			}
 		}
 
@@ -794,6 +806,8 @@ function G4_RELOAD(token){
 
 						},"json");
 						
+					}else{
+						$("#spanG4Cnt").text("-");
 					}
 					msgNotice("[시스템별 현황] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -821,27 +835,6 @@ function G4_RELOAD(token){
         }
 		alog("G4_VIEWHIDDEN()..................end");
     }
-//새로고침	
-function G5_RELOAD(token){
-  alog("G5_RELOAD-----------------start");
-  G5_SEARCH(lastinputG5,token);
-}
-    function G5_HIDDENCOL(){
-		alog("G5_HIDDENCOL()..................start");
-        if(isToggleHiddenColG5){
-            isToggleHiddenColG5 = false;            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),true); //TEAM_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),true); //SYS_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),true); //SUBSYS_NM
-     }else{
-            isToggleHiddenColG5 = true;
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),false); //TEAM_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),false); //SYS_NM
-            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),false); //SUBSYS_NM
-        }
-		alog("G5_HIDDENCOL()..................end");
-    }
 
 
 
@@ -860,9 +853,10 @@ function G5_RELOAD(token){
         tGrid.clearAll();        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
-			for(var pair of tinput.entries()) {
-				sendFormData.append(pair[0],pair[1]);
-				//console.log(pair[0]+ ', '+ pair[1]); 
+			var tKeys = tinput.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
 			}
 		}
 
@@ -892,6 +886,8 @@ function G5_RELOAD(token){
 
 						},"json");
 						
+					}else{
+						$("#spanG5Cnt").text("-");
 					}
 					msgNotice("[취약점별 현황] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -907,3 +903,24 @@ function G5_RELOAD(token){
         alog("G5_SEARCH()------------end");
     }
 
+    function G5_HIDDENCOL(){
+		alog("G5_HIDDENCOL()..................start");
+        if(isToggleHiddenColG5){
+            isToggleHiddenColG5 = false;            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),true); //TEAM_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),true); //SYS_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),true); //SUBSYS_NM
+     }else{
+            isToggleHiddenColG5 = true;
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("TEAM_NM"),false); //TEAM_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SYS_NM"),false); //SYS_NM
+            mygridG5.setColumnHidden(mygridG5.getColIndexById("SUBSYS_NM"),false); //SUBSYS_NM
+        }
+		alog("G5_HIDDENCOL()..................end");
+    }
+//새로고침	
+function G5_RELOAD(token){
+  alog("G5_RELOAD-----------------start");
+  G5_SEARCH(lastinputG5,token);
+}

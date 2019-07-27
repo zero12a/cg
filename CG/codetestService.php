@@ -224,7 +224,23 @@ class codetestService
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array();	
-			//CTLCUD 명령어에 따른 분개 처리
+			//파일저장
+		alog("G3-TFILE-NM = " . $REQ["G3-TFILE-NM"]);
+		if(strlen($REQ["G3-TFILE-NM"]) > 4  && isAllowExtension($REQ["G3-TFILE-NM"],$t_allow_extension=array("jpg", "gif", "png","peng","bmp","svg","xls","xlsx","doc","docx","ppt","pptx","pdf","hwp","txt"))){
+			
+			$REQ["G3-TFILE-SVRNM"] = getFileSvrNm($REQ["G3-TFILE-NM"], $t_prefix="PIC_");
+			$MYFILE1 = $CFG_UPLOAD_DIR . $REQ["G3-TFILE-SVRNM"];
+			alog("###### MYFILE1 : " . $MYFILE1 );
+
+			if(!move_uploaded_file($REQ["G3-TFILE-TMPNM"], $MYFILE1)){
+				//처리 결과 리턴
+				$rtnVal->RTN_CD = "500";
+				$rtnVal->ERR_CD = "591";
+				echo json_encode($rtnVal);
+				return;
+			}
+		}
+		//CTLCUD 명령어에 따른 분개 처리
 		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
 
 			$FORMVIEW["SQL"] = array();
@@ -357,7 +373,23 @@ class codetestService
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array();	
-			//CTLCUD 명령어에 따른 분개 처리
+			//파일저장
+		alog("G4-TFILE-NM = " . $REQ["G4-TFILE-NM"]);
+		if(strlen($REQ["G4-TFILE-NM"]) > 4  && isAllowExtension($REQ["G4-TFILE-NM"],$t_allow_extension=array("jpg", "gif", "png","peng","bmp","svg","xls","xlsx","doc","docx","ppt","pptx","pdf","hwp","txt"))){
+			
+			$REQ["G4-TFILE-SVRNM"] = getFileSvrNm($REQ["G4-TFILE-NM"], $t_prefix="PIC_");
+			$MYFILE1 = $CFG_UPLOAD_DIR . $REQ["G4-TFILE-SVRNM"];
+			alog("###### MYFILE1 : " . $MYFILE1 );
+
+			if(!move_uploaded_file($REQ["G4-TFILE-TMPNM"], $MYFILE1)){
+				//처리 결과 리턴
+				$rtnVal->RTN_CD = "500";
+				$rtnVal->ERR_CD = "591";
+				echo json_encode($rtnVal);
+				return;
+			}
+		}
+		//CTLCUD 명령어에 따른 분개 처리
 		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
 
 			$FORMVIEW["SQL"] = array();

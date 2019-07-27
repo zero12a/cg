@@ -68,22 +68,23 @@ class menumngService
 		alog("MENUMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, FOLDER_SEQ
 
 		//조회
 		//V_GRPNM : 폴더
-		$GRID["SQL"]["R"] = $this->DAO->selFoldG($REQ); //SEARCH, 조회,selFoldG
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -148,22 +149,23 @@ class menumngService
 		alog("MENUMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, MNU_SEQ
 
 		//조회
 		//V_GRPNM : 메뉴
-		$GRID["SQL"]["R"] = $this->DAO->selMenuG($REQ); //SEARCH, 조회,selMenuG
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -182,6 +184,9 @@ class menumngService
 
 		alog("MENUMNGService-goG3Save________________________start");
 		//GRID_SAVE____________________________start
+		$GRID["SQL"]["C"] = array();
+		$GRID["SQL"]["U"] = array();
+		$GRID["SQL"]["D"] = array();
 		$grpId="G3";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
 		$GRID["COLORD"] = "CHK,MNU_SEQ,PGMID,MNU_NM,URL,PGMTYPE,MNU_ORD,FOLDER_SEQ,USE_YN,ADD_DT,ADD_ID,MOD_ID,MOD_DT"; //그리드 컬럼순서(Hidden컬럼포함)
@@ -190,16 +195,18 @@ class menumngService
 		$GRID["KEYCOLID"] = "MNU_SEQ";  //KEY컬럼 COLID, 1
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//S
-		$GRID["SQL"]["C"] = $this->DAO->insMenuG($REQ); // SAVE, S, insMenuG
-		$GRID["SQL"]["U"] = $this->DAO->updMenuG($REQ); // SAVE, S, updMenuG
-		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		//V_GRPNM : 메뉴
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
+		//V_GRPNM : 메뉴
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
+		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;
@@ -238,12 +245,13 @@ class menumngService
 
 		alog("MENUMNGService-goG3Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
+		$GRID["SQL"] = array();
 		$grpId="G3";
 		$GRID["CHK"]=$REQ[$grpId."-CHK"];
 		$GRID["KEYCOLID"] = "MNU_SEQ";  //KEY컬럼 COLID, 1
 		//선택 삭제	
-		$GRID["SQL"] = $this->DAO->delMenuG($REQ); // CHKSAVE, 선택 삭제, delMenuG
-			$tmpVal = makeGridChkJson($GRID,$this->DB);
+		array_push($GRID["SQL"], $this->DAO->($REQ)); // CHKSAVE, 선택 삭제, 
+		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;

@@ -68,22 +68,23 @@ class sqlsearchService
 		alog("SQLSEARCHService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PGMSEQ
 
 		//조회
 		//V_GRPNM : 프로그램
-		$GRID["SQL"]["R"] = $this->DAO->sPgmG($REQ); //SEARCH, 조회,pgm
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -118,22 +119,23 @@ class sqlsearchService
 		alog("SQLSEARCHService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 2; // KEY 컬럼, SQLSEQ
 
 		//조회
 		//V_GRPNM : SQL
-		$GRID["SQL"]["R"] = $this->DAO->sSqlG($REQ); //SEARCH, 조회,sql
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -167,20 +169,22 @@ class sqlsearchService
 
 		alog("SQLSEARCHService-goG4Search________________________start");
 //FORMVIEW SEARCH
+		$grpId="G4";
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array();
-// SQL LOOP
-		// sql
-		$FORMVIEW["SQL"]["R"] = $this->DAO->sSqlF($REQ); 
+		$FORMVIEW["SQL"] = array();
+	// SQL LOOP
+		// 
+		array_push($FORMVIEW["SQL"], $this->DAO->($REQ)); 
 		//필수 여부 검사
-		$tmpVal = requireFormviewSearch($FORMVIEW["SQL"]);
+		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeFormviewSearchJson($FORMVIEW,$this->DB);
+		$rtnVal = makeFormviewSearchJsonArray($FORMVIEW,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";

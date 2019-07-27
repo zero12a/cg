@@ -64,6 +64,11 @@ $REQ["G4-CTLCUD"] = reqPostString("G4-CTLCUD",2);
 //FILE먼저 : G2, 마스터
 //FILE먼저 : G3, 상세
 //FILE먼저 : G4, 상세폼
+$REQ["G4-TFILE-NM"] = $_FILES["G4-TFILE"]["name"];//파일
+$REQ["G4-TFILE-TYPE"] = $_FILES["G4-TFILE"]["type"];//파일
+$REQ["G4-TFILE-TMPNM"] = $_FILES["G4-TFILE"]["tmp_name"];//파일
+$REQ["G4-TFILE-SIZE"] = $_FILES["G4-TFILE"]["size"];//파일
+$REQ["G4-TFILE-ERROR"] = $_FILES["G4-TFILE"]["error"];//파일
 
 //G1, 1
 $REQ["G1-MYRADIO"] = reqPostString("G1-MYRADIO",30);//나의라디오	
@@ -138,6 +143,8 @@ $REQ["G4-PCD"] = reqPostString("G4-PCD",30);//PCD
 $REQ["G4-PCD"] = getFilter($REQ["G4-PCD"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G4-IMG"] = reqPostString("G4-IMG",200);//이미지뷰어	
 $REQ["G4-IMG"] = getFilter($REQ["G4-IMG"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G4-TFILE"] = reqPostString("G4-TFILE",200);//파일	
+$REQ["G4-TFILE"] = getFilter($REQ["G4-TFILE"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터	
 	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//상세	
 	//,  입력값 필터 

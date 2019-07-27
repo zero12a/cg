@@ -68,22 +68,23 @@ class usrmngService
 		alog("USRMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_SEQ
 
 		//조회
 		//V_GRPNM : 회원목록
-		$GRID["SQL"]["R"] = $this->DAO->selUsrG($REQ); //SEARCH, 조회,회원목록
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array("USR_PWD"=>"HASH");
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -102,6 +103,9 @@ class usrmngService
 
 		alog("USRMNGService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
+		$GRID["SQL"]["C"] = array();
+		$GRID["SQL"]["U"] = array();
+		$GRID["SQL"]["D"] = array();
 		$grpId="G2";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
 		$GRID["COLORD"] = "USR_SEQ,USR_ID,USR_NM,USR_PWD,PW_CHG_DT,PHONE,PW_ERR_CNT,LAST_STATUS,USE_YN,ADD_DT,MOD_DT"; //그리드 컬럼순서(Hidden컬럼포함)
@@ -110,15 +114,16 @@ class usrmngService
 		$GRID["KEYCOLID"] = "USR_SEQ";  //KEY컬럼 COLID, 0
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
-		$GRID["SQL"]["C"] = $this->DAO->insUsrG($REQ); // SAVE, 저장, 회원등록
-		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		//V_GRPNM : 회원목록
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;
@@ -172,6 +177,9 @@ class usrmngService
 
 		alog("USRMNGService-goG2Savepwd________________________start");
 		//GRID_SAVE____________________________start
+		$GRID["SQL"]["C"] = array();
+		$GRID["SQL"]["U"] = array();
+		$GRID["SQL"]["D"] = array();
 		$grpId="G2";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
 		$GRID["COLORD"] = "USR_SEQ,USR_ID,USR_NM,USR_PWD,PW_CHG_DT,PHONE,PW_ERR_CNT,LAST_STATUS,USE_YN,ADD_DT,MOD_DT"; //그리드 컬럼순서(Hidden컬럼포함)
@@ -180,15 +188,16 @@ class usrmngService
 		$GRID["KEYCOLID"] = "USR_SEQ";  //KEY컬럼 COLID, 0
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//비번변경
-		$GRID["SQL"]["U"] = $this->DAO->updUsrPwG($REQ); // SAVEPWD, 비번변경, 비번변경
-		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		//V_GRPNM : 회원목록
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVEPWD, 비번변경,
+		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;
@@ -212,20 +221,22 @@ class usrmngService
 
 		alog("USRMNGService-goG3Search________________________start");
 //FORMVIEW SEARCH
+		$grpId="G3";
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array("USR_PWD"=>"HASH");
-// SQL LOOP
-		// 회원상세
-		$FORMVIEW["SQL"]["R"] = $this->DAO->selUsrF($REQ); 
+		$FORMVIEW["SQL"] = array();
+	// SQL LOOP
+		// 
+		array_push($FORMVIEW["SQL"], $this->DAO->($REQ)); 
 		//필수 여부 검사
-		$tmpVal = requireFormviewSearch($FORMVIEW["SQL"]);
+		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeFormviewSearchJson($FORMVIEW,$this->DB);
+		$rtnVal = makeFormviewSearchJsonArray($FORMVIEW,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";

@@ -63,11 +63,11 @@ $REQ["F4-CTLCUD"] = reqPostString("F4-CTLCUD",2);
 //FILE먼저 : C2, 컨디션1
 //FILE먼저 : G3, 그리드1
 //FILE먼저 : F4, 폼뷰1
-$REQ["F4-MYFILE_name"] = $_FILES["F4-MYFILE"]["name"];//MYFILE
-$REQ["F4-MYFILE_type"] = $_FILES["F4-MYFILE"]["type"];//MYFILE
-$REQ["F4-MYFILE_tmp_name"] = $_FILES["F4-MYFILE"]["tmp_name"];//MYFILE
-$REQ["F4-MYFILE_size"] = $_FILES["F4-MYFILE"]["size"];//MYFILE
-$REQ["F4-MYFILE_error"] = $_FILES["F4-MYFILE"]["error"];//MYFILE
+$REQ["F4-MYFILE-NM"] = $_FILES["F4-MYFILE"]["name"];//MYFILE
+$REQ["F4-MYFILE-TYPE"] = $_FILES["F4-MYFILE"]["type"];//MYFILE
+$REQ["F4-MYFILE-TMPNM"] = $_FILES["F4-MYFILE"]["tmp_name"];//MYFILE
+$REQ["F4-MYFILE-SIZE"] = $_FILES["F4-MYFILE"]["size"];//MYFILE
+$REQ["F4-MYFILE-ERROR"] = $_FILES["F4-MYFILE"]["error"];//MYFILE
 
 //C2, 컨디션1
 $REQ["C2-API_SEQ"] = reqPostString("C2-API_SEQ",10);//SEQ	

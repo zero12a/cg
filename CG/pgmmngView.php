@@ -43,19 +43,19 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
  	<div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:54px;">	
+            <div class="GRP_INNER" style="height:44px;">	
 		
 	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
-		<div class="DETAIL_LABELGRP">
-			<div class="DETAIL_LABEL"  style="">
+		<div class="CONDITION_LABELGRP">
+			<div class="CONDITION_LABEL"  style="">
 				<b>* 프로젝트 관리</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
-			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_G2_SEARCHALL" value="조회(전체)" onclick="G2_SEARCHALL(uuidv4());">
+			<div class="CONDITION_LABELBTN">				<input type="button" name="BTN_G2_SEARCHALL" value="조회(전체)" onclick="G2_SEARCHALL(uuidv4());">
 			</div>
 		</div>
-		<div style="height:18px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:22px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 			<!--D101: STARTTXT, TAG-->
@@ -84,10 +84,10 @@ include_once('../include/incRequest.php');//CG REQUEST
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
  						나의라디오
  					</div>
- 					<!-- style="width:100px;"-->
+ 					<!-- style="width:200px;"-->
 					<div class="CON_OBJECT">
  	<!--MYRADIO오브젝트출력 radio-->
-	<div name="G2-MYRADIO-HOLDER" id="G2-MYRADIO-HOLDER"  style="width:100px;"></div>
+	<div name="G2-MYRADIO-HOLDER" id="G2-MYRADIO-HOLDER"  style="width:200px;"></div>
 					</div>
  				</div>
  			</div><!-- is_br_tag end -->
@@ -102,7 +102,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER_GRID" style="height:223px;">
 		<div  class="GRID_LABELGRP">
 			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
@@ -118,9 +117,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:220px;width:100%;"></div>
+			<div id="gridG3"  style="background-color:white;overflow:hidden;height:215px;width:100%;"></div>
 		</div>
-		</div></div>
+		</div>
 	</div>
 	<!--
 	#####################################################
@@ -134,7 +133,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER_GRID" style="height:223px;">
 		<div  class="GRID_LABELGRP">
 			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
@@ -151,9 +149,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG4"  style="background-color:white;overflow:hidden;height:220px;width:100%;"></div>
+			<div id="gridG4"  style="background-color:white;overflow:hidden;height:215px;width:100%;"></div>
 		</div>
-		</div></div>
+		</div>
 	</div>
 	<!--
 	#####################################################
@@ -167,7 +165,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER_GRID" style="height:173px;">
 		<div  class="GRID_LABELGRP">
 			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG5_GRID_LABEL"class="GRID_LABEL" >
@@ -184,9 +181,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG5"  style="background-color:white;overflow:hidden;height:170px;width:100%;"></div>
+			<div id="gridG5"  style="background-color:white;overflow:hidden;height:165px;width:100%;"></div>
 		</div>
-		</div></div>
+		</div>
 	</div>
 	<!--
 	#####################################################
@@ -200,7 +197,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER_GRID" style="height:223px;">
 		<div  class="GRID_LABELGRP">
 			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG6_GRID_LABEL"class="GRID_LABEL" >
@@ -218,9 +214,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG6"  style="background-color:white;overflow:hidden;height:220px;width:100%;"></div>
+			<div id="gridG6"  style="background-color:white;overflow:hidden;height:215px;width:100%;"></div>
 		</div>
-		</div></div>
+		</div>
 	</div>
 	<!--
 	#####################################################
@@ -234,7 +230,6 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER_GRID" style="height:223px;">
 		<div  class="GRID_LABELGRP">
 			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG7_GRID_LABEL"class="GRID_LABEL" >
@@ -252,9 +247,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG7"  style="background-color:white;overflow:hidden;height:220px;width:100%;"></div>
+			<div id="gridG7"  style="background-color:white;overflow:hidden;height:215px;width:100%;"></div>
 		</div>
-		</div></div>
+		</div>
 	</div>
 	<!--
 	#####################################################

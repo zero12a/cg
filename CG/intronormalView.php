@@ -43,21 +43,21 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
  	<div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:64px;">	
+            <div class="GRP_INNER" style="height:54px;">	
 		
 	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
-		<div class="DETAIL_LABELGRP">
-			<div class="DETAIL_LABEL"  style="">
+		<div class="CONDITION_LABELGRP">
+			<div class="CONDITION_LABEL"  style="">
 				<b>* 인트로_일반</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
-			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
+			<div class="CONDITION_LABELBTN">				<input type="button" name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
 				<input type="button" name="BTN_G1_SAVE" value="저장" onclick="G1_SAVE(uuidv4());">
 				<input type="button" name="BTN_G1_RESET" value="입력 초기화" onclick="G1_RESET(uuidv4());">
 			</div>
 		</div>
-		<div style="height:28px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:32px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 			</div><!-- is_br_tag end -->
@@ -72,10 +72,10 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:299px;">
 		<div  class="GRID_LABELGRP">
-  			<div id="div_gridG2_GRID_LABEL" class="GRID_LABEL" style="padding-right:14px;" >
-	  				* 로그인
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
+  			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
+	  				* 로그인      
 			</div>
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
@@ -83,11 +83,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G2_HIDDENCOL" value="숨김필드보기" onclick="G2_HIDDENCOL(uuidv4());">
 <input type="button" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG2"  style="background-color:white;overflow:hidden;height:275px;width:100%;"></div>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:270px;width:100%;"></div>
 		</div>
-		</div></div>
+		</div>
 	</div>
 	<!--
 	#####################################################
@@ -103,8 +104,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:94px;">
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
 	  				* 잠금      
 			</div>
@@ -114,11 +115,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G3_HIDDENCOL" value="숨김필드보기" onclick="G3_HIDDENCOL(uuidv4());">
 <input type="button" name="BTN_G3_EXCEL" value="엑셀다운로드" onclick="G3_EXCEL(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:70px;width:100%;"></div>
+			<div id="gridG3"  style="background-color:white;overflow:hidden;height:65px;width:100%;"></div>
 		</div>
-		</div></div>
+		</div>
 	</div>
 	<!--
 	#####################################################
@@ -132,8 +134,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:194px;">
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG4_GRID_LABEL"class="GRID_LABEL" >
 	  				* 메뉴이력      
 			</div>
@@ -143,11 +145,12 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G4_HIDDENCOL" value="숨김필드보기" onclick="G4_HIDDENCOL(uuidv4());">
 <input type="button" name="BTN_G4_EXCEL" value="엑셀다운로드" onclick="G4_EXCEL(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG4"  style="background-color:white;overflow:hidden;height:170px;width:100%;"></div>
+			<div id="gridG4"  style="background-color:white;overflow:hidden;height:165px;width:100%;"></div>
 		</div>
-		</div></div>
+		</div>
 	</div>
 	<!--
 	#####################################################

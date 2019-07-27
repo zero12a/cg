@@ -12,28 +12,13 @@ class deploymngDao
 	function __toString(){
 		alog("DeploymngDao-__toString");
 	}
-	//PGM    
-	public function sPgmG($req){
-		//조회
-		$RtnVal = null;
-		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
-		$RtnVal["SQLTXT"] = "SELECT 
-        0 as CHK, PGMSEQ, PGMID, PGMNM, PKGGRP, VIEWURL, PGMTYPE, SECTYPE, ADDDT, MODDT
-    FROM 
-        CG.CG_PGMINFO
-    WHERE PJTSEQ = #{G1-PJTSEQ}
-";
-	$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "i";
-		return $RtnVal;
-    }  
 	//AUTH    
 	public function sAuthG($req){
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sAuthG";
 		$RtnVal["SQLTXT"] = "  SELECT 
  		0 as CHK
 		, concat(p.PGMID,'-',g.GRPID,'_',f.FNCID) as ROWID
@@ -47,7 +32,8 @@ class deploymngDao
   WHERE p.PJTSEQ = #{G1-PJTSEQ} AND ( f.FNCTYPE != '' && f.FNCTYPE is not null )
       order by p.PGMID,g.GRPORD asc,f.FNCORD asc  
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
@@ -57,13 +43,33 @@ class deploymngDao
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sFileG";
 		$RtnVal["SQLTXT"] = "    SELECT 
         0 as CHK, PGMSEQ, VERSEQ, FILESEQ, FILETYPE, FILENM, FILEHASH, FILESIZE, ADDDT, MODDT
     FROM 
         CG.CG_RSTFILE
     WHERE PJTSEQ = #{G1-PJTSEQ} and ACTIVEYN = 'Y'
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "i";
+		return $RtnVal;
+    }  
+	//PGM    
+	public function sPgmG($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sPgmG";
+		$RtnVal["SQLTXT"] = "SELECT 
+        0 as CHK, PGMSEQ, PGMID, PGMNM, PKGGRP, VIEWURL, PGMTYPE, SECTYPE, ADDDT, MODDT
+    FROM 
+        CG.CG_PGMINFO
+    WHERE PJTSEQ = #{G1-PJTSEQ}
+";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  

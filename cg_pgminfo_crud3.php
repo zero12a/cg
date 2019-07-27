@@ -46,7 +46,7 @@
 
     //로그인 정보
     $REQ["ADDID"] = getUserSeq();
-    $REQ["MODID"] = $REQ["ADDID"];
+    $REQ["MODID"] = getUserSeq();
 
     //그룹ID받기
     $REQ["F_GRPID"] = $_GET['F_GRPID'];

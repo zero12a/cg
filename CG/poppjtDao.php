@@ -18,6 +18,7 @@ class poppjtDao
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "sPjtList";
 		$RtnVal["SQLTXT"] = "select
 	PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL
 	,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT
@@ -26,7 +27,8 @@ from
  CG_PJTINFO	
 where DELYN = 'N'
 ";
-	$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
 		return $RtnVal;
     }  

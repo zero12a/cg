@@ -67,20 +67,22 @@ class introadminService
 
 		alog("INTROADMINService-goG2Search________________________start");
 //FORMVIEW SEARCH
+		$grpId="G2";
 	//암호화컬럼
 		$FORMVIEW["COLCRYPT"] = array();
-// SQL LOOP
-		// sMonthG
-		$FORMVIEW["SQL"]["R"] = $this->DAO->sMonthG($REQ); 
+		$FORMVIEW["SQL"] = array();
+	// SQL LOOP
+		// 
+		array_push($FORMVIEW["SQL"], $this->DAO->($REQ)); 
 		//필수 여부 검사
-		$tmpVal = requireFormviewSearch($FORMVIEW["SQL"]);
+		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeFormviewSearchJson($FORMVIEW,$this->DB);
+		$rtnVal = makeFormviewSearchJsonArray($FORMVIEW,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
@@ -106,27 +108,25 @@ class introadminService
 		$FORMVIEW["COLCRYPT"] = array();	
 			//CTLCUD 명령어에 따른 분개 처리
 		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
+
+			$FORMVIEW["SQL"] = array();
 			switch($FORMVIEW["FNCTYPE"]){
-				case "C":////iMonthG
-					//추가
-					$FORMVIEW["SQL"][$FORMVIEW["FNCTYPE"]] = $this->DAO->iMonthG($REQ); 
+				case "C":
 					break;
-				default:
-					//처리 결과 리턴
-					$rtnVal->RTN_CD = "500";
-					$rtnVal->ERR_CD = "593";
-					echo json_encode($rtnVal);
-					return;	
+				case "U":
+					break;
+				default : 
+					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
 			}
 			//필수 여부 검사
-			$tmpVal = requireFormviewSave($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
+			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
 			if($tmpVal->RTN_CD == "500"){
 				alog("requireFormview - fail.");
 				$tmpVal->GRPID = $grpId;
 				echo json_encode($tmpVal);
 				exit;
 			}
-			$tmpVal = makeFormviewSaveJson($FORMVIEW,$this->DB);
+			$tmpVal = makeFormviewSaveJsonArray($FORMVIEW,$this->DB);
 			array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
 			$al->GRPID = $grpId;
@@ -152,22 +152,23 @@ class introadminService
 		alog("INTROADMINService-goG8Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, CFM_SEQ
 
 		//조회
 		//V_GRPNM : 월점검목록
-		$GRID["SQL"]["R"] = $this->DAO->s2MonthG($REQ); //SEARCH, 조회,s2MonthG
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G8]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -202,22 +203,23 @@ class introadminService
 		alog("INTROADMINService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
 		//V_GRPNM : 로그인실패
-		$GRID["SQL"]["R"] = $this->DAO->sLgnFailG($REQ); //SEARCH, 조회,sLgnFailG
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -252,22 +254,23 @@ class introadminService
 		alog("INTROADMINService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, REMOTE_ADDR
 
 		//조회
 		//V_GRPNM : 로그인실패IP
-		$GRID["SQL"]["R"] = $this->DAO->sLgnIpG($REQ); //SEARCH, 조회,sLgnIpG
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -302,22 +305,23 @@ class introadminService
 		alog("INTROADMINService-goG6Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
 		//V_GRPNM : 권한없는접근
-		$GRID["SQL"]["R"] = $this->DAO->sAuthNoG($REQ); //SEARCH, 조회,sAuthNoG
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G6]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -352,22 +356,23 @@ class introadminService
 		alog("INTROADMINService-goG7Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
 		//V_GRPNM : 로그인잠금
-		$GRID["SQL"]["R"] = $this->DAO->sLgnLockG($REQ); //SEARCH, 조회,sLgnLockG
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G7]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -402,22 +407,23 @@ class introadminService
 		alog("INTROADMINService-goG9Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USR_ID
 
 		//조회
 		//V_GRPNM : 개인정보접근
-		$GRID["SQL"]["R"] = $this->DAO->sAuthPiG($REQ); //SEARCH, 조회,sAuthPiG
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G9]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴

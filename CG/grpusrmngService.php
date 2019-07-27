@@ -68,22 +68,23 @@ class grpusrmngService
 		alog("GRPUSRMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, GRP_SEQ
 
 		//조회
 		//V_GRPNM : 그룹
-		$GRID["SQL"]["R"] = $this->DAO->selGrpG($REQ); //SEARCH, 조회,그룹목록
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -118,22 +119,23 @@ class grpusrmngService
 		alog("GRPUSRMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 2; // KEY 컬럼, USR_SEQ
 
 		//조회
 		//V_GRPNM : 그룹에 속함
-		$GRID["SQL"]["R"] = $this->DAO->selHoldG($REQ); //SEARCH, 조회,권한보유사용자
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -152,12 +154,13 @@ class grpusrmngService
 
 		alog("GRPUSRMNGService-goG3Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
+		$GRID["SQL"] = array();
 		$grpId="G3";
 		$GRID["CHK"]=$REQ[$grpId."-CHK"];
 		$GRID["KEYCOLID"] = "USR_SEQ";  //KEY컬럼 COLID, 2
 		//선택 삭제	
-		$GRID["SQL"] = $this->DAO->delHoldG($REQ); // CHKSAVE, 선택 삭제, 사용자권한삭제
-			$tmpVal = makeGridChkJson($GRID,$this->DB);
+		array_push($GRID["SQL"], $this->DAO->($REQ)); // CHKSAVE, 선택 삭제, 
+		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;
@@ -180,22 +183,23 @@ class grpusrmngService
 		alog("GRPUSRMNGService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, USR_SEQ
 
 		//조회
 		//V_GRPNM : 해당그룹에 미포함
-		$GRID["SQL"]["R"] = $this->DAO->selNoG($REQ); //SEARCH, 조회,권한미보유
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -214,12 +218,13 @@ class grpusrmngService
 
 		alog("GRPUSRMNGService-goG4Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
+		$GRID["SQL"] = array();
 		$grpId="G4";
 		$GRID["CHK"]=$REQ[$grpId."-CHK"];
 		$GRID["KEYCOLID"] = "USR_SEQ";  //KEY컬럼 COLID, 1
 		//선택 추가	
-		$GRID["SQL"] = $this->DAO->insNoToHoldG($REQ); // CHKSAVE, 선택 추가, 사용자추가
-			$tmpVal = makeGridChkJson($GRID,$this->DB);
+		array_push($GRID["SQL"], $this->DAO->($REQ)); // CHKSAVE, 선택 추가, 
+		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;

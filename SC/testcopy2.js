@@ -45,7 +45,8 @@ function initBody(){
 		G3_INIT();	
 		G4_INIT();	
 		G5_INIT();	
-		alog("initBody()-----------------------end");
+	      feather.replace();
+	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
 	//팝업창 오픈요청
@@ -149,6 +150,8 @@ function G3_INIT(){
 			["text-align:center;","text-align:center;","text-align:center;","text-align:center;","text-align:center;","text-align:center;"]);
 		mygridG3.splitAt(0);//'freezes' 0 columns 
 		mygridG3.init();
+
+		mygridG3.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_1")); // 위험 상
 		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_2")); // 위험 중
 		mygridG3.setNumberFormat("0,000",mygridG3.getColIndexById("PRIORITY_3")); // 위험 하
@@ -294,6 +297,8 @@ function G4_INIT(){
 		//mygridG4.setColValidators("G4_UUID_SEQ,G4_TEAM_NM,G4_SYS_NM,G4_SUBSYS_NM,G4_VUL_CNT");
 		mygridG4.splitAt(0);//'freezes' 0 columns 
 		mygridG4.init();
+
+		mygridG4.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG4.enableBlockSelection(true);
 		mygridG4.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -376,13 +381,13 @@ function G4_INIT(){
 			//'}');
 		//A124
 			lastinputG5json = jQuery.parseJSON('{ "__NAME":"lastinputG5json"' +
-				', "G4-SUBSYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue()) + '"' +
-			', "G4-SYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue()) + '"' +
+				', "G4-SYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue()) + '"' +
+			', "G4-SUBSYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue()) + '"' +
 			', "G4-TEAM_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("TEAM_NM")).getValue()) + '"' +
 			'}');
 		lastinputG5 = new HashMap(); // 취약점별 현황
-		lastinputG5.set("G4-SUBSYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue().replace(/&amp;/g, "&")); // 
 		lastinputG5.set("G4-SYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue().replace(/&amp;/g, "&")); // 
+		lastinputG5.set("G4-SUBSYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue().replace(/&amp;/g, "&")); // 
 		lastinputG5.set("G4-TEAM_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("TEAM_NM")).getValue().replace(/&amp;/g, "&")); // 
 			G5_SEARCH(lastinputG5,uuidv4()); //자식그룹 호출 : 취약점별 현황
 		});
@@ -436,6 +441,8 @@ function G5_INIT(){
 		//mygridG5.setColValidators("G5_UUID_SEQ,G5_TEAM_NM,G5_SYS_NM,G5_SUBSYS_NM,G5_RULESET,G5_VUL_CNT");
 		mygridG5.splitAt(0);//'freezes' 0 columns 
 		mygridG5.init();
+
+		mygridG5.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG5.enableBlockSelection(true);
 		mygridG5.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -560,8 +567,8 @@ function G1_SEARCHALL(token){
 	alog("ConAllData:" + ConAllData);
 	//json : G1
 			lastinputG2 = new HashMap(); //팀별 현황 (보안취약점 갯수)1
-			lastinputG3 = new HashMap(); //팀별 현황 (보안취약점 갯수)2
-	//  호출
+				lastinputG3 = new HashMap(); //팀별 현황 (보안취약점 갯수)2
+		//  호출
 	G2_SEARCH(lastinputG2,token);
 	//  호출
 	G3_SEARCH(lastinputG3,token);
@@ -691,6 +698,14 @@ function G1_SEARCHALL(token){
 
         alog("gridSearchG2()------------end");
     }
+//사용자정의함수 : 내함수임
+function G3_myFunction(token){
+	alog("G3_myFunction-----------------start");
+alert("hi 1");
+alert("hi 2");
+
+	alog("G3_myFunction-----------------end");
+}
 //새로고침	
 function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
@@ -793,6 +808,8 @@ function G3_RELOAD(token){
 
 																			 						},"json");
 						
+					}else{
+						$("#spanG3Cnt").text("-");
 					}
 					msgNotice("[팀별 현황 (보안취약점 갯수)2] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -808,14 +825,18 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
-//사용자정의함수 : 내함수임
-function G3_myFunction(token){
-	alog("G3_myFunction-----------------start");
-alert("hi 1");
-alert("hi 2");
-
-	alog("G3_myFunction-----------------end");
-}
+    function G4_VIEWHIDDEN(){
+		alog("G4_VIEWHIDDEN()..................start");
+        if(isToggleHiddenColG4){
+            isToggleHiddenColG4 = false;            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
+            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),true); //TEAM_NM
+     }else{
+            isToggleHiddenColG4 = true;
+            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
+            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),false); //TEAM_NM
+        }
+		alog("G4_VIEWHIDDEN()..................end");
+    }
 
 
 
@@ -867,6 +888,8 @@ alert("hi 2");
 
 						},"json");
 						
+					}else{
+						$("#spanG4Cnt").text("-");
 					}
 					msgNotice("[시스템별 현황] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -887,18 +910,6 @@ function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");
   G4_SEARCH(lastinputG4,token);
 }
-    function G4_VIEWHIDDEN(){
-		alog("G4_VIEWHIDDEN()..................start");
-        if(isToggleHiddenColG4){
-            isToggleHiddenColG4 = false;            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
-            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),true); //TEAM_NM
-     }else{
-            isToggleHiddenColG4 = true;
-            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
-            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),false); //TEAM_NM
-        }
-		alog("G4_VIEWHIDDEN()..................end");
-    }
 //새로고침	
 function G5_RELOAD(token){
   alog("G5_RELOAD-----------------start");
@@ -971,6 +982,8 @@ function G5_RELOAD(token){
 
 						},"json");
 						
+					}else{
+						$("#spanG5Cnt").text("-");
 					}
 					msgNotice("[취약점별 현황] 조회 성공했습니다. ("+row_cnt+"건)",1);
 

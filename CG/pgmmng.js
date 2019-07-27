@@ -1018,7 +1018,8 @@ function G3_RELOAD(token){
 				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
 				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
 			}
-		}	sendFormData.append("G3-XML" , myXmlString);
+		}
+	sendFormData.append("G3-XML" , myXmlString);
 	$.ajax({
 		type : "POST",
 		url : url_G3_SAVE + "&TOKEN=" + token,
@@ -1176,7 +1177,8 @@ function G4_RELOAD(token){
 				sendFormData.append(tKeys[i],lastinputG4.get(tKeys[i]));
 				//console.log(tKeys[i]+ '='+ lastinputG4.get(tKeys[i])); 
 			}
-		}	sendFormData.append("G4-XML" , myXmlString);
+		}
+	sendFormData.append("G4-XML" , myXmlString);
 	$.ajax({
 		type : "POST",
 		url : url_G4_SAVE + "&TOKEN=" + token,
@@ -1306,7 +1308,8 @@ function G5_RELOAD(token){
 				sendFormData.append(tKeys[i],lastinputG5.get(tKeys[i]));
 				//console.log(tKeys[i]+ '='+ lastinputG5.get(tKeys[i])); 
 			}
-		}	sendFormData.append("G5-XML" , myXmlString);
+		}
+	sendFormData.append("G5-XML" , myXmlString);
 	$.ajax({
 		type : "POST",
 		url : url_G5_SAVE + "&TOKEN=" + token,
@@ -1376,7 +1379,8 @@ function G5_EXCEL(){
 				sendFormData.append(tKeys[i],lastinputG6.get(tKeys[i]));
 				//console.log(tKeys[i]+ '='+ lastinputG6.get(tKeys[i])); 
 			}
-		}	sendFormData.append("G6-XML" , myXmlString);
+		}
+	sendFormData.append("G6-XML" , myXmlString);
 	$.ajax({
 		type : "POST",
 		url : url_G6_SAVE + "&TOKEN=" + token,
@@ -1637,7 +1641,8 @@ function G7_USERDEF(token){
 				sendFormData.append(tKeys[i],lastinputG7.get(tKeys[i]));
 				//console.log(tKeys[i]+ '='+ lastinputG7.get(tKeys[i])); 
 			}
-		}	sendFormData.append("G7-XML" , myXmlString);
+		}
+	sendFormData.append("G7-XML" , myXmlString);
 	$.ajax({
 		type : "POST",
 		url : url_G7_SAVE + "&TOKEN=" + token,

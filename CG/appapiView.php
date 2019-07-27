@@ -11,6 +11,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <title>앱API</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
+<script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
 <script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="../lib/jquery-ui-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
@@ -20,6 +21,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
 <script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
+<link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <script src="appapi.js?<?=getRndVal(10)?>"></script>
@@ -34,23 +36,29 @@ include_once('../include/incRequest.php');//CG REQUEST
 </head>
 <body onload="initBody();">
 
-<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--D72 : STARTTXT, TAG-->
-	<!--G.GRPID : C2-->
-	<div class="GRP_OBJECT" style="width:100%;height:80px;border-radius:3px;-moz-border-radius: 3px;">
-	  <div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
-			<div class="DETAIL_LABELGRP">
-			<div class="DETAIL_LABEL"  style="">
+<div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--
+	#####################################################
+	## 컨디션 컨디션1 - START G.GRPID : C2-
+	#####################################################
+	-->
+ 	<div class="GRP_OBJECT" style="width:100%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:64px;">	
+		
+	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
+		<div class="CONDITION_LABELGRP">
+			<div class="CONDITION_LABEL"  style="">
 				<b>* 앱API</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
-			<div class="DETAIL_LABELBTN">				<input type="button" name="BTN_C2_sss" value="" onclick="C2_sss(uuidv4());">
+			<div class="CONDITION_LABELBTN">				<input type="button" name="BTN_C2_sss" value="" onclick="C2_sss(uuidv4());">
 				<input type="button" name="BTN_C2_SEARCHALL" value="조회(전체)" onclick="C2_SEARCHALL(uuidv4());">
 				<input type="button" name="BTN_C2_SAVE" value="저장" onclick="C2_SAVE(uuidv4());">
 				<input type="button" name="BTN_C2_RESET" value="검색조건 초기화" onclick="C2_RESET(uuidv4());">
 			</div>
 		</div>
-		<div style="height:38px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:42px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 			<!--D101: STARTTXT, TAG-->
@@ -100,15 +108,17 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+		</div></div>
 	</div>
 	<!--
 	#####################################################
 	## 그리드 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:450px;">
-
+    <div class="GRP_OBJECT" style="width:50%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
 		<div  class="GRID_LABELGRP">
+			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG3_GRID_LABEL"class="GRID_LABEL" >
 	  				* 그리드1      
 			</div>
@@ -122,9 +132,11 @@ include_once('../include/incRequest.php');//CG REQUEST
 <input type="button" name="BTN_G3_ROWDELETE" value="-" onclick="G3_ROWDELETE(uuidv4());">
 <input type="button" name="BTN_G3_ROWADD" value="+" onclick="G3_ROWADD(uuidv4());">
 			</div>
+			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:428px;width:100%;"></div>
+			<div id="gridG3"  style="background-color:white;overflow:hidden;height:415px;width:100%;"></div>
+		</div>
 		</div>
 	</div>
 	<!--
@@ -134,22 +146,25 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
 	<!--
 	#####################################################
-	## 폼뷰 - START
+	## 폼뷰 폼뷰1 - START
 	#####################################################
 	-->
-	<div class="GRP_OBJECT" style="width:50%;height:450px;">
-		<div sty_le="width:0px;height:0px;overflow: hidden">
-			<form id="formviewF4" name="formviewF4" method="post" enctype="multipart/form-data"  onsubmit="return false;">
-			<input type="hidden" name="F4-CTLCUD"  id="F4-CTLCUD" value="">
-		</div>	
-		<div class="DETAIL_LABELGRP">
-			<div class="DETAIL_LABEL"  style="">
+    <div class="GRP_OBJECT" style="width:50%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:434px;">
+				
+			<div sty_le="width:0px;height:0px;overflow: hidden">
+				<form id="formviewF4" name="formviewF4" method="post" enctype="multipart/form-data"  onsubmit="return false;">
+				<input type="hidden" name="F4-CTLCUD"  id="F4-CTLCUD" value="">
+			</div>	
+		<div class="FORMVIEW_LABELGRP">
+			<div class="FORMVIEW_LABEL"  style="">
 				* 폼뷰1
 			</div>
-			<div class="DETAIL_LABELBTN"  style="">
+			<div class="FORMVIEW_LABELBTN"  style="">
 				<input type="button" name="BTN_F4_" value="" onclick="F4_(uuidv4());">				<input type="button" name="BTN_F4_SAVE" value="저장" onclick="F4_SAVE(uuidv4());">				<input type="button" name="BTN_F4_RELOAD" value="새로고침" onclick="F4_RELOAD(uuidv4());">				<input type="button" name="BTN_F4_NEW" value="신규" onclick="F4_NEW(uuidv4());">				<input type="button" name="BTN_F4_DELETE" value="삭제" onclick="F4_DELETE(uuidv4());">				<input type="button" name="BTN_F4_MOD" value="수정" onclick="F4_MOD(uuidv4());">			</div>
 		</div>
-		<div style="height:408px;" class="DETAIL_OBJECT">
+		<div style="height:412px;" class="FORMVIEW_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 			</DIV><!--is_br_tab end-->
@@ -291,7 +306,9 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<!-- style="width:150;"-->	
 		<div class="CON_OBJECT">
 		<input type="file" name="F4-MYFILE" value="" id="F4-MYFILE" style="width:150px;">
-		<a href="" target="_blank" name="F4-MYFILE_link" id="F4-MYFILE_link"><span id="F4-MYFILE_name" name="F4-MYFILE_name"></span></a>
+		<div  id="DIV-F4-MYFILE" style="display:none">
+			<a href="" target="_blank" name="F4-MYFILE-LINK" id="F4-MYFILE-LINK"><span id="F4-MYFILE-NM" name="F4-MYFILE-NM"></span></a><input type="checkbox" name="F4-MYFILE-DEL" id="F4-MYFILE-DEL">삭제
+		</div>
 		</div>	
 	</div>	
 			</DIV><!--is_br_tab end-->
@@ -305,7 +322,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				</div>	
 				<!-- style="width:320;"-->
 				<div class="CON_OBJECT">
-					<div name="F4-MYFILE_VIEWER" id="F4-MYFILE_VIEWER" class="FORMVIEW_IMGVIEWER" style="width:320px;">
+					<div name="F4-MYFILE_VIEWER-HOLDER" id="F4-MYFILE_VIEWER-HOLDER" class="FORMVIEW_IMGVIEWER" style="width:320px;">
 				</div>
 			</div>
 			</DIV><!--is_br_tab end-->
@@ -336,6 +353,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</DIV><!--is_br_tab end-->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+		</div>
+		</div>
 	</div>
 	<!--
 	#####################################################

@@ -68,22 +68,23 @@ class layoutmngService
 		alog("LAYOUTMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, LAYOUTID
 
 		//조회
 		//V_GRPNM : LAYOUT
-		$GRID["SQL"]["R"] = $this->DAO->sLayoutG($REQ); //SEARCH, 조회,LAYOUT
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -102,6 +103,9 @@ class layoutmngService
 
 		alog("LAYOUTMNGService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
+		$GRID["SQL"]["C"] = array();
+		$GRID["SQL"]["U"] = array();
+		$GRID["SQL"]["D"] = array();
 		$grpId="G2";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
 		$GRID["COLORD"] = "PJTSEQ,LAYOUTID,GRPCNT,USEYN,ADDDT,ADDID,MODDT,MODID"; //그리드 컬럼순서(Hidden컬럼포함)
@@ -110,17 +114,20 @@ class layoutmngService
 		$GRID["KEYCOLID"] = "LAYOUTID";  //KEY컬럼 COLID, 1
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
-		$GRID["SQL"]["U"] = $this->DAO->uLayoutG($REQ); // SAVE, 저장, LAYOUT
-		$GRID["SQL"]["C"] = $this->DAO->iLayoutG($REQ); // SAVE, 저장, LAYOUT
-		$GRID["SQL"]["D"] = $this->DAO->dLayoutG($REQ); // SAVE, 저장, LAYOUTD
-		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		//V_GRPNM : LAYOUT
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		//V_GRPNM : LAYOUT
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		//V_GRPNM : LAYOUT
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;
@@ -175,22 +182,23 @@ class layoutmngService
 		alog("LAYOUTMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
+		$GRID["SQL"] = array();
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, LAYOUTDSEQ
 
 		//조회
 		//V_GRPNM : LAYOUTD
-		$GRID["SQL"]["R"] = $this->DAO->sLayoutDG($REQ); //SEARCH, 조회,LAYOUTD
+		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
-		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		$rtnVal = makeGridSearchJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 		//GRID_SEARCH____________________________end
 		//처리 결과 리턴
@@ -209,6 +217,9 @@ class layoutmngService
 
 		alog("LAYOUTMNGService-goG3Save________________________start");
 		//GRID_SAVE____________________________start
+		$GRID["SQL"]["C"] = array();
+		$GRID["SQL"]["U"] = array();
+		$GRID["SQL"]["D"] = array();
 		$grpId="G3";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
 		$GRID["COLORD"] = "LAYOUTDSEQ,PJTSEQ,LAYOUTID,GRPID,REFGRPID,ORD,GRPTYPE,GRPWIDTH,GRPHEIGHT,VBOX,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
@@ -217,17 +228,20 @@ class layoutmngService
 		$GRID["KEYCOLID"] = "LAYOUTDSEQ";  //KEY컬럼 COLID, 0
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
-		$GRID["SQL"]["U"] = $this->DAO->uLayoutDG($REQ); // SAVE, 저장, LAYOUTD
-		$GRID["SQL"]["C"] = $this->DAO->iLayoutDG($REQ); // SAVE, 저장, LAYOUTD
-		$GRID["SQL"]["D"] = $this->DAO->dLayoutDG($REQ); // SAVE, 저장, LAYOUTD
-		$tmpVal = requireGridSave($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		//V_GRPNM : LAYOUTD
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		//V_GRPNM : LAYOUTD
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		//V_GRPNM : LAYOUTD
+		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
 		}
-		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 
 		$tmpVal->GRPID = $grpId;

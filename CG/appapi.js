@@ -76,7 +76,8 @@ function initBody(){
 	C2_INIT();	
 		G3_INIT();	
 		F4_INIT();	
-		alog("initBody()-----------------------end");
+	      feather.replace();
+	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
 	//팝업창 오픈요청
@@ -305,7 +306,8 @@ setCodeCombo("FORMVIEW",$("#F4-REQ_DATATYPE"),"REQDATATYPE");
 	//URL, URL 초기화	
 	//MYFILESVRNM, MYFILESVRNM 초기화	
 	$("#F4-MYFILESVRNM").attr("readonly",true);
-	//MYFILE, MYFILE 초기화		//MYFILE_VIEWER, 이미지뷰어 초기화	
+	//MYFILE, MYFILE 초기화	
+	//MYFILE_VIEWER, 이미지뷰어 초기화	
 	//ADD_DT, ADD 초기화		//MOD_DT, MOD 초기화	  alog("F4_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
@@ -397,7 +399,8 @@ function C2_SAVE(){
 				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
 				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
 			}
-		}	sendFormData.append("G3-XML" , myXmlString);
+		}
+	sendFormData.append("G3-XML" , myXmlString);
 	$.ajax({
 		type : "POST",
 		url : url_G3_SAVE + "&TOKEN=" + token,
@@ -435,10 +438,15 @@ function G3_CHKSAVE(){
 
         //전송용 post 만들기
 		sendFormData = new FormData($("#condition")[0]);
-		for(var pair of lastinputG3.entries()) {
-			sendFormData.append(pair[0],pair[1]);
-   			//console.log(pair[0]+ ', '+ pair[1]); 
-		}	//CHK 배열 합치기
+
+		if(typeof lastinputG3 != "undefined"){
+			var tKeys = lastinputG3.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
+			}
+		}
+	//CHK 배열 합치기
 	sendFormData.append("G3-CHK",arrRows);
 	$.ajax({
 		type : "POST",
@@ -536,6 +544,8 @@ function G3_EXCEL(){
 
 						},"json");
 						
+					}else{
+						$("#spanG3Cnt").text("-");
 					}
 					msgNotice("[그리드1] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
@@ -595,10 +605,10 @@ function F4_SAVE(token){
 
 	//컨디션 데이터 추가하기
 	conditionData = new FormData($("#condition")[0]);
-	for(var pair of conditionData.entries()) {
+    var es, e, pair;
+    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
 		sendFormData.append(pair[0],pair[1]);
-		//console.log(pair[0]+ ', '+ pair[1]); 
-	}
+    }
 
 	$.ajax({
 		type : "POST",
@@ -638,7 +648,8 @@ function F4_NEW(){
 	$("#F4-REQ_BODY").val("");//REQBODY 신규초기화
 	$("#F4-RES_BODY").val("");//RESBODY 신규초기화
 	$("#F4-MYFILESVRNM").val("");//MYFILESVRNM 신규초기화	
-	$("#F4-MYFILE").val("");//MYFILE 신규초기화	
+				$("#F4-MYFILE-LINK").attr("href","");//MYFILE NEW
+				$("#F4-MYFILE-NM").text("");//MYFILE NEW
 	$("#F4-MYFILE_VIEWER").html("");
 	$("#F4-ADD_DT").text("");//ADD 신규초기화		$("#F4-MOD_DT").text("");//MOD 신규초기화	       alog("DETAILNew30---------------end");
 }
@@ -712,17 +723,36 @@ function F4_SEARCH(tinput,token){
 		$("#F4-REQ_BODY").val(data.RTN_DATA.REQ_BODY);//REQBODY 오브젝트 값세팅
 		$("#F4-RES_BODY").val(data.RTN_DATA.RES_BODY);//RESBODY 오브젝트 값세팅
 			$("#F4-MYFILESVRNM").val(data.RTN_DATA.MYFILESVRNM);//MYFILESVRNM 변수세팅
-			//$("#F4-MYFILE").val(data.RTN_DATA.MYFILE);//MYFILE, JS오류남
-			$("#F4-MYFILE_link").attr("href",data.RTN_DATA.MYFILE_link);//MYFILE 변수세팅
-			$("#F4-MYFILE_name").text(data.RTN_DATA.MYFILE);//MYFILE 변수세팅
+		if(data.RTN_DATA.MYFILE){
+			var tarr = data.RTN_DATA.MYFILE.split("^");//CD^NM
+			if(tarr.length == 2){
+				var fileNm = tarr[1] ;
+				if(fileNm != ""){
+					$("#F4-MYFILE-LINK").attr("href",tarr[0]);//MYFILE 링크세팅
+					$("#F4-MYFILE-NM").text(fileNm);//MYFILE 파일이름세팅
+					$("#DIV-F4-MYFILE").css("display", ""); //영역보이기
+				}else{
+					alog("MYFILE MYFILE 파일 이름이 없습니다.");
+				}
+			}else{
+				alert("F4-MYFILE 값이 멀티값이 아닙니다.");
+			}
+		}else{
+			$("#F4-MYFILE").val("");//값 비우기
+			$("#F4-MYFILE-LINK").attr("href","");//MYFILE 링크세팅
+			$("#F4-MYFILE-NM").text("");//MYFILE 파일이름세팅
+
+			$("#DIV-F4-MYFILE").css("display", "none"); //영역숨기기
+			alog("F4-MYFILE 값이 없습니다..");
+		}
 			//IMAGE VIEWER ( format : thumb_url:real_url,thumb_url:real_url )
-			$("#F4-MYFILE_VIEWER").html("");
+			$("#F4-MYFILE_VIEWER-HOLDER").html(""); //기존값 비우기
 			if(data.RTN_DATA.MYFILE_VIEWER){
 				var tArray1 = data.RTN_DATA.MYFILE_VIEWER.split(",");
 				if(data.RTN_DATA.MYFILE_VIEWER && tArray1.length > 0){
 					for(var t=0;t<tArray1.length;t++){
-						var tArray2 = tArray1[t].split(":");//0 thumb, 1 real
-						$("#F4-MYFILE_VIEWER").append("<span><a href='" + tArray2[0] + "' target='_blank'><img src='" + tArray2[1] + "' height='80' border=0></a></span>"); 						
+						var tArray2 = tArray1[t].split("^");//0 thumb, 1 real
+						$("#F4-MYFILE_VIEWER-HOLDER").append("<span><a href='" + tArray2[0] + "' target='_blank'><img src='" + tArray2[1] + "' height='80' border=0></a></span>"); 						
 					}
 				}
 			}
@@ -733,7 +763,8 @@ function F4_SEARCH(tinput,token){
             alog("Error:");
             alog(error);
         }
-    });    alog("(FORMVIEW) F4_SEARCH---------------end");
+    });
+    alog("(FORMVIEW) F4_SEARCH---------------end");
 
 }
 //FORMVIEW DELETE
