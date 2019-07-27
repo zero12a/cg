@@ -34,7 +34,7 @@ input[type=text]:read-only {
 
 .CON_LINE {position: relative;width:100%;overflow:auto;z-index:20;}
 .CON_OBJGRP {position: relative;float:left;background-color: #eeeeee;vertical-align:middle ;overflow:auto;z-index:25;}
-.CON_LABEL {position: relative;float:left;background-color: #eeeeee;vertical-align:middle ;padding-left:5px;overflow:auto;z-index:30;}
+.CON_LABEL {overflow:hidden;overflow-y:hidden;position: relative;float:left;background-color: #eeeeee;vertical-align:middle ;padding-left:5px;overflow:auto;z-index:30;}
 .CON_OBJECT {position: relative;float:left;background-color: #eeeeee;vertical-align:middle;overflow:auto;z-index:30;}
 .CON_LINEPADDING {position: relative;height:5px;overflow:auto;z-index:20;}
 
@@ -44,7 +44,7 @@ input[type=text]:read-only {
 */
 .GRID_LABELGRP {overflow:hidden;background-color: white;position:relative;width:100%;height:27px;z-index:20;}
 .GRID_LABELGRP_GAP {padding:5px 5px 0px 5px;}
-.GRID_LABEL {white-space: nowrap;overflow:visible;position:relative;float:left;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
+.GRID_LABEL {overflow:hidden;overflow-y:hidden;white-space: nowrap;overflow:visible;position:relative;float:left;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
 .GRID_LABELBTN {white-space: nowrap;overflow:visible;position: relative;float:right;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
 .GRID_OBJECT {overflow:hidden;background-color: white;position: relative;width:100%;z-index:20;}
 
@@ -75,7 +75,7 @@ input[type=text]:read-only {
 .BI_OBJGRP {border:0px solid black;padding:0px 0px 0px 0px;position: relative;float:left;vertical-align:middle ;overflow:auto;z-index:25;}
 .BI_OBJINNER {background-color: white;border-radius:5px;padding:5px 5px 5px 5px;height:70px;}
 .BI_LABEL {height:22px;color:gray;text-align:left;font-size:11pt;height:22px;position: relative;vertical-align:middle ;overflow:auto;z-index:30;}
-.BI_ICON {position: relative;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_ICON {overflow:hidden;overflow-y:hidden;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
 .BI_VALUE {height:45px;font-weight:bold;text-align:left;font-size:24pt;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
 .BI_VALUE2 {font-size:11pt;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
 .BI_VALUE2_TYPE3 {color:gray;width:30%;padding-top:12px;text-align:right;}
