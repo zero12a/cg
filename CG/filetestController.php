@@ -72,6 +72,7 @@ $REQ["G3-FILE1-TYPE"] = $_FILES["G3-FILE1"]["type"];//파일1
 $REQ["G3-FILE1-TMPNM"] = $_FILES["G3-FILE1"]["tmp_name"];//파일1
 $REQ["G3-FILE1-SIZE"] = $_FILES["G3-FILE1"]["size"];//파일1
 $REQ["G3-FILE1-ERROR"] = $_FILES["G3-FILE1"]["error"];//파일1
+//FILE먼저 : G8, BT그리드
 
 //G1, 컨디션
 $REQ["G1-ADDDT"] = reqPostString("G1-ADDDT",14);//ADDDT	
@@ -116,6 +117,16 @@ $REQ["G3-LINKVIEW"] = reqPostString("G3-LINKVIEW",10);//링크뷰
 $REQ["G3-LINKVIEW"] = getFilter($REQ["G3-LINKVIEW"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-HIDDENLINK"] = reqPostString("G3-HIDDENLINK",50);//히든링크	
 $REQ["G3-HIDDENLINK"] = getFilter($REQ["G3-HIDDENLINK"],"CLEARTEXT","/--미 정의--/");	
+
+//G8, BT그리드
+$REQ["G8-ADD_ID"] = reqPostString("G8-ADD_ID",30);//ADD_ID	
+$REQ["G8-ADD_ID"] = getFilter($REQ["G8-ADD_ID"],"SAFETEXT","/--미 정의--/");	
+$REQ["G8-ADD_DT"] = reqPostString("G8-ADD_DT",14);//ADD	
+$REQ["G8-ADD_DT"] = getFilter($REQ["G8-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G8-MOD_DT"] = reqPostString("G8-MOD_DT",14);//MOD	
+$REQ["G8-MOD_DT"] = getFilter($REQ["G8-MOD_DT"],"SAFETEXT","/--미 정의--/");	
+$REQ["G8-MOD_ID"] = reqPostString("G8-MOD_ID",30);//MOD_ID	
+$REQ["G8-MOD_ID"] = getFilter($REQ["G8-MOD_ID"],"SAFETEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//그리드	
 	//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(

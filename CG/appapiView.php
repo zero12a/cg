@@ -12,8 +12,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
 <script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
-<script src="../lib/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
-<script src="../lib/jquery-ui-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
+<script src="/lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
+<script src="/lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="/lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 <script src="../lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
@@ -21,9 +21,13 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
 <script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
+<script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS-->
+<script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-ko-KR.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS Lang-->
 <link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
-<link rel="stylesheet" href="../lib/jquery-ui-1.8.18.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
+<link rel="stylesheet" href="/lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
+<link rel="stylesheet" href="/lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <script src="appapi.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
 <script>
@@ -124,19 +128,66 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
-<input type="button" name="BTN_G3_CHKSAVE" value="완전삭제" onclick="G3_CHKSAVE(uuidv4());">
-<input type="button" name="BTN_G3_SAVE" value="S" onclick="G3_SAVE(uuidv4());">
-<input type="button" name="BTN_G3_RELOAD" value="R" onclick="G3_RELOAD(uuidv4());">
-<input type="button" name="BTN_G3_EXCEL" value="E" onclick="G3_EXCEL(uuidv4());">
-<input type="button" name="BTN_G3_HIDDENCOL" value="V" onclick="G3_HIDDENCOL(uuidv4());">
-<input type="button" name="BTN_G3_ROWDELETE" value="-" onclick="G3_ROWDELETE(uuidv4());">
-<input type="button" name="BTN_G3_ROWADD" value="+" onclick="G3_ROWADD(uuidv4());">
+<input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:415px;width:100%;"></div>
-		</div>
+<table id="btG3"
+			data-id-field="myid"
+			data-height="460"
+			data-virtual-scroll="true"
+			data-click-to-select="false"
+			data-resizable="true"
+			class="table table-bordered table-striped"
+            >
+            <thead>
+                <tr>
+					<th data-field="ROWCHK" data-sortable="true" data-visible="true"
+						data-halign="LEFT"
+						data-align="CENTER"
+						data-width="40"
+						data-width-unit="%"
+						>ROWCHK
+					</th>
+					<th data-field="API_SEQ" data-sortable="true" data-visible="true"
+						data-halign="LEFT"
+						data-align="LEFT"
+						data-width="60"
+						data-width-unit="%"
+						>API_SEQ
+					</th>
+					<th data-field="API_NM" data-sortable="true" data-visible="true"
+						data-halign="LEFT"
+						data-align="LEFT"
+						data-width="60"
+						data-width-unit="%"
+						>API_NM
+					</th>
+					<th data-field="PGM_ID" data-sortable="true" data-visible="true"
+						data-halign="LEFT"
+						data-align="LEFT"
+						data-width="60"
+						data-width-unit="%"
+						>PGM_ID
+					</th>
+					<th data-field="ADD_DT" data-sortable="true" data-visible="true"
+						data-halign="LEFT"
+						data-align="LEFT"
+						data-width="60"
+						data-width-unit="%"
+						>ADD_DT
+					</th>
+					<th data-field="MOD_DT" data-sortable="true" data-visible="true"
+						data-halign="LEFT"
+						data-align="LEFT"
+						data-width="60px"
+						data-width-unit="%"
+						>MOD_DT
+					</th>
+                </tr>
+            </thead>
+        </table>		</div>
 		</div>
 	</div>
 	<!--
@@ -162,7 +213,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				* 폼뷰1
 			</div>
 			<div class="FORMVIEW_LABELBTN"  style="">
-				<input type="button" name="BTN_F4_" value="" onclick="F4_(uuidv4());">				<input type="button" name="BTN_F4_SAVE" value="저장" onclick="F4_SAVE(uuidv4());">				<input type="button" name="BTN_F4_RELOAD" value="새로고침" onclick="F4_RELOAD(uuidv4());">				<input type="button" name="BTN_F4_NEW" value="신규" onclick="F4_NEW(uuidv4());">				<input type="button" name="BTN_F4_DELETE" value="삭제" onclick="F4_DELETE(uuidv4());">				<input type="button" name="BTN_F4_MOD" value="수정" onclick="F4_MOD(uuidv4());">			</div>
+				<input type="button" name="BTN_F4_SAVE" value="저장" onclick="F4_SAVE(uuidv4());">				<input type="button" name="BTN_F4_RELOAD" value="새로고침" onclick="F4_RELOAD(uuidv4());">				<input type="button" name="BTN_F4_NEW" value="신규" onclick="F4_NEW(uuidv4());">				<input type="button" name="BTN_F4_DELETE" value="삭제" onclick="F4_DELETE(uuidv4());">				<input type="button" name="BTN_F4_MOD" value="수정" onclick="F4_MOD(uuidv4());">			</div>
 		</div>
 		<div style="height:412px;" class="FORMVIEW_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>

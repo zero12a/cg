@@ -36,39 +36,6 @@ class appapiService
 		$rtnVal->GRP_DATA = array();
 
 		alog("APPAPIService-goC2Save________________________start");
-		//GRID_SAVE____________________________start
-		$GRID["SQL"]["C"] = array();
-		$GRID["SQL"]["U"] = array();
-		$GRID["SQL"]["D"] = array();
-		$grpId="G3";
-		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "ROWCHK,API_SEQ,API_NM,PGM_ID,URL,REQ_ENCTYPE,REQ_DATATYPE,REQ_BODY,RES_BODY,MYFILE,MYFILESVRNM,ADD_DT,MOD_DT,CHK"; //그리드 컬럼순서(Hidden컬럼포함)
-	//암호화컬럼
-		$GRID["COLCRYPT"] = array("REQ_BODY"=>"CRYPT","RES_BODY"=>"CRYPT");	
-		$GRID["KEYCOLID"] = "API_SEQ";  //KEY컬럼 COLID, 1
-		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
-		//저장
-		//V_GRPNM : 그리드1
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
-		//V_GRPNM : 그리드1
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
-		//V_GRPNM : 그리드1
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
-		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
-		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
-			$tmpVal->GRPID = $grpId;
-			echo json_encode($tmpVal);
-			exit;
-		}
-		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
-
-		$tmpVal->GRPID = $grpId;
-		array_push($rtnVal->GRP_DATA, $tmpVal);
-		//GRID_SAVE____________________________end
-
-
 		//FORMVIEW SAVE
 		$grpId="F4";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
@@ -136,16 +103,15 @@ class appapiService
 		$rtnVal->GRP_DATA = array();
 
 		alog("APPAPIService-goG3Search________________________start");
-		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
-		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, API_SEQ
+		$GRID["GRPTYPE"] = "GRID_BOOTSTRAP";
+		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
 
 		//조회
 		//V_GRPNM : 그리드1
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->searchApiG($REQ)); //SEARCH, 조회,조회
 	//암호화컬럼
-		$GRID["COLCRYPT"] = array("REQ_BODY"=>"CRYPT","RES_BODY"=>"CRYPT");
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
@@ -163,97 +129,6 @@ class appapiService
 		echo json_encode($rtnVal);
 		alog("APPAPIService-goG3Search________________________end");
 	}
-	//그리드1, 완전삭제
-	public function goG3Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("APPAPIService-goG3Chksave________________________start");
-		//GRID_CHK_SAVE____________________________start
-		$GRID["SQL"] = array();
-		$grpId="G3";
-		$GRID["CHK"]=$REQ[$grpId."-CHK"];
-		$GRID["KEYCOLID"] = "API_SEQ";  //KEY컬럼 COLID, 1
-		//완전삭제	
-		array_push($GRID["SQL"], $this->DAO->($REQ)); // CHKSAVE, 완전삭제, 
-		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
-
-		$tmpVal->GRPID = $grpId;
-		array_push($rtnVal->GRP_DATA, $tmpVal);
-		//GRID_CHK_SAVE____________________________end
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("APPAPIService-goG3Chksave________________________end");
-	}
-	//그리드1, S
-	public function goG3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("APPAPIService-goG3Save________________________start");
-		//GRID_SAVE____________________________start
-		$GRID["SQL"]["C"] = array();
-		$GRID["SQL"]["U"] = array();
-		$GRID["SQL"]["D"] = array();
-		$grpId="G3";
-		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "ROWCHK,API_SEQ,API_NM,PGM_ID,URL,REQ_ENCTYPE,REQ_DATATYPE,REQ_BODY,RES_BODY,MYFILE,MYFILESVRNM,ADD_DT,MOD_DT,CHK"; //그리드 컬럼순서(Hidden컬럼포함)
-	//암호화컬럼
-		$GRID["COLCRYPT"] = array("REQ_BODY"=>"CRYPT","RES_BODY"=>"CRYPT");	
-		$GRID["KEYCOLID"] = "API_SEQ";  //KEY컬럼 COLID, 1
-		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
-		//S
-		//V_GRPNM : 그리드1
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
-		//V_GRPNM : 그리드1
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
-		//V_GRPNM : 그리드1
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
-		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
-		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
-			$tmpVal->GRPID = $grpId;
-			echo json_encode($tmpVal);
-			exit;
-		}
-		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
-
-		$tmpVal->GRPID = $grpId;
-		array_push($rtnVal->GRP_DATA, $tmpVal);
-		//GRID_SAVE____________________________end
-
-
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("APPAPIService-goG3Save________________________end");
-	}
-	//그리드1, E
-	public function goG3Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("APPAPIService-goG3Excel________________________start");
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("APPAPIService-goG3Excel________________________end");
-	}
 	//폼뷰1, 조회
 	public function goF4Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
@@ -269,8 +144,8 @@ class appapiService
 		$FORMVIEW["COLCRYPT"] = array("REQ_BODY"=>"CRYPT","RES_BODY"=>"CRYPT");
 		$FORMVIEW["SQL"] = array();
 	// SQL LOOP
-		// 
-		array_push($FORMVIEW["SQL"], $this->DAO->($REQ)); 
+		// 상세
+		array_push($FORMVIEW["SQL"], $this->DAO->detailApi($REQ)); 
 		//필수 여부 검사
 		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
@@ -325,8 +200,10 @@ class appapiService
 			$FORMVIEW["SQL"] = array();
 			switch($FORMVIEW["FNCTYPE"]){
 				case "C":
-					break;
+				array_push($FORMVIEW["SQL"],$this->DAO->insApi($REQ)); 
+						break;
 				case "U":
+					array_push($FORMVIEW["SQL"],$this->DAO->updApi($REQ));
 					break;
 				default : 
 					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
@@ -366,7 +243,7 @@ class appapiService
 //FORMVIEW DELETE
 		$grpId="F4";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId."-CTLCUD"]; 
-		$FORMVIEW["SQL"][$FORMVIEW["FNCTYPE"]] = $this->DAO->($REQ); 
+		$FORMVIEW["SQL"][$FORMVIEW["FNCTYPE"]] = $this->DAO->delApi($REQ); 
 
 		//필수 여부 검사
 		$tmpVal = requireFormviewSave($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"] );

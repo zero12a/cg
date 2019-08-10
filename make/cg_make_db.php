@@ -800,7 +800,7 @@ function getInput($input,$filetype,$param,$G){
             ,$G["G"]["GRPSEQ"]
             ,$AddSql
         );
-        alog("SQL 799 (input " . $input . ") : " .$T_SQL);
+        //alog("SQL 799 (input " . $input . ") : " .$T_SQL);
         //exit;
 
         //echo "<br>getInput $input :  ". $T_SQL;
@@ -1119,7 +1119,7 @@ function getInput($input,$filetype,$param,$G){
             ,addSqlSlashes($F_PGMSEQ)
             ,$G["V"]["GRPSEQ"]
         );
-        alog("SQL (input 1122 " . $input . ") : " .$T_SQL);
+        //alog("SQL (input 1122 " . $input . ") : " .$T_SQL);
 
         //echo "<br>getInput $input :  ". $T_SQL;
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################

@@ -62,6 +62,7 @@ function initBody(){
 		G7_INIT();	
 		G2_INIT();	
 		G3_INIT();	
+		G8_INIT();	
 	      feather.replace();
 	alog("initBody()-----------------------end");
 } //initBody()	
@@ -299,6 +300,39 @@ function G3_INIT(){
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG4 = new HashMap(); //a
+				lastinputG5 = new HashMap(); //b
+				lastinputG6 = new HashMap(); //c
+				lastinputG7 = new HashMap(); //d
+				lastinputG2 = new HashMap(); //그리드
+				lastinputG8 = new HashMap(); //BT그리드
+		//  호출
+	G4_SEARCH(lastinputG4,token);
+	//  호출
+	G5_SEARCH(lastinputG5,token);
+	//  호출
+	G6_SEARCH(lastinputG6,token);
+	//  호출
+	G7_SEARCH(lastinputG7,token);
+	//  호출
+	G2_SEARCH(lastinputG2,token);
+	//  호출
+	G8_SEARCH(lastinputG8,token);
+	alog("G1_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 //컨디션, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -336,36 +370,6 @@ function G1_USERDEF(token){
 	alog("G1_USERDEF-----------------start");
 
 	alog("G1_USERDEF-----------------end");
-}
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG4 = new HashMap(); //a
-				lastinputG5 = new HashMap(); //b
-				lastinputG6 = new HashMap(); //c
-				lastinputG7 = new HashMap(); //d
-				lastinputG2 = new HashMap(); //그리드
-		//  호출
-	G4_SEARCH(lastinputG4,token);
-	//  호출
-	G5_SEARCH(lastinputG5,token);
-	//  호출
-	G6_SEARCH(lastinputG6,token);
-	//  호출
-	G7_SEARCH(lastinputG7,token);
-	//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
 }
 function G4_SEARCH(tinput,token){
        alog("(BIVIEW) G4_SEARCH---------------start");
@@ -575,6 +579,69 @@ function G7_SEARCH(tinput,token){
     alog("(BIVIEW) G7_SEARCH---------------end");
 
 }
+	function G2_SAVE(token){
+	alog("G2_SAVE()------------start");
+	tgrid = mygridG2;
+
+	tgrid.setSerializationLevel(true,false,false,false,true,false);
+	var myXmlString = tgrid.serialize();
+        //post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+		//for(var pair of lastinputG2.entries()) {
+		//	sendFormData.append(pair[0],pair[1]);
+   		//	//console.log(pair[0]+ ', '+ pair[1]); 
+		//}
+
+		if(typeof lastinputG2 != "undefined"){
+			var tKeys = lastinputG2.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG2.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG2.get(tKeys[i])); 
+			}
+		}
+	sendFormData.append("G2-XML" , myXmlString);
+	$.ajax({
+		type : "POST",
+		url : url_G2_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G2_SAVE()------------end");
+}
+//그리드 행추가 : 그리드
+	function G2_ROWBULKADD(){
+		if( !(lastinputG2json)){
+			msgError("조회 후에 행추가 가능합니다",3);
+		}else{
+			var tCols = ["","","","",""];//초기값
+
+	var rowcnt = prompt("Please enter row's count", "input number");
+	if($.isNumeric(rowcnt)){
+		for(k=0;k<rowcnt;k++){
+			addRow(mygridG2,tCols);  
+		}
+	}
+			}
+	}
 
 
 
@@ -663,69 +730,29 @@ function G2_USERDEF(token){
 			var tCols = ["","","","",""];//초기값
 			addRow(mygridG2,tCols);
 		}
-	}	function G2_SAVE(token){
-	alog("G2_SAVE()------------start");
-	tgrid = mygridG2;
+	}//	
+function G3_NEW2(){
+       alog("[FromView] G3_NEW2---------------start");
+	$("#G3-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G3-FILESEQ").val("");//FILESEQ 신규초기화	
+				$("#G3-FILE1-LINK").attr("href","");//파일1 NEW
+				$("#G3-FILE1-NM").text("");//파일1 NEW
+			$("#G3-LINKVIEW-LINK").attr("href","");//링크뷰 신규
+			$("#G3-LINKVIEW-NM").text("");//링크뷰 신규
+			$("#DIV_G3-LINKVIEW").css("display", "none");
+			$("#G3-HIDDENLINK-LINK").attr("href","");//히든링크 신규
+			$("#G3-HIDDENLINK-NM").text("");//히든링크 신규
+			$("#DIV_G3-HIDDENLINK").css("display", "none");
 
-	tgrid.setSerializationLevel(true,false,false,false,true,false);
-	var myXmlString = tgrid.serialize();
-        //post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-		//for(var pair of lastinputG2.entries()) {
-		//	sendFormData.append(pair[0],pair[1]);
-   		//	//console.log(pair[0]+ ', '+ pair[1]); 
-		//}
-
-		if(typeof lastinputG2 != "undefined"){
-			var tKeys = lastinputG2.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],lastinputG2.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ lastinputG2.get(tKeys[i])); 
-			}
-		}
-	sendFormData.append("G2-XML" , myXmlString);
-	$.ajax({
-		type : "POST",
-		url : url_G2_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G2_SAVE()------------end");
+       alog("DETAILNew30---------------end");
 }
-//그리드 행추가 : 그리드
-	function G2_ROWBULKADD(){
-		if( !(lastinputG2json)){
-			msgError("조회 후에 행추가 가능합니다",3);
-		}else{
-			var tCols = ["","","","",""];//초기값
+//사용자정의함수 : 사용자정의
+function G3_USERDEF(token){
+	alog("G3_USERDEF-----------------start");
 
-	var rowcnt = prompt("Please enter row's count", "input number");
-	if($.isNumeric(rowcnt)){
-		for(k=0;k<rowcnt;k++){
-			addRow(mygridG2,tCols);  
-		}
-	}
-			}
-	}
+	alog("G3_USERDEF-----------------end");
+}
 //디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
@@ -865,27 +892,4 @@ function G3_SAVE(token){
 			alog(error);
 		}
 	});
-}
-//	
-function G3_NEW2(){
-       alog("[FromView] G3_NEW2---------------start");
-	$("#G3-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G3-FILESEQ").val("");//FILESEQ 신규초기화	
-				$("#G3-FILE1-LINK").attr("href","");//파일1 NEW
-				$("#G3-FILE1-NM").text("");//파일1 NEW
-			$("#G3-LINKVIEW-LINK").attr("href","");//링크뷰 신규
-			$("#G3-LINKVIEW-NM").text("");//링크뷰 신규
-			$("#DIV_G3-LINKVIEW").css("display", "none");
-			$("#G3-HIDDENLINK-LINK").attr("href","");//히든링크 신규
-			$("#G3-HIDDENLINK-NM").text("");//히든링크 신규
-			$("#DIV_G3-HIDDENLINK").css("display", "none");
-
-       alog("DETAILNew30---------------end");
-}
-//사용자정의함수 : 사용자정의
-function G3_USERDEF(token){
-	alog("G3_USERDEF-----------------start");
-
-	alog("G3_USERDEF-----------------end");
 }

@@ -80,32 +80,18 @@ $REQ["C2-URL"] = reqPostString("C2-URL",50);//URL
 $REQ["C2-URL"] = getFilter($REQ["C2-URL"],"","//");	
 
 //G3, 그리드1
+$REQ["G3-ROWCHK"] = reqPostNumber("G3-ROWCHK",1);//ROWCHK	
+$REQ["G3-ROWCHK"] = getFilter($REQ["G3-ROWCHK"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-API_SEQ"] = reqPostString("G3-API_SEQ",10);//SEQ	
-$REQ["G3-API_SEQ"] = getFilter($REQ["G3-API_SEQ"],"","//");	
+$REQ["G3-API_SEQ"] = getFilter($REQ["G3-API_SEQ"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-API_NM"] = reqPostString("G3-API_NM",50);//NM	
-$REQ["G3-API_NM"] = getFilter($REQ["G3-API_NM"],"","//");	
+$REQ["G3-API_NM"] = getFilter($REQ["G3-API_NM"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-PGM_ID"] = reqPostString("G3-PGM_ID",50);//ID	
-$REQ["G3-PGM_ID"] = getFilter($REQ["G3-PGM_ID"],"","//");	
-$REQ["G3-URL"] = reqPostString("G3-URL",50);//URL	
-$REQ["G3-URL"] = getFilter($REQ["G3-URL"],"","//");	
-$REQ["G3-REQ_ENCTYPE"] = reqPostString("G3-REQ_ENCTYPE",55);//REQENCTYPE	
-$REQ["G3-REQ_ENCTYPE"] = getFilter($REQ["G3-REQ_ENCTYPE"],"","//");	
-$REQ["G3-REQ_DATATYPE"] = reqPostString("G3-REQ_DATATYPE",50);//REQDATATYPE	
-$REQ["G3-REQ_DATATYPE"] = getFilter($REQ["G3-REQ_DATATYPE"],"","//");	
-$REQ["G3-REQ_BODY"] = reqPostString("G3-REQ_BODY",50);//REQBODY	
-$REQ["G3-REQ_BODY"] = getFilter($REQ["G3-REQ_BODY"],"","//");	
-$REQ["G3-RES_BODY"] = reqPostString("G3-RES_BODY",50);//RESBODY	
-$REQ["G3-RES_BODY"] = getFilter($REQ["G3-RES_BODY"],"","//");	
-$REQ["G3-MYFILE"] = reqPostString("G3-MYFILE",40);//MYFILE	
-$REQ["G3-MYFILE"] = getFilter($REQ["G3-MYFILE"],"","//");	
-$REQ["G3-MYFILESVRNM"] = reqPostString("G3-MYFILESVRNM",40);//MYFILESVRNM	
-$REQ["G3-MYFILESVRNM"] = getFilter($REQ["G3-MYFILESVRNM"],"","//");	
+$REQ["G3-PGM_ID"] = getFilter($REQ["G3-PGM_ID"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-ADD_DT"] = reqPostString("G3-ADD_DT",14);//ADD	
-$REQ["G3-ADD_DT"] = getFilter($REQ["G3-ADD_DT"],"","//");	
+$REQ["G3-ADD_DT"] = getFilter($REQ["G3-ADD_DT"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-MOD_DT"] = reqPostString("G3-MOD_DT",14);//MOD	
-$REQ["G3-MOD_DT"] = getFilter($REQ["G3-MOD_DT"],"","//");	
-$REQ["G3-CHK"] = reqPostNumber("G3-CHK",1);//CHK	
-$REQ["G3-CHK"] = getFilter($REQ["G3-CHK"],"","//");	
+$REQ["G3-MOD_DT"] = getFilter($REQ["G3-MOD_DT"],"CLEARTEXT","/--미 정의--/");	
 
 //F4, 폼뷰1
 $REQ["F4-CAL"] = reqPostString("F4-CAL",40);//달력	
@@ -136,39 +122,9 @@ $REQ["F4-ADD_DT"] = reqPostString("F4-ADD_DT",14);//ADD
 $REQ["F4-ADD_DT"] = getFilter($REQ["F4-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["F4-MOD_DT"] = reqPostString("F4-MOD_DT",14);//MOD	
 $REQ["F4-MOD_DT"] = getFilter($REQ["F4-MOD_DT"],"SAFETEXT","/--미 정의--/");	
-$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//그리드1	
-	//,  입력값 필터 
-	$REQ["G3-XML"] = filterGridXml(
-	array(
-		"XML"=>$REQ["G3-XML"]
-		,"COLORD"=>"ROWCHK,API_SEQ,API_NM,PGM_ID,URL,REQ_ENCTYPE,REQ_DATATYPE,REQ_BODY,RES_BODY,MYFILE,MYFILESVRNM,ADD_DT,MOD_DT,CHK"
-		,"VALID"=>
-			array(
-			"ROWCHK"=>array("NUMBER",1)	
-			,"API_SEQ"=>array("STRING",10)	
-			,"API_NM"=>array("STRING",50)	
-			,"PGM_ID"=>array("STRING",50)	
-			,"URL"=>array("STRING",50)	
-			,"REQ_ENCTYPE"=>array("STRING",55)	
-			,"REQ_DATATYPE"=>array("STRING",50)	
-			,"REQ_BODY"=>array("STRING",50)	
-			,"RES_BODY"=>array("STRING",50)	
-			,"MYFILE"=>array("STRING",40)	
-			,"MYFILESVRNM"=>array("STRING",40)	
-			,"ADD_DT"=>array("STRING",14)	
-			,"MOD_DT"=>array("STRING",14)	
-			,"CHK"=>array("NUMBER",1)	
-					)
-		,"FILTER"=>
-			array(
-					)
-	)
-);
-	
-$REQ["G3-CHK"] = $_POST["G3-CHK"];//CHK 받기
-//filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
-$REQ["G3-CHK"] = filterGridChk($REQ["G3-CHK"],"STRING",10,"","//");//API_SEQ 입력값검증
-	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
+//,  입력값 필터 
+		
+array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new appapiService();
 	//컨트롤 명령별 분개처리
@@ -179,15 +135,6 @@ switch ($ctl){
   		break;
 	case "G3_SEARCH" :
   		echo $objService->goG3Search(); //그리드1, 조회
-  		break;
-	case "G3_CHKSAVE" :
-  		echo $objService->goG3Chksave(); //그리드1, 완전삭제
-  		break;
-	case "G3_SAVE" :
-  		echo $objService->goG3Save(); //그리드1, S
-  		break;
-	case "G3_EXCEL" :
-  		echo $objService->goG3Excel(); //그리드1, E
   		break;
 	case "F4_SEARCH" :
   		echo $objService->goF4Search(); //폼뷰1, 조회

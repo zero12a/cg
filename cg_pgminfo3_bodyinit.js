@@ -384,6 +384,47 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("ICONSTYLE"),true); 
 
                     break;
+                case "GRIDBT":
+                    //(FNC) FNCTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCGRIDBT");
+
+                    //(IO) OBJTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTGRIDBT");
+
+                    //BRYN, LBLHIDDEN, LBLWIDTH 숨기기
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATATYPE"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FORMAT"),false);                       
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),true);                    
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);
+
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),false);                     
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("SEQYN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),false);   
+
+                    //그리드 전용 컬럼 숨기기  
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERNM"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERMATH"),false);   
+                    
+                    //스타일 전용 컬럼(BIVEIW 사용중)
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLSTYLE"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJSTYLE"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJ2STYLE"),true); 
+                    
+                    //BIVIEW 전용 컬럼
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("ICONNM"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("ICONSTYLE"),true); 
+
+                    break;                    
                 case "FORMVIEW":
                     //(FNC) FNCTYPE 다시 불러오기
                     setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCFORMVIEW");

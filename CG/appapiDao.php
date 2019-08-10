@@ -129,7 +129,8 @@ WHERE DEL_YN='N'
 FROM 
 	APP_API
 WHERE DEL_YN='N'
-ORDER BY API_SEQ DESC";
+ORDER BY API_SEQ DESC
+";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";

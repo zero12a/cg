@@ -73,7 +73,7 @@ class menumngService
 
 		//조회
 		//V_GRPNM : 폴더
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selFoldG($REQ)); //SEARCH, 조회,selFoldG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -154,7 +154,7 @@ class menumngService
 
 		//조회
 		//V_GRPNM : 메뉴
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selMenuG($REQ)); //SEARCH, 조회,selMenuG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -196,9 +196,11 @@ class menumngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//S
 		//V_GRPNM : 메뉴
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
+		array_push($GRID["SQL"]["U"], $this->DAO->updMenuG($REQ)); //SAVE, S,updMenuG
 		//V_GRPNM : 메뉴
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
+		array_push($GRID["SQL"]["D"], $this->DAO->delMenuG($REQ)); //SAVE, S,delMenuG
+		//V_GRPNM : 메뉴
+		array_push($GRID["SQL"]["C"], $this->DAO->insMenuG($REQ)); //SAVE, S,insMenuG
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");

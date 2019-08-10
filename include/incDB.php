@@ -1483,6 +1483,7 @@ end
                         $one_row = array();
                         $j = 0;
                         foreach($data as $k=>$v){
+                            $tMap = array();
                             //암호화 컬럼에 존재 하는지 확인
                             if( $colcrypt_array[trim($k)] == "CRYPT" ){
                                 //양방향 암호화
@@ -1490,25 +1491,42 @@ end
                                 alog("  cyrpt 후 : [" .  aes_decrypt($v,$CFG_SEC_KEY) . "]");                        
     
                                 //$array[$i][$k] = aes_decrypt($v,$CFG_SEC_KEY);
-    
-                                array_push($one_row, aes_decrypt($v,$CFG_SEC_KEY) );
+                                if($map["GRPTYPE"] == "GRID_BOOTSTRAP"){
+                                    $one_row[$k] = aes_decrypt($v,$CFG_SEC_KEY);
+                                }else{
+                                    array_push($one_row, aes_decrypt($v,$CFG_SEC_KEY) );
+                                }
+                                
                             }else if( $colcrypt_array[trim($k)] == "HASH" ){
                                 //일방향 암호화
                                 alog("  hash 전 col/key: " . $v . "/" . $CFG_SEC_SALT);
                                 //$array[$i][$k] = aes_decrypt($v,$CFG_SEC_KEY);
-    
-                                array_push($one_row, $v );
+                                if($map["GRPTYPE"] == "GRID_BOOTSTRAP"){
+                                    $one_row[$k] = $v;
+                                }else{
+                                    array_push($one_row, $v );
+                                }
                             }else{
                                 //평문
-                                array_push($one_row, $v );
+                                if($map["GRPTYPE"] == "GRID_BOOTSTRAP"){
+                                    $one_row[$k] = $v;
+                                }else{
+                                    array_push($one_row, $v );
+                                }                                
                             }
                             
                             
                             if($j == $map["KEYCOLIDX"])$id_col_value = $v;
                             $j++;
                         }
-                        $RtnVal->RTN_DATA->rows[$i]['id']=$id_col_value;
-                        $RtnVal->RTN_DATA->rows[$i]['data']=$one_row;
+                        
+                        if($map["GRPTYPE"] == "GRID_BOOTSTRAP"){
+                            $RtnVal->RTN_DATA->rows[$i]=$one_row;                            
+                        }else{
+                            $RtnVal->RTN_DATA->rows[$i]['id']=$id_col_value;
+                            $RtnVal->RTN_DATA->rows[$i]['data']=$one_row;
+                        }
+
                         //alog($i);
                         $i++;
                 }
@@ -2914,4 +2932,3 @@ end
         return $RtnVal;
     }
 ?>
-
