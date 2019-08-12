@@ -3,10 +3,11 @@ header("Content-Type: text/html; charset=UTF-8");
 header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
-	//로그인 검사
+    //로그인 검사
+    require_once("./incConfig.php");
     require_once("./include/incUtil.php");
     require_once("./include/incUser.php");
-    require_once("./incConfig.php");
+
 
     require_once("./include/incLoginCheck.php");//로그인 검사
 
@@ -51,6 +52,15 @@ header("Pragma:no-cache");
 
 
     <style>
+
+        input[type=button]{
+            padding: 3px 5px 3px 5px;
+            font-size: 12px;
+            border-radius: 0;
+            -webkit-appearance: none;
+        }
+
+
         .CodeMirror {
             border-top: 1px solid black;
             border-bottom: 1px solid black;
@@ -73,12 +83,12 @@ header("Pragma:no-cache");
 
 <div id="BODY_BOX" class="BODY_BOX">
 
-	<div  class="GRID_LABELGRP" >
-		<div class="GRID_LABEL" >* PGMINFO3
+	<div  class="GRID_LABELGRP" style="vertical-align:bottom;">
+		<div class="GRID_LABEL" style="vertical-align:text-bottom;">* PGMINFO3
 			<!--popup--><a href="?" target="_blank"><img src="./img/popup.png" height=10 align=absmiddle border=0></a>
 			<!--reload--><a href="javascript:location.reload();"><img src="./img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 		</div>
-		<div  class="GRID_LABELBTN"  >
+		<div  class="GRID_LABELBTN"  style="vertical-align: bottom;" >
             <!--"HTML","HTMLJS","SVRCTL","SVRSVC","SVRDAO"-->
             <span id="makeHTML"></span>
             <span id="makeHTMLJS"></span>

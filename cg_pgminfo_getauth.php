@@ -76,7 +76,7 @@
         order by p.PGMID,g.GRPORD asc,f.FNCORD asc        
     ";
 
-    mlog("cg_clode_json.php...............333");
+    alog("cg_clode_json.php...............333");
 
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
 
@@ -106,10 +106,11 @@
         $lastPgmid = $tMap["PGMID"];
     }
     //화면에 SQL문 출력
-    echo "<BR>lastPgmid : " . $lastPgmid;
-    echo "<BR>count(sqlVal[lastPgmid]) : " . count($rtnVal[$lastPgmid]);    
-    echo "<textarea style='width:100%;height:120px;font-size:8pt'>";
+    alog("<BR>lastPgmid : " . $lastPgmid);
+    alog("<BR>count(sqlVal[lastPgmid]) : " . count($rtnVal[$lastPgmid]));    
+    alog("<textarea style='width:100%;height:120px;font-size:8pt'>");
     $tMap = $sqlVal[$lastPgmid][$j];
+    /*
     echo sprintf("
         insert into CMN_MNU (
             MNU_NM, PGMID, URL, MNU_ORD, FOLDER_SEQ
@@ -130,8 +131,11 @@
     echo "</textarea>";
 
     echo "<textarea style='width:100%;height:500px;font-size:8pt'>";
+    */
+
     for($j=0;$j<count($sqlVal[$lastPgmid]);$j++){
         $tMap = $sqlVal[$lastPgmid][$j];
+        /*
         echo sprintf("
         insert into CMN_AUTH (
             PGMID,AUTH_ID,AUTH_NM,USE_YN,ADD_DT
@@ -144,8 +148,12 @@
         ,$tMap["AUTH_NM"]
         ,"date_format(sysdate(),'%Y%m%d%H%i%s')"
         );
+        */
     }
-    echo "</textarea>";
+    
+    //echo "</textarea>";
+
+
     //기존 세션 정보 가져오기
     $sessAuth = $_SESSION['CG_AUTH']; //true줘야 일반 배열이 되고, true없으면 stdclass()가 됨
     $sessAuth[$lastPgmid] = $rtnVal[$lastPgmid];

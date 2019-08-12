@@ -183,7 +183,9 @@
 
         
 
-        mygridPgm.attachEvent("onRowDblClicked",function(rowID,celInd){
+        //mygridPgm.attachEvent("onRowDblClicked",function(rowID,celInd){
+        mygridPgm.attachEvent("onRowSelect",function(rowID,celInd){
+
             alog("mygridPgm - onRowDblClicked ----------start");
             alog("   rowID = " + rowID);
             alog("   celInd = " + celInd);

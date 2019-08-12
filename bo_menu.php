@@ -4,9 +4,10 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
 	//로그인 검사
+	require_once("../c.g/incConfig.php");
+
     require_once("../c.g/include/incUtil.php");
     require_once("../c.g/include/incUser.php");
-    require_once("../c.g/incConfig.php");
 
     require_once("../c.g/include/incLoginCheck.php");//로그인 검사
 

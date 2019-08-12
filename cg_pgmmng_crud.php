@@ -3,13 +3,14 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
-
+    include_once("./incConfig.php");
+    include_once('./include/incSeC.php');//CG SEC
     include_once("./include/incUtil.php");
 	include_once('./include/incRequest.php');//CG REQUEST    
-    include_once("./incConfig.php");
+
     include_once("./include/incDB.php");
     include_once("./include/incUser.php");
-	include_once('./include/incSEC.php');//CG SEC
+
     include_once("./cg_pgmmng_svc.php");
     include_once('./cg_pgmmng_dao.php');
     //ServerViewTxt("N","N","Y","Y");
