@@ -1,7 +1,9 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "findanalController?CTLGRP=G1&CTLFNC=SEARCHALL";// 변수 선언	
-var obj_G1_EX_TEAM_NM; // 그래프 제외 팀명 변수선언//컨트롤러 경로
+var url_G1_SEARCHALL = "findanalController?CTLGRP=G1&CTLFNC=SEARCHALL";
+// 변수 선언	
+var obj_G1_EX_TEAM_NM; // 그래프 제외 팀명 변수선언
+//컨트롤러 경로
 var url_G2_SEARCH = "findanalController?CTLGRP=G2&CTLFNC=SEARCH";
 			//G.GRPID 챠트 데이터
 		var chartG2Data = { colids : [], labels : [], datasets: [] };
@@ -692,7 +694,8 @@ function G1_SEARCHALL(token){
 		var tGrid = mygridG3;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -723,7 +726,8 @@ function G1_SEARCHALL(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG3Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG3Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");
@@ -770,7 +774,8 @@ function G4_RELOAD(token){
 		var tGrid = mygridG4;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -801,7 +806,8 @@ function G4_RELOAD(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG4Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG4Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");
@@ -850,7 +856,8 @@ function G4_RELOAD(token){
 		var tGrid = mygridG5;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -881,7 +888,8 @@ function G4_RELOAD(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG5Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG5Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");

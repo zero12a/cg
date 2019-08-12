@@ -115,7 +115,7 @@ function G3_INIT(){
 	$btG3 = $('#btG3');
 	$btG3.on('click-row.bs.table', function (e, row, $element) {
 		//    alert(row.myid);
-		alert(JSON.stringify(row))
+		//alert(JSON.stringify(row))
 
 		lastinputF4 = new HashMap(); // 폼뷰1
 		lastinputF4.set("G3-API_SEQ", row.API_SEQ); // 
@@ -213,7 +213,7 @@ function C2_SAVE(){
 	});
 	alog("C2_SAVE-------------------end");	
 }
-//사용자정의함수 : 
+//사용자정의함수 : 테스트
 function C2_sss(token){
 	alog("C2_sss-----------------start");
 alert("hi condition");
@@ -285,6 +285,37 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
+function F4_MOD(){
+       alog("[FromView] F4_MOD---------------start");
+	if( $("#F4-CTLCUD").val() == "C" ){
+		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+	if( $("#F4-CTLCUD").val() == "D" ){
+		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+
+	$("#F4-CTLCUD").val("U");
+       alog("[FromView] F4_MOD---------------end");
+}
+//	
+function F4_NEW(){
+       alog("[FromView] F4_NEW---------------start");
+	$("#F4-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#F4-API_SEQ").val("");//SEQ 신규초기화	
+	$("#F4-API_NM").val("");//NM 신규초기화	
+	$("#F4-PGM_ID").val("");//ID 신규초기화	
+	$("#F4-URL").val("");//URL 신규초기화	
+	$("#F4-REQ_BODY").val("");//REQBODY 신규초기화
+	$("#F4-RES_BODY").val("");//RESBODY 신규초기화
+	$("#F4-MYFILESVRNM").val("");//MYFILESVRNM 신규초기화	
+				$("#F4-MYFILE-LINK").attr("href","");//MYFILE NEW
+				$("#F4-MYFILE-NM").text("");//MYFILE NEW
+	$("#F4-MYFILE_VIEWER").html("");
+	$("#F4-ADD_DT").text("");//ADD 신규초기화		$("#F4-MOD_DT").text("");//MOD 신규초기화	       alog("DETAILNew30---------------end");
+}
 //FORMVIEW DELETE
 function F4_DELETE(){	
 	alog("F4_DELETE---------------start");
@@ -468,35 +499,4 @@ function F4_SAVE(token){
 			alog(error);
 		}
 	});
-}
-function F4_MOD(){
-       alog("[FromView] F4_MOD---------------start");
-	if( $("#F4-CTLCUD").val() == "C" ){
-		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-	if( $("#F4-CTLCUD").val() == "D" ){
-		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-
-	$("#F4-CTLCUD").val("U");
-       alog("[FromView] F4_MOD---------------end");
-}
-//	
-function F4_NEW(){
-       alog("[FromView] F4_NEW---------------start");
-	$("#F4-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#F4-API_SEQ").val("");//SEQ 신규초기화	
-	$("#F4-API_NM").val("");//NM 신규초기화	
-	$("#F4-PGM_ID").val("");//ID 신규초기화	
-	$("#F4-URL").val("");//URL 신규초기화	
-	$("#F4-REQ_BODY").val("");//REQBODY 신규초기화
-	$("#F4-RES_BODY").val("");//RESBODY 신규초기화
-	$("#F4-MYFILESVRNM").val("");//MYFILESVRNM 신규초기화	
-				$("#F4-MYFILE-LINK").attr("href","");//MYFILE NEW
-				$("#F4-MYFILE-NM").text("");//MYFILE NEW
-	$("#F4-MYFILE_VIEWER").html("");
-	$("#F4-ADD_DT").text("");//ADD 신규초기화		$("#F4-MOD_DT").text("");//MOD 신규초기화	       alog("DETAILNew30---------------end");
 }

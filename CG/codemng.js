@@ -1,9 +1,13 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "codemngController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_RESET = "codemngController?CTLGRP=G1&CTLFNC=RESET";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "codemngController?CTLGRP=G1&CTLFNC=SEARCHALL";//1 변수 선언	
-var obj_G1_ADD_DT; // ADD 변수선언//그리드 변수 초기화	
+var url_G1_SAVE = "codemngController?CTLGRP=G1&CTLFNC=SAVE";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_RESET = "codemngController?CTLGRP=G1&CTLFNC=RESET";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_SEARCHALL = "codemngController?CTLGRP=G1&CTLFNC=SEARCHALL";
+//1 변수 선언	
+var obj_G1_ADD_DT; // ADD 변수선언
+//그리드 변수 초기화	
 //컨트롤러 경로
 var url_G2_SEARCH = "codemngController?CTLGRP=G2&CTLFNC=SEARCH";
 //컨트롤러 경로
@@ -442,6 +446,19 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
+}
+    function G2_HIDDENCOL(){
+		alog("G2_HIDDENCOL()..................start");
+        if(isToggleHiddenColG2){
+            isToggleHiddenColG2 = false;     }else{
+            isToggleHiddenColG2 = true;
+        }
+		alog("G2_HIDDENCOL()..................end");
+    }
     function G2_ROWDELETE(){	
         alog("G2_ROWDELETE()------------start");
         delRow(mygridG2);
@@ -504,7 +521,8 @@ function G2_EXCEL(){
 		var tGrid = mygridG2;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -535,7 +553,8 @@ function G2_EXCEL(){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG2Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG2Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");
@@ -652,20 +671,31 @@ function G2_CHKSAVE(){
 	
 	alog("G2_CHKSAVE()------------end");
 }
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
-}
-    function G2_HIDDENCOL(){
-		alog("G2_HIDDENCOL()..................start");
-        if(isToggleHiddenColG2){
-            isToggleHiddenColG2 = false;     }else{
-            isToggleHiddenColG2 = true;
-        }
-		alog("G2_HIDDENCOL()..................end");
-    }
+//그리드 행추가 : 상세
+	function G3_ROWBULKADD(){
+		if( !(lastinputG3json)|| !(lastinputG3json.PCD) ){
+			msgError("조회 후에 행추가 가능합니다",3);
+		}else{
+			var tCols = ["","","","",lastinputG3.get("G2-PCD"),"","","","","","","","","","","",""];//초기값
 
+	var rowcnt = prompt("Please enter row's count", "input number");
+	if($.isNumeric(rowcnt)){
+		for(k=0;k<rowcnt;k++){
+			addRow(mygridG3,tCols);  
+		}
+	}
+			}
+	}
+//행추가3 (상세)	
+//그리드 행추가 : 상세
+	function G3_ROWADD(){
+		if( !(lastinputG3)|| lastinputG3.get("G3-PCD") == ""){
+			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
+		}else{
+			var tCols = ["","","","",lastinputG3.get("G2-PCD"),"","","","","","","","","","","",""];//초기값
+			addRow(mygridG3,tCols);
+		}
+	}
 
 
 
@@ -680,7 +710,8 @@ function G2_RELOAD(token){
 		var tGrid = mygridG3;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -711,7 +742,8 @@ function G2_RELOAD(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG3Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG3Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");
@@ -864,28 +896,3 @@ function G3_EXCEL(){
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
 }
-//그리드 행추가 : 상세
-	function G3_ROWBULKADD(){
-		if( !(lastinputG3json)|| !(lastinputG3json.PCD) ){
-			msgError("조회 후에 행추가 가능합니다",3);
-		}else{
-			var tCols = ["","","","",lastinputG3.get("G2-PCD"),"","","","","","","","","","","",""];//초기값
-
-	var rowcnt = prompt("Please enter row's count", "input number");
-	if($.isNumeric(rowcnt)){
-		for(k=0;k<rowcnt;k++){
-			addRow(mygridG3,tCols);  
-		}
-	}
-			}
-	}
-//행추가3 (상세)	
-//그리드 행추가 : 상세
-	function G3_ROWADD(){
-		if( !(lastinputG3)|| lastinputG3.get("G3-PCD") == ""){
-			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
-		}else{
-			var tCols = ["","","","",lastinputG3.get("G2-PCD"),"","","","","","","","","","","",""];//초기값
-			addRow(mygridG3,tCols);
-		}
-	}

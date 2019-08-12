@@ -1,10 +1,16 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_USERDEF = "filetestController?CTLGRP=G1&CTLFNC=USERDEF";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "filetestController?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "filetestController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_RESET = "filetestController?CTLGRP=G1&CTLFNC=RESET";//컨디션 변수 선언	
-var obj_G1_ADDDT; // ADDDT 변수선언var obj_G1_MODDT; // MODDT 변수선언	//a 글로벌 변수 초기화
+var url_G1_USERDEF = "filetestController?CTLGRP=G1&CTLFNC=USERDEF";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_SEARCHALL = "filetestController?CTLGRP=G1&CTLFNC=SEARCHALL";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_SAVE = "filetestController?CTLGRP=G1&CTLFNC=SAVE";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_RESET = "filetestController?CTLGRP=G1&CTLFNC=RESET";
+//컨디션 변수 선언	
+var obj_G1_ADDDT; // ADDDT 변수선언
+var obj_G1_MODDT; // MODDT 변수선언
+	//a 글로벌 변수 초기화
 //BI뷰 컨트롤러 경로
 var url_G4_SEARCH = "filetestController?CTLGRP=G4&CTLFNC=SEARCH";
 	//b 글로벌 변수 초기화
@@ -657,7 +663,8 @@ function G7_SEARCH(tinput,token){
 		var tGrid = mygridG2;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -688,7 +695,8 @@ function G7_SEARCH(tinput,token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG2Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG2Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");
@@ -730,7 +738,49 @@ function G2_USERDEF(token){
 			var tCols = ["","","","",""];//초기값
 			addRow(mygridG2,tCols);
 		}
-	}//	
+	}//G3_SAVE
+	//IO_FILE_YN = Y	
+function G3_SAVE(token){	
+	alog("G3_SAVE---------------start");
+
+	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
+		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
+		return;
+	}
+
+	//전송 데이터 객체 만들기
+	var sendFormData = new FormData($("#formviewG3")[0]);
+
+	//컨디션 데이터 추가하기
+	conditionData = new FormData($("#condition")[0]);
+    var es, e, pair;
+    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
+		sendFormData.append(pair[0],pair[1]);
+    }
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 저장되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
+}
+//	
 function G3_NEW2(){
        alog("[FromView] G3_NEW2---------------start");
 	$("#G3-CTLCUD").val("C");
@@ -850,46 +900,4 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
-}
-//G3_SAVE
-	//IO_FILE_YN = Y	
-function G3_SAVE(token){	
-	alog("G3_SAVE---------------start");
-
-	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
-		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
-		return;
-	}
-
-	//전송 데이터 객체 만들기
-	var sendFormData = new FormData($("#formviewG3")[0]);
-
-	//컨디션 데이터 추가하기
-	conditionData = new FormData($("#condition")[0]);
-    var es, e, pair;
-    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
-		sendFormData.append(pair[0],pair[1]);
-    }
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 저장되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
 }

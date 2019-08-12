@@ -2,7 +2,7 @@
 //echo "session_status:" . session_status();
 //php5.4이상 echo "ession_status : " . session_status();
 if( !isset($_SESSION) ){
-	//echo "세션이 시작되지 않았습니다.";
+	echo "세션이 시작되지 않았습니다.";
 }	
 
 

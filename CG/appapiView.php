@@ -47,7 +47,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
  	<div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:64px;">	
+            <div class="GRP_INNER" style="height:74px;">	
 		
 	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 		<div class="CONDITION_LABELGRP">
@@ -56,13 +56,13 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
-			<div class="CONDITION_LABELBTN">				<input type="button" name="BTN_C2_sss" value="" onclick="C2_sss(uuidv4());">
-				<input type="button" name="BTN_C2_SEARCHALL" value="조회(전체)" onclick="C2_SEARCHALL(uuidv4());">
-				<input type="button" name="BTN_C2_SAVE" value="저장" onclick="C2_SAVE(uuidv4());">
-				<input type="button" name="BTN_C2_RESET" value="검색조건 초기화" onclick="C2_RESET(uuidv4());">
+			<div class="CONDITION_LABELBTN">				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_C2_sss" value="테스트" onclick="C2_sss(uuidv4());">
+				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_C2_SEARCHALL" value="조회(전체)" onclick="C2_SEARCHALL(uuidv4());">
+				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_C2_SAVE" value="저장" onclick="C2_SAVE(uuidv4());">
+				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_C2_RESET" value="검색조건 초기화" onclick="C2_RESET(uuidv4());">
 			</div>
 		</div>
-		<div style="height:42px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:32px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 			<!--D101: STARTTXT, TAG-->
@@ -128,14 +128,14 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
-<input type="button" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
 <table id="btG3"
 			data-id-field="myid"
-			data-height="460"
+			data-height="457"
 			data-virtual-scroll="true"
 			data-click-to-select="false"
 			data-resizable="true"
@@ -166,21 +166,21 @@ include_once('../include/incRequest.php');//CG REQUEST
 					</th>
 					<th data-field="PGM_ID" data-sortable="true" data-visible="true"
 						data-halign="LEFT"
-						data-align="LEFT"
+						data-align="RIGHT"
 						data-width="60"
 						data-width-unit="%"
 						>PGM_ID
 					</th>
 					<th data-field="ADD_DT" data-sortable="true" data-visible="true"
 						data-halign="LEFT"
-						data-align="LEFT"
+						data-align="CENTER"
 						data-width="60"
 						data-width-unit="%"
 						>ADD_DT
 					</th>
 					<th data-field="MOD_DT" data-sortable="true" data-visible="true"
 						data-halign="LEFT"
-						data-align="LEFT"
+						data-align="CENTER"
 						data-width="60px"
 						data-width-unit="%"
 						>MOD_DT
@@ -202,7 +202,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:434px;">
+            <div class="GRP_INNER" style="height:494px;">
 				
 			<div sty_le="width:0px;height:0px;overflow: hidden">
 				<form id="formviewF4" name="formviewF4" method="post" enctype="multipart/form-data"  onsubmit="return false;">
@@ -213,9 +213,14 @@ include_once('../include/incRequest.php');//CG REQUEST
 				* 폼뷰1
 			</div>
 			<div class="FORMVIEW_LABELBTN"  style="">
-				<input type="button" name="BTN_F4_SAVE" value="저장" onclick="F4_SAVE(uuidv4());">				<input type="button" name="BTN_F4_RELOAD" value="새로고침" onclick="F4_RELOAD(uuidv4());">				<input type="button" name="BTN_F4_NEW" value="신규" onclick="F4_NEW(uuidv4());">				<input type="button" name="BTN_F4_DELETE" value="삭제" onclick="F4_DELETE(uuidv4());">				<input type="button" name="BTN_F4_MOD" value="수정" onclick="F4_MOD(uuidv4());">			</div>
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_F4_SAVE" value="저장" onclick="F4_SAVE(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_F4_RELOAD" value="새로고침" onclick="F4_RELOAD(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_F4_NEW" value="신규" onclick="F4_NEW(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_F4_DELETE" value="삭제" onclick="F4_DELETE(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_F4_MOD" value="수정" onclick="F4_MOD(uuidv4());">
+			</div>
 		</div>
-		<div style="height:412px;" class="FORMVIEW_OBJECT">
+		<div style="height:452px;" class="FORMVIEW_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 			</DIV><!--is_br_tab end-->

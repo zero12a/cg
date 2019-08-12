@@ -39,6 +39,7 @@ class pgmmngService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, PJTSEQ
 
 		//조회
@@ -123,6 +124,7 @@ class pgmmngService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PGMSEQ
 
 		//조회
@@ -169,11 +171,11 @@ class pgmmngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : PGM
+		array_push($GRID["SQL"]["D"], $this->DAO->sql9($REQ)); //SAVE, 저장,PGM
+		//V_GRPNM : PGM
 		array_push($GRID["SQL"]["C"], $this->DAO->sql7($REQ)); //SAVE, 저장,PGM
 		//V_GRPNM : PGM
 		array_push($GRID["SQL"]["U"], $this->DAO->sql8($REQ)); //SAVE, 저장,PGM
-		//V_GRPNM : PGM
-		array_push($GRID["SQL"]["D"], $this->DAO->sql9($REQ)); //SAVE, 저장,PGM
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -207,6 +209,7 @@ class pgmmngService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, DDSEQ
 
 		//조회
@@ -253,11 +256,11 @@ class pgmmngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : DD
+		array_push($GRID["SQL"]["D"], $this->DAO->sql13($REQ)); //SAVE, 저장,DD
+		//V_GRPNM : DD
 		array_push($GRID["SQL"]["U"], $this->DAO->sql12($REQ)); //SAVE, 저장,DD
 		//V_GRPNM : DD
 		array_push($GRID["SQL"]["C"], $this->DAO->sql11($REQ)); //SAVE, 저장,DD
-		//V_GRPNM : DD
-		array_push($GRID["SQL"]["D"], $this->DAO->sql13($REQ)); //SAVE, 저장,DD
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -306,6 +309,7 @@ class pgmmngService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, CFGSEQ
 
 		//조회
@@ -420,6 +424,7 @@ class pgmmngService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, FILESEQ
 
 		//조회
