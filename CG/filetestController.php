@@ -151,7 +151,6 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//그리드
 					)
 	)
 );
-	
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new filetestService();

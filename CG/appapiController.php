@@ -80,9 +80,7 @@ $REQ["C2-URL"] = reqPostString("C2-URL",50);//URL
 $REQ["C2-URL"] = getFilter($REQ["C2-URL"],"","//");	
 
 //G3, 그리드1
-$REQ["G3-ROWCHK"] = reqPostNumber("G3-ROWCHK",1);//ROWCHK	
-$REQ["G3-ROWCHK"] = getFilter($REQ["G3-ROWCHK"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G3-API_SEQ"] = reqPostString("G3-API_SEQ",10);//SEQ	
+$REQ["G3-API_SEQ"] = reqPostNumber("G3-API_SEQ",10);//SEQ	
 $REQ["G3-API_SEQ"] = getFilter($REQ["G3-API_SEQ"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-API_NM"] = reqPostString("G3-API_NM",50);//NM	
 $REQ["G3-API_NM"] = getFilter($REQ["G3-API_NM"],"CLEARTEXT","/--미 정의--/");	
@@ -123,8 +121,10 @@ $REQ["F4-ADD_DT"] = getFilter($REQ["F4-ADD_DT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["F4-MOD_DT"] = reqPostString("F4-MOD_DT",14);//MOD	
 $REQ["F4-MOD_DT"] = getFilter($REQ["F4-MOD_DT"],"SAFETEXT","/--미 정의--/");	
 //,  입력값 필터 
-		
-array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
+	$REQ["G3-CHK"] = $_POST["G3-CHK"];//CHK 받기
+//filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
+$REQ["G3-CHK"] = filterGridChk($REQ["G3-CHK"],"NUMBER",10,"CLEARTEXT","/--미 정의--/");//API_SEQ 입력값검증
+	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new appapiService();
 	//컨트롤 명령별 분개처리
@@ -135,6 +135,9 @@ switch ($ctl){
   		break;
 	case "G3_SEARCH" :
   		echo $objService->goG3Search(); //그리드1, 조회
+  		break;
+	case "G3_CHKSAVE2" :
+  		echo $objService->goG3Chksave2(); //그리드1, 11
   		break;
 	case "F4_SEARCH" :
   		echo $objService->goF4Search(); //폼뷰1, 조회

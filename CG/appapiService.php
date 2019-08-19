@@ -106,7 +106,7 @@ class appapiService
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
 		$GRID["GRPTYPE"] = "GRID_BOOTSTRAP";
-		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
+		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, API_SEQ
 
 		//조회
 		//V_GRPNM : 그리드1
@@ -128,6 +128,34 @@ class appapiService
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
 		alog("APPAPIService-goG3Search________________________end");
+	}
+	//그리드1, 11
+	public function goG3Chksave2(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("APPAPIService-goG3Chksave2________________________start");
+		//GRID_CHK_SAVE____________________________start
+		$GRID["SQL"] = array();
+		$grpId="G3";
+		$GRID["CHK"]=$REQ[$grpId."-CHK"];
+		$GRID["KEYCOLID"] = "API_SEQ";  //KEY컬럼 COLID, 1
+		//11	
+		array_push($GRID["SQL"], $this->DAO->delApiG($REQ)); // CHKSAVE2, 11, 삭제
+		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_CHK_SAVE____________________________end
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("APPAPIService-goG3Chksave2________________________end");
 	}
 	//폼뷰1, 조회
 	public function goF4Search(){

@@ -23,7 +23,7 @@ class appapiDao
  ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array("F4-API_SEQ"	);
-		$RtnVal["BINDTYPE"] = "s";
+		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
 	//삭제    
@@ -36,7 +36,7 @@ class appapiDao
 		$RtnVal["SQLTXT"] = "UPDATE  APP_API SET DEL_YN ='Y' WHERE API_SEQ = #{API_SEQ}";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "s";
+		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
 	//완전삭제    
@@ -49,7 +49,7 @@ class appapiDao
 		$RtnVal["SQLTXT"] = "DELETE FROM APP_API WHERE API_SEQ = #{API_SEQ}";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "s";
+		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
 	//상세    
@@ -70,7 +70,7 @@ WHERE DEL_YN='N'
 	AND API_SEQ = #{G3-API_SEQ} ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array("G3-API_SEQ"	);
-		$RtnVal["BINDTYPE"] = "s";
+		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
 	//추가    
@@ -123,9 +123,9 @@ WHERE DEL_YN='N'
 		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "searchApiG";
 		$RtnVal["SQLTXT"] = "SELECT
-	 '0' AS ROWCHK,API_SEQ, API_NM, PGM_ID, URL 
-	, REQ_ENCTYPE, REQ_DATATYPE, REQ_BODY, RES_BODY, MYFILE, MYFILESVRNM
-	, ADD_DT, MOD_DT,'0' AS CHK
+	 'true' AS ROWCHK,API_SEQ, API_NM, PGM_ID, URL 
+	, REQ_ENCTYPE, REQ_DATATYPE, REQ_BODY, RES_BODY, ifnull(MYFILE,'') as MYFILE, ifnull(MYFILESVRNM,'') as MYFILESVRNM
+	, ADD_DT, ifnull(MOD_DT,'') as MOD_DT,'0' AS CHK
 FROM 
 	APP_API
 WHERE DEL_YN='N'
@@ -157,7 +157,7 @@ SET
 WHERE API_SEQ = #{F4-API_SEQ} ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array("F4-API_NM"	);
-		$RtnVal["BINDTYPE"] = "ssssssss";
+		$RtnVal["BINDTYPE"] = "sssssssi";
 		return $RtnVal;
     }  
 	//G상세수정    
@@ -181,7 +181,7 @@ SET
 WHERE API_SEQ = #{API_SEQ} ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "ssssssss";
+		$RtnVal["BINDTYPE"] = "sssssssi";
 		return $RtnVal;
     }  
 }

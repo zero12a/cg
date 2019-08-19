@@ -21,13 +21,13 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
 <script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
-<script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS-->
-<script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-ko-KR.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS Lang-->
+<script src="/lib/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS-->
+<script src="/lib/bootstrap-table/locale/bootstrap-table-ko-KR.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS Lang-->
 <link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="/lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <link rel="stylesheet" href="/lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
-<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
+<link rel="stylesheet" href="/lib/bootstrap-table/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <script src="appapi.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
 <script>
@@ -128,66 +128,27 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div>
 			<div id="div_gridG3_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_CHKSAVE2" value="11" onclick="G3_CHKSAVE2(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
+<!--
+data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정상 처리됨
+-->
 <table id="btG3"
-			data-id-field="myid"
+			data-toggle="table"
 			data-height="457"
 			data-virtual-scroll="true"
 			data-click-to-select="false"
 			data-resizable="true"
 			class="table table-bordered table-striped"
-            >
-            <thead>
-                <tr>
-					<th data-field="ROWCHK" data-sortable="true" data-visible="true"
-						data-halign="LEFT"
-						data-align="CENTER"
-						data-width="40"
-						data-width-unit="%"
-						>ROWCHK
-					</th>
-					<th data-field="API_SEQ" data-sortable="true" data-visible="true"
-						data-halign="LEFT"
-						data-align="LEFT"
-						data-width="60"
-						data-width-unit="%"
-						>API_SEQ
-					</th>
-					<th data-field="API_NM" data-sortable="true" data-visible="true"
-						data-halign="LEFT"
-						data-align="LEFT"
-						data-width="60"
-						data-width-unit="%"
-						>API_NM
-					</th>
-					<th data-field="PGM_ID" data-sortable="true" data-visible="true"
-						data-halign="LEFT"
-						data-align="RIGHT"
-						data-width="60"
-						data-width-unit="%"
-						>PGM_ID
-					</th>
-					<th data-field="ADD_DT" data-sortable="true" data-visible="true"
-						data-halign="LEFT"
-						data-align="CENTER"
-						data-width="60"
-						data-width-unit="%"
-						>ADD_DT
-					</th>
-					<th data-field="MOD_DT" data-sortable="true" data-visible="true"
-						data-halign="LEFT"
-						data-align="CENTER"
-						data-width="60px"
-						data-width-unit="%"
-						>MOD_DT
-					</th>
-                </tr>
+			data-id-field="API_SEQ"			>
+			<thead>
             </thead>
-        </table>		</div>
+        </table>
+		</div>
 		</div>
 	</div>
 	<!--
