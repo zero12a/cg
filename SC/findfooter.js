@@ -1,7 +1,9 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "findfooterController?CTLGRP=G1&CTLFNC=SEARCHALL";// 변수 선언	
-var obj_G1_EX_TEAM_NM; // 그래프 제외 팀명 변수선언//컨트롤러 경로
+var url_G1_SEARCHALL = "findfooterController?CTLGRP=G1&CTLFNC=SEARCHALL";
+// 변수 선언	
+var obj_G1_EX_TEAM_NM; // 그래프 제외 팀명 변수선언
+//컨트롤러 경로
 var url_G2_SEARCH = "findfooterController?CTLGRP=G2&CTLFNC=SEARCH";
 			//G.GRPID 챠트 데이터
 		var chartG2Data = { colids : [], labels : [], datasets: [] };
@@ -379,13 +381,13 @@ function G4_INIT(){
 			//'}');
 		//A124
 			lastinputG5json = jQuery.parseJSON('{ "__NAME":"lastinputG5json"' +
-				', "G4-SYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue()) + '"' +
-			', "G4-SUBSYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue()) + '"' +
+				', "G4-SUBSYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue()) + '"' +
+			', "G4-SYS_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue()) + '"' +
 			', "G4-TEAM_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("TEAM_NM")).getValue()) + '"' +
 			'}');
 		lastinputG5 = new HashMap(); // 취약점별 현황
-		lastinputG5.set("G4-SYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue().replace(/&amp;/g, "&")); // 
 		lastinputG5.set("G4-SUBSYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SUBSYS_NM")).getValue().replace(/&amp;/g, "&")); // 
+		lastinputG5.set("G4-SYS_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("SYS_NM")).getValue().replace(/&amp;/g, "&")); // 
 		lastinputG5.set("G4-TEAM_NM", mygridG4.cells(rowID,mygridG4.getColIndexById("TEAM_NM")).getValue().replace(/&amp;/g, "&")); // 
 			G5_SEARCH(lastinputG5,uuidv4()); //자식그룹 호출 : 취약점별 현황
 		});
@@ -629,7 +631,6 @@ function G1_SEARCHALL(token){
 				newColids = [];
 				newColids.push("TYPE_CNT"); // 유형수
 					newColids.push("VUL_CNT"); // 취약점갯수
-					newColids.push("ADD_DT2"); // ADD_DT22
 					chartG2Data.colids = newColids; // 팀별 현황 (보안취약점 갯수)1
             //두번째 컬럼부터 
             nowCol++;
@@ -654,22 +655,6 @@ function G1_SEARCHALL(token){
                 type : 'bar',                
 				label: '취약점갯수',
 				colid : 'VUL_CNT',
-				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
-				borderColor: dsColor,
-				borderWidth: 1,
-				data: []
-            };
-            for(i=0;i<resData.RTN_DATA.rows.length;i++){
-                newDataset.data.push(resData.RTN_DATA.rows[i].data[nowCol]);
-            }      
-            chartG2Data.datasets.push(newDataset);
-            //두번째 컬럼부터 
-            nowCol++;
-            var dsColor = window.chartColors[colorNames[nowCol-1]];                 
-            var newDataset = {
-                type : 'bar',                
-				label: 'ADD_DT22',
-				colid : 'ADD_DT2',
 				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
 				borderColor: dsColor,
 				borderWidth: 1,
@@ -716,7 +701,8 @@ function G3_RELOAD(token){
 		var tGrid = mygridG3;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -747,7 +733,8 @@ function G3_RELOAD(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG3Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG3Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 							//특정 컬럼 평균 구하기. 팀별 현황 (보안취약점 갯수)2.
@@ -815,6 +802,18 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
+    function G4_VIEWHIDDEN(){
+		alog("G4_VIEWHIDDEN()..................start");
+        if(isToggleHiddenColG4){
+            isToggleHiddenColG4 = false;            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
+            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),true); //TEAM_NM
+     }else{
+            isToggleHiddenColG4 = true;
+            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
+            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),false); //TEAM_NM
+        }
+		alog("G4_VIEWHIDDEN()..................end");
+    }
 
 
 
@@ -830,7 +829,8 @@ function G3_RELOAD(token){
 		var tGrid = mygridG4;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -861,7 +861,8 @@ function G3_RELOAD(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG4Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG4Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");
@@ -888,18 +889,6 @@ function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");
   G4_SEARCH(lastinputG4,token);
 }
-    function G4_VIEWHIDDEN(){
-		alog("G4_VIEWHIDDEN()..................start");
-        if(isToggleHiddenColG4){
-            isToggleHiddenColG4 = false;            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),true); //UUID_SEQ
-            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),true); //TEAM_NM
-     }else{
-            isToggleHiddenColG4 = true;
-            mygridG4.setColumnHidden(mygridG4.getColIndexById("UUID_SEQ"),false); //UUID_SEQ
-            mygridG4.setColumnHidden(mygridG4.getColIndexById("TEAM_NM"),false); //TEAM_NM
-        }
-		alog("G4_VIEWHIDDEN()..................end");
-    }
 //새로고침	
 function G5_RELOAD(token){
   alog("G5_RELOAD-----------------start");
@@ -936,7 +925,8 @@ function G5_RELOAD(token){
 		var tGrid = mygridG5;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -967,7 +957,8 @@ function G5_RELOAD(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG5Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG5Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");

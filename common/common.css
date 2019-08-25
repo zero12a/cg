@@ -21,11 +21,14 @@ dhtmlx 디펄트 : content-box
     box-sizing: border-box;
 }
 
+/*dhtmlx div box*/
 div.gridbox {
     -webkit-box-sizing: content-box;
        -moz-box-sizing: content-box;
             box-sizing: content-box;
 }
+
+
 
 /*
 div,input,textarea,select,span {font-family: "Nanum Gothic", sans-serif;font-size: 11px;}
@@ -92,6 +95,11 @@ input[type=text]:read-only {
 /*.GRP_INNER_GRID {overflow: visible;background-color: white;border-radius:2px;padding:0px 0px 0px 0px;}*/
 
 .FORMVIEW_IMGVIEWER {background-color:#e1e1e1;}
+.FORMVIEW_IMGVIEWER_IMG {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 5px;    
+}
 
 .BI_OBJGRP {border:0px solid black;padding:0px 0px 0px 0px;position: relative;float:left;vertical-align:middle ;overflow:auto;z-index:25;}
 .BI_OBJINNER {background-color: white;border-radius:5px;padding:5px 5px 5px 5px;height:70px;}

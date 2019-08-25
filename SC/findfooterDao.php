@@ -45,7 +45,7 @@ order by count(b.LOADD_SEQ) desc";
 		$RtnVal["SVRID"] = "SC";
 		$RtnVal["SQLID"] = "sSys";
 		$RtnVal["SQLTXT"] = "select UUID() as UUID_SEQ, TEAM_NM,SYS_NM, SUBSYS_NM, count(b.LOADD_SEQ) as VUL_CNT
-from 
+from
 	FILELOAD a  
     join  FILELOADD b on a.load_seq = b.LOAD_SEQ
 where a.TEAM_NM  = #{G3-TEAM_NM}
@@ -54,7 +54,7 @@ order by count(b.LOADD_SEQ) desc
 ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array("G3-TEAM_NM"	);
-		$RtnVal["BINDTYPE"] = "ss";
+		$RtnVal["BINDTYPE"] = "s";
 		return $RtnVal;
     }  
 	//TEAM1    

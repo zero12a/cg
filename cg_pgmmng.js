@@ -236,11 +236,11 @@
         mygridPgm = new dhtmlXGridObject('gridPgm');
 		mygridPgm.setUserData("","gridTitle","pgm : pgm list"); //글로별 변수에 그리드 타이블 넣기
         mygridPgm.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridPgm.setHeader("#master_checkbox,PJTSEQ,PJTID,PGMSEQ,STATUS,PGMID,PGMNM,URL,PGMTYPE,VERDT,차수,MAKEDT,ADDDT,MODDT");
-        mygridPgm.setColumnIds("CHK,PJTSEQ,PJTID,PGMSEQ,STATUS,PGMID,PGMNM,VIEWURL,PGMTYPE,VERDT,DEGREE,MAKEDT,ADDDT,MODDT");
-        mygridPgm.setInitWidths("50,50,50,70,60,70,*,100,60,50,40,50,70,70")
-        mygridPgm.setColTypes("ch,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
-		mygridPgm.setColSorting("str,int,str,int,str,str,str,str,str,str,int,str,str,str");
+        mygridPgm.setHeader("#master_checkbox,PJTSEQ,PJTID,PGMSEQ,STATUS,PGMID,PGMNM,URL,권한받기,PGMTYPE,VERDT,차수,MAKEDT,ADDDT,MODDT");
+        mygridPgm.setColumnIds("CHK,PJTSEQ,PJTID,PGMSEQ,STATUS,PGMID,PGMNM,VIEWURL,GETAUTH,PGMTYPE,VERDT,DEGREE,MAKEDT,ADDDT,MODDT");
+        mygridPgm.setInitWidths("50,50,50,70,60,70,*,100,60,60,50,40,50,70,70")
+        mygridPgm.setColTypes("ch,ro,ro,ro,ro,ro,ro,ro,link,ro,ro,ro,ro,ro,ro");
+		mygridPgm.setColSorting("str,int,str,int,str,str,str,str,str,str,str,int,str,str,str");
 
 		mygridPgm.enableSmartRendering(false);
         mygridPgm.enableMultiselect(true);

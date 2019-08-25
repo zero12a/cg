@@ -7,12 +7,12 @@ array_push($_RTIME,array("[TIME 00.START]",microtime(true)));
 include_once('findfooterService.php');
 
 array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
-include_once('../include/incUtil.php');//CG UTIL
+include_once('./incConfig.SC.php');//CG CONFIG
 	include_once('../include/incRequest.php');//CG REQUEST
-	include_once('../include/incDB.php');//CG DB
-	include_once('../include/incSEC.php');//CG SEC
+	include_once('../include/incSec.php');//CG SEC
 	include_once('../include/incAuth.php');//CG AUTH
-	include_once('./incConfig.SC.php');//CG CONFIG
+	include_once('../include/incUtil.php');//CG UTIL
+	include_once('../include/incDB.php');//CG DB
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
@@ -64,8 +64,6 @@ $REQ["G2-TYPE_CNT"] = reqPostNumber("G2-TYPE_CNT",30);//유형수
 $REQ["G2-TYPE_CNT"] = getFilter($REQ["G2-TYPE_CNT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-VUL_CNT"] = reqPostNumber("G2-VUL_CNT",30);//취약점갯수	
 $REQ["G2-VUL_CNT"] = getFilter($REQ["G2-VUL_CNT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-ADD_DT2"] = reqPostNumber("G2-ADD_DT2",0);//ADD_DT22	
-$REQ["G2-ADD_DT2"] = getFilter($REQ["G2-ADD_DT2"],"","//");	
 
 //G3, 팀별 현황 (보안취약점 갯수)2
 $REQ["G3-UUID_SEQ"] = reqPostNumber("G3-UUID_SEQ",100);//UUID_SEQ	
@@ -180,7 +178,6 @@ $REQ["G5-XML"] = filterGridXml(
 					)
 	)
 );
-	
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new findfooterService();

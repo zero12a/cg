@@ -62,7 +62,7 @@ class appapiDao
 		$RtnVal["SQLTXT"] = "SELECT
 	API_SEQ, API_NM, PGM_ID, URL, REQ_BODY
 	,REQ_ENCTYPE, REQ_DATATYPE, RES_BODY, MYFILE, concat('/c.g/up/',MYFILESVRNM) as MYFILE_link
-	, '/c.g/up/PIC_171213122506BdIm.png:/c.g/up/PIC_171213122506BdIm.png,/c.g/up/PIC_171213122506BdIm.png:/c.g/up/PIC_171213122506BdIm.png' MYFILE_VIEWER
+	, '/img/enc.gif^/img/enc.gif,/c.g/up/PIC_171213122506BdIm.png^/c.g/up/PIC_171213122506BdIm.png' MYFILE_VIEWER
 	, MYFILESVRNM, ADD_DT, MOD_DT
 FROM 
 	APP_API

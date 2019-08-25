@@ -298,6 +298,7 @@ header("Pragma:no-cache");
                         <option value="#{GRPID-COLID}">(입력) 라디오 (FORM)</option>      
                         <option value="#{GRPID-COLID}">(입력) 코드검색[CD만저장됨] (FORM)</option>            
                         <option value="CD^NM^GRPID">(출력3V) 코드검색(GRID)</option>
+                        <option value="NM^LINK^TARGET">(출력3V) 링크(GRID)</option>                          
                         <option value="CD^NM">(출력2V) 코드검색(FORM)</option>
                         <option value="LINK^NM">(출력2V) 링크뷰(FORM)</option>           
                         <option value="CHK1,CHK2,CHK3 ~">(출력NV) 체크박스(FORM)</option>        

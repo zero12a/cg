@@ -56,7 +56,7 @@ class findfooterService
 
 		//조회
 		//V_GRPNM : 팀별 현황 (보안취약점 갯수)1
-		$GRID["SQL"][""] = $this->DAO->($REQ); //SEARCH, 조회,
+		$GRID["SQL"]["R"] = $this->DAO->sTeamChart($REQ); //SEARCH, 조회,TEAM2
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -88,11 +88,12 @@ class findfooterService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, UUID_SEQ
 
 		//조회
 		//V_GRPNM : 팀별 현황 (보안취약점 갯수)2
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->sTeam($REQ)); //SEARCH, 조회,TEAM1
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -124,11 +125,12 @@ class findfooterService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, UUID_SEQ
 
 		//조회
 		//V_GRPNM : 시스템별 현황
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->sSys($REQ)); //SEARCH, 조회,SYS
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -160,11 +162,12 @@ class findfooterService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, UUID_SEQ
 
 		//조회
 		//V_GRPNM : 취약점별 현황
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->sRule($REQ)); //SEARCH, 조회,RULESET
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
