@@ -14,6 +14,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
 <script src="/lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="/lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
+<script src="/lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
+<script src="/lib/tableExport/tableExport.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="/lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 <script src="../lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
@@ -130,6 +132,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_CHKSAVE2" value="11" onclick="G3_CHKSAVE2(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_EXCEL2" value="엑셀받기" onclick="G3_EXCEL2(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>
