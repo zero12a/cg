@@ -410,7 +410,6 @@ $REQ["G7-XML"] = filterGridXml(
 					)
 	)
 );
-	
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new pgmmngService();

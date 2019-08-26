@@ -14,6 +14,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
 <script src="/lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="/lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
+<script src="/lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
+<script src="/lib/tableExport/tableExport.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT-->
 <script src="../lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="/lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 <script src="../lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
@@ -21,13 +23,13 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 <script src="../common/common.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX EXT-->
 <script src="/lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
-<script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS-->
-<script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-ko-KR.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS Lang-->
+<script src="/lib/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS-->
+<script src="/lib/bootstrap-table/locale/bootstrap-table-ko-KR.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS Lang-->
 <link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="/lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <link rel="stylesheet" href="/lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
-<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
+<link rel="stylesheet" href="/lib/bootstrap-table/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <script src="pgmmng.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
 <script>
@@ -121,7 +123,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG3"  style="background-color:white;overflow:hidden;height:211px;width:100%;"></div>
+			<div id="gridG3"  style="background-color:white;overflow:hidden;height:205px;width:100%;"></div>
 		</div>
 		</div>
 	</div>
@@ -153,7 +155,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG4"  style="background-color:white;overflow:hidden;height:211px;width:100%;"></div>
+			<div id="gridG4"  style="background-color:white;overflow:hidden;height:205px;width:100%;"></div>
 		</div>
 		</div>
 	</div>
@@ -185,7 +187,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG5"  style="background-color:white;overflow:hidden;height:161px;width:100%;"></div>
+			<div id="gridG5"  style="background-color:white;overflow:hidden;height:155px;width:100%;"></div>
 		</div>
 		</div>
 	</div>
@@ -218,7 +220,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG6"  style="background-color:white;overflow:hidden;height:211px;width:100%;"></div>
+			<div id="gridG6"  style="background-color:white;overflow:hidden;height:205px;width:100%;"></div>
 		</div>
 		</div>
 	</div>
@@ -251,7 +253,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-			<div id="gridG7"  style="background-color:white;overflow:hidden;height:211px;width:100%;"></div>
+			<div id="gridG7"  style="background-color:white;overflow:hidden;height:205px;width:100%;"></div>
 		</div>
 		</div>
 	</div>

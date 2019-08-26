@@ -123,8 +123,9 @@ WHERE DEL_YN='N'
 		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "searchApiG";
 		$RtnVal["SQLTXT"] = "SELECT
-	 'true' AS ROWCHK,API_SEQ, API_NM, PGM_ID, URL 
+	 '' AS ROWCHK,API_SEQ, API_NM, PGM_ID, URL 
 	, REQ_ENCTYPE, REQ_DATATYPE, REQ_BODY, RES_BODY, ifnull(MYFILE,'') as MYFILE, ifnull(MYFILESVRNM,'') as MYFILESVRNM
+	, 'http://www.naver.com/^네이버^_blank' as LINK
 	, ADD_DT, ifnull(MOD_DT,'') as MOD_DT,'0' AS CHK
 FROM 
 	APP_API

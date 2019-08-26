@@ -1128,3 +1128,15 @@ function yn2boolen(tmp){
 		return false;
 	}
 }
+
+//2019.08.23
+function bt4TablelinkFormatter(value, row) {
+	var tarr = value.toString().split("^");//LINK^NM^TARGET
+	if(tarr.length==3){
+		var target = tarr[2];
+		if(tarr[2] == "")target = "_self";
+		return '<i class="glyphicon plyphicon-align-justify"></i><a href="' + tarr[0] + '" target="' + target + '">' + tarr[1] + '</a>';
+	}else{
+		return '배열오류';
+	}
+}

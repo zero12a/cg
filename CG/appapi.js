@@ -20,6 +20,8 @@ var $btG3 = null; //그리드1
 	//컨트롤러 경로 s
 	var url_G3_RELOAD = "appapiController?CTLGRP=G3&CTLFNC=RELOAD";
 	//컨트롤러 경로 s
+	var url_G3_USER2 = "appapiController?CTLGRP=G3&CTLFNC=USER2";
+	//컨트롤러 경로 s
 	var url_G3_EXCEL2 = "appapiController?CTLGRP=G3&CTLFNC=EXCEL2";
 //디테일 변수 초기화	
 
@@ -156,6 +158,14 @@ function G3_INIT(){
 			valign: 'middle'
 			}
 			,{
+			field: 'LINK',
+			title: 'LINK',
+			sortable: true,
+			align: 'left',
+			formatter:'bt4TablelinkFormatter',
+			valign: 'middle'
+			}
+			,{
 			field: 'ADD_DT',
 			title: 'ADD',
 			sortable: true,
@@ -213,6 +223,24 @@ setCodeCombo("FORMVIEW",$("#F4-REQ_DATATYPE"),"REQDATATYPE");
 	//ADD_DT, ADD 초기화		//MOD_DT, MOD 초기화	  alog("F4_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//검색조건 초기화
+function C2_RESET(){
+	alog("C2_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
+// CONDITIONSearch	
+function C2_SEARCHALL(token){
+	alog("C2_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : C2
+			lastinputG3 = new HashMap(); //그리드1
+		//  호출
+	G3_SEARCH(lastinputG3,token);
+	alog("C2_SEARCHALL--------------------------end");
+}
 //컨디션1, 저장	
 function C2_SAVE(){
  alog("C2_SAVE-------------------start");
@@ -260,80 +288,12 @@ alert("hi condition");
 
 	alog("C2_sss-----------------end");
 }
-//검색조건 초기화
-function C2_RESET(){
-	alog("C2_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-// CONDITIONSearch	
-function C2_SEARCHALL(token){
-	alog("C2_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : C2
-			lastinputG3 = new HashMap(); //그리드1
-		//  호출
-	G3_SEARCH(lastinputG3,token);
-	alog("C2_SEARCHALL--------------------------end");
-}
-//그리드1
-function G3_CHKSAVE2(token){
-	alog("G3_CHKSAVE2()------------start");
+//사용자정의함수 : UU
+function G3_USER2(token){
+	alog("G3_USER2-----------------start");
+alert('감사합니다.');
 
-	var jsonSelectedRows = $btG3.bootstrapTable('getSelections');
-	var strSelectedRowsIds = "";
-
-	for(i=0;i<jsonSelectedRows.length;i++){
-		if(i>0) strSelectedRowsIds += ",";
-
-
-		strSelectedRowsIds += jsonSelectedRows[i].API_SEQ;
-	}
-        //전송용 post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-
-		if(typeof lastinputG3 != "undefined"){
-			var tKeys = lastinputG3.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
-			}
-		}
-	//CHK 배열 합치기
-	sendFormData.append("G3-CHK",strSelectedRowsIds);
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_CHKSAVE2 + "&TOKEN=" + token ,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			if(data && data.RTN_CD == "200"){
-				msgNotice("[그리드1] 정상 처리되었습니다.");
-			}else{
-				msgError("처리 결과 실패했습니다. ( " + data.ERR_CD + ":" + data.RTN_MSG + " )",3);
-			}
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G3_CHKSAVE2()------------end");
+	alog("G3_USER2-----------------end");
 }
 //새로고침	
 function G3_RELOAD(token){
@@ -407,11 +367,64 @@ function G3_SEARCH(tinput,token){
 		alog("G3_SEARCH()------------end");
 }
 
-//새로고침	
-function F4_RELOAD(token){
-	alog("F4_RELOAD-----------------start");
-	F4_SEARCH(lastinputF4,token);
-}//F4_SAVE
+//그리드1
+function G3_CHKSAVE2(token){
+	alog("G3_CHKSAVE2()------------start");
+
+	var jsonSelectedRows = $btG3.bootstrapTable('getSelections');
+	var strSelectedRowsIds = "";
+
+	for(i=0;i<jsonSelectedRows.length;i++){
+		if(i>0) strSelectedRowsIds += ",";
+
+
+		strSelectedRowsIds += jsonSelectedRows[i].API_SEQ;
+	}
+        //전송용 post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+
+		if(typeof lastinputG3 != "undefined"){
+			var tKeys = lastinputG3.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
+			}
+		}
+	//CHK 배열 합치기
+	sendFormData.append("G3-CHK",strSelectedRowsIds);
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_CHKSAVE2 + "&TOKEN=" + token ,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			if(data && data.RTN_CD == "200"){
+				msgNotice("[그리드1] 정상 처리되었습니다.");
+			}else{
+				msgError("처리 결과 실패했습니다. ( " + data.ERR_CD + ":" + data.RTN_MSG + " )",3);
+			}
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G3_CHKSAVE2()------------end");
+}
+//F4_SAVE
 	//IO_FILE_YN = Y	
 function F4_SAVE(token){	
 	alog("F4_SAVE---------------start");
@@ -607,7 +620,7 @@ function F4_SEARCH(tinput,token){
 				if(data.RTN_DATA.MYFILE_VIEWER && tArray1.length > 0){
 					for(var t=0;t<tArray1.length;t++){
 						var tArray2 = tArray1[t].split("^");//0 thumb, 1 real
-						$("#F4-MYFILE_VIEWER-HOLDER").append("<span><a href='" + tArray2[0] + "' target='_blank'><img class='FORMVIEW_IMGVIEWER_IMG' src='" + tArray2[1] + "' height='80' border=0></a></span>"); 						
+						$("#F4-MYFILE_VIEWER-HOLDER").append("<span><a href='" + tArray2[0] + "' target='_blank'><img class='FORMVIEW_IMGVIEWER_IMG' src='" + tArray2[1] + "' height='90px'></a></span>"); 						
 					}
 				}
 			}
@@ -621,4 +634,9 @@ function F4_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) F4_SEARCH---------------end");
 
+}
+//새로고침	
+function F4_RELOAD(token){
+	alog("F4_RELOAD-----------------start");
+	F4_SEARCH(lastinputF4,token);
 }

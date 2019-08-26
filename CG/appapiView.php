@@ -132,6 +132,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 				<span id="spanG3Cnt" name="그리드 ROW 갯수">N</span>
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_CHKSAVE2" value="11" onclick="G3_CHKSAVE2(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_USER2" value="UU" onclick="G3_USER2(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G3_EXCEL2" value="엑셀받기" onclick="G3_EXCEL2(uuidv4());">
 			</div>
 			</div><!--GAP-->
@@ -342,7 +343,12 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 				</div>	
 				<!-- style="width:320;"-->
 				<div class="CON_OBJECT">
-					<div name="F4-MYFILE_VIEWER-HOLDER" id="F4-MYFILE_VIEWER-HOLDER" class="FORMVIEW_IMGVIEWER" style="width:320px;">
+					<div 
+						 name="F4-MYFILE_VIEWER-HOLDER" 
+						 id="F4-MYFILE_VIEWER-HOLDER"
+						 class="FORMVIEW_IMGVIEWER"
+						 style="width:320px;height:90px;">
+					</div>
 				</div>
 			</div>
 			</DIV><!--is_br_tab end-->
