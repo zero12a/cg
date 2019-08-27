@@ -126,12 +126,12 @@ WHERE DEL_YN='N'
 	 '' AS ROWCHK,API_SEQ, API_NM, PGM_ID, URL 
 	, REQ_ENCTYPE, REQ_DATATYPE, REQ_BODY, RES_BODY, ifnull(MYFILE,'') as MYFILE, ifnull(MYFILESVRNM,'') as MYFILESVRNM
 	, 'http://www.naver.com/^네이버^_blank' as LINK
+	, 'http://www.naver.com/^네이버^_blank,http://www.daum.net/^다음^_blank,http://www.gmail.com/^지메일^_blank' as MULTILINK
 	, ADD_DT, ifnull(MOD_DT,'') as MOD_DT,'0' AS CHK
 FROM 
 	APP_API
 WHERE DEL_YN='N'
-ORDER BY API_SEQ DESC
-";
+ORDER BY API_SEQ DESC";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";

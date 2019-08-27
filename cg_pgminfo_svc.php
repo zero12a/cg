@@ -578,7 +578,7 @@ class cg_pgminfo_svc
 			$to_coltype = "is";
 			$sql = "
 				select
-				*
+					DDSEQ, COLID, COLNM
 				from CG_DD
 				where PJTSEQ=#{F_PJTSEQ} and COLID = #{COLID}
 				";
@@ -586,7 +586,12 @@ class cg_pgminfo_svc
 			$stmt = makeStmt($db,$sql, $to_coltype, $tarray);
 			if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 			if(!$stmt->execute())JsonMsg("500","110","(makeGridSearchJson) stmt 실행 실패" . $db->errno . " -> " . $db->error);
+
+			$stmt->bind_result($DDSEQ, $COLID, $COLNM);
 			if($stmt->fetch()){
+				//기존 DDSEQ 뽑아내기.	
+				$tarray["DDSEQ"] = $DDSEQ;
+
 				$stmt->close();
 				alog("데이터딕셔너리 UPDATE : " . $tarray["COLID"]);
 
@@ -629,6 +634,9 @@ class cg_pgminfo_svc
 				$stmt = makeStmt($db,$sql, $to_coltype, $tarray);
 				if(!$stmt)JsonMsg("500","10I","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 				if(!$stmt->execute())JsonMsg("500","11I","(makeGridSearchJson) stmt 실행 실패" . $db->errno . " -> " . $db->error);
+				//등록된 DDSEQ 뽑아내기.	
+				$tarray["DDSEQ"] = $db->insert_id;
+
 				$stmt->close();
 
 			}

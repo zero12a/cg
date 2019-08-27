@@ -1130,13 +1130,31 @@ function yn2boolen(tmp){
 }
 
 //2019.08.23
-function bt4TablelinkFormatter(value, row) {
+function bt4TableLinkFormatter(value, row) {
 	var tarr = value.toString().split("^");//LINK^NM^TARGET
 	if(tarr.length==3){
 		var target = tarr[2];
 		if(tarr[2] == "")target = "_self";
-		return '<i class="glyphicon plyphicon-align-justify"></i><a href="' + tarr[0] + '" target="' + target + '">' + tarr[1] + '</a>';
+		return '<a href="' + tarr[0] + '" target="' + target + '">' + tarr[1] + '</a>';
 	}else{
 		return '배열오류';
 	}
+}
+
+//2019.08.23
+function bt4TableMultiLinkFormatter(value, row) {
+	var tlinks = value.toString().split(",");//LINK^NM^TARGET,LINK2^NM2^TARGET2
+	var rtnVal = "";
+	for(i=0;i<tlinks.length;i++){
+		var tarr = tlinks[i].toString().split("^");//LINK^NM^TARGET
+		if(tarr.length==3){
+			var target = tarr[2];
+			if(tarr[2] == "")target = "_self";
+			if(i>0)rtnVal += "&nbsp;";
+			rtnVal += '<a href="' + tarr[0] + '" target="' + target + '">' + tarr[1] + '</a>';
+		}else{
+			rtnVal += '배열오류';
+		}
+	}
+	return rtnVal;
 }
