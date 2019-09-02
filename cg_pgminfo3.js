@@ -508,7 +508,8 @@
 							,data.RTN_DATA.rows[i].data[0]
 							,data.RTN_DATA.rows[i].data[0]
 							,data.RTN_DATA.rows[i].data[1]
-							,data.RTN_DATA.rows[i].data[2]
+                            ,data.RTN_DATA.rows[i].data[2]
+                            ,10
 						];//초기값
 						
 						addRow(mygridFnc,tCols);
