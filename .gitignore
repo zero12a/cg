@@ -12,6 +12,7 @@
 
 # config
 incConfig.php
-incConfig.*.php
+incConfig.CG.php
+incConfig.SC.php
 
 
