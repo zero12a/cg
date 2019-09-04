@@ -867,6 +867,10 @@
 
             lastrowid5 = rowID;
 
+            //상태가 편집모드이면 선택시 반응 없음
+            RowEditStatus = mygridFnc.getUserData(rowID,"!nativeeditor_status");
+            if(RowEditStatus == "inserted" || RowEditStatus == "deleted" || RowEditStatus == "updated"){return false;}
+            
             //선택된 ROW의 모든컬럼 추출하기
             var RowAllData;
             RowAllData = getRowsColid(mygridFnc,rowID,"G5");

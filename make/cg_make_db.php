@@ -1267,7 +1267,7 @@ function getInput($input,$filetype,$param,$G){
             ,addSqlSlashes($F_PGMSEQ)
             ,$AddSql
         );
-        //alog("SQL 1155 (input " . $input . ") : " . $T_SQL);
+        //alog("SQL 1270 (input " . $input . ") : " . $T_SQL);
         //echo "<br>getInput $input :  ". $T_SQL;
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
 

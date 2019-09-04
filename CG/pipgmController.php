@@ -50,6 +50,7 @@ if(!isLogin()){
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
 		//사용자 정보 가져오기
+	$REQ["USER.ID"] = getUserId();
 //로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
@@ -57,8 +58,6 @@ $PGM_CFG["SECTYPE"] = "NORMAL";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
-
-//로그인정보 및 환경경수 받기
 
 //FILE먼저 : G1, 검색
 //FILE먼저 : G2, PGM목록
@@ -123,6 +122,9 @@ switch ($ctl){
   		break;
 	case "G3_SEARCH" :
   		echo $objService->goG3Search(); //PGM상세, 조회
+  		break;
+	case "G3_save" :
+  		echo $objService->goG3Save(); //PGM상세, 저장
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");

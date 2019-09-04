@@ -12,6 +12,27 @@ class pipgmDao
 	function __toString(){
 		alog("PipgmDao-__toString");
 	}
+	//insPgmF    
+	public function insPgmF($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "insPgmF";
+		$RtnVal["SQLTXT"] = "insert into CG_PGMINFO (
+	PJTSEQ, PGMID, PGMNM, VIEWURL
+	, PGMTYPE
+	, ADDID, ADDDT, MODDT
+) values (
+	#{G3-PJTSEQ}, #{G3-PGMID}, #{G3-PGMNM}, #{G3-VIEWURL}, #{G3-PGMTYPE}
+	, #{USER.ID}, date_format(sysdate(),'%Y%m%d%H%i%s'), null 
+)
+";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "isssss";
+		return $RtnVal;
+    }  
 	//selPgmF    
 	public function selPgmF($req){
 		//조회

@@ -26,6 +26,10 @@ var $btG2 = null; //PGM목록
 var url_G3_SEARCH = "pipgmController?CTLGRP=G3&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로
 var url_G3_reload = "pipgmController?CTLGRP=G3&CTLFNC=reload";
+//폼뷰 컨트롤러 경로
+var url_G3_new = "pipgmController?CTLGRP=G3&CTLFNC=new";
+//폼뷰 컨트롤러 경로
+var url_G3_save = "pipgmController?CTLGRP=G3&CTLFNC=save";
 var obj_G3_PGMSEQ;   // PGMSEQ 글로벌 변수 선언
 var obj_G3_PGMID;   // 프로그램ID 글로벌 변수 선언
 var obj_G3_PJTSEQ;   // PJTSEQ 글로벌 변수 선언
@@ -184,6 +188,7 @@ function G3_INIT(){
 
 	//컬럼 초기화
 	//PGMSEQ, PGMSEQ 초기화	
+	$("#G3-PGMSEQ").attr("readonly",true);
 	//PGMID, 프로그램ID 초기화	
 	//PJTSEQ, PJTSEQ 초기화	
 	//PGMNM, 프로그램이름 초기화	
@@ -192,6 +197,25 @@ function G3_INIT(){
 	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//사용자정의함수 : 사용자정의
+function G1_USERDEF(token){
+	alog("G1_USERDEF-----------------start");
+
+	alog("G1_USERDEF-----------------end");
+}
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //PGM목록
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("G1_SEARCHALL--------------------------end");
+}
 //검색조건 초기화
 function G1_RESET(){
 	alog("G1_RESET--------------------------start");
@@ -229,24 +253,16 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //PGM목록
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
 //사용자정의함수 : 사용자정의
-function G1_USERDEF(token){
-	alog("G1_USERDEF-----------------start");
+function G2_USERDEF(token){
+	alog("G2_USERDEF-----------------start");
 
-	alog("G1_USERDEF-----------------end");
+	alog("G2_USERDEF-----------------end");
+}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
 }
 //PGM목록 엑셀 내려받기
 function G2_EXCEL(){
@@ -372,16 +388,18 @@ function G2_CHKSAVE(token){
 	
 	alog("G2_CHKSAVE()------------end");
 }
-//사용자정의함수 : 사용자정의
-function G2_USERDEF(token){
-	alog("G2_USERDEF-----------------start");
-
-	alog("G2_USERDEF-----------------end");
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
+//	
+function G3_new(){
+       alog("[FromView] G3_new---------------start");
+	$("#G3-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G3-PGMSEQ").val("");//PGMSEQ 신규초기화	
+	$("#G3-PGMID").val("");//프로그램ID 신규초기화	
+	$("#G3-PJTSEQ").val("");//PJTSEQ 신규초기화	
+	$("#G3-PGMNM").val("");//프로그램이름 신규초기화	
+	$("#G3-VIEWURL").val("");//VIEWURL 신규초기화	
+	$("#G3-PGMTYPE").val("");//PGMTYPE 신규초기화	
+	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
 }
 //디테일 검색	
 function G3_SEARCH(tinput,token){
@@ -443,4 +461,46 @@ function G3_SEARCH(tinput,token){
 function G3_reload(token){
 	alog("G3_reload-----------------start");
 	G3_SEARCH(lastinputG3,token);
+}//G3_save
+//IO_FILE_YN = N	
+	//IO_FILE_YN = N	
+function G3_save(token){	
+	alog("G3_save---------------start");
+
+	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
+		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
+		return;
+	}
+
+	//전송용 데이터 생성하기
+	var sendFormData = new FormData($("#formviewG3")[0]);
+
+	//컨디션 데이터 추가하기
+	conditionData = new FormData($("#condition")[0]);
+    var es, e, pair;
+    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
+		sendFormData.append(pair[0],pair[1]);
+    }
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_save + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 저장되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
 }

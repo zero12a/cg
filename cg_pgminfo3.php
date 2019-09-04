@@ -26,9 +26,10 @@ header("Pragma:no-cache");
 	<script src="./lib/jquery-1.11.1.min.js"></script>
 	<script src="./lib/json2.min.js"></script>
 
-	<!--dhmltx-->
+	<!--dhmltx    -->
     <script src="./lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
+
 
     <!--chart-->
     <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
