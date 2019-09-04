@@ -1,31 +1,31 @@
 <?php
 //SVC
  
-//include_once('PisqlInterface.php');
-include_once('pisqlDao.php');
-//class PisqlService implements PisqlInterface
-class pisqlService 
+//include_once('Pisql2Interface.php');
+include_once('pisql2Dao.php');
+//class Pisql2Service implements Pisql2Interface
+class pisql2Service 
 {
 	private $DAO;
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("PisqlService-__construct");
+		alog("Pisql2Service-__construct");
 
-		$this->DAO = new pisqlDao();
+		$this->DAO = new pisql2Dao();
 	    //$this->DB = db_s_open();
 		$this->DB["CG"] = db_obj_open(getDbSvrInfo("CG"));
 	}
 	//파괴자
 	function __destruct(){
-		alog("PisqlService-__destruct");
+		alog("Pisql2Service-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("PisqlService-__toString");
+		alog("Pisql2Service-__toString");
 	}
 	//, 조회(전체)
 	public function goG1Searchall(){
@@ -35,12 +35,12 @@ class pisqlService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG1Searchall________________________start");
+		alog("PISQL2Service-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG1Searchall________________________end");
+		alog("PISQL2Service-goG1Searchall________________________end");
 	}
 	//, 저장
 	public function goG1Save(){
@@ -50,12 +50,12 @@ class pisqlService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG1Save________________________start");
+		alog("PISQL2Service-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG1Save________________________end");
+		alog("PISQL2Service-goG1Save________________________end");
 	}
 	//, 조회
 	public function goG2Search(){
@@ -65,7 +65,7 @@ class pisqlService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG2Search________________________start");
+		alog("PISQL2Service-goG2Search________________________start");
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
 		$GRID["GRPTYPE"] = "GRID_BOOTSTRAP";
@@ -90,7 +90,7 @@ class pisqlService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG2Search________________________end");
+		alog("PISQL2Service-goG2Search________________________end");
 	}
 	//, 선택저장
 	public function goG2Chksave(){
@@ -100,12 +100,12 @@ class pisqlService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG2Chksave________________________start");
+		alog("PISQL2Service-goG2Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG2Chksave________________________end");
+		alog("PISQL2Service-goG2Chksave________________________end");
 	}
 	//, 조회
 	public function goG3Search(){
@@ -115,7 +115,7 @@ class pisqlService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG3Search________________________start");
+		alog("PISQL2Service-goG3Search________________________start");
 //FORMVIEW SEARCH
 		$grpId="G3";
 	//암호화컬럼
@@ -138,7 +138,7 @@ class pisqlService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG3Search________________________end");
+		alog("PISQL2Service-goG3Search________________________end");
 	}
 	//, 저장
 	public function goG3Save(){
@@ -148,7 +148,7 @@ class pisqlService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG3Save________________________start");
+		alog("PISQL2Service-goG3Save________________________start");
 		//FORMVIEW SAVE
 		$grpId="G3";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
@@ -190,7 +190,7 @@ class pisqlService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG3Save________________________end");
+		alog("PISQL2Service-goG3Save________________________end");
 	}
 	//, 삭제
 	public function goG3Delete(){
@@ -200,12 +200,12 @@ class pisqlService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG3Delete________________________start");
+		alog("PISQL2Service-goG3Delete________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG3Delete________________________end");
+		alog("PISQL2Service-goG3Delete________________________end");
 	}
 }
                                                              

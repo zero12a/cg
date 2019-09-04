@@ -1,6 +1,6 @@
 <?php
-//PGMID : PIPGM
-//PGMNM : PIPGM
+//PGMID : PISQL2
+//PGMNM : Copy of PISQL
 header("Content-Type: text/html; charset=UTF-8"); //HTML
 
 require_once("../include/incUtil.php");
@@ -8,7 +8,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>	
-<title>PIPGM</title>
+<title>Copy of PISQL</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
 <!--JS 불러오기--><script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
@@ -34,7 +34,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 <link rel="stylesheet" href="/lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
 <link rel="stylesheet" href="/lib/bootstrap-table/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css" charset="UTF-8"><!--CODE MIRROR CSS-->
-<script src="pipgm.js?<?=getRndVal(10)?>"></script>
+<script src="pisql2.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
 <script>
 	//팝업창인 경우 오프너에게서 파라미터 받기
@@ -48,7 +48,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 
 <div id="BODY_BOX" class="BODY_BOX"><!--그룹별 IO출력-->	<!--
 	#####################################################
-	## 컨디션 검색 - START G.GRPID : G1-
+	## 컨디션  - START G.GRPID : G1-
 	#####################################################
 	-->
  	<div class="GRP_OBJECT" style="width:100%;">
@@ -58,7 +58,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 		<div class="CONDITION_LABELGRP">
 			<div class="CONDITION_LABEL"  style="">
-				<b>* PIPGM</b>	
+				<b>* Copy of PISQL</b>	
 				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
@@ -71,15 +71,23 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<div style="height:32px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
+					<!-- PGMSEQ -->
+					<div class="CON_OBJECT" style="display:none">
+						<input type="text" name="G1-PGMSEQ" value="<?=getFilter(reqGetString("PGMSEQ",30),"SAFEECHO","")?>" id="G1-PGMSEQ">
+					</div>
+					<!-- PJTSEQ -->
+					<div class="CON_OBJECT" style="display:none">
+						<input type="text" name="G1-PJTSEQ" value="<?=getFilter(reqGetString("PJTSEQ",20),"SAFEECHO","")?>" id="G1-PJTSEQ">
+					</div>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : PJTSEQ-->
+			<!--I.COLID : SQLNM-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						PJTSEQ
+						SQLNM
 					</div>
-					<!-- style="width:100px;"-->
+					<!-- style="width:60px;"-->
 					<div class="CON_OBJECT">
-	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G1-PJTSEQ" value="<?=getFilter(reqPostString("PJTSEQ",20),"SAFEECHO","")?>" id="G1-PJTSEQ" style="width:100px;">
+	<!--SQLNM오브젝트출력-->						<input type="text" name="G1-SQLNM" value="<?=getFilter(reqPostString("SQLNM",30),"SAFEECHO","")?>" id="G1-SQLNM" style="width:60px;">
 					</div>
 				</div>
 			</div><!-- is_br_tag end -->
@@ -97,14 +105,14 @@ include_once('../include/incRequest.php');//CG REQUEST
 		<div  class="GRID_LABELGRP">
 			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
-	  				* PGM목록      
+	  				*       
 			</div>
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_USERDEF" value="사용자정의" onclick="G2_USERDEF(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_RELOAD" value="새로고침" onclick="G2_RELOAD(uuidv4());">
-			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_CHKSAVE" value="선택저장" onclick="G2_CHKSAVE(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_CHKSAVE" value="선택저장" onclick="G2_CHKSAVE(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>
@@ -114,12 +122,12 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 -->
 <table id="btG2"
 			data-toggle="table"
-			data-height="557"
+			data-height="457"
 			data-virtual-scroll="true"
 			data-click-to-select="false"
 			data-resizable="true"
 			class="table table-bordered table-striped"
-			data-id-field="PGMSEQ"			>
+			data-id-field="SQLSEQ"			>
 			<thead>
             </thead>
         </table>
@@ -133,12 +141,12 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 	-->
 	<!--
 	#####################################################
-	## 폼뷰 PGM상세 - START
+	## 폼뷰  - START
 	#####################################################
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:594px;">
+            <div class="GRP_INNER" style="height:494px;">
 				
 			<div sty_le="width:0px;height:0px;overflow: hidden">
 				<form id="formviewG3" name="formviewG3" method="post" enctype="multipart/form-data"  onsubmit="return false;">
@@ -146,41 +154,32 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 			</div>	
 		<div class="FORMVIEW_LABELGRP">
 			<div class="FORMVIEW_LABEL"  style="">
-				* PGM상세
+				* 
 			</div>
 			<div class="FORMVIEW_LABELBTN"  style="">
-			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_reload" value="R" onclick="G3_reload(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_USERDEF" value="사용자정의" onclick="G3_USERDEF(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_SAVE" value="저장" onclick="G3_SAVE(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_NEW" value="신규" onclick="G3_NEW(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_MODIFY" value="수정" onclick="G3_MODIFY(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_DELETE" value="삭제" onclick="G3_DELETE(uuidv4());">
 			</div>
 		</div>
-		<div style="height:552px;" class="FORMVIEW_OBJECT">
+		<div style="height:452px;" class="FORMVIEW_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : PGMSEQ-->
+			<!--I.COLID : SQLSEQ-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						PGMSEQ
+						SQLSEQ
 					</div>
-					<!-- style="width:100px;"-->
+					<!-- style="width:50px;"-->
 					<div class="CON_OBJECT">
-	<!--PGMSEQ오브젝트출력-->						<input type="text" name="G3-PGMSEQ" value="" id="G3-PGMSEQ" style="width:100px;">
-					</div>
-				</div>
-			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : PGMID-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						프로그램ID
-					</div>
-					<!-- style="width:200px;"-->
-					<div class="CON_OBJECT">
-	<!--PGMID오브젝트출력-->						<input type="text" name="G3-PGMID" value="" id="G3-PGMID" style="width:200px;">
+	<!--SQLSEQ오브젝트출력-->						<input type="text" name="G3-SQLSEQ" value="" id="G3-SQLSEQ" style="width:50px;">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -201,42 +200,129 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : PGMNM-->
+			<!--I.COLID : PGMSEQ-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						프로그램이름
+						PGMSEQ
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--PGMNM오브젝트출력-->						<input type="text" name="G3-PGMNM" value="" id="G3-PGMNM" style="width:100px;">
+	<!--PGMSEQ오브젝트출력-->						<input type="text" name="G3-PGMSEQ" value="" id="G3-PGMSEQ" style="width:100px;">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : VIEWURL-->
+			<!--I.COLID : SQLID-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						VIEWURL
-					</div>
-					<!-- style="width:100px;"-->
-					<div class="CON_OBJECT">
-	<!--VIEWURL오브젝트출력-->						<input type="text" name="G3-VIEWURL" value="" id="G3-VIEWURL" style="width:100px;">
-					</div>
-				</div>
-			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : PGMTYPE-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						PGMTYPE
+						SQLID
 					</div>
 					<!-- style="width:60px;"-->
 					<div class="CON_OBJECT">
-	<!--PGMTYPE오브젝트출력-->						<input type="text" name="G3-PGMTYPE" value="" id="G3-PGMTYPE" style="width:60px;">
+	<!--SQLID오브젝트출력-->						<input type="text" name="G3-SQLID" value="" id="G3-SQLID" style="width:60px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : SQLNM-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						SQLNM
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--SQLNM오브젝트출력-->						<input type="text" name="G3-SQLNM" value="" id="G3-SQLNM" style="width:60px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : SVRSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						SERVERSEQ
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--SVRSEQ오브젝트출력-->						<input type="text" name="G3-SVRSEQ" value="" id="G3-SVRSEQ" style="width:60px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : CRUD-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						CRUD
+					</div>
+					<!-- style="width:40px;"-->
+					<div class="CON_OBJECT">
+	<!--CRUD오브젝트출력-->						<input type="text" name="G3-CRUD" value="" id="G3-CRUD" style="width:40px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : RTN_TYPE-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						RTN_TYPE
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--RTN_TYPE오브젝트출력-->						<input type="text" name="G3-RTN_TYPE" value="" id="G3-RTN_TYPE" style="width:60px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : SQLORD-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						ORD
+					</div>
+					<!-- style="width:30px;"-->
+					<div class="CON_OBJECT">
+	<!--SQLORD오브젝트출력-->						<input type="text" name="G3-SQLORD" value="" id="G3-SQLORD" style="width:30px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : PSQLSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						PSQLSEQ
+					</div>
+					<!-- style="width:70px;"-->
+					<div class="CON_OBJECT">
+	<!--PSQLSEQ오브젝트출력-->						<input type="text" name="G3-PSQLSEQ" value="" id="G3-PSQLSEQ" style="width:70px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : SQLTXT-->
+				<div class="CON_OBJGRP" style="">
+					<!-- style="width:400px;height:200px;"-->
+					<div class="CON_OBJECT">
+			<!--SQLTXT오브젝트출력-->
+			<span style="height:31px;overflow:hidden">
+				<input class="btn btn-secondary  btn-sm" type="button" name="bigFont" value="+" onclick="changeCodemirrorFontSizeG3Sqltxt('+')">
+				<input class="btn btn-secondary  btn-sm" type="button" name="bigFont" value="-" onclick="changeCodemirrorFontSizeG3Sqltxt('-')">
+			</span>
+
+			<textarea id="codeMirror_G3-SQLTXT" name="codeMirror_G3-SQLTXT" ></textarea>
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->

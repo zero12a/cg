@@ -1,16 +1,16 @@
 <?php
 //DAO
  
-class pisqlDao
+class pisql2Dao
 {
 	function __construct(){
-		alog("PisqlDao-__construct");
+		alog("Pisql2Dao-__construct");
 	}
 	function __destruct(){
-		alog("PisqlDao-__destruct");
+		alog("Pisql2Dao-__destruct");
 	}
 	function __toString(){
-		alog("PisqlDao-__toString");
+		alog("Pisql2Dao-__toString");
 	}
 	//selSqlF    
 	public function selSqlF($req){
@@ -67,7 +67,7 @@ set
 	,CRUD = #{G3-CRUD}, RTN_TYPE = #{G3-RTN_TYPE}, SQLORD = #{G3-SQLORD}, PSQLSEQ = #{G3-PSQLSEQ}
 	,SQLTXT = #{G3-SQLTXT}, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
 where
-	PJTSEQ = #{G3-PJTSEQ} and PGMSEQ = #{G3-PGMSEQ} and SQLSEQ = #{SQLSEQ}";
+	PJTSEQ = #{G3-PJTSEQ} and PGMSEQ = #{G3-PGMSEQ} and SQLSEQ = #{G3-SQLSEQ}";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ssissiisiii";

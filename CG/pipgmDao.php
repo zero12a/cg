@@ -38,7 +38,7 @@ where PJTSEQ = #{G2-PJTSEQ} and PGMSEQ = #{G2-PGMSEQ}
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "selPgmG";
 		$RtnVal["SQLTXT"] = "select
-	PJTSEQ, PGMSEQ, PGMID, PJTSEQ, PGMNM, VIEWURL, PGMTYPE
+	PJTSEQ, PGMSEQ, PGMID, PGMNM, VIEWURL, PGMTYPE
 	, concat(
 			'pigrpView?PJTSEQ=', PJTSEQ, '&PGMSEQ=', PGMSEQ, '^GRP^_blank',
 			',pisqlView?PJTSEQ=', PJTSEQ, '&PGMSEQ=', PGMSEQ, '^SQL^_blank'

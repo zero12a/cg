@@ -21,8 +21,9 @@ class cg_pgminfo_dao
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLTXT"] = "
 		select
-			0, a.PJTSEQ, c.PJTID, a.PGMSEQ, '-' as STATUS, a.PGMID, a.PGMNM, a.VIEWURL
-			,concat('권한받기^cg_pgminfo_getauth.php?PJTSEQ=',a.PJTSEQ,'&PGMSEQ=',a.PGMSEQ,'^_blank') as GETAUTH
+			0, a.PJTSEQ, c.PJTID, a.PGMSEQ, '-' as STATUS, a.PGMID, a.PGMNM
+			, concat(a.VIEWURL,'^',c.PJTID,'/',a.VIEWURL,'^_blank') as VIEWURL
+			, concat('권한받기^cg_pgminfo_getauth.php?PJTSEQ=',a.PJTSEQ,'&PGMSEQ=',a.PGMSEQ,'^_blank') as GETAUTH
 			, a.PGMTYPE
 			,b.VERDT, b.DEGREE, b.ADDDT as MAKEDT, a.ADDDT, a.MODDT
 		from 

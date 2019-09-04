@@ -1,43 +1,43 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_USERDEF = "pisqlController?CTLGRP=G1&CTLFNC=USERDEF";
+var url_G1_USERDEF = "pisql2Controller?CTLGRP=G1&CTLFNC=USERDEF";
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "pisqlController?CTLGRP=G1&CTLFNC=SEARCHALL";
+var url_G1_SEARCHALL = "pisql2Controller?CTLGRP=G1&CTLFNC=SEARCHALL";
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "pisqlController?CTLGRP=G1&CTLFNC=SAVE";
+var url_G1_SAVE = "pisql2Controller?CTLGRP=G1&CTLFNC=SAVE";
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_RESET = "pisqlController?CTLGRP=G1&CTLFNC=RESET";
+var url_G1_RESET = "pisql2Controller?CTLGRP=G1&CTLFNC=RESET";
 // 변수 선언	
 var obj_G1_PJTSEQ; // PJTSEQ 변수선언
 var obj_G1_PGMSEQ; // PGMSEQ 변수선언
 var obj_G1_SQLNM; // SQLNM 변수선언
 var $btG2 = null; //
 	//컨트롤러 경로 s
-	var url_G2_USERDEF = "pisqlController?CTLGRP=G2&CTLFNC=USERDEF";
+	var url_G2_USERDEF = "pisql2Controller?CTLGRP=G2&CTLFNC=USERDEF";
 	//컨트롤러 경로 s
-	var url_G2_SEARCH = "pisqlController?CTLGRP=G2&CTLFNC=SEARCH";
+	var url_G2_SEARCH = "pisql2Controller?CTLGRP=G2&CTLFNC=SEARCH";
 	//컨트롤러 경로 s
-	var url_G2_RELOAD = "pisqlController?CTLGRP=G2&CTLFNC=RELOAD";
+	var url_G2_RELOAD = "pisql2Controller?CTLGRP=G2&CTLFNC=RELOAD";
 	//컨트롤러 경로 s
-	var url_G2_EXCEL = "pisqlController?CTLGRP=G2&CTLFNC=EXCEL";
+	var url_G2_EXCEL = "pisql2Controller?CTLGRP=G2&CTLFNC=EXCEL";
 	//컨트롤러 경로 s
-	var url_G2_CHKSAVE = "pisqlController?CTLGRP=G2&CTLFNC=CHKSAVE";
+	var url_G2_CHKSAVE = "pisql2Controller?CTLGRP=G2&CTLFNC=CHKSAVE";
 //디테일 변수 초기화	
 
 //폼뷰 컨트롤러 경로
-var url_G3_USERDEF = "pisqlController?CTLGRP=G3&CTLFNC=USERDEF";
+var url_G3_USERDEF = "pisql2Controller?CTLGRP=G3&CTLFNC=USERDEF";
 //폼뷰 컨트롤러 경로
-var url_G3_SEARCH = "pisqlController?CTLGRP=G3&CTLFNC=SEARCH";
+var url_G3_SEARCH = "pisql2Controller?CTLGRP=G3&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로
-var url_G3_SAVE = "pisqlController?CTLGRP=G3&CTLFNC=SAVE";
+var url_G3_SAVE = "pisql2Controller?CTLGRP=G3&CTLFNC=SAVE";
 //폼뷰 컨트롤러 경로
-var url_G3_RELOAD = "pisqlController?CTLGRP=G3&CTLFNC=RELOAD";
+var url_G3_RELOAD = "pisql2Controller?CTLGRP=G3&CTLFNC=RELOAD";
 //폼뷰 컨트롤러 경로
-var url_G3_NEW = "pisqlController?CTLGRP=G3&CTLFNC=NEW";
+var url_G3_NEW = "pisql2Controller?CTLGRP=G3&CTLFNC=NEW";
 //폼뷰 컨트롤러 경로
-var url_G3_MODIFY = "pisqlController?CTLGRP=G3&CTLFNC=MODIFY";
+var url_G3_MODIFY = "pisql2Controller?CTLGRP=G3&CTLFNC=MODIFY";
 //폼뷰 컨트롤러 경로
-var url_G3_DELETE = "pisqlController?CTLGRP=G3&CTLFNC=DELETE";
+var url_G3_DELETE = "pisql2Controller?CTLGRP=G3&CTLFNC=DELETE";
 var obj_G3_SQLSEQ;   // SQLSEQ 글로벌 변수 선언
 var obj_G3_PJTSEQ;   // PJTSEQ 글로벌 변수 선언
 var obj_G3_PGMSEQ;   // PGMSEQ 글로벌 변수 선언
@@ -254,7 +254,10 @@ function G3_INIT(){
 
 
 	//컬럼 초기화
-	//SQLSEQ, SQLSEQ 초기화		//PJTSEQ, PJTSEQ 초기화		//PGMSEQ, PGMSEQ 초기화		//SQLID, SQLID 초기화	
+	//SQLSEQ, SQLSEQ 초기화	
+	//PJTSEQ, PJTSEQ 초기화	
+	//PGMSEQ, PGMSEQ 초기화	
+	//SQLID, SQLID 초기화	
 	//SQLNM, SQLNM 초기화	
 	//SVRSEQ, SERVERSEQ 초기화	
 	//CRUD, CRUD 초기화	
@@ -498,7 +501,7 @@ function G3_SAVE(token){
 	//전송용 데이터 생성하기
 	var sendFormData = new FormData($("#formviewG3")[0]);
 
-	sendFormData.append("G3_SQLTXT",obj_G3_SQLTXT.getValue()); //SQLTXT
+	sendFormData.append("G3-SQLTXT",obj_G3_SQLTXT.getValue()); //SQLTXT
 	//컨디션 데이터 추가하기
 	conditionData = new FormData($("#condition")[0]);
     var es, e, pair;
@@ -546,7 +549,10 @@ function G3_NEW(){
        alog("[FromView] G3_NEW---------------start");
 	$("#G3-CTLCUD").val("C");
 	//PMGIO 로직
-	$("#G3-SQLSEQ").text("");//SQLSEQ 신규초기화		$("#G3-PJTSEQ").text("");//PJTSEQ 신규초기화		$("#G3-PGMSEQ").text("");//PGMSEQ 신규초기화		$("#G3-SQLID").val("");//SQLID 신규초기화	
+	$("#G3-SQLSEQ").val("");//SQLSEQ 신규초기화	
+	$("#G3-PJTSEQ").val("");//PJTSEQ 신규초기화	
+	$("#G3-PGMSEQ").val("");//PGMSEQ 신규초기화	
+	$("#G3-SQLID").val("");//SQLID 신규초기화	
 	$("#G3-SQLNM").val("");//SQLNM 신규초기화	
 	$("#G3-SVRSEQ").val("");//SERVERSEQ 신규초기화	
 	$("#G3-CRUD").val("");//CRUD 신규초기화	
@@ -639,9 +645,9 @@ function G3_SEARCH(tinput,token){
             //모드 변경하기
             $("#G3-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
-			$("#G3-SQLSEQ").text(data.RTN_DATA.SQLSEQ);//SQLSEQ 변수세팅
-			$("#G3-PJTSEQ").text(data.RTN_DATA.PJTSEQ);//PJTSEQ 변수세팅
-			$("#G3-PGMSEQ").text(data.RTN_DATA.PGMSEQ);//PGMSEQ 변수세팅
+			$("#G3-SQLSEQ").val(data.RTN_DATA.SQLSEQ);//SQLSEQ 변수세팅
+			$("#G3-PJTSEQ").val(data.RTN_DATA.PJTSEQ);//PJTSEQ 변수세팅
+			$("#G3-PGMSEQ").val(data.RTN_DATA.PGMSEQ);//PGMSEQ 변수세팅
 			$("#G3-SQLID").val(data.RTN_DATA.SQLID);//SQLID 변수세팅
 			$("#G3-SQLNM").val(data.RTN_DATA.SQLNM);//SQLNM 변수세팅
 			$("#G3-SVRSEQ").val(data.RTN_DATA.SVRSEQ);//SERVERSEQ 변수세팅

@@ -48,7 +48,7 @@ header("Pragma:no-cache");
 
     <!--공통-->
     <script src="./common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
-    <link href="./common/common.css" rel="stylesheet" type="text/css" />
+    <link href="./common/common.css?<?=getRndVal(10)?>" rel="stylesheet" type="text/css" />
 
 
     <style>
@@ -61,17 +61,6 @@ header("Pragma:no-cache");
         }
 
 
-        .CodeMirror {
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-            width:100%;height:321px;
-            font-size: 12px;
-        }
-        .cm-tab {
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
-            background-position: right;
-            background-repeat: no-repeat;
-        }
     </style>
 
     <script src="cg_pgminfo3.js?<?=getRndVal(10)?>"></script>
@@ -298,7 +287,8 @@ header("Pragma:no-cache");
                         <option value="#{GRPID-COLID}">(입력) 라디오 (FORM)</option>      
                         <option value="#{GRPID-COLID}">(입력) 코드검색[CD만저장됨] (FORM)</option>            
                         <option value="CD^NM^GRPID">(출력3V) 코드검색(GRID)</option>
-                        <option value="NM^LINK^TARGET">(출력3V) 링크(GRID)</option>                          
+                        <option value="NM^LINK^TARGET">(출력3V) 링크(GRID)</option>      
+                        <option value="LINK^NM^TARGET">(출력3V) 링크(GRIDBT)</option>                       
                         <option value="CD^NM">(출력2V) 코드검색(FORM)</option>
                         <option value="LINK^NM">(출력2V) 링크뷰(FORM)</option>           
                         <option value="CHK1,CHK2,CHK3 ~">(출력NV) 체크박스(FORM)</option>        

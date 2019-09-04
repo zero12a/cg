@@ -2069,11 +2069,12 @@ function setGridSql(tGrptype, tCombo, tPjtseq, tPgmseq, tSvcseq){
 			//그리드에 데이터 반영
 			if(data.RTN_CD == "200"){
 				if(tGrptype == "GRID"){
+
+                    tCombo.clear(); //비우기
+                    tCombo.put("","");
+                    
 					if(!data.RTN_DATA)return;
 					//alog("	코드수 : " + data.RTN_DATA.rows.length);
-					
-					tCombo.clear(); //비우기
-					tCombo.put("","");
 
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);

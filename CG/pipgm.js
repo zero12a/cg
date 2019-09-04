@@ -22,14 +22,6 @@ var $btG2 = null; //PGM목록
 	var url_G2_EXCEL = "pipgmController?CTLGRP=G2&CTLFNC=EXCEL";
 //디테일 변수 초기화	
 
-var obj_G3_PGMSEQ_valid = jQuery.parseJSON( '{ "G3_PGMSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // PGMSEQ 밸리데이션 선언
-var obj_G3_PGMID_valid = jQuery.parseJSON( '{ "G3_PGMID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":20,  "DATATYPE":"STRING"} }' );   // 프로그램ID 밸리데이션 선언
-var obj_G3_PJTSEQ_valid = jQuery.parseJSON( '{ "G3_PJTSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":20,  "DATATYPE":"NUMBER"} }' );   // PJTSEQ 밸리데이션 선언
-var obj_G3_PGMNM_valid = jQuery.parseJSON( '{ "G3_PGMNM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":50,  "DATATYPE":"STRING"} }' );   // 프로그램이름 밸리데이션 선언
-var obj_G3_VIEWURL_valid = jQuery.parseJSON( '{ "G3_VIEWURL": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // VIEWURL 밸리데이션 선언
-var obj_G3_PGMTYPE_valid = jQuery.parseJSON( '{ "G3_PGMTYPE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // PGMTYPE 밸리데이션 선언
-var obj_G3_ADDDT_valid = jQuery.parseJSON( '{ "G3_ADDDT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // ADDDT 밸리데이션 선언
-var obj_G3_MODDT_valid = jQuery.parseJSON( '{ "G3_MODDT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // MODDT 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G3_SEARCH = "pipgmController?CTLGRP=G3&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로
@@ -103,6 +95,7 @@ function G2_INIT(){
 			,{
 			field: 'PJTSEQ',
 			title: 'PJTSEQ',
+			visible: false,
 			sortable: true,
 			align: 'left',
 			valign: 'middle'
@@ -117,13 +110,6 @@ function G2_INIT(){
 			,{
 			field: 'PGMID',
 			title: '프로그램ID',
-			sortable: true,
-			align: 'left',
-			valign: 'middle'
-			}
-			,{
-			field: 'PJTSEQ',
-			title: 'PJTSEQ',
 			sortable: true,
 			align: 'left',
 			valign: 'middle'
@@ -180,7 +166,6 @@ function G2_INIT(){
 		lastinputG3 = new HashMap(); // PGM상세
 		lastinputG3.set("G2-PGMSEQ", row.PGMSEQ); // 
 		lastinputG3.set("G2-PJTSEQ", row.PJTSEQ); // 
-		lastinputG3.set("G2-PJTSEQ", row.PJTSEQ); // 
 		G3_SEARCH(lastinputG3,uuidv4()); //자식그룹 호출 : PGM상세
 		//    //alog(field);
 		});
@@ -207,6 +192,11 @@ function G3_INIT(){
 	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 //검색, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -258,10 +248,13 @@ function G1_USERDEF(token){
 
 	alog("G1_USERDEF-----------------end");
 }
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
+//PGM목록 엑셀 내려받기
+function G2_EXCEL(){
+	alog("G2_EXCEL()-------------------------start");
+
+	$btG2.tableExport({type:'excel'});
+
+	alog("G2_EXCEL()------------end");
 }
 //그리드 조회(PGM목록)	
 function G2_SEARCH(tinput,token){
@@ -390,19 +383,7 @@ function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
 }
-//PGM목록 엑셀 내려받기
-function G2_EXCEL(){
-	alog("G2_EXCEL()-------------------------start");
-
-	$btG2.tableExport({type:'excel'});
-
-	alog("G2_EXCEL()------------end");
-}
-//새로고침	
-function G3_reload(token){
-	alog("G3_reload-----------------start");
-	G3_SEARCH(lastinputG3,token);
-}//디테일 검색	
+//디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
 
@@ -457,4 +438,9 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
+}
+//새로고침	
+function G3_reload(token){
+	alog("G3_reload-----------------start");
+	G3_SEARCH(lastinputG3,token);
 }

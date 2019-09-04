@@ -70,6 +70,8 @@
 			  countries: {name: null, population: null, size: null}
 			}}
         });
+        cmSql.setSize("100%","321px");
+        
         cmSql.on("change", function(cmSql, change) {
             alog("cmSql change -------------------------------start");
             alog("    cmSql.getValue :  (" + cmSql.getValue() + ")");

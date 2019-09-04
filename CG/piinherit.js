@@ -182,6 +182,7 @@ function G2_INIT(){
 		//alert(JSON.stringify(row))
 
 		lastinputG3 = new HashMap(); // 
+		lastinputG3.set("G2-INHERITSEQ", row.INHERITSEQ); // 
 		lastinputG3.set("G2-PJTSEQ", row.PJTSEQ); // 
 		lastinputG3.set("G2-PGMSEQ", row.PGMSEQ); // 
 		lastinputG3.set("G2-GRPSEQ", row.GRPSEQ); // 
@@ -207,11 +208,6 @@ function G3_INIT(){
 	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -263,65 +259,11 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
-//그리드 조회()	
-function G2_SEARCH(tinput,token){
-	alog("G2_SEARCH()------------start");
-	$("#spanG2Cnt").text("");
-	//post 만들기
-	sendFormData = new FormData($("#condition")[0]);
-	if(typeof tinput != "undefined"){
-		var tKeys = tinput.keys();
-		for(i=0;i<tKeys.length;i++) {
-			sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
-			//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
-		}
-	}
-	$btG2.bootstrapTable('showLoading');
-
-	//불러오기
-	$.ajax({
-		type : "POST",
-		url : url_G2_SEARCH+"&TOKEN=" + token + " &G2_CRUD_MODE=read" ,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: true,
-		success: function(data){
-			alog("   gridG2 json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			$btG2.bootstrapTable('hideLoading');
-
-			//그리드에 데이터 반영
-			if(data.RTN_CD == "200"){
-				var row_cnt = 0;
-				if(data.RTN_DATA){
-					row_cnt = data.RTN_DATA.rows.length;
-					$("#spanG2Cnt").text(row_cnt);
-					$btG2.bootstrapTable('removeAll'); //모두 지우기
-					$btG2.bootstrapTable('load', data.RTN_DATA.rows);
-
-					}else{
-						$("#spanG2Cnt").text("-");
-					}
-					msgNotice("[] 조회 성공했습니다. ("+row_cnt+"건)",1);
-
-                }else{
-                    msgError("[] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
-                }
-            },
-            error: function(error){
-				msgError("[] Ajax http 500 error ( " + error + " )",3);
-                alog("[] Ajax http 500 error ( " + data.RTN_MSG + " )");
-            }
-        });
-		alog("G2_SEARCH()------------end");
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
 }
-
 //
 function G2_CHKSAVE(token){
 	alog("G2_CHKSAVE()------------start");
@@ -398,29 +340,65 @@ function G2_EXCEL(){
 
 	alog("G2_EXCEL()------------end");
 }
-function G3_MODIFY(){
-       alog("[FromView] G3_MODIFY---------------start");
-	if( $("#G3-CTLCUD").val() == "C" ){
-		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
-		return;
+//그리드 조회()	
+function G2_SEARCH(tinput,token){
+	alog("G2_SEARCH()------------start");
+	$("#spanG2Cnt").text("");
+	//post 만들기
+	sendFormData = new FormData($("#condition")[0]);
+	if(typeof tinput != "undefined"){
+		var tKeys = tinput.keys();
+		for(i=0;i<tKeys.length;i++) {
+			sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+			//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+		}
 	}
-	if( $("#G3-CTLCUD").val() == "D" ){
-		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
-		return;
-	}
+	$btG2.bootstrapTable('showLoading');
 
-	$("#G3-CTLCUD").val("U");
-       alog("[FromView] G3_MODIFY---------------end");
+	//불러오기
+	$.ajax({
+		type : "POST",
+		url : url_G2_SEARCH+"&TOKEN=" + token + " &G2_CRUD_MODE=read" ,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: true,
+		success: function(data){
+			alog("   gridG2 json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			$btG2.bootstrapTable('hideLoading');
+
+			//그리드에 데이터 반영
+			if(data.RTN_CD == "200"){
+				var row_cnt = 0;
+				if(data.RTN_DATA){
+					row_cnt = data.RTN_DATA.rows.length;
+					$("#spanG2Cnt").text(row_cnt);
+					$btG2.bootstrapTable('removeAll'); //모두 지우기
+					$btG2.bootstrapTable('load', data.RTN_DATA.rows);
+
+					}else{
+						$("#spanG2Cnt").text("-");
+					}
+					msgNotice("[] 조회 성공했습니다. ("+row_cnt+"건)",1);
+
+                }else{
+                    msgError("[] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
+                }
+            },
+            error: function(error){
+				msgError("[] Ajax http 500 error ( " + error + " )",3);
+                alog("[] Ajax http 500 error ( " + data.RTN_MSG + " )");
+            }
+        });
+		alog("G2_SEARCH()------------end");
 }
-//	
-function G3_NEW(){
-       alog("[FromView] G3_NEW---------------start");
-	$("#G3-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G3-INHERITSEQ").text("");//INHERITSEQ 신규초기화		$("#G3-PJTSEQ").text("");//PJTSEQ 신규초기화		$("#G3-PGMSEQ").text("");//PGMSEQ 신규초기화		$("#G3-GRPSEQ").text("");//GRPSEQ 신규초기화		$("#G3-COLID").val("");//컬럼ID 신규초기화	
-	$("#G3-CHILDGRPID").val("");//CHILDGRPID 신규초기화	
-	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
-}
+
 //FORMVIEW DELETE
 function G3_DELETE(){	
 	alog("G3_DELETE---------------start");
@@ -574,4 +552,26 @@ function G3_SAVE(token){
 			alog(error);
 		}
 	});
+}function G3_MODIFY(){
+       alog("[FromView] G3_MODIFY---------------start");
+	if( $("#G3-CTLCUD").val() == "C" ){
+		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+	if( $("#G3-CTLCUD").val() == "D" ){
+		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+
+	$("#G3-CTLCUD").val("U");
+       alog("[FromView] G3_MODIFY---------------end");
+}
+//	
+function G3_NEW(){
+       alog("[FromView] G3_NEW---------------start");
+	$("#G3-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G3-INHERITSEQ").text("");//INHERITSEQ 신규초기화		$("#G3-PJTSEQ").text("");//PJTSEQ 신규초기화		$("#G3-PGMSEQ").text("");//PGMSEQ 신규초기화		$("#G3-GRPSEQ").text("");//GRPSEQ 신규초기화		$("#G3-COLID").val("");//컬럼ID 신규초기화	
+	$("#G3-CHILDGRPID").val("");//CHILDGRPID 신규초기화	
+	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
 }

@@ -72,7 +72,7 @@
         $sql = " select CD,NM from CG_CODED where  PCD = #PCD# and DELYN = 'N' and USEYN='Y' ORDER BY   ORD ASC   ";
     } 
 
-    mlog("cg_clode_json.php...............333");
+    alog("cg_code_json.php...............333");
 
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
 
