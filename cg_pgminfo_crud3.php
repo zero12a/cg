@@ -7,9 +7,9 @@
     include_once("./include/incUtil.php");
 	include_once('./include/incRequest.php');//CG REQUEST    
     include_once("./incConfig.php");
+	include_once('./include/incSec.php');//CG SEC    
     include_once("./include/incDB.php");
     include_once("./include/incUser.php");
-	include_once('./include/incSEC.php');//CG SEC
     include_once("./cg_pgminfo_svc.php");
 
     alog("aaaa");

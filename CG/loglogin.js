@@ -1,9 +1,16 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "logloginController?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "logloginController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_RESET = "logloginController?CTLGRP=G1&CTLFNC=RESET";//조건 변수 선언	
-var obj_G1_USR_ID; // USR_ID 변수선언var obj_G1_REMOTE_ADDR; // IP 변수선언var obj_G1_FROM_DT; // FROM_DT 변수선언var obj_G1_TO_DT; // ~ 변수선언//그리드 변수 초기화	
+var url_G1_SEARCHALL = "logloginController?CTLGRP=G1&CTLFNC=SEARCHALL";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_SAVE = "logloginController?CTLGRP=G1&CTLFNC=SAVE";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_RESET = "logloginController?CTLGRP=G1&CTLFNC=RESET";
+//조건 변수 선언	
+var obj_G1_USR_ID; // USR_ID 변수선언
+var obj_G1_REMOTE_ADDR; // IP 변수선언
+var obj_G1_FROM_DT; // FROM_DT 변수선언
+var obj_G1_TO_DT; // ~ 변수선언
+//그리드 변수 초기화	
 //컨트롤러 경로
 var url_G2_SEARCH = "logloginController?CTLGRP=G2&CTLFNC=SEARCH";
 //컨트롤러 경로
@@ -16,10 +23,6 @@ var url_G2_EXCEL = "logloginController?CTLGRP=G2&CTLFNC=EXCEL";
 var mygridG2,isToggleHiddenColG2,lastinputG2,lastinputG2json,lastrowidG2;
 var lastselectG2json;//디테일 변수 초기화	
 
-var obj_G3_LOGIN_SEQ_valid = jQuery.parseJSON( '{ "G3_LOGIN_SEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"NUMBER"} }' );   // SEQ 밸리데이션 선언
-var obj_G3_SESSION_ID_valid = jQuery.parseJSON( '{ "G3_SESSION_ID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // SESSION_ID 밸리데이션 선언
-var obj_G3_USER_AGENT_valid = jQuery.parseJSON( '{ "G3_USER_AGENT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":500,  "DATATYPE":"STRING"} }' );   // BROWSER 밸리데이션 선언
-var obj_G3_AUTH_JSON_valid = jQuery.parseJSON( '{ "G3_AUTH_JSON": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":300,  "DATATYPE":"STRING"} }' );   // AUTH 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G3_SEARCH = "logloginController?CTLGRP=G3&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로
@@ -298,32 +301,6 @@ function G1_RESET(){
 	alog("G1_RESET--------------------------start");
 	$('#condition')[0].reset();
 }
-    function G2_HIDDENCOL(){
-		alog("G2_HIDDENCOL()..................start");
-        if(isToggleHiddenColG2){
-            isToggleHiddenColG2 = false;     }else{
-            isToggleHiddenColG2 = true;
-        }
-		alog("G2_HIDDENCOL()..................end");
-    }
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/c.g/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG2.setSerializationLevel(true,false,false,false,false,false);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("LOGIN_SEQ,USR_ID,SESSION_ID,SUCCESS_YN,USR_SEQ,SERVER_NAME,REMOTE_ADDR,USER_AGENT,ADD_DT");
-	$("#DATA_WIDTHS").val("60,60,60,60,60,60,60,120,60");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
-}
 
 
 
@@ -339,7 +316,8 @@ function G2_EXCEL(){
 		var tGrid = mygridG2;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -370,7 +348,8 @@ function G2_EXCEL(){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG2Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG2Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");
@@ -396,6 +375,77 @@ function G2_EXCEL(){
 function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
+}
+    function G2_HIDDENCOL(){
+		alog("G2_HIDDENCOL()..................start");
+        if(isToggleHiddenColG2){
+            isToggleHiddenColG2 = false;     }else{
+            isToggleHiddenColG2 = true;
+        }
+		alog("G2_HIDDENCOL()..................end");
+    }
+//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/c.g/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,false);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("LOGIN_SEQ,USR_ID,SESSION_ID,SUCCESS_YN,USR_SEQ,SERVER_NAME,REMOTE_ADDR,USER_AGENT,ADD_DT");
+	$("#DATA_WIDTHS").val("60,60,60,60,60,60,60,120,60");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}
+//FORMVIEW DELETE
+function G3_DELETE(){	
+	alog("G3_DELETE---------------start");
+
+	//조회했는지 확인하기
+	if( $("#G3-CTLCUD").val() != "R" ){
+		alert("조회된 것만 삭제 가능합니다.");
+		return;
+	}
+	//확인
+	if(!confirm("정말로 삭제하시겠습니까?")){
+		return;
+	}
+	
+	//삭제처리 명령어
+	$("#G3-CTLCUD").val("D");
+
+	//폼객체를 불러와서
+	var form1 = $("#formviewG3")[0];
+
+	//FormData parameter에 담아줌
+	var formData = new FormData(form1);
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_DELETE,
+		data : formData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 삭제되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
 }
 //G3_SAVE
 //IO_FILE_YN = N	
@@ -517,49 +567,4 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
-}
-//FORMVIEW DELETE
-function G3_DELETE(){	
-	alog("G3_DELETE---------------start");
-
-	//조회했는지 확인하기
-	if( $("#G3-CTLCUD").val() != "R" ){
-		alert("조회된 것만 삭제 가능합니다.");
-		return;
-	}
-	//확인
-	if(!confirm("정말로 삭제하시겠습니까?")){
-		return;
-	}
-	
-	//삭제처리 명령어
-	$("#G3-CTLCUD").val("D");
-
-	//폼객체를 불러와서
-	var form1 = $("#formviewG3")[0];
-
-	//FormData parameter에 담아줌
-	var formData = new FormData(form1);
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_DELETE,
-		data : formData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 삭제되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
 }

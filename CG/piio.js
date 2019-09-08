@@ -26,42 +26,6 @@ var $btG2 = null; //
 	var url_G2_CHKSAVE = "piioController?CTLGRP=G2&CTLFNC=CHKSAVE";
 //디테일 변수 초기화	
 
-var obj_G3_PJTSEQ_valid = jQuery.parseJSON( '{ "G3_PJTSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":20,  "DATATYPE":"NUMBER"} }' );   // PJTSEQ 밸리데이션 선언
-var obj_G3_PGMSEQ_valid = jQuery.parseJSON( '{ "G3_PGMSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // PGMSEQ 밸리데이션 선언
-var obj_G3_GRPSEQ_valid = jQuery.parseJSON( '{ "G3_GRPSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // GRPSEQ 밸리데이션 선언
-var obj_G3_IOSEQ_valid = jQuery.parseJSON( '{ "G3_IOSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // IOSEQ 밸리데이션 선언
-var obj_G3_COLORD_valid = jQuery.parseJSON( '{ "G3_COLORD": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":3,  "DATATYPE":"NUMBER"} }' );   // COLORD 밸리데이션 선언
-var obj_G3_COLID_valid = jQuery.parseJSON( '{ "G3_COLID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 컬럼ID 밸리데이션 선언
-var obj_G3_COLNM_valid = jQuery.parseJSON( '{ "G3_COLNM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 컬럼명 밸리데이션 선언
-var obj_G3_DATATYPE_valid = jQuery.parseJSON( '{ "G3_DATATYPE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 데이터타입 밸리데이션 선언
-var obj_G3_VALIDSEQ_valid = jQuery.parseJSON( '{ "G3_VALIDSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // VALIDSEQ 밸리데이션 선언
-var obj_G3_DATASIZE_valid = jQuery.parseJSON( '{ "G3_DATASIZE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // 데이터사이즈 밸리데이션 선언
-var obj_G3_OBJTYPE_valid = jQuery.parseJSON( '{ "G3_OBJTYPE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 오브젝트타입 밸리데이션 선언
-var obj_G3_POPUP_valid = jQuery.parseJSON( '{ "G3_POPUP": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // POPUP 밸리데이션 선언
-var obj_G3_KEYYN_valid = jQuery.parseJSON( '{ "G3_KEYYN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // KEYYN 밸리데이션 선언
-var obj_G3_SEQYN_valid = jQuery.parseJSON( '{ "G3_SEQYN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // SEQYN 밸리데이션 선언
-var obj_G3_LBLHIDDENYN_valid = jQuery.parseJSON( '{ "G3_LBLHIDDENYN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // LBLHIDDENYN 밸리데이션 선언
-var obj_G3_LBLWIDTH_valid = jQuery.parseJSON( '{ "G3_LBLWIDTH": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 라벨가로 밸리데이션 선언
-var obj_G3_LBLALIGN_valid = jQuery.parseJSON( '{ "G3_LBLALIGN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":20,  "DATATYPE":"STRING"} }' );   // LBLALIGN 밸리데이션 선언
-var obj_G3_OBJWIDTH_valid = jQuery.parseJSON( '{ "G3_OBJWIDTH": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 오브젝트가로 밸리데이션 선언
-var obj_G3_OBJHEIGHT_valid = jQuery.parseJSON( '{ "G3_OBJHEIGHT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 오브젝트세로 밸리데이션 선언
-var obj_G3_OBJALIGN_valid = jQuery.parseJSON( '{ "G3_OBJALIGN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 가로정렬 밸리데이션 선언
-var obj_G3_HIDDENYN_valid = jQuery.parseJSON( '{ "G3_HIDDENYN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // HIDDENYN 밸리데이션 선언
-var obj_G3_EDITYN_valid = jQuery.parseJSON( '{ "G3_EDITYN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":1,  "DATATYPE":"STRING"} }' );   // EDITYN 밸리데이션 선언
-var obj_G3_FNINIT_valid = jQuery.parseJSON( '{ "G3_FNINIT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // FNINIT 밸리데이션 선언
-var obj_G3_BRYN_valid = jQuery.parseJSON( '{ "G3_BRYN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // BRYN 밸리데이션 선언
-var obj_G3_FORMAT_valid = jQuery.parseJSON( '{ "G3_FORMAT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // FORMAT 밸리데이션 선언
-var obj_G3_FOOTERMATH_valid = jQuery.parseJSON( '{ "G3_FOOTERMATH": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // FOOTERMATH 밸리데이션 선언
-var obj_G3_FOOTERNM_valid = jQuery.parseJSON( '{ "G3_FOOTERNM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // FOOTERNM 밸리데이션 선언
-var obj_G3_ICONNM_valid = jQuery.parseJSON( '{ "G3_ICONNM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // ICONNM 밸리데이션 선언
-var obj_G3_ICONSTYLE_valid = jQuery.parseJSON( '{ "G3_ICONSTYLE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // ICONSTYLE 밸리데이션 선언
-var obj_G3_LBLSTYLE_valid = jQuery.parseJSON( '{ "G3_LBLSTYLE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":60,  "DATATYPE":"STRING"} }' );   // LBLSTYLE 밸리데이션 선언
-var obj_G3_OBJSTYLE_valid = jQuery.parseJSON( '{ "G3_OBJSTYLE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":70,  "DATATYPE":"STRING"} }' );   // OBJSTYLE 밸리데이션 선언
-var obj_G3_OBJ2STYLE_valid = jQuery.parseJSON( '{ "G3_OBJ2STYLE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":70,  "DATATYPE":"STRING"} }' );   // OBJ2STYLE 밸리데이션 선언
-var obj_G3_ADDDT_valid = jQuery.parseJSON( '{ "G3_ADDDT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // ADDDT 밸리데이션 선언
-var obj_G3_ADDID_valid = jQuery.parseJSON( '{ "G3_ADDID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"NUMBER"} }' );   // ADDID 밸리데이션 선언
-var obj_G3_MODDT_valid = jQuery.parseJSON( '{ "G3_MODDT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // MODDT 밸리데이션 선언
-var obj_G3_MODID_valid = jQuery.parseJSON( '{ "G3_MODID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"NUMBER"} }' );   // MODID 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G3_USERDEF = "piioController?CTLGRP=G3&CTLFNC=USERDEF";
 //폼뷰 컨트롤러 경로
@@ -521,24 +485,6 @@ function G3_INIT(){
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
 //사용자정의함수 : 사용자정의
 function G1_USERDEF(token){
 	alog("G1_USERDEF-----------------start");
@@ -576,6 +522,30 @@ function G1_SAVE(){
 		}
 	});
 	alog("G1_SAVE-------------------end");	
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("G1_SEARCHALL--------------------------end");
+}
+//사용자정의함수 : 사용자정의
+function G2_USERDEF(token){
+	alog("G2_USERDEF-----------------start");
+
+	alog("G2_USERDEF-----------------end");
 }
 //새로고침	
 function G2_RELOAD(token){
@@ -705,113 +675,6 @@ function G2_CHKSAVE(token){
 	});
 	
 	alog("G2_CHKSAVE()------------end");
-}
-//사용자정의함수 : 사용자정의
-function G2_USERDEF(token){
-	alog("G2_USERDEF-----------------start");
-
-	alog("G2_USERDEF-----------------end");
-}
-//사용자정의함수 : 사용자정의
-function G3_USERDEF(token){
-	alog("G3_USERDEF-----------------start");
-
-	alog("G3_USERDEF-----------------end");
-}
-//G3_SAVE
-//IO_FILE_YN = N	
-	//IO_FILE_YN = N	
-function G3_SAVE(token){	
-	alog("G3_SAVE---------------start");
-
-	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
-		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
-		return;
-	}
-
-	//전송용 데이터 생성하기
-	var sendFormData = new FormData($("#formviewG3")[0]);
-
-	//컨디션 데이터 추가하기
-	conditionData = new FormData($("#condition")[0]);
-    var es, e, pair;
-    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
-		sendFormData.append(pair[0],pair[1]);
-    }
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 저장되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
-}function G3_MODIFY(){
-       alog("[FromView] G3_MODIFY---------------start");
-	if( $("#G3-CTLCUD").val() == "C" ){
-		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-	if( $("#G3-CTLCUD").val() == "D" ){
-		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-
-	$("#G3-CTLCUD").val("U");
-       alog("[FromView] G3_MODIFY---------------end");
-}
-//	
-function G3_NEW(){
-       alog("[FromView] G3_NEW---------------start");
-	$("#G3-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G3-PJTSEQ").text("");//PJTSEQ 신규초기화		$("#G3-PGMSEQ").text("");//PGMSEQ 신규초기화		$("#G3-GRPSEQ").text("");//GRPSEQ 신규초기화		$("#G3-IOSEQ").text("");//IOSEQ 신규초기화		$("#G3-COLORD").val("");//COLORD 신규초기화	
-	$("#G3-COLID").val("");//컬럼ID 신규초기화	
-	$("#G3-COLNM").val("");//컬럼명 신규초기화	
-	$("#G3-DATATYPE").val("");//데이터타입 신규초기화	
-	$("#G3-VALIDSEQ").val("");//VALIDSEQ 신규초기화	
-	$("#G3-DATASIZE").val("");//데이터사이즈 신규초기화	
-	$("#G3-OBJTYPE").val("");//오브젝트타입 신규초기화	
-	$("#G3-POPUP").val("");//POPUP 신규초기화	
-	$("#G3-KEYYN").val("");//KEYYN 신규초기화	
-	$("#G3-SEQYN").val("");//SEQYN 신규초기화	
-	$("#G3-LBLHIDDENYN").val("");//LBLHIDDENYN 신규초기화	
-	$("#G3-LBLWIDTH").val("");//라벨가로 신규초기화	
-	$("#G3-LBLALIGN").val("");//LBLALIGN 신규초기화	
-	$("#G3-OBJWIDTH").val("");//오브젝트가로 신규초기화	
-	$("#G3-OBJHEIGHT").val("");//오브젝트세로 신규초기화	
-	$("#G3-OBJALIGN").val("");//가로정렬 신규초기화	
-	$("#G3-HIDDENYN").val("");//HIDDENYN 신규초기화	
-	$("#G3-EDITYN").val("");//EDITYN 신규초기화	
-	$("#G3-FNINIT").val("");//FNINIT 신규초기화	
-	$("#G3-BRYN").val("");//BRYN 신규초기화	
-	$("#G3-FORMAT").val("");//FORMAT 신규초기화	
-	$("#G3-FOOTERMATH").val("");//FOOTERMATH 신규초기화	
-	$("#G3-FOOTERNM").val("");//FOOTERNM 신규초기화	
-	$("#G3-ICONNM").val("");//ICONNM 신규초기화	
-	$("#G3-ICONSTYLE").val("");//ICONSTYLE 신규초기화	
-	$("#G3-LBLSTYLE").val("");//LBLSTYLE 신규초기화	
-	$("#G3-OBJSTYLE").val("");//OBJSTYLE 신규초기화	
-	$("#G3-OBJ2STYLE").val("");//OBJ2STYLE 신규초기화	
-	$("#G3-ADDDT").val("");//ADDDT 신규초기화	
-	$("#G3-ADDID").val("");//ADDID 신규초기화	
-	$("#G3-MODDT").val("");//MODDT 신규초기화	
-	$("#G3-MODID").val("");//MODID 신규초기화	
-       alog("DETAILNew30---------------end");
 }
 //FORMVIEW DELETE
 function G3_DELETE(){	
@@ -946,4 +809,104 @@ function G3_SEARCH(tinput,token){
 function G3_RELOAD(token){
 	alog("G3_RELOAD-----------------start");
 	G3_SEARCH(lastinputG3,token);
+}//사용자정의함수 : 사용자정의
+function G3_USERDEF(token){
+	alog("G3_USERDEF-----------------start");
+
+	alog("G3_USERDEF-----------------end");
+}
+//G3_SAVE
+//IO_FILE_YN = N	
+	//IO_FILE_YN = N	
+function G3_SAVE(token){	
+	alog("G3_SAVE---------------start");
+
+	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
+		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
+		return;
+	}
+
+	//전송용 데이터 생성하기
+	var sendFormData = new FormData($("#formviewG3")[0]);
+
+	//컨디션 데이터 추가하기
+	conditionData = new FormData($("#condition")[0]);
+    var es, e, pair;
+    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
+		sendFormData.append(pair[0],pair[1]);
+    }
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 저장되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
+}function G3_MODIFY(){
+       alog("[FromView] G3_MODIFY---------------start");
+	if( $("#G3-CTLCUD").val() == "C" ){
+		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+	if( $("#G3-CTLCUD").val() == "D" ){
+		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+
+	$("#G3-CTLCUD").val("U");
+       alog("[FromView] G3_MODIFY---------------end");
+}
+//	
+function G3_NEW(){
+       alog("[FromView] G3_NEW---------------start");
+	$("#G3-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G3-PJTSEQ").text("");//PJTSEQ 신규초기화		$("#G3-PGMSEQ").text("");//PGMSEQ 신규초기화		$("#G3-GRPSEQ").text("");//GRPSEQ 신규초기화		$("#G3-IOSEQ").text("");//IOSEQ 신규초기화		$("#G3-COLORD").val("");//COLORD 신규초기화	
+	$("#G3-COLID").val("");//컬럼ID 신규초기화	
+	$("#G3-COLNM").val("");//컬럼명 신규초기화	
+	$("#G3-DATATYPE").val("");//데이터타입 신규초기화	
+	$("#G3-VALIDSEQ").val("");//VALIDSEQ 신규초기화	
+	$("#G3-DATASIZE").val("");//데이터사이즈 신규초기화	
+	$("#G3-OBJTYPE").val("");//오브젝트타입 신규초기화	
+	$("#G3-POPUP").val("");//POPUP 신규초기화	
+	$("#G3-KEYYN").val("");//KEYYN 신규초기화	
+	$("#G3-SEQYN").val("");//SEQYN 신규초기화	
+	$("#G3-LBLHIDDENYN").val("");//LBLHIDDENYN 신규초기화	
+	$("#G3-LBLWIDTH").val("");//라벨가로 신규초기화	
+	$("#G3-LBLALIGN").val("");//LBLALIGN 신규초기화	
+	$("#G3-OBJWIDTH").val("");//오브젝트가로 신규초기화	
+	$("#G3-OBJHEIGHT").val("");//오브젝트세로 신규초기화	
+	$("#G3-OBJALIGN").val("");//가로정렬 신규초기화	
+	$("#G3-HIDDENYN").val("");//HIDDENYN 신규초기화	
+	$("#G3-EDITYN").val("");//EDITYN 신규초기화	
+	$("#G3-FNINIT").val("");//FNINIT 신규초기화	
+	$("#G3-BRYN").val("");//BRYN 신규초기화	
+	$("#G3-FORMAT").val("");//FORMAT 신규초기화	
+	$("#G3-FOOTERMATH").val("");//FOOTERMATH 신규초기화	
+	$("#G3-FOOTERNM").val("");//FOOTERNM 신규초기화	
+	$("#G3-ICONNM").val("");//ICONNM 신규초기화	
+	$("#G3-ICONSTYLE").val("");//ICONSTYLE 신규초기화	
+	$("#G3-LBLSTYLE").val("");//LBLSTYLE 신규초기화	
+	$("#G3-OBJSTYLE").val("");//OBJSTYLE 신규초기화	
+	$("#G3-OBJ2STYLE").val("");//OBJ2STYLE 신규초기화	
+	$("#G3-ADDDT").val("");//ADDDT 신규초기화	
+	$("#G3-ADDID").val("");//ADDID 신규초기화	
+	$("#G3-MODDT").val("");//MODDT 신규초기화	
+	$("#G3-MODID").val("");//MODID 신규초기화	
+       alog("DETAILNew30---------------end");
 }

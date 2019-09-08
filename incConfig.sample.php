@@ -3,6 +3,7 @@
 //세션 사용
 session_start(); 
 
+$CFG_LIBS_PATH_REDIS = "Predis/Autoloader.php";
 
 //운영/개발 모드
 $CFG_MODE = "DEV"; //DEV, REAL, LOCAL

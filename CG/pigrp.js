@@ -24,15 +24,6 @@ var $btG2 = null; //GRP목록
 	var url_G2_CHKSAVE = "pigrpController?CTLGRP=G2&CTLFNC=CHKSAVE";
 //디테일 변수 초기화	
 
-var obj_G3_PJTSEQ_valid = jQuery.parseJSON( '{ "G3_PJTSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":20,  "DATATYPE":"NUMBER"} }' );   // PJTSEQ 밸리데이션 선언
-var obj_G3_PGMSEQ_valid = jQuery.parseJSON( '{ "G3_PGMSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // PGMSEQ 밸리데이션 선언
-var obj_G3_GRPSEQ_valid = jQuery.parseJSON( '{ "G3_GRPSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // GRPSEQ 밸리데이션 선언
-var obj_G3_GRPID_valid = jQuery.parseJSON( '{ "G3_GRPID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // GRPID 밸리데이션 선언
-var obj_G3_GRPTYPE_valid = jQuery.parseJSON( '{ "G3_GRPTYPE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // GRPTYPE 밸리데이션 선언
-var obj_G3_GRPNM_valid = jQuery.parseJSON( '{ "G3_GRPNM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":100,  "DATATYPE":"STRING"} }' );   // GRPNM 밸리데이션 선언
-var obj_G3_GRPORD_valid = jQuery.parseJSON( '{ "G3_GRPORD": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // GRPORD 밸리데이션 선언
-var obj_G3_ADDDT_valid = jQuery.parseJSON( '{ "G3_ADDDT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // ADDDT 밸리데이션 선언
-var obj_G3_MODDT_valid = jQuery.parseJSON( '{ "G3_MODDT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // MODDT 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G3_SEARCH = "pigrpController?CTLGRP=G3&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로
@@ -266,14 +257,6 @@ function G1_RESET(){
 	alog("G1_RESET--------------------------start");
 	$('#condition')[0].reset();
 }
-//GRP목록 엑셀 내려받기
-function G2_EXCEL(){
-	alog("G2_EXCEL()-------------------------start");
-
-	$btG2.tableExport({type:'excel'});
-
-	alog("G2_EXCEL()------------end");
-}
 //그리드 조회(GRP목록)	
 function G2_SEARCH(tinput,token){
 	alog("G2_SEARCH()------------start");
@@ -401,7 +384,19 @@ function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
 }
-//디테일 검색	
+//GRP목록 엑셀 내려받기
+function G2_EXCEL(){
+	alog("G2_EXCEL()-------------------------start");
+
+	$btG2.tableExport({type:'excel'});
+
+	alog("G2_EXCEL()------------end");
+}
+//새로고침	
+function G3_reload(token){
+	alog("G3_reload-----------------start");
+	G3_SEARCH(lastinputG3,token);
+}//디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
 
@@ -457,9 +452,4 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
-}
-//새로고침	
-function G3_reload(token){
-	alog("G3_reload-----------------start");
-	G3_SEARCH(lastinputG3,token);
 }

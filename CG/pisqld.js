@@ -25,16 +25,6 @@ var $btG2 = null; //
 	var url_G2_CHKSAVE = "pisqldController?CTLGRP=G2&CTLFNC=CHKSAVE";
 //디테일 변수 초기화	
 
-var obj_G3_SQLSEQ_valid = jQuery.parseJSON( '{ "G3_SQLSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // SQLSEQ 밸리데이션 선언
-var obj_G3_COLSEQ_valid = jQuery.parseJSON( '{ "G3_COLSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // COLSEQ 밸리데이션 선언
-var obj_G3_PJTSEQ_valid = jQuery.parseJSON( '{ "G3_PJTSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":20,  "DATATYPE":"NUMBER"} }' );   // PJTSEQ 밸리데이션 선언
-var obj_G3_PGMSEQ_valid = jQuery.parseJSON( '{ "G3_PGMSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // PGMSEQ 밸리데이션 선언
-var obj_G3_SQLGBN_valid = jQuery.parseJSON( '{ "G3_SQLGBN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":1,  "DATATYPE":"STRING"} }' );   // SQLGBN 밸리데이션 선언
-var obj_G3_COLID_valid = jQuery.parseJSON( '{ "G3_COLID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // 컬럼ID 밸리데이션 선언
-var obj_G3_DDCOLID_valid = jQuery.parseJSON( '{ "G3_DDCOLID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":50,  "DATATYPE":"STRING"} }' );   // DDCOLID 밸리데이션 선언
-var obj_G3_REQUIREYN_valid = jQuery.parseJSON( '{ "G3_REQUIREYN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":1,  "DATATYPE":"STRING"} }' );   // 필수 밸리데이션 선언
-var obj_G3_ORD_valid = jQuery.parseJSON( '{ "G3_ORD": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"NUMBER"} }' );   // ORD 밸리데이션 선언
-var obj_G3_MODDT_valid = jQuery.parseJSON( '{ "G3_MODDT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // MODDT 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G3_USERDEF = "pisqldController?CTLGRP=G3&CTLFNC=USERDEF";
 //폼뷰 컨트롤러 경로
@@ -287,6 +277,12 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
+//사용자정의함수 : 사용자정의
+function G2_USERDEF(token){
+	alog("G2_USERDEF-----------------start");
+
+	alog("G2_USERDEF-----------------end");
+}
 //새로고침	
 function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
@@ -416,13 +412,11 @@ function G2_CHKSAVE(token){
 	
 	alog("G2_CHKSAVE()------------end");
 }
-//사용자정의함수 : 사용자정의
-function G2_USERDEF(token){
-	alog("G2_USERDEF-----------------start");
-
-	alog("G2_USERDEF-----------------end");
-}
-//사용자정의함수 : 사용자정의
+//새로고침	
+function G3_RELOAD(token){
+	alog("G3_RELOAD-----------------start");
+	G3_SEARCH(lastinputG3,token);
+}//사용자정의함수 : 사용자정의
 function G3_USERDEF(token){
 	alog("G3_USERDEF-----------------start");
 
@@ -598,9 +592,4 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
-}
-//새로고침	
-function G3_RELOAD(token){
-	alog("G3_RELOAD-----------------start");
-	G3_SEARCH(lastinputG3,token);
 }

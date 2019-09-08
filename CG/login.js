@@ -1,14 +1,15 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "loginController?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "loginController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_RESET = "loginController?CTLGRP=G1&CTLFNC=RESET";//입력폼 변수 선언	
-var obj_G1_USR_ID; // USR_ID 변수선언var obj_G1_USR_PWD; // USR_PWD 변수선언//디테일 변수 초기화	
+var url_G1_SEARCHALL = "loginController?CTLGRP=G1&CTLFNC=SEARCHALL";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_SAVE = "loginController?CTLGRP=G1&CTLFNC=SAVE";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_RESET = "loginController?CTLGRP=G1&CTLFNC=RESET";
+//입력폼 변수 선언	
+var obj_G1_USR_ID; // USR_ID 변수선언
+var obj_G1_USR_PWD; // USR_PWD 변수선언
+//디테일 변수 초기화	
 
-var obj_G2_USR_ID_valid = jQuery.parseJSON( '{ "G2_USR_ID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // USR_ID 밸리데이션 선언
-var obj_G2_USR_SEQ_valid = jQuery.parseJSON( '{ "G2_USR_SEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"NUMBER"} }' );   // USE_SEQ 밸리데이션 선언
-var obj_G2_USR_NM_valid = jQuery.parseJSON( '{ "G2_USR_NM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // USR_NM 밸리데이션 선언
-var obj_G2_USR_PWD_valid = jQuery.parseJSON( '{ "G2_USR_PWD": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // USR_PWD 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G2_SEARCH = "loginController?CTLGRP=G2&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로

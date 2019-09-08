@@ -1,9 +1,16 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "usrmngController?CTLGRP=G1&CTLFNC=SEARCHALL";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "usrmngController?CTLGRP=G1&CTLFNC=SAVE";//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_RESET = "usrmngController?CTLGRP=G1&CTLFNC=RESET";//조회조건 변수 선언	
-var obj_G1_USR_SEQ; // USR_SEQ 변수선언var obj_G1_USR_ID; // USR_ID 변수선언var obj_G1_USR_NM; // USR_NM 변수선언var obj_G1_PHONE; // PHONE 변수선언//그리드 변수 초기화	
+var url_G1_SEARCHALL = "usrmngController?CTLGRP=G1&CTLFNC=SEARCHALL";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_SAVE = "usrmngController?CTLGRP=G1&CTLFNC=SAVE";
+//버틀 그룹쪽에서 컨틀롤러 호출
+var url_G1_RESET = "usrmngController?CTLGRP=G1&CTLFNC=RESET";
+//조회조건 변수 선언	
+var obj_G1_USR_SEQ; // USR_SEQ 변수선언
+var obj_G1_USR_ID; // USR_ID 변수선언
+var obj_G1_USR_NM; // USR_NM 변수선언
+var obj_G1_PHONE; // PHONE 변수선언
+//그리드 변수 초기화	
 //컨트롤러 경로
 var url_G2_SEARCH = "usrmngController?CTLGRP=G2&CTLFNC=SEARCH";
 //컨트롤러 경로
@@ -26,15 +33,6 @@ var url_G2_SAVEPWD = "usrmngController?CTLGRP=G2&CTLFNC=SAVEPWD";
 var mygridG2,isToggleHiddenColG2,lastinputG2,lastinputG2json,lastrowidG2;
 var lastselectG2json;//디테일 변수 초기화	
 
-var obj_G3_USR_SEQ_valid = jQuery.parseJSON( '{ "G3_USR_SEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"NUMBER"} }' );   // USR_SEQ 밸리데이션 선언
-var obj_G3_USR_ID_valid = jQuery.parseJSON( '{ "G3_USR_ID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // USR_ID 밸리데이션 선언
-var obj_G3_USR_NM_valid = jQuery.parseJSON( '{ "G3_USR_NM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // USR_NM 밸리데이션 선언
-var obj_G3_USR_PWD_valid = jQuery.parseJSON( '{ "G3_USR_PWD": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // USR_PWD 밸리데이션 선언
-var obj_G3_PHONE_valid = jQuery.parseJSON( '{ "G3_PHONE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":20,  "DATATYPE":"STRING"} }' );   // PHONE 밸리데이션 선언
-var obj_G3_PW_ERR_CNT_valid = jQuery.parseJSON( '{ "G3_PW_ERR_CNT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":2,  "DATATYPE":"NUMBER"} }' );   // PW_ERR_CNT 밸리데이션 선언
-var obj_G3_LAST_STATUS_valid = jQuery.parseJSON( '{ "G3_LAST_STATUS": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":40,  "DATATYPE":"STRING"} }' );   // LAST_STATUS 밸리데이션 선언
-var obj_G3_ADD_DT_valid = jQuery.parseJSON( '{ "G3_ADD_DT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // ADD 밸리데이션 선언
-var obj_G3_MOD_DT_valid = jQuery.parseJSON( '{ "G3_MOD_DT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // MOD 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G3_SEARCH = "usrmngController?CTLGRP=G3&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로
@@ -329,6 +327,53 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
+function G2_CHKSAVE(token){
+	alog("G2_CHKSAVE()------------start");
+	tgrid = mygridG2;
+
+	//체크된 ROW의 ID 배열로 불러오기
+	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
+	//alert(arrRows.length);
+
+        //전송용 post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+
+		if(typeof lastinputG2 != "undefined"){
+			var tKeys = lastinputG2.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG2.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG2.get(tKeys[i])); 
+			}
+		}
+	//CHK 배열 합치기
+	sendFormData.append("G2-CHK",arrRows);
+	$.ajax({
+		type : "POST",
+		url : url_G2_CHKSAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G2_CHKSAVE()------------end");
+}
 //행추가3 (회원목록)	
 //그리드 행추가 : 회원목록
 	function G2_ROWADD(){
@@ -439,7 +484,8 @@ function G2_RELOAD(token){
 		var tGrid = mygridG2;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -470,7 +516,8 @@ function G2_RELOAD(token){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG2Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG2Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");
@@ -540,52 +587,18 @@ function G2_RELOAD(token){
 	
 	alog("G2_SAVEPWD()------------end");
 }
-function G2_CHKSAVE(){
-	alog("G2_CHKSAVE()------------start");
-	tgrid = mygridG2;
-
-	//체크된 ROW의 ID 배열로 불러오기
-	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
-	//alert(arrRows.length);
-
-        //전송용 post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-
-		if(typeof lastinputG2 != "undefined"){
-			var tKeys = lastinputG2.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],lastinputG2.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ lastinputG2.get(tKeys[i])); 
-			}
-		}
-	//CHK 배열 합치기
-	sendFormData.append("G2-CHK",arrRows);
-	$.ajax({
-		type : "POST",
-		url : url_G2_CHKSAVE + "&" + lastinputG2 ,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G2_CHKSAVE()------------end");
+//	
+function G3_NEW(){
+       alog("[FromView] G3_NEW---------------start");
+	$("#G3-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G3-USR_ID").val("");//USR_ID 신규초기화	
+	$("#G3-USR_NM").val("");//USR_NM 신규초기화	
+	$("#G3-USR_PWD").val("");//USR_PWD 신규초기화	
+	$("#G3-PHONE").val("");//PHONE 신규초기화	
+	$("#G3-PW_ERR_CNT").val("");//PW_ERR_CNT 신규초기화	
+	$("#G3-LAST_STATUS").val("");//LAST_STATUS 신규초기화	
+       alog("DETAILNew30---------------end");
 }
 function G3_MODIFY(){
        alog("[FromView] G3_MODIFY---------------start");
@@ -746,16 +759,4 @@ function G3_SAVE(token){
 function G3_RELOAD(token){
 	alog("G3_RELOAD-----------------start");
 	G3_SEARCH(lastinputG3,token);
-}//	
-function G3_NEW(){
-       alog("[FromView] G3_NEW---------------start");
-	$("#G3-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G3-USR_ID").val("");//USR_ID 신규초기화	
-	$("#G3-USR_NM").val("");//USR_NM 신규초기화	
-	$("#G3-USR_PWD").val("");//USR_PWD 신규초기화	
-	$("#G3-PHONE").val("");//PHONE 신규초기화	
-	$("#G3-PW_ERR_CNT").val("");//PW_ERR_CNT 신규초기화	
-	$("#G3-LAST_STATUS").val("");//LAST_STATUS 신규초기화	
-       alog("DETAILNew30---------------end");
 }

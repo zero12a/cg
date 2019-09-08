@@ -10,9 +10,9 @@ array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
 include_once('../include/incUtil.php');//CG UTIL
 	include_once('../include/incRequest.php');//CG REQUEST
 	include_once('../include/incDB.php');//CG DB
-	include_once('../include/incSEC.php');//CG SEC
-	include_once('../include/incAuth.php');//CG AUTH
+	include_once('../include/incSec.php');//CG SEC
 	include_once('./incConfig.CG.php');//CG CONFIG
+	include_once('../include/incAuth.php');//CG AUTH
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	include_once('../lib/htmlpurifier-4.9.3/library/HTMLPurifier.auto.php');//HTML Purifier
@@ -61,8 +61,6 @@ $PGM_CFG["SECTYPE"] = "NORMAL";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 $REQ["G4-CTLCUD"] = reqPostString("G4-CTLCUD",2);
-
-//로그인정보 및 환경경수 받기
 
 //FILE먼저 : G1, 조건
 //FILE먼저 : G2, 프로그램
@@ -161,7 +159,6 @@ $REQ["G3-XML"] = filterGridXml(
 					)
 	)
 );
-	
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new sqlsearchService();

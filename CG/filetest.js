@@ -39,10 +39,6 @@ var url_G2_ROWADD = "filetestController?CTLGRP=G2&CTLFNC=ROWADD";
 var mygridG2,isToggleHiddenColG2,lastinputG2,lastinputG2json,lastrowidG2;
 var lastselectG2json;//디테일 변수 초기화	
 
-var obj_G3_FILESEQ_valid = jQuery.parseJSON( '{ "G3_FILESEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // FILESEQ 밸리데이션 선언
-var obj_G3_FILE1_valid = jQuery.parseJSON( '{ "G3_FILE1": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":100,  "DATATYPE":"STRING"} }' );   // 파일1 밸리데이션 선언
-var obj_G3_LINKVIEW_valid = jQuery.parseJSON( '{ "G3_LINKVIEW": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":10,  "DATATYPE":"STRING"} }' );   // 링크뷰 밸리데이션 선언
-var obj_G3_HIDDENLINK_valid = jQuery.parseJSON( '{ "G3_HIDDENLINK": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":50,  "DATATYPE":"STRING"} }' );   // 히든링크 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G3_USERDEF = "filetestController?CTLGRP=G3&CTLFNC=USERDEF";
 //폼뷰 컨트롤러 경로
@@ -585,21 +581,6 @@ function G7_SEARCH(tinput,token){
     alog("(BIVIEW) G7_SEARCH---------------end");
 
 }
-//그리드 행추가 : 그리드
-	function G2_ROWBULKADD(){
-		if( !(lastinputG2json)){
-			msgError("조회 후에 행추가 가능합니다",3);
-		}else{
-			var tCols = ["","","","",""];//초기값
-
-	var rowcnt = prompt("Please enter row's count", "input number");
-	if($.isNumeric(rowcnt)){
-		for(k=0;k<rowcnt;k++){
-			addRow(mygridG2,tCols);  
-		}
-	}
-			}
-	}
 
 
 
@@ -738,6 +719,21 @@ function G2_USERDEF(token){
 	
 	alog("G2_SAVE()------------end");
 }
+//그리드 행추가 : 그리드
+	function G2_ROWBULKADD(){
+		if( !(lastinputG2json)){
+			msgError("조회 후에 행추가 가능합니다",3);
+		}else{
+			var tCols = ["","","","",""];//초기값
+
+	var rowcnt = prompt("Please enter row's count", "input number");
+	if($.isNumeric(rowcnt)){
+		for(k=0;k<rowcnt;k++){
+			addRow(mygridG2,tCols);  
+		}
+	}
+			}
+	}
 //	
 function G3_NEW2(){
        alog("[FromView] G3_NEW2---------------start");

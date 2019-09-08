@@ -11,8 +11,8 @@ include_once('../include/incUtil.php');//CG UTIL
 	include_once('../include/incRequest.php');//CG REQUEST
 	include_once('../include/incDB.php');//CG DB
 	include_once('../include/incSEC.php');//CG SEC
-	include_once('../include/incAuth.php');//CG AUTH
 	include_once('./incConfig.CG.php');//CG CONFIG
+	include_once('../include/incAuth.php');//CG AUTH
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
@@ -57,8 +57,6 @@ $PGM_CFG["SECTYPE"] = "NORMAL";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
-
-//로그인정보 및 환경경수 받기
 
 //FILE먼저 : G1, 
 //FILE먼저 : G2, 
@@ -113,7 +111,7 @@ $REQ["G3-PGMSEQ"] = reqPostNumber("G3-PGMSEQ",30);//PGMSEQ
 $REQ["G3-PGMSEQ"] = getFilter($REQ["G3-PGMSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-GRPSEQ"] = reqPostNumber("G3-GRPSEQ",30);//GRPSEQ	
 $REQ["G3-GRPSEQ"] = getFilter($REQ["G3-GRPSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-FNCSEQ"] = reqPostString("G3-FNCSEQ",30);//FNCSEQ	
+$REQ["G3-FNCSEQ"] = reqPostNumber("G3-FNCSEQ",30);//FNCSEQ	
 $REQ["G3-FNCSEQ"] = getFilter($REQ["G3-FNCSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-FNCID"] = reqPostString("G3-FNCID",30);//FNCID	
 $REQ["G3-FNCID"] = getFilter($REQ["G3-FNCID"],"CLEARTEXT","/--미 정의--/");	

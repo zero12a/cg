@@ -10,9 +10,9 @@ array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
 include_once('../include/incUtil.php');//CG UTIL
 	include_once('../include/incRequest.php');//CG REQUEST
 	include_once('../include/incDB.php');//CG DB
-	include_once('../include/incSEC.php');//CG SEC
-	include_once('../include/incAuth.php');//CG AUTH
+	include_once('../include/incSec.php');//CG SEC
 	include_once('./incConfig.CG.php');//CG CONFIG
+	include_once('../include/incAuth.php');//CG AUTH
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
@@ -56,8 +56,6 @@ if(!isLogin()){
 $PGM_CFG["SECTYPE"] = "POWER";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
-
-//로그인정보 및 환경경수 받기
 
 //FILE먼저 : G1, 조회조건
 //FILE먼저 : G2, 그룹목록
@@ -199,7 +197,6 @@ $REQ["G4-XML"] = filterGridXml(
 					)
 	)
 );
-	
 $REQ["G3-CHK"] = $_POST["G3-CHK"];//CHK 받기
 //filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
 $REQ["G3-CHK"] = filterGridChk($REQ["G3-CHK"],"NUMBER",20,"REGEXMAT","/^[0-9]+$/");//GA_SEQ 입력값검증

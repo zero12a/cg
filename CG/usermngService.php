@@ -83,6 +83,7 @@ class usermngService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, USERSEQ
 
 		//조회
@@ -208,6 +209,7 @@ class usermngService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PJTSEQ
 
 		//조회
@@ -304,6 +306,7 @@ class usermngService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 0; // KEY 컬럼, SVRSEQ
 
 		//조회

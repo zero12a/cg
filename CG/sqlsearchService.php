@@ -69,6 +69,7 @@ class sqlsearchService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PGMSEQ
 
 		//조회
@@ -120,6 +121,7 @@ class sqlsearchService
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
+		$GRID["GRPTYPE"] = "GRID_DHTMLX";
 		$GRID["KEYCOLIDX"] = 2; // KEY 컬럼, SQLSEQ
 
 		//조회

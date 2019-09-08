@@ -1,7 +1,7 @@
 <?php
 
 //redis에 모두 넣기
-require_once('Predis/Autoloader.php');
+require_once($CFG_LIBS_PATH_REDIS);
 
 class authObject
 {

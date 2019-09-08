@@ -4,7 +4,7 @@
     header("Pragma:no-cache");
 
     include_once("./incConfig.php");
-    include_once('./include/incSeC.php');//CG SEC
+    include_once('./include/incSec.php');//CG SEC
     include_once("./include/incUtil.php");
 	include_once('./include/incRequest.php');//CG REQUEST    
 

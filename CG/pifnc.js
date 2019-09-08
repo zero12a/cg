@@ -26,19 +26,6 @@ var $btG2 = null; //
 	var url_G2_CHKSAVE = "pifncController?CTLGRP=G2&CTLFNC=CHKSAVE";
 //디테일 변수 초기화	
 
-var obj_G3_PJTSEQ_valid = jQuery.parseJSON( '{ "G3_PJTSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":20,  "DATATYPE":"NUMBER"} }' );   // PJTSEQ 밸리데이션 선언
-var obj_G3_PGMSEQ_valid = jQuery.parseJSON( '{ "G3_PGMSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // PGMSEQ 밸리데이션 선언
-var obj_G3_GRPSEQ_valid = jQuery.parseJSON( '{ "G3_GRPSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"NUMBER"} }' );   // GRPSEQ 밸리데이션 선언
-var obj_G3_FNCSEQ_valid = jQuery.parseJSON( '{ "G3_FNCSEQ": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // FNCSEQ 밸리데이션 선언
-var obj_G3_FNCID_valid = jQuery.parseJSON( '{ "G3_FNCID": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // FNCID 밸리데이션 선언
-var obj_G3_FNCCD_valid = jQuery.parseJSON( '{ "G3_FNCCD": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // FNCCD 밸리데이션 선언
-var obj_G3_FNCNM_valid = jQuery.parseJSON( '{ "G3_FNCNM": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // FNCNM 밸리데이션 선언
-var obj_G3_FNCTYPE_valid = jQuery.parseJSON( '{ "G3_FNCTYPE": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":30,  "DATATYPE":"STRING"} }' );   // FNCTYPE 밸리데이션 선언
-var obj_G3_FNCORD_valid = jQuery.parseJSON( '{ "G3_FNCORD": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":3,  "DATATYPE":"NUMBER"} }' );   // FNCORD 밸리데이션 선언
-var obj_G3_USEYN_valid = jQuery.parseJSON( '{ "G3_USEYN": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":1,  "DATATYPE":"STRING"} }' );   // 사용 밸리데이션 선언
-var obj_G3_USERDEFJS_valid = jQuery.parseJSON( '{ "G3_USERDEFJS": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":500,  "DATATYPE":"STRING"} }' );   // USERDEFJS 밸리데이션 선언
-var obj_G3_ADDDT_valid = jQuery.parseJSON( '{ "G3_ADDDT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // ADDDT 밸리데이션 선언
-var obj_G3_MODDT_valid = jQuery.parseJSON( '{ "G3_MODDT": {"REQUARED":"",  "MIN":"",  "MAX":"",  "DATASIZE":14,  "DATATYPE":"STRING"} }' );   // MODDT 밸리데이션 선언
 //폼뷰 컨트롤러 경로
 var url_G3_USERDEF = "pifncController?CTLGRP=G3&CTLFNC=USERDEF";
 //폼뷰 컨트롤러 경로
@@ -238,10 +225,10 @@ function G2_INIT(){
 		//alert(JSON.stringify(row))
 
 		lastinputG3 = new HashMap(); // 
-		lastinputG3.set("G2-FNCSEQ", row.FNCSEQ); // 
 		lastinputG3.set("G2-PJTSEQ", row.PJTSEQ); // 
 		lastinputG3.set("G2-PGMSEQ", row.PGMSEQ); // 
 		lastinputG3.set("G2-GRPSEQ", row.GRPSEQ); // 
+		lastinputG3.set("G2-FNCSEQ", row.FNCSEQ); // 
 		G3_SEARCH(lastinputG3,uuidv4()); //자식그룹 호출 : 
 		//    //alog(field);
 		});
@@ -267,6 +254,24 @@ function G3_INIT(){
 	//PJTSEQ, PJTSEQ 초기화		//PGMSEQ, PGMSEQ 초기화		//GRPSEQ, GRPSEQ 초기화		//FNCSEQ, FNCSEQ 초기화		//FNCID, FNCID 초기화		//FNCCD, FNCCD 초기화		//FNCNM, FNCNM 초기화		//FNCTYPE, FNCTYPE 초기화		//FNCORD, FNCORD 초기화		//USEYN, 사용 초기화		//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("G1_SEARCHALL--------------------------end");
+}
 //사용자정의함수 : 사용자정의
 function G1_USERDEF(token){
 	alog("G1_USERDEF-----------------start");
@@ -304,35 +309,6 @@ function G1_SAVE(){
 		}
 	});
 	alog("G1_SAVE-------------------end");	
-}
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
-//사용자정의함수 : 사용자정의
-function G2_USERDEF(token){
-	alog("G2_USERDEF-----------------start");
-
-	alog("G2_USERDEF-----------------end");
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
 }
 // 엑셀 내려받기
 function G2_EXCEL(){
@@ -458,76 +434,16 @@ function G2_CHKSAVE(token){
 	
 	alog("G2_CHKSAVE()------------end");
 }
-//디테일 검색	
-function G3_SEARCH(tinput,token){
-       alog("(FORMVIEW) G3_SEARCH---------------start");
+//사용자정의함수 : 사용자정의
+function G2_USERDEF(token){
+	alog("G2_USERDEF-----------------start");
 
-	//post 만들기
-	sendFormData = new FormData($("#condition")[0]);
-	if(typeof tinput != "undefined"){
-		var tKeys = tinput.keys();
-		for(i=0;i<tKeys.length;i++) {
-			sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
-			//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
-		}
-	}
-
-    $.ajax({
-        type : "POST",
-        url : url_G3_SEARCH+"&TOKEN=" + token + "&G3_CRUD_MODE=SEARCH" ,
-        data : sendFormData,
-		processData: false,
-		contentType: false,
-        dataType: "json",
-        success: function(data){
-            alog(data);
-
-			if(data && data.RTN_CD == "200"){
-				if(data.RTN_DATA){
-					msgNotice("정상적으로 조회되었습니다.",1);
-				}else{
-					msgNotice("정상적으로 조회되었으나 데이터가 없습니다.",2);
-					return;
-				}
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-				return;
-			}
-
-            //모드 변경하기
-            $("#G3-CTLCUD").val("R");
-			//SETVAL  가져와서 세팅
-			$("#G3-PJTSEQ").text(data.RTN_DATA.PJTSEQ);//PJTSEQ 변수세팅
-			$("#G3-PGMSEQ").text(data.RTN_DATA.PGMSEQ);//PGMSEQ 변수세팅
-			$("#G3-GRPSEQ").text(data.RTN_DATA.GRPSEQ);//GRPSEQ 변수세팅
-			$("#G3-FNCSEQ").text(data.RTN_DATA.FNCSEQ);//FNCSEQ 변수세팅
-			$("#G3-FNCID").text(data.RTN_DATA.FNCID);//FNCID 변수세팅
-			$("#G3-FNCCD").text(data.RTN_DATA.FNCCD);//FNCCD 변수세팅
-			$("#G3-FNCNM").text(data.RTN_DATA.FNCNM);//FNCNM 변수세팅
-			$("#G3-FNCTYPE").text(data.RTN_DATA.FNCTYPE);//FNCTYPE 변수세팅
-			$("#G3-FNCORD").text(data.RTN_DATA.FNCORD);//FNCORD 변수세팅
-			$("#G3-USEYN").text(data.RTN_DATA.USEYN);//사용 변수세팅
-		$("#G3-USERDEFJS").val(data.RTN_DATA.USERDEFJS);//USERDEFJS 오브젝트 값세팅
-			$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
-			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
-        },
-        error: function(error){
-            alog("Error:");
-            alog(error);
-        }
-    });
-    alog("(FORMVIEW) G3_SEARCH---------------end");
-
+	alog("G2_USERDEF-----------------end");
 }
 //새로고침	
-function G3_RELOAD(token){
-	alog("G3_RELOAD-----------------start");
-	G3_SEARCH(lastinputG3,token);
-}//사용자정의함수 : 사용자정의
-function G3_USERDEF(token){
-	alog("G3_USERDEF-----------------start");
-
-	alog("G3_USERDEF-----------------end");
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
 }
 //G3_SAVE
 //IO_FILE_YN = N	
@@ -637,4 +553,75 @@ function G3_DELETE(){
 			alog(error);
 		}
 	});
+}
+//디테일 검색	
+function G3_SEARCH(tinput,token){
+       alog("(FORMVIEW) G3_SEARCH---------------start");
+
+	//post 만들기
+	sendFormData = new FormData($("#condition")[0]);
+	if(typeof tinput != "undefined"){
+		var tKeys = tinput.keys();
+		for(i=0;i<tKeys.length;i++) {
+			sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+			//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+		}
+	}
+
+    $.ajax({
+        type : "POST",
+        url : url_G3_SEARCH+"&TOKEN=" + token + "&G3_CRUD_MODE=SEARCH" ,
+        data : sendFormData,
+		processData: false,
+		contentType: false,
+        dataType: "json",
+        success: function(data){
+            alog(data);
+
+			if(data && data.RTN_CD == "200"){
+				if(data.RTN_DATA){
+					msgNotice("정상적으로 조회되었습니다.",1);
+				}else{
+					msgNotice("정상적으로 조회되었으나 데이터가 없습니다.",2);
+					return;
+				}
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+				return;
+			}
+
+            //모드 변경하기
+            $("#G3-CTLCUD").val("R");
+			//SETVAL  가져와서 세팅
+			$("#G3-PJTSEQ").text(data.RTN_DATA.PJTSEQ);//PJTSEQ 변수세팅
+			$("#G3-PGMSEQ").text(data.RTN_DATA.PGMSEQ);//PGMSEQ 변수세팅
+			$("#G3-GRPSEQ").text(data.RTN_DATA.GRPSEQ);//GRPSEQ 변수세팅
+			$("#G3-FNCSEQ").text(data.RTN_DATA.FNCSEQ);//FNCSEQ 변수세팅
+			$("#G3-FNCID").text(data.RTN_DATA.FNCID);//FNCID 변수세팅
+			$("#G3-FNCCD").text(data.RTN_DATA.FNCCD);//FNCCD 변수세팅
+			$("#G3-FNCNM").text(data.RTN_DATA.FNCNM);//FNCNM 변수세팅
+			$("#G3-FNCTYPE").text(data.RTN_DATA.FNCTYPE);//FNCTYPE 변수세팅
+			$("#G3-FNCORD").text(data.RTN_DATA.FNCORD);//FNCORD 변수세팅
+			$("#G3-USEYN").text(data.RTN_DATA.USEYN);//사용 변수세팅
+		$("#G3-USERDEFJS").val(data.RTN_DATA.USERDEFJS);//USERDEFJS 오브젝트 값세팅
+			$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
+			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
+        },
+        error: function(error){
+            alog("Error:");
+            alog(error);
+        }
+    });
+    alog("(FORMVIEW) G3_SEARCH---------------end");
+
+}
+//새로고침	
+function G3_RELOAD(token){
+	alog("G3_RELOAD-----------------start");
+	G3_SEARCH(lastinputG3,token);
+}//사용자정의함수 : 사용자정의
+function G3_USERDEF(token){
+	alog("G3_USERDEF-----------------start");
+
+	alog("G3_USERDEF-----------------end");
 }

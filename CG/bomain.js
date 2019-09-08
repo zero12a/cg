@@ -1,7 +1,10 @@
 //글로벌 변수 선언	
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G2_conSearch = "bomainController?CTLGRP=G2&CTLFNC=conSearch";//10 변수 선언	
-var obj_G2_MYCOL; // 입력해 변수선언var obj_G2_TXT1; // 감사 변수선언//그리드 변수 초기화	
+var url_G2_conSearch = "bomainController?CTLGRP=G2&CTLFNC=conSearch";
+//10 변수 선언	
+var obj_G2_MYCOL; // 입력해 변수선언
+var obj_G2_TXT1; // 감사 변수선언
+//그리드 변수 초기화	
 //컨트롤러 경로
 var url_G3_USERDEF = "bomainController?CTLGRP=G3&CTLFNC=USERDEF";
 //컨트롤러 경로
@@ -215,7 +218,22 @@ function G2_conSearch(token){
 	G3_SEARCH(lastinputG3,token);
 	alog("G2_SEARCHALL--------------------------end");
 }
-	function G3_SAVE(token){
+//사용자정의함수 : 사용자정의
+function G3_USERDEF(token){
+	alog("G3_USERDEF-----------------start");
+
+	alog("G3_USERDEF-----------------end");
+}
+//행추가3 (감사)	
+//그리드 행추가 : 감사
+	function G3_ROWADD(){
+		if( !(lastinputG3)){
+			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
+		}else{
+			var tCols = ["",""];//초기값
+			addRow(mygridG3,tCols);
+		}
+	}	function G3_SAVE(token){
 	alog("G3_SAVE()------------start");
 	tgrid = mygridG3;
 
@@ -296,7 +314,8 @@ function G3_EXCEL(){
 		var tGrid = mygridG3;
 
         //그리드 초기화
-        tGrid.clearAll();        //post 만들기
+        tGrid.clearAll();
+        //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 		if(typeof tinput != "undefined"){
 			var tKeys = tinput.keys();
@@ -327,7 +346,8 @@ function G3_EXCEL(){
 					var row_cnt = 0;
 					if(data.RTN_DATA){
 						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG3Cnt").text(row_cnt);						tGrid.parse(data.RTN_DATA,function(){
+						$("#spanG3Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
 							//푸터 합계 처리	
 
 						},"json");
@@ -359,19 +379,3 @@ function G3_RELOAD(token){
         delRow(mygridG3);
         alog("G3_ROWDELETE()------------start");
     }
-//사용자정의함수 : 사용자정의
-function G3_USERDEF(token){
-	alog("G3_USERDEF-----------------start");
-
-	alog("G3_USERDEF-----------------end");
-}
-//행추가3 (감사)	
-//그리드 행추가 : 감사
-	function G3_ROWADD(){
-		if( !(lastinputG3)){
-			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
-		}else{
-			var tCols = ["",""];//초기값
-			addRow(mygridG3,tCols);
-		}
-	}

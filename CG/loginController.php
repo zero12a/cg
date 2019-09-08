@@ -10,9 +10,9 @@ array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
 include_once('../include/incUtil.php');//CG UTIL
 	include_once('../include/incRequest.php');//CG REQUEST
 	include_once('../include/incDB.php');//CG DB
-	include_once('../include/incSEC.php');//CG SEC
-	include_once('../include/incAuth.php');//CG AUTH
+	include_once('../include/incSec.php');//CG SEC
 	include_once('./incConfig.CG.php');//CG CONFIG
+	include_once('../include/incAuth.php');//CG AUTH
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
@@ -58,8 +58,6 @@ $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 $REQ["G2-CTLCUD"] = reqPostString("G2-CTLCUD",2);
 
-//로그인정보 및 환경경수 받기
-
 //FILE먼저 : G1, 입력폼
 //FILE먼저 : G2, 조회결과
 
@@ -79,8 +77,7 @@ $REQ["G2-USR_NM"] = getFilter($REQ["G2-USR_NM"],"SAFETEXT","/--미 정의--/");
 $REQ["G2-USR_PWD"] = reqPostString("G2-USR_PWD",10);//USR_PWD	
 $REQ["G2-USR_PWD"] = getFilter($REQ["G2-USR_PWD"],"SAFETEXT","/--미 정의--/");	
 //,  입력값 필터 
-		
-array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
+	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new loginService();
 	//컨트롤 명령별 분개처리

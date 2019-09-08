@@ -10,9 +10,9 @@ array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
 include_once('../include/incUtil.php');//CG UTIL
 	include_once('../include/incRequest.php');//CG REQUEST
 	include_once('../include/incDB.php');//CG DB
-	include_once('../include/incSEC.php');//CG SEC
-	include_once('../include/incAuth.php');//CG AUTH
+	include_once('../include/incSec.php');//CG SEC
 	include_once('./incConfig.CG.php');//CG CONFIG
+	include_once('../include/incAuth.php');//CG AUTH
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
@@ -57,8 +57,6 @@ $PGM_CFG["SECTYPE"] = "NORMAL";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 
-//로그인정보 및 환경경수 받기
-
 //FILE먼저 : G1, 5
 //FILE먼저 : G2, 10
 //FILE먼저 : G3, 감사
@@ -92,7 +90,6 @@ $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//감사
 					)
 	)
 );
-	
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new bomainService();

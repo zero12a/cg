@@ -61,7 +61,7 @@ $reqToken = $_GET["TOKEN"];
 
 //비동기 요청일때만 분산캐쉬
 if($reqToken != ""){
-    require_once('Predis/Autoloader.php');
+    require_once($CFG_LIBS_PATH_REDIS);
     Predis\Autoloader::register();
     $redis = new Predis\Client($CFG_AUTH_REDIS);   
 }
