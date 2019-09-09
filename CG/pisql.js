@@ -119,6 +119,9 @@ function G1_INIT(){
 // 그리드 초기화
 function G2_INIT(){
 	alog("G2_INIT()-------------------------start");
+	$btG2 = $('#btG2').bootstrapTable();
+
+	/*
 	$btG2 = $('#btG2').bootstrapTable({
 		columns:[
 			{
@@ -224,7 +227,7 @@ function G2_INIT(){
 			}
 ]
 	});
-	$btG2.on('click-row.bs.table', function (e, row, $element) {
+*/	$btG2.on('click-row.bs.table', function (e, row, $element) {
 		//    alert(row.myid);
 		//alert(JSON.stringify(row))
 
@@ -245,8 +248,11 @@ function G3_INIT(){
 
 
 
+setCodeCombo("FORMVIEW",$("#G3-SVRSEQ"),"SVRSEQ");
 
+setCodeCombo("FORMVIEW",$("#G3-CRUD"),"CRUD");
 
+setCodeCombo("FORMVIEW",$("#G3-RTN_TYPE"),"RTN_TYPE");
 
 
 
@@ -256,9 +262,6 @@ function G3_INIT(){
 	//컬럼 초기화
 	//SQLSEQ, SQLSEQ 초기화		//PJTSEQ, PJTSEQ 초기화		//PGMSEQ, PGMSEQ 초기화		//SQLID, SQLID 초기화	
 	//SQLNM, SQLNM 초기화	
-	//SVRSEQ, SERVERSEQ 초기화	
-	//CRUD, CRUD 초기화	
-	//RTN_TYPE, RTN_TYPE 초기화	
 	//SQLORD, ORD 초기화	
 	//PSQLSEQ, PSQLSEQ 초기화	
 		//코드 미러 초기화
@@ -654,9 +657,6 @@ function G3_NEW(){
 	//PMGIO 로직
 	$("#G3-SQLSEQ").text("");//SQLSEQ 신규초기화		$("#G3-PJTSEQ").text("");//PJTSEQ 신규초기화		$("#G3-PGMSEQ").text("");//PGMSEQ 신규초기화		$("#G3-SQLID").val("");//SQLID 신규초기화	
 	$("#G3-SQLNM").val("");//SQLNM 신규초기화	
-	$("#G3-SVRSEQ").val("");//SERVERSEQ 신규초기화	
-	$("#G3-CRUD").val("");//CRUD 신규초기화	
-	$("#G3-RTN_TYPE").val("");//RTN_TYPE 신규초기화	
 	$("#G3-SQLORD").val("");//ORD 신규초기화	
 	$("#G3-PSQLSEQ").val("");//PSQLSEQ 신규초기화	
 obj_G3_SQLTXT.setValue(""); // SQLTXT값 비우기	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");

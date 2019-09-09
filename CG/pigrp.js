@@ -88,6 +88,9 @@ function G1_INIT(){
 //GRP목록 그리드 초기화
 function G2_INIT(){
 	alog("G2_INIT()-------------------------start");
+	$btG2 = $('#btG2').bootstrapTable();
+
+	/*
 	$btG2 = $('#btG2').bootstrapTable({
 		columns:[
 			{
@@ -172,7 +175,7 @@ function G2_INIT(){
 			}
 ]
 	});
-	$btG2.on('click-row.bs.table', function (e, row, $element) {
+*/	$btG2.on('click-row.bs.table', function (e, row, $element) {
 		//    alert(row.myid);
 		//alert(JSON.stringify(row))
 
@@ -256,6 +259,14 @@ function G1_USERDEF(token){
 function G1_RESET(){
 	alog("G1_RESET--------------------------start");
 	$('#condition')[0].reset();
+}
+//GRP목록 엑셀 내려받기
+function G2_EXCEL(){
+	alog("G2_EXCEL()-------------------------start");
+
+	$btG2.tableExport({type:'excel'});
+
+	alog("G2_EXCEL()------------end");
 }
 //그리드 조회(GRP목록)	
 function G2_SEARCH(tinput,token){
@@ -384,19 +395,7 @@ function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
 }
-//GRP목록 엑셀 내려받기
-function G2_EXCEL(){
-	alog("G2_EXCEL()-------------------------start");
-
-	$btG2.tableExport({type:'excel'});
-
-	alog("G2_EXCEL()------------end");
-}
-//새로고침	
-function G3_reload(token){
-	alog("G3_reload-----------------start");
-	G3_SEARCH(lastinputG3,token);
-}//디테일 검색	
+//디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
 
@@ -452,4 +451,9 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
+}
+//새로고침	
+function G3_reload(token){
+	alog("G3_reload-----------------start");
+	G3_SEARCH(lastinputG3,token);
 }

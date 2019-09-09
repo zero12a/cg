@@ -131,6 +131,9 @@ function G1_INIT(){
 // 그리드 초기화
 function G2_INIT(){
 	alog("G2_INIT()-------------------------start");
+	$btG2 = $('#btG2').bootstrapTable();
+
+	/*
 	$btG2 = $('#btG2').bootstrapTable({
 		columns:[
 			{
@@ -396,7 +399,7 @@ function G2_INIT(){
 			}
 ]
 	});
-	$btG2.on('click-row.bs.table', function (e, row, $element) {
+*/	$btG2.on('click-row.bs.table', function (e, row, $element) {
 		//    alert(row.myid);
 		//alert(JSON.stringify(row))
 
@@ -485,6 +488,24 @@ function G3_INIT(){
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("G1_SEARCHALL--------------------------end");
+}
 //사용자정의함수 : 사용자정의
 function G1_USERDEF(token){
 	alog("G1_USERDEF-----------------start");
@@ -522,43 +543,6 @@ function G1_SAVE(){
 		}
 	});
 	alog("G1_SAVE-------------------end");	
-}
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
-//사용자정의함수 : 사용자정의
-function G2_USERDEF(token){
-	alog("G2_USERDEF-----------------start");
-
-	alog("G2_USERDEF-----------------end");
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
-}
-// 엑셀 내려받기
-function G2_EXCEL(){
-	alog("G2_EXCEL()-------------------------start");
-
-	$btG2.tableExport({type:'excel'});
-
-	alog("G2_EXCEL()------------end");
 }
 //그리드 조회()	
 function G2_SEARCH(tinput,token){
@@ -675,6 +659,25 @@ function G2_CHKSAVE(token){
 	});
 	
 	alog("G2_CHKSAVE()------------end");
+}
+//사용자정의함수 : 사용자정의
+function G2_USERDEF(token){
+	alog("G2_USERDEF-----------------start");
+
+	alog("G2_USERDEF-----------------end");
+}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
+}
+// 엑셀 내려받기
+function G2_EXCEL(){
+	alog("G2_EXCEL()-------------------------start");
+
+	$btG2.tableExport({type:'excel'});
+
+	alog("G2_EXCEL()------------end");
 }
 //FORMVIEW DELETE
 function G3_DELETE(){	

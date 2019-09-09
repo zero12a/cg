@@ -12,6 +12,28 @@ class pisqlDao
 	function __toString(){
 		alog("PisqlDao-__toString");
 	}
+	//insSqlF    
+	public function insSqlF($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "insSqlF";
+		$RtnVal["SQLTXT"] = "insert into  CG_PGMSQL (
+	SQLID, SQLNM, SVRSEQ, CRUD, RTN_TYPE
+	, SQLORD, PSQLSEQ
+	, ADDDT 
+	) values (
+		#{G3-SQLID}, #{G3-SQLNM}, #{G3-SVRSEQ}, #{G3-CRUD}, #{G3-RTN_TYPE}
+		,#{G3-SQLORD}, #{G3-PSQLSEQ}
+		date_format(sysdate(),'%Y%m%d%H%i%s')
+	)
+";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "ssissii";
+		return $RtnVal;
+    }  
 	//selSqlF    
 	public function selSqlF($req){
 		//조회

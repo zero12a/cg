@@ -162,6 +162,7 @@ class pisqlService
 			$FORMVIEW["SQL"] = array();
 			switch($FORMVIEW["FNCTYPE"]){
 				case "C":
+					array_push($FORMVIEW["SQL"],$this->DAO->insSqlF($REQ)); 
 					break;
 				case "U":
 					array_push($FORMVIEW["SQL"],$this->DAO->updSqlF($REQ));

@@ -147,9 +147,10 @@ class pipgmService
 			$FORMVIEW["SQL"] = array();
 			switch($FORMVIEW["FNCTYPE"]){
 				case "C":
-				array_push($FORMVIEW["SQL"],$this->DAO->insPgmF($REQ)); 
-						break;
+					array_push($FORMVIEW["SQL"],$this->DAO->insPgmF($REQ)); 
+					break;
 				case "U":
+					array_push($FORMVIEW["SQL"],$this->DAO->updPgmF($REQ));
 					break;
 				default : 
 					alog("(SVC) FNCTYPE을 찾을수 없습니다.");

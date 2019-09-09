@@ -11,7 +11,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 <title>PIFNC</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
-<!--JS 불러오기--><script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
+<!--JS 불러오기-->
+<script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
 <script src="/lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="/lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="/lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
@@ -28,12 +29,15 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/lib/codemirror/lib/codemirror.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR1-->
 <script src="/lib/codemirror/mode/sql/sql.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR2-->
 <script src="/lib/codemirror/addon/selection/active-line.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR3-->
-<!--CSS 불러오기--><link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
+
+<!--CSS 불러오기-->
+<link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="/lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <link rel="stylesheet" href="/lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
 <link rel="stylesheet" href="/lib/bootstrap-table/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css" charset="UTF-8"><!--CODE MIRROR CSS-->
+<!--공통 js/css-->
 <script src="pifnc.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
 <script>
@@ -144,7 +148,158 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 			class="table table-bordered table-striped"
 			data-id-field="FNCSEQ"			>
 			<thead>
-            </thead>
+				<tr>
+					<th
+						data-field="ROWID"
+						data-sortable="false"
+						data-visible="false"
+						data-align="right"
+						data-width="100"
+						data-width-unit="px"
+						>ROWID</th>
+					<th
+						data-field="PJTSEQ"
+						data-width="100" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>PJTSEQ
+					</th>
+					<th
+						data-field="PGMSEQ"
+						data-width="100" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>PGMSEQ
+					</th>
+					<th
+						data-field="GRPSEQ"
+						data-width="100" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>GRPSEQ
+					</th>
+					<th
+						data-field="FNCSEQ"
+						data-width="60" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>FNCSEQ
+					</th>
+					<th
+						data-field="FNCID"
+						data-width="70" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>FNCID
+					</th>
+					<th
+						data-field="FNCCD"
+						data-width="70" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>FNCCD
+					</th>
+					<th
+						data-field="FNCNM"
+						data-width="70" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>FNCNM
+					</th>
+					<th
+						data-field="FNCTYPE"
+						data-width="70" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>FNCTYPE
+					</th>
+					<th
+						data-field="FNCORD"
+						data-width="70" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>FNCORD
+					</th>
+					<th
+						data-field="USEYN"
+						data-width="50" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>사용
+					</th>
+					<th
+						data-field="USERDEFJS"
+						data-width="" 
+						data-align=""
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>USERDEFJS
+					</th>
+					<th
+						data-field="LINK"
+						data-width="100" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					data-formatter="bt4TableLinkFormatter"
+					>LINK
+					</th>
+					<th
+						data-field="ADDDT"
+						data-width="60" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>ADDDT
+					</th>
+					<th
+						data-field="MODDT"
+						data-width="60" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>MODDT
+					</th>
+					</tr>            
+				</thead>
         </table>
 		</div>
 		</div>

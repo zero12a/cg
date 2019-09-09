@@ -100,6 +100,9 @@ function G1_INIT(){
 // 그리드 초기화
 function G2_INIT(){
 	alog("G2_INIT()-------------------------start");
+	$btG2 = $('#btG2').bootstrapTable();
+
+	/*
 	$btG2 = $('#btG2').bootstrapTable({
 		columns:[
 			{
@@ -169,7 +172,7 @@ function G2_INIT(){
 			}
 ]
 	});
-	$btG2.on('click-row.bs.table', function (e, row, $element) {
+*/	$btG2.on('click-row.bs.table', function (e, row, $element) {
 		//    alert(row.myid);
 		//alert(JSON.stringify(row))
 
@@ -391,7 +394,49 @@ function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
 }
-function G3_MODIFY(){
+//G3_SAVE
+//IO_FILE_YN = N	
+	//IO_FILE_YN = N	
+function G3_SAVE(token){	
+	alog("G3_SAVE---------------start");
+
+	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
+		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
+		return;
+	}
+
+	//전송용 데이터 생성하기
+	var sendFormData = new FormData($("#formviewG3")[0]);
+
+	//컨디션 데이터 추가하기
+	conditionData = new FormData($("#condition")[0]);
+    var es, e, pair;
+    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
+		sendFormData.append(pair[0],pair[1]);
+    }
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 저장되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
+}function G3_MODIFY(){
        alog("[FromView] G3_MODIFY---------------start");
 	if( $("#G3-CTLCUD").val() == "C" ){
 		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
@@ -524,47 +569,4 @@ function G3_USERDEF(token){
 	alog("G3_USERDEF-----------------start");
 
 	alog("G3_USERDEF-----------------end");
-}
-//G3_SAVE
-//IO_FILE_YN = N	
-	//IO_FILE_YN = N	
-function G3_SAVE(token){	
-	alog("G3_SAVE---------------start");
-
-	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
-		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
-		return;
-	}
-
-	//전송용 데이터 생성하기
-	var sendFormData = new FormData($("#formviewG3")[0]);
-
-	//컨디션 데이터 추가하기
-	conditionData = new FormData($("#condition")[0]);
-    var es, e, pair;
-    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
-		sendFormData.append(pair[0],pair[1]);
-    }
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 저장되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
 }

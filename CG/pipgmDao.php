@@ -75,6 +75,23 @@ order by PGMSEQ desc
 		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
+	//updPgmF    
+	public function updPgmF($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "updPgmF";
+		$RtnVal["SQLTXT"] = "update CG_PGMINFO set
+	PGMID = #{G3-PGMID}, PGMNM = #{G3-PGMNM}, VIEWURL = #{G3-VIEWURL}, PGMTYPE = #{G3-PGMTYPE}
+	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
+where PJTSEQ = #{G3-PJTSEQ} and PGMSEQ = #{G3-PGMSEQ}
+";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "ssssii";
+		return $RtnVal;
+    }  
 }
                                                              
 ?>
