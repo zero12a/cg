@@ -140,6 +140,92 @@ class pigrpService
 		echo json_encode($rtnVal);
 		alog("PIGRPService-goG3Search________________________end");
 	}
+	//GRP상세, 저장
+	public function goG3Save(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("PIGRPService-goG3Save________________________start");
+		//FORMVIEW SAVE
+		$grpId="G3";
+		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
+		$GRID["KEYCOLID"] = "";  //KEY컬럼 COLID, -1
+		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
+	//암호화컬럼
+		$FORMVIEW["COLCRYPT"] = array();	
+			//CTLCUD 명령어에 따른 분개 처리
+		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
+
+			$FORMVIEW["SQL"] = array();
+			switch($FORMVIEW["FNCTYPE"]){
+				case "C":
+					array_push($FORMVIEW["SQL"],$this->DAO->insGrpF($REQ)); 
+					break;
+				case "U":
+					array_push($FORMVIEW["SQL"],$this->DAO->updGrpF($REQ));
+					break;
+				default : 
+					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
+			}
+			//필수 여부 검사
+			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
+			if($tmpVal->RTN_CD == "500"){
+				alog("requireFormview - fail.");
+				$tmpVal->GRPID = $grpId;
+				echo json_encode($tmpVal);
+				exit;
+			}
+			$tmpVal = makeFormviewSaveJsonArray($FORMVIEW,$this->DB);
+			array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
+
+			$al->GRPID = $grpId;
+			array_push($rtnVal->GRP_DATA, $tmpVal);
+
+			//$rtnVal = makeFormviewSaveJson($FORMVIEW,$this->DB);
+
+		}//C,U 일때만 DB처리
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("PIGRPService-goG3Save________________________end");
+	}
+	//GRP상세, 삭제
+	public function goG3Del(){
+		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("PIGRPService-goG3Del________________________start");
+//FORMVIEW DELETE
+		$grpId="G3";
+		$FORMVIEW["FNCTYPE"] = $REQ[$grpId."-CTLCUD"]; 
+		$FORMVIEW["SQL"][$FORMVIEW["FNCTYPE"]] = $this->DAO->delGrpF($REQ); 
+
+		//필수 여부 검사
+		$tmpVal = requireFormviewSave($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"] );
+		if($tmpVal->RTN_CD == "500"){
+			alog("requireFormviewSave - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
+		$tmpVal = makeFormviewSaveJson($FORMVIEW,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("PIGRPService-goG3Del________________________end");
+	}
 }
                                                              
 ?>

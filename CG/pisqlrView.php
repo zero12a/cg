@@ -269,59 +269,59 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : SQLRSEQ-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					SQLRSEQ	
-				</div>	
-				<!-- style="width:70;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-SQLRSEQ" id="G3-SQLRSEQ" style="width:70px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : SQLRSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						SQLRSEQ
+					</div>
+					<!-- style="width:70px;"-->
+					<div class="CON_OBJECT">
+	<!--SQLRSEQ오브젝트출력-->						<input type="text" name="G3-SQLRSEQ" value="" id="G3-SQLRSEQ" style="width:70px;">
+					</div>
 				</div>
-			</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : SVCSEQ-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					SVCSEQ	
-				</div>	
-				<!-- style="width:70;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-SVCSEQ" id="G3-SVCSEQ" style="width:70px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : SVCSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						SVCSEQ
+					</div>
+					<!-- style="width:70px;"-->
+					<div class="CON_OBJECT">
+	<!--SVCSEQ오브젝트출력-->						<input type="text" name="G3-SVCSEQ" value="" id="G3-SVCSEQ" style="width:70px;">
+					</div>
 				</div>
-			</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : PJTSEQ-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					PJTSEQ	
-				</div>	
-				<!-- style="width:100;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-PJTSEQ" id="G3-PJTSEQ" style="width:100px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : PJTSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						PJTSEQ
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G3-PJTSEQ" value="" id="G3-PJTSEQ" style="width:100px;">
+					</div>
 				</div>
-			</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : PGMSEQ-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					PGMSEQ	
-				</div>	
-				<!-- style="width:100;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-PGMSEQ" id="G3-PGMSEQ" style="width:100px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : PGMSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						PGMSEQ
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--PGMSEQ오브젝트출력-->						<input type="text" name="G3-PGMSEQ" value="" id="G3-PGMSEQ" style="width:100px;">
+					</div>
 				</div>
-			</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>

@@ -24,7 +24,10 @@ if( $F_PASSWD == "1234" ){
 	//echo "22";
 
 	$REQ["USR_SEQ"] = 1;
+	$REQ["USR_ID"] = "zero12a";
 	setUserSeq($REQ["USR_SEQ"]);
+	setUserId($REQ["USR_ID"]);
+
 	$objAuth->setLastSession($REQ["USR_SEQ"],session_id());
 	unset($objAuth);
 	

@@ -273,6 +273,10 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 			</div>
 			<div class="FORMVIEW_LABELBTN"  style="">
 			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_reload" value="R" onclick="G3_reload(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_save" value="저장" onclick="G3_save(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_edit" value="수정" onclick="G3_edit(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_new" value="신규" onclick="G3_new(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_del" value="삭제" onclick="G3_del(uuidv4());">
 			</div>
 		</div>
 		<div style="height:552px;" class="FORMVIEW_OBJECT">
@@ -281,108 +285,211 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : PJTSEQ-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					PJTSEQ	
-				</div>	
-				<!-- style="width:100;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-PJTSEQ" id="G3-PJTSEQ" style="width:100px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : PJTSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						PJTSEQ
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G3-PJTSEQ" value="" id="G3-PJTSEQ" style="width:100px;">
+					</div>
 				</div>
-			</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : PGMSEQ-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					PGMSEQ	
-				</div>	
-				<!-- style="width:100;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-PGMSEQ" id="G3-PGMSEQ" style="width:100px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : PGMSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						PGMSEQ
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--PGMSEQ오브젝트출력-->						<input type="text" name="G3-PGMSEQ" value="" id="G3-PGMSEQ" style="width:100px;">
+					</div>
 				</div>
-			</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : GRPSEQ-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					GRPSEQ	
-				</div>	
-				<!-- style="width:100;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-GRPSEQ" id="G3-GRPSEQ" style="width:100px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GRPSEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						GRPSEQ
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--GRPSEQ오브젝트출력-->						<input type="text" name="G3-GRPSEQ" value="" id="G3-GRPSEQ" style="width:100px;">
+					</div>
 				</div>
-			</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : GRPID-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					GRPID	
-				</div>	
-				<!-- style="width:60;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-GRPID" id="G3-GRPID" style="width:60px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GRPID-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						GRPID
+					</div>
+					<!-- style="width:120px;"-->
+					<div class="CON_OBJECT">
+	<!--GRPID오브젝트출력-->						<input type="text" name="G3-GRPID" value="" id="G3-GRPID" style="width:120px;">
+					</div>
 				</div>
+			</DIV>
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+		<!--, GRPTYPE-->
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:130px;text-align:left;">
+				GRPTYPE
 			</div>
+			<div class="CON_OBJECT" style="width:120px;">
+				<select id="G3-GRPTYPE" name="G3-GRPTYPE" style="width:120px"></select>
+			</div>
+		</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : GRPTYPE-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					GRPTYPE	
-				</div>	
-				<!-- style="width:60;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-GRPTYPE" id="G3-GRPTYPE" style="width:60px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GRPNM-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						GRPNM
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--GRPNM오브젝트출력-->						<input type="text" name="G3-GRPNM" value="" id="G3-GRPNM" style="width:100px;">
+					</div>
 				</div>
-			</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : GRPNM-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					GRPNM	
-				</div>	
-				<!-- style="width:100;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-GRPNM" id="G3-GRPNM" style="width:100px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GRPORD-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						GRPORD
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--GRPORD오브젝트출력-->						<input type="text" name="G3-GRPORD" value="" id="G3-GRPORD" style="width:100px;">
+					</div>
 				</div>
-			</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--D101: STARTTXT, TAG-->
-		<!--I.COLID : GRPORD-->
-			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
-					GRPORD	
-				</div>	
-				<!-- style="width:100;"-->
-				<div class="CON_OBJECT">
-					<div name="G3-GRPORD" id="G3-GRPORD" style="width:100px;"></div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : FREEZECNT-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						(Grid)FREEZECNT
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--FREEZECNT오브젝트출력-->						<input type="text" name="G3-FREEZECNT" value="" id="G3-FREEZECNT" style="width:60px;">
+					</div>
 				</div>
+			</DIV>
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+		<!--, VBOX-->
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:130px;text-align:left;">
+				VBOX
 			</div>
+			<div class="CON_OBJECT" style="width:60px;">
+				<select id="G3-VBOX" name="G3-VBOX" style="width:60px"></select>
+			</div>
+		</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : REFGRPID-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						REFGRPID
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--REFGRPID오브젝트출력-->						<input type="text" name="G3-REFGRPID" value="" id="G3-REFGRPID" style="width:60px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GRPWIDTH-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						GRPWIDTH
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--GRPWIDTH오브젝트출력-->						<input type="text" name="G3-GRPWIDTH" value="" id="G3-GRPWIDTH" style="width:60px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GRPHEIGHT-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						GRPHEIGHT
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--GRPHEIGHT오브젝트출력-->						<input type="text" name="G3-GRPHEIGHT" value="" id="G3-GRPHEIGHT" style="width:60px;">
+					</div>
+				</div>
+			</DIV>
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+		<!--, COLSIZETYPE-->
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:130px;text-align:left;">
+				COLSIZETYPE
+			</div>
+			<div class="CON_OBJECT" style="width:60px;">
+				<select id="G3-COLSIZETYPE" name="G3-COLSIZETYPE" style="width:60px"></select>
+			</div>
+		</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : LEGENDALIGN-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						(Chart)LEGENDALIGN
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--LEGENDALIGN오브젝트출력-->						<input type="text" name="G3-LEGENDALIGN" value="" id="G3-LEGENDALIGN" style="width:60px;">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : STACKED-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:130px;text-align:left;">
+						(Chart)STACKED
+					</div>
+					<!-- style="width:60px;"-->
+					<div class="CON_OBJECT">
+	<!--STACKED오브젝트출력-->						<input type="text" name="G3-STACKED" value="" id="G3-STACKED" style="width:60px;">
+					</div>
+				</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 		<!--D101: STARTTXT, TAG-->
 		<!--I.COLID : ADDDT-->
 			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
+				<div class="CON_LABEL" style="width:130px;text-align:left;">	
 					ADDDT	
 				</div>	
 				<!-- style="width:60;"-->
@@ -396,7 +503,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 		<!--D101: STARTTXT, TAG-->
 		<!--I.COLID : MODDT-->
 			<div class="CON_OBJGRP" style="">
-				<div class="CON_LABEL" style="width:100px;text-align:left;">	
+				<div class="CON_LABEL" style="width:130px;text-align:left;">	
 					MODDT	
 				</div>	
 				<!-- style="width:60;"-->

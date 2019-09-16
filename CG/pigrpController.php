@@ -50,6 +50,7 @@ if(!isLogin()){
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
 		//사용자 정보 가져오기
+	$REQ["USER.SEQ"] = getUserSeq();
 //로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
@@ -107,6 +108,22 @@ $REQ["G3-GRPNM"] = reqPostString("G3-GRPNM",100);//GRPNM
 $REQ["G3-GRPNM"] = getFilter($REQ["G3-GRPNM"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-GRPORD"] = reqPostNumber("G3-GRPORD",30);//GRPORD	
 $REQ["G3-GRPORD"] = getFilter($REQ["G3-GRPORD"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G3-FREEZECNT"] = reqPostNumber("G3-FREEZECNT",10);//(Grid)FREEZECNT	
+$REQ["G3-FREEZECNT"] = getFilter($REQ["G3-FREEZECNT"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G3-VBOX"] = reqPostString("G3-VBOX",10);//VBOX	
+$REQ["G3-VBOX"] = getFilter($REQ["G3-VBOX"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-REFGRPID"] = reqPostString("G3-REFGRPID",30);//REFGRPID	
+$REQ["G3-REFGRPID"] = getFilter($REQ["G3-REFGRPID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
+$REQ["G3-GRPWIDTH"] = reqPostString("G3-GRPWIDTH",10);//GRPWIDTH	
+$REQ["G3-GRPWIDTH"] = getFilter($REQ["G3-GRPWIDTH"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-GRPHEIGHT"] = reqPostString("G3-GRPHEIGHT",10);//GRPHEIGHT	
+$REQ["G3-GRPHEIGHT"] = getFilter($REQ["G3-GRPHEIGHT"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-COLSIZETYPE"] = reqPostString("G3-COLSIZETYPE",10);//COLSIZETYPE	
+$REQ["G3-COLSIZETYPE"] = getFilter($REQ["G3-COLSIZETYPE"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-LEGENDALIGN"] = reqPostString("G3-LEGENDALIGN",10);//(Chart)LEGENDALIGN	
+$REQ["G3-LEGENDALIGN"] = getFilter($REQ["G3-LEGENDALIGN"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
+$REQ["G3-STACKED"] = reqPostString("G3-STACKED",10);//(Chart)STACKED	
+$REQ["G3-STACKED"] = getFilter($REQ["G3-STACKED"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
 $REQ["G3-ADDDT"] = reqPostString("G3-ADDDT",14);//ADDDT	
 $REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//MODDT	
@@ -132,6 +149,12 @@ switch ($ctl){
   		break;
 	case "G3_SEARCH" :
   		echo $objService->goG3Search(); //GRP상세, 조회
+  		break;
+	case "G3_save" :
+  		echo $objService->goG3Save(); //GRP상세, 저장
+  		break;
+	case "G3_del" :
+  		echo $objService->goG3Del(); //GRP상세, 삭제
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");
