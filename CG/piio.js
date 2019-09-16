@@ -76,6 +76,23 @@ var obj_G3_ADDDT;   // ADDDT 글로벌 변수 선언
 var obj_G3_ADDID;   // ADDID 글로벌 변수 선언
 var obj_G3_MODDT;   // MODDT 글로벌 변수 선언
 var obj_G3_MODID;   // MODID 글로벌 변수 선언
+	var codeMirrorFontSizeG3Fninit = 11; // FNINIT
+
+//FNINIT
+function changeCodemirrorFontSizeG3Fninit(sizeCmd){
+	alog("changeCodemirrorFontSizeG3Fninit..........start " + sizeCmd);
+
+	if(sizeCmd == "+"){
+		codeMirrorFontSizeG3Fninit  = codeMirrorFontSizeG3Fninit  + 2;
+	}else{
+		codeMirrorFontSizeG3Fninit  = codeMirrorFontSizeG3Fninit  - 2;
+	}
+
+	$(".CodeMirror").css('font-size',codeMirrorFontSizeG3Fninit  + "px");
+
+	obj_G3_FNINIT .refresh();
+	alog("changeCodemirrorFontSizeG3Fninit..........end");   
+}
 //화면 초기화	
 function initBody(){
      alog("initBody()-----------------------start");
@@ -423,25 +440,30 @@ function G3_INIT(){
 
 
 
+setCodeCombo("FORMVIEW", $("#G3-DATATYPE"), "DATATYPE","");
+setCodeCombo("FORMVIEW", $("#G3-VALIDSEQ"), "VALIDSEQ","");
+
+setCodeCombo("FORMVIEW", $("#G3-OBJTYPE"), "CTFORMVIEW","");
+
+setCodeRadio("FORMVIEW", "G3-KEYYN", "YN","");
+
+setCodeRadio("FORMVIEW", "G3-SEQYN", "YN","");
+
+setCodeRadio("FORMVIEW", "G3-LBLHIDDENYN", "YN","");
+
+
+setCodeCombo("FORMVIEW", $("#G3-LBLALIGN"), "OBJALIGN","");
 
 
 
+setCodeCombo("FORMVIEW", $("#G3-OBJALIGN"), "OBJALIGN","");
+setCodeRadio("FORMVIEW", "G3-HIDDENYN", "YN","");
 
+setCodeRadio("FORMVIEW", "G3-EDITYN", "YN","");
 
+setCodeRadio("FORMVIEW", "G3-BRYN", "YN","");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+setCodeCombo("FORMVIEW", $("#G3-FOOTERMATH"), "GRIDFOOTER","");
 
 
 
@@ -464,36 +486,44 @@ function G3_INIT(){
 	//COLORD, COLORD 초기화	
 	//COLID, 컬럼ID 초기화	
 	//COLNM, 컬럼명 초기화	
-	//DATATYPE, 데이터타입 초기화	
-	//VALIDSEQ, VALIDSEQ 초기화	
 	//DATASIZE, 데이터사이즈 초기화	
-	//OBJTYPE, 오브젝트타입 초기화	
 	//POPUP, POPUP 초기화	
 	//KEYYN, KEYYN 초기화	
 	//SEQYN, SEQYN 초기화	
 	//LBLHIDDENYN, LBLHIDDENYN 초기화	
 	//LBLWIDTH, 라벨가로 초기화	
-	//LBLALIGN, LBLALIGN 초기화	
 	//OBJWIDTH, 오브젝트가로 초기화	
 	//OBJHEIGHT, 오브젝트세로 초기화	
-	//OBJALIGN, 가로정렬 초기화	
 	//HIDDENYN, HIDDENYN 초기화	
 	//EDITYN, EDITYN 초기화	
-	//FNINIT, FNINIT 초기화	
+		//코드 미러 초기화
+        obj_G3_FNINIT = CodeMirror.fromTextArea(document.getElementById('codeMirror_G3-FNINIT'), {
+            mode: "text/x-sql",
+            styleActiveLine: true,
+            indentWithTabs: true,
+            smartIndent: true,
+            lineWrapping: true,
+            lineNumbers: true,
+            matchBrackets : true,
+            tabSize: 4,
+            indentUnit: 4,
+            indentWithTabs: true,
+            extraKeys: {"Ctrl-Space": "autocomplete"},
+			hintOptions: {tables: {
+			  users: {name: null, score: null, birthDate: null},
+			  countries: {name: null, population: null, size: null}
+			}}
+        });
+		obj_G3_FNINIT .setSize("300px","53px");
 	//BRYN, BRYN 초기화	
 	//FORMAT, FORMAT 초기화	
-	//FOOTERMATH, FOOTERMATH 초기화	
 	//FOOTERNM, FOOTERNM 초기화	
 	//ICONNM, ICONNM 초기화	
 	//ICONSTYLE, ICONSTYLE 초기화	
 	//LBLSTYLE, LBLSTYLE 초기화	
 	//OBJSTYLE, OBJSTYLE 초기화	
 	//OBJ2STYLE, OBJ2STYLE 초기화	
-	//ADDDT, ADDDT 초기화	
-	//ADDID, ADDID 초기화	
-	//MODDT, MODDT 초기화	
-	//MODID, MODID 초기화	
-  alog("G3_INIT()-------------------------end");
+	//ADDDT, ADDDT 초기화		//ADDID, ADDID 초기화		//MODDT, MODDT 초기화		//MODID, MODID 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
 //, 저장	
@@ -552,73 +582,6 @@ function G1_RESET(){
 	alog("G1_RESET--------------------------start");
 	$('#condition')[0].reset();
 }
-// 엑셀 내려받기
-function G2_EXCEL(){
-	alog("G2_EXCEL()-------------------------start");
-
-	$btG2.tableExport({type:'excel'});
-
-	alog("G2_EXCEL()------------end");
-}
-//그리드 조회()	
-function G2_SEARCH(tinput,token){
-	alog("G2_SEARCH()------------start");
-	$("#spanG2Cnt").text("");
-	//post 만들기
-	sendFormData = new FormData($("#condition")[0]);
-	if(typeof tinput != "undefined"){
-		var tKeys = tinput.keys();
-		for(i=0;i<tKeys.length;i++) {
-			sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
-			//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
-		}
-	}
-	$btG2.bootstrapTable('showLoading');
-
-	//불러오기
-	$.ajax({
-		type : "POST",
-		url : url_G2_SEARCH+"&TOKEN=" + token + " &G2_CRUD_MODE=read" ,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: true,
-		success: function(data){
-			alog("   gridG2 json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			$btG2.bootstrapTable('hideLoading');
-
-			//그리드에 데이터 반영
-			if(data.RTN_CD == "200"){
-				var row_cnt = 0;
-				if(data.RTN_DATA){
-					row_cnt = data.RTN_DATA.rows.length;
-					$("#spanG2Cnt").text(row_cnt);
-					$btG2.bootstrapTable('removeAll'); //모두 지우기
-					$btG2.bootstrapTable('load', data.RTN_DATA.rows);
-
-					}else{
-						$("#spanG2Cnt").text("-");
-					}
-					msgNotice("[] 조회 성공했습니다. ("+row_cnt+"건)",1);
-
-                }else{
-                    msgError("[] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
-                }
-            },
-            error: function(error){
-				msgError("[] Ajax http 500 error ( " + error + " )",3);
-                alog("[] Ajax http 500 error ( " + data.RTN_MSG + " )");
-            }
-        });
-		alog("G2_SEARCH()------------end");
-}
-
 //
 function G2_CHKSAVE(token){
 	alog("G2_CHKSAVE()------------start");
@@ -687,53 +650,74 @@ function G2_USERDEF(token){
 
 	alog("G2_USERDEF-----------------end");
 }
-//새로고침	
-function G3_RELOAD(token){
-	alog("G3_RELOAD-----------------start");
-	G3_SEARCH(lastinputG3,token);
-}//G3_SAVE
-//IO_FILE_YN = N	
-	//IO_FILE_YN = N	
-function G3_SAVE(token){	
-	alog("G3_SAVE---------------start");
+// 엑셀 내려받기
+function G2_EXCEL(){
+	alog("G2_EXCEL()-------------------------start");
 
-	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
-		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
-		return;
+	$btG2.tableExport({type:'excel'});
+
+	alog("G2_EXCEL()------------end");
+}
+//그리드 조회()	
+function G2_SEARCH(tinput,token){
+	alog("G2_SEARCH()------------start");
+	$("#spanG2Cnt").text("");
+	//post 만들기
+	sendFormData = new FormData($("#condition")[0]);
+	if(typeof tinput != "undefined"){
+		var tKeys = tinput.keys();
+		for(i=0;i<tKeys.length;i++) {
+			sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+			//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+		}
 	}
+	$btG2.bootstrapTable('showLoading');
 
-	//전송용 데이터 생성하기
-	var sendFormData = new FormData($("#formviewG3")[0]);
-
-	//컨디션 데이터 추가하기
-	conditionData = new FormData($("#condition")[0]);
-    var es, e, pair;
-    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
-		sendFormData.append(pair[0],pair[1]);
-    }
-
+	//불러오기
 	$.ajax({
 		type : "POST",
-		url : url_G3_SAVE + "&TOKEN=" + token,
+		url : url_G2_SEARCH+"&TOKEN=" + token + " &G2_CRUD_MODE=read" ,
 		data : sendFormData,
 		processData: false,
 		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 저장되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
-}//	
+		dataType: "json",
+		async: true,
+		success: function(data){
+			alog("   gridG2 json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			$btG2.bootstrapTable('hideLoading');
+
+			//그리드에 데이터 반영
+			if(data.RTN_CD == "200"){
+				var row_cnt = 0;
+				if(data.RTN_DATA){
+					row_cnt = data.RTN_DATA.rows.length;
+					$("#spanG2Cnt").text(row_cnt);
+					$btG2.bootstrapTable('removeAll'); //모두 지우기
+					$btG2.bootstrapTable('load', data.RTN_DATA.rows);
+
+					}else{
+						$("#spanG2Cnt").text("-");
+					}
+					msgNotice("[] 조회 성공했습니다. ("+row_cnt+"건)",1);
+
+                }else{
+                    msgError("[] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
+                }
+            },
+            error: function(error){
+				msgError("[] Ajax http 500 error ( " + error + " )",3);
+                alog("[] Ajax http 500 error ( " + data.RTN_MSG + " )");
+            }
+        });
+		alog("G2_SEARCH()------------end");
+}
+
+//	
 function G3_NEW(){
        alog("[FromView] G3_NEW---------------start");
 	$("#G3-CTLCUD").val("C");
@@ -745,36 +729,25 @@ function G3_NEW(){
 	$("#G3-COLORD").val("");//COLORD 신규초기화	
 	$("#G3-COLID").val("");//컬럼ID 신규초기화	
 	$("#G3-COLNM").val("");//컬럼명 신규초기화	
-	$("#G3-DATATYPE").val("");//데이터타입 신규초기화	
-	$("#G3-VALIDSEQ").val("");//VALIDSEQ 신규초기화	
 	$("#G3-DATASIZE").val("");//데이터사이즈 신규초기화	
-	$("#G3-OBJTYPE").val("");//오브젝트타입 신규초기화	
 	$("#G3-POPUP").val("");//POPUP 신규초기화	
 	$("#G3-KEYYN").val("");//KEYYN 신규초기화	
 	$("#G3-SEQYN").val("");//SEQYN 신규초기화	
 	$("#G3-LBLHIDDENYN").val("");//LBLHIDDENYN 신규초기화	
 	$("#G3-LBLWIDTH").val("");//라벨가로 신규초기화	
-	$("#G3-LBLALIGN").val("");//LBLALIGN 신규초기화	
 	$("#G3-OBJWIDTH").val("");//오브젝트가로 신규초기화	
 	$("#G3-OBJHEIGHT").val("");//오브젝트세로 신규초기화	
-	$("#G3-OBJALIGN").val("");//가로정렬 신규초기화	
 	$("#G3-HIDDENYN").val("");//HIDDENYN 신규초기화	
 	$("#G3-EDITYN").val("");//EDITYN 신규초기화	
-	$("#G3-FNINIT").val("");//FNINIT 신규초기화	
-	$("#G3-BRYN").val("");//BRYN 신규초기화	
+obj_G3_FNINIT.setValue(""); // FNINIT값 비우기	$("#G3-BRYN").val("");//BRYN 신규초기화	
 	$("#G3-FORMAT").val("");//FORMAT 신규초기화	
-	$("#G3-FOOTERMATH").val("");//FOOTERMATH 신규초기화	
 	$("#G3-FOOTERNM").val("");//FOOTERNM 신규초기화	
 	$("#G3-ICONNM").val("");//ICONNM 신규초기화	
 	$("#G3-ICONSTYLE").val("");//ICONSTYLE 신규초기화	
 	$("#G3-LBLSTYLE").val("");//LBLSTYLE 신규초기화	
 	$("#G3-OBJSTYLE").val("");//OBJSTYLE 신규초기화	
 	$("#G3-OBJ2STYLE").val("");//OBJ2STYLE 신규초기화	
-	$("#G3-ADDDT").val("");//ADDDT 신규초기화	
-	$("#G3-ADDID").val("");//ADDID 신규초기화	
-	$("#G3-MODDT").val("");//MODDT 신규초기화	
-	$("#G3-MODID").val("");//MODID 신규초기화	
-       alog("DETAILNew30---------------end");
+	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-ADDID").text("");//ADDID 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화		$("#G3-MODID").text("");//MODID 신규초기화	       alog("DETAILNew30---------------end");
 }
 //사용자정의함수 : 사용자정의
 function G3_USERDEF(token){
@@ -847,18 +820,18 @@ function G3_SEARCH(tinput,token){
 			$("#G3-DATASIZE").val(data.RTN_DATA.DATASIZE);//데이터사이즈 변수세팅
 			$("#G3-OBJTYPE").val(data.RTN_DATA.OBJTYPE);//오브젝트타입 변수세팅
 			$("#G3-POPUP").val(data.RTN_DATA.POPUP);//POPUP 변수세팅
-			$("#G3-KEYYN").val(data.RTN_DATA.KEYYN);//KEYYN 변수세팅
-			$("#G3-SEQYN").val(data.RTN_DATA.SEQYN);//SEQYN 변수세팅
-			$("#G3-LBLHIDDENYN").val(data.RTN_DATA.LBLHIDDENYN);//LBLHIDDENYN 변수세팅
+			$('input:radio[name="G3-KEYYN"][value=' + data.RTN_DATA.KEYYN + ']').click();
+			$('input:radio[name="G3-SEQYN"][value=' + data.RTN_DATA.SEQYN + ']').click();
+			$('input:radio[name="G3-LBLHIDDENYN"][value=' + data.RTN_DATA.LBLHIDDENYN + ']').click();
 			$("#G3-LBLWIDTH").val(data.RTN_DATA.LBLWIDTH);//라벨가로 변수세팅
 			$("#G3-LBLALIGN").val(data.RTN_DATA.LBLALIGN);//LBLALIGN 변수세팅
 			$("#G3-OBJWIDTH").val(data.RTN_DATA.OBJWIDTH);//오브젝트가로 변수세팅
 			$("#G3-OBJHEIGHT").val(data.RTN_DATA.OBJHEIGHT);//오브젝트세로 변수세팅
 			$("#G3-OBJALIGN").val(data.RTN_DATA.OBJALIGN);//가로정렬 변수세팅
-			$("#G3-HIDDENYN").val(data.RTN_DATA.HIDDENYN);//HIDDENYN 변수세팅
-			$("#G3-EDITYN").val(data.RTN_DATA.EDITYN);//EDITYN 변수세팅
-			$("#G3-FNINIT").val(data.RTN_DATA.FNINIT);//FNINIT 변수세팅
-			$("#G3-BRYN").val(data.RTN_DATA.BRYN);//BRYN 변수세팅
+			$('input:radio[name="G3-HIDDENYN"][value=' + data.RTN_DATA.HIDDENYN + ']').click();
+			$('input:radio[name="G3-EDITYN"][value=' + data.RTN_DATA.EDITYN + ']').click();
+		obj_G3_FNINIT.setValue(data.RTN_DATA.FNINIT); //FNINIT 
+			$('input:radio[name="G3-BRYN"][value=' + data.RTN_DATA.BRYN + ']').click();
 			$("#G3-FORMAT").val(data.RTN_DATA.FORMAT);//FORMAT 변수세팅
 			$("#G3-FOOTERMATH").val(data.RTN_DATA.FOOTERMATH);//FOOTERMATH 변수세팅
 			$("#G3-FOOTERNM").val(data.RTN_DATA.FOOTERNM);//FOOTERNM 변수세팅
@@ -867,10 +840,10 @@ function G3_SEARCH(tinput,token){
 			$("#G3-LBLSTYLE").val(data.RTN_DATA.LBLSTYLE);//LBLSTYLE 변수세팅
 			$("#G3-OBJSTYLE").val(data.RTN_DATA.OBJSTYLE);//OBJSTYLE 변수세팅
 			$("#G3-OBJ2STYLE").val(data.RTN_DATA.OBJ2STYLE);//OBJ2STYLE 변수세팅
-			$("#G3-ADDDT").val(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
-			$("#G3-ADDID").val(data.RTN_DATA.ADDID);//ADDID 변수세팅
-			$("#G3-MODDT").val(data.RTN_DATA.MODDT);//MODDT 변수세팅
-			$("#G3-MODID").val(data.RTN_DATA.MODID);//MODID 변수세팅
+			$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
+			$("#G3-ADDID").text(data.RTN_DATA.ADDID);//ADDID 변수세팅
+			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
+			$("#G3-MODID").text(data.RTN_DATA.MODID);//MODID 변수세팅
         },
         error: function(error){
             alog("Error:");
@@ -915,6 +888,60 @@ function G3_DELETE(){
 			//alert(data);
 			if(data && data.RTN_CD == "200"){
 				msgNotice("정상적으로 삭제되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
+}
+//새로고침	
+function G3_RELOAD(token){
+	alog("G3_RELOAD-----------------start");
+	G3_SEARCH(lastinputG3,token);
+}//G3_SAVE
+//IO_FILE_YN = N	
+	//IO_FILE_YN = N	
+function G3_SAVE(token){	
+	alog("G3_SAVE---------------start");
+
+	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
+		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
+		return;
+	}
+
+	//전송용 데이터 생성하기
+	var sendFormData = new FormData($("#formviewG3")[0]);
+
+	sendFormData.append("G3-KEYYN",$('input[name="G3-KEYYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-SEQYN",$('input[name="G3-SEQYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-LBLHIDDENYN",$('input[name="G3-LBLHIDDENYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-HIDDENYN",$('input[name="G3-HIDDENYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-EDITYN",$('input[name="G3-EDITYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-FNINIT",obj_G3_FNINIT.getValue()); //FNINIT
+	sendFormData.append("G3-BRYN",$('input[name="G3-BRYN"]:checked').val());//radio 선택값 가져오기.
+	//컨디션 데이터 추가하기
+	conditionData = new FormData($("#condition")[0]);
+    var es, e, pair;
+    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
+		sendFormData.append(pair[0],pair[1]);
+    }
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 저장되었습니다.",1);
 			}else{
 				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
 			}

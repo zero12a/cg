@@ -7,7 +7,7 @@
  */
 
 function isFilter($G, $tFilter){
-    alog("isFilter()..................................start : " . $tFilter);
+    //alog("isFilter()..................................start : " . $tFilter);
     $isAndOper = null;
 
     $tFilter = str_replace("&amp;","&",$tFilter);//그리드에서 & 입력시 자꾸 &amp;로 변경되서 이거 처리 함
@@ -25,7 +25,7 @@ function isFilter($G, $tFilter){
 
     $SuccessCnt = 0;
     $FailCnt = 0;
-    alog("  필터갯수 : " . sizeof($tarr));
+    //alog("  필터갯수 : " . sizeof($tarr));
     for($u=0;$u<sizeof($tarr);$u++){
         $tFilter2 = $tarr[$u];
         if(strpos($tFilter2,"!=") > 0){
