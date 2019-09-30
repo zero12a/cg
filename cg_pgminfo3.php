@@ -90,12 +90,27 @@ header("Pragma:no-cache");
             type="button" name="some_name" value="Copy" id="btnCopyPgm"><input 
             type="button" name="some_name" value="Del" id="btnDelPgm"><input 
             type="button" name="some_name" value="Make" onclick="Make('');"><input 
-            type="button" name="some_name" value="MakeAsync" onclick="MakeAsync(uuidv4());"><input 
+            type="button" name="some_name" value="MakeAsync" onclick="MakeAsync(uuidv4());">
+            
+            <!--
+            Queue
+            <input 
+            type="button" name="some_name" value="V" onclick="MakeQueue('HTML');"><input 
+            type="button" name="some_name" value="J" onclick="MakeQueue('HTMLJS');"><input 
+            type="button" name="some_name" value="C" onclick="MakeQueue('SVRCTL');"><input 
+            type="button" name="some_name" value="S" onclick="MakeQueue('SVRSVC');"><input 
+            type="button" name="some_name" value="D" onclick="MakeQueue('SVRDAO');">
+
+            Single
+            -->
+            <input 
             type="button" name="some_name" value="V" onclick="Make('HTML');"><input 
             type="button" name="some_name" value="J" onclick="Make('HTMLJS');"><input 
             type="button" name="some_name" value="C" onclick="Make('SVRCTL');"><input 
             type="button" name="some_name" value="S" onclick="Make('SVRSVC');"><input 
-            type="button" name="some_name" value="D" onclick="Make('SVRDAO');"><input 
+            type="button" name="some_name" value="D" onclick="Make('SVRDAO');">
+            
+            <input 
             type="button" name="some_name" value="GetAuth" onclick="getAuth();"><input 
             type="button" name="some_name" value="Run" onclick="Run();"><input 
             type="button" name="some_name" value="SourceView" onclick="SourceView();">

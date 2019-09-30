@@ -167,7 +167,7 @@
         //그리드 초기화(PGM)
         mygridPgm = new dhtmlXGridObject('gridPgm');
 		mygridPgm.setUserData("","gridTitle","pgm : pgm list"); //글로별 변수에 그리드 타이블 넣기
-        mygridPgm.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
+        mygridPgm.setImagePath(gridImagePath);
         mygridPgm.setHeader("PJTSEQ,PJTID,PGMSEQ,PGMID,PGMNM,URL,PGMTYPE,VERDT,차수,ADDDT,MODDT");
         mygridPgm.setColumnIds("PJTSEQ,PJTID,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,VERDT,DEGREE,ADDDT,MODDT");
         mygridPgm.setInitWidths("40,40,40,60,*,100,60,50,40,70,70")
@@ -228,7 +228,7 @@
         //그리드 초기화(Group)(grp)
         mygridGrp = new dhtmlXGridObject('grid1');
 		mygridGrp.setUserData("","gridTitle","grid1 : group list"); //글로별 변수에 그리드 타이블 넣기
-        mygridGrp.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
+        mygridGrp.setImagePath(gridImagePath);
         mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,ADDDT,MODDT");
         mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,ADDDT,MODDT");
         mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,30,30,50,50")
@@ -698,7 +698,7 @@
         //2번째 그리드 초기화(sql)
         mygridSql = new dhtmlXGridObject('grid2');
 		mygridSql.setUserData("","gridTitle","grid2 : sql list"); //글로별 변수에 그리드 타이블 넣기
-        mygridSql.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
+        mygridSql.setImagePath(gridImagePath);
         mygridSql.setHeader("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,PSQLID,SQLTXT,ADDDT,MODDT");
         mygridSql.setColumnIds("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,PSQLSEQ,SQLTXT,ADDDT,MODDT");
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
@@ -819,7 +819,7 @@
         //5번째 그리드 초기화 (fnc)
         mygridFnc = new dhtmlXGridObject('grid5');
 		mygridFnc.setUserData("","gridTitle","grid5 : fnc list"); //글로별 변수에 그리드 타이블 넣기
-        mygridFnc.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
+        mygridFnc.setImagePath(gridImagePath);
         mygridFnc.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USE,FNCID,FNCCD,FNCNM,FNCTYPE,ORD,PROPERTY,UESRDEFJS,ADDDT,MODDT");
         mygridFnc.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,PROPERTY,USERDEFJS,ADDDT,MODDT");
         mygridFnc.setInitWidths("50,50,50,35,30,50,50,50,30,50,40,50,50,50");
@@ -945,7 +945,7 @@
         //6번째 그리드 초기화 (inherit)
         mygridInherit = new dhtmlXGridObject('grid6');
 		mygridInherit.setUserData("","gridTitle","grid6 : inherrit list"); //글로별 변수에 그리드 타이블 넣기
-        mygridInherit.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
+        mygridInherit.setImagePath(gridImagePath);
         mygridInherit.setHeader("INHERITSEQ,PJTSEQ,PGMSEQ,GRPSEQ,COLID,CHILDGRPID,ADDDT,MODDT");
         mygridInherit.setColumnIds("INHERITSEQ,PJTSEQ,PGMSEQ,GRPSEQ,COLID,CHILDGRPID,ADDDT,MODDT");
         mygridInherit.setInitWidths("50,50,50,50,50,50,50,50");
@@ -996,7 +996,7 @@
         //6번째 그리드 초기화 (sqlR)
         mygridSqlR = new dhtmlXGridObject('grid7');
 		mygridSqlR.setUserData("","gridTitle","gridSQLR : fnc list"); //글로별 변수에 그리드 타이블 넣기
-        mygridSqlR.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
+        mygridSqlR.setImagePath(gridImagePath);
         mygridSqlR.setHeader("SEQ,PJTSEQ,PGMSEQ,SVCSEQ,SQLID,ORD,ADDDT,MODDT");
         mygridSqlR.setColumnIds("SQLRSEQ,PJTSEQ,PGMSEQ,SVCSEQ,SQLSEQ,ORD,ADDDT,MODDT");
         mygridSqlR.setInitWidths("50,50,50,50,50,50,50,50");
@@ -1049,7 +1049,7 @@
         alog("mygridCol........init.......start");        
         mygridCol = new dhtmlXGridObject('grid3');
 		mygridCol.setUserData("","gridTitle","grid3 : sql column list"); //글로별 변수에 그리드 타이블 넣기
-        mygridCol.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
+        mygridCol.setImagePath(gridImagePath);
         mygridCol.setHeader("COLSEQ,PJTSEQ,PGMSEQ,SQLSEQ,DDCOLID,COLID,DD_DATATYPE,SQLGBN,필수YN,ORD,ADDDT,MODDT");
         mygridCol.setColumnIds("COLSEQ,PJTSEQ,PGMSEQ,SQLSEQ,DDCOLID,COLID,DATATYPE,SQLGBN,REQUIREYN,ORD,ADDDT,MODDT");
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
@@ -1100,16 +1100,16 @@
         alog("mygridIo........init.......start");
         mygridIo = new dhtmlXGridObject('grid4');
 		mygridIo.setUserData("","gridTitle","grid3 : io list"); //글로별 변수에 그리드 타이블 넣기
-        mygridIo.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
-        mygridIo.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,ORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,ADDDT,MODDT"); //29
+        mygridIo.setImagePath(gridImagePath);
+        mygridIo.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,ORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FNCHANGE,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,ADDDT,MODDT"); //29
 
-        mygridIo.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,COLORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POPUP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,ADDDT,MODDT"); //29
+        mygridIo.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,COLORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POPUP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FNCHANGE,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,ADDDT,MODDT"); //29
 
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,30,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
-        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,ed,ed,coro,ed,ed,ed,ed,ed,ro,ro"); //29
-        mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
-		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
+        mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,30,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
+        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,txttxt,ed,ed,coro,ed,ed,ed,ed,ed,ro,ro"); //29
+        mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
+		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
 
         mygridIo.enableSmartRendering(true);
         mygridIo.enableMultiselect(true);
@@ -1303,7 +1303,7 @@
 		alog("grid9-----------------------------start");
 		mygridSvc = new dhtmlXGridObject('grid9');
 		mygridSvc.setUserData("","gridTitle","grid9 : sql column list"); //글로별 변수에 그리드 타이블 넣기
-		mygridSvc.setImagePath("./lib/dhtmlxSuite/codebase/imgs/");
+		mygridSvc.setImagePath(gridImagePath);
 		mygridSvc.setHeader("SVCSEQ,PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,ORD,SVCGRPID,ADDDT,MODDT");
 		mygridSvc.setColumnIds("SVCSEQ,PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,ORD,SVCGRPID,ADDDT,MODDT");
 		mygridSvc.setInitWidths("50,50,50,50,50,50,50,50,50");

@@ -2,6 +2,7 @@
 
 
     //정적 변수 선언
+    var gridImagePath="./lib/dhtmlxSuite/codebase/imgs/";
     var cmSql, cmFnc;//codemirror
     var makeSyncFileLineSum;
 	var popSelectLayout; //레이아웃용
@@ -50,7 +51,10 @@
 
     var lastSelectPgRowId; //마지막 선택한 그리드 프로퍼티 row
 
-    
+    function MakeQueue(pgmtype) {
+        window.open( "./make/cg_make_queue.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
+    }
+
     function Make(pgmtype) {
         window.open( "./make/cg_make.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }

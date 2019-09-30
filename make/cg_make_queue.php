@@ -59,17 +59,13 @@ $G = null;
 $reqToken = $_GET["TOKEN"];
 
 
-//비동기 요청일때만 분산캐쉬
-if($reqToken != ""){
-    require_once($CFG_LIBS_PATH_REDIS);
-    Predis\Autoloader::register();
-    $redis = new Predis\Client($CFG_AUTH_REDIS);   
-    $REQ["REQTYPE"] = "ASYNC";
-}else{
-    $REQ["REQTYPE"] = "SINGLE";
-}
+//분산 큐
+require_once($CFG_LIBS_PATH_REDIS);
+Predis\Autoloader::register();
+$redis = new Predis\Client($CFG_AUTH_REDIS);   
 
 
+$REQ["REQTYPE"] = "QUEUE";
 
 $F_PJTSEQ = $_GET["pjtseq"];
 $F_PGMSEQ = $_GET["pgmseq"];
@@ -182,75 +178,71 @@ for($j=0;$j<sizeof($arrFileList);$j++){
 
 		//030 템플릿 DB생성
 		$OBJINFOD = getInput($arrFileList[$j]["TEMPLATE"] ,"","FILETYPE=" . $arrFileList[$j]["MKFILETYPE"],$G);
-		alog("	OBJINFOD sizeof : " . sizeof($OBJINFOD) );
-		if( sizeof($OBJINFOD) > 0 ){
-			goJsD($OBJINFOD,$G,$arrFileList[$j]["MKFILETYPE"]);
-		}
-		
-        //040 DB추출해서 실제파일생성
-        $rtnMap = saveFile2($arrFileList[$j]["MKFILETYPE"],$MAKE_FILE_NM);
-
-        $REQ["FILEHASH"] = $rtnMap["FILEHASH"];
-        $REQ["FILESIZE"] = $rtnMap["FILESIZE"];
+        alog("	OBJINFOD sizeof : " . sizeof($OBJINFOD) );
         
-        //alog("FILEHASH 1: " . $map["FILEHASH"]);
-
-        //050 이전 결과파일은 ACTIVEYN = N으로 변경하기
-        $map["FNCTYPE"] = "U";
-        $map["SQL"]["U"]["SVRID"] = $svrid;        
-		$map["SQL"]["U"]["BINDTYPE"] = "iis";
-		$map["SQL"]["U"]["SQLTXT"] = "
-        update CG_RSTFILE set
-            ACTIVEYN = 'N', MODDT = date_format(NOW(),'%Y%m%d%H%i%s') 
-        where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and FILETYPE = #{FILETYPE} 
-            and ACTIVEYN = 'Y'
-		";
-		$REQ["FILETYPE"] = $arrFileList[$j]["MKFILETYPE"];
-        $rtnVal = makeFormviewSaveJson($map,$db);
-        
-        //alog("FILEHASH 2: " . $map["FILEHASH"]);
-
-		//060 CG_RSTFILE결과 파일 목록  추가
-        $map["FNCTYPE"] = "C";
-        $map["SQL"]["C"]["SVRID"] = $svrid;        
-		$map["SQL"]["C"]["BINDTYPE"] = "iiiss sis";
-		$map["SQL"]["C"]["SQLTXT"] = "
-		insert into CG_RSTFILE (
-			PJTSEQ, PGMSEQ, VERSEQ, FILETYPE, FILENM
+        //RSTFILE 넣고 번호 가져오기      
+        $coltype = "iiiss s";
+        $sql = "
+        insert into CG_RSTFILE (
+            PJTSEQ, PGMSEQ, VERSEQ, FILETYPE, FILENM
             , ACTIVEYN, FILEHASH, FILESIZE, REQTYPE
             , ADDDT
-		) values (
-			#{PJTSEQ} ,#{PGMSEQ} ,#{VERSEQ} ,#{FILETYPE}, #{FILENM} 
-            , 'Y', #{FILEHASH} , #{FILESIZE}, #{REQTYPE}
+        ) values (
+            #{PJTSEQ} ,#{PGMSEQ} ,#{VERSEQ} ,#{FILETYPE}, #{FILENM} 
+            , 'N', '' , 0, #{REQTYPE}
             , date_format(NOW(),'%Y%m%d%H%i%s') 
-		)
-		";
-		$REQ["FILETYPE"] = $arrFileList[$j]["MKFILETYPE"];
+        )
+        ";
+        $REQ["FILETYPE"] = $arrFileList[$j]["MKFILETYPE"];
         $REQ["FILENM"] = $MAKE_FILE_NM; 
         
-        //alog("FILEHASH 3: " . $map["FILEHASH"]);        
-        $rtnVal = makeFormviewSaveJson($map,$db);
-        
-        //070 프로그램 viewurl 업데이트
-        if(($F_PGMTYPE == "" || $F_PGMTYPE == "HTML" ) && strlen($REQ["FILENM"])>4){
+        $stmt = makeStmt($db[$svrid],$sql,$coltype,$REQ);
+        if(!$stmt) JsonMsg("500","100","(CG_RSTFILE) stmt make fail " . $db->errno . " -> " . $db->error);
+        if(!$stmt->execute()) JsonMsg("500","110","(CG_RSTFILE) stmt execute fail " . $stmt->errno . " -> " . $stmt->error);
+        $REQ["FILESEQ"] = $db[$svrid]->insert_id;
+        $stmt->close();
 
-            $REQ["FILENM"] = $MAKE_FILE_NM_NO_EXT; // view url용
+		for($i=0; $i < sizeof($OBJINFOD); $i++ ){
+            //var_dump($OBJINFOD[$i]);
 
-            $map["FNCTYPE"] = "U";
-            $map["SQL"]["U"]["SVRID"] = $svrid;            
-            $map["SQL"]["U"]["BINDTYPE"] = "si";
-            $map["SQL"]["U"]["SQLTXT"] = "     
-                update CG_PGMINFO set 
-                    VIEWURL = #{FILENM}
-                    , MODDT = date_format(NOW(),'%Y%m%d%H%i%s') 
-                where PGMSEQ = #{PGMSEQ}
+            //echo "<BR>OBJDORD =" . $REQ["OBJDORD"];
+
+            //RSTQUEUEM 테이블에 insert
+            $coltype = "isiss sssss s";
+            $sql = "
+                insert into CG_RSTQUEUEM 
+                (
+                    FILESEQ, OBJDESC, OBJDORD, SPTTXT, SRCTXT
+                    , SRCTYPE, UILANG, PARAM, INPUT, FILTER
+                    , DEBUGYN, DTLSTEP, ADDDT
+                ) values (
+                    #{FILESEQ}, #{OBJDESC}, #{OBJDORD}, #{SPTTXT}, #{SRCTXT}
+                    , #{SRCTYPE}, #{UILANG}, #{PARAM}, #{INPUT}, #{FILTER}
+                    , #{DEBUGYN}, '10', date_format(NOW(),'%Y%m%d%H%i%s') 
+                )
             ";
-            alog("#################뷰 파일명 변경됨 : " . $REQ["FILETYPE"] . "/" . $REQ["FILENM"]);
-            $rtnVal = makeFormviewSaveJson($map,$db);
-        }
+            $REQ = array_merge($REQ, $OBJINFOD[$i]);
 
-                
+            $stmt = makeStmt($db[$svrid],$sql,$coltype,$REQ);
+            if(!$stmt) JsonMsg("500","100","(CG_RSTQUEUEM) stmt make fail " . $db->errno . " -> " . $db->error);
+            if(!$stmt->execute()) JsonMsg("500","110","(CG_RSTQUEUEM) stmt execute fail " . $stmt->errno . " -> " . $stmt->error);
+            $REQ["QUEUEMSEQ"] = $db[$svrid]->insert_id;
+            $stmt->close();      
 
+            //큐에 넣기
+            $redisMap["REQ"] = $REQ;
+            $redisMap["G"] = $G;
+            //var_dump($redisMap);
+            
+            if(!$redis->rpush( 'make_queue', json_encode($redisMap)))JsonMsg("500","120","Redis make_queue rpush error");
+
+		}
+
+
+        //갱신 내용 알리기
+        if(!$redis->publish("PUBSUB_MAKE_QUEUE","NEWMSG"))JsonMsg("500","120","Redis PUBSUB_MAKE_QUEUE error");
+
+        
 	}else{
 		alog("<font color=red>MAKE_FILE_NM 미생성 = ". $MAKE_FILE_NM ."</font>");
 	}
@@ -274,10 +266,9 @@ $rtnVal = makeFormviewSaveJson($map,$db);
 */
 
 //캐쉬 클로즈
-if($reqToken != ""){
-    $redis->disconnect();
-    unset($redis);
-}
+$redis->disconnect();
+unset($redis);
+
 
 $time_end = microtime_float();
 $time = $time_end - $time_start;

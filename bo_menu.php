@@ -23,13 +23,12 @@ header("Pragma:no-cache");
 	<script src="/c.g/lib/json2.min.js"></script>
 
 	<!--dhmltx-->
-    <script src="/c.g/lib/dhtmlxSuite/codebase/dhtmlx461_beautify.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">	
+    <script src="./lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
 
     <!--공통-->
     <script src="/c.g/rst/common.js" type="text/javascript" charset="utf-8"></script>
 
-
-    <link rel="stylesheet" href="/c.g/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
     <style>
 
 		html,body {margin:0;padding:0;height: 100%}
@@ -71,7 +70,7 @@ header("Pragma:no-cache");
 		myTabbar = myLayout.cells("b").attachTabbar();
 		alog(122);
 
-        myTabbar.setSkin('dhx_skyblue');
+        //myTabbar.setSkin('dhx_skyblue');
         myTabbar.enableAutoReSize(true);
 		myTabbar.enableTabCloseButton(true);
 
@@ -105,9 +104,11 @@ header("Pragma:no-cache");
             //myTabbar.tabs(id).set_actions(true);
             myTabbar.tabs(mnu_seq).setActive();
         }else if(id.split(":").length > 1){
+			//alert("url go 1");
             myTabbar.addTab(mnu_seq, mnu_nm, null, null, true );
             //myTabbar.tabs(id).attachURL("cg_pjtinfo.php");
             myTabbar.tabs(mnu_seq).attachURL(url);
+			//alert("url go 2");			
         }
 
         
