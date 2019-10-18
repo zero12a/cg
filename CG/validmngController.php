@@ -50,6 +50,7 @@ if(!isLogin()){
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
 		//사용자 정보 가져오기
+	$REQ["USER.SEQ"] = getUserSeq();
 //로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
@@ -149,12 +150,6 @@ switch ($ctl){
   		break;
 	case "G2_SAVE" :
   		echo $objService->goG2Save(); //목록, 저장
-  		break;
-	case "G2_EXCEL" :
-  		echo $objService->goG2Excel(); //목록, 엑셀다운로드
-  		break;
-	case "G2_CHKSAVE" :
-  		echo $objService->goG2Chksave(); //목록, 선택저장
   		break;
 	case "F3_DELETE" :
   		echo $objService->goF3Delete(); //상세, 삭제

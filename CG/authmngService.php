@@ -74,7 +74,7 @@ class authmngService
 
 		//조회
 		//V_GRPNM : 권한목록
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selAuthG($REQ)); //SEARCH, 조회,selAuthG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -116,7 +116,7 @@ class authmngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//S
 		//V_GRPNM : 권한목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
+		array_push($GRID["SQL"]["C"], $this->DAO->insAuthG($REQ)); //SAVE, S,권한추가
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -168,7 +168,7 @@ class authmngService
 		$GRID["CHK"]=$REQ[$grpId."-CHK"];
 		$GRID["KEYCOLID"] = "AUTH_SEQ";  //KEY컬럼 COLID, 1
 		//선택 삭제	
-		array_push($GRID["SQL"], $this->DAO->($REQ)); // CHKSAVE, 선택 삭제, 
+		array_push($GRID["SQL"], $this->DAO->delChkAuthG($REQ)); // CHKSAVE, 선택 삭제, 체크삭제
 		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
 

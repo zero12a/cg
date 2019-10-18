@@ -1937,7 +1937,7 @@
 
     function goSqlSearch(){
 		//alert(lastinput3json.SQLSEQ);
-		window.open("./rst/sqlsearchView.php","sqlsearch","width=800,height=600,scrollbars=yes");
+		window.open("./CG/sqlsearchView.php","sqlsearch","width=800,height=600,scrollbars=yes");
     }
 
 	function goSqlpreview(){

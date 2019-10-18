@@ -74,7 +74,7 @@ class pgmsearchService
 
 		//조회
 		//V_GRPNM : G2
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selPjtG($REQ)); //SEARCH, 조회,PJT
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -124,21 +124,6 @@ class pgmsearchService
 		echo json_encode($rtnVal);
 		alog("PGMSEARCHService-goG2Excel________________________end");
 	}
-	//G2, 선택저장
-	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("PGMSEARCHService-goG2Chksave________________________start");
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("PGMSEARCHService-goG2Chksave________________________end");
-	}
 	//G3, 조회
 	public function goG3Search(){
 		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
@@ -156,7 +141,7 @@ class pgmsearchService
 
 		//조회
 		//V_GRPNM : G3
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selPgmG($REQ)); //SEARCH, 조회,PGM
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사

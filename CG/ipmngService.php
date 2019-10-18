@@ -74,7 +74,7 @@ class ipmngService
 
 		//조회
 		//V_GRPNM : IP목록
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selIpG($REQ)); //SEARCH, 조회,IP
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -109,18 +109,18 @@ class ipmngService
 		$GRID["SQL"]["D"] = array();
 		$grpId="G2";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "IP_SEQ,PGMTYPE,IP,IP_DESC,ADD_DT,ADD_ID,MOD_DT,MOD_ID"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "IP_SEQ,PGMTYPE,ALLOW_IP,IP_DESC,ADD_DT,ADD_ID,MOD_DT,MOD_ID"; //그리드 컬럼순서(Hidden컬럼포함)
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
 		$GRID["KEYCOLID"] = "IP_SEQ";  //KEY컬럼 COLID, 0
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : IP목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["U"], $this->DAO->updIpG($REQ)); //SAVE, 저장,IP
 		//V_GRPNM : IP목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["D"], $this->DAO->delIpG($REQ)); //SAVE, 저장,IP
 		//V_GRPNM : IP목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["C"], $this->DAO->insIpG($REQ)); //SAVE, 저장,IP
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -156,21 +156,6 @@ class ipmngService
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
 		alog("IPMNGService-goG2Excel________________________end");
-	}
-	//IP목록, 선택저장
-	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("IPMNGService-goG2Chksave________________________start");
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("IPMNGService-goG2Chksave________________________end");
 	}
 }
                                                              

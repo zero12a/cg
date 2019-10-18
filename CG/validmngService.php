@@ -64,9 +64,11 @@ class validmngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["D"], $this->DAO->delValidG($REQ)); //SAVE, 저장,목록삭제
 		//V_GRPNM : 목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["U"], $this->DAO->updValidG($REQ)); //SAVE, 저장,목록수정
+		//V_GRPNM : 목록
+		array_push($GRID["SQL"]["C"], $this->DAO->insValidG($REQ)); //SAVE, 저장,목록추가
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -105,7 +107,7 @@ class validmngService
 
 		//조회
 		//V_GRPNM : 목록
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selValidG($REQ)); //SEARCH, 조회,목록조회
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -147,11 +149,11 @@ class validmngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["D"], $this->DAO->delValidG($REQ)); //SAVE, 저장,목록삭제
 		//V_GRPNM : 목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["U"], $this->DAO->updValidG($REQ)); //SAVE, 저장,목록수정
 		//V_GRPNM : 목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["C"], $this->DAO->insValidG($REQ)); //SAVE, 저장,목록추가
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -172,36 +174,6 @@ class validmngService
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
 		alog("VALIDMNGService-goG2Save________________________end");
-	}
-	//목록, 엑셀다운로드
-	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("VALIDMNGService-goG2Excel________________________start");
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("VALIDMNGService-goG2Excel________________________end");
-	}
-	//목록, 선택저장
-	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
-		$rtnVal = null;
-		$tmpVal = null;
-		$grpId = null;
-		$rtnVal->GRP_DATA = array();
-
-		alog("VALIDMNGService-goG2Chksave________________________start");
-		//처리 결과 리턴
-		$rtnVal->RTN_CD = "200";
-		$rtnVal->ERR_CD = "200";
-		echo json_encode($rtnVal);
-		alog("VALIDMNGService-goG2Chksave________________________end");
 	}
 	//상세, 삭제
 	public function goF3Delete(){

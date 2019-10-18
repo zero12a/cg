@@ -50,6 +50,7 @@ if(!isLogin()){
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
 		//사용자 정보 가져오기
+	$REQ["USER.SEQ"] = getUserSeq();
 //로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
@@ -67,8 +68,8 @@ $REQ["G2-IP_SEQ"] = reqPostNumber("G2-IP_SEQ",10);//IP_SEQ
 $REQ["G2-IP_SEQ"] = getFilter($REQ["G2-IP_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-PGMTYPE"] = reqPostString("G2-PGMTYPE",10);//PGMTYPE	
 $REQ["G2-PGMTYPE"] = getFilter($REQ["G2-PGMTYPE"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-IP"] = reqPostString("G2-IP",20);//IP	
-$REQ["G2-IP"] = getFilter($REQ["G2-IP"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G2-ALLOW_IP"] = reqPostString("G2-ALLOW_IP",20);//IP	
+$REQ["G2-ALLOW_IP"] = getFilter($REQ["G2-ALLOW_IP"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-IP_DESC"] = reqPostString("G2-IP_DESC",100);//DESC	
 $REQ["G2-IP_DESC"] = getFilter($REQ["G2-IP_DESC"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-ADD_DT"] = reqPostString("G2-ADD_DT",14);//ADD	
@@ -84,12 +85,12 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//IP목록
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"IP_SEQ,PGMTYPE,IP,IP_DESC,ADD_DT,ADD_ID,MOD_DT,MOD_ID"
+		,"COLORD"=>"IP_SEQ,PGMTYPE,ALLOW_IP,IP_DESC,ADD_DT,ADD_ID,MOD_DT,MOD_ID"
 		,"VALID"=>
 			array(
 			"IP_SEQ"=>array("NUMBER",10)	
 			,"PGMTYPE"=>array("STRING",10)	
-			,"IP"=>array("STRING",20)	
+			,"ALLOW_IP"=>array("STRING",20)	
 			,"IP_DESC"=>array("STRING",100)	
 			,"ADD_DT"=>array("STRING",14)	
 			,"ADD_ID"=>array("STRING",30)	
@@ -100,7 +101,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//IP목록
 			array(
 			"IP_SEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"PGMTYPE"=>array("CLEARTEXT","/--미 정의--/")
-			,"IP"=>array("CLEARTEXT","/--미 정의--/")
+			,"ALLOW_IP"=>array("CLEARTEXT","/--미 정의--/")
 			,"IP_DESC"=>array("CLEARTEXT","/--미 정의--/")
 			,"ADD_DT"=>array("REGEXMAT","/^[0-9]+$/")
 			,"ADD_ID"=>array("SAFETEXT","/--미 정의--/")
@@ -129,9 +130,6 @@ switch ($ctl){
   		break;
 	case "G2_EXCEL" :
   		echo $objService->goG2Excel(); //IP목록, 엑셀다운로드
-  		break;
-	case "G2_CHKSAVE" :
-  		echo $objService->goG2Chksave(); //IP목록, 선택저장
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");

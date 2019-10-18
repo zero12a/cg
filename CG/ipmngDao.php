@@ -35,9 +35,9 @@ WHERE IP_SEQ = #{IP_SEQ}
 		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "insIpG";
 		$RtnVal["SQLTXT"] = "INSERT INTO CMN_IP (
-	PGMTYPE, IP, IP_DESC, ADD_DT, ADD_ID
+	PGMTYPE, ALLOW_IP, IP_DESC, ADD_DT, ADD_ID
 ) VALUES (	
-	#{PGMTYPE}, #{IP}, #{IP_DESC}, date_format(sysdate(),'%Y%m%d%H%i%s'),#{USER.SEQ}   
+	#{PGMTYPE}, #{ALLOW_IP}, #{IP_DESC}, date_format(sysdate(),'%Y%m%d%H%i%s'),#{USER.SEQ}   
 )";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
@@ -52,7 +52,7 @@ WHERE IP_SEQ = #{IP_SEQ}
 		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "selIpG";
 		$RtnVal["SQLTXT"] = "select
-	IP_SEQ, PGMTYPE, IP, IP_DESC, ADD_DT, ADD_ID
+	IP_SEQ, PGMTYPE, ALLOW_IP, IP_DESC, ADD_DT, ADD_ID
 	, MOD_DT, MOD_ID 
 from CMN_IP
 order by IP_SEQ desc ";
@@ -69,7 +69,7 @@ order by IP_SEQ desc ";
 		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "updIpG";
 		$RtnVal["SQLTXT"] = "UPDATE CMN_IP SET
-	PGMTYPE = #{PGMTYPE}, IP = #{IP}, IP_DESC = #{IP_DESC}
+	PGMTYPE = #{PGMTYPE}, ALLOW_IP = #{ALLOW_IP}, IP_DESC = #{IP_DESC}
 	, MOD_DT = date_format(sysdate(),'%Y%m%d%H%i%s') , MOD_ID = #{USER.SEQ}
 WHERE IP_SEQ = #{IP_SEQ}
 ";
