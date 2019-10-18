@@ -73,7 +73,7 @@ header("Pragma:no-cache");
 
 <div id="BODY_BOX" class="BODY_BOX">
 
-	<div  class="GRID_LABELGRP" style="vertical-align:bottom;">
+	<div  class="GRID_LABELGRP_SLIM" style="vertical-align:bottom;">
 		<div class="GRID_LABEL" style="vertical-align:text-bottom;">* PGMINFO3
 			<!--popup--><a href="?" target="_blank"><img src="./img/popup.png" height=10 align=absmiddle border=0></a>
 			<!--reload--><a href="javascript:location.reload();"><img src="./img/reload.png" width=11 height=10 align=absmiddle border=0></a>
@@ -160,7 +160,7 @@ header("Pragma:no-cache");
 
     <div class="GRP_LINE" >
         <div class="GRP_OBJECT" style="width:27%;">
-            <div  class="GRID_LABELGRP" >
+            <div  class="GRID_LABELGRP_SLIM" >
                 <div class="GRID_LABEL" >* 그룹</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanGrpCnt">N</span>
@@ -179,7 +179,7 @@ header("Pragma:no-cache");
 
         <div class="GRP_OBJECT" style="width:20%;">
 
-            <div  class="GRID_LABELGRP" >
+            <div  class="GRID_LABELGRP_SLIM" >
                 <div class="GRID_LABEL" >* 기능</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanFncCnt">N</span>
@@ -198,7 +198,7 @@ header("Pragma:no-cache");
 
         <div class="GRP_OBJECT" style="width:38%;">
 
-            <div  class="GRID_LABELGRP" >
+            <div  class="GRID_LABELGRP_SLIM" >
                 <div class="GRID_LABEL" >* 오브젝트</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanIoCnt">N</span>
@@ -216,7 +216,7 @@ header("Pragma:no-cache");
         </div>
 
         <div class="GRP_OBJECT" style="width:15%;">
-            <div  class="GRID_LABELGRP" >
+            <div  class="GRID_LABELGRP_SLIM" >
                 <div class="GRID_LABEL" >* 상속</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanInheritCnt">N</span>
@@ -237,7 +237,7 @@ header("Pragma:no-cache");
 
         <div class="GRP_OBJECT" style="width:13%;">
 
-            <div  class="GRID_LABELGRP" >
+            <div  class="GRID_LABELGRP_SLIM" >
                 <div class="GRID_LABEL" >* 서비스</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanSvcCnt">N</span>
@@ -253,7 +253,7 @@ header("Pragma:no-cache");
 
 
 
-            <div  class="GRID_LABELGRP" >
+            <div  class="GRID_LABELGRP_SLIM" >
                 <div class="GRID_LABEL" >* DB처리</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanSqlrCnt">N</span>
@@ -271,7 +271,7 @@ header("Pragma:no-cache");
         </div>
 
         <div class="GRP_OBJECT" style="width:22%;">
-            <div  class="GRID_LABELGRP" >
+            <div  class="GRID_LABELGRP_SLIM" >
                 <div class="GRID_LABEL" >* SQL</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanSqlCnt">N</span>
@@ -286,7 +286,7 @@ header("Pragma:no-cache");
             </div>
         </div>
         <div class="GRP_OBJECT" style="width:50%;">
-        <div  class="GRID_LABELGRP" >
+        <div  class="GRID_LABELGRP_SLIM" >
                 <div class="GRID_LABEL" >* SQL Edit</div>
                 <div  class="GRID_LABELBTN"  >
                     <select id="selSqlHint" name="selSqlHint" onchange="addSqlHint()" style="font-size:9pt">
@@ -322,7 +322,7 @@ header("Pragma:no-cache");
             </div>
         </div>
         <div class="GRP_OBJECT" style="width:15%;">
-            <div  class="GRID_LABELGRP" >
+            <div  class="GRID_LABELGRP_SLIM" >
                 <div class="GRID_LABEL" >* SQL IO</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanColCnt">N</span>
