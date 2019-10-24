@@ -76,6 +76,203 @@
     $REQ["G3_CRUD_MODE"]    = $_GET['G3_CRUD_MODE'];
     $REQ["G4_CRUD_MODE"]    = $_GET['G4_CRUD_MODE'];
     $REQ["G5_CRUD_MODE"]    = $_GET['G5_CRUD_MODE'];
+    $REQ["G6_CRUD_MODE"]    = $_GET['G6_CRUD_MODE'];
+    $REQ["G7_CRUD_MODE"]    = $_GET['G7_CRUD_MODE'];
+
+if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
+
+    require '/data/www/vendor/autoload.php';
+
+    use Aws\S3\S3Client;
+    use Aws\Common\Exception\MultipartUploadException;
+    use Aws\S3\Model\MultipartUpload\UploadBuilder;
+    
+    $config = array(
+        'credentials' => array('key' => S3_KEY,'secret' => S3_SEC),
+        'region' => S3_REGION,
+        'version' => 'latest');
+ 
+    $client = S3Client::factory($config);
+    
+    $result = $client->putObject(array(
+            'Bucket'     => S3_BUCKET,
+            'SourceFile' => $source,
+            'Key'        => $target
+    ));
+ 
+
+
+
+    $s3 = new S3Client::factory(
+        array(
+            'version'=>'latest',
+            'region' =>'ap-northeast-2',
+            'credentials'=>array(
+                'key'=>'AKIAVHXRCVHDDT4SS3MW'
+                ,'secret'=>'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'
+            )
+        )
+        );
+    
+    try {
+        $s3->putObject([
+            'Bucket' => 'code-gen-mdm',
+            'Key'    => 'my-object',
+            'Body'   => fopen('./md/objinfo_list.json', 'r'),
+            'ACL'    => 'public-read',
+        ]);
+    } catch (S3Exception $e) {
+        echo "There was an error uploading the file.\n";
+    }
+
+
+    $db["cg"]->close();
+}
+
+if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
+
+    //OBJINFO
+    $coltype = "";
+    //alog("        coltype : " . $coltype);
+    $sql = "
+            select 
+                *
+            from 
+                CG_OBJINFO
+            where DELYN = 'N' and USEYN='Y'
+            ";
+
+    $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+    if(!$stmt)JsonMsg("500","300","SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+    if(!$stmt->execute())JsonMsg("500","100","stmt 실행 실패" . $db->stmt . " -> " . $db->stmt);
+    $resultI = $stmt->get_result();
+    $stmt->close();$stmt=null;
+
+    $rowsI = array();
+    //echo "<table border=1><th>OBJSEQ</th><th>objdseq</th><th>objaseq</th><th>objbseq</th></tr>";
+    while($colsI = $resultI->fetch_array(MYSQLI_ASSOC))
+    {
+        //echo "<tr><td>" . $colsI["OBJSEQ"] . "</td><td></td><td></td><td></td></tr>";
+
+        //OBJINFOD
+        $REQ["OBJTYPE"] = $colsI["OBJTYPE"];
+
+        $coltype = "s";
+        alog("        coltype : " . $coltype);
+        $sql = "
+                select 
+                    *
+                from 
+                    CG_OBJINFOD
+                where OBJTYPE = #{OBJTYPE}
+                order by OBJDORD asc 
+                ";
+
+        $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+        if(!$stmt)JsonMsg("500","300","[objinfoD]SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+        if(!$stmt->execute())JsonMsg("500","100","[objinfoD]stmt 실행 실패" . $db->stmt . " -> " . $db->stmt);
+        $resultD = $stmt->get_result();
+        $stmt->close();$stmt=null;
+
+        $rowsD = array();
+        while($colsD = $resultD->fetch_array(MYSQLI_ASSOC)){
+            //echo "<tr><td></td><td>" . $colsD["OBJDSEQ"] . "</td><td></td><td></td></tr>";
+
+            //OBJINFOA
+            $REQ["OBJDSEQ"] = $colsD["OBJDSEQ"];
+            $colsD["OBJDSEQ"] = "";
+
+            $coltype = "i";
+            $sql = "
+                    select 
+                        *
+                    from 
+                        CG_OBJINFOA
+                    where OBJDSEQ = #{OBJDSEQ}
+                    order by OBJAORD asc 
+                    ";
+
+            $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+            if(!$stmt)JsonMsg("500","300","[objinfoA]SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+            if(!$stmt->execute())JsonMsg("500","100","[objinfoA]stmt 실행 실패" . $db->stmt . " -> " . $db->stmt);
+            $resultA = $stmt->get_result();
+            $stmt->close();$stmt=null;
+
+            $rowsA = array();
+            while($colsA = $resultA->fetch_array(MYSQLI_ASSOC)){
+                //echo "<tr><td></td><td></td><td>" . $colsA["OBJASEQ"] . "</td><td></td></tr>";
+
+                //OBJINFOB
+                $REQ["OBJASEQ"] = $colsA["OBJASEQ"];
+                $colsA["OBJDSEQ"] = "";
+                $colsA["OBJASEQ"] = "";
+
+                $coltype = "i";
+                $sql = "
+                        select 
+                            *
+                        from 
+                            CG_OBJINFOB
+                        where OBJASEQ = #{OBJASEQ}
+                        order by OBJBORD asc 
+                        ";
+
+                $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+                if(!$stmt)JsonMsg("500","300","[objinfoB]SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+                if(!$stmt->execute())JsonMsg("500","100","[objinfoB]stmt 실행 실패" . $db->stmt . " -> " . $db->stmt);
+                $resultB = $stmt->get_result();
+                $stmt->close();$stmt=null;
+
+                $rowsB = array();
+                while($colsB = $resultB->fetch_array(MYSQLI_ASSOC)){
+                    $colsB["OBJASEQ"] = "";
+                    $colsB["OBJBSEQ"] = "";
+                    array_push($rowsB,$colsB);
+                }
+                $colsA["OBJINFOB"] = $rowsB;
+
+                array_push($rowsA,$colsA);
+            }
+
+            $colsD["OBJINFOA"] = $rowsA;
+
+            array_push($rowsD,$colsD);
+        }
+        
+        $colsI["OBJINFOD"] = $rowsD;
+
+        array_push($rowsI,$colsI);
+    }
+    //echo "</table><pre>";
+
+    $db["cg"]->close();
+
+
+    echo json_encode($rowsI);
+
+    //목록/해쉬값 만들기
+    $fileList = array();
+    for($i=0;$i < sizeof($rowsI);$i++){
+        $colsI = $rowsI[$i];
+
+        $jsonStr = json_encode($colsI["OBJINFOD"]);
+
+        $myfile = fopen("./md/objinfo_" . $colsI["OBJTYPE"] . ".json", "w") or die("Unable to open file!");
+        fwrite($myfile, $jsonStr);
+        fclose($myfile);
+
+        $colsI["OBJINFOD"] = hash("sha256", $jsonStr);
+        array_push($fileList,$colsI);
+    }
+    $jsonStr = json_encode($fileList);
+    $myfile = fopen("./md/objinfo_list.json", "w") or die("Unable to open file!");
+    fwrite($myfile, $jsonStr);
+    fclose($myfile);
+
+}
+
+
+
 
 
 if($REQ["F_GRPID"] == "1" && $REQ["G1_CRUD_MODE"] == "read"){

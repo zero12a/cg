@@ -1,3 +1,30 @@
+    //정적 변수 선언
+    var myCalendar;
+    var mygrid1,selrowid1,lastinput1,lastinput1json;
+    var mygrid2,selrowid2,lastinput2,lastinput2json;
+    var mygrid3,selrowid3,lastinput3,lastinput3json;
+    var mygrid4,selrowid3,lastinput4,lastinput4json;
+    var url_1 = "cg_objinfo_crud3.php?F_GRPID=1&";
+    var url_2 = "cg_objinfo_crud3.php?F_GRPID=2&";
+    var url_3 = "cg_objinfo_crud3.php?F_GRPID=3&";
+    var url_4 = "cg_objinfo_crud3.php?F_GRPID=4&";
+    var url_5 = "cg_objinfo_crud3.php?F_GRPID=5&";
+    var url_6 = "cg_objinfo_crud3.php?F_GRPID=6&"; //makefile
+    var url_7 = "cg_objinfo_crud3.php?F_GRPID=7&"; //deployfile
+    var validmsg = jQuery.parseJSON('{"REQUARED":"[0]는 반드시 입력바랍니다.", "MIN":"this는 [0]이상 입력바랍니다."}');
+
+
+    //동적 변수 선언
+    var obj_condition_valid = jQuery.parseJSON( '{ "":"" ' +
+        ', "PJTID": {"REQUARED":"Y",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
+        '}' );
+
+    //디테일 변수 선언
+    var obj_F4_valid = jQuery.parseJSON( '{ "":"" ' +
+        ' , "OBJTYPE": {"REQUARED":"Y",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"}' +
+        ' , "STARTTXT": {"REQUARED":"Y",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"}' +
+       "}" );
+
 
     function search1(){
         //폼값 밸리데이션
@@ -204,6 +231,56 @@
         $("#tt").val(xml);
         $("#tt2").val(xml2);
     }
+
+
+    function deployFile(){
+        alog("makeFile()------------start");
+        
+        sendFormData = new FormData($("#condition1")[0]);
+
+        window.open(url_7 + "G7_CRUD_MODE=SAVE&","new");
+        return;
+
+    }
+
+    function makeFile(){
+        alog("makeFile()------------start");
+        
+        sendFormData = new FormData($("#condition1")[0]);
+
+        window.open(url_6 + "G6_CRUD_MODE=SAVE&","new");
+        return;
+
+
+        $.ajax({
+            type : "POST",
+            url : url_6 + "&G6_CRUD_MODE=SAVE&" ,
+            data : sendFormData,
+			processData: false,
+            contentType: false, 
+            dataType: "json",
+            async:false,
+            success: function(data){
+                alog("   save1 json return----------------------");
+                //alog("   json data : " + data);
+                //alog("   json RTN_CD : " + data.RTN_CD);
+                //alog("   json ERR_CD : " + data.ERR_CD);
+                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+                //그리드에 데이터 반영
+                saveToGrid(tgrid,data);
+
+            },
+            error: function(error){
+                alog("Error:");
+                alog(error);
+            }
+        });
+
+        addstatusyn1 = false;
+        alog("save1()------------end");
+    }
+
 
     function save1(){
         alog("save1()------------start");
@@ -670,30 +747,7 @@
 
 
 
-    //정적 변수 선언
-    var myCalendar;
-    var mygrid1,selrowid1,lastinput1,lastinput1json;
-    var mygrid2,selrowid2,lastinput2,lastinput2json;
-    var mygrid3,selrowid3,lastinput3,lastinput3json;
-    var mygrid4,selrowid3,lastinput4,lastinput4json;
-    var url_1 = "cg_objinfo_crud3.php?F_GRPID=1&";
-    var url_2 = "cg_objinfo_crud3.php?F_GRPID=2&";
-    var url_3 = "cg_objinfo_crud3.php?F_GRPID=3&";
-    var url_4 = "cg_objinfo_crud3.php?F_GRPID=4&";
-    var url_5 = "cg_objinfo_crud3.php?F_GRPID=5&";
-    var validmsg = jQuery.parseJSON('{"REQUARED":"[0]는 반드시 입력바랍니다.", "MIN":"this는 [0]이상 입력바랍니다."}');
 
-
-    //동적 변수 선언
-    var obj_condition_valid = jQuery.parseJSON( '{ "":"" ' +
-        ', "PJTID": {"REQUARED":"Y",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"} ' +
-        '}' );
-
-    //디테일 변수 선언
-    var obj_F4_valid = jQuery.parseJSON( '{ "":"" ' +
-        ' , "OBJTYPE": {"REQUARED":"Y",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"}' +
-        ' , "STARTTXT": {"REQUARED":"Y",  "MIN":"0",  "MAX":"ZZZ",  "DATASIZE":10,  "DATATYPE":"STRING"}' +
-       "}" );
 
 
     //화면 초기화
