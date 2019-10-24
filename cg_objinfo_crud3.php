@@ -86,7 +86,7 @@ if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
     use Aws\S3\S3Client;
     use Aws\Common\Exception\MultipartUploadException;
     use Aws\S3\Model\MultipartUpload\UploadBuilder;
-    
+
     $config = array(
         'credentials' => array('key' => S3_KEY,'secret' => S3_SEC),
         'region' => S3_REGION,
@@ -108,8 +108,8 @@ if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
             'version'=>'latest',
             'region' =>'ap-northeast-2',
             'credentials'=>array(
-                'key'=>'AKIAVHXRCVHDDT4SS3MW'
-                ,'secret'=>'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'
+                'key'=>''
+                ,'secret'=>''
             )
         )
         );
