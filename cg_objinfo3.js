@@ -10,7 +10,8 @@
     var url_4 = "cg_objinfo_crud3.php?F_GRPID=4&";
     var url_5 = "cg_objinfo_crud3.php?F_GRPID=5&";
     var url_6 = "cg_objinfo_crud3.php?F_GRPID=6&"; //makefile
-    var url_7 = "cg_objinfo_crud3.php?F_GRPID=7&"; //deployfile
+    var url_7 = "cg_objinfo_crud3.php?F_GRPID=7&"; //deployfileS3
+    var url_8 = "cg_objinfo_crud3.php?F_GRPID=8&"; //loadFromS3  
     var validmsg = jQuery.parseJSON('{"REQUARED":"[0]는 반드시 입력바랍니다.", "MIN":"this는 [0]이상 입력바랍니다."}');
 
 
@@ -232,6 +233,15 @@
         $("#tt2").val(xml2);
     }
 
+    function loadFromS3(){
+        alog("makeFile()------------start");
+        
+        sendFormData = new FormData($("#condition1")[0]);
+
+        window.open(url_8 + "G8_CRUD_MODE=SAVE&","new");
+        return;
+
+    }
 
     function deployFile(){
         alog("makeFile()------------start");
@@ -954,11 +964,11 @@
         //그리드 초기화
         mygrid1 = new dhtmlXGridObject('grid1'); //OBJINFO
         mygrid1.setImagePath("../dhtmlx/imgs/");
-        mygrid1.setHeader("OLD_OBJTYPE,OBJTYPE,USE,ADDDT,MODDT");
-        mygrid1.setColumnIds("OLD_OBJTYPE,OBJTYPE,USEYN,ADDDT,MODDT");
+        mygrid1.setHeader("OLD_OBJTYPE,OBJTYPE,USE,DEPLOYDT,LOADDT,ADDDT,MODDT");
+        mygrid1.setColumnIds("OLD_OBJTYPE,OBJTYPE,USEYN,DEPLOYDT,LOADDT,ADDDT,MODDT");
         //mygrid1.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygrid1.setInitWidths("40,50,30,60,60")
-        mygrid1.setColTypes("ed,ed,ed,ro,ro");
+        mygrid1.setInitWidths("40,50,30,50,50,60,60")
+        mygrid1.setColTypes("ed,ed,ed,ro,ro,ro,ro");
         mygrid1.enableSmartRendering(false);
         mygrid1.enableMultiselect(true);
         mygrid1.init();

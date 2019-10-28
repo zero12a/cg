@@ -86,6 +86,220 @@
     $REQ["G5_CRUD_MODE"]    = $_GET['G5_CRUD_MODE'];
     $REQ["G6_CRUD_MODE"]    = $_GET['G6_CRUD_MODE'];
     $REQ["G7_CRUD_MODE"]    = $_GET['G7_CRUD_MODE'];
+    $REQ["G8_CRUD_MODE"]    = $_GET['G8_CRUD_MODE'];
+
+//load from S3
+if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "SAVE"){
+
+    echo 111;
+    
+    try {
+            
+        $client = S3Client::factory(
+            array(
+            'credentials' => array('key' => $CFG_AWS_AID,'secret' => $CFG_AWS_KEY),
+            'region' => 'ap-northeast-2',
+            'version' => 'latest'
+            )
+        );
+        echo 222;
+    }catch (S3Exception $e) {
+        echo $e->getMessage() . "\n";
+    }catch (AwsException $e) {
+        echo $e->getMessage() . "\n";
+    }
+    
+    try{
+        $result = $client->getObject(array(
+            'Bucket'     => "code-gen-mdm",
+            'Key'        => "objinfo_list.json",
+            'SaveAs' => "./md/objinfo_list_load.json"
+        ));
+    
+        echo 333;
+    }catch (S3Exception $e) {
+        echo $e->getMessage() . "\n";
+    }catch (AwsException $e) {
+        echo $e->getMessage() . "\n";
+    }
+
+    //list파일 열어서 전송
+    $tArray = json_decode(file_get_contents('./md/objinfo_list_load.json'),true);
+    for($i=0;$i<sizeof($tArray) && $i == 0;$i++){
+        $tCols = $tArray[$i];
+
+        try{
+            //S3에서 내려받기
+            $fileNm = "objinfo_" . $tCols["OBJTYPE"]. ".json";
+            $fileLocalNm = "objinfo_" . $tCols["OBJTYPE"]. "_load.json";            
+            $result = $client->getObject(array(
+                'Bucket'     => "code-gen-mdm",
+                'Key'        => $fileNm,
+                'SaveAs' => "./md/" . $fileLocalNm          
+            ));
+        
+            echo "<br>" . $i . " " . $fileNm;
+
+            //기존 데이터 지우고( objinfoB -> objinfoA -> objinfoD )
+            $REQ["OBJTYPE"] = $tCols["OBJTYPE"];    
+
+
+            $coltype = "s";
+            $sql = "delete from CG_OBJINFOB where OBJTYPE = #{OBJTYPE}";
+
+            $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+            if(!$stmt)ServerMsg("500","300","[objinfo]SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+            if(!$stmt->execute())ServerMsg("500","100","[objinfo]stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+            $stmt->close();
+
+
+            $coltype = "s";
+            $sql = "delete from CG_OBJINFOA where OBJTYPE = #{OBJTYPE}";
+
+            $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+            if(!$stmt)ServerMsg("500","300","[objinfo]SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+            if(!$stmt->execute())ServerMsg("500","100","[objinfo]stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+            $stmt->close();
+
+
+            $coltype = "s";
+            $sql = "delete from CG_OBJINFOD where OBJTYPE = #{OBJTYPE}";
+
+            $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+            if(!$stmt)ServerMsg("500","300","[objinfo]SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+            if(!$stmt->execute())ServerMsg("500","100","[objinfo]stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+            $stmt->close();
+
+
+
+            //내려받은  데이터 넣기 ( objinfoD -> objinfoA -> objinfo B)
+            $tArrayD = json_decode(file_get_contents('./md/' . $fileLocalNm),true);
+
+            for($d=0;$d<sizeof($tArrayD);$d++){
+
+                $REQD = $tArrayD[$d];
+
+                //var_dump($REQD);
+                //exit;
+
+                $coltype = "sssis sssss sssss";
+                $sql = "
+                    insert into CG_OBJINFOD (
+                                        OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE
+                                        ,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT
+                                        ,INPUT,PARAM,SRCTYPE,FILTER,DEBUGYN
+                                        ,ADDDT
+                    ) values (
+                                        #{OBJTYPE},#{FILETYPE},#{OBJVAL},#{OBJDORD},#{OBJVALTYPE}
+                                        ,#{UILANG},#{OBJVALNM},#{OBJDESC},#{SRCTXT},#{SPTTXT}
+                                        ,#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER},#{DEBUGYN}
+                                        ,date_format(sysdate(),'%Y%m%d%H%i%s')
+                    )
+                ";
+    
+                $stmt = makeStmt($db["cg"],$sql,$coltype,$REQD);
+                if(!$stmt)ServerMsg("500","300","[objinfo d]SQL makeStmt 실패 했습니다." . $db["cg"]->errno . " -> " . $db["cg"]->error);
+                if(!$stmt->execute())ServerMsg("500","100","[objinfo d]stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+                $LAST_OBJDSEQ = $db["cg"]->insert_id;
+                echo "<br>-" . $db["cg"]->insert_id;
+                $stmt->close();
+
+
+                for($a=0;$a<sizeof($REQD["OBJINFOA"]);$a++){
+                    $REQA = $REQD["OBJINFOA"][$a];
+
+                    $REQA["OBJDSEQ"] = $LAST_OBJDSEQ;
+
+                    var_dump($REQA);
+                    //exit;
+
+                    $coltype = "siiss sssss s";
+                    $sql = "
+                        insert into CG_OBJINFOA (
+                            OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT
+                            ,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER
+                            ,DEBUGYN
+                            ,ADDDT
+                        ) values (
+                            #{OBJTYPE},#{OBJDSEQ},#{OBJAORD},#{OBJDESC},#{SRCTXT}
+                            ,#{SPTTXT},#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER}
+                            ,#{DEBUGYN}
+                            ,date_format(sysdate(),'%Y%m%d%H%i%s')
+                        )
+                        ";
+        
+                    $stmt = makeStmt($db["cg"],$sql,$coltype,$REQA);
+                    if(!$stmt)ServerMsg("500","300","[objinfo A]SQL makeStmt 실패 했습니다." . $db["cg"]->errno . " -> " . $db["cg"]->error);
+                    if(!$stmt->execute())ServerMsg("500","100","[objinfo A]stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+                    $LAST_OBJASEQ = $db["cg"]->insert_id;
+                    echo "<br>--" . $db["cg"]->insert_id;                    
+                    $stmt->close();
+
+
+                    for($b=0;$b<sizeof($REQA["OBJINFOB"]);$b++){
+                        $REQB = $REQA["OBJINFOB"][$b];
+                        $REQB["OBJASEQ"] = $LAST_OBJASEQ;
+    
+                        $coltype = "siiss sssss s";
+                        $sql = "
+                            insert into CG_OBJINFOB (
+                                OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT
+                                ,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER
+                                ,DEBUGYN
+                                ,ADDDT
+                            ) values (
+                                                    #{OBJTYPE},#{OBJASEQ},#{OBJBORD},#{OBJDESC},#{SRCTXT}
+                                                    ,#{SPTTXT},#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER}
+                                                    ,#{DEBUGYN}
+                                                    ,date_format(sysdate(),'%Y%m%d%H%i%s')
+                            )
+                            ";
+
+                        $stmt = makeStmt($db["cg"],$sql,$coltype,$REQB);
+                        if(!$stmt)ServerMsg("500","300","[objinfo B]SQL makeStmt 실패 했습니다." . $db["cg"]->errno . " -> " . $db["cg"]->error);
+                        if(!$stmt->execute())ServerMsg("500","100","[objinfo B]stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+                        $REQ["OBJBSEQ"] = $db["cg"]->insert_id;
+                        echo "<br>---" . $db["cg"]->insert_id;                             
+                        $stmt->close();
+                    }    
+                    
+                }
+
+
+
+
+            }            
+
+
+            //DB에 업데이트
+            $REQ["OBJTYPE"] = $tCols["OBJTYPE"];            
+            $REQ["DEPLOYHASH"] = $tCols["OBJINFOD"];
+            $coltype = "ss";
+            $sql = "
+                    update CG_OBJINFO set
+                        LOADHASH = #{DEPLOYHASH}
+                        ,LOADDT =  date_format(sysdate(),'%Y%m%d%H%i%s')
+                    where OBJTYPE = #{OBJTYPE} and DELYN='N' and USEYN='Y'
+                    ";
+
+            $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+            if(!$stmt)ServerMsg("500","300","[objinfo]SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+            if(!$stmt->execute())ServerMsg("500","100","[objinfo]stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+            $stmt->close();
+
+        }catch (S3Exception $e) {
+            echo $e->getMessage() . "\n";
+        }catch (AwsException $e) {
+            echo $e->getMessage() . "\n";
+        }
+
+    }
+
+
+    $db["cg"]->close();
+}
+
+
 
 if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
 
@@ -127,6 +341,7 @@ if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
         $tCols = $tArray[$i];
 
         try{
+            //S3에 전송
             $fileNm = "objinfo_" . $tCols["OBJTYPE"]. ".json";
             $result = $client->putObject(array(
                 'Bucket'     => "code-gen-mdm",
@@ -135,6 +350,23 @@ if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
             ));
         
             echo "<br>" . $i . " " . $fileNm;
+
+            //DB에 업데이트
+            $REQ["OBJTYPE"] = $tCols["OBJTYPE"];            
+            $REQ["DEPLOYHASH"] = $tCols["OBJINFOD"];
+            $coltype = "ss";
+            $sql = "
+                    update CG_OBJINFO set
+                        DEPLOYHASH = #{DEPLOYHASH}
+                        ,DEPLOYDT =  date_format(sysdate(),'%Y%m%d%H%i%s')
+                    where OBJTYPE = #{OBJTYPE} and DELYN='N' and USEYN='Y'
+                    ";
+
+            $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+            if(!$stmt)ServerMsg("500","300","[objinfo]SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+            if(!$stmt->execute())ServerMsg("500","100","[objinfo]stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+            $stmt->close();
+
         }catch (S3Exception $e) {
             echo $e->getMessage() . "\n";
         }catch (AwsException $e) {
@@ -296,26 +528,12 @@ if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
 if($REQ["F_GRPID"] == "1" && $REQ["G1_CRUD_MODE"] == "read"){
 
     $to_coltype = "s";
-    alog("        to_coltype : " . $to_coltype);
-    $sql = "
-          select
-            OBJTYPE as OLD_OBJTYPE,OBJTYPE,a.USEYN,a.ADDDT,a.MODDT
-          from CG_OBJINFO a
-		  where a.DELYN='N' 
-          ";
-    if($REQ["F_OBJTYPE"] != "") {
-        $sql .= " and OBJTYPE = #F_OBJTYPE# ";
-        $to_coltype .= "s";
-    }
-
-
-
 
     //V_GRPNM : 팀별 현황 (보안취약점 갯수)
     $GRID["SQL"]["R"]["FNCTYPE"] = "R";
     $GRID["SQL"]["R"]["SQLTXT"] = "
         select
-            OBJTYPE as OLD_OBJTYPE,OBJTYPE,a.USEYN,a.ADDDT,a.MODDT
+            OBJTYPE as OLD_OBJTYPE,OBJTYPE,a.USEYN,a.DEPLOYDT,a.LOADDT,a.ADDDT,a.MODDT
         from CG_OBJINFO a
         where a.DELYN='N' 
         ";
@@ -340,7 +558,7 @@ if($REQ["F_GRPID"] == "1" && $REQ["G1_CRUD_MODE"] == "read"){
 
     $GRID["XML"] = getXml2Array($_POST["xmldata"]);//
 
-    $GRID["COLORD"] = "OLD_OBJTYPE,OBJTYPE,USEYN,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+    $GRID["COLORD"] = "OLD_OBJTYPE,OBJTYPE,USEYN,DEPLOYDT,LOADDT,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 
     $GRID["COLCRYPT"] = array();
     $GRID["KEYCOLID"] = "OBJTYPE";  //KEY컬럼 COLID, 0
