@@ -5,6 +5,12 @@ session_start();
 
 $CFG_LIBS_PATH_REDIS = "Predis/Autoloader.php";
 
+$CFG_LIBS_PATH_AWS = "/data/www/lib/php/aws/aws-autoloader.php";
+
+//aws 
+$CFG_AWS_AID = "";
+$CFG_AWS_KEY = "";
+
 //운영/개발 모드
 $CFG_MODE = "DEV"; //DEV, REAL, LOCAL
 

@@ -113,8 +113,8 @@ header("Pragma:no-cache");
 			<!--reload--><a href="javascript:location.reload();"><img src="./img/reload.png" width=11 height=10 align=absmiddle border=0></a>		
 		</div>
 		<div  class="GRID_LABELBTN"  >
-            <input type="button" name="some_name" value="makeFile" onclick="makeFile();">
-            <input type="button" name="some_name" value="deployFile" onclick="deployFile();">            
+            <input type="button" name="some_name" value="makeLocalFile" onclick="makeFile();">
+            <input type="button" name="some_name" value="deployFileS3" onclick="deployFile();">            
 			<input type="button" name="some_name" value="Search1" onclick="search1();">
 			<input type="button" name="some_name" value="detailNew4" onclick="detailNew4();">
 			<input type="button" name="some_name" value="detailSave4" onclick="detailSave4();">

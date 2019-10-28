@@ -9,6 +9,14 @@
     require_once("./include/incUtil.php");
     require_once("./include/incDB.php");
 
+    require_once($CFG_LIBS_PATH_AWS);
+
+    use Aws\S3\S3Client;
+    use Aws\Exception\AwsException;
+    use Aws\S3\Exception\S3Exception;
+    use Aws\Common\Exception\MultipartUploadException;
+    use Aws\S3\Model\MultipartUpload\UploadBuilder;
+
     //ServerViewTxt("N","N","Y","Y");
     $db["cg"]=db_m_open();
 
@@ -81,48 +89,58 @@
 
 if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
 
-    require '/data/www/vendor/autoload.php';
-
-    use Aws\S3\S3Client;
-    use Aws\Common\Exception\MultipartUploadException;
-    use Aws\S3\Model\MultipartUpload\UploadBuilder;
-
-    $config = array(
-        'credentials' => array('key' => S3_KEY,'secret' => S3_SEC),
-        'region' => S3_REGION,
-        'version' => 'latest');
- 
-    $client = S3Client::factory($config);
-    
-    $result = $client->putObject(array(
-            'Bucket'     => S3_BUCKET,
-            'SourceFile' => $source,
-            'Key'        => $target
-    ));
- 
-
-
-
-    $s3 = new S3Client::factory(
-        array(
-            'version'=>'latest',
-            'region' =>'ap-northeast-2',
-            'credentials'=>array(
-                'key'=>''
-                ,'secret'=>''
-            )
-        )
-        );
+    echo 111;
     
     try {
-        $s3->putObject([
-            'Bucket' => 'code-gen-mdm',
-            'Key'    => 'my-object',
-            'Body'   => fopen('./md/objinfo_list.json', 'r'),
-            'ACL'    => 'public-read',
-        ]);
-    } catch (S3Exception $e) {
-        echo "There was an error uploading the file.\n";
+            
+        $client = S3Client::factory(
+            array(
+            'credentials' => array('key' => $CFG_AWS_AID,'secret' => $CFG_AWS_KEY),
+            'region' => 'ap-northeast-2',
+            'version' => 'latest'
+            )
+        );
+        echo 222;
+    }catch (S3Exception $e) {
+        echo $e->getMessage() . "\n";
+    }catch (AwsException $e) {
+        echo $e->getMessage() . "\n";
+    }
+    
+    try{
+        $result = $client->putObject(array(
+            'Bucket'     => "code-gen-mdm",
+            'SourceFile' => "./md/objinfo_list.json",
+            'Key'        => "objinfo_list.json"
+        ));
+    
+        echo 333;
+    }catch (S3Exception $e) {
+        echo $e->getMessage() . "\n";
+    }catch (AwsException $e) {
+        echo $e->getMessage() . "\n";
+    }
+
+    //list파일 열어서 전송
+    $tArray = json_decode(file_get_contents('./md/objinfo_list.json'),true);
+    for($i=0;$i<sizeof($tArray);$i++){
+        $tCols = $tArray[$i];
+
+        try{
+            $fileNm = "objinfo_" . $tCols["OBJTYPE"]. ".json";
+            $result = $client->putObject(array(
+                'Bucket'     => "code-gen-mdm",
+                'SourceFile' => "./md/" . $fileNm ,
+                'Key'        => $fileNm
+            ));
+        
+            echo "<br>" . $i . " " . $fileNm;
+        }catch (S3Exception $e) {
+            echo $e->getMessage() . "\n";
+        }catch (AwsException $e) {
+            echo $e->getMessage() . "\n";
+        }
+
     }
 
 
