@@ -125,8 +125,28 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "SAVE"){
 
     //list파일 열어서 전송
     $tArray = json_decode(file_get_contents('./md/objinfo_list_load.json'),true);
-    for($i=0;$i<sizeof($tArray) && $i == 0;$i++){
+    for($i=0;$i<sizeof($tArray) ;$i++){
         $tCols = $tArray[$i];
+
+        //아래 검증 통과사 S3에서 개별 파일 내려받기
+        //검증1 내꺼LOADHASH하고 S3목록의HASH하고 달라진경우 개별 파일 다운받기
+        $REQ["OBJTYPE"] = $tCols["OBJTYPE"];    
+        $coltype = "s";
+        $sql = " select LOADHASH from CG_OBJINFO where OBJTYPE = #{OBJTYPE} and DELYN='N' and USEYN='Y'  ";
+
+        $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
+        if(!$stmt)ServerMsg("500","300","[objinfo]SQL makeStmt 실패 했습니다." . $db->errno . " -> " . $db->error);
+        if(!$stmt->execute())ServerMsg("500","100","[objinfo]stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+        $result = $stmt->get_result();
+        $stmt->close();
+        //echo "<BR>" . $REQ["OBJTYPE"] . " 바뀐거 없어서 LOAD 패스.( DB=" . $tcolsDB["LOADHASH"] . " , FILE=" . $tCols["OBJINFOD"] . " )";
+           
+        if($tcolsDB = $result->fetch_array(MYSQLI_ASSOC) ){
+            if($tcolsDB["LOADHASH"] == $tCols["OBJINFOD"]){
+                echo "<BR>" . $REQ["OBJTYPE"] . " 바뀐거 없어서 LOAD 패스.( DB=" . $tcolsDB["LOADHASH"] . " , S3_FILE=" . $tCols["OBJINFOD"] . " )";
+                continue;
+            }
+        }
 
         try{
             //S3에서 내려받기
@@ -141,9 +161,6 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "SAVE"){
             echo "<br>" . $i . " " . $fileNm;
 
             //기존 데이터 지우고( objinfoB -> objinfoA -> objinfoD )
-            $REQ["OBJTYPE"] = $tCols["OBJTYPE"];    
-
-
             $coltype = "s";
             $sql = "delete from CG_OBJINFOB where OBJTYPE = #{OBJTYPE}";
 
@@ -182,18 +199,18 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "SAVE"){
                 //var_dump($REQD);
                 //exit;
 
-                $coltype = "sssis sssss sssss";
+                $coltype = "sssis sssss sssss ss";
                 $sql = "
                     insert into CG_OBJINFOD (
                                         OBJTYPE,FILETYPE,OBJVAL,OBJDORD,OBJVALTYPE
                                         ,UILANG,OBJVALNM,OBJDESC,SRCTXT,SPTTXT
                                         ,INPUT,PARAM,SRCTYPE,FILTER,DEBUGYN
-                                        ,ADDDT
+                                        ,ADDDT,MODDT
                     ) values (
                                         #{OBJTYPE},#{FILETYPE},#{OBJVAL},#{OBJDORD},#{OBJVALTYPE}
                                         ,#{UILANG},#{OBJVALNM},#{OBJDESC},#{SRCTXT},#{SPTTXT}
                                         ,#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER},#{DEBUGYN}
-                                        ,date_format(sysdate(),'%Y%m%d%H%i%s')
+                                        ,#{ADDDT},#{MODDT}
                     )
                 ";
     
@@ -210,21 +227,21 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "SAVE"){
 
                     $REQA["OBJDSEQ"] = $LAST_OBJDSEQ;
 
-                    var_dump($REQA);
+                    //var_dump($REQA);
                     //exit;
 
-                    $coltype = "siiss sssss s";
+                    $coltype = "siiss sssss s ss";
                     $sql = "
                         insert into CG_OBJINFOA (
                             OBJTYPE,OBJDSEQ,OBJAORD,OBJDESC,SRCTXT
                             ,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER
                             ,DEBUGYN
-                            ,ADDDT
+                            ,ADDDT,MODDT
                         ) values (
                             #{OBJTYPE},#{OBJDSEQ},#{OBJAORD},#{OBJDESC},#{SRCTXT}
                             ,#{SPTTXT},#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER}
                             ,#{DEBUGYN}
-                            ,date_format(sysdate(),'%Y%m%d%H%i%s')
+                            ,#{ADDDT},#{MODDT}
                         )
                         ";
         
@@ -240,18 +257,19 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "SAVE"){
                         $REQB = $REQA["OBJINFOB"][$b];
                         $REQB["OBJASEQ"] = $LAST_OBJASEQ;
     
-                        $coltype = "siiss sssss s";
+                        echo "<br>OBJBORD = " . $REQB["OBJBORD"];
+                        $coltype = "siiss sssss s ss";
                         $sql = "
                             insert into CG_OBJINFOB (
                                 OBJTYPE,OBJASEQ,OBJBORD,OBJDESC,SRCTXT
                                 ,SPTTXT,INPUT,PARAM,SRCTYPE,FILTER
                                 ,DEBUGYN
-                                ,ADDDT
+                                ,ADDDT,MODDT
                             ) values (
-                                                    #{OBJTYPE},#{OBJASEQ},#{OBJBORD},#{OBJDESC},#{SRCTXT}
-                                                    ,#{SPTTXT},#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER}
-                                                    ,#{DEBUGYN}
-                                                    ,date_format(sysdate(),'%Y%m%d%H%i%s')
+                                #{OBJTYPE},#{OBJASEQ},#{OBJBORD},#{OBJDESC},#{SRCTXT}
+                                ,#{SPTTXT},#{INPUT},#{PARAM},#{SRCTYPE},#{FILTER}
+                                ,#{DEBUGYN}
+                                ,#{ADDDT},#{MODDT}
                             )
                             ";
 
@@ -271,13 +289,12 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "SAVE"){
             }            
 
 
-            //DB에 업데이트
-            $REQ["OBJTYPE"] = $tCols["OBJTYPE"];            
-            $REQ["DEPLOYHASH"] = $tCols["OBJINFOD"];
+            //DB에 업데이트     
+            $REQ["LOADHASH"] = $tCols["OBJINFOD"];
             $coltype = "ss";
             $sql = "
                     update CG_OBJINFO set
-                        LOADHASH = #{DEPLOYHASH}
+                        LOADHASH = #{LOADHASH}
                         ,LOADDT =  date_format(sysdate(),'%Y%m%d%H%i%s')
                     where OBJTYPE = #{OBJTYPE} and DELYN='N' and USEYN='Y'
                     ";
@@ -300,7 +317,7 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "SAVE"){
 }
 
 
-
+//deployToS3
 if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
 
     echo 111;
@@ -379,6 +396,8 @@ if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
     $db["cg"]->close();
 }
 
+
+//makeLocalFile
 if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
 
     //OBJINFO
@@ -399,10 +418,10 @@ if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
     $stmt->close();$stmt=null;
 
     $rowsI = array();
-    //echo "<table border=1><th>OBJSEQ</th><th>objdseq</th><th>objaseq</th><th>objbseq</th></tr>";
+    echo "<table border=1><th>OBJSEQ</th><th>objdseq</th><th>objaseq</th><th>objbseq</th></tr>";
     while($colsI = $resultI->fetch_array(MYSQLI_ASSOC))
     {
-        //echo "<tr><td>" . $colsI["OBJSEQ"] . "</td><td></td><td></td><td></td></tr>";
+        echo "<tr><td>" . $colsI["OBJSEQ"] . "</td><td></td><td></td><td></td></tr>";
 
         //OBJINFOD
         $REQ["OBJTYPE"] = $colsI["OBJTYPE"];
@@ -415,7 +434,7 @@ if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
                 from 
                     CG_OBJINFOD
                 where OBJTYPE = #{OBJTYPE}
-                order by OBJDORD asc 
+                order by OBJDORD asc, OBJDSEQ asc
                 ";
 
         $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
@@ -439,7 +458,7 @@ if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
                     from 
                         CG_OBJINFOA
                     where OBJDSEQ = #{OBJDSEQ}
-                    order by OBJAORD asc 
+                    order by OBJAORD asc, OBJASEQ asc 
                     ";
 
             $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
@@ -464,7 +483,7 @@ if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
                         from 
                             CG_OBJINFOB
                         where OBJASEQ = #{OBJASEQ}
-                        order by OBJBORD asc 
+                        order by OBJBORD asc, OBJBSEQ asc
                         ";
 
                 $stmt = makeStmt($db["cg"],$sql,$coltype,$REQ);
@@ -493,12 +512,12 @@ if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
 
         array_push($rowsI,$colsI);
     }
-    //echo "</table><pre>";
+    echo "</table><pre>";
 
     $db["cg"]->close();
 
 
-    echo json_encode($rowsI);
+    //echo json_encode($rowsI);
 
     //목록/해쉬값 만들기
     $fileList = array();
@@ -519,6 +538,7 @@ if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
     fwrite($myfile, $jsonStr);
     fclose($myfile);
 
+    echo "<BR>로컬에 파일생성 완료";
 }
 
 

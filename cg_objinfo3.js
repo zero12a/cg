@@ -969,6 +969,7 @@
         //mygrid1.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
         mygrid1.setInitWidths("40,50,30,50,50,60,60")
         mygrid1.setColTypes("ed,ed,ed,ro,ro,ro,ro");
+        mygrid1.setColSorting("str,str,str,str,str,str,str");
         mygrid1.enableSmartRendering(false);
         mygrid1.enableMultiselect(true);
         mygrid1.init();

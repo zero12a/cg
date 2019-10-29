@@ -114,7 +114,7 @@ header("Pragma:no-cache");
 		</div>
 		<div  class="GRID_LABELBTN"  >
             <input type="button" name="some_name" value="makeLocalFile" onclick="makeFile();">
-            <input type="button" name="some_name" value="deployFileS3" onclick="deployFile();">    
+            <input type="button" name="some_name" value="deployToS3" onclick="deployFile();">    
             <input type="button" name="some_name" value="loadFromS3" onclick="loadFromS3();">            
 			<input type="button" name="some_name" value="Search1" onclick="search1();">
 			<input type="button" name="some_name" value="detailNew4" onclick="detailNew4();">

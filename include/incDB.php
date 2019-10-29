@@ -431,7 +431,7 @@ function makeStmt($db,$sql,$coltype,$map){
             //alog("***   value = " . $map[$mat[2]]);            
             if(
                 ( substr($to_coltype,$k,1) == "i" || substr($to_coltype,$k,1) == "d" )
-                && $map[$mat[2]] == ""
+                && strval($map[$mat[2]]) == ""
                 ){
                 //숫자 타입인데 값이 없으면 null 문자열 넣어주기.
                 //alog("***   set null");
