@@ -3,9 +3,12 @@
 //세션 사용
 session_start(); 
 
-$CFG_LIBS_PATH_REDIS = "Predis/Autoloader.php";
-
+//LIBS
+$CFG_LIBS_PATH_REDIS = "/data/www/lib/php/predis/autoload.php"; // predis/predis 
 $CFG_LIBS_PATH_AWS = "/data/www/lib/php/aws/aws-autoloader.php";
+$CFG_LIBS_SQL_PARSER = "/data/www/lib/php/PHP-SQL-Parser/src/PHPSQLParser.php";
+$CFG_LIBS_HTML_PURIFIER = "/data/www/lib/php/HTMLPurifier-4.12.0/library/HTMLPurifier.auto.php"; //xss 필터
+$CFG_LIBS_MONO_LOG = "/data/www/lib/php/monolog/autoload.php";
 
 //aws 
 $CFG_AWS_AID = "";
