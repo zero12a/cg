@@ -57,7 +57,8 @@ function db_open3(){
 }
 
 function db_m_open(){
-    global $mysql_m_host, $mysql_m_userid, $mysql_m_passwd, $mysql_m_db, $mysql_m_port;
+    global $CFG;
+    //$mysql_m_host, $mysql_m_userid, $mysql_m_passwd, $mysql_m_db, $mysql_m_port;
 
     $db = mysqli_init(); 
     if (!$db) {
@@ -67,16 +68,17 @@ function db_m_open(){
     if (!$db->options(MYSQLI_OPT_CONNECT_TIMEOUT, 1)) {
         JsonMsg("500","997","db_m_open() Setting MYSQLI_OPT_CONNECT_TIMEOUT failed");
     }
-    if($mysql_m_port == "")$mysql_m_port = "3306";
+    if($CFG["mysql_m_port"] == "")$CFG["mysql_m_port"] = "3306";
 
-    if(!$db->real_connect($mysql_m_host,$mysql_m_userid, $mysql_m_passwd,$mysql_m_db, $mysql_m_port)){
+    if(!$db->real_connect($CFG["mysql_m_host"],$CFG["mysql_m_userid"], $CFG["mysql_m_passwd"]
+        ,$CFG["mysql_m_db"], $CFG["mysql_m_port"])){
 
-        alog("db_m_open() MYSQL_HOST="    . $mysql_m_host);
-        alog("db_m_open() MYSQL_ID="      . $mysql_m_userid);
-        alog("db_m_open() MYSQL_DB="      . $mysql_m_db);
-        alog("db_m_open() MYSQL_PORT="    . $mysql_m_port);
+        alog("db_m_open() MYSQL_HOST="    . $CFG["mysql_m_host"]);
+        alog("db_m_open() MYSQL_ID="      . $CFG["mysql_m_userid"]);
+        alog("db_m_open() MYSQL_DB="      . $CFG["mysql_m_db"]);
+        alog("db_m_open() MYSQL_PORT="    . $CFG["mysql_m_port"]);
 
-        JsonMsg("500","998","db_m_open() ". $mysql_m_host . "db 연결 실패 : " . $db->connect_error);
+        JsonMsg("500","998","db_m_open() ". $CFG["mysql_m_host"] . "db 연결 실패 : " . $db->connect_error);
     } 
 
     //$link = new mysqli($mysql_m_host, $mysql_m_userid, $mysql_m_passwd, $mysql_m_db)
@@ -125,14 +127,14 @@ function db_b_open(){
 
 
 function getDbSvrInfo($tSvrId){
-    global $CFG_SEC_KEY,$CFG_MODE,$CFG_DB;
+    global $CFG;
     alog("getDbSvrInfo()_________________________Start");
-    //alog("  CFG_MODE : " . $CFG_MODE);
+    //alog("  CFG_MODE : " . $CFG["CFG_MODE"]);
     //alog("  tSvrId : " . $tSvrId);
 
     $RtnVal = new stdClass();
 
-    switch ($CFG_MODE){
+    switch ($CFG["CFG_MODE"]){
         case "DEV" :
             $db = db_m_open();
 
@@ -145,26 +147,27 @@ function getDbSvrInfo($tSvrId){
             //alog("  DBHOST : " . $arr[0]["DBHOST"]);
             //alog("  DBNAME : " . $arr[0]["DBNAME"]);
             //alog("  DBUSRID : " . $arr[0]["DBUSRID"]);
-            //alog("  DBUSRPW : " . aes_decrypt($arr[0]["DBUSRPW"],$CFG_SEC_KEY));
+            alog("CFG_SEC_KEY = " . $CFG["CFG_SEC_KEY"]);
+            alog("  DBUSRPW : " . aes_decrypt($arr[0]["DBUSRPW"],$CFG["CFG_SEC_KEY"]));
         
             $RtnVal->MYSQL_HOST =  $arr[0]["DBHOST"];
             $RtnVal->MYSQL_DB =  $arr[0]["DBNAME"];
             $RtnVal->MYSQL_ID =  $arr[0]["DBUSRID"];
-            $RtnVal->MYSQL_PW =  aes_decrypt($arr[0]["DBUSRPW"],$CFG_SEC_KEY); //비번 복호화             
+            $RtnVal->MYSQL_PW =  aes_decrypt($arr[0]["DBUSRPW"],$CFG["CFG_SEC_KEY"]); //비번 복호화             
             $RtnVal->MYSQL_PORT =  ($arr[0]["DBPORT"] == "")?"3306":$arr[0]["DBPORT"];
             break;
 
         case "REAL" :
-            $RtnVal =   $CFG_DB[$tSvrId];
+            $RtnVal =   $CFG["CFG_DB"][$tSvrId];
             break;
 
         case "LOCAL" :
-            $RtnVal =   $CFG_DB[$tSvrId];
+            $RtnVal =   $CFG["CFG_DB"][$tSvrId];
             break;
 
         default:
-            $RtnVal =   $CFG_DB[$tSvrId];        
-            return "CFG_MODE 없음(".$CFG_MODE.")";
+            $RtnVal =   $CFG["FG_DB"][$tSvrId];        
+            return "CFG_MODE 없음(".$CFG["CFG_MODE"].")";
     }
 
 
@@ -1356,7 +1359,8 @@ end
     ###################################################################
     */
 	function makeGridSearchJson($map,&$db){
-		global $REQ, $CFG_SEC_KEY, $CFG_SEC_SALT, $PGM_CFG;
+        global $REQ, $CFG, $PGM_CFG;
+        
 		alog("StdService-makeGridSearchJson");
 
 	    $stmt = makeStmt($db[$map["SQL"]["R"]["SVRID"]],$map["SQL"]["R"]["SQLTXT"], $map["SQL"]["R"]["BINDTYPE"], $REQ);
@@ -1399,16 +1403,16 @@ end
                     //암호화 컬럼에 존재 하는지 확인
                     if( $colcrypt_array[trim($k)] == "CRYPT" ){
                         //양방향 암호화
-                        alog("  crypt 전 col/key: " . $v . "/" . $CFG_SEC_KEY);
-                        alog("  cyrpt 후 : [" .  aes_decrypt($v,$CFG_SEC_KEY) . "]");                        
+                        alog("  crypt 전 col/key: " . $v . "/" . $CFG["CFG_SEC_KEY"]);
+                        alog("  cyrpt 후 : [" .  aes_decrypt($v,$CFG["CFG_SEC_KEY"]) . "]");                        
 
-                        //$array[$i][$k] = aes_decrypt($v,$CFG_SEC_KEY);
+                        //$array[$i][$k] = aes_decrypt($v,$CFG["CFG_SEC_KEY"]);
 
-                        array_push($one_row, aes_decrypt($v,$CFG_SEC_KEY) );
+                        array_push($one_row, aes_decrypt($v,$CFG["CFG_SEC_KEY"]) );
                     }else if( $colcrypt_array[trim($k)] == "HASH" ){
                         //일방향 암호화
-                        alog("  hash 전 col/key: " . $v . "/" . $CFG_SEC_SALT);
-                        //$array[$i][$k] = aes_decrypt($v,$CFG_SEC_KEY);
+                        alog("  hash 전 col/key: " . $v . "/" . $CFG["CFG_SEC_SALT"]);
+                        //$array[$i][$k] = aes_decrypt($v,$CFG["CFG_SEC_KEY"]);
 
                         array_push($one_row, $v );
                     }else if( $colcrypt_array[trim($k)] == "CDATA" ){
@@ -1443,7 +1447,7 @@ end
 
 
 	function makeGridSearchJsonArray($map,&$db){
-		global $REQ, $CFG_SEC_KEY, $CFG_SEC_SALT, $PGM_CFG;
+		global $REQ, $CFG, $PGM_CFG;
 		alog("makeGridSearchJsonArray..................................start");
 
         //main/sub sql 갯수 만큼 루프돌면서 처리하기
@@ -1497,20 +1501,20 @@ end
                             //암호화 컬럼에 존재 하는지 확인
                             if( $colcrypt_array[trim($k)] == "CRYPT" ){
                                 //양방향 암호화
-                                alog("  crypt 전 col/key: " . $v . "/" . $CFG_SEC_KEY);
-                                alog("  cyrpt 후 : [" .  aes_decrypt($v,$CFG_SEC_KEY) . "]");                        
+                                alog("  crypt 전 col/key: " . $v . "/" . $CFG["CFG_SEC_KEY"]);
+                                alog("  cyrpt 후 : [" .  aes_decrypt($v,$CFG["CFG_SEC_KEY"]) . "]");                        
     
-                                //$array[$i][$k] = aes_decrypt($v,$CFG_SEC_KEY);
+                                //$array[$i][$k] = aes_decrypt($v,$CFG["CFG_SEC_KEY"]);
                                 if($map["GRPTYPE"] == "GRID_BOOTSTRAP"){
-                                    $one_row[$k] = aes_decrypt($v,$CFG_SEC_KEY);
+                                    $one_row[$k] = aes_decrypt($v,$CFG["CFG_SEC_KEY"]);
                                 }else{
-                                    array_push($one_row, aes_decrypt($v,$CFG_SEC_KEY) );
+                                    array_push($one_row, aes_decrypt($v,$CFG["CFG_SEC_KEY"]) );
                                 }
                                 
                             }else if( $colcrypt_array[trim($k)] == "HASH" ){
                                 //일방향 암호화
-                                alog("  hash 전 col/key: " . $v . "/" . $CFG_SEC_SALT);
-                                //$array[$i][$k] = aes_decrypt($v,$CFG_SEC_KEY);
+                                alog("  hash 전 col/key: " . $v . "/" . $CFG["CFG_SEC_SALT"]);
+                                //$array[$i][$k] = aes_decrypt($v,$CFG["CFG_SEC_KEY"]);
                                 if($map["GRPTYPE"] == "GRID_BOOTSTRAP"){
                                     $one_row[$k] = $v;
                                 }else{
@@ -1717,7 +1721,7 @@ end
 
 
 	function requireGridSave($colord,$xml,$sql){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         
         //ar_dump($sql["U"]);
         //exit;
@@ -1842,7 +1846,7 @@ end
 
 
 	function requireGridSaveArray($colord,$xml,$sql){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         
         //ar_dump($sql["U"]);
         //exit;
@@ -1988,7 +1992,7 @@ end
 
 
 	function requireGridSearch($colord,$xml,$sql){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         alog("requireGridSearch ");
         //ar_dump($sql["U"]);
         //exit;
@@ -2029,7 +2033,7 @@ end
 
 
 	function requireGridSearchArray($colord,$xml,$sql){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         alog("requireGridSearchArray ");
         //ar_dump($sql["U"]);
         //exit;
@@ -2073,7 +2077,7 @@ end
 
 
 	function makeGridSaveJson($map,&$db){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         
         //alog("^^^ COLORD : " . $map["COLORD"]);
         $colord_array = explode(",",$map["COLORD"]);
@@ -2117,14 +2121,14 @@ end
                     //암호화 컬럼에 존재 하는지 확인
                     if($colcrypt_array[trim($colord_array[$j])] == "CRYPT" ){
                         //양방향 암호화
-                        alog("  crypt 전 col/key: [" . $col . "]/" . $CFG_SEC_KEY);
-                        alog("  crypt 후 : [" .  aes_encrypt($col,$CFG_SEC_KEY) . "]");                        
-                        $to_row[trim($colord_array[$j])] = aes_encrypt($col,$CFG_SEC_KEY);
+                        alog("  crypt 전 col/key: [" . $col . "]/" . $CFG["CFG_SEC_KEY"]);
+                        alog("  crypt 후 : [" .  aes_encrypt($col,$CFG["CFG_SEC_KEY"]) . "]");                        
+                        $to_row[trim($colord_array[$j])] = aes_encrypt($col,$CFG["CFG_SEC_KEY"]);
                     }else if($colcrypt_array[trim($colord_array[$j])] == "HASH" ){
                         //일방향 암호화
-                        alog("  hash 전 col/salt: [" . $col . "]/" . $CFG_SEC_SALT);
-                        alog("  hash 후 : [" .  pwd_hash($col,$CFG_SEC_SALT) . "]");                        
-                        $to_row[trim($colord_array[$j])] = pwd_hash($col,$CFG_SEC_SALT);
+                        alog("  hash 전 col/salt: [" . $col . "]/" . $CFG["CFG_SEC_SALT"]);
+                        alog("  hash 후 : [" .  pwd_hash($col,$CFG["CFG_SEC_SALT"]) . "]");                        
+                        $to_row[trim($colord_array[$j])] = pwd_hash($col,$CFG["CFG_SEC_SALT"]);
                     }else{
                         //평문
                         //alog("  [평문] " . trim($colord_array[$j]) . " = " . $col);
@@ -2217,7 +2221,7 @@ end
 
 
 	function makeGridSaveJsonArray($map,&$db){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         
         //alog("^^^ COLORD : " . $map["COLORD"]);
         $colord_array = explode(",",$map["COLORD"]);
@@ -2261,14 +2265,14 @@ end
                     //암호화 컬럼에 존재 하는지 확인
                     if($colcrypt_array[trim($colord_array[$j])] == "CRYPT" ){
                         //양방향 암호화
-                        alog("  crypt 전 col/key: [" . $col . "]/" . $CFG_SEC_KEY);
-                        alog("  crypt 후 : [" .  aes_encrypt($col,$CFG_SEC_KEY) . "]");                        
-                        $to_row[trim($colord_array[$j])] = aes_encrypt($col,$CFG_SEC_KEY);
+                        alog("  crypt 전 col/key: [" . $col . "]/" . $CFG["CFG_SEC_KEY"]);
+                        alog("  crypt 후 : [" .  aes_encrypt($col,$CFG["CFG_SEC_KEY"]) . "]");                        
+                        $to_row[trim($colord_array[$j])] = aes_encrypt($col,$CFG["CFG_SEC_KEY"]);
                     }else if($colcrypt_array[trim($colord_array[$j])] == "HASH" ){
                         //일방향 암호화
-                        alog("  hash 전 col/salt: [" . $col . "]/" . $CFG_SEC_SALT);
-                        alog("  hash 후 : [" .  pwd_hash($col,$CFG_SEC_SALT) . "]");                        
-                        $to_row[trim($colord_array[$j])] = pwd_hash($col,$CFG_SEC_SALT);
+                        alog("  hash 전 col/salt: [" . $col . "]/" . $CFG["CFG_SEC_SALT"]);
+                        alog("  hash 후 : [" .  pwd_hash($col,$CFG["CFG_SEC_SALT"]) . "]");                        
+                        $to_row[trim($colord_array[$j])] = pwd_hash($col,$CFG["CFG_SEC_SALT"]);
                     }else{
                         //평문
                         //alog("  [평문] " . trim($colord_array[$j]) . " = " . $col);
@@ -2370,7 +2374,7 @@ end
 
 
     function makeParamEnc($tSql, $tReq, $colcrypt_array){
-        global $CFG_SEC_KEY, $CFG_SEC_SALT;
+        global $CFG;
         //alog("makeParamEnc()........................................................start");
         $k = 0;
         $to_sql = $tSql;
@@ -2392,11 +2396,11 @@ end
             if( $colcrypt_array[trim($colid)] == "CRYPT" ){
                 //양방향 암호화                   
                 alog(" CRYPT");
-                $RtnVal[$fullParam] = aes_encrypt($tReq[$fullParam],$CFG_SEC_KEY);
+                $RtnVal[$fullParam] = aes_encrypt($tReq[$fullParam],$CFG["CFG_SEC_KEY"]);
             }else if( $colcrypt_array[trim($colid)] == "HASH" ){
                 //일방향 암호화
                 alog(" HASH");                
-                $RtnVal[$fullParam] = pwd_hash($tReq[$fullParam],$CFG_SEC_SALT);
+                $RtnVal[$fullParam] = pwd_hash($tReq[$fullParam],$CFG["CFG_SEC_SALT"]);
             }else{
                 //평문
                 $RtnVal[$fullParam] = $tReq[$fullParam];
@@ -2417,7 +2421,7 @@ end
 
 
     function makeParamDec($tKey, $tValue, $colcrypt_array){
-        global $CFG_SEC_KEY, $CFG_SEC_SALT;
+        global $CFG;
         //alog("makeParamDec()........................................................start");
 
         $RtnVal = null;
@@ -2425,7 +2429,7 @@ end
         //colid가 암호화 대상이면 암호화 처리
         if( $colcrypt_array[trim($tKey)] == "CRYPT" ){
             //양방향 암호화                   
-            $RtnVal = aes_decrypt($tValue,$CFG_SEC_KEY);
+            $RtnVal = aes_decrypt($tValue,$CFG["CFG_SEC_KEY"]);
         }else if( $colcrypt_array[trim($tKey)] == "HASH" ){
             //일방향 암호화
             $RtnVal = $tValue;
@@ -2443,7 +2447,7 @@ end
     ###################################################################
     */
 	function requireFormviewSearch($sql){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         alog("requireFormviewSearch ");
         //ar_dump($sql["U"]);
         //exit;
@@ -2484,7 +2488,7 @@ end
 
 
 	function requireFormviewSearchArray($sql){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         alog("requireFormviewSearchArray...............................start");
         //ar_dump($sql["U"]);
         //exit;
@@ -2529,7 +2533,7 @@ end
 
 
 	function requireFormviewSave($sql,$fnctype){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         alog("requireFormviewSave ");
         //ar_dump($sql["U"]);
         //exit;
@@ -2599,7 +2603,7 @@ end
 
 
 	function requireFormviewSaveArray($sql,$fnctype){
-        global $REQ,$CFG_SEC_KEY,$CFG_SEC_SALT, $PGM_CFG;
+        global $REQ,$CFG, $PGM_CFG;
         alog("requireFormviewSaveArray ..................................start");
         //ar_dump($sql["U"]);
         //exit;
@@ -2657,7 +2661,7 @@ end
     }    
     
 	function makeFormviewSearchJson($map,&$db){
-        global $REQ, $CFG_SEC_KEY, $CFG_SEC_SALT, $PGM_CFG;
+        global $REQ, $CFG, $PGM_CFG;
         
         //암호화컬럼
         $colcrypt_array = $map["COLCRYPT"];   
@@ -2707,7 +2711,7 @@ end
 
 
 	function makeFormviewSearchJsonArray($map,&$db){
-        global $REQ, $CFG_SEC_KEY, $CFG_SEC_SALT, $PGM_CFG;
+        global $REQ, $CFG, $PGM_CFG;
         alog("makeFormviewSearchJsonArray...........................start");
 
         //암호화컬럼
@@ -2914,8 +2918,8 @@ end
 
 
     function getSqlSelect2Array($tSql){
-        global $CFG_LIBS_SQL_PARSER;
-        include_once($CFG_LIBS_SQL_PARSER);
+        global $CFG;
+        include_once($CFG["CFG_LIBS_SQL_PARSER"]);
         $RtnVal = array();
 
         $parser = new PHPSQLParser($tSql);

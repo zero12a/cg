@@ -4,13 +4,16 @@
 class poppjtDao
 {
 	function __construct(){
-		alog("PoppjtDao-__construct");
+		global $log;
+		$log->info("PoppjtDao-__construct");
 	}
 	function __destruct(){
-		alog("PoppjtDao-__destruct");
+		global $log;
+		$log->info("PoppjtDao-__destruct");
 	}
 	function __toString(){
-		alog("PoppjtDao-__toString");
+		global $log;
+		$log->info("PoppjtDao-__toString");
 	}
 	//PJT    
 	public function sPjtList($req){

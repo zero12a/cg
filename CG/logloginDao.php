@@ -4,13 +4,16 @@
 class logloginDao
 {
 	function __construct(){
-		alog("LogloginDao-__construct");
+		global $log;
+		$log->info("LogloginDao-__construct");
 	}
 	function __destruct(){
-		alog("LogloginDao-__destruct");
+		global $log;
+		$log->info("LogloginDao-__destruct");
 	}
 	function __toString(){
-		alog("LogloginDao-__toString");
+		global $log;
+		$log->info("LogloginDao-__toString");
 	}
 	//selLogF    
 	public function selLogF($req){

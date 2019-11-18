@@ -10,7 +10,8 @@ class ipmngService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("IpmngService-__construct");
+		global $log;
+		$log->info("IpmngService-__construct");
 
 		$this->DAO = new ipmngDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class ipmngService
 	}
 	//파괴자
 	function __destruct(){
-		alog("IpmngService-__destruct");
+		global $log;
+		$log->info("IpmngService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("IpmngService-__toString");
+		global $log;
+		$log->info("IpmngService-__toString");
 	}
 	//조건, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("IPMNGService-goG1Searchall________________________start");
+		$log->info("IPMNGService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("IPMNGService-goG1Searchall________________________end");
+		$log->info("IPMNGService-goG1Searchall________________________end");
 	}
 	//조건, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("IPMNGService-goG1Save________________________start");
+		$log->info("IPMNGService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("IPMNGService-goG1Save________________________end");
+		$log->info("IPMNGService-goG1Save________________________end");
 	}
 	//IP목록, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("IPMNGService-goG2Search________________________start");
+		$log->info("IPMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -80,7 +83,7 @@ class ipmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -92,17 +95,17 @@ class ipmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("IPMNGService-goG2Search________________________end");
+		$log->info("IPMNGService-goG2Search________________________end");
 	}
 	//IP목록, 저장
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("IPMNGService-goG2Save________________________start");
+		$log->info("IPMNGService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -123,7 +126,7 @@ class ipmngService
 		array_push($GRID["SQL"]["C"], $this->DAO->insIpG($REQ)); //SAVE, 저장,IP
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -140,22 +143,22 @@ class ipmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("IPMNGService-goG2Save________________________end");
+		$log->info("IPMNGService-goG2Save________________________end");
 	}
 	//IP목록, 엑셀다운로드
 	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("IPMNGService-goG2Excel________________________start");
+		$log->info("IPMNGService-goG2Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("IPMNGService-goG2Excel________________________end");
+		$log->info("IPMNGService-goG2Excel________________________end");
 	}
 }
                                                              

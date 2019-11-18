@@ -4,13 +4,16 @@
 class menumngDao
 {
 	function __construct(){
-		alog("MenumngDao-__construct");
+		global $log;
+		$log->info("MenumngDao-__construct");
 	}
 	function __destruct(){
-		alog("MenumngDao-__destruct");
+		global $log;
+		$log->info("MenumngDao-__destruct");
 	}
 	function __toString(){
-		alog("MenumngDao-__toString");
+		global $log;
+		$log->info("MenumngDao-__toString");
 	}
 	//delMenuG    
 	public function delMenuG($req){

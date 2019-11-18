@@ -4,13 +4,16 @@
 class layoutmngDao
 {
 	function __construct(){
-		alog("LayoutmngDao-__construct");
+		global $log;
+		$log->info("LayoutmngDao-__construct");
 	}
 	function __destruct(){
-		alog("LayoutmngDao-__destruct");
+		global $log;
+		$log->info("LayoutmngDao-__destruct");
 	}
 	function __toString(){
-		alog("LayoutmngDao-__toString");
+		global $log;
+		$log->info("LayoutmngDao-__toString");
 	}
 	//LAYOUTD    
 	public function dLayoutDG($req){

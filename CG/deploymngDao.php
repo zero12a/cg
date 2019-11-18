@@ -4,13 +4,16 @@
 class deploymngDao
 {
 	function __construct(){
-		alog("DeploymngDao-__construct");
+		global $log;
+		$log->info("DeploymngDao-__construct");
 	}
 	function __destruct(){
-		alog("DeploymngDao-__destruct");
+		global $log;
+		$log->info("DeploymngDao-__destruct");
 	}
 	function __toString(){
-		alog("DeploymngDao-__toString");
+		global $log;
+		$log->info("DeploymngDao-__toString");
 	}
 	//AUTH    
 	public function sAuthG($req){

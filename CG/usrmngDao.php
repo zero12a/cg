@@ -4,13 +4,16 @@
 class usrmngDao
 {
 	function __construct(){
-		alog("UsrmngDao-__construct");
+		global $log;
+		$log->info("UsrmngDao-__construct");
 	}
 	function __destruct(){
-		alog("UsrmngDao-__destruct");
+		global $log;
+		$log->info("UsrmngDao-__destruct");
 	}
 	function __toString(){
-		alog("UsrmngDao-__toString");
+		global $log;
+		$log->info("UsrmngDao-__toString");
 	}
 	//회원등록    
 	public function insUsrG($req){

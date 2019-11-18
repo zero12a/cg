@@ -1,4 +1,4 @@
-//글로벌 변수 선언	
+//글로벌 변수 선언
 //버틀 그룹쪽에서 컨틀롤러 호출
 var url_C2_sss = "appapiController?CTLGRP=C2&CTLFNC=sss";
 //버틀 그룹쪽에서 컨틀롤러 호출
@@ -104,6 +104,9 @@ function C2_INIT(){
 //그리드1 그리드 초기화
 function G3_INIT(){
 	alog("G3_INIT()-------------------------start");
+	$btG3 = $('#btG3').bootstrapTable();
+
+	/*
 	$btG3 = $('#btG3').bootstrapTable({
 		columns:[
 			{
@@ -175,7 +178,7 @@ function G3_INIT(){
 			}
 ]
 	});
-	$btG3.on('click-row.bs.table', function (e, row, $element) {
+*/	$btG3.on('click-row.bs.table', function (e, row, $element) {
 		//    alert(row.myid);
 		//alert(JSON.stringify(row))
 
@@ -217,23 +220,17 @@ setCodeCombo("FORMVIEW",$("#F4-REQ_DATATYPE"),"REQDATATYPE");
 	//ADD_DT, ADD 초기화		//MOD_DT, MOD 초기화	  alog("F4_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//사용자정의함수 : 테스트
+function C2_sss(token){
+	alog("C2_sss-----------------start");
+alert("hi condition");
+
+	alog("C2_sss-----------------end");
+}
 //검색조건 초기화
 function C2_RESET(){
 	alog("C2_RESET--------------------------start");
 	$('#condition')[0].reset();
-}
-// CONDITIONSearch	
-function C2_SEARCHALL(token){
-	alog("C2_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : C2
-			lastinputG3 = new HashMap(); //그리드1
-		//  호출
-	G3_SEARCH(lastinputG3,token);
-	alog("C2_SEARCHALL--------------------------end");
 }
 //컨디션1, 저장	
 function C2_SAVE(){
@@ -275,24 +272,18 @@ function C2_SAVE(){
 	});
 	alog("C2_SAVE-------------------end");	
 }
-//사용자정의함수 : 테스트
-function C2_sss(token){
-	alog("C2_sss-----------------start");
-alert("hi condition");
-
-	alog("C2_sss-----------------end");
-}
-//사용자정의함수 : UU
-function G3_USER2(token){
-	alog("G3_USER2-----------------start");
-alert('감사합니다.');
-
-	alog("G3_USER2-----------------end");
-}
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
+// CONDITIONSearch	
+function C2_SEARCHALL(token){
+	alog("C2_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : C2
+			lastinputG3 = new HashMap(); //그리드1
+		//  호출
+	G3_SEARCH(lastinputG3,token);
+	alog("C2_SEARCHALL--------------------------end");
 }
 //그리드1 엑셀 내려받기
 function G3_EXCEL2(){
@@ -418,6 +409,32 @@ function G3_CHKSAVE2(token){
 	
 	alog("G3_CHKSAVE2()------------end");
 }
+//사용자정의함수 : UU
+function G3_USER2(token){
+	alog("G3_USER2-----------------start");
+alert('감사합니다.');
+
+	alog("G3_USER2-----------------end");
+}
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
+}
+function F4_MOD(){
+       alog("[FromView] F4_MOD---------------start");
+	if( $("#F4-CTLCUD").val() == "C" ){
+		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+	if( $("#F4-CTLCUD").val() == "D" ){
+		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+
+	$("#F4-CTLCUD").val("U");
+       alog("[FromView] F4_MOD---------------end");
+}
 //F4_SAVE
 	//IO_FILE_YN = Y	
 function F4_SAVE(token){	
@@ -459,37 +476,6 @@ function F4_SAVE(token){
 			alog(error);
 		}
 	});
-}
-function F4_MOD(){
-       alog("[FromView] F4_MOD---------------start");
-	if( $("#F4-CTLCUD").val() == "C" ){
-		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-	if( $("#F4-CTLCUD").val() == "D" ){
-		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-
-	$("#F4-CTLCUD").val("U");
-       alog("[FromView] F4_MOD---------------end");
-}
-//	
-function F4_NEW(){
-       alog("[FromView] F4_NEW---------------start");
-	$("#F4-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#F4-API_SEQ").val("");//SEQ 신규초기화	
-	$("#F4-API_NM").val("");//NM 신규초기화	
-	$("#F4-PGM_ID").val("");//ID 신규초기화	
-	$("#F4-URL").val("");//URL 신규초기화	
-	$("#F4-REQ_BODY").val("");//REQBODY 신규초기화
-	$("#F4-RES_BODY").val("");//RESBODY 신규초기화
-	$("#F4-MYFILESVRNM").val("");//MYFILESVRNM 신규초기화	
-				$("#F4-MYFILE-LINK").attr("href","");//MYFILE NEW
-				$("#F4-MYFILE-NM").text("");//MYFILE NEW
-	$("#F4-MYFILE_VIEWER").html("");
-	$("#F4-ADD_DT").text("");//ADD 신규초기화		$("#F4-MOD_DT").text("");//MOD 신규초기화	       alog("DETAILNew30---------------end");
 }
 //FORMVIEW DELETE
 function F4_DELETE(){	
@@ -628,6 +614,23 @@ function F4_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) F4_SEARCH---------------end");
 
+}
+//	
+function F4_NEW(){
+       alog("[FromView] F4_NEW---------------start");
+	$("#F4-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#F4-API_SEQ").val("");//SEQ 신규초기화	
+	$("#F4-API_NM").val("");//NM 신규초기화	
+	$("#F4-PGM_ID").val("");//ID 신규초기화	
+	$("#F4-URL").val("");//URL 신규초기화	
+	$("#F4-REQ_BODY").val("");//REQBODY 신규초기화
+	$("#F4-RES_BODY").val("");//RESBODY 신규초기화
+	$("#F4-MYFILESVRNM").val("");//MYFILESVRNM 신규초기화	
+				$("#F4-MYFILE-LINK").attr("href","");//MYFILE NEW
+				$("#F4-MYFILE-NM").text("");//MYFILE NEW
+	$("#F4-MYFILE_VIEWER").html("");
+	$("#F4-ADD_DT").text("");//ADD 신규초기화		$("#F4-MOD_DT").text("");//MOD 신규초기화	       alog("DETAILNew30---------------end");
 }
 //새로고침	
 function F4_RELOAD(token){

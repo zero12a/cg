@@ -1,4 +1,4 @@
-//글로벌 변수 선언	
+//글로벌 변수 선언
 //버틀 그룹쪽에서 컨틀롤러 호출
 var url_G1_SEARCHALL = "ddiomngController?CTLGRP=G1&CTLFNC=SEARCHALL";
 //버틀 그룹쪽에서 컨틀롤러 호출
@@ -570,6 +570,14 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
+    function G2_HIDDENCOL(){
+		alog("G2_HIDDENCOL()..................start");
+        if(isToggleHiddenColG2){
+            isToggleHiddenColG2 = false;     }else{
+            isToggleHiddenColG2 = true;
+        }
+		alog("G2_HIDDENCOL()..................end");
+    }
 
 
 
@@ -640,18 +648,57 @@ function G1_SAVE(){
         alog("G2_SEARCH()------------end");
     }
 
-    function G2_HIDDENCOL(){
-		alog("G2_HIDDENCOL()..................start");
-        if(isToggleHiddenColG2){
-            isToggleHiddenColG2 = false;     }else{
-            isToggleHiddenColG2 = true;
-        }
-		alog("G2_HIDDENCOL()..................end");
-    }
 //새로고침	
 function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
+}
+function G2_CHKSAVE(token){
+	alog("G2_CHKSAVE()------------start");
+	tgrid = mygridG2;
+
+	//체크된 ROW의 ID 배열로 불러오기
+	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
+	//alert(arrRows.length);
+
+        //전송용 post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+
+		if(typeof lastinputG2 != "undefined"){
+			var tKeys = lastinputG2.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG2.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG2.get(tKeys[i])); 
+			}
+		}
+	//CHK 배열 합치기
+	sendFormData.append("G2-CHK",arrRows);
+	$.ajax({
+		type : "POST",
+		url : url_G2_CHKSAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G2_CHKSAVE()------------end");
 }
 	function G2_SAVE(token){
 	alog("G2_SAVE()------------start");
@@ -701,9 +748,9 @@ function G2_RELOAD(token){
 	
 	alog("G2_SAVE()------------end");
 }
-function G2_CHKSAVE(token){
-	alog("G2_CHKSAVE()------------start");
-	tgrid = mygridG2;
+function G3_CHKSAVE(token){
+	alog("G3_CHKSAVE()------------start");
+	tgrid = mygridG3;
 
 	//체크된 ROW의 ID 배열로 불러오기
 	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
@@ -712,18 +759,18 @@ function G2_CHKSAVE(token){
         //전송용 post 만들기
 		sendFormData = new FormData($("#condition")[0]);
 
-		if(typeof lastinputG2 != "undefined"){
-			var tKeys = lastinputG2.keys();
+		if(typeof lastinputG3 != "undefined"){
+			var tKeys = lastinputG3.keys();
 			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],lastinputG2.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ lastinputG2.get(tKeys[i])); 
+				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
 			}
 		}
 	//CHK 배열 합치기
-	sendFormData.append("G2-CHK",arrRows);
+	sendFormData.append("G3-CHK",arrRows);
 	$.ajax({
 		type : "POST",
-		url : url_G2_CHKSAVE + "&TOKEN=" + token,
+		url : url_G3_CHKSAVE + "&TOKEN=" + token,
 		data : sendFormData,
 		processData: false,
 		contentType: false,
@@ -746,21 +793,8 @@ function G2_CHKSAVE(token){
 		}
 	});
 	
-	alog("G2_CHKSAVE()------------end");
+	alog("G3_CHKSAVE()------------end");
 }
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
-}
-    function G3_HIDDENCOL(){
-		alog("G3_HIDDENCOL()..................start");
-        if(isToggleHiddenColG3){
-            isToggleHiddenColG3 = false;     }else{
-            isToggleHiddenColG3 = true;
-        }
-		alog("G3_HIDDENCOL()..................end");
-    }
 	function G3_SAVE(token){
 	alog("G3_SAVE()------------start");
 	tgrid = mygridG3;
@@ -809,53 +843,14 @@ function G3_RELOAD(token){
 	
 	alog("G3_SAVE()------------end");
 }
-function G3_CHKSAVE(token){
-	alog("G3_CHKSAVE()------------start");
-	tgrid = mygridG3;
-
-	//체크된 ROW의 ID 배열로 불러오기
-	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
-	//alert(arrRows.length);
-
-        //전송용 post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-
-		if(typeof lastinputG3 != "undefined"){
-			var tKeys = lastinputG3.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
-			}
-		}
-	//CHK 배열 합치기
-	sendFormData.append("G3-CHK",arrRows);
-	$.ajax({
-		type : "POST",
-		url : url_G3_CHKSAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G3_CHKSAVE()------------end");
-}
+    function G3_HIDDENCOL(){
+		alog("G3_HIDDENCOL()..................start");
+        if(isToggleHiddenColG3){
+            isToggleHiddenColG3 = false;     }else{
+            isToggleHiddenColG3 = true;
+        }
+		alog("G3_HIDDENCOL()..................end");
+    }
 
 
 
@@ -927,9 +922,9 @@ function G3_CHKSAVE(token){
     }
 
 //새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
 }
 function G4_CHKSAVE(token){
 	alog("G4_CHKSAVE()------------start");
@@ -977,6 +972,11 @@ function G4_CHKSAVE(token){
 	});
 	
 	alog("G4_CHKSAVE()------------end");
+}
+//새로고침	
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
 }
 
 

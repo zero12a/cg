@@ -10,7 +10,8 @@ class introadminService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("IntroadminService-__construct");
+		global $log;
+		$log->info("IntroadminService-__construct");
 
 		$this->DAO = new introadminDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class introadminService
 	}
 	//파괴자
 	function __destruct(){
-		alog("IntroadminService-__destruct");
+		global $log;
+		$log->info("IntroadminService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("IntroadminService-__toString");
+		global $log;
+		$log->info("IntroadminService-__toString");
 	}
 	//조건, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG1Searchall________________________start");
+		$log->info("INTROADMINService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG1Searchall________________________end");
+		$log->info("INTROADMINService-goG1Searchall________________________end");
 	}
 	//조건, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG1Save________________________start");
+		$log->info("INTROADMINService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG1Save________________________end");
+		$log->info("INTROADMINService-goG1Save________________________end");
 	}
 	//월점검, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG2Search________________________start");
+		$log->info("INTROADMINService-goG2Search________________________start");
 //FORMVIEW SEARCH
 		$grpId="G2";
 	//암호화컬럼
@@ -77,7 +80,7 @@ class introadminService
 		//필수 여부 검사
 		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireFormview - fail.");
+			$log->info("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -88,17 +91,17 @@ class introadminService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG2Search________________________end");
+		$log->info("INTROADMINService-goG2Search________________________end");
 	}
 	//월점검, 저장
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG2Save________________________start");
+		$log->info("INTROADMINService-goG2Save________________________start");
 		//FORMVIEW SAVE
 		$grpId="G2";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
@@ -116,12 +119,12 @@ class introadminService
 				case "U":
 					break;
 				default : 
-					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
+					$log->info("(SVC) FNCTYPE을 찾을수 없습니다.");
 			}
 			//필수 여부 검사
 			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
 			if($tmpVal->RTN_CD == "500"){
-				alog("requireFormview - fail.");
+				$log->info("requireFormview - fail.");
 				$tmpVal->GRPID = $grpId;
 				echo json_encode($tmpVal);
 				exit;
@@ -139,17 +142,17 @@ class introadminService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG2Save________________________end");
+		$log->info("INTROADMINService-goG2Save________________________end");
 	}
 	//월점검목록, 조회
 	public function goG8Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG8Search________________________start");
+		$log->info("INTROADMINService-goG8Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -164,7 +167,7 @@ class introadminService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -176,32 +179,32 @@ class introadminService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG8Search________________________end");
+		$log->info("INTROADMINService-goG8Search________________________end");
 	}
 	//월점검목록, 엑셀다운로드
 	public function goG8Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG8Excel________________________start");
+		$log->info("INTROADMINService-goG8Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG8Excel________________________end");
+		$log->info("INTROADMINService-goG8Excel________________________end");
 	}
 	//로그인실패, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG3Search________________________start");
+		$log->info("INTROADMINService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -216,7 +219,7 @@ class introadminService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -228,32 +231,32 @@ class introadminService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG3Search________________________end");
+		$log->info("INTROADMINService-goG3Search________________________end");
 	}
 	//로그인실패, 엑셀다운로드
 	public function goG3Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG3Excel________________________start");
+		$log->info("INTROADMINService-goG3Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG3Excel________________________end");
+		$log->info("INTROADMINService-goG3Excel________________________end");
 	}
 	//로그인실패IP, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG4Search________________________start");
+		$log->info("INTROADMINService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -268,7 +271,7 @@ class introadminService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -280,32 +283,32 @@ class introadminService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG4Search________________________end");
+		$log->info("INTROADMINService-goG4Search________________________end");
 	}
 	//로그인실패IP, 엑셀다운로드
 	public function goG4Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG4Excel________________________start");
+		$log->info("INTROADMINService-goG4Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG4Excel________________________end");
+		$log->info("INTROADMINService-goG4Excel________________________end");
 	}
 	//권한없는접근, 조회
 	public function goG6Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG6Search________________________start");
+		$log->info("INTROADMINService-goG6Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -320,7 +323,7 @@ class introadminService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -332,32 +335,32 @@ class introadminService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG6Search________________________end");
+		$log->info("INTROADMINService-goG6Search________________________end");
 	}
 	//권한없는접근, 엑셀다운로드
 	public function goG6Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG6Excel________________________start");
+		$log->info("INTROADMINService-goG6Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG6Excel________________________end");
+		$log->info("INTROADMINService-goG6Excel________________________end");
 	}
 	//로그인잠금, 조회
 	public function goG7Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG7Search________________________start");
+		$log->info("INTROADMINService-goG7Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -372,7 +375,7 @@ class introadminService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -384,32 +387,32 @@ class introadminService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG7Search________________________end");
+		$log->info("INTROADMINService-goG7Search________________________end");
 	}
 	//로그인잠금, 엑셀다운로드
 	public function goG7Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG7Excel________________________start");
+		$log->info("INTROADMINService-goG7Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG7Excel________________________end");
+		$log->info("INTROADMINService-goG7Excel________________________end");
 	}
 	//개인정보접근, 조회
 	public function goG9Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG9Search________________________start");
+		$log->info("INTROADMINService-goG9Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -424,7 +427,7 @@ class introadminService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -436,22 +439,22 @@ class introadminService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG9Search________________________end");
+		$log->info("INTROADMINService-goG9Search________________________end");
 	}
 	//개인정보접근, 엑셀다운로드
 	public function goG9Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("INTROADMINService-goG9Excel________________________start");
+		$log->info("INTROADMINService-goG9Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("INTROADMINService-goG9Excel________________________end");
+		$log->info("INTROADMINService-goG9Excel________________________end");
 	}
 }
                                                              

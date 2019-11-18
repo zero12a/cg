@@ -4,13 +4,16 @@
 class pisvcDao
 {
 	function __construct(){
-		alog("PisvcDao-__construct");
+		global $log;
+		$log->info("PisvcDao-__construct");
 	}
 	function __destruct(){
-		alog("PisvcDao-__destruct");
+		global $log;
+		$log->info("PisvcDao-__destruct");
 	}
 	function __toString(){
-		alog("PisvcDao-__toString");
+		global $log;
+		$log->info("PisvcDao-__toString");
 	}
 	//delSvcF    
 	public function delSvcF($req){

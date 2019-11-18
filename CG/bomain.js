@@ -1,4 +1,4 @@
-//글로벌 변수 선언	
+//글로벌 변수 선언
 //버틀 그룹쪽에서 컨틀롤러 호출
 var url_G2_conSearch = "bomainController?CTLGRP=G2&CTLFNC=conSearch";
 //10 변수 선언	
@@ -218,22 +218,30 @@ function G2_conSearch(token){
 	G3_SEARCH(lastinputG3,token);
 	alog("G2_SEARCHALL--------------------------end");
 }
-//사용자정의함수 : 사용자정의
-function G3_USERDEF(token){
-	alog("G3_USERDEF-----------------start");
+//엑셀다운		
+function G3_EXCEL(){	
+	alog("G3_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/c.g/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
 
-	alog("G3_USERDEF-----------------end");
+	mygridG3.setSerializationLevel(true,false,false,false,false,false);
+	var myXmlString = mygridG3.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("bb,aa");
+	$("#DATA_WIDTHS").val(",");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
 }
-//행추가3 (감사)	
-//그리드 행추가 : 감사
-	function G3_ROWADD(){
-		if( !(lastinputG3)){
-			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
-		}else{
-			var tCols = ["",""];//초기값
-			addRow(mygridG3,tCols);
-		}
-	}	function G3_SAVE(token){
+    function G3_ROWDELETE(){	
+        alog("G3_ROWDELETE()------------start");
+        delRow(mygridG3);
+        alog("G3_ROWDELETE()------------start");
+    }
+	function G3_SAVE(token){
 	alog("G3_SAVE()------------start");
 	tgrid = mygridG3;
 
@@ -281,23 +289,10 @@ function G3_USERDEF(token){
 	
 	alog("G3_SAVE()------------end");
 }
-//엑셀다운		
-function G3_EXCEL(){	
-	alog("G3_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/c.g/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG3.setSerializationLevel(true,false,false,false,false,false);
-	var myXmlString = mygridG3.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("bb,aa");
-	$("#DATA_WIDTHS").val(",");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
+//새로고침	
+function G3_RELOAD(token){
+  alog("G3_RELOAD-----------------start");
+  G3_SEARCH(lastinputG3,token);
 }
 
 
@@ -369,13 +364,18 @@ function G3_EXCEL(){
         alog("G3_SEARCH()------------end");
     }
 
-//새로고침	
-function G3_RELOAD(token){
-  alog("G3_RELOAD-----------------start");
-  G3_SEARCH(lastinputG3,token);
+//행추가3 (감사)	
+//그리드 행추가 : 감사
+	function G3_ROWADD(){
+		if( !(lastinputG3)){
+			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
+		}else{
+			var tCols = ["",""];//초기값
+			addRow(mygridG3,tCols);
+		}
+	}//사용자정의함수 : 사용자정의
+function G3_USERDEF(token){
+	alog("G3_USERDEF-----------------start");
+
+	alog("G3_USERDEF-----------------end");
 }
-    function G3_ROWDELETE(){	
-        alog("G3_ROWDELETE()------------start");
-        delRow(mygridG3);
-        alog("G3_ROWDELETE()------------start");
-    }

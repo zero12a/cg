@@ -31,7 +31,8 @@ class cg_pgminfo_svc
 
 
 	public function goDdSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME,$CFG;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -58,7 +59,8 @@ class cg_pgminfo_svc
 	
 
 	public function goIocdSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME, $CFG;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -84,7 +86,8 @@ class cg_pgminfo_svc
 	}	
 
 	public function goFnccdSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME, $CFG;
+		//$CFG_UPLOAD_DIR
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -110,7 +113,8 @@ class cg_pgminfo_svc
 	}	
 
 	public function goLayoutdSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME,$CFG;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -136,7 +140,8 @@ class cg_pgminfo_svc
 	}	
 
 	public function goLayoutSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -164,7 +169,8 @@ class cg_pgminfo_svc
 
 
 	public function goPgmSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -190,7 +196,8 @@ class cg_pgminfo_svc
 	}	
 
 	public function goSqldSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -227,7 +234,8 @@ class cg_pgminfo_svc
 	
 
 	public function goSqldSave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -274,7 +282,8 @@ class cg_pgminfo_svc
 	}	
 
 	public function goSqlrSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -301,7 +310,8 @@ class cg_pgminfo_svc
 
 
 	public function goSqlrSave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -340,7 +350,8 @@ class cg_pgminfo_svc
 
 
 	public function goSvcSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -366,7 +377,8 @@ class cg_pgminfo_svc
 	}
 
 	public function goSvcSave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//$CFG_UPLOAD_DIR
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -406,7 +418,8 @@ class cg_pgminfo_svc
 
 
 	public function goInheritSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//$CFG_UPLOAD_DIR
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -434,7 +447,8 @@ class cg_pgminfo_svc
 
 
 	public function goInheritSave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME;
+		//$CFG_UPLOAD_DIR
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -475,7 +489,7 @@ class cg_pgminfo_svc
 	######################################################
 	*/
 	public function goIoSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -501,7 +515,7 @@ class cg_pgminfo_svc
 	}
 
 	public function goIoSave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -676,7 +690,7 @@ class cg_pgminfo_svc
 	######################################################
 	*/
 	public function goFncSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -704,7 +718,7 @@ class cg_pgminfo_svc
 
 
 	public function goFncSave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -740,7 +754,7 @@ class cg_pgminfo_svc
 	}	
 
 	public function goGrpSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -767,7 +781,7 @@ class cg_pgminfo_svc
 
 
 	public function goGrpSave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -808,7 +822,7 @@ class cg_pgminfo_svc
 	######################################################
 	*/	
 	public function goSqlSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -834,7 +848,7 @@ class cg_pgminfo_svc
 	}
 	
 	public function goSqlSave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;

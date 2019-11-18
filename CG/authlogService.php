@@ -10,7 +10,8 @@ class authlogService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("AuthlogService-__construct");
+		global $log;
+		$log->info("AuthlogService-__construct");
 
 		$this->DAO = new authlogDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class authlogService
 	}
 	//파괴자
 	function __destruct(){
-		alog("AuthlogService-__destruct");
+		global $log;
+		$log->info("AuthlogService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("AuthlogService-__toString");
+		global $log;
+		$log->info("AuthlogService-__toString");
 	}
 	//컨, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("AUTHLOGService-goG1Searchall________________________start");
+		$log->info("AUTHLOGService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("AUTHLOGService-goG1Searchall________________________end");
+		$log->info("AUTHLOGService-goG1Searchall________________________end");
 	}
 	//컨, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("AUTHLOGService-goG1Save________________________start");
+		$log->info("AUTHLOGService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("AUTHLOGService-goG1Save________________________end");
+		$log->info("AUTHLOGService-goG1Save________________________end");
 	}
 	//AUTH, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("AUTHLOGService-goG2Search________________________start");
+		$log->info("AUTHLOGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -80,7 +83,7 @@ class authlogService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -92,47 +95,47 @@ class authlogService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("AUTHLOGService-goG2Search________________________end");
+		$log->info("AUTHLOGService-goG2Search________________________end");
 	}
 	//AUTH, 엑셀다운로드
 	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("AUTHLOGService-goG2Excel________________________start");
+		$log->info("AUTHLOGService-goG2Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("AUTHLOGService-goG2Excel________________________end");
+		$log->info("AUTHLOGService-goG2Excel________________________end");
 	}
 	//AUTH, 선택저장
 	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("AUTHLOGService-goG2Chksave________________________start");
+		$log->info("AUTHLOGService-goG2Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("AUTHLOGService-goG2Chksave________________________end");
+		$log->info("AUTHLOGService-goG2Chksave________________________end");
 	}
 	//AUTHD, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("AUTHLOGService-goG3Search________________________start");
+		$log->info("AUTHLOGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -147,7 +150,7 @@ class authlogService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -159,47 +162,47 @@ class authlogService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("AUTHLOGService-goG3Search________________________end");
+		$log->info("AUTHLOGService-goG3Search________________________end");
 	}
 	//AUTHD, 엑셀다운로드
 	public function goG3Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("AUTHLOGService-goG3Excel________________________start");
+		$log->info("AUTHLOGService-goG3Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("AUTHLOGService-goG3Excel________________________end");
+		$log->info("AUTHLOGService-goG3Excel________________________end");
 	}
 	//AUTHD, 선택저장
 	public function goG3Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("AUTHLOGService-goG3Chksave________________________start");
+		$log->info("AUTHLOGService-goG3Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("AUTHLOGService-goG3Chksave________________________end");
+		$log->info("AUTHLOGService-goG3Chksave________________________end");
 	}
 	//AUTHD상세, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("AUTHLOGService-goG4Search________________________start");
+		$log->info("AUTHLOGService-goG4Search________________________start");
 //FORMVIEW SEARCH
 		$grpId="G4";
 	//암호화컬럼
@@ -211,7 +214,7 @@ class authlogService
 		//필수 여부 검사
 		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireFormview - fail.");
+			$log->info("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -222,7 +225,7 @@ class authlogService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("AUTHLOGService-goG4Search________________________end");
+		$log->info("AUTHLOGService-goG4Search________________________end");
 	}
 }
                                                              

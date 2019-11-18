@@ -10,7 +10,8 @@ class codemngService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("CodemngService-__construct");
+		global $log;
+		$log->info("CodemngService-__construct");
 
 		$this->DAO = new codemngDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class codemngService
 	}
 	//파괴자
 	function __destruct(){
-		alog("CodemngService-__destruct");
+		global $log;
+		$log->info("CodemngService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("CodemngService-__toString");
+		global $log;
+		$log->info("CodemngService-__toString");
 	}
 	//1, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG1Save________________________start");
+		$log->info("CODEMNGService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG1Save________________________end");
+		$log->info("CODEMNGService-goG1Save________________________end");
 	}
 	//1, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG1Searchall________________________start");
+		$log->info("CODEMNGService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG1Searchall________________________end");
+		$log->info("CODEMNGService-goG1Searchall________________________end");
 	}
 	//마스터, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG2Search________________________start");
+		$log->info("CODEMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -80,7 +83,7 @@ class codemngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -92,17 +95,17 @@ class codemngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG2Search________________________end");
+		$log->info("CODEMNGService-goG2Search________________________end");
 	}
 	//마스터, 저장
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG2Save________________________start");
+		$log->info("CODEMNGService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -116,14 +119,14 @@ class codemngService
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 마스터
-		array_push($GRID["SQL"]["C"], $this->DAO->insMasG($REQ)); //SAVE, 저장,MAS
-		//V_GRPNM : 마스터
 		array_push($GRID["SQL"]["D"], $this->DAO->delMasG($REQ)); //SAVE, 저장,MAS
 		//V_GRPNM : 마스터
 		array_push($GRID["SQL"]["U"], $this->DAO->updMasG($REQ)); //SAVE, 저장,MAS
+		//V_GRPNM : 마스터
+		array_push($GRID["SQL"]["C"], $this->DAO->insMasG($REQ)); //SAVE, 저장,MAS
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -140,47 +143,47 @@ class codemngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG2Save________________________end");
+		$log->info("CODEMNGService-goG2Save________________________end");
 	}
 	//마스터, 엑셀다운로드
 	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG2Excel________________________start");
+		$log->info("CODEMNGService-goG2Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG2Excel________________________end");
+		$log->info("CODEMNGService-goG2Excel________________________end");
 	}
 	//마스터, 선택저장
 	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG2Chksave________________________start");
+		$log->info("CODEMNGService-goG2Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG2Chksave________________________end");
+		$log->info("CODEMNGService-goG2Chksave________________________end");
 	}
 	//상세, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG3Search________________________start");
+		$log->info("CODEMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -195,7 +198,7 @@ class codemngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -207,17 +210,17 @@ class codemngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG3Search________________________end");
+		$log->info("CODEMNGService-goG3Search________________________end");
 	}
 	//상세, 저장
 	public function goG3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG3Save________________________start");
+		$log->info("CODEMNGService-goG3Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -231,14 +234,14 @@ class codemngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 상세
-		array_push($GRID["SQL"]["C"], $this->DAO->insDtlG($REQ)); //SAVE, 저장,DTL
-		//V_GRPNM : 상세
 		array_push($GRID["SQL"]["D"], $this->DAO->delDtlG($REQ)); //SAVE, 저장,DTL
 		//V_GRPNM : 상세
 		array_push($GRID["SQL"]["U"], $this->DAO->updDtlG($REQ)); //SAVE, 저장,DTL
+		//V_GRPNM : 상세
+		array_push($GRID["SQL"]["C"], $this->DAO->insDtlG($REQ)); //SAVE, 저장,DTL
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -255,37 +258,37 @@ class codemngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG3Save________________________end");
+		$log->info("CODEMNGService-goG3Save________________________end");
 	}
 	//상세, 엑셀다운로드
 	public function goG3Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG3Excel________________________start");
+		$log->info("CODEMNGService-goG3Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG3Excel________________________end");
+		$log->info("CODEMNGService-goG3Excel________________________end");
 	}
 	//상세, 선택저장
 	public function goG3Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODEMNGService-goG3Chksave________________________start");
+		$log->info("CODEMNGService-goG3Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODEMNGService-goG3Chksave________________________end");
+		$log->info("CODEMNGService-goG3Chksave________________________end");
 	}
 }
                                                              

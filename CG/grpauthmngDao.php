@@ -4,13 +4,16 @@
 class grpauthmngDao
 {
 	function __construct(){
-		alog("GrpauthmngDao-__construct");
+		global $log;
+		$log->info("GrpauthmngDao-__construct");
 	}
 	function __destruct(){
-		alog("GrpauthmngDao-__destruct");
+		global $log;
+		$log->info("GrpauthmngDao-__destruct");
 	}
 	function __toString(){
-		alog("GrpauthmngDao-__toString");
+		global $log;
+		$log->info("GrpauthmngDao-__toString");
 	}
 	//권한 삭제    
 	public function delHoldG($req){

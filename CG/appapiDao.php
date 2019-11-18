@@ -4,13 +4,16 @@
 class appapiDao
 {
 	function __construct(){
-		alog("AppapiDao-__construct");
+		global $log;
+		$log->info("AppapiDao-__construct");
 	}
 	function __destruct(){
-		alog("AppapiDao-__destruct");
+		global $log;
+		$log->info("AppapiDao-__destruct");
 	}
 	function __toString(){
-		alog("AppapiDao-__toString");
+		global $log;
+		$log->info("AppapiDao-__toString");
 	}
 	//상세삭제    
 	public function delApi($req){

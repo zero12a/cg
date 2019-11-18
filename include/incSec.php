@@ -52,11 +52,12 @@ function pkcs5_unpad($text) {
 //echo "<br> iv = " . base64_encode($iv);
 
 function aes_encrypt($tencrypt,$tkey) { 
-	global $CFG_SEC_IV;
+	global $CFG;
+	//CFG_SEC_IV;
 	$cipher = "aes-256-cbc";
 	//$ivlen = openssl_cipher_iv_length($cipher);
 	//$iv = openssl_random_pseudo_bytes($ivlen);
-	$iv = base64_decode($CFG_SEC_IV);
+	$iv = base64_decode($CFG["CFG_SEC_IV"]);
 	//echo "\n<br> aes_decrypt.iv = " . $CFG_SEC_IV;	
 	//echo "\n<br> tkey = " . $tkey;	
 
@@ -127,12 +128,13 @@ function is_base64($str){
 }
 
 function aes_decrypt($decrypt,$tkey) {
-	global $CFG_SEC_IV;
+	global $CFG;
+	//CFG_SEC_IV;
 
 	$cipher = "aes-256-cbc";
 	//$ivlen = openssl_cipher_iv_length($cipher);
 	//$iv = openssl_random_pseudo_bytes($ivlen);
-	$iv = base64_decode($CFG_SEC_IV);	
+	$iv = base64_decode($CFG["CFG_SEC_IV"]);	
 	//echo "\n<br> aes_decrypt.iv = " . $CFG_SEC_IV;	
 	//$ciphertext = openssl_encrypt($tencrypt, $cipher, $tkey, $options=0, $iv, $tag=null);
 	//store $cipher, $iv, and $tag for decryption later

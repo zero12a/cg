@@ -4,13 +4,16 @@
 class pifncDao
 {
 	function __construct(){
-		alog("PifncDao-__construct");
+		global $log;
+		$log->info("PifncDao-__construct");
 	}
 	function __destruct(){
-		alog("PifncDao-__destruct");
+		global $log;
+		$log->info("PifncDao-__destruct");
 	}
 	function __toString(){
-		alog("PifncDao-__toString");
+		global $log;
+		$log->info("PifncDao-__toString");
 	}
 	//delFncF    
 	public function delFncF($req){

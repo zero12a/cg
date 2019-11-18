@@ -29,7 +29,7 @@ class cg_pgminfo_svc
 	}
 
 	public function goPgmSearch(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$_RTIME;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;

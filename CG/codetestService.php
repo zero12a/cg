@@ -10,7 +10,8 @@ class codetestService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("CodetestService-__construct");
+		global $log;
+		$log->info("CodetestService-__construct");
 
 		$this->DAO = new codetestDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class codetestService
 	}
 	//파괴자
 	function __destruct(){
-		alog("CodetestService-__destruct");
+		global $log;
+		$log->info("CodetestService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("CodetestService-__toString");
+		global $log;
+		$log->info("CodetestService-__toString");
 	}
 	//1, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG1Searchall________________________start");
+		$log->info("CODETESTService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG1Searchall________________________end");
+		$log->info("CODETESTService-goG1Searchall________________________end");
 	}
 	//1, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG1Save________________________start");
+		$log->info("CODETESTService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG1Save________________________end");
+		$log->info("CODETESTService-goG1Save________________________end");
 	}
 	//마스터, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG2Search________________________start");
+		$log->info("CODETESTService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -80,7 +83,7 @@ class codetestService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -92,17 +95,17 @@ class codetestService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG2Search________________________end");
+		$log->info("CODETESTService-goG2Search________________________end");
 	}
 	//마스터, 저장
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG2Save________________________start");
+		$log->info("CODETESTService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -125,7 +128,7 @@ class codetestService
 		array_push($GRID["SQL"]["U"], $this->DAO->hitMasG2($REQ)); //SAVE, 저장,MAS
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -142,17 +145,17 @@ class codetestService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG2Save________________________end");
+		$log->info("CODETESTService-goG2Save________________________end");
 	}
 	//마스터, 선택저장
 	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG2Chksave________________________start");
+		$log->info("CODETESTService-goG2Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
 		$GRID["SQL"] = array();
 		$grpId="G2";
@@ -171,17 +174,17 @@ class codetestService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG2Chksave________________________end");
+		$log->info("CODETESTService-goG2Chksave________________________end");
 	}
 	//상세, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG3Search________________________start");
+		$log->info("CODETESTService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -196,7 +199,7 @@ class codetestService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -208,17 +211,17 @@ class codetestService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG3Search________________________end");
+		$log->info("CODETESTService-goG3Search________________________end");
 	}
 	//상세, 저장
 	public function goG3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG3Save________________________start");
+		$log->info("CODETESTService-goG3Save________________________start");
 		//FORMVIEW SAVE
 		$grpId="G4";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
@@ -231,7 +234,7 @@ class codetestService
 		if(strlen($REQ["G3-TFILE-NM"]) > 4  && isAllowExtension($REQ["G3-TFILE-NM"],$t_allow_extension=array("jpg", "gif", "png","peng","bmp","svg","xls","xlsx","doc","docx","ppt","pptx","pdf","hwp","txt"))){
 			
 			$REQ["G3-TFILE-SVRNM"] = getFileSvrNm($REQ["G3-TFILE-NM"], $t_prefix="PIC_");
-			$MYFILE1 = $CFG_UPLOAD_DIR . $REQ["G3-TFILE-SVRNM"];
+			$MYFILE1 = $CFG["CFG_UPLOAD_DIR"] . $REQ["G3-TFILE-SVRNM"];
 			alog("###### MYFILE1 : " . $MYFILE1 );
 
 			if(!move_uploaded_file($REQ["G3-TFILE-TMPNM"], $MYFILE1)){
@@ -254,12 +257,12 @@ class codetestService
 					array_push($FORMVIEW["SQL"],$this->DAO->hitDtlF($REQ));
 					break;
 				default : 
-					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
+					$log->info("(SVC) FNCTYPE을 찾을수 없습니다.");
 			}
 			//필수 여부 검사
 			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
 			if($tmpVal->RTN_CD == "500"){
-				alog("requireFormview - fail.");
+				$log->info("requireFormview - fail.");
 				$tmpVal->GRPID = $grpId;
 				echo json_encode($tmpVal);
 				exit;
@@ -277,47 +280,47 @@ class codetestService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG3Save________________________end");
+		$log->info("CODETESTService-goG3Save________________________end");
 	}
 	//상세, 엑셀다운로드
 	public function goG3Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG3Excel________________________start");
+		$log->info("CODETESTService-goG3Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG3Excel________________________end");
+		$log->info("CODETESTService-goG3Excel________________________end");
 	}
 	//상세, 선택저장
 	public function goG3Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG3Chksave________________________start");
+		$log->info("CODETESTService-goG3Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG3Chksave________________________end");
+		$log->info("CODETESTService-goG3Chksave________________________end");
 	}
 	//상세폼, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG4Search________________________start");
+		$log->info("CODETESTService-goG4Search________________________start");
 //FORMVIEW SEARCH
 		$grpId="G4";
 	//암호화컬럼
@@ -331,7 +334,7 @@ class codetestService
 		//필수 여부 검사
 		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireFormview - fail.");
+			$log->info("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -342,32 +345,32 @@ class codetestService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG4Search________________________end");
+		$log->info("CODETESTService-goG4Search________________________end");
 	}
 	//상세폼, 삭제
 	public function goG4Delete(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG4Delete________________________start");
+		$log->info("CODETESTService-goG4Delete________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG4Delete________________________end");
+		$log->info("CODETESTService-goG4Delete________________________end");
 	}
 	//상세폼, 저장
 	public function goG4Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CODETESTService-goG4Save________________________start");
+		$log->info("CODETESTService-goG4Save________________________start");
 		//FORMVIEW SAVE
 		$grpId="G4";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
@@ -380,7 +383,7 @@ class codetestService
 		if(strlen($REQ["G4-TFILE-NM"]) > 4  && isAllowExtension($REQ["G4-TFILE-NM"],$t_allow_extension=array("jpg", "gif", "png","peng","bmp","svg","xls","xlsx","doc","docx","ppt","pptx","pdf","hwp","txt"))){
 			
 			$REQ["G4-TFILE-SVRNM"] = getFileSvrNm($REQ["G4-TFILE-NM"], $t_prefix="PIC_");
-			$MYFILE1 = $CFG_UPLOAD_DIR . $REQ["G4-TFILE-SVRNM"];
+			$MYFILE1 = $CFG["CFG_UPLOAD_DIR"] . $REQ["G4-TFILE-SVRNM"];
 			alog("###### MYFILE1 : " . $MYFILE1 );
 
 			if(!move_uploaded_file($REQ["G4-TFILE-TMPNM"], $MYFILE1)){
@@ -403,12 +406,12 @@ class codetestService
 					array_push($FORMVIEW["SQL"],$this->DAO->hitDtlF($REQ));
 					break;
 				default : 
-					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
+					$log->info("(SVC) FNCTYPE을 찾을수 없습니다.");
 			}
 			//필수 여부 검사
 			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
 			if($tmpVal->RTN_CD == "500"){
-				alog("requireFormview - fail.");
+				$log->info("requireFormview - fail.");
 				$tmpVal->GRPID = $grpId;
 				echo json_encode($tmpVal);
 				exit;
@@ -426,7 +429,7 @@ class codetestService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CODETESTService-goG4Save________________________end");
+		$log->info("CODETESTService-goG4Save________________________end");
 	}
 }
                                                              

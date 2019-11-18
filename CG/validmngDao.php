@@ -4,13 +4,16 @@
 class validmngDao
 {
 	function __construct(){
-		alog("ValidmngDao-__construct");
+		global $log;
+		$log->info("ValidmngDao-__construct");
 	}
 	function __destruct(){
-		alog("ValidmngDao-__destruct");
+		global $log;
+		$log->info("ValidmngDao-__destruct");
 	}
 	function __toString(){
-		alog("ValidmngDao-__toString");
+		global $log;
+		$log->info("ValidmngDao-__toString");
 	}
 	//목록삭제    
 	public function delValidG($req){

@@ -3,14 +3,14 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
+    $CFG = include_once("./incConfig.php");
 
     require_once("./include/incUtil.php");
-    require_once("./incConfig.php");
     require_once("./include/incDB.php");
     require_once("./include/incUser.php");
     require_once("./include/incRequest.php");
 
-    require_once("./lib/PHP-SQL-Parser/src/PHPSQLParser.php");
+    require_once($CFG["CFG_LIBS_SQL_PARSER"]);
 
 	
 

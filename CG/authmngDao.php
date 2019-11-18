@@ -4,13 +4,16 @@
 class authmngDao
 {
 	function __construct(){
-		alog("AuthmngDao-__construct");
+		global $log;
+		$log->info("AuthmngDao-__construct");
 	}
 	function __destruct(){
-		alog("AuthmngDao-__destruct");
+		global $log;
+		$log->info("AuthmngDao-__destruct");
 	}
 	function __toString(){
-		alog("AuthmngDao-__toString");
+		global $log;
+		$log->info("AuthmngDao-__toString");
 	}
 	//체크삭제    
 	public function delChkAuthG($req){

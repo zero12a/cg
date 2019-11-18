@@ -4,13 +4,16 @@
 class pisqlrDao
 {
 	function __construct(){
-		alog("PisqlrDao-__construct");
+		global $log;
+		$log->info("PisqlrDao-__construct");
 	}
 	function __destruct(){
-		alog("PisqlrDao-__destruct");
+		global $log;
+		$log->info("PisqlrDao-__destruct");
 	}
 	function __toString(){
-		alog("PisqlrDao-__toString");
+		global $log;
+		$log->info("PisqlrDao-__toString");
 	}
 	//delSqlrF    
 	public function delSqlrF($req){

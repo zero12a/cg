@@ -4,13 +4,16 @@
 class sqlsearchDao
 {
 	function __construct(){
-		alog("SqlsearchDao-__construct");
+		global $log;
+		$log->info("SqlsearchDao-__construct");
 	}
 	function __destruct(){
-		alog("SqlsearchDao-__destruct");
+		global $log;
+		$log->info("SqlsearchDao-__destruct");
 	}
 	function __toString(){
-		alog("SqlsearchDao-__toString");
+		global $log;
+		$log->info("SqlsearchDao-__toString");
 	}
 	//pgm    
 	public function sPgmG($req){

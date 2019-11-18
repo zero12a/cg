@@ -5,7 +5,8 @@
 
     //session_start();
 
-    require_once("./incConfig.php");
+    $CFG = include_once("./incConfig.php");
+    require_once("./include/incUser.php");
     require_once("./include/incSec.php");
     require_once("./include/incUtil.php");
     require_once("./include/incDB.php");
@@ -39,7 +40,6 @@
     //$_SESSION[ $tPjt[0]["PJTID"] . "_USR_SEQ"] = 0;
 
     //마지막 로그인세션 기록용(중복로그인 방지)
-    //$CFG_SID_PREFIX = $tPjt[0]["PJTID"];
 
     //마지막 로그인 세션id기록용
     //$objAuth= new authObject();	

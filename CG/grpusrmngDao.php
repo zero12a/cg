@@ -4,13 +4,16 @@
 class grpusrmngDao
 {
 	function __construct(){
-		alog("GrpusrmngDao-__construct");
+		global $log;
+		$log->info("GrpusrmngDao-__construct");
 	}
 	function __destruct(){
-		alog("GrpusrmngDao-__destruct");
+		global $log;
+		$log->info("GrpusrmngDao-__destruct");
 	}
 	function __toString(){
-		alog("GrpusrmngDao-__toString");
+		global $log;
+		$log->info("GrpusrmngDao-__toString");
 	}
 	//사용자권한삭제    
 	public function delHoldG($req){

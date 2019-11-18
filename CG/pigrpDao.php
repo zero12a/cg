@@ -4,13 +4,16 @@
 class pigrpDao
 {
 	function __construct(){
-		alog("PigrpDao-__construct");
+		global $log;
+		$log->info("PigrpDao-__construct");
 	}
 	function __destruct(){
-		alog("PigrpDao-__destruct");
+		global $log;
+		$log->info("PigrpDao-__destruct");
 	}
 	function __toString(){
-		alog("PigrpDao-__toString");
+		global $log;
+		$log->info("PigrpDao-__toString");
 	}
 	//delGrpF    
 	public function delGrpF($req){

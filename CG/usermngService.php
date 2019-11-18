@@ -10,7 +10,8 @@ class usermngService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("UsermngService-__construct");
+		global $log;
+		$log->info("UsermngService-__construct");
 
 		$this->DAO = new usermngDao();
 	    //$this->DB = db_s_open();
@@ -18,24 +19,26 @@ class usermngService
 	}
 	//파괴자
 	function __destruct(){
-		alog("UsermngService-__destruct");
+		global $log;
+		$log->info("UsermngService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("UsermngService-__toString");
+		global $log;
+		$log->info("UsermngService-__toString");
 	}
 	//사용자1, 비번변경
 	public function goG2Userdef(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG2Userdef________________________start");
+		$log->info("USERMNGService-goG2Userdef________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -52,7 +55,7 @@ class usermngService
 		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //USERDEF, 비번변경,
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -69,17 +72,17 @@ class usermngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG2Userdef________________________end");
+		$log->info("USERMNGService-goG2Userdef________________________end");
 	}
 	//사용자1, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG2Search________________________start");
+		$log->info("USERMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -94,7 +97,7 @@ class usermngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -106,17 +109,17 @@ class usermngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG2Search________________________end");
+		$log->info("USERMNGService-goG2Search________________________end");
 	}
 	//사용자1, S
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG2Save________________________start");
+		$log->info("USERMNGService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -133,7 +136,7 @@ class usermngService
 		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -150,62 +153,62 @@ class usermngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG2Save________________________end");
+		$log->info("USERMNGService-goG2Save________________________end");
 	}
 	//사용자1, E
 	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG2Excel________________________start");
+		$log->info("USERMNGService-goG2Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG2Excel________________________end");
+		$log->info("USERMNGService-goG2Excel________________________end");
 	}
 	//사용자1, 선택저장
 	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG2Chksave________________________start");
+		$log->info("USERMNGService-goG2Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG2Chksave________________________end");
+		$log->info("USERMNGService-goG2Chksave________________________end");
 	}
 	//프로젝트2, 사용자정의
 	public function goG3Userdef(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG3Userdef________________________start");
+		$log->info("USERMNGService-goG3Userdef________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG3Userdef________________________end");
+		$log->info("USERMNGService-goG3Userdef________________________end");
 	}
 	//프로젝트2, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG3Search________________________start");
+		$log->info("USERMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -220,7 +223,7 @@ class usermngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -232,77 +235,77 @@ class usermngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG3Search________________________end");
+		$log->info("USERMNGService-goG3Search________________________end");
 	}
 	//프로젝트2, S
 	public function goG3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG3Save________________________start");
+		$log->info("USERMNGService-goG3Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG3Save________________________end");
+		$log->info("USERMNGService-goG3Save________________________end");
 	}
 	//프로젝트2, E
 	public function goG3Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG3Excel________________________start");
+		$log->info("USERMNGService-goG3Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG3Excel________________________end");
+		$log->info("USERMNGService-goG3Excel________________________end");
 	}
 	//프로젝트2, 선택저장
 	public function goG3Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG3Chksave________________________start");
+		$log->info("USERMNGService-goG3Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG3Chksave________________________end");
+		$log->info("USERMNGService-goG3Chksave________________________end");
 	}
 	//서버4, 사용자정의
 	public function goG4Userdef(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG4Userdef________________________start");
+		$log->info("USERMNGService-goG4Userdef________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG4Userdef________________________end");
+		$log->info("USERMNGService-goG4Userdef________________________end");
 	}
 	//서버4, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG4Search________________________start");
+		$log->info("USERMNGService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -317,7 +320,7 @@ class usermngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -329,17 +332,17 @@ class usermngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG4Search________________________end");
+		$log->info("USERMNGService-goG4Search________________________end");
 	}
 	//서버4, S
 	public function goG4Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG4Save________________________start");
+		$log->info("USERMNGService-goG4Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -358,7 +361,7 @@ class usermngService
 		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -375,37 +378,37 @@ class usermngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG4Save________________________end");
+		$log->info("USERMNGService-goG4Save________________________end");
 	}
 	//서버4, E
 	public function goG4Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG4Excel________________________start");
+		$log->info("USERMNGService-goG4Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG4Excel________________________end");
+		$log->info("USERMNGService-goG4Excel________________________end");
 	}
 	//서버4, 선택저장
 	public function goG4Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("USERMNGService-goG4Chksave________________________start");
+		$log->info("USERMNGService-goG4Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("USERMNGService-goG4Chksave________________________end");
+		$log->info("USERMNGService-goG4Chksave________________________end");
 	}
 }
                                                              

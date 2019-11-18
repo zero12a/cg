@@ -4,13 +4,16 @@
 class errmngDao
 {
 	function __construct(){
-		alog("ErrmngDao-__construct");
+		global $log;
+		$log->info("ErrmngDao-__construct");
 	}
 	function __destruct(){
-		alog("ErrmngDao-__destruct");
+		global $log;
+		$log->info("ErrmngDao-__destruct");
 	}
 	function __toString(){
-		alog("ErrmngDao-__toString");
+		global $log;
+		$log->info("ErrmngDao-__toString");
 	}
 	//에러저장    
 	public function cErr($req){

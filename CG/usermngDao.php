@@ -4,13 +4,16 @@
 class usermngDao
 {
 	function __construct(){
-		alog("UsermngDao-__construct");
+		global $log;
+		$log->info("UsermngDao-__construct");
 	}
 	function __destruct(){
-		alog("UsermngDao-__destruct");
+		global $log;
+		$log->info("UsermngDao-__destruct");
 	}
 	function __toString(){
-		alog("UsermngDao-__toString");
+		global $log;
+		$log->info("UsermngDao-__toString");
 	}
 	//사용자비번변경    
 	public function chgUserPwG($req){

@@ -9,9 +9,9 @@
 
 
 function saveFile2($filetype,$filenm){
-    global $F_PJTSEQ,$svrid,$F_PGMSEQ,$db,$CFG_ROOT_DIR, $F_VERSEQ, $P;
-    //$tpath = $CFG_ROOT_DIR . "rst/" . ;//단일 프로젝트 일때
-    $tpath = $CFG_ROOT_DIR . $P["PJTID"] . "/";  
+    global $F_PJTSEQ,$svrid,$F_PGMSEQ,$db,$CFG, $F_VERSEQ, $P;
+
+    $tpath = $CFG["CFG_ROOT_DIR"] . $P["PJTID"] . "/";  
 	$printRowCnt = 0;
 
     //프로젝트 폴더가 없으면 생성하기
@@ -75,8 +75,8 @@ function saveFile2($filetype,$filenm){
 
 
 function saveFile($filetype,$suffix,$file_extension){
-    global $F_PJTSEQ,$F_PGMSEQ,$db,$svrid,$CFG_ROOT_DIR;
-    $tpath = $CFG_ROOT_DIR . "rst/";
+    global $F_PJTSEQ,$F_PGMSEQ,$db,$svrid,$CFG;
+    $tpath = $CFG["CFG_ROOT_DIR"] . "rst/";
 
 
 

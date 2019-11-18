@@ -3,8 +3,8 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
-    require_once("./include/incUtil.php");
-    require_once("./incConfig.php");
+    $CFG = include_once("./incConfig.php");;
+
     require_once("./include/incUtil.php");
     require_once("./include/incDB.php");
     require_once("./include/incUser.php");

@@ -4,13 +4,16 @@
 class authdownDao
 {
 	function __construct(){
-		alog("AuthdownDao-__construct");
+		global $log;
+		$log->info("AuthdownDao-__construct");
 	}
 	function __destruct(){
-		alog("AuthdownDao-__destruct");
+		global $log;
+		$log->info("AuthdownDao-__destruct");
 	}
 	function __toString(){
-		alog("AuthdownDao-__toString");
+		global $log;
+		$log->info("AuthdownDao-__toString");
 	}
 	//권한목록    
 	public function selAuthG($req){

@@ -4,13 +4,16 @@
 class authlogDao
 {
 	function __construct(){
-		alog("AuthlogDao-__construct");
+		global $log;
+		$log->info("AuthlogDao-__construct");
 	}
 	function __destruct(){
-		alog("AuthlogDao-__destruct");
+		global $log;
+		$log->info("AuthlogDao-__destruct");
 	}
 	function __toString(){
-		alog("AuthlogDao-__toString");
+		global $log;
+		$log->info("AuthlogDao-__toString");
 	}
 	//sAuthG    
 	public function sAuthG($req){

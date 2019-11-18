@@ -10,7 +10,8 @@ class chartbarService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("ChartbarService-__construct");
+		global $log;
+		$log->info("ChartbarService-__construct");
 
 		$this->DAO = new chartbarDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class chartbarService
 	}
 	//파괴자
 	function __destruct(){
-		alog("ChartbarService-__destruct");
+		global $log;
+		$log->info("ChartbarService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("ChartbarService-__toString");
+		global $log;
+		$log->info("ChartbarService-__toString");
 	}
 	//컨디션, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CHARTBARService-goG1Searchall________________________start");
+		$log->info("CHARTBARService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CHARTBARService-goG1Searchall________________________end");
+		$log->info("CHARTBARService-goG1Searchall________________________end");
 	}
 	//컨디션, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CHARTBARService-goG1Save________________________start");
+		$log->info("CHARTBARService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CHARTBARService-goG1Save________________________end");
+		$log->info("CHARTBARService-goG1Save________________________end");
 	}
 	//챠트, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CHARTBARService-goG2Search________________________start");
+		$log->info("CHARTBARService-goG2Search________________________start");
 		//CHARTBAR SEARCH____________________________start
 		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
 
@@ -77,7 +80,7 @@ class chartbarService
 		//필수 여부 검사
 		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -89,17 +92,17 @@ class chartbarService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CHARTBARService-goG2Search________________________end");
+		$log->info("CHARTBARService-goG2Search________________________end");
 	}
 	//PIE, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CHARTBARService-goG3Search________________________start");
+		$log->info("CHARTBARService-goG3Search________________________start");
 		//CHARTPIE SEARCH____________________________start
 		$GRID["KEYCOLIDX"] = -1; // KEY 컬럼, 
 
@@ -111,7 +114,7 @@ class chartbarService
 		//필수 여부 검사
 		$tmpVal = requireGridSearch($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -123,17 +126,17 @@ class chartbarService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CHARTBARService-goG3Search________________________end");
+		$log->info("CHARTBARService-goG3Search________________________end");
 	}
 	//BAR상속, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CHARTBARService-goG4Search________________________start");
+		$log->info("CHARTBARService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -148,7 +151,7 @@ class chartbarService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -160,32 +163,32 @@ class chartbarService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CHARTBARService-goG4Search________________________end");
+		$log->info("CHARTBARService-goG4Search________________________end");
 	}
 	//BAR상속, 저장
 	public function goG4Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CHARTBARService-goG4Save________________________start");
+		$log->info("CHARTBARService-goG4Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CHARTBARService-goG4Save________________________end");
+		$log->info("CHARTBARService-goG4Save________________________end");
 	}
 	//PIE상속, 조회
 	public function goG5Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CHARTBARService-goG5Search________________________start");
+		$log->info("CHARTBARService-goG5Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -200,7 +203,7 @@ class chartbarService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -212,22 +215,22 @@ class chartbarService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CHARTBARService-goG5Search________________________end");
+		$log->info("CHARTBARService-goG5Search________________________end");
 	}
 	//PIE상속, 저장
 	public function goG5Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("CHARTBARService-goG5Save________________________start");
+		$log->info("CHARTBARService-goG5Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("CHARTBARService-goG5Save________________________end");
+		$log->info("CHARTBARService-goG5Save________________________end");
 	}
 }
                                                              

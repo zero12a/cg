@@ -4,13 +4,16 @@
 class pgmmngDao
 {
 	function __construct(){
-		alog("PgmmngDao-__construct");
+		global $log;
+		$log->info("PgmmngDao-__construct");
 	}
 	function __destruct(){
-		alog("PgmmngDao-__destruct");
+		global $log;
+		$log->info("PgmmngDao-__destruct");
 	}
 	function __toString(){
-		alog("PgmmngDao-__toString");
+		global $log;
+		$log->info("PgmmngDao-__toString");
 	}
 	//FILE    
 	public function fileC($req){

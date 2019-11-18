@@ -1,7 +1,7 @@
 <?php
 
 //redis에 모두 넣기
-require_once($CFG_LIBS_PATH_REDIS);
+require_once($CFG["CFG_LIBS_PATH_REDIS"]);
 
 class authObject
 {
@@ -12,17 +12,18 @@ class authObject
 
 	//생성자
 	function __construct(){
-        global $CFG_AUTH_LOG, $CFG_AUTH_REDIS, $CFG_SID_PREFIX;
+        global $CFG;
+        //$CFG_AUTH_LOG, $CFG_AUTH_REDIS, $CFG_SID_PREFIX;
 
 		alog("authLog-__construct");
 
-        $this->PREFIX_SESSION_ID = "SID_" . $CFG_SID_PREFIX . "_";//세션유저 프리픽스
+        $this->PREFIX_SESSION_ID = "SID_" . $CFG["CFG_SID_PREFIX"] . "_";//세션유저 프리픽스
 
-        if($CFG_AUTH_LOG == "DB"){
+        if($CFG["CFG_AUTH_LOG"] == "DB"){
             $this->DB = db_obj_open(getDbSvrInfo("DATING"));
-        }else if($CFG_AUTH_LOG == "REDIS"){
+        }else if($CFG["CFG_AUTH_LOG"] == "REDIS"){
             Predis\Autoloader::register();
-            $this->REDIS = new Predis\Client($CFG_AUTH_REDIS);    
+            $this->REDIS = new Predis\Client($CFG["CFG_AUTH_REDIS"]);    
         }else{
             JsonMsg("500","100","[authLog] __construct() .......................CFG_AUTH_LOG 정의가 잘못되었습니다.");
         }
@@ -96,8 +97,9 @@ class authObject
     
     //로그 저장
     function logUsrAuth($reqToken,$resToken,$tPgmid,$tAuth,$tSuccessYn){
-        global $_SESSION, $CFG_AUTH_LOG;
-        alog("##### logUsrAuth()...........................start : " . $CFG_AUTH_LOG);        
+        global $_SESSION, $CFG;
+        //$CFG_AUTH_LOG;
+        alog("##### logUsrAuth()...........................start : " . $CFG["CFG_AUTH_LOG"]);        
         $RtnVal = "";
     
         $tMap["SVR_DT"] = date("YmdHis");
@@ -109,7 +111,7 @@ class authObject
         $tMap["SUCCESS_YN"] = $tSuccessYn;
         $tMap["AUTH_ID"] = $tAuth;
 
-        if($CFG_AUTH_LOG == "DB"){
+        if($CFG["CFG_AUTH_LOG"] == "DB"){
 
             $coltype = "ssiss ss";
     
@@ -135,7 +137,7 @@ class authObject
         
             alog("logUsrAuth() insert_id = " . $RtnVal);
             $stmt->close();
-        }else if($CFG_AUTH_LOG == "REDIS"){
+        }else if($CFG["CFG_AUTH_LOG"] == "REDIS"){
             $redisMap = array();
             //$redisMap["SQL"] = $sql;
             //$redisMap["COLTYPE"] = $coltype;
@@ -155,8 +157,9 @@ class authObject
     
     //로그 상세 저장
     function logUsrAuthD($reqToken,$resToken){
-        global $_SESSION, $PGM_CFG, $CFG_AUTH_LOG;
-        alog("##### logUsrAuthD()...........................start : " . $CFG_AUTH_LOG);        
+        global $_SESSION, $PGM_CFG, $CFG;
+        //$CFG_AUTH_LOG;
+        alog("##### logUsrAuthD()...........................start : " . $CFG["CFG_AUTH_LOG"]);        
         $RtnVal = "";
     
         $tMap["LAUTH_SEQ"] = $this->LAUTH_SEQ;
@@ -169,7 +172,7 @@ class authObject
         $tMap["RES_TOKEN"] = $resToken;        
         alog("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^count(tArr) = ". count($tArr));
     
-        $startSqlNo = ($CFG_AUTH_LOG == "REDIS")? 0 : 1; //DB저장 방식이면 첫번째 SQL(log_auth)무시 
+        $startSqlNo = ($CFG["CFG_AUTH_LOG"] == "REDIS")? 0 : 1; //DB저장 방식이면 첫번째 SQL(log_auth)무시 
 
         for($j=$startSqlNo;$j<count($tArr);$j++){
             alog("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^logUsrAuthD() j = ". $j);
@@ -186,7 +189,7 @@ class authObject
 
         
 
-            if($CFG_AUTH_LOG == "DB"){      
+            if($CFG["CFG_AUTH_LOG"] == "DB"){      
                 
                 $tMap["DD_COLIDS"] = array2ddstr($tMap["COLIDS"],", "); //중복허용
                 $tMap["PI_IN_COLIDS"] = array2pistr($tMap["COLIDS"],", "); //중복제거
@@ -213,7 +216,7 @@ class authObject
                         
                 //$RtnVal = $db->insert_id;
                 $stmt->close();
-            }else if($CFG_AUTH_LOG == "REDIS"){
+            }else if($CFG["CFG_AUTH_LOG"] == "REDIS"){
                 $redisMap = array();
                 //$redisMap["SQL"] = $sql;
                 //$redisMap["COLTYPE"] = $coltype;

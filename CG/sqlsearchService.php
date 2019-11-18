@@ -10,7 +10,8 @@ class sqlsearchService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("SqlsearchService-__construct");
+		global $log;
+		$log->info("SqlsearchService-__construct");
 
 		$this->DAO = new sqlsearchDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class sqlsearchService
 	}
 	//파괴자
 	function __destruct(){
-		alog("SqlsearchService-__destruct");
+		global $log;
+		$log->info("SqlsearchService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("SqlsearchService-__toString");
+		global $log;
+		$log->info("SqlsearchService-__toString");
 	}
 	//조건, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("SQLSEARCHService-goG1Searchall________________________start");
+		$log->info("SQLSEARCHService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("SQLSEARCHService-goG1Searchall________________________end");
+		$log->info("SQLSEARCHService-goG1Searchall________________________end");
 	}
 	//조건, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("SQLSEARCHService-goG1Save________________________start");
+		$log->info("SQLSEARCHService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("SQLSEARCHService-goG1Save________________________end");
+		$log->info("SQLSEARCHService-goG1Save________________________end");
 	}
 	//프로그램, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("SQLSEARCHService-goG2Search________________________start");
+		$log->info("SQLSEARCHService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -80,7 +83,7 @@ class sqlsearchService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -92,32 +95,32 @@ class sqlsearchService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("SQLSEARCHService-goG2Search________________________end");
+		$log->info("SQLSEARCHService-goG2Search________________________end");
 	}
 	//프로그램, 엑셀다운로드
 	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("SQLSEARCHService-goG2Excel________________________start");
+		$log->info("SQLSEARCHService-goG2Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("SQLSEARCHService-goG2Excel________________________end");
+		$log->info("SQLSEARCHService-goG2Excel________________________end");
 	}
 	//SQL, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("SQLSEARCHService-goG3Search________________________start");
+		$log->info("SQLSEARCHService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -132,7 +135,7 @@ class sqlsearchService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -144,32 +147,32 @@ class sqlsearchService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("SQLSEARCHService-goG3Search________________________end");
+		$log->info("SQLSEARCHService-goG3Search________________________end");
 	}
 	//SQL, 엑셀다운로드
 	public function goG3Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("SQLSEARCHService-goG3Excel________________________start");
+		$log->info("SQLSEARCHService-goG3Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("SQLSEARCHService-goG3Excel________________________end");
+		$log->info("SQLSEARCHService-goG3Excel________________________end");
 	}
 	//폼, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("SQLSEARCHService-goG4Search________________________start");
+		$log->info("SQLSEARCHService-goG4Search________________________start");
 //FORMVIEW SEARCH
 		$grpId="G4";
 	//암호화컬럼
@@ -181,7 +184,7 @@ class sqlsearchService
 		//필수 여부 검사
 		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireFormview - fail.");
+			$log->info("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -192,7 +195,7 @@ class sqlsearchService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("SQLSEARCHService-goG4Search________________________end");
+		$log->info("SQLSEARCHService-goG4Search________________________end");
 	}
 }
                                                              

@@ -10,7 +10,8 @@ class pgmmngService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("PgmmngService-__construct");
+		global $log;
+		$log->info("PgmmngService-__construct");
 
 		$this->DAO = new pgmmngDao();
 	    //$this->DB = db_s_open();
@@ -18,24 +19,26 @@ class pgmmngService
 	}
 	//파괴자
 	function __destruct(){
-		alog("PgmmngService-__destruct");
+		global $log;
+		$log->info("PgmmngService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("PgmmngService-__toString");
+		global $log;
+		$log->info("PgmmngService-__toString");
 	}
 	//PJT, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG3Search________________________start");
+		$log->info("PGMMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -50,7 +53,7 @@ class pgmmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -62,17 +65,17 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG3Search________________________end");
+		$log->info("PGMMNGService-goG3Search________________________end");
 	}
 	//PJT, 저장
 	public function goG3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG3Save________________________start");
+		$log->info("PGMMNGService-goG3Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -93,7 +96,7 @@ class pgmmngService
 		array_push($GRID["SQL"]["C"], $this->DAO->sql4($REQ)); //SAVE, 저장,PJT
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -110,17 +113,17 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG3Save________________________end");
+		$log->info("PGMMNGService-goG3Save________________________end");
 	}
 	//PGM, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG4Search________________________start");
+		$log->info("PGMMNGService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -135,7 +138,7 @@ class pgmmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -147,17 +150,17 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG4Search________________________end");
+		$log->info("PGMMNGService-goG4Search________________________end");
 	}
 	//PGM, 저장
 	public function goG4Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG4Save________________________start");
+		$log->info("PGMMNGService-goG4Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -178,7 +181,7 @@ class pgmmngService
 		array_push($GRID["SQL"]["U"], $this->DAO->sql8($REQ)); //SAVE, 저장,PGM
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -195,17 +198,17 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG4Save________________________end");
+		$log->info("PGMMNGService-goG4Save________________________end");
 	}
 	//DD, 조회
 	public function goG5Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG5Search________________________start");
+		$log->info("PGMMNGService-goG5Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -220,7 +223,7 @@ class pgmmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -232,17 +235,17 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG5Search________________________end");
+		$log->info("PGMMNGService-goG5Search________________________end");
 	}
 	//DD, 저장
 	public function goG5Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG5Save________________________start");
+		$log->info("PGMMNGService-goG5Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -263,7 +266,7 @@ class pgmmngService
 		array_push($GRID["SQL"]["C"], $this->DAO->sql11($REQ)); //SAVE, 저장,DD
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -280,32 +283,32 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG5Save________________________end");
+		$log->info("PGMMNGService-goG5Save________________________end");
 	}
 	//CONFIG, 사용자정의
 	public function goG6Userdef(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG6Userdef________________________start");
+		$log->info("PGMMNGService-goG6Userdef________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG6Userdef________________________end");
+		$log->info("PGMMNGService-goG6Userdef________________________end");
 	}
 	//CONFIG, 조회
 	public function goG6Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG6Search________________________start");
+		$log->info("PGMMNGService-goG6Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -320,7 +323,7 @@ class pgmmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -332,17 +335,17 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG6Search________________________end");
+		$log->info("PGMMNGService-goG6Search________________________end");
 	}
 	//CONFIG, 저장
 	public function goG6Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG6Save________________________start");
+		$log->info("PGMMNGService-goG6Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -363,7 +366,7 @@ class pgmmngService
 		array_push($GRID["SQL"]["U"], $this->DAO->impU($REQ)); //SAVE, 저장,CONFIG
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -380,47 +383,47 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG6Save________________________end");
+		$log->info("PGMMNGService-goG6Save________________________end");
 	}
 	//CONFIG, 엑셀다운로드
 	public function goG6Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG6Excel________________________start");
+		$log->info("PGMMNGService-goG6Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG6Excel________________________end");
+		$log->info("PGMMNGService-goG6Excel________________________end");
 	}
 	//FILE, 사용자정의
 	public function goG7Userdef(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG7Userdef________________________start");
+		$log->info("PGMMNGService-goG7Userdef________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG7Userdef________________________end");
+		$log->info("PGMMNGService-goG7Userdef________________________end");
 	}
 	//FILE, 조회
 	public function goG7Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG7Search________________________start");
+		$log->info("PGMMNGService-goG7Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -435,7 +438,7 @@ class pgmmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -447,17 +450,17 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG7Search________________________end");
+		$log->info("PGMMNGService-goG7Search________________________end");
 	}
 	//FILE, 저장
 	public function goG7Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG7Save________________________start");
+		$log->info("PGMMNGService-goG7Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -476,7 +479,7 @@ class pgmmngService
 		array_push($GRID["SQL"]["U"], $this->DAO->fileU($REQ)); //SAVE, 저장,FILE
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -493,22 +496,22 @@ class pgmmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG7Save________________________end");
+		$log->info("PGMMNGService-goG7Save________________________end");
 	}
 	//FILE, 엑셀다운로드
 	public function goG7Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PGMMNGService-goG7Excel________________________start");
+		$log->info("PGMMNGService-goG7Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PGMMNGService-goG7Excel________________________end");
+		$log->info("PGMMNGService-goG7Excel________________________end");
 	}
 }
                                                              

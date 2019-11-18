@@ -4,12 +4,13 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
+    $CFG = include_once("./incConfig.php");
+
     require_once("./include/incUtil.php");
-    require_once("./incConfig.php");
     require_once("./include/incUtil.php");
     require_once("./include/incDB.php");
 
-    require_once($CFG_LIBS_PATH_AWS);
+    require_once($CFG["CFG_LIBS_PATH_AWS"]);
 
     use Aws\S3\S3Client;
     use Aws\Exception\AwsException;
@@ -97,7 +98,7 @@ if($REQ["F_GRPID"] == "8" && $REQ["G8_CRUD_MODE"] == "SAVE"){
             
         $client = S3Client::factory(
             array(
-            'credentials' => array('key' => $CFG_AWS_AID,'secret' => $CFG_AWS_KEY),
+            'credentials' => array('key' => $CFG["CFG_AWS_AID"],'secret' => $CFG["CFG_AWS_KEY"]),
             'region' => 'ap-northeast-2',
             'version' => 'latest'
             )
@@ -326,7 +327,7 @@ if($REQ["F_GRPID"] == "7" && $REQ["G7_CRUD_MODE"] == "SAVE"){
             
         $client = S3Client::factory(
             array(
-            'credentials' => array('key' => $CFG_AWS_AID,'secret' => $CFG_AWS_KEY),
+            'credentials' => array('key' => $CFG["CFG_AWS_AID"],'secret' => $CFG["CFG_AWS_KEY"]),
             'region' => 'ap-northeast-2',
             'version' => 'latest'
             )

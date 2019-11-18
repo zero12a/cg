@@ -10,7 +10,8 @@ class ddiomngService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("DdiomngService-__construct");
+		global $log;
+		$log->info("DdiomngService-__construct");
 
 		$this->DAO = new ddiomngDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class ddiomngService
 	}
 	//파괴자
 	function __destruct(){
-		alog("DdiomngService-__destruct");
+		global $log;
+		$log->info("DdiomngService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("DdiomngService-__toString");
+		global $log;
+		$log->info("DdiomngService-__toString");
 	}
 	//조건1, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG1Searchall________________________start");
+		$log->info("DDIOMNGService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG1Searchall________________________end");
+		$log->info("DDIOMNGService-goG1Searchall________________________end");
 	}
 	//조건1, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG1Save________________________start");
+		$log->info("DDIOMNGService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG1Save________________________end");
+		$log->info("DDIOMNGService-goG1Save________________________end");
 	}
 	//DATASIZE, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG2Search________________________start");
+		$log->info("DDIOMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -80,7 +83,7 @@ class ddiomngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -92,32 +95,32 @@ class ddiomngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG2Search________________________end");
+		$log->info("DDIOMNGService-goG2Search________________________end");
 	}
 	//DATASIZE, S
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG2Save________________________start");
+		$log->info("DDIOMNGService-goG2Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG2Save________________________end");
+		$log->info("DDIOMNGService-goG2Save________________________end");
 	}
 	//DATASIZE, 선택저장
 	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG2Chksave________________________start");
+		$log->info("DDIOMNGService-goG2Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
 		$GRID["SQL"] = array();
 		$grpId="G2";
@@ -135,17 +138,17 @@ class ddiomngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG2Chksave________________________end");
+		$log->info("DDIOMNGService-goG2Chksave________________________end");
 	}
 	//DATATYPE, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG3Search________________________start");
+		$log->info("DDIOMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -160,7 +163,7 @@ class ddiomngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -172,32 +175,32 @@ class ddiomngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG3Search________________________end");
+		$log->info("DDIOMNGService-goG3Search________________________end");
 	}
 	//DATATYPE, S
 	public function goG3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG3Save________________________start");
+		$log->info("DDIOMNGService-goG3Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG3Save________________________end");
+		$log->info("DDIOMNGService-goG3Save________________________end");
 	}
 	//DATATYPE, 선택저장
 	public function goG3Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG3Chksave________________________start");
+		$log->info("DDIOMNGService-goG3Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
 		$GRID["SQL"] = array();
 		$grpId="G3";
@@ -215,17 +218,17 @@ class ddiomngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG3Chksave________________________end");
+		$log->info("DDIOMNGService-goG3Chksave________________________end");
 	}
 	//VALIDSEQ, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG4Search________________________start");
+		$log->info("DDIOMNGService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -240,7 +243,7 @@ class ddiomngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -252,17 +255,17 @@ class ddiomngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG4Search________________________end");
+		$log->info("DDIOMNGService-goG4Search________________________end");
 	}
 	//VALIDSEQ, 선택저장
 	public function goG4Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("DDIOMNGService-goG4Chksave________________________start");
+		$log->info("DDIOMNGService-goG4Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
 		$GRID["SQL"] = array();
 		$grpId="G4";
@@ -280,7 +283,7 @@ class ddiomngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("DDIOMNGService-goG4Chksave________________________end");
+		$log->info("DDIOMNGService-goG4Chksave________________________end");
 	}
 }
                                                              

@@ -10,7 +10,8 @@ class validmngService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("ValidmngService-__construct");
+		global $log;
+		$log->info("ValidmngService-__construct");
 
 		$this->DAO = new validmngDao();
 	    //$this->DB = db_s_open();
@@ -18,39 +19,41 @@ class validmngService
 	}
 	//파괴자
 	function __destruct(){
-		alog("ValidmngService-__destruct");
+		global $log;
+		$log->info("ValidmngService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("ValidmngService-__toString");
+		global $log;
+		$log->info("ValidmngService-__toString");
 	}
 	//조회조건, 조회(전체)
 	public function goC1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("VALIDMNGService-goC1Searchall________________________start");
+		$log->info("VALIDMNGService-goC1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("VALIDMNGService-goC1Searchall________________________end");
+		$log->info("VALIDMNGService-goC1Searchall________________________end");
 	}
 	//조회조건, 저장
 	public function goC1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("VALIDMNGService-goC1Save________________________start");
+		$log->info("VALIDMNGService-goC1Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -71,7 +74,7 @@ class validmngService
 		array_push($GRID["SQL"]["C"], $this->DAO->insValidG($REQ)); //SAVE, 저장,목록추가
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -88,17 +91,17 @@ class validmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("VALIDMNGService-goC1Save________________________end");
+		$log->info("VALIDMNGService-goC1Save________________________end");
 	}
 	//목록, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("VALIDMNGService-goG2Search________________________start");
+		$log->info("VALIDMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -113,7 +116,7 @@ class validmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -125,17 +128,17 @@ class validmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("VALIDMNGService-goG2Search________________________end");
+		$log->info("VALIDMNGService-goG2Search________________________end");
 	}
 	//목록, 저장
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("VALIDMNGService-goG2Save________________________start");
+		$log->info("VALIDMNGService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -156,7 +159,7 @@ class validmngService
 		array_push($GRID["SQL"]["C"], $this->DAO->insValidG($REQ)); //SAVE, 저장,목록추가
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -173,52 +176,52 @@ class validmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("VALIDMNGService-goG2Save________________________end");
+		$log->info("VALIDMNGService-goG2Save________________________end");
 	}
 	//상세, 삭제
 	public function goF3Delete(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("VALIDMNGService-goF3Delete________________________start");
+		$log->info("VALIDMNGService-goF3Delete________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("VALIDMNGService-goF3Delete________________________end");
+		$log->info("VALIDMNGService-goF3Delete________________________end");
 	}
 	//상세, 조회
 	public function goF3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("VALIDMNGService-goF3Search________________________start");
+		$log->info("VALIDMNGService-goF3Search________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("VALIDMNGService-goF3Search________________________end");
+		$log->info("VALIDMNGService-goF3Search________________________end");
 	}
 	//상세, 저장
 	public function goF3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("VALIDMNGService-goF3Save________________________start");
+		$log->info("VALIDMNGService-goF3Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("VALIDMNGService-goF3Save________________________end");
+		$log->info("VALIDMNGService-goF3Save________________________end");
 	}
 }
                                                              

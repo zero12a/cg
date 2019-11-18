@@ -4,13 +4,16 @@
 class piinheritDao
 {
 	function __construct(){
-		alog("PiinheritDao-__construct");
+		global $log;
+		$log->info("PiinheritDao-__construct");
 	}
 	function __destruct(){
-		alog("PiinheritDao-__destruct");
+		global $log;
+		$log->info("PiinheritDao-__destruct");
 	}
 	function __toString(){
-		alog("PiinheritDao-__toString");
+		global $log;
+		$log->info("PiinheritDao-__toString");
 	}
 	//delInherF    
 	public function delInherF($req){

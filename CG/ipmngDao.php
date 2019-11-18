@@ -4,13 +4,16 @@
 class ipmngDao
 {
 	function __construct(){
-		alog("IpmngDao-__construct");
+		global $log;
+		$log->info("IpmngDao-__construct");
 	}
 	function __destruct(){
-		alog("IpmngDao-__destruct");
+		global $log;
+		$log->info("IpmngDao-__destruct");
 	}
 	function __toString(){
-		alog("IpmngDao-__toString");
+		global $log;
+		$log->info("IpmngDao-__toString");
 	}
 	//IP    
 	public function delIpG($req){

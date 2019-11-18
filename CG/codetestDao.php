@@ -4,13 +4,16 @@
 class codetestDao
 {
 	function __construct(){
-		alog("CodetestDao-__construct");
+		global $log;
+		$log->info("CodetestDao-__construct");
 	}
 	function __destruct(){
-		alog("CodetestDao-__destruct");
+		global $log;
+		$log->info("CodetestDao-__destruct");
 	}
 	function __toString(){
-		alog("CodetestDao-__toString");
+		global $log;
+		$log->info("CodetestDao-__toString");
 	}
 	//aa    
 	public function aa($req){

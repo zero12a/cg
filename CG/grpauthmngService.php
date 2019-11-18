@@ -10,7 +10,8 @@ class grpauthmngService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("GrpauthmngService-__construct");
+		global $log;
+		$log->info("GrpauthmngService-__construct");
 
 		$this->DAO = new grpauthmngDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class grpauthmngService
 	}
 	//파괴자
 	function __destruct(){
-		alog("GrpauthmngService-__destruct");
+		global $log;
+		$log->info("GrpauthmngService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("GrpauthmngService-__toString");
+		global $log;
+		$log->info("GrpauthmngService-__toString");
 	}
 	//조회조건, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GRPAUTHMNGService-goG1Searchall________________________start");
+		$log->info("GRPAUTHMNGService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GRPAUTHMNGService-goG1Searchall________________________end");
+		$log->info("GRPAUTHMNGService-goG1Searchall________________________end");
 	}
 	//조회조건, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GRPAUTHMNGService-goG1Save________________________start");
+		$log->info("GRPAUTHMNGService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GRPAUTHMNGService-goG1Save________________________end");
+		$log->info("GRPAUTHMNGService-goG1Save________________________end");
 	}
 	//그룹목록, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GRPAUTHMNGService-goG2Search________________________start");
+		$log->info("GRPAUTHMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -80,7 +83,7 @@ class grpauthmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -92,17 +95,17 @@ class grpauthmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GRPAUTHMNGService-goG2Search________________________end");
+		$log->info("GRPAUTHMNGService-goG2Search________________________end");
 	}
 	//보유 권한, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GRPAUTHMNGService-goG3Search________________________start");
+		$log->info("GRPAUTHMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -117,7 +120,7 @@ class grpauthmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -129,17 +132,17 @@ class grpauthmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GRPAUTHMNGService-goG3Search________________________end");
+		$log->info("GRPAUTHMNGService-goG3Search________________________end");
 	}
 	//보유 권한, 선택 삭제
 	public function goG3Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GRPAUTHMNGService-goG3Chksave________________________start");
+		$log->info("GRPAUTHMNGService-goG3Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
 		$GRID["SQL"] = array();
 		$grpId="G3";
@@ -157,17 +160,17 @@ class grpauthmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GRPAUTHMNGService-goG3Chksave________________________end");
+		$log->info("GRPAUTHMNGService-goG3Chksave________________________end");
 	}
 	//미보유 권한, 조회
 	public function goG4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GRPAUTHMNGService-goG4Search________________________start");
+		$log->info("GRPAUTHMNGService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -182,7 +185,7 @@ class grpauthmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -194,17 +197,17 @@ class grpauthmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GRPAUTHMNGService-goG4Search________________________end");
+		$log->info("GRPAUTHMNGService-goG4Search________________________end");
 	}
 	//미보유 권한, 선택 추가
 	public function goG4Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GRPAUTHMNGService-goG4Chksave________________________start");
+		$log->info("GRPAUTHMNGService-goG4Chksave________________________start");
 		//GRID_CHK_SAVE____________________________start
 		$GRID["SQL"] = array();
 		$grpId="G4";
@@ -222,7 +225,7 @@ class grpauthmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GRPAUTHMNGService-goG4Chksave________________________end");
+		$log->info("GRPAUTHMNGService-goG4Chksave________________________end");
 	}
 }
                                                              

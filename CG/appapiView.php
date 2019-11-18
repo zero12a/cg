@@ -11,7 +11,8 @@ include_once('../include/incRequest.php');//CG REQUEST
 <title>앱API</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
-<!--JS 불러오기--><script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
+<!--JS 불러오기-->
+<script src="/lib/feather.min.js" type="text/javascript" charset="UTF-8"></script> <!--FEATHER ICON JS-->
 <script src="/lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="/lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="/lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
@@ -28,12 +29,15 @@ include_once('../include/incRequest.php');//CG REQUEST
 <script src="/lib/codemirror/lib/codemirror.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR1-->
 <script src="/lib/codemirror/mode/sql/sql.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR2-->
 <script src="/lib/codemirror/addon/selection/active-line.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR3-->
-<!--CSS 불러오기--><link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
+
+<!--CSS 불러오기-->
+<link rel="stylesheet" href="../common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="../lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="/lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <link rel="stylesheet" href="/lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
 <link rel="stylesheet" href="/lib/bootstrap-table/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css" type="text/css" charset="UTF-8"><!--CODE MIRROR CSS-->
+<!--공통 js/css-->
 <script src="appapi.js?<?=getRndVal(10)?>"></script>
 <link href="../common/common.css" rel="stylesheet" type="text/css" />
 <script>
@@ -154,7 +158,99 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 			class="table table-bordered table-striped"
 			data-id-field="API_SEQ"			>
 			<thead>
-            </thead>
+				<tr>
+					<th
+						data-field="ROWID"
+						data-sortable="false"
+						data-visible="false"
+						data-align="right"
+						data-width="100"
+						data-width-unit="px"
+						>ROWID</th>
+					<th
+						data-field="ROWCHK"
+						data-width="40" 
+						data-align="center"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>ROWCHK
+					</th>
+					<th
+						data-field="API_SEQ"
+						data-width="60" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>SEQ
+					</th>
+					<th
+						data-field="API_NM"
+						data-width="60" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>NM
+					</th>
+					<th
+						data-field="PGM_ID"
+						data-width="60" 
+						data-align="right"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>ID
+					</th>
+					<th
+						data-field="LINK"
+						data-width="100" 
+						data-align="left"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					data-formatter="bt4TableLinkFormatter"
+					>LINK
+					</th>
+					<th
+						data-field="MULTILINK"
+						data-width="50" 
+						data-align="center"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					data-formatter="bt4TableMultiLinkFormatter"
+					>MULTILINK
+					</th>
+					<th
+						data-field="ADD_DT"
+						data-width="60" 
+						data-align="center"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>ADD
+					</th>
+					<th
+						data-field="MOD_DT"
+						data-width="60" 
+						data-align="center"
+						data-width-unit="px"
+						data-sortable="true" 
+						data-visible="true"
+						data-halign="center"
+					>MOD
+					</th>
+					</tr>            
+				</thead>
         </table>
 		</div>
 		</div>

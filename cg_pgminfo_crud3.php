@@ -3,10 +3,11 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
+    $CFG = include_once "incConfig.php";
 
     include_once("./include/incUtil.php");
 	include_once('./include/incRequest.php');//CG REQUEST    
-    include_once("./incConfig.php");
+    //include_once("./incConfig.php");
 	include_once('./include/incSec.php');//CG SEC    
     include_once("./include/incDB.php");
     include_once("./include/incUser.php");
@@ -27,7 +28,7 @@
     //https://code.google.com/archive/p/php-sql-parser/downloads
 
     
-    include_once($CFG_LIBS_SQL_PARSER);
+    include_once($CFG["CFG_LIBS_SQL_PARSER"]);
 
 
     //ServerViewTxt("N","N","Y","Y");

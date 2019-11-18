@@ -4,13 +4,16 @@
 class filetestDao
 {
 	function __construct(){
-		alog("FiletestDao-__construct");
+		global $log;
+		$log->info("FiletestDao-__construct");
 	}
 	function __destruct(){
-		alog("FiletestDao-__destruct");
+		global $log;
+		$log->info("FiletestDao-__destruct");
 	}
 	function __toString(){
-		alog("FiletestDao-__toString");
+		global $log;
+		$log->info("FiletestDao-__toString");
 	}
 	//insG    
 	public function insG($req){

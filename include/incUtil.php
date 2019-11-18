@@ -3,17 +3,18 @@ libxml_use_internal_errors(true);
 
 function getLogger($arrLog){
     alog("getLogger()...........................start");
-    global $CFG_LIBS_MONO_LOG,$CFG_LIBS_PATH_REDIS,$CFG_AUTH_REDIS,$CFG_LOG_PATH;
+    global $CFG;
+
     
     //로거 사용 (부가 LIBS)
-    if(!require_once($CFG_LIBS_MONO_LOG))die("getLogger() CFG_LIBS_MONO_LOG load fail");
-    if(!require_once($CFG_LIBS_PATH_REDIS))die("getLogger() CFG_LIBS_PATH_REDIS load fail");
+    if(!require_once($CFG["CFG_LIBS_MONO_LOG"]))die("getLogger() CFG_LIBS_MONO_LOG load fail");
+    if(!require_once($CFG["CFG_LIBS_PATH_REDIS"]))die("getLogger() CFG_LIBS_PATH_REDIS load fail");
     
     //로그 관련 객체 생성.(채널 : log_svc, log_make, log_cg, log_batch)
     $redisClient = null;
     alog("RedisClient connection make");
     try{
-        $redisClient = new Predis\Client($CFG_AUTH_REDIS);
+        $redisClient = new Predis\Client($CFG["CFG_AUTH_REDIS"]);
         $redisClient->connect();//연결하기
     }catch(Exception $e) {
         alog("RedisClient connection error : " . $e->getMessage());
@@ -67,7 +68,7 @@ function getLogger($arrLog){
         // Create the logger
         $log = new Monolog\Logger($arrLog["PGM_ID"]);
         // Now add some handlers
-        $stream = new Monolog\Handler\StreamHandler($CFG_LOG_PATH, Monolog\Logger::INFO);
+        $stream = new Monolog\Handler\StreamHandler($CFG["CFG_LOG_PATH"], Monolog\Logger::INFO);
         $stream->setFormatter($formatter);
         $log->pushHandler($stream);        
     }
@@ -230,11 +231,11 @@ function getXml2Array($tXml){
 
 //alog 기본 함수 활용
 function alog($tStr){
-    global $CFG_LOG_PATH;
+    global $CFG;
 
     $s = session_id();
     $t = $_SERVER["PHP_SELF"];
-    error_log(PHP_EOL .date("y.m.d H:i:s") . " [" . $s . "]" . sprintf(" %-20s : %s", substr($t,0,strlen($t)-4) , $tStr) , 3, $CFG_LOG_PATH);
+    error_log(PHP_EOL .date("y.m.d H:i:s") . " [" . $s . "]" . sprintf(" %-20s : %s", substr($t,0,strlen($t)-4) , $tStr) , 3, $CFG["CFG_LOG_PATH"]);
 }
 
 
@@ -257,10 +258,10 @@ function alogRedis($tStr){
 
 //json 파일에 쓰기
 function alogCustom($tStr){
-    global $CFG_LOG_PATH,$_SERVER;
+    global $CFG,$_SERVER;
     $RtnVal = false;
-    if(!($f = fopen($CFG_LOG_PATH, "a+"))) {
-		echo "fopen fail:" . $CFG_LOG_PATH;
+    if(!($f = fopen($CFG["CFG_LOG_PATH"], "a+"))) {
+		echo "fopen fail:" . $CFG["CFG_LOG_PATH"];
 
         $RtnVal = false;
     }else{
@@ -279,10 +280,10 @@ function alogCustom($tStr){
 
 //json 파일에 쓰기
 function mlog($tStr){
-    global $CFG_LOG_PATH2,$_SERVER;
+    global $CFG,$_SERVER;
     $RtnVal = true;
 
-    error_log(PHP_EOL .date("i:s") . sprintf(" %-20s : %s", $_SERVER["PHP_SELF"] , $tStr) , 3, $CFG_LOG_PATH2);
+    error_log(PHP_EOL .date("i:s") . sprintf(" %-20s : %s", $_SERVER["PHP_SELF"] , $tStr) , 3, $CFG["CFG_LOG_PATH2"]);
 
     return $RtnVal;
 }
@@ -350,12 +351,12 @@ function getModArray($inArr,$mod){
 
 //배열을 구분자 문자열로
 function array2pistr($array,$spt){
-    global $CFG_PI_COLIDS ;
+    global $CFG ;
     $T=null;
     $tArr = array();
     for($i=0;$i<sizeof($array);$i++){
         $tStr = (strpos($array[$i],"-")>0)?explode("-",$array[$i])[1]:$array[$i];
-        if(in_array($tStr,$CFG_PI_COLIDS)){
+        if(in_array($tStr,$CFG["CFG_PI_COLIDS"])){
             if(!in_array($tStr,$tArr)){
                 array_push($tArr,$tStr);
                 $T.= ($T!=null)?$spt:"";            
@@ -478,7 +479,7 @@ function makeConfigArray($tFilePath, $tArray){
             while (list ($key, $val) = each ($tArray) ) {
                 //echo $val;
 
-                if( !fwrite($f, sprintf("\$CFG_%s = \"%s\";\n",$key,$val)) ) {
+                if( !fwrite($f, sprintf("\$CFG[\"CFG_%s\"] = \"%s\";\n",$key,$val)) ) {
                     $RtnVal = false;
                 }else{
                     $RtnVal = true;

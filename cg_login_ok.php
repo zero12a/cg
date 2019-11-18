@@ -4,7 +4,7 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
 
-require_once("./incConfig.php");
+$CFG = include_once("./incConfig.php");
 
 if(!include_once './include/incUtil.php')		echo "include fail(3)";
 

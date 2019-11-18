@@ -4,13 +4,16 @@
 class pgmsearchDao
 {
 	function __construct(){
-		alog("PgmsearchDao-__construct");
+		global $log;
+		$log->info("PgmsearchDao-__construct");
 	}
 	function __destruct(){
-		alog("PgmsearchDao-__destruct");
+		global $log;
+		$log->info("PgmsearchDao-__destruct");
 	}
 	function __toString(){
-		alog("PgmsearchDao-__toString");
+		global $log;
+		$log->info("PgmsearchDao-__toString");
 	}
 	//PGM    
 	public function selPgmG($req){

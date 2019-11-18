@@ -4,13 +4,16 @@
 class intronormalDao
 {
 	function __construct(){
-		alog("IntronormalDao-__construct");
+		global $log;
+		$log->info("IntronormalDao-__construct");
 	}
 	function __destruct(){
-		alog("IntronormalDao-__destruct");
+		global $log;
+		$log->info("IntronormalDao-__destruct");
 	}
 	function __toString(){
-		alog("IntronormalDao-__toString");
+		global $log;
+		$log->info("IntronormalDao-__toString");
 	}
 	//lock    
 	public function sLockG($req){

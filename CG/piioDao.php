@@ -4,13 +4,16 @@
 class piioDao
 {
 	function __construct(){
-		alog("PiioDao-__construct");
+		global $log;
+		$log->info("PiioDao-__construct");
 	}
 	function __destruct(){
-		alog("PiioDao-__destruct");
+		global $log;
+		$log->info("PiioDao-__destruct");
 	}
 	function __toString(){
-		alog("PiioDao-__toString");
+		global $log;
+		$log->info("PiioDao-__toString");
 	}
 	//delIoF    
 	public function delIoF($req){

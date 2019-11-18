@@ -4,13 +4,16 @@
 class ddiomngDao
 {
 	function __construct(){
-		alog("DdiomngDao-__construct");
+		global $log;
+		$log->info("DdiomngDao-__construct");
 	}
 	function __destruct(){
-		alog("DdiomngDao-__destruct");
+		global $log;
+		$log->info("DdiomngDao-__destruct");
 	}
 	function __toString(){
-		alog("DdiomngDao-__toString");
+		global $log;
+		$log->info("DdiomngDao-__toString");
 	}
 	//SIZE    
 	public function selSizeG($req){

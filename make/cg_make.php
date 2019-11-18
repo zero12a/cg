@@ -9,7 +9,7 @@
 header("Content-Type: text/html; charset=UTF-8");
 
 //설정 함수 읽기
-if(!include_once '../incConfig.php')	        echo "include fail(1)";
+$CFG = include_once '../incConfig.php';
 if(!include_once '../include/incDB.php')			echo "include fail(2)";
 if(!include_once '../include/incUtil.php')		echo "include fail(3)";
 if(!include_once '../include/incSec.php')		echo "include fail(4)";
@@ -61,9 +61,9 @@ $reqToken = $_GET["TOKEN"];
 
 //비동기 요청일때만 분산캐쉬
 if($reqToken != ""){
-    require_once($CFG_LIBS_PATH_REDIS);
+    require_once($CFG["CFG_LIBS_PATH_REDIS"]);
     Predis\Autoloader::register();
-    $redis = new Predis\Client($CFG_AUTH_REDIS);   
+    $redis = new Predis\Client($CFG["CFG_AUTH_REDIS"]);   
     $REQ["REQTYPE"] = "ASYNC";
 }else{
     $REQ["REQTYPE"] = "SINGLE";

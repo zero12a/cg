@@ -1,4 +1,4 @@
-//글로벌 변수 선언	
+//글로벌 변수 선언
 //버틀 그룹쪽에서 컨틀롤러 호출
 var url_G1_USERDEF = "filetestController?CTLGRP=G1&CTLFNC=USERDEF";
 //버틀 그룹쪽에서 컨틀롤러 호출
@@ -335,6 +335,12 @@ function G1_RESET(){
 	alog("G1_RESET--------------------------start");
 	$('#condition')[0].reset();
 }
+//사용자정의함수 : 사용자정의
+function G1_USERDEF(token){
+	alog("G1_USERDEF-----------------start");
+
+	alog("G1_USERDEF-----------------end");
+}
 //컨디션, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -366,12 +372,6 @@ function G1_SAVE(){
 		}
 	});
 	alog("G1_SAVE-------------------end");	
-}
-//사용자정의함수 : 사용자정의
-function G1_USERDEF(token){
-	alog("G1_USERDEF-----------------start");
-
-	alog("G1_USERDEF-----------------end");
 }
 function G4_SEARCH(tinput,token){
        alog("(BIVIEW) G4_SEARCH---------------start");
@@ -651,17 +651,17 @@ function G7_SEARCH(tinput,token){
         alog("G2_SEARCH()------------end");
     }
 
-    function G2_ROWDELETE(){	
-        alog("G2_ROWDELETE()------------start");
-        delRow(mygridG2);
-        alog("G2_ROWDELETE()------------start");
-    }
 //사용자정의함수 : 사용자정의
 function G2_USERDEF(token){
 	alog("G2_USERDEF-----------------start");
 
 	alog("G2_USERDEF-----------------end");
 }
+    function G2_ROWDELETE(){	
+        alog("G2_ROWDELETE()------------start");
+        delRow(mygridG2);
+        alog("G2_ROWDELETE()------------start");
+    }
 //행추가3 (그리드)	
 //그리드 행추가 : 그리드
 	function G2_ROWADD(){
@@ -734,29 +734,6 @@ function G2_USERDEF(token){
 	}
 			}
 	}
-//	
-function G3_NEW2(){
-       alog("[FromView] G3_NEW2---------------start");
-	$("#G3-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G3-FILESEQ").val("");//FILESEQ 신규초기화	
-				$("#G3-FILE1-LINK").attr("href","");//파일1 NEW
-				$("#G3-FILE1-NM").text("");//파일1 NEW
-			$("#G3-LINKVIEW-LINK").attr("href","");//링크뷰 신규
-			$("#G3-LINKVIEW-NM").text("");//링크뷰 신규
-			$("#DIV_G3-LINKVIEW").css("display", "none");
-			$("#G3-HIDDENLINK-LINK").attr("href","");//히든링크 신규
-			$("#G3-HIDDENLINK-NM").text("");//히든링크 신규
-			$("#DIV_G3-HIDDENLINK").css("display", "none");
-
-       alog("DETAILNew30---------------end");
-}
-//사용자정의함수 : 사용자정의
-function G3_USERDEF(token){
-	alog("G3_USERDEF-----------------start");
-
-	alog("G3_USERDEF-----------------end");
-}
 //디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
@@ -854,6 +831,29 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
+}
+//	
+function G3_NEW2(){
+       alog("[FromView] G3_NEW2---------------start");
+	$("#G3-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G3-FILESEQ").val("");//FILESEQ 신규초기화	
+				$("#G3-FILE1-LINK").attr("href","");//파일1 NEW
+				$("#G3-FILE1-NM").text("");//파일1 NEW
+			$("#G3-LINKVIEW-LINK").attr("href","");//링크뷰 신규
+			$("#G3-LINKVIEW-NM").text("");//링크뷰 신규
+			$("#DIV_G3-LINKVIEW").css("display", "none");
+			$("#G3-HIDDENLINK-LINK").attr("href","");//히든링크 신규
+			$("#G3-HIDDENLINK-NM").text("");//히든링크 신규
+			$("#DIV_G3-HIDDENLINK").css("display", "none");
+
+       alog("DETAILNew30---------------end");
+}
+//사용자정의함수 : 사용자정의
+function G3_USERDEF(token){
+	alog("G3_USERDEF-----------------start");
+
+	alog("G3_USERDEF-----------------end");
 }
 //G3_SAVE
 	//IO_FILE_YN = Y	

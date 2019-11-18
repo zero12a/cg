@@ -4,13 +4,16 @@
 class bomainDao
 {
 	function __construct(){
-		alog("BomainDao-__construct");
+		global $log;
+		$log->info("BomainDao-__construct");
 	}
 	function __destruct(){
-		alog("BomainDao-__destruct");
+		global $log;
+		$log->info("BomainDao-__destruct");
 	}
 	function __toString(){
-		alog("BomainDao-__toString");
+		global $log;
+		$log->info("BomainDao-__toString");
 	}
 	//API찾기    
 	public function apiSearch($req){

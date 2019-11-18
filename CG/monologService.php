@@ -32,7 +32,7 @@ class monologService
 	}
 	//, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME, $log;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -47,7 +47,7 @@ class monologService
 	}
 	//로그, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME, $log;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -84,7 +84,7 @@ class monologService
 	}
 	//로그, 엑셀다운로드
 	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME, $log;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
@@ -99,7 +99,7 @@ class monologService
 	}
 	//상세, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME, $log;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;

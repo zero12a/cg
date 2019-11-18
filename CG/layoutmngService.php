@@ -10,7 +10,8 @@ class layoutmngService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("LayoutmngService-__construct");
+		global $log;
+		$log->info("LayoutmngService-__construct");
 
 		$this->DAO = new layoutmngDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class layoutmngService
 	}
 	//파괴자
 	function __destruct(){
-		alog("LayoutmngService-__destruct");
+		global $log;
+		$log->info("LayoutmngService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("LayoutmngService-__toString");
+		global $log;
+		$log->info("LayoutmngService-__toString");
 	}
 	//, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG1Searchall________________________start");
+		$log->info("LAYOUTMNGService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG1Searchall________________________end");
+		$log->info("LAYOUTMNGService-goG1Searchall________________________end");
 	}
 	//, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG1Save________________________start");
+		$log->info("LAYOUTMNGService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG1Save________________________end");
+		$log->info("LAYOUTMNGService-goG1Save________________________end");
 	}
 	//LAYOUT, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG2Search________________________start");
+		$log->info("LAYOUTMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -80,7 +83,7 @@ class layoutmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -92,17 +95,17 @@ class layoutmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG2Search________________________end");
+		$log->info("LAYOUTMNGService-goG2Search________________________end");
 	}
 	//LAYOUT, 저장
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG2Save________________________start");
+		$log->info("LAYOUTMNGService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -123,7 +126,7 @@ class layoutmngService
 		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -140,47 +143,47 @@ class layoutmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG2Save________________________end");
+		$log->info("LAYOUTMNGService-goG2Save________________________end");
 	}
 	//LAYOUT, 엑셀다운로드
 	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG2Excel________________________start");
+		$log->info("LAYOUTMNGService-goG2Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG2Excel________________________end");
+		$log->info("LAYOUTMNGService-goG2Excel________________________end");
 	}
 	//LAYOUT, 선택저장
 	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG2Chksave________________________start");
+		$log->info("LAYOUTMNGService-goG2Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG2Chksave________________________end");
+		$log->info("LAYOUTMNGService-goG2Chksave________________________end");
 	}
 	//LAYOUTD, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG3Search________________________start");
+		$log->info("LAYOUTMNGService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -195,7 +198,7 @@ class layoutmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -207,17 +210,17 @@ class layoutmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG3Search________________________end");
+		$log->info("LAYOUTMNGService-goG3Search________________________end");
 	}
 	//LAYOUTD, 저장
 	public function goG3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG3Save________________________start");
+		$log->info("LAYOUTMNGService-goG3Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -238,7 +241,7 @@ class layoutmngService
 		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -255,37 +258,37 @@ class layoutmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG3Save________________________end");
+		$log->info("LAYOUTMNGService-goG3Save________________________end");
 	}
 	//LAYOUTD, 엑셀다운로드
 	public function goG3Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG3Excel________________________start");
+		$log->info("LAYOUTMNGService-goG3Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG3Excel________________________end");
+		$log->info("LAYOUTMNGService-goG3Excel________________________end");
 	}
 	//LAYOUTD, 선택저장
 	public function goG3Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("LAYOUTMNGService-goG3Chksave________________________start");
+		$log->info("LAYOUTMNGService-goG3Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("LAYOUTMNGService-goG3Chksave________________________end");
+		$log->info("LAYOUTMNGService-goG3Chksave________________________end");
 	}
 }
                                                              

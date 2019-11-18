@@ -9,7 +9,7 @@
 header("Content-Type: text/html; charset=UTF-8");
 
 //설정 함수 읽기
-if(!include_once './incConfig.php')	        echo "include fail(1)";
+$CFG = include_once './incConfig.php';
 if(!include_once './include/incDB.php')			echo "include fail(2)";
 if(!include_once './include/incUtil.php')		echo "include fail(3)";
 if(!include_once './include/incSec.php')		echo "include fail(4)";

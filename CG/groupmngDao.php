@@ -4,13 +4,16 @@
 class groupmngDao
 {
 	function __construct(){
-		alog("GroupmngDao-__construct");
+		global $log;
+		$log->info("GroupmngDao-__construct");
 	}
 	function __destruct(){
-		alog("GroupmngDao-__destruct");
+		global $log;
+		$log->info("GroupmngDao-__destruct");
 	}
 	function __toString(){
-		alog("GroupmngDao-__toString");
+		global $log;
+		$log->info("GroupmngDao-__toString");
 	}
 	//insGrpG    
 	public function insGrpG($req){

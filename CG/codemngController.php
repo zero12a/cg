@@ -4,27 +4,32 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 $_RTIME = array();
 array_push($_RTIME,array("[TIME 00.START]",microtime(true)));
+$CFG = include_once('./incConfig.CG.php');//CG CONFIG
 include_once('codemngService.php');
 
 array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
 include_once('../include/incUtil.php');//CG UTIL
-	include_once('../include/incRequest.php');//CG REQUEST
-	include_once('../include/incDB.php');//CG DB
-	include_once('../include/incSec.php');//CG SEC
-	include_once('./incConfig.CG.php');//CG CONFIG
-	include_once('../include/incAuth.php');//CG AUTH
-	include_once('../include/incUser.php');//CG USER
-	//하위에서 LOADDING LIB 처리
+include_once('../include/incRequest.php');//CG REQUEST
+include_once('../include/incDB.php');//CG DB
+include_once('../include/incSec.php');//CG SEC
+include_once('../include/incAuth.php');//CG AUTH
+include_once('../include/incUser.php');//CG USER
+//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
-alog("CodemngControl___________________________start");
-
 $reqToken = reqGetString("TOKEN",37);
 $resToken = uniqid();
-alog("reqToken : " . $reqToken);
-alog("resToken : " . $resToken);
 
-$objAuth = new authObject();	
-	
+$log = getLogger(
+	array(
+	"LIST_NM"=>"log_CG"
+	, "PGM_ID"=>"CODEMNG"
+	, "REQTOKEN" => $reqToken
+	, "RESTOKEN" => $resToken
+	)
+);
+$log->info("CodemngControl___________________________start");
+$objAuth = new authObject();
+
 
 //컨트롤 명령 받기
 $ctl = "";
@@ -203,7 +208,7 @@ array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new codemngService();
 	//컨트롤 명령별 분개처리
-alog("ctl:" . $ctl);
+$log->info("ctl:" . $ctl);
 switch ($ctl){
 			case "G1_SAVE" :
   		echo $objService->goG1Save(); //1, 저장
@@ -244,14 +249,14 @@ if($PGM_CFG["SECTYPE"] == "POWER" || $PGM_CFG["SECTYPE"] == "PI") $objAuth->logU
 	array_push($_RTIME,array("[TIME 60.AUGHD_LOG]",microtime(true)));
 //실행시간 검사
 for($j=1;$j<sizeof($_RTIME);$j++){
-	alog( $_RTIME[$j][0] . " " . number_format($_RTIME[$j][1]-$_RTIME[$j-1][1],4) );
+	$log->debug( $_RTIME[$j][0] . " " . number_format($_RTIME[$j][1]-$_RTIME[$j-1][1],4) );
 
-	if($j == sizeof($_RTIME)-1) alog( "RUN TIME : " . number_format($_RTIME[$j][1]-$_RTIME[0][1],4) );
+	if($j == sizeof($_RTIME)-1) $log->debug( "RUN TIME : " . number_format($_RTIME[$j][1]-$_RTIME[0][1],4) );
 }
 //서비스 클래스 비우기
 unset($objService);
 unset($objAuth);
 
-alog("CodemngControl___________________________end");
-
-?>	
+$log->info("CodemngControl___________________________end");
+$log->close(); unset($log);
+?>

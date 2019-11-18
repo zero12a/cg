@@ -10,7 +10,8 @@ class appapiService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("AppapiService-__construct");
+		global $log;
+		$log->info("AppapiService-__construct");
 
 		$this->DAO = new appapiDao();
 	    //$this->DB = db_s_open();
@@ -18,24 +19,26 @@ class appapiService
 	}
 	//파괴자
 	function __destruct(){
-		alog("AppapiService-__destruct");
+		global $log;
+		$log->info("AppapiService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("AppapiService-__toString");
+		global $log;
+		$log->info("AppapiService-__toString");
 	}
 	//컨디션1, 저장
 	public function goC2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("APPAPIService-goC2Save________________________start");
+		$log->info("APPAPIService-goC2Save________________________start");
 		//FORMVIEW SAVE
 		$grpId="F4";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
@@ -48,7 +51,7 @@ class appapiService
 		if(strlen($REQ["C2-MYFILE-NM"]) > 4  && isAllowExtension($REQ["C2-MYFILE-NM"],$t_allow_extension=array("jpg", "gif", "png","peng","bmp","svg","xls","xlsx","doc","docx","ppt","pptx","pdf","hwp","txt"))){
 			
 			$REQ["C2-MYFILE-SVRNM"] = getFileSvrNm($REQ["C2-MYFILE-NM"], $t_prefix="PIC_");
-			$MYFILE1 = $CFG_UPLOAD_DIR . $REQ["C2-MYFILE-SVRNM"];
+			$MYFILE1 = $CFG["CFG_UPLOAD_DIR"] . $REQ["C2-MYFILE-SVRNM"];
 			alog("###### MYFILE1 : " . $MYFILE1 );
 
 			if(!move_uploaded_file($REQ["C2-MYFILE-TMPNM"], $MYFILE1)){
@@ -69,12 +72,12 @@ class appapiService
 				case "U":
 					break;
 				default : 
-					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
+					$log->info("(SVC) FNCTYPE을 찾을수 없습니다.");
 			}
 			//필수 여부 검사
 			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
 			if($tmpVal->RTN_CD == "500"){
-				alog("requireFormview - fail.");
+				$log->info("requireFormview - fail.");
 				$tmpVal->GRPID = $grpId;
 				echo json_encode($tmpVal);
 				exit;
@@ -92,17 +95,17 @@ class appapiService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("APPAPIService-goC2Save________________________end");
+		$log->info("APPAPIService-goC2Save________________________end");
 	}
 	//그리드1, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("APPAPIService-goG3Search________________________start");
+		$log->info("APPAPIService-goG3Search________________________start");
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
 		$GRID["GRPTYPE"] = "GRID_BOOTSTRAP";
@@ -115,7 +118,7 @@ class appapiService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -127,17 +130,17 @@ class appapiService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("APPAPIService-goG3Search________________________end");
+		$log->info("APPAPIService-goG3Search________________________end");
 	}
 	//그리드1, 11
 	public function goG3Chksave2(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("APPAPIService-goG3Chksave2________________________start");
+		$log->info("APPAPIService-goG3Chksave2________________________start");
 		//GRID_CHK_SAVE____________________________start
 		$GRID["SQL"] = array();
 		$grpId="G3";
@@ -155,17 +158,17 @@ class appapiService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("APPAPIService-goG3Chksave2________________________end");
+		$log->info("APPAPIService-goG3Chksave2________________________end");
 	}
 	//폼뷰1, 조회
 	public function goF4Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("APPAPIService-goF4Search________________________start");
+		$log->info("APPAPIService-goF4Search________________________start");
 //FORMVIEW SEARCH
 		$grpId="F4";
 	//암호화컬럼
@@ -177,7 +180,7 @@ class appapiService
 		//필수 여부 검사
 		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireFormview - fail.");
+			$log->info("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -188,17 +191,17 @@ class appapiService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("APPAPIService-goF4Search________________________end");
+		$log->info("APPAPIService-goF4Search________________________end");
 	}
 	//폼뷰1, 저장
 	public function goF4Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("APPAPIService-goF4Save________________________start");
+		$log->info("APPAPIService-goF4Save________________________start");
 		//FORMVIEW SAVE
 		$grpId="F4";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
@@ -211,7 +214,7 @@ class appapiService
 		if(strlen($REQ["F4-MYFILE-NM"]) > 4  && isAllowExtension($REQ["F4-MYFILE-NM"],$t_allow_extension=array("jpg", "gif", "png","peng","bmp","svg","xls","xlsx","doc","docx","ppt","pptx","pdf","hwp","txt"))){
 			
 			$REQ["F4-MYFILE-SVRNM"] = getFileSvrNm($REQ["F4-MYFILE-NM"], $t_prefix="PIC_");
-			$MYFILE1 = $CFG_UPLOAD_DIR . $REQ["F4-MYFILE-SVRNM"];
+			$MYFILE1 = $CFG["CFG_UPLOAD_DIR"] . $REQ["F4-MYFILE-SVRNM"];
 			alog("###### MYFILE1 : " . $MYFILE1 );
 
 			if(!move_uploaded_file($REQ["F4-MYFILE-TMPNM"], $MYFILE1)){
@@ -228,18 +231,18 @@ class appapiService
 			$FORMVIEW["SQL"] = array();
 			switch($FORMVIEW["FNCTYPE"]){
 				case "C":
-				array_push($FORMVIEW["SQL"],$this->DAO->insApi($REQ)); 
-						break;
+					array_push($FORMVIEW["SQL"],$this->DAO->insApi($REQ)); 
+					break;
 				case "U":
 					array_push($FORMVIEW["SQL"],$this->DAO->updApi($REQ));
 					break;
 				default : 
-					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
+					$log->info("(SVC) FNCTYPE을 찾을수 없습니다.");
 			}
 			//필수 여부 검사
 			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
 			if($tmpVal->RTN_CD == "500"){
-				alog("requireFormview - fail.");
+				$log->info("requireFormview - fail.");
 				$tmpVal->GRPID = $grpId;
 				echo json_encode($tmpVal);
 				exit;
@@ -257,17 +260,17 @@ class appapiService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("APPAPIService-goF4Save________________________end");
+		$log->info("APPAPIService-goF4Save________________________end");
 	}
 	//폼뷰1, 삭제
 	public function goF4Delete(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("APPAPIService-goF4Delete________________________start");
+		$log->info("APPAPIService-goF4Delete________________________start");
 //FORMVIEW DELETE
 		$grpId="F4";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId."-CTLCUD"]; 
@@ -276,7 +279,7 @@ class appapiService
 		//필수 여부 검사
 		$tmpVal = requireFormviewSave($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"] );
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireFormviewSave - fail.");
+			$log->info("requireFormviewSave - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -290,7 +293,7 @@ class appapiService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("APPAPIService-goF4Delete________________________end");
+		$log->info("APPAPIService-goF4Delete________________________end");
 	}
 }
                                                              

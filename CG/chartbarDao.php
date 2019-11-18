@@ -4,13 +4,16 @@
 class chartbarDao
 {
 	function __construct(){
-		alog("ChartbarDao-__construct");
+		global $log;
+		$log->info("ChartbarDao-__construct");
 	}
 	function __destruct(){
-		alog("ChartbarDao-__destruct");
+		global $log;
+		$log->info("ChartbarDao-__destruct");
 	}
 	function __toString(){
-		alog("ChartbarDao-__toString");
+		global $log;
+		$log->info("ChartbarDao-__toString");
 	}
 	//LOGIN    
 	public function sLogin($req){

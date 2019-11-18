@@ -10,7 +10,8 @@ class pisqlService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("PisqlService-__construct");
+		global $log;
+		$log->info("PisqlService-__construct");
 
 		$this->DAO = new pisqlDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class pisqlService
 	}
 	//파괴자
 	function __destruct(){
-		alog("PisqlService-__destruct");
+		global $log;
+		$log->info("PisqlService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("PisqlService-__toString");
+		global $log;
+		$log->info("PisqlService-__toString");
 	}
 	//, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG1Searchall________________________start");
+		$log->info("PISQLService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG1Searchall________________________end");
+		$log->info("PISQLService-goG1Searchall________________________end");
 	}
 	//, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG1Save________________________start");
+		$log->info("PISQLService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG1Save________________________end");
+		$log->info("PISQLService-goG1Save________________________end");
 	}
 	//, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG2Search________________________start");
+		$log->info("PISQLService-goG2Search________________________start");
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
 		$GRID["GRPTYPE"] = "GRID_BOOTSTRAP";
@@ -78,7 +81,7 @@ class pisqlService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -90,32 +93,32 @@ class pisqlService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG2Search________________________end");
+		$log->info("PISQLService-goG2Search________________________end");
 	}
 	//, 선택저장
 	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG2Chksave________________________start");
+		$log->info("PISQLService-goG2Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG2Chksave________________________end");
+		$log->info("PISQLService-goG2Chksave________________________end");
 	}
 	//, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG3Search________________________start");
+		$log->info("PISQLService-goG3Search________________________start");
 //FORMVIEW SEARCH
 		$grpId="G3";
 	//암호화컬럼
@@ -127,7 +130,7 @@ class pisqlService
 		//필수 여부 검사
 		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireFormview - fail.");
+			$log->info("requireFormview - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -138,17 +141,17 @@ class pisqlService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG3Search________________________end");
+		$log->info("PISQLService-goG3Search________________________end");
 	}
 	//, 저장
 	public function goG3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG3Save________________________start");
+		$log->info("PISQLService-goG3Save________________________start");
 		//FORMVIEW SAVE
 		$grpId="G3";
 		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
@@ -168,12 +171,12 @@ class pisqlService
 					array_push($FORMVIEW["SQL"],$this->DAO->updSqlF($REQ));
 					break;
 				default : 
-					alog("(SVC) FNCTYPE을 찾을수 없습니다.");
+					$log->info("(SVC) FNCTYPE을 찾을수 없습니다.");
 			}
 			//필수 여부 검사
 			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
 			if($tmpVal->RTN_CD == "500"){
-				alog("requireFormview - fail.");
+				$log->info("requireFormview - fail.");
 				$tmpVal->GRPID = $grpId;
 				echo json_encode($tmpVal);
 				exit;
@@ -191,22 +194,22 @@ class pisqlService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG3Save________________________end");
+		$log->info("PISQLService-goG3Save________________________end");
 	}
 	//, 삭제
 	public function goG3Delete(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("PISQLService-goG3Delete________________________start");
+		$log->info("PISQLService-goG3Delete________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("PISQLService-goG3Delete________________________end");
+		$log->info("PISQLService-goG3Delete________________________end");
 	}
 }
                                                              

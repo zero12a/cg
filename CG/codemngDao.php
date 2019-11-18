@@ -4,13 +4,16 @@
 class codemngDao
 {
 	function __construct(){
-		alog("CodemngDao-__construct");
+		global $log;
+		$log->info("CodemngDao-__construct");
 	}
 	function __destruct(){
-		alog("CodemngDao-__destruct");
+		global $log;
+		$log->info("CodemngDao-__destruct");
 	}
 	function __toString(){
-		alog("CodemngDao-__toString");
+		global $log;
+		$log->info("CodemngDao-__toString");
 	}
 	//DTL    
 	public function delDtlG($req){

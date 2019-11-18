@@ -4,13 +4,16 @@
 class pipgmDao
 {
 	function __construct(){
-		alog("PipgmDao-__construct");
+		global $log;
+		$log->info("PipgmDao-__construct");
 	}
 	function __destruct(){
-		alog("PipgmDao-__destruct");
+		global $log;
+		$log->info("PipgmDao-__destruct");
 	}
 	function __toString(){
-		alog("PipgmDao-__toString");
+		global $log;
+		$log->info("PipgmDao-__toString");
 	}
 	//insPgmF    
 	public function insPgmF($req){

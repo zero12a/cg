@@ -4,13 +4,16 @@
 class pisqldDao
 {
 	function __construct(){
-		alog("PisqldDao-__construct");
+		global $log;
+		$log->info("PisqldDao-__construct");
 	}
 	function __destruct(){
-		alog("PisqldDao-__destruct");
+		global $log;
+		$log->info("PisqldDao-__destruct");
 	}
 	function __toString(){
-		alog("PisqldDao-__toString");
+		global $log;
+		$log->info("PisqldDao-__toString");
 	}
 	//selSqlF    
 	public function selSqlF($req){

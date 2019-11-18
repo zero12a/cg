@@ -4,13 +4,16 @@
 class pjtcopyDao
 {
 	function __construct(){
-		alog("PjtcopyDao-__construct");
+		global $log;
+		$log->info("PjtcopyDao-__construct");
 	}
 	function __destruct(){
-		alog("PjtcopyDao-__destruct");
+		global $log;
+		$log->info("PjtcopyDao-__destruct");
 	}
 	function __toString(){
-		alog("PjtcopyDao-__toString");
+		global $log;
+		$log->info("PjtcopyDao-__toString");
 	}
 	//CopyCFG    
 	public function iFromCFG($req){

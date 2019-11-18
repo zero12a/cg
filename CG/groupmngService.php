@@ -10,7 +10,8 @@ class groupmngService
 	private $DB;
 	//생성자
 	function __construct(){
-		alog("GroupmngService-__construct");
+		global $log;
+		$log->info("GroupmngService-__construct");
 
 		$this->DAO = new groupmngDao();
 	    //$this->DB = db_s_open();
@@ -18,54 +19,56 @@ class groupmngService
 	}
 	//파괴자
 	function __destruct(){
-		alog("GroupmngService-__destruct");
+		global $log;
+		$log->info("GroupmngService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
-		alog("GroupmngService-__toString");
+		global $log;
+		$log->info("GroupmngService-__toString");
 	}
 	//조회조건, 조회(전체)
 	public function goG1Searchall(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GROUPMNGService-goG1Searchall________________________start");
+		$log->info("GROUPMNGService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GROUPMNGService-goG1Searchall________________________end");
+		$log->info("GROUPMNGService-goG1Searchall________________________end");
 	}
 	//조회조건, 저장
 	public function goG1Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GROUPMNGService-goG1Save________________________start");
+		$log->info("GROUPMNGService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GROUPMNGService-goG1Save________________________end");
+		$log->info("GROUPMNGService-goG1Save________________________end");
 	}
 	//그룹목록, 조회
 	public function goG2Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GROUPMNGService-goG2Search________________________start");
+		$log->info("GROUPMNGService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
@@ -80,7 +83,7 @@ class groupmngService
 		//필수 여부 검사
 		$tmpVal = requireGridSearchArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -92,17 +95,17 @@ class groupmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GROUPMNGService-goG2Search________________________end");
+		$log->info("GROUPMNGService-goG2Search________________________end");
 	}
 	//그룹목록, 저장
 	public function goG2Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GROUPMNGService-goG2Save________________________start");
+		$log->info("GROUPMNGService-goG2Save________________________start");
 		//GRID_SAVE____________________________start
 		$GRID["SQL"]["C"] = array();
 		$GRID["SQL"]["U"] = array();
@@ -121,7 +124,7 @@ class groupmngService
 		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
-			alog("requireGrid - fail.");
+			$log->info("requireGrid - fail.");
 			$tmpVal->GRPID = $grpId;
 			echo json_encode($tmpVal);
 			exit;
@@ -138,82 +141,82 @@ class groupmngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GROUPMNGService-goG2Save________________________end");
+		$log->info("GROUPMNGService-goG2Save________________________end");
 	}
 	//그룹목록, 엑셀다운로드
 	public function goG2Excel(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GROUPMNGService-goG2Excel________________________start");
+		$log->info("GROUPMNGService-goG2Excel________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GROUPMNGService-goG2Excel________________________end");
+		$log->info("GROUPMNGService-goG2Excel________________________end");
 	}
 	//그룹목록, 선택저장
 	public function goG2Chksave(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GROUPMNGService-goG2Chksave________________________start");
+		$log->info("GROUPMNGService-goG2Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GROUPMNGService-goG2Chksave________________________end");
+		$log->info("GROUPMNGService-goG2Chksave________________________end");
 	}
 	//그룹상세, 조회
 	public function goG3Search(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GROUPMNGService-goG3Search________________________start");
+		$log->info("GROUPMNGService-goG3Search________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GROUPMNGService-goG3Search________________________end");
+		$log->info("GROUPMNGService-goG3Search________________________end");
 	}
 	//그룹상세, 저장
 	public function goG3Save(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GROUPMNGService-goG3Save________________________start");
+		$log->info("GROUPMNGService-goG3Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GROUPMNGService-goG3Save________________________end");
+		$log->info("GROUPMNGService-goG3Save________________________end");
 	}
 	//그룹상세, 삭제
 	public function goG3Delete(){
-		global $REQ,$CFG_UPLOAD_DIR,$_RTIME;
+		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
 		$tmpVal = null;
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		alog("GROUPMNGService-goG3Delete________________________start");
+		$log->info("GROUPMNGService-goG3Delete________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		alog("GROUPMNGService-goG3Delete________________________end");
+		$log->info("GROUPMNGService-goG3Delete________________________end");
 	}
 }
                                                              

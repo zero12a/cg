@@ -4,13 +4,16 @@
 class introadminDao
 {
 	function __construct(){
-		alog("IntroadminDao-__construct");
+		global $log;
+		$log->info("IntroadminDao-__construct");
 	}
 	function __destruct(){
-		alog("IntroadminDao-__destruct");
+		global $log;
+		$log->info("IntroadminDao-__destruct");
 	}
 	function __toString(){
-		alog("IntroadminDao-__toString");
+		global $log;
+		$log->info("IntroadminDao-__toString");
 	}
 	//iMonthG    
 	public function iMonthG($req){

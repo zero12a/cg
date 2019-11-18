@@ -4,13 +4,16 @@
 class loginDao
 {
 	function __construct(){
-		alog("LoginDao-__construct");
+		global $log;
+		$log->info("LoginDao-__construct");
 	}
 	function __destruct(){
-		alog("LoginDao-__destruct");
+		global $log;
+		$log->info("LoginDao-__destruct");
 	}
 	function __toString(){
-		alog("LoginDao-__toString");
+		global $log;
+		$log->info("LoginDao-__toString");
 	}
 	//getUsr    
 	public function getUsr($req){
