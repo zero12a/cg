@@ -16,15 +16,20 @@ include_once('../include/incUtil.php');//CG UTIL
 	include_once('../include/incUser.php');//CG USER
 	//하위에서 LOADDING LIB 처리
 	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
-alog("MonologControl___________________________start");
-
 $reqToken = reqGetString("TOKEN",37);
 $resToken = uniqid();
-alog("reqToken : " . $reqToken);
-alog("resToken : " . $resToken);
 
-$objAuth = new authObject();	
-	
+$log = getLogger(
+	array(
+	"LIST_NM"=>"log_CG"
+	, "PGM_ID"=>"MONOLOG"
+	, "REQTOKEN" => $reqToken
+	, "RESTOKEN" => $resToken
+	)
+);
+$log->info("MonologControl___________________________start");
+$objAuth = new authObject();
+
 
 //컨트롤 명령 받기
 $ctl = "";
@@ -56,9 +61,11 @@ if(!isLogin()){
 $PGM_CFG["SECTYPE"] = "NORMAL";
 $PGM_CFG["SQLTXT"] = array();
 array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
+$REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 
 //FILE먼저 : G1, 
 //FILE먼저 : G2, 로그
+//FILE먼저 : G3, 상세
 
 //G1, 
 $REQ["G1-ADDDT"] = reqPostString("G1-ADDDT",14);//ADDDT	
@@ -79,6 +86,10 @@ $REQ["G2-URL"] = reqPostString("G2-URL",50);//URL
 $REQ["G2-URL"] = getFilter($REQ["G2-URL"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-SESSIONID"] = reqPostString("G2-SESSIONID",30);//SESSION	
 $REQ["G2-SESSIONID"] = getFilter($REQ["G2-SESSIONID"],"SAFETEXT","/--미 정의--/");	
+$REQ["G2-REQTOKEN"] = reqPostString("G2-REQTOKEN",100);//REQTOKEN	
+$REQ["G2-REQTOKEN"] = getFilter($REQ["G2-REQTOKEN"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G2-RESTOKEN"] = reqPostString("G2-RESTOKEN",100);//RESTOKEN	
+$REQ["G2-RESTOKEN"] = getFilter($REQ["G2-RESTOKEN"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-USERID"] = reqPostString("G2-USERID",50);//ID	
 $REQ["G2-USERID"] = getFilter($REQ["G2-USERID"],"SAFETEXT","/--미 정의--/");	
 $REQ["G2-USERSEQ"] = reqPostNumber("G2-USERSEQ",20);//USERSEQ	
@@ -95,17 +106,25 @@ $REQ["G2-CHANNEL"] = reqPostString("G2-CHANNEL",30);//PGMID
 $REQ["G2-CHANNEL"] = getFilter($REQ["G2-CHANNEL"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-ADDDT"] = reqPostString("G2-ADDDT",14);//ADDDT	
 $REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
+
+//G3, 상세
+$REQ["G3-LOGSEQ"] = reqPostNumber("G3-LOGSEQ",30);//SEQ	
+$REQ["G3-LOGSEQ"] = getFilter($REQ["G3-LOGSEQ"],"REGEXMAT","/^[0-9]+$/");	
+$REQ["G3-LOGMSG"] = reqPostString("G3-LOGMSG",300);//MSG	
+$REQ["G3-LOGMSG"] = getFilter($REQ["G3-LOGMSG"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//로그	
 	//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"LOGSEQ,URL,SESSIONID,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT"
+		,"COLORD"=>"LOGSEQ,URL,SESSIONID,REQTOKEN,RESTOKEN,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT"
 		,"VALID"=>
 			array(
 			"LOGSEQ"=>array("NUMBER",30)	
 			,"URL"=>array("STRING",50)	
 			,"SESSIONID"=>array("STRING",30)	
+			,"REQTOKEN"=>array("STRING",100)	
+			,"RESTOKEN"=>array("STRING",100)	
 			,"USERID"=>array("STRING",50)	
 			,"USERSEQ"=>array("NUMBER",20)	
 			,"LISTNM"=>array("STRING",30)	
@@ -120,6 +139,8 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//로그
 			"LOGSEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"URL"=>array("CLEARTEXT","/--미 정의--/")
 			,"SESSIONID"=>array("SAFETEXT","/--미 정의--/")
+			,"REQTOKEN"=>array("CLEARTEXT","/--미 정의--/")
+			,"RESTOKEN"=>array("CLEARTEXT","/--미 정의--/")
 			,"USERID"=>array("SAFETEXT","/--미 정의--/")
 			,"USERSEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"LISTNM"=>array("CLEARTEXT","/--미 정의--/")
@@ -135,7 +156,7 @@ array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new monologService();
 	//컨트롤 명령별 분개처리
-alog("ctl:" . $ctl);
+$log->info("ctl:" . $ctl);
 switch ($ctl){
 			case "G1_SEARCHALL" :
   		echo $objService->goG1Searchall(); //, 조회(전체)
@@ -146,6 +167,9 @@ switch ($ctl){
 	case "G2_EXCEL" :
   		echo $objService->goG2Excel(); //로그, 엑셀다운로드
   		break;
+	case "G3_SEARCH" :
+  		echo $objService->goG3Search(); //상세, 조회
+  		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");
 		break;
@@ -155,14 +179,14 @@ if($PGM_CFG["SECTYPE"] == "POWER" || $PGM_CFG["SECTYPE"] == "PI") $objAuth->logU
 	array_push($_RTIME,array("[TIME 60.AUGHD_LOG]",microtime(true)));
 //실행시간 검사
 for($j=1;$j<sizeof($_RTIME);$j++){
-	alog( $_RTIME[$j][0] . " " . number_format($_RTIME[$j][1]-$_RTIME[$j-1][1],4) );
+	$log->debug( $_RTIME[$j][0] . " " . number_format($_RTIME[$j][1]-$_RTIME[$j-1][1],4) );
 
-	if($j == sizeof($_RTIME)-1) alog( "RUN TIME : " . number_format($_RTIME[$j][1]-$_RTIME[0][1],4) );
+	if($j == sizeof($_RTIME)-1) $log->debug( "RUN TIME : " . number_format($_RTIME[$j][1]-$_RTIME[0][1],4) );
 }
 //서비스 클래스 비우기
 unset($objService);
 unset($objAuth);
 
-alog("MonologControl___________________________end");
-
-?>	
+$log->info("MonologControl___________________________end");
+$log->close(); unset($log);
+?>

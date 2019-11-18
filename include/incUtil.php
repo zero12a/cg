@@ -1,7 +1,7 @@
 <?php
 libxml_use_internal_errors(true);
 
-function getLogger($listNm,$pgmNm){
+function getLogger($arrLog){
     alog("getLogger()...........................start");
     global $CFG_LIBS_MONO_LOG,$CFG_LIBS_PATH_REDIS,$CFG_AUTH_REDIS,$CFG_LOG_PATH;
     
@@ -28,28 +28,25 @@ function getLogger($listNm,$pgmNm){
         /////////////////////////
         // REDIS_LOG
         /////////////////////////
-        $formatter = new Monolog\Formatter\JsonFormatter();
-        $formatter->format( array( 
-            "context" => array("session_id"=>$s, "url_path"=>$t)
-            ,"extra" => array("session_id"=>$s, "url_path"=>$t)
-            ) );
-        $redisHandler = new Monolog\Handler\RedisHandler($redisClient, $listNm, Monolog\Logger::INFO); // plog is list name
+        $redisHandler = new Monolog\Handler\RedisHandler($redisClient, $arrLog["LIST_NM"], Monolog\Logger::INFO); // plog is list name
         $redisHandler->setFormatter(new Monolog\Formatter\JsonFormatter());
          //JsonFormatter(int $batchMode = self::BATCH_MODE_JSON, bool $appendNewline = true)
-        $log = new Monolog\Logger($pgmNm, array($redisHandler)); // 채널
+        $log = new Monolog\Logger($arrLog["PGM_ID"], array($redisHandler)); // 채널
         //$log->addInfo('info', array("session_id"=>$s, "url_path"=>$t));
 
-        $log->pushProcessor(function ($record) {
+        $log->pushProcessor(function ($record) use (&$arrLog) {
             $s = session_id();
             $t = $_SERVER["PHP_SELF"];
 
-            $record['extra']['env'] = 'staging';
-            $record['extra']['version'] = '1.1';
+            //$record['extra']['env'] = 'staging';
+            //$record['extra']['version'] = '1.1';
             $record['context'] = array(
                 'SESSIONID' => $s
                 , 'URL' => $t
                 , 'USERID' => getUserId()
                 , 'USERSEQ' => getUserSeq()
+                , 'REQTOKEN' => $arrLog["REQTOKEN"]
+                , 'RESTOKEN' => $arrLog["RESTOKEN"]
             );
             return $record;
         });
@@ -68,7 +65,7 @@ function getLogger($listNm,$pgmNm){
         $formatter = new Monolog\Formatter\LineFormatter($output, $dateFormat);
 
         // Create the logger
-        $log = new Monolog\Logger($pgmNm);
+        $log = new Monolog\Logger($arrLog["PGM_ID"]);
         // Now add some handlers
         $stream = new Monolog\Handler\StreamHandler($CFG_LOG_PATH, Monolog\Logger::INFO);
         $stream->setFormatter($formatter);

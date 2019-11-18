@@ -136,7 +136,7 @@ include_once('../include/incRequest.php');//CG REQUEST
 	## 그리드 - START
 	#####################################################
 	-->
-    <div class="GRP_OBJECT" style="width:100%;">
+    <div class="GRP_OBJECT" style="width:60%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
 		<div  class="GRID_LABELGRP">
 			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
@@ -157,6 +157,69 @@ include_once('../include/incRequest.php');//CG REQUEST
 	<!--
 	#####################################################
 	## 그리드 - END
+	#####################################################
+	-->
+	<!--
+	#####################################################
+	## 폼뷰 상세 - START
+	#####################################################
+	-->
+    <div class="GRP_OBJECT" style="width:40%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:494px;">
+				
+			<div sty_le="width:0px;height:0px;overflow: hidden">
+				<form id="formviewG3" name="formviewG3" method="post" enctype="multipart/form-data"  onsubmit="return false;">
+				<input type="hidden" name="G3-CTLCUD"  id="G3-CTLCUD" value="">
+			</div>	
+		<div class="FORMVIEW_LABELGRP">
+			<div class="FORMVIEW_LABEL"  style="">
+				* 상세
+			</div>
+			<div class="FORMVIEW_LABELBTN"  style="">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
+			</div>
+		</div>
+		<div style="height:452px;" class="FORMVIEW_OBJECT">
+			<DIV class="CON_LINE" is_br_tag>
+			<!--OBJECT LIST PRINT.-->
+		<!--D101: STARTTXT, TAG-->
+		<!--I.COLID : LOGSEQ-->
+			<div class="CON_OBJGRP" style="">
+				<div class="CON_LABEL" style="width:70px;text-align:;">	
+					SEQ	
+				</div>	
+				<!-- style="width:100;"-->
+				<div class="CON_OBJECT">
+					<div name="G3-LOGSEQ" id="G3-LOGSEQ" style="width:100px;"></div>
+				</div>
+			</div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : LOGMSG-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:70px;text-align:;">
+						MSG
+					</div>
+					<!-- style="width:400px;height:px;"-->
+					<div class="CON_OBJECT">
+			<!--LOGMSG오브젝트출력-->
+			<span style="height:31px;overflow:hidden">
+				<input class="btn btn-secondary  btn-sm" type="button" name="bigFont" value="+" onclick="changeCodemirrorFontSizeG3Logmsg('+')">
+				<input class="btn btn-secondary  btn-sm" type="button" name="bigFont" value="-" onclick="changeCodemirrorFontSizeG3Logmsg('-')">
+			</span>
+
+			<textarea id="codeMirror_G3-LOGMSG" name="codeMirror_G3-LOGMSG" ></textarea>
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+		</div>
+		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
+		</div>
+		</div>
+	</div>
+	<!--
+	#####################################################
+	## 폼뷰 - END
 	#####################################################
 	-->
 <div style="width:0px;height:0px;overflow: hidden">

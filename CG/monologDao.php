@@ -4,14 +4,33 @@
 class monologDao
 {
 	function __construct(){
-		alog("MonologDao-__construct");
+		global $log;
+		$log->info("MonologDao-__construct");
 	}
 	function __destruct(){
-		alog("MonologDao-__destruct");
+		global $log;
+		$log->info("MonologDao-__destruct");
 	}
 	function __toString(){
-		alog("MonologDao-__toString");
+		global $log;
+		$log->info("MonologDao-__toString");
 	}
+	//selF    
+	public function selF($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLID"] = "selF";
+		$RtnVal["SQLTXT"] = "select LOGSEQ, URL, SESSIONID, REQTOKEN, RESTOKEN, USERID, USERSEQ, LISTNM, LOGLEVEL, LOGDT, LOGMSG, CHANNEL, ADDDT
+from CG_MONOLOG
+where  LOGSEQ = #{G2-LOGSEQ}
+";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "i";
+		return $RtnVal;
+    }  
 	//selG    
 	public function selG($req){
 		//조회
@@ -19,7 +38,7 @@ class monologDao
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "selG";
-		$RtnVal["SQLTXT"] = "select LOGSEQ, URL, SESSIONID, USERID, USERSEQ, LISTNM, LOGLEVEL, LOGDT, LOGMSG, CHANNEL, ADDDT
+		$RtnVal["SQLTXT"] = "select LOGSEQ, URL, SESSIONID, REQTOKEN, RESTOKEN, USERID, USERSEQ, LISTNM, LOGLEVEL, LOGDT, LOGMSG, CHANNEL, ADDDT
 from CG_MONOLOG
 where ADDDT >= concat(replace(#{G1-ADDDT},'.',''),'000000')
 	and ADDDT <= concat(replace(#{G1-ADDDT},'.',''),'235959')

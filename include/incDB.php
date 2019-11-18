@@ -294,7 +294,7 @@ function fetch_all($tresult,$resulttype)
 
 
 function makeStmt($db,$sql,$coltype,$map){
-    global $PGM_CFG;
+    global $PGM_CFG, $log;
 	//alog("makeStmt-----------------------------------start");
 
     $tParamColids = array(); //G3-COLID를 그대로 저장
@@ -308,7 +308,7 @@ function makeStmt($db,$sql,$coltype,$map){
     //$to_coltype = $coltype;
 
     $to_coltype = str_replace(" ","",$coltype,$count);
-    alog("        to_coltype before : " . $to_coltype);    
+    if($log)$log->info("to_coltype before : " . $to_coltype);    
     //echo "\n to_coltype replace:" . $count;
     //LogMaster::log("        to_coltype : " . $to_coltype);
 
@@ -395,7 +395,7 @@ function makeStmt($db,$sql,$coltype,$map){
 
 
         //값이 배열이면 " in ? " ==>  " in ( a, b, c ) "로 만든기
-        alog($mat[2] . " sizeof = " . sizeof($map[$mat[2]]));
+        //alog($mat[2] . " sizeof = " . sizeof($map[$mat[2]]));
 
         if(is_array($map[$mat[2]])){
             //멀티 값 처리
@@ -459,9 +459,9 @@ function makeStmt($db,$sql,$coltype,$map){
     }
 
     //최종
-    alog("        to_coltype after : " . $to_coltype);    
-	alog("prepare sql : " . $to_sql);
-    alog("full sql : " . $debug_sql);
+    if($log)$log->info("to_coltype after : " . $to_coltype);    
+	if($log)$log->info("prepare sql : " . $to_sql);
+    if($log)$log->info("full sql : " . $debug_sql);
 
     //[로그저장용] 권한변경로그용 SQL더하기 
     if($PGM_CFG["SECTYPE"] == "POWER" || $PGM_CFG["SECTYPE"] == "PI") {
@@ -474,7 +474,7 @@ function makeStmt($db,$sql,$coltype,$map){
     //$stmt->bind_param($to_coltype, $to_map);
 
     if(!$stmt){
-        alog("        stmt error : " . $stmt->errno . " > " . $stmt->error);
+        if($log)$log->info("        stmt error : " . $stmt->errno . " > " . $stmt->error);
         return false;
     }else if($k > 0){
 		//sql문에 bind param이 하나라도 있으면 처리
@@ -492,7 +492,7 @@ function makeStmt($db,$sql,$coltype,$map){
 
         //바인드 파람 처리
         if(!call_user_func_array(array(&$stmt, 'bind_param'), $bind_names)){
-            alog("        bind_param error : " . $stmt->errno . " > " . $stmt->error);
+            if($log)$log->info("        bind_param error : " . $stmt->errno . " > " . $stmt->error);
             return false;
         }
     }

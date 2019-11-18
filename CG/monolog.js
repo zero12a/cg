@@ -16,7 +16,32 @@ var url_G2_SEARCH = "monologController?CTLGRP=G2&CTLFNC=SEARCH";
 var url_G2_EXCEL = "monologController?CTLGRP=G2&CTLFNC=EXCEL";
 //그리드 객체
 var mygridG2,isToggleHiddenColG2,lastinputG2,lastinputG2json,lastrowidG2;
-var lastselectG2json;//화면 초기화	
+var lastselectG2json;//디테일 변수 초기화	
+
+//폼뷰 컨트롤러 경로
+var url_G3_SEARCH = "monologController?CTLGRP=G3&CTLFNC=SEARCH";
+//폼뷰 컨트롤러 경로
+var url_G3_RELOAD = "monologController?CTLGRP=G3&CTLFNC=RELOAD";
+var obj_G3_LOGSEQ;   // SEQ 글로벌 변수 선언
+var obj_G3_LOGMSG;   // MSG 글로벌 변수 선언
+	var codeMirrorFontSizeG3Logmsg = 11; // MSG
+
+//MSG
+function changeCodemirrorFontSizeG3Logmsg(sizeCmd){
+	alog("changeCodemirrorFontSizeG3Logmsg..........start " + sizeCmd);
+
+	if(sizeCmd == "+"){
+		codeMirrorFontSizeG3Logmsg  = codeMirrorFontSizeG3Logmsg  + 2;
+	}else{
+		codeMirrorFontSizeG3Logmsg  = codeMirrorFontSizeG3Logmsg  - 2;
+	}
+
+	$(".CodeMirror").css('font-size',codeMirrorFontSizeG3Logmsg  + "px");
+
+	obj_G3_LOGMSG .refresh();
+	alog("changeCodemirrorFontSizeG3Logmsg..........end");   
+}
+//화면 초기화	
 function initBody(){
      alog("initBody()-----------------------start");
 	
@@ -24,6 +49,7 @@ function initBody(){
    dhtmlx.message.position="bottom";
 	G1_INIT();	
 		G2_INIT();	
+		G3_INIT();	
 	      feather.replace();
 	alog("initBody()-----------------------end");
 } //initBody()	
@@ -78,16 +104,16 @@ function G2_INIT(){
         mygridG2.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG2.setUserData("","gridTitle","G2 : 로그"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
-        mygridG2.setHeader("SEQ,URL,SESSION,ID,USERSEQ,LIST,LEVEL,DT,MSG,PGMID,ADDDT");
-		mygridG2.setColumnIds("LOGSEQ,URL,SESSIONID,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
-		mygridG2.setInitWidths("70,60,60,60,60,70,70,120,150,120,100");
-		mygridG2.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+        mygridG2.setHeader("SEQ,URL,SESSION,REQTOKEN,RESTOKEN,ID,USERSEQ,LIST,LEVEL,DT,MSG,PGMID,ADDDT");
+		mygridG2.setColumnIds("LOGSEQ,URL,SESSIONID,REQTOKEN,RESTOKEN,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
+		mygridG2.setInitWidths("70,60,50,50,50,50,50,50,40,120,150,120,100");
+		mygridG2.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,txttxt,ro,ro");
 	//가로 정렬	
-		mygridG2.setColAlign("left,left,left,left,left,left,left,left,left,left,left");
-		mygridG2.setColSorting("int,str,str,str,int,str,str,str,str,str,str");		//렌더링	
+		mygridG2.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left");
+		mygridG2.setColSorting("int,str,str,str,str,str,int,str,str,str,str,str,str");		//렌더링	
 		mygridG2.enableSmartRendering(false);
 		mygridG2.enableMultiselect(true);
-		//mygridG2.setColValidators("G2_LOGSEQ,G2_URL,G2_SESSIONID,G2_USERID,G2_USERSEQ,G2_LISTNM,G2_LOGLEVEL,G2_LOGDT,G2_LOGMSG,G2_CHANNEL,G2_ADDDT");
+		//mygridG2.setColValidators("G2_LOGSEQ,G2_URL,G2_SESSIONID,G2_REQTOKEN,G2_RESTOKEN,G2_USERID,G2_USERSEQ,G2_LISTNM,G2_LOGLEVEL,G2_LOGDT,G2_LOGMSG,G2_CHANNEL,G2_ADDDT");
 		mygridG2.splitAt(0);//'freezes' 0 columns 
 		mygridG2.init();
 
@@ -132,6 +158,8 @@ function G2_INIT(){
 		 // IO : SEQ초기화	
 		 // IO : URL초기화	
 		 // IO : SESSION초기화	
+		 // IO : REQTOKEN초기화	
+		 // IO : RESTOKEN초기화	
 		 // IO : ID초기화	
 		 // IO : USERSEQ초기화	
 		 // IO : LIST초기화	
@@ -175,6 +203,8 @@ function G2_INIT(){
 			//', "LOGSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGSEQ")).getValue()) + '"' +
 			//', "URL" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("URL")).getValue()) + '"' +
 			//', "SESSIONID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("SESSIONID")).getValue()) + '"' +
+			//', "REQTOKEN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("REQTOKEN")).getValue()) + '"' +
+			//', "RESTOKEN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("RESTOKEN")).getValue()) + '"' +
 			//', "USERID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USERID")).getValue()) + '"' +
 			//', "USERSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USERSEQ")).getValue()) + '"' +
 			//', "LISTNM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LISTNM")).getValue()) + '"' +
@@ -185,6 +215,12 @@ function G2_INIT(){
 			//', "ADDDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADDDT")).getValue()) + '"' +
 			//'}');
 		//A124
+			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
+				', "G2-LOGSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGSEQ")).getValue()) + '"' +
+			'}');
+		lastinputG3 = new HashMap(); // 상세
+		lastinputG3.set("G2-LOGSEQ", mygridG2.cells(rowID,mygridG2.getColIndexById("LOGSEQ")).getValue().replace(/&amp;/g, "&")); // 
+			G3_SEARCH(lastinputG3,uuidv4()); //자식그룹 호출 : 상세
 		});
 		mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
 
@@ -212,6 +248,34 @@ function G2_INIT(){
 		});
         alog("G2_INIT()-------------------------end");
      }
+//디테일 초기화	
+//상세 폼뷰 초기화
+function G3_INIT(){
+  alog("G3_INIT()-------------------------start");
+
+
+	//컬럼 초기화
+	//LOGSEQ, SEQ 초기화			//코드 미러 초기화
+        obj_G3_LOGMSG = CodeMirror.fromTextArea(document.getElementById('codeMirror_G3-LOGMSG'), {
+            mode: "text/x-sql",
+            styleActiveLine: true,
+            indentWithTabs: true,
+            smartIndent: true,
+            lineWrapping: true,
+            lineNumbers: true,
+            matchBrackets : true,
+            tabSize: 4,
+            indentUnit: 4,
+            indentWithTabs: true,
+            extraKeys: {"Ctrl-Space": "autocomplete"},
+			hintOptions: {tables: {
+			  users: {name: null, score: null, birthDate: null},
+			  countries: {name: null, population: null, size: null}
+			}}
+        });
+		obj_G3_LOGMSG .setSize("400px","px");
+  alog("G3_INIT()-------------------------end");
+}
 //D146 그룹별 기능 함수 출력		
 //검색조건 초기화
 function G1_RESET(){
@@ -230,24 +294,6 @@ function G1_SEARCHALL(token){
 		//  호출
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
-}
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/c.g/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG2.setSerializationLevel(true,false,false,false,false,false);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("LOGSEQ,URL,SESSIONID,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
-	$("#DATA_WIDTHS").val("70,60,60,60,60,70,70,120,150,120,100");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
 }
 
 
@@ -319,3 +365,75 @@ function G2_EXCEL(){
         alog("G2_SEARCH()------------end");
     }
 
+//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/c.g/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,false);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("LOGSEQ,URL,SESSIONID,REQTOKEN,RESTOKEN,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
+	$("#DATA_WIDTHS").val("70,60,50,50,50,50,50,50,40,120,150,120,100");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}
+//새로고침	
+function G3_RELOAD(token){
+	alog("G3_RELOAD-----------------start");
+	G3_SEARCH(lastinputG3,token);
+}//디테일 검색	
+function G3_SEARCH(tinput,token){
+       alog("(FORMVIEW) G3_SEARCH---------------start");
+
+	//post 만들기
+	sendFormData = new FormData($("#condition")[0]);
+	if(typeof tinput != "undefined"){
+		var tKeys = tinput.keys();
+		for(i=0;i<tKeys.length;i++) {
+			sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+			//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+		}
+	}
+
+    $.ajax({
+        type : "POST",
+        url : url_G3_SEARCH+"&TOKEN=" + token + "&G3_CRUD_MODE=SEARCH" ,
+        data : sendFormData,
+		processData: false,
+		contentType: false,
+        dataType: "json",
+        success: function(data){
+            alog(data);
+
+			if(data && data.RTN_CD == "200"){
+				if(data.RTN_DATA){
+					msgNotice("정상적으로 조회되었습니다.",1);
+				}else{
+					msgNotice("정상적으로 조회되었으나 데이터가 없습니다.",2);
+					return;
+				}
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+				return;
+			}
+
+            //모드 변경하기
+            $("#G3-CTLCUD").val("R");
+			//SETVAL  가져와서 세팅
+			$("#G3-LOGSEQ").text(data.RTN_DATA.LOGSEQ);//SEQ 변수세팅
+		obj_G3_LOGMSG.setValue(data.RTN_DATA.LOGMSG); //MSG 
+        },
+        error: function(error){
+            alog("Error:");
+            alog(error);
+        }
+    });
+    alog("(FORMVIEW) G3_SEARCH---------------end");
+
+}
