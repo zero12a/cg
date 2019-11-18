@@ -32,7 +32,7 @@ class authObject
 		alog("authLog-__destruct");
 
         //갱신 내용 알리기
-        if($this->REDIS)$this->REDIS->publish("PUBSUB_AUTH_LOG","NEWMSG");   
+        //if($this->REDIS)$this->REDIS->publish("PUBSUB_AUTH_LOG","NEWMSG");   
 
         //메모리 비우기
         if($this->REDIS)$this->REDIS->disconnect();

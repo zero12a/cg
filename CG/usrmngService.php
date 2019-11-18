@@ -74,7 +74,7 @@ class usrmngService
 
 		//조회
 		//V_GRPNM : 회원목록
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selUsrG($REQ)); //SEARCH, 조회,회원목록
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array("USR_PWD"=>"HASH");
 		//필수 여부 검사
@@ -116,7 +116,7 @@ class usrmngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 회원목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["C"], $this->DAO->insUsrG($REQ)); //SAVE, 저장,회원등록
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -190,7 +190,7 @@ class usrmngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//비번변경
 		//V_GRPNM : 회원목록
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVEPWD, 비번변경,
+		array_push($GRID["SQL"]["U"], $this->DAO->updUsrPwG($REQ)); //SAVEPWD, 비번변경,비번변경
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			alog("requireGrid - fail.");
@@ -227,8 +227,8 @@ class usrmngService
 		$FORMVIEW["COLCRYPT"] = array("USR_PWD"=>"HASH");
 		$FORMVIEW["SQL"] = array();
 	// SQL LOOP
-		// 
-		array_push($FORMVIEW["SQL"], $this->DAO->($REQ)); 
+		// 회원상세
+		array_push($FORMVIEW["SQL"], $this->DAO->selUsrF($REQ)); 
 		//필수 여부 검사
 		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){

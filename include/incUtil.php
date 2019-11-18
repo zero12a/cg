@@ -1,6 +1,82 @@
 <?php
 libxml_use_internal_errors(true);
 
+function getLogger($listNm,$pgmNm){
+    alog("getLogger()...........................start");
+    global $CFG_LIBS_MONO_LOG,$CFG_LIBS_PATH_REDIS,$CFG_AUTH_REDIS,$CFG_LOG_PATH;
+    
+    //로거 사용 (부가 LIBS)
+    if(!require_once($CFG_LIBS_MONO_LOG))die("getLogger() CFG_LIBS_MONO_LOG load fail");
+    if(!require_once($CFG_LIBS_PATH_REDIS))die("getLogger() CFG_LIBS_PATH_REDIS load fail");
+    
+    //로그 관련 객체 생성.(채널 : log_svc, log_make, log_cg, log_batch)
+    $redisClient = null;
+    alog("RedisClient connection make");
+    try{
+        $redisClient = new Predis\Client($CFG_AUTH_REDIS);
+        $redisClient->connect();//연결하기
+    }catch(Exception $e) {
+        alog("RedisClient connection error : " . $e->getMessage());
+    }
+    $log = null;
+
+
+
+    if($redisClient->isConnected()){
+        alog("RedisClient connection new : true ");
+
+        /////////////////////////
+        // REDIS_LOG
+        /////////////////////////
+        $formatter = new Monolog\Formatter\JsonFormatter();
+        $formatter->format( array( 
+            "context" => array("session_id"=>$s, "url_path"=>$t)
+            ,"extra" => array("session_id"=>$s, "url_path"=>$t)
+            ) );
+        $redisHandler = new Monolog\Handler\RedisHandler($redisClient, $listNm, Monolog\Logger::INFO); // plog is list name
+        $redisHandler->setFormatter(new Monolog\Formatter\JsonFormatter());
+         //JsonFormatter(int $batchMode = self::BATCH_MODE_JSON, bool $appendNewline = true)
+        $log = new Monolog\Logger($pgmNm, array($redisHandler)); // 채널
+        //$log->addInfo('info', array("session_id"=>$s, "url_path"=>$t));
+
+        $log->pushProcessor(function ($record) {
+            $s = session_id();
+            $t = $_SERVER["PHP_SELF"];
+
+            $record['extra']['env'] = 'staging';
+            $record['extra']['version'] = '1.1';
+            $record['context'] = array(
+                'SESSIONID' => $s
+                , 'URL' => $t
+                , 'USERID' => getUserId()
+                , 'USERSEQ' => getUserSeq()
+            );
+            return $record;
+        });
+
+    }else{
+        alog("RedisClient connection new : false ");
+
+        /////////////////////////
+        // FILE_LOG
+        /////////////////////////
+        $s = session_id();
+        $t = $_SERVER["PHP_SELF"];
+
+        $dateFormat = "y.m.d H:i:s";
+        $output = "\n%datetime% [" . $s . "] %level_name% " . sprintf("%-20s", substr($t,0,strlen($t)-4)) . " : %message% %context% %extra%";
+        $formatter = new Monolog\Formatter\LineFormatter($output, $dateFormat);
+
+        // Create the logger
+        $log = new Monolog\Logger($pgmNm);
+        // Now add some handlers
+        $stream = new Monolog\Handler\StreamHandler($CFG_LOG_PATH, Monolog\Logger::INFO);
+        $stream->setFormatter($formatter);
+        $log->pushHandler($stream);        
+    }
+    return $log;
+}
+
 
 function xmlCdataAdd($tmp){
 	return "<![CDATA[" . $tmp . "]]>";
@@ -81,7 +157,7 @@ function xhandler($errno,$string, $file, $line, $context){
 	$stmt->close();
     $err_db->close();
 
-	alog("xhandler____________________________________________start()");
+	alog("xhandler____________________________________________end()");
 }
 
 //카델 표기 변환

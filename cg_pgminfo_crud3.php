@@ -12,15 +12,21 @@
     include_once("./include/incUser.php");
     include_once("./cg_pgminfo_svc.php");
 
-    alog("aaaa");
-    //exit;
 
-    //php 7.3에서 동작안함..ㅠㅠ
+
+    $log = getLogger("log_cg", "PGMINFO");
+
+
+    $log->info("################### 0001");
+    //exit;
+    $log->info("################### 0002");
+    //php 7.3에서 동작안함..ㅠㅠ (개선을 직접 했음.)
     //https://github.com/soundintheory/php-sql-parser
     //https://code.google.com/archive/p/php-sql-parser/downloads
-    include_once("./lib/PHP-SQL-Parser/src/PHPSQLParser.php");
 
-    alog("bbbb");
+    
+    include_once($CFG_LIBS_SQL_PARSER);
+
 
     //ServerViewTxt("N","N","Y","Y");
 
@@ -103,9 +109,9 @@
     $REQ["POP_PGMID"]    = $_POST['POP_PGMID'];
     $REQ["POP_PGMNM"]    = $_POST['POP_PGMNM'];
     $REQ["POP_PJTSEQ"]    = $_POST['POP_PJTSEQ'];
-	alog("POP_PGMID=" . $_POST['POP_PGMID']);
-	alog("POP_PGMNM=" . $_POST['POP_PGMNM']);
-	alog("POP_PJTSEQ=" . $_POST['POP_PJTSEQ']);
+	$log->info("POP_PGMID=" . $_POST['POP_PGMID']);
+	$log->info("POP_PGMNM=" . $_POST['POP_PGMNM']);
+	$log->info("POP_PJTSEQ=" . $_POST['POP_PJTSEQ']);
 
 	$REQ["POP_PGMNM"] = "%" . $REQ["POP_PGMNM"] . "%";
 	
@@ -139,7 +145,7 @@
         $ctl = $ctl1 . "_" . $ctl2;
     }
 
-    alog("ctl:" . $ctl);
+    $log->info("ctl:" . $ctl);
     switch ($ctl){
         case "GRP_SEARCH" :
             echo $objService->goGrpSearch(); //
@@ -211,6 +217,10 @@
             JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");
             break;
     }
+
+
+$log->close();
+unset($log);
 exit;
 
 
@@ -219,8 +229,8 @@ exit;
 
 //VALID
 if($REQ["F_GRPID"] == "12" && $REQ["G12_CRUD_MODE"] == "read"){
-    alog("---------------GRP G12 ---------------------START");
-    alog("        G12_CRUD_MODE : " . $REQ["G12_CRUD_MODE"]);
+    $log->info("---------------GRP G12 ---------------------START");
+    $log->info("        G12_CRUD_MODE : " . $REQ["G12_CRUD_MODE"]);
 
     $to_coltype = "ssss";
     $sql = "
@@ -230,7 +240,7 @@ if($REQ["F_GRPID"] == "12" && $REQ["G12_CRUD_MODE"] == "read"){
 		  where PJTID = #G5_PJTID# and PGMID = #G5_PGMID# and GRPID = #G5_GRPID# and FNCID = #G5_FNCID#
 		  order by ORD desc
           ";
-    alog("        selected : " );
+    $log->info("        selected : " );
     $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
     if(!$stmt)   JsonMsg("500","912","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
@@ -239,9 +249,9 @@ if($REQ["F_GRPID"] == "12" && $REQ["G12_CRUD_MODE"] == "read"){
     $db->close();
 
 }else if($REQ["F_GRPID"] == "12"){
-    alog("---------------GRP G12 ---------------------START");
-    alog("        G12_CRUD_MODE : " . $REQ["G12_CRUD_MODE"]);
-    alog("        xmldata : " .$_POST["xmldata"]);
+    $log->info("---------------GRP G12 ---------------------START");
+    $log->info("        G12_CRUD_MODE : " . $REQ["G12_CRUD_MODE"]);
+    $log->info("        xmldata : " .$_POST["xmldata"]);
 
 	$xml_array = getXml2Array($_POST["xmldata"]);
 

@@ -173,23 +173,33 @@ function getDbSvrInfo($tSvrId){
 }
 
 function db_obj_open($tOBJ_SERVER){
-    //echo "tOBJ_SERVER->MYSQL_DB" . $tOBJ_SERVER->MYSQL_DB;
-    $link = new mysqli($tOBJ_SERVER->MYSQL_HOST, $tOBJ_SERVER->MYSQL_ID, $tOBJ_SERVER->MYSQL_PW, $tOBJ_SERVER->MYSQL_DB, $tOBJ_SERVER->MYSQL_PORT)
-    or die("<br> ". $tOBJ_SERVER->MYSQL_HOST . "db 연결 실패 : " . $link->connect_error );
+    $db = mysqli_init();
+    if (!$db) {
+        alog("db_obj_open() mysqli_init failed");
+        die('mysqli_init failed');
+    }
+    if (!$db->options(MYSQLI_OPT_CONNECT_TIMEOUT, 1)) {
+        alog("db_obj_open() Setting MYSQLI_OPT_CONNECT_TIMEOUT failed");
+    }
 
-	if (mysqli_connect_errno()) {
-        alog("db_obj_open() MYSQL_HOST="    . $tOBJ_SERVER->MYSQL_HOST);
+    if($tOBJ_SERVER->MYSQL_PORT == "")$tOBJ_SERVER->MYSQL_PORT = "3306";
+
+    if(!$db->real_connect($tOBJ_SERVER->MYSQL_HOST, $tOBJ_SERVER->MYSQL_ID, $tOBJ_SERVER->MYSQL_PW, $tOBJ_SERVER->MYSQL_DB, $tOBJ_SERVER->MYSQL_PORT)){
+        alog("db_obj_open() MYSQL_HOST=["    . $tOBJ_SERVER->MYSQL_HOST . "]");
         alog("db_obj_open() MYSQL_ID="      . $tOBJ_SERVER->MYSQL_ID);
         alog("db_obj_open() MYSQL_DB="      . $tOBJ_SERVER->MYSQL_DB);
         alog("db_obj_open() MYSQL_PORT="    . $tOBJ_SERVER->MYSQL_PORT);
-
-		JsonMsg("500","999","db_obj_open() Connect failed : " .  mysqli_connect_error());
-	    //printf("Connect failed: %s\n", mysqli_connect_error());
-	    exit();
-	}
+        //alog("db_obj_open() MYSQL_PW="    . $tOBJ_SERVER->MYSQL_PW);
+        alog("mysqli error : " . $db->connect_errno . "/" . $db->connect_error);
+        JsonMsg("500","999","db_obj_open() Connect failed : " .  $db->connect_error);
+        //printf("Connect failed: %s\n", mysqli_connect_error());
+        exit();
+    }
     //echo "<br>db 연결 성공";
-    return $link;
+    return $db;
 }
+
+ 
 
 function db_session_open(){
     global $_SESSION;
@@ -2904,7 +2914,8 @@ end
 
 
     function getSqlSelect2Array($tSql){
-        include_once("../c.g/lib/PHP-SQL-Parser/src/PHPSQLParser.php");
+        global $CFG_LIBS_SQL_PARSER;
+        include_once($CFG_LIBS_SQL_PARSER);
         $RtnVal = array();
 
         $parser = new PHPSQLParser($tSql);
