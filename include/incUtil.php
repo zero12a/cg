@@ -237,8 +237,8 @@ function alog($tStr){
     $t = $_SERVER["PHP_SELF"];
 
     $logFile = $CFG["CFG_LOG_PATH"] . "cg_" . date("Ymd") . ".log";
-
-    error_log(PHP_EOL .date("y.m.d H:i:s") . " [" . $s . "]" . sprintf(" %-20s : %s", substr($t,0,strlen($t)-4) , $tStr) , 3, $CFG["CFG_LOG_PATH"]);
+    //echo $logFile;
+    error_log(PHP_EOL .date("y.m.d H:i:s") . " [" . $s . "]" . sprintf(" %-20s : %s", substr($t,0,strlen($t)-4) , $tStr) , 3, $logFile);
 }
 
 
