@@ -3,6 +3,8 @@ header("Content-Type: text/html; charset=UTF-8");
 header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
+$CFG = include_once("./incConfig.php");
+
 	//로그인 검사
 	require_once("../c.g/incConfig.php");
 
