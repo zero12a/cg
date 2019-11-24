@@ -10,7 +10,7 @@ $redisClient = new Predis\Client(
 		'port'   => 1234,
 		'timeout' => 1
 	));
-$rtnArray = $redisClient->get("CONFIG_CG");
+$rtnArray = $redisClient->get("CONFIG_CG");//CONFIG_PJTID
 $redisClient->quit();
 
 return json_decode($rtnArray,true);
