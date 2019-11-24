@@ -62,39 +62,43 @@ function eXcell_button(cell){ //the eXcell name is defined here
 		}
 	}
 }
-eXcell_button.prototype = new eXcell;// nests all other methods from the base class
+if(typeof eXcell !== 'undefined'){
+	eXcell_button.prototype = new eXcell;// nests all other methods from the base class
+}
+
 
 
 //달력 타입 정의
-dhtmlXCalendarObject.prototype.langData["kr"] = {
-	// date format
-	dateformat: "%Y%m%d",
-	// full names of months
-	monthesFNames: [
-		"1월","2월","3월","4월","5월","6월","7월",
-		"8월","9월","10월","11월","12월"
-	],
-	// short names of months
-	monthesSNames: [
-		"1월","2월","3월","4월","5월","6월","7월",
-		"8월","9월","10월","11월","12월"
-	],
-	// full names of days
-	daysFNames: [
-		"일","월","화","수",
-		"목","금","토"
-	],
-	// short names of days
-	daysSNames: [
-		"일","월","화","수",
-		"목","금","토"
-	],
-	// starting day of a week. Number from 1(Monday) to 7(Sunday)
-	weekstart: 7, 
-	// the title of the week number column
-	weekname: "w" 
-};
-
+if(typeof dhtmlXCalendarObject !== 'undefined'){
+	dhtmlXCalendarObject.prototype.langData["kr"] = {
+		// date format
+		dateformat: "%Y%m%d",
+		// full names of months
+		monthesFNames: [
+			"1월","2월","3월","4월","5월","6월","7월",
+			"8월","9월","10월","11월","12월"
+		],
+		// short names of months
+		monthesSNames: [
+			"1월","2월","3월","4월","5월","6월","7월",
+			"8월","9월","10월","11월","12월"
+		],
+		// full names of days
+		daysFNames: [
+			"일","월","화","수",
+			"목","금","토"
+		],
+		// short names of days
+		daysSNames: [
+			"일","월","화","수",
+			"목","금","토"
+		],
+		// starting day of a week. Number from 1(Monday) to 7(Sunday)
+		weekstart: 7, 
+		// the title of the week number column
+		weekname: "w" 
+	};
+}
 
 function alog(tLog){
 	if(typeof console == "object")console.log(tLog);
@@ -1119,8 +1123,10 @@ function uuidv4() {
   }
   
 //Chart.js
-var color = Chart.helpers.color;
-
+var color;
+if(typeof Chart !== 'undefined'){
+	color = Chart.helpers.color;
+}
 
 //2018.08.29
 function formatNumber(a){
