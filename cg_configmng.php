@@ -1,6 +1,11 @@
 <?php
+header("Content-Type: text/html; charset=UTF-8");
+
 //redis에 모두 넣기
 require_once "/data/www/lib/php/predis/autoload.php";
+require_once "./include/incUtil.php";
+
+
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -31,6 +36,37 @@ require_once "/data/www/lib/php/predis/autoload.php";
     <script src="/lib/codemirror/addon/comment/comment.js"></script> 
     <script src="/lib/codemirror/addon/selection/active-line.js"></script>
 
+<script>
+
+    $( document ).ready(function() {
+        var editor = CodeMirror.fromTextArea(document.getElementById("codeMirror"), {
+            styleActiveLine: true,
+            indentWithTabs: true,
+            smartIndent: true,
+            tabSize: 4,
+            indentUnit: 4,
+            indentWithTabs: true,
+            lineNumbers: true,
+            matchBrackets: true,
+            autoCloseBrackets: true,
+            mode: "application/ld+json",
+            lineWrapping: true
+        });
+
+        //비밀번호 입력창 초기화
+        $("#CONFIG_PW").val("");
+        alert("loaded");
+    });
+
+    
+
+    function chkForm(){
+        if(!confirm("정말로 변경하시겠습니까?"))return false;
+        //alert($("#codeMirror").val());
+
+        return true;
+    }
+</script>
 
 </head>
 <body class="HTML_BODY">
@@ -58,52 +94,29 @@ if($_POST["CONFIG_NM"] == ""){
     );    
     $pwStr = $redisClient->get("CONFIG_PW");
 
-    echo "000";    
+    //echo "000";    
     if(trim($_POST["CONFIG_PW"]) == trim($pwStr)){
-        echo "111";
+        //echo "111";
         //신규 패스워드가 2개다 일치 하면 패스워드 바꾸기
         if(strlen($_POST["CONFIG_PW_NEW"]) > 0){
             if($_POST["CONFIG_PW_NEW"] == $_POST["CONFIG_PW_NEW_CONFIRM"]){
                 $redisClient->set("CONFIG_PW",$_POST["CONFIG_PW_NEW"]);
             }else{
-                echo "신규 비밀번호가 일치하지 않습니다.";
+                $redisClient->quit();
+                MsgBack("신규 비밀번호가 일치하지 않습니다.");
             }
         }else{
-            echo "신규 비번 입력 없음.";
+            alog("신규 비번 입력 없음.");
         }
-        echo "222";        
+        //echo "222";        
         //exit;
 
         //json
         $tmpArray = json_decode($_POST["codeMirror"],true);
 
-        //json 문법 확인
-        switch (json_last_error()) {
-            case JSON_ERROR_NONE:
-                echo ' - No errors';
-                break;
-            case JSON_ERROR_DEPTH:
-                echo ' - Maximum stack depth exceeded';
-                break;
-            case JSON_ERROR_STATE_MISMATCH:
-                echo ' - Underflow or the modes mismatch';
-                break;
-            case JSON_ERROR_CTRL_CHAR:
-                echo ' - Unexpected control character found';
-                break;
-            case JSON_ERROR_SYNTAX:
-                echo ' - Syntax error, malformed JSON';
-                break;
-            case JSON_ERROR_UTF8:
-                echo ' - Malformed UTF-8 characters, possibly incorrectly encoded';
-                break;
-            default:
-                echo ' - Unknown error';
-            break;
-        }
         if(json_last_error() != JSON_ERROR_NONE){
-            echo "JSON ERROR : " . json_last_error_msg();
-            exit;
+            $redisClient->quit();
+            MsgBack("JSON 문법 에러 발생 : " . json_last_error_msg());
         }
 
         //기존거 오늘날짜로 백업
@@ -113,8 +126,14 @@ if($_POST["CONFIG_NM"] == ""){
 
         //신규로 세팅
         $redisClient->set($_POST["CONFIG_NM"],json_encode($tmpArray));
+
+
+        $redisClient->quit();
+        MsgBack("정상 저장되었습니다.");
+
     }else{
-        echo "비밀번호가 일치하지 않습니다.";
+        $redisClient->quit();
+        MsgBack("기존 비밀번호가 일치하지 않습니다.");
     }
     $redisClient->quit();
 
@@ -127,8 +146,21 @@ if($_POST["CONFIG_NM"] == ""){
             'timeout' => 1
         )
     );    
+
+
+    $pwStr = $redisClient->get("CONFIG_PW");
+
+    //echo "000";    
+    if(trim($_POST["CONFIG_PW"]) != trim($pwStr)){
+        $redisClient->quit();
+        MsgBack("기존 비밀번호가 일치하지 않습니다.");
+    }
+
     $jsonStr = $redisClient->get($_POST["CONFIG_NM"]);   
     $redisClient->quit();
+
+
+
 
     if(strlen($jsonStr) < 10){
         $jsonStr = json_encode(array(
@@ -208,7 +240,7 @@ if($_POST["CONFIG_NM"] == ""){
 ?>
     <form method="post" onsubmit="return chkForm(this);">
     CONFIG_NM : <?=$_POST["CONFIG_NM"]?> <input type="hidden" name="CONFIG_NM" value="<?=$_POST["CONFIG_NM"]?>"><BR>
-    CONFIG_PW : OLD<input type="password" name="CONFIG_PW" value="">,
+    CONFIG_PW : OLD<input type="password" id="CONFIG_PW" name="CONFIG_PW" value="">,
     NEW <input type="password" name="CONFIG_PW_NEW" value="">,
     NEW CONFIRM<input type="password" name="CONFIG_PW_NEW_CONFIRM" value="">
                 <BR>
@@ -223,27 +255,7 @@ if($_POST["CONFIG_NM"] == ""){
 
     </body>
 
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("codeMirror"), {
-        styleActiveLine: true,
-        indentWithTabs: true,
-        smartIndent: true,
-        tabSize: 4,
-        indentUnit: 4,
-        indentWithTabs: true,
-        lineNumbers: true,
-        matchBrackets: true,
-        autoCloseBrackets: true,
-        mode: "application/ld+json",
-        lineWrapping: true
-      });
-
-      function chkForm(){
-        alert($("#codeMirror").val());
-
-        return true;
-      }
-    </script>
+    
         
     <html>
 <?php
