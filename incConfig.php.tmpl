@@ -6,8 +6,8 @@ if(!require_once("/data/www/lib/php/predis/autoload.php"))die("require predis lo
 $redisClient = new Predis\Client(
 	array(
 		'scheme' => 'tcp',
-		'host'   => 'xxx.xxx.xxx.xxx',
-		'port'   => 1234,
+		'host'   => '{{ "REDIS_HOST" | default "127.0.0.1" }}',
+		'port'   => {{ "REDIS_PORT" | default "6379" }},
 		'timeout' => 1
 	));
 $rtnArray = $redisClient->get("CONFIG_CG");//CONFIG_PJTID

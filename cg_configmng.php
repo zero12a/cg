@@ -2,7 +2,8 @@
 header("Content-Type: text/html; charset=UTF-8");
 
 //redis에 모두 넣기
-require_once "/data/www/lib/php/predis/autoload.php";
+//require_once "/data/www/lib/php/vendor/autoload.php";
+require_once "/data/www/lib/php/vendor/autoload.php";
 require_once "./include/incUtil.php";
 
 
@@ -164,7 +165,7 @@ if($_POST["CONFIG_NM"] == ""){
 
     if(strlen($jsonStr) < 10){
         $jsonStr = json_encode(array(
-            "CFG_LIBS_PATH_REDIS" => "/data/www/lib/php/predis/autoload.php" // predis/predis 
+            "CFG_LIBS_PATH_REDIS" => "/data/www/lib/php/vendor/predis/predis/autoload.php" // predis/predis 
             ,"CFG_LIBS_PATH_AWS" => "/data/www/lib/php/aws/aws-autoloader.php"
             ,"CFG_LIBS_SQL_PARSER" => "/data/www/lib/php/PHP-SQL-Parser/src/PHPSQLParser.php"
             ,"CFG_LIBS_HTML_PURIFIER" => "/data/www/lib/php/HTMLPurifier-4.12.0/library/HTMLPurifier.auto.php" //xss 필터
