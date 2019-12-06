@@ -242,7 +242,10 @@ function alog($tStr){
     error_log(PHP_EOL .date("y.m.d H:i:s") . " [" . $s . "]" . sprintf(" %-20s : %s", substr($t,0,strlen($t)-4) , $tStr) , 3, $logFile) || die("alog fail : " . $logFile);
 }
 
-
+function isJSON($string){
+    return is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
+ }
+ 
 //redis에 쓰기
 function alogRedis($tStr){
     //alog($tStr);

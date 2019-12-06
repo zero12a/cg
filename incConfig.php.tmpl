@@ -1,17 +1,30 @@
 <?php
 //redis에 모두 넣기
-if(!require_once("/data/www/lib/php/predis/autoload.php"))die("require predis load fail.");
+if(!require_once("{{ "LIB_PATH_REDIS" | default "/data/www/lib/php/vendor/predis/autoload.php" }}"))die("require predis load fail.");
+
+//레디스 config
+$miniConfig = array(
+	"REDIS_HOST" => "{{ "REDIS_HOST" | default "127.0.0.1" }}"
+	,"REDIS_PORT" => {{ "REDIS_PORT" | default "6379" }}
+);
 
 //세션 사용
 $redisClient = new Predis\Client(
 	array(
 		'scheme' => 'tcp',
-		'host'   => '{{ "REDIS_HOST" | default "127.0.0.1" }}',
-		'port'   => {{ "REDIS_PORT" | default "6379" }},
+		'host'   => $miniConfig["REDIS_HOST"],
+		'port'   => $miniConfig["REDIS_PORT"],
 		'timeout' => 1
 	));
-$rtnArray = $redisClient->get("CONFIG_CG");//CONFIG_PJTID
+$jsonString = $redisClient->get("{{ "REDIS_CONFIG_ID" | default "CONFIG_PJTID" }}");
 $redisClient->quit();
 
-return json_decode($rtnArray,true);
+$rtnArray = null;
+if($jsonString == null || $jsonString == "" || !is_array(json_decode($jsonString,true)) ){
+	$rtnArray = json_encode($miniConfig);
+}else{
+	$rtnArray = array_merge(json_decode($jsonString,true),$miniConfig);
+}
+
+return $rtnArray;
 ?>

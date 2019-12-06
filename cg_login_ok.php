@@ -6,10 +6,12 @@ header("Pragma:no-cache");
 
 $CFG = include_once("./incConfig.php");
 
+var_dump($CFG);
+
 if(!include_once './include/incUtil.php')		echo "include fail(3)";
 
 require_once("./include/incUser.php");
-include_once('./include/incAuth.php');//CG AUTH
+require_once('./include/incAuth.php');//CG AUTH
 
 $objAuth = new authObject();	
 //echo "11";

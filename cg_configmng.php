@@ -3,7 +3,9 @@ header("Content-Type: text/html; charset=UTF-8");
 
 //redis에 모두 넣기
 //require_once "/data/www/lib/php/vendor/autoload.php";
-require_once "/data/www/lib/php/vendor/autoload.php";
+$CFG = include_once("incConfig.php");
+//if(!require_once("/data/www/lib/php/predis/autoload.php"))die("require predis load fail.");
+
 require_once "./include/incUtil.php";
 
 
@@ -54,6 +56,8 @@ require_once "./include/incUtil.php";
             lineWrapping: true
         });
 
+        editor.setSize("100%","500px");
+
         //비밀번호 입력창 초기화
         $("#CONFIG_PW").val("");
         alert("loaded");
@@ -88,8 +92,8 @@ if($_POST["CONFIG_NM"] == ""){
     $redisClient = new Predis\Client(
         array(
             'scheme' => 'tcp',
-            'host'   => '172.17.0.1',
-            'port'   => 1234,
+            'host'   => $CFG["REDIS_HOST"],
+            'port'   => $CFG["REDIS_PORT"],
             'timeout' => 1
         )
     );    
@@ -142,8 +146,8 @@ if($_POST["CONFIG_NM"] == ""){
     $redisClient = new Predis\Client(
         array(
             'scheme' => 'tcp',
-            'host'   => '172.17.0.1',
-            'port'   => 1234,
+            'host'   => $CFG["REDIS_HOST"],
+            'port'   => $CFG["REDIS_PORT"],
             'timeout' => 1
         )
     );    
