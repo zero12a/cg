@@ -169,7 +169,8 @@ if($_POST["CONFIG_NM"] == ""){
 
     if(strlen($jsonStr) < 10){
         $jsonStr = json_encode(array(
-            "CFG_LIBS_PATH_REDIS" => "/data/www/lib/php/vendor/predis/predis/autoload.php" // predis/predis 
+            "FRIST_LOAD_DT" => date("Y.m.d H:i:s")
+            ,"CFG_LIBS_PATH_REDIS" => "/data/www/lib/php/vendor/predis/predis/autoload.php" // predis/predis 
             ,"CFG_LIBS_PATH_AWS" => "/data/www/lib/php/aws/aws-autoloader.php"
             ,"CFG_LIBS_SQL_PARSER" => "/data/www/lib/php/PHP-SQL-Parser/src/PHPSQLParser.php"
             ,"CFG_LIBS_HTML_PURIFIER" => "/data/www/lib/php/HTMLPurifier-4.12.0/library/HTMLPurifier.auto.php" //xss 필터
