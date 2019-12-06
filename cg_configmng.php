@@ -251,9 +251,10 @@ if($_POST["CONFIG_NM"] == ""){
     NEW CONFIRM<input type="password" name="CONFIG_PW_NEW_CONFIRM" value="">
                 <BR>
     CONFIG_JSON : 
-<textarea id="codeMirror" name="codeMirror">
+<textarea id="codeMirror" name="codeMirror" style="width:100%;height:500px;font-size:9pt;">
 <?=json_encode(json_decode($jsonStr),JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)?>
 </textarea>
+<font color="blue">초기화를 원하시면 반드시 <b>{}</b>를 입력하세요.</font>
     <br>
     <input type="submit" value="SAVE">
 

@@ -6,7 +6,7 @@ header("Pragma:no-cache");
 
 $CFG = include_once("./incConfig.php");
 
-var_dump($CFG);
+//var_dump($CFG);
 
 if(!include_once './include/incUtil.php')		echo "include fail(3)";
 
