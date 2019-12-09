@@ -5,13 +5,11 @@ header("Pragma:no-cache");
 
 $CFG = include_once("./incConfig.php");
 
-	//로그인 검사
-	require_once("../c.g/incConfig.php");
+require_once("../c.g/include/incUtil.php");
+require_once("../c.g/include/incUser.php");
 
-    require_once("../c.g/include/incUtil.php");
-    require_once("../c.g/include/incUser.php");
-
-    require_once("../c.g/include/incLoginCheck.php");//로그인 검사
+//로그인 검사
+require_once("../c.g/include/incLoginCheck.php");//로그인 검사
 
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,8 +19,8 @@ $CFG = include_once("./incConfig.php");
 	<meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<!--jquery / json-->
-	<script src="/c.g/lib/jquery-1.11.1.min.js"></script>
-	<script src="/c.g/lib/json2.min.js"></script>
+	<script src="/lib/jquery/jquery-1.12.4.min.js"></script>
+	<script src="/lib/json2.min.js"></script>
 
 	<!--dhmltx-->
     <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">	
