@@ -24,8 +24,8 @@ header("Pragma:no-cache");
     <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 
 	<!--jquery / json-->
-	<script src="./lib/jquery-1.11.1.min.js"></script>
-	<script src="./lib/json2.min.js"></script>
+	<script src="/lib/jquery/jquery-1.12.4.min.js"></script>
+	<script src="/lib/json2.min.js"></script>
 
 	<!--dhmltx    -->
     <script src="./lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>

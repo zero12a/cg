@@ -51,8 +51,8 @@ header("Pragma:no-cache");
     </style>
 
 	<!--jquery / json-->
-	<script src="./lib/jquery-1.11.1.min.js"></script>
-	<script src="./lib/json2.min.js"></script>
+	<script src="/lib/jquery/jquery-1.12.4.min.js"></script>
+	<script src="/lib/json2.min.js"></script>
 
 	<!--dhmltx-->
     <script src="./lib/dhtmlxSuite/codebase/dhtmlx461_beautify.js" type="text/javascript" charset="utf-8"></script>
@@ -60,7 +60,7 @@ header("Pragma:no-cache");
 
     <!--chart-->
     <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
-    <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="/c.g/common/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
     <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
