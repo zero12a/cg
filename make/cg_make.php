@@ -10,10 +10,10 @@ header("Content-Type: text/html; charset=UTF-8");
 
 //설정 함수 읽기
 $CFG = include_once '../incConfig.php';
-if(!include_once '../include/incDB.php')			echo "include fail(2)";
-if(!include_once '../include/incUtil.php')		echo "include fail(3)";
-if(!include_once '../include/incSec.php')		echo "include fail(4)";
-if(!include_once '../include/incUser.php')		echo "include fail(5)";
+if(!include_once '../../common/include/incDB.php')			echo "include fail(2)";
+if(!include_once '../../common/include/incUtil.php')		echo "include fail(3)";
+if(!include_once '../../common/include/incSec.php')		echo "include fail(4)";
+if(!include_once '../../common/include/incUser.php')		echo "include fail(5)";
 
 
 if(!include_once './cg_make_db.php')		echo "include fail(6)";
@@ -22,7 +22,7 @@ if(!include_once './cg_make_body.php')		echo "include fail(8)";
 if(!include_once './cg_make_js.php')		echo "include fail(9)";
 if(!include_once './cg_make_func.php')		echo "include fail(10)";
 
-require_once("../include/incLoginCheck.php");//로그인 검사
+require_once("../../common/include/incLoginCheck.php");//로그인 검사
 
 
 

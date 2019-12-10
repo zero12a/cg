@@ -5,11 +5,11 @@ header("Pragma:no-cache");
 
 $CFG = include_once("./incConfig.php");
 
-require_once("../c.g/include/incUtil.php");
-require_once("../c.g/include/incUser.php");
+require_once("../common/include//incUtil.php");
+require_once("../common/include//incUser.php");
 
 //로그인 검사
-require_once("../c.g/include/incLoginCheck.php");//로그인 검사
+require_once("../common/include//incLoginCheck.php");//로그인 검사
 
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,11 +23,11 @@ require_once("../c.g/include/incLoginCheck.php");//로그인 검사
 	<script src="/lib/json2.min.js"></script>
 
 	<!--dhmltx-->
-    <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">	
-    <script src="./lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">	
+    <script src="/lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
 
     <!--공통-->
-    <script src="/c.g/rst/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/common/common.js" type="text/javascript" charset="utf-8"></script>
 
     <style>
 
@@ -77,7 +77,7 @@ require_once("../c.g/include/incLoginCheck.php");//로그인 검사
 
 		//트리
 		myTree = myLayout.cells("a").attachTree();
-		myTree.setImagePath("/c.g/lib/dhtmlxSuite/codebase/imgs/dhxtree_skyblue/");
+		myTree.setImagePath("/lib/dhtmlxSuite/codebase/imgs/dhxtree_skyblue/");
 		myTree.loadXML("../c.g/menu_data.php?etc="+new Date().getTime());
 		myTree.setOnClickHandler(tonclick);
 

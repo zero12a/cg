@@ -5,12 +5,11 @@
 
     $CFG = include_once "incConfig.php";
 
-    include_once("./include/incUtil.php");
-	include_once('./include/incRequest.php');//CG REQUEST    
-    //include_once("./incConfig.php");
-	include_once('./include/incSec.php');//CG SEC    
-    include_once("./include/incDB.php");
-    include_once("./include/incUser.php");
+    include_once("../common/include/incUtil.php");
+	include_once('../common/include/incRequest.php');//CG REQUEST    
+	include_once('../common/include/incSec.php');//CG SEC    
+    include_once("../common/include/incDB.php");
+    include_once("../common/include/incUser.php");
     include_once("./cg_pgminfo_svc.php");
 
 

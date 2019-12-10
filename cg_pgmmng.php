@@ -6,10 +6,10 @@ header("Pragma:no-cache");
     //로그인 검사
     $CFG = include_once("./incConfig.php");
 
-    require_once("./include/incUtil.php");
-    require_once("./include/incUser.php");
+    require_once("../common/include/incUtil.php");
+    require_once("../common/include/incUser.php");
 
-    require_once("./include/incLoginCheck.php");//로그인 검사
+    require_once("../common/include/incLoginCheck.php");//로그인 검사
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,8 +27,8 @@ header("Pragma:no-cache");
 	<script src="/lib/json2.min.js"></script>
 
 	<!--dhmltx-->
-    <script src="./lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
+    <script src="/lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
 
    <!--chart-->
    <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
@@ -36,8 +36,8 @@ header("Pragma:no-cache");
 
 
     <!--공통-->
-    <script src="./common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
-    <link href="./common/common.css" rel="stylesheet" type="text/css" />
+    <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
+    <link href="/common/common.css" rel="stylesheet" type="text/css" />
 
     <script src="cg_pgmmng.js?<?=getRndVal(10)?>"></script>
 

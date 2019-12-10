@@ -6,8 +6,8 @@
 
     $CFG = include_once("./incConfig.php");
 
-    require_once("./include/incUtil.php");
-    require_once("./include/incDB.php");
+    require_once("../common/include/incUtil.php");
+    require_once("../common/include/incDB.php");
 
     require_once($CFG["CFG_LIBS_PATH_AWS"]);
 

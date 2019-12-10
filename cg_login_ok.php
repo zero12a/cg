@@ -8,10 +8,10 @@ $CFG = include_once("./incConfig.php");
 
 //var_dump($CFG);
 
-if(!include_once './include/incUtil.php')		echo "include fail(3)";
+if(!include_once '../common/include/incUtil.php')		echo "include fail(3)";
 
-require_once("./include/incUser.php");
-require_once('./include/incAuth.php');//CG AUTH
+require_once("../common/include/incUser.php");
+require_once('../common/include/incAuth.php');//CG AUTH
 
 $objAuth = new authObject();	
 //echo "11";

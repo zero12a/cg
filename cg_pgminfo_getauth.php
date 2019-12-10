@@ -6,11 +6,11 @@
     //session_start();
 
     $CFG = include_once("./incConfig.php");
-    require_once("./include/incUser.php");
-    require_once("./include/incSec.php");
-    require_once("./include/incUtil.php");
-    require_once("./include/incDB.php");
-    //require_once("./include/incAuth.php");
+    require_once("../common/include/incUser.php");
+    require_once("../common/include/incSec.php");
+    require_once("../common/include/incUtil.php");
+    require_once("../common/include/incDB.php");
+    //require_once("../common/include/incAuth.php");
     
 
     

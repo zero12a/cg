@@ -2,7 +2,7 @@
 
 
     //정적 변수 선언
-    var gridImagePath="./lib/dhtmlxSuite/codebase/imgs/";
+    var gridImagePath="/lib/dhtmlxSuite/codebase/imgs/";
     var cmSql, cmFnc;//codemirror
     var makeSyncFileLineSum;
 	var popSelectLayout; //레이아웃용
