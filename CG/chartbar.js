@@ -178,7 +178,7 @@ function G4_INIT(){
         //그리드 초기화
         mygridG4 = new dhtmlXGridObject('gridG4');
         mygridG4.setDateFormat("%Y%m%d");
-        mygridG4.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+        mygridG4.setImagePath("/lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG4.setUserData("","gridTitle","G4 : BAR상속"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
         mygridG4.setHeader("LOGIN_DT,LOGIN_CNT,LOGIN_CNT2");
@@ -306,7 +306,7 @@ function G5_INIT(){
         //그리드 초기화
         mygridG5 = new dhtmlXGridObject('gridG5');
         mygridG5.setDateFormat("%Y%m%d");
-        mygridG5.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+        mygridG5.setImagePath("/lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG5.setUserData("","gridTitle","G5 : PIE상속"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
         mygridG5.setHeader("LOGIN_DT,LOGIN_CNT,LOGIN_CNT2");
@@ -802,6 +802,11 @@ function G4_RELOAD(token){
         alog("G4_SEARCH()------------end");
     }
 
+//새로고침	
+function G5_RELOAD(token){
+  alog("G5_RELOAD-----------------start");
+  G5_SEARCH(lastinputG5,token);
+}
 	function G5_SAVE(token){
 	alog("G5_SAVE()------------start");
 	tgrid = mygridG5;
@@ -920,8 +925,3 @@ function G4_RELOAD(token){
         alog("G5_SEARCH()------------end");
     }
 
-//새로고침	
-function G5_RELOAD(token){
-  alog("G5_RELOAD-----------------start");
-  G5_SEARCH(lastinputG5,token);
-}

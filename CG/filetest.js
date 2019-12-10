@@ -155,7 +155,7 @@ function G2_INIT(){
         //그리드 초기화
         mygridG2 = new dhtmlXGridObject('gridG2');
         mygridG2.setDateFormat("%Y%m%d");
-        mygridG2.setImagePath("../lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+        mygridG2.setImagePath("/lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG2.setUserData("","gridTitle","G2 : 그리드"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
         mygridG2.setHeader("FILESEQ,FILESVRNM,FILENM,FILETYPE,FILESIZE");
@@ -302,6 +302,38 @@ function G3_INIT(){
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//컨디션, 저장	
+function G1_SAVE(){
+ alog("G1_SAVE-------------------start");
+	//FormData parameter에 담아줌	
+	var formData = new FormData();	//G1 getparams	
+//var params = { CTL : "G1_SAVE"};
+	$.ajax({	
+		type : "POST",
+		url : url_G1_SAVE  ,
+		data : formData,
+		processData: false,
+		contentType: false,
+		async: false,
+		success: function(tdata){
+			alog("   json return----------------------");
+			alog("   json data : " + tdata);
+			data = jQuery.parseJSON(tdata);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("[G1] Ajax http 500 error ( " + error + " )");
+			alog("[G1] Ajax http 500 error ( " + error + " )");
+		}
+	});
+	alog("G1_SAVE-------------------end");	
+}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -340,38 +372,6 @@ function G1_USERDEF(token){
 	alog("G1_USERDEF-----------------start");
 
 	alog("G1_USERDEF-----------------end");
-}
-//컨디션, 저장	
-function G1_SAVE(){
- alog("G1_SAVE-------------------start");
-	//FormData parameter에 담아줌	
-	var formData = new FormData();	//G1 getparams	
-//var params = { CTL : "G1_SAVE"};
-	$.ajax({	
-		type : "POST",
-		url : url_G1_SAVE  ,
-		data : formData,
-		processData: false,
-		contentType: false,
-		async: false,
-		success: function(tdata){
-			alog("   json return----------------------");
-			alog("   json data : " + tdata);
-			data = jQuery.parseJSON(tdata);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("[G1] Ajax http 500 error ( " + error + " )");
-			alog("[G1] Ajax http 500 error ( " + error + " )");
-		}
-	});
-	alog("G1_SAVE-------------------end");	
 }
 function G4_SEARCH(tinput,token){
        alog("(BIVIEW) G4_SEARCH---------------start");
@@ -581,6 +581,21 @@ function G7_SEARCH(tinput,token){
     alog("(BIVIEW) G7_SEARCH---------------end");
 
 }
+//그리드 행추가 : 그리드
+	function G2_ROWBULKADD(){
+		if( !(lastinputG2json)){
+			msgError("조회 후에 행추가 가능합니다",3);
+		}else{
+			var tCols = ["","","","",""];//초기값
+
+	var rowcnt = prompt("Please enter row's count", "input number");
+	if($.isNumeric(rowcnt)){
+		for(k=0;k<rowcnt;k++){
+			addRow(mygridG2,tCols);  
+		}
+	}
+			}
+	}
 
 
 
@@ -719,21 +734,6 @@ function G2_USERDEF(token){
 	
 	alog("G2_SAVE()------------end");
 }
-//그리드 행추가 : 그리드
-	function G2_ROWBULKADD(){
-		if( !(lastinputG2json)){
-			msgError("조회 후에 행추가 가능합니다",3);
-		}else{
-			var tCols = ["","","","",""];//초기값
-
-	var rowcnt = prompt("Please enter row's count", "input number");
-	if($.isNumeric(rowcnt)){
-		for(k=0;k<rowcnt;k++){
-			addRow(mygridG2,tCols);  
-		}
-	}
-			}
-	}
 //디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");

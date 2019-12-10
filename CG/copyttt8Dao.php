@@ -4,13 +4,16 @@
 class copyttt8Dao
 {
 	function __construct(){
-		alog("Copyttt8Dao-__construct");
+		global $log;
+		$log->info("Copyttt8Dao-__construct");
 	}
 	function __destruct(){
-		alog("Copyttt8Dao-__destruct");
+		global $log;
+		$log->info("Copyttt8Dao-__destruct");
 	}
 	function __toString(){
-		alog("Copyttt8Dao-__toString");
+		global $log;
+		$log->info("Copyttt8Dao-__toString");
 	}
 	//aa    
 	public function aa($req){
