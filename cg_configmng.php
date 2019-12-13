@@ -6,7 +6,7 @@ header("Content-Type: text/html; charset=UTF-8");
 $CFG = include_once("incConfig.php");
 //if(!require_once("/data/www/lib/php/predis/autoload.php"))die("require predis load fail.");
 
-require_once "./include/incUtil.php";
+require_once "../common/include/incUtil.php";
 
 
 ?>
@@ -26,8 +26,8 @@ require_once "./include/incUtil.php";
 	<script src="/lib/json2.min.js"></script>
 
     <!--공통-->
-    <script src="./common/common.js?" type="text/javascript" charset="utf-8"></script>    
-    <link href="./common/common.css?" rel="stylesheet" type="text/css" />
+    <script src="/common/common.js?" type="text/javascript" charset="utf-8"></script>    
+    <link href="/common/common.css?" rel="stylesheet" type="text/css" />
 
 
     <!--codemirror-->
