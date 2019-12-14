@@ -3,7 +3,7 @@ header("Content-Type: text/html; charset=UTF-8");
 
 //redis에 모두 넣기
 //require_once "/data/www/lib/php/vendor/autoload.php";
-$CFG = include_once("../common/include/incConfig.php");
+$CFG = require_once("../common/include/incConfig.php");
 //if(!require_once("/data/www/lib/php/predis/autoload.php"))die("require predis load fail.");
 
 require_once "../common/include/incUtil.php";
@@ -22,8 +22,8 @@ require_once "../common/include/incUtil.php";
     <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 
 	<!--jquery / json-->
-	<script src="/lib/jquery/jquery-1.12.4.min.js"></script>
-	<script src="/lib/json2.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-1.12.4.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js"></script>
 
     <!--공통-->
     <script src="/common/common.js?" type="text/javascript" charset="utf-8"></script>    
@@ -31,13 +31,13 @@ require_once "../common/include/incUtil.php";
 
 
     <!--codemirror-->
-    <link href="/lib/codemirror/lib/codemirror.css" rel="stylesheet" type="text/css" />
-    <script src="/lib/codemirror/lib/codemirror.js"></script>
-    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>    
-    <script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
-    <script src="/lib/codemirror/addon/comment/continuecomment.js"></script>
-    <script src="/lib/codemirror/addon/comment/comment.js"></script> 
-    <script src="/lib/codemirror/addon/selection/active-line.js"></script>
+    <link href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css" rel="stylesheet" type="text/css" />
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/javascript/javascript.js"></script>    
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/comment/continuecomment.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/comment/comment.js"></script> 
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/selection/active-line.js"></script>
 
 <script>
 

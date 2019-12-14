@@ -178,7 +178,7 @@ function G2_INIT(){
         //그리드 초기화
         mygridG2 = new dhtmlXGridObject('gridG2');
         mygridG2.setDateFormat("%Y%m%d");
-        mygridG2.setImagePath("/lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+        mygridG2.setImagePath("lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG2.setUserData("","gridTitle","G2 : 권한목록"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
         mygridG2.setHeader("#master_checkbox,AUTH_SEQ,프로그램ID,AUTH_ID,AUTH_NM,USE_YN,ADD,MOD,PGMID2");
@@ -379,11 +379,6 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
-}
 function G2_CHKSAVE(token){
 	alog("G2_CHKSAVE()------------start");
 	tgrid = mygridG2;
@@ -541,21 +536,6 @@ function G2_EXCEL(){
         delRow(mygridG2);
         alog("G2_ROWDELETE()------------start");
     }
-//그리드 행추가 : 권한목록
-	function G2_ADDBULK(){
-		if( !(lastinputG2json)){
-			msgError("조회 후에 행추가 가능합니다",3);
-		}else{
-			var tCols = ["","","","","","","","",""];//초기값
-
-	var rowcnt = prompt("Please enter row's count", "input number");
-	if($.isNumeric(rowcnt)){
-		for(k=0;k<rowcnt;k++){
-			addRow(mygridG2,tCols);  
-		}
-	}
-			}
-	}
 	function G2_SAVE(token){
 	alog("G2_SAVE()------------start");
 	tgrid = mygridG2;
@@ -603,6 +583,26 @@ function G2_EXCEL(){
 	});
 	
 	alog("G2_SAVE()------------end");
+}
+//그리드 행추가 : 권한목록
+	function G2_ADDBULK(){
+		if( !(lastinputG2json)){
+			msgError("조회 후에 행추가 가능합니다",3);
+		}else{
+			var tCols = ["","","","","","","","",""];//초기값
+
+	var rowcnt = prompt("Please enter row's count", "input number");
+	if($.isNumeric(rowcnt)){
+		for(k=0;k<rowcnt;k++){
+			addRow(mygridG2,tCols);  
+		}
+	}
+			}
+	}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
 }
 //새로고침	
 function G3_RELOAD(token){

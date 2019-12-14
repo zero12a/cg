@@ -4,7 +4,7 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 $_RTIME = array();
 array_push($_RTIME,array("[TIME 00.START]",microtime(true)));
-$CFG = include_once('./incConfig.CG.php');//CG CONFIG
+$CFG = include_once('../../common/include/incConfig.php');//CG CONFIG
 include_once('piioService.php');
 
 array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
