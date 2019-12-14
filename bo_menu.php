@@ -3,10 +3,10 @@ header("Content-Type: text/html; charset=UTF-8");
 header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
-$CFG = include_once("./incConfig.php");
+$CFG = include_once("../common/include/incConfig.php");
 
-require_once("../common/include//incUtil.php");
-require_once("../common/include//incUser.php");
+require_once("../common/include/incUtil.php");
+require_once("../common/include/incUser.php");
 
 //로그인 검사
 require_once("../common/include//incLoginCheck.php");//로그인 검사
@@ -19,15 +19,15 @@ require_once("../common/include//incLoginCheck.php");//로그인 검사
 	<meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<!--jquery / json-->
-	<script src="/lib/jquery/jquery-1.12.4.min.js"></script>
-	<script src="/lib/json2.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-1.12.4.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js"></script>
 
 	<!--dhmltx-->
-    <link rel="stylesheet" href="/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">	
-    <script src="/lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">	
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
 
     <!--공통-->
-    <script src="/common/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>common/common.js" type="text/javascript" charset="utf-8"></script>
 
     <style>
 
