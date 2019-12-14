@@ -5,7 +5,7 @@
 
     //session_start();
 
-    $CFG = include_once("./incConfig.php");
+    $CFG = require_once("../common/include/incConfig.php");
     require_once("../common/include/incUser.php");
     require_once("../common/include/incSec.php");
     require_once("../common/include/incUtil.php");

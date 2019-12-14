@@ -363,7 +363,7 @@ class pgmmngService
 		//V_GRPNM : CONFIG
 		array_push($GRID["SQL"]["U"], $this->DAO->impU($REQ)); //SAVE, 저장,CONFIG
 		//V_GRPNM : CONFIG
-		array_push($GRID["SQL"]["U"], $this->DAO->impU($REQ)); //SAVE, 저장,CONFIG
+		array_push($GRID["SQL"]["D"], $this->DAO->impD($REQ)); //SAVE, 저장,CONFIG
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");

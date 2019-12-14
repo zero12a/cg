@@ -51,36 +51,36 @@ header("Pragma:no-cache");
     </style>
 
 	<!--jquery / json-->
-	<script src="/lib/jquery/jquery-1.12.4.min.js"></script>
-	<script src="/lib/json2.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-1.12.4.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js"></script>
 
 	<!--dhmltx-->
-    <script src="/lib/dhtmlxSuite/codebase/dhtmlx461_beautify.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
 
     <!--chart-->
-    <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/Chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
     <script src="/common/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
-    <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
+    <link rel=stylesheet href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css">
 
-    <script src="/lib/codemirror/lib/codemirror.js"></script>
-    <script src="/lib/codemirror/mode/php/php.js"></script>
-    <script src="/lib/codemirror/mode/sql/sql.js"></script>
-    <script src="/lib/codemirror/addon/selection/active-line.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/php/php.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/sql/sql.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/selection/active-line.js"></script>
 
-    <script src="/lib/codemirror/mode/xml/xml.js"></script>
-    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>
-    <script src="/lib/codemirror/mode/css/css.js"></script>
-    <script src="/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/xml/xml.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/javascript/javascript.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/css/css.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
-    <script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
-    <script src="/lib/codemirror/addon/comment/continuecomment.js"></script>
-    <script src="/lib/codemirror/addon/comment/comment.js"></script>
-    <script src="/lib/codemirror/mode/clike/clike.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/comment/continuecomment.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/comment/comment.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/clike/clike.js"></script>
 
-    <script src="/lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 
     <!--공통-->
     <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>

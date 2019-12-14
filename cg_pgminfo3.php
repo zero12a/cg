@@ -33,11 +33,11 @@ header("Pragma:no-cache");
 
 
     <!--chart-->
-    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/Chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
     <script src="/common/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
-    <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
+    <link rel=stylesheet href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css">
 
     <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.js"></script>
     <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/sql/sql.js"></script>
@@ -65,6 +65,9 @@ header("Pragma:no-cache");
 
     </style>
 
+    <script>
+    var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
+    </script>
     <script src="cg_pgminfo3.js?<?=getRndVal(10)?>"></script>
     <script src="cg_pgminfo3_bodyinit.js?<?=getRndVal(10)?>"></script>
     <script src="cg_pgminfo3_pg.js?<?=getRndVal(10)?>"></script>
