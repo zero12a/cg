@@ -4,7 +4,7 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
     //로그인 검사
-    $CFG = include_once("./common/include/incConfig.php");
+    $CFG = include_once("../common/include/incConfig.php");
     
     require_once("../common/include/incUtil.php");
     require_once("../common/include/incUser.php");
@@ -24,29 +24,29 @@ header("Pragma:no-cache");
     <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 
 	<!--jquery / json-->
-	<script src="/lib/jquery/jquery-1.12.4.min.js"></script>
-	<script src="/lib/json2.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-1.12.4.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js"></script>
 
 	<!--dhmltx    -->
-    <script src="/lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
 
 
     <!--chart-->
-    <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
-    <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="/common/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
     <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
 
-    <script src="/lib/codemirror/lib/codemirror.js"></script>
-    <script src="/lib/codemirror/mode/sql/sql.js"></script>
-    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>    
-    <script src="/lib/codemirror/addon/selection/active-line.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/sql/sql.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/javascript/javascript.js"></script>    
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/selection/active-line.js"></script>
 
     <!--프로퍼티 그리드-->
-    <script src="/lib/jqPropertyGrid.js"></script>  
-    <link href="/lib/jqPropertyGrid.css" rel="stylesheet" type="text/css" />
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jqPropertyGrid.js"></script>  
+    <link href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jqPropertyGrid.css" rel="stylesheet" type="text/css" />
 
     <!--공통-->
     <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    

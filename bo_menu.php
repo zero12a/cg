@@ -27,7 +27,7 @@ require_once("../common/include//incLoginCheck.php");//로그인 검사
     <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
 
     <!--공통-->
-    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>common/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/common/common.js" type="text/javascript" charset="utf-8"></script>
 
     <style>
 
@@ -77,7 +77,7 @@ require_once("../common/include//incLoginCheck.php");//로그인 검사
 
 		//트리
 		myTree = myLayout.cells("a").attachTree();
-		myTree.setImagePath("/lib/dhtmlxSuite/codebase/imgs/dhxtree_skyblue/");
+		myTree.setImagePath("<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/imgs/dhxtree_skyblue/");
 		myTree.loadXML("../c.g/menu_data.php?etc="+new Date().getTime());
 		myTree.setOnClickHandler(tonclick);
 
