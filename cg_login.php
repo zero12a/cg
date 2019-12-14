@@ -4,7 +4,7 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
 
-$CFG = require_once("./incConfig.php");
+$CFG = require_once("../common/include/incConfig.php");
 
 require_once('../common/include/incUtil.php');
 

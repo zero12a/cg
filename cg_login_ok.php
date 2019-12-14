@@ -4,7 +4,7 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
 
-$CFG = include_once("./incConfig.php");
+$CFG = include_once("../common/include/incConfig.php");
 
 //var_dump($CFG);
 
