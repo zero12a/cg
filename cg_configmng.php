@@ -3,7 +3,7 @@ header("Content-Type: text/html; charset=UTF-8");
 
 //redis에 모두 넣기
 //require_once "/data/www/lib/php/vendor/autoload.php";
-$CFG = include_once("incConfig.php");
+$CFG = include_once("../common/include/incConfig.php");
 //if(!require_once("/data/www/lib/php/predis/autoload.php"))die("require predis load fail.");
 
 require_once "../common/include/incUtil.php";
