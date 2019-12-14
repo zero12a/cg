@@ -101,7 +101,7 @@ function G2_INIT(){
         //그리드 초기화
         mygridG2 = new dhtmlXGridObject('gridG2');
         mygridG2.setDateFormat("%Y%m%d");
-        mygridG2.setImagePath("/lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+        mygridG2.setImagePath("lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG2.setUserData("","gridTitle","G2 : 로그"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
         mygridG2.setHeader("SEQ,URL,SESSION,REQTOKEN,RESTOKEN,ID,USERSEQ,LIST,LEVEL,DT,MSG,PGMID,ADDDT");

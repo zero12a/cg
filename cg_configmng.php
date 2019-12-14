@@ -176,7 +176,10 @@ if($_POST["CONFIG_NM"] == ""){
             ,"CFG_LIBS_HTML_PURIFIER" => "/data/www/lib/php/HTMLPurifier-4.12.0/library/HTMLPurifier.auto.php" //xss 필터
             ,"CFG_LIBS_MONO_LOG" => "/data/www/lib/php/monolog/autoload.php"
             ,"CFG_LIBS_SQL_PARSER" => "/data/www/lib/php/PHP-SQL-Parser/src/PHPSQLParser.php"
-        
+            ,"CFG_LIBS_EXCEL" => "/data/www/lib/php/vendor/autoload.php"
+
+            
+
             ,"CFG_AWS_AID" => ""
             ,"CFG_AWS_KEY" => ""
         

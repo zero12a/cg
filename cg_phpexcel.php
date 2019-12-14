@@ -2,8 +2,10 @@
 
 function column_char($i) { return chr( 65 + $i ); }
  
-include_once('./incConfig.php');//CG CONFIG
-include_once("./include/incUtil.php");
+$CFG = require_once "../common/include/incConfig.php";
+
+//include_once('./incConfig.php');//CG CONFIG
+include_once("../common/include/incUtil.php");
 
 //echo $_POST["DATA_HEADERS"];//그리드1
 
@@ -83,7 +85,7 @@ for($i=0;$i<count($xml_array_last);$i++){
 
 
 
-include_once('./lib/PHPExcel-1.8/Classes/PHPExcel.php');
+include_once($CFG["CFG_LIBS_EXCEL"]);
 
 
 
