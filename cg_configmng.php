@@ -231,6 +231,7 @@ if($_POST["CONFIG_NM"] == ""){
         
             //서버 PATH  정보들
             ,"CFG_ROOT_DIR" => "/data/www/c.g/"
+            ,"CFG_LC_DIR" => "/data/www/l.c/"
         
             //배포 관련 정보
             ,"CFG_DEPLOY_DIR" => "/data/www/r.d/"
@@ -239,7 +240,7 @@ if($_POST["CONFIG_NM"] == ""){
             //저장 경로 정보들	
             ,"CFG_LOG_PATH" => "/data/www/c.g/log/cg_" . date("Ymd"). ".log"//코드 그룹
             ,"CFG_LOG_PATH2" => "/data/www/c.g/log/cg2_" . date("Ymd"). ".log" //make 로그
-            ,"CFG_UPLOAD_DIR" => "/data/www/c.g/up/" 	  //업로드 폴더
+            ,"CFG_UPLOAD_DIR" => "/data/www/up/" 	  //업로드 폴더
         ));
     }
 
