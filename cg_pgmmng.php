@@ -4,7 +4,7 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
     //로그인 검사
-    $CFG = include_once("./incConfig.php");
+    $CFG = include_once("./common/include/incConfig.php");
 
     require_once("../common/include/incUtil.php");
     require_once("../common/include/incUser.php");

@@ -3,7 +3,7 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
-    $CFG = include_once("./incConfig.php");
+    $CFG = include_once("../common/include/incConfig.php");
     include_once('../common/include/incSec.php');//CG SEC
     include_once("../common/include/incUtil.php");
 	include_once('../common/include/incRequest.php');//CG REQUEST    
