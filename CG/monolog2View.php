@@ -136,6 +136,60 @@ require_once('../../common/include/incRequest.php');//CG REQUEST
 	</div>
 	<!--
 	#####################################################
+	## BI뷰  11 - START
+	#####################################################
+	-->
+		<div class="GRP_OBJECT" id="DIV-G4-CLICK" style="width:50%;">
+			<div class="GRP_GAP"><!--흰색 바깥 여백-->
+				<div class="GRP_INNER" style="height:74px;overflow:hidden;">
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : VIEW1-->
+                <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
+                        <i style="padding-top:9px;"
+                        width="50"
+                        height="50"
+                        data-feather="eye"></i>
+                </div>
+                <div class="BI_VALUE"
+                 style="width:70%;">
+                    <span id="G4-VIEW1-VALUE">Value</span>
+                </div>
+                <div class="BI_LABEL" style="width:70%;">
+                    <span id="G4-VIEW1-LABEL">VIEW1</span>
+                </div>
+				</div>
+			</div>
+		</div>
+	<!--
+	#####################################################
+	## BI뷰  22 - START
+	#####################################################
+	-->
+		<div class="GRP_OBJECT" id="DIV-G5-CLICK" style="width:50%;">
+			<div class="GRP_GAP"><!--흰색 바깥 여백-->
+				<div class="GRP_INNER" style="height:74px;overflow:hidden;">
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : VIEW2-->
+ 				<div class="BI_LABEL" style="float:left;width:70%;">
+                    <span id="G5-VIEW2-LABEL">VIEW2</span>
+                </div>
+                <div class="BI_ICON" style="text-align:right;width:30%;">
+                        <i style="padding-right:5px;padding-top:0px;"
+                        color="silver" 
+                        width="22"
+                        height="22"
+                        data-feather="eye"></i>
+                </div>
+                <div class="BI_VALUE" style="float:left;width:70%;">
+                    <span id="G5-VIEW2-VALUE1">Value1</span>
+                </div>
+                <div class="BI_VALUE2 BI_VALUE2_TYPE3" style="font-width:bold;">
+                    <span id="G5-VIEW2-VALUE2">Value2</span>
+                </div>				</div>
+			</div>
+		</div>
+	<!--
+	#####################################################
 	## 그리드 - START
 	#####################################################
 	-->

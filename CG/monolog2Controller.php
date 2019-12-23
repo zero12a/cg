@@ -64,6 +64,8 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 
 //FILE먼저 : G1, 
+//FILE먼저 : G4, 11
+//FILE먼저 : G5, 22
 //FILE먼저 : G2, 로그
 //FILE먼저 : G3, 상세
 
@@ -78,6 +80,14 @@ $REQ["G1-LOGMSG"] = reqPostString("G1-LOGMSG",300);//MSG
 $REQ["G1-LOGMSG"] = getFilter($REQ["G1-LOGMSG"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G1-CHANNEL"] = reqPostString("G1-CHANNEL",30);//PGMID	
 $REQ["G1-CHANNEL"] = getFilter($REQ["G1-CHANNEL"],"CLEARTEXT","/--미 정의--/");	
+
+//G4, 11
+$REQ["G4-VIEW1"] = reqPost("G4-VIEW1",);//VIEW1	
+$REQ["G4-VIEW1"] = getFilter($REQ["G4-VIEW1"],"","//");	
+
+//G5, 22
+$REQ["G5-VIEW2"] = reqPost("G5-VIEW2",);//VIEW2	
+$REQ["G5-VIEW2"] = getFilter($REQ["G5-VIEW2"],"","//");	
 
 //G2, 로그
 $REQ["G2-LOGSEQ"] = reqPostNumber("G2-LOGSEQ",30);//SEQ	

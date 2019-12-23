@@ -9,6 +9,8 @@ var obj_G1_LISTNM; // LIST 변수선언
 var obj_G1_LOGLEVEL; // LEVEL 변수선언
 var obj_G1_LOGMSG; // MSG 변수선언
 var obj_G1_CHANNEL; // PGMID 변수선언
+	//11 글로벌 변수 초기화
+	//22 글로벌 변수 초기화
 //그리드 변수 초기화	
 //컨트롤러 경로
 var url_G2_SEARCH = "monolog2Controller?CTLGRP=G2&CTLFNC=SEARCH";
@@ -48,6 +50,8 @@ function initBody(){
    //dhtmlx 메시지 박스 초기화
    dhtmlx.message.position="bottom";
 	G1_INIT();	
+		G4_INIT();	
+		G5_INIT();	
 		G2_INIT();	
 		G3_INIT();	
 	      feather.replace();
@@ -94,6 +98,46 @@ $("#G1-ADDDT").val(moment().format("YYYYMMDD"));
   alog("G1_INIT()-------------------------end");
 }
 
+//11 BI뷰 초기화
+function G4_INIT(){
+  alog("G4_INIT()-------------------------start");
+}
+//11 BI뷰 초기화
+function G4_INIT(){
+  alog("G4_INIT()-------------------------start");
+		
+		$("#G4-VIEW1-VALUE").text("-");//VIEW1 변수세팅
+	//BIVIEW 11 클릭 이벤트
+	$( "#DIV-G4-CLICK" ).click(function() {
+		alog("#DIV-G4-CLICK.click()...........................start");
+
+alert("클릭 했어요");
+
+		alog("#DIV-G4-CLICK.click()...........................end");
+	});
+  alog("G4_INIT()-------------------------end");
+}
+//22 BI뷰 초기화
+function G5_INIT(){
+  alog("G5_INIT()-------------------------start");
+}
+//22 BI뷰 초기화
+function G5_INIT(){
+  alog("G5_INIT()-------------------------start");
+		
+			$("#G5-VIEW2-VALUE1").text("-");//VIEW2 NEW
+			$("#G5-VIEW2-VALUE2").text("-");//VIEW2 NEW
+	//BIVIEW 22 클릭 이벤트
+	$( "#DIV-G5-CLICK" ).click(function() {
+		alog("#DIV-G5-CLICK.click()...........................start");
+
+alert("정말 클릭?");
+
+
+		alog("#DIV-G5-CLICK.click()...........................end");
+	});
+  alog("G5_INIT()-------------------------end");
+}
 	//로그 그리드 초기화
 function G2_INIT(){
   alog("G2_INIT()-------------------------start");
@@ -198,22 +242,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "LOGSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGSEQ")).getValue()) + '"' +
-			//', "URL" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("URL")).getValue()) + '"' +
-			//', "SESSIONID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("SESSIONID")).getValue()) + '"' +
-			//', "REQTOKEN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("REQTOKEN")).getValue()) + '"' +
-			//', "RESTOKEN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("RESTOKEN")).getValue()) + '"' +
-			//', "USERID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USERID")).getValue()) + '"' +
-			//', "USERSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USERSEQ")).getValue()) + '"' +
-			//', "LISTNM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LISTNM")).getValue()) + '"' +
-			//', "LOGLEVEL" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGLEVEL")).getValue()) + '"' +
-			//', "LOGDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGDT")).getValue()) + '"' +
-			//', "LOGMSG" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGMSG")).getValue()) + '"' +
-			//', "CHANNEL" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("CHANNEL")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADDDT")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
 				', "G2-LOGSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGSEQ")).getValue()) + '"' +
@@ -290,8 +318,14 @@ function G1_SEARCHALL(token){
 	var ConAllData = $( "#condition" ).serialize();
 	alog("ConAllData:" + ConAllData);
 	//json : G1
-			lastinputG2 = new HashMap(); //로그
+			lastinputG4 = new HashMap(); //11
+				lastinputG5 = new HashMap(); //22
+				lastinputG2 = new HashMap(); //로그
 		//  호출
+	G4_SEARCH(lastinputG4,token);
+	//  호출
+	G5_SEARCH(lastinputG5,token);
+	//  호출
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
