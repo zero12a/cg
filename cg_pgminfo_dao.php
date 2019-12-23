@@ -565,8 +565,82 @@ class cg_pgminfo_dao
 		";
 		$RtnVal["BINDTYPE"] = "iiii";
 		return $RtnVal;
+	}  
+	
+
+	/*
+	######################################################
+	##	EVT
+	######################################################
+	*/
+	public function evtSearch($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		select
+			PJTSEQ,PGMSEQ,GRPSEQ,EVTSEQ,IF(USEYN='Y',1,0) AS USEYN,EVTCD,EVTNM,EVTSRC,EVTORD,ADDDT,MODDT
+		from CG_PGMEVT 
+		where PJTSEQ = #{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ} and GRPSEQ = #{G1-GRPSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "iii";
+
+		return $RtnVal;
+	}  
+
+
+	public function evtIns($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		insert into CG_PGMEVT (
+			PJTSEQ,PGMSEQ,GRPSEQ,EVTCD,EVTNM
+			,EVTSRC,USEYN,EVTORD
+			,ADDID, ADDDT
+		) values (
+			#{F_PJTSEQ},#{F_PGMSEQ},#{G1-GRPSEQ},#{EVTCD},#{EVTNM}
+			,#{EVTSRC},case #{USEYN} when 1 then 'Y' else 'N' end,#{EVTORD}
+			,#{ADDID}, date_format(sysdate(),'%Y%m%d%H%i%s')
+		)
+		";
+		$RtnVal["BINDTYPE"] = "iiiss ssii";
+		return $RtnVal;
+    }  
+	public function evtUpd($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+	update CG_PGMEVT set
+		EVTCD = #{EVTCD}, EVTNM = #{EVTNM}, USEYN = case #{USEYN} when 1 then 'Y' else 'N' end
+		, EVTORD = #{EVTORD}, EVTSRC = #{EVTSRC}
+		, MODID = #{MODID}, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
+  	where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ} and EVTSEQ = #{EVTSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "sssis i iiii";
+		return $RtnVal;
+    }  
+	public function evtDel($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SQLTXT"] = "
+		delete from CG_PGMEVT where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ} and EVTSEQ = #{EVTSEQ}
+		";
+		$RtnVal["BINDTYPE"] = "iiii";
+		return $RtnVal;
     }  
 
+	/*
+	######################################################
+	##	SQL
+	######################################################
+	*/
 	public function sqlSearch($req){
 		//조회
 		$RtnVal = null;

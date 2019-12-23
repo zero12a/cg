@@ -13,11 +13,13 @@
     var mygridCol,dp3,addstatusyn3,lastinput3,lastinput3json,lastrowid3,isView3;
     var mygridIo,dp4,addstatusyn4,lastinput4,lastinput4json,lastrowid4,isViewIo;
     var mygridFnc,dp5,addstatusyn5,lastinput5,lastinput5json,lastrowid5,isView5;
+    var mygridEvt,dpEvt,addstatusynEvt,lastinputEvt,lastinputEvtJson,lastrowidEvt,isViewEvt;
     var mygridInherit,dp6,addstatusyn6,lastinput6,lastinput6json,lastrowid6,isView6;
     var mygridSqlR,dp7,addstatusyn7,lastinput7,lastinput7json,lastrowid7,isView7;
     var mygrid8,dp8,addstatusyn8,lastinput8,lastinput8json,lastrowid8,isView8;
     var mygridSvc,dp9,addstatusyn9,lastinput9,lastinput9json,lastrowid9,isView9;
     var mygridPgm,addstatusynPgm,lastinputPgm,lastinputPgmjson,lastrowidPgm;
+    var mygridEvt_url = "cg_pgminfo_crud3.php?CTLGRP=EVT&";//완
     var mygridGrp_url = "cg_pgminfo_crud3.php?CTLGRP=GRP&";//완
     var mygridSql_url = "cg_pgminfo_crud3.php?CTLGRP=SQL&";//완
     var mygridCol_url = "cg_pgminfo_crud3.php?CTLGRP=SQLD&";
@@ -242,6 +244,16 @@
 		}else{
 			var tCols = [lastinput5json.PJTSEQ,lastinput5json.PGMSEQ,lastinput5json.GRPSEQ];//초기값
 			addRow(mygridFnc,tCols);
+		}
+    }
+    
+    //행추가5 (evt)
+	function addRowEvt(){
+		if( !(lastinputEvtjson) || !(lastinputEvtjson.PJTSEQ) || !(lastinputEvtjson.PGMSEQ)  || !(lastinputEvtjson.GRPSEQ)  ){
+			msgError("조회 후에 행추가 가능합니다",3);
+		}else{
+			var tCols = [lastinputEvtjson.PJTSEQ,lastinputEvtjson.PGMSEQ,lastinputEvtjson.GRPSEQ,,1];//초기값
+			addRow(mygridEvt,tCols);
 		}
 	}
 
@@ -1008,7 +1020,7 @@
 
 	//그리드 다시 조회
 	function gridReload4(){
-		gridSearch4(lastinput4);
+		gridSearchIo(lastinput4);
 	}
 
 	//그리드 다시 조회
@@ -1019,8 +1031,8 @@
 	}
 
     //그리드 조회
-    function gridSearch4(tinput){
-        alog("gridSearch4()------------start");
+    function gridSearchIo(tinput){
+        alog("gridSearchIo()------------start");
 
         //그리드 초기화
         mygridIo.clearAll();
@@ -1033,7 +1045,7 @@
             dataType: "json",
             async: true,
             success: function(data){
-                alog("   gridSearch4 json return----------------------");
+                alog("   gridSearchIo json return----------------------");
                 alog("   json data : " + data);
                 alog("   json RTN_CD : " + data.RTN_CD);
                 alog("   json ERR_CD : " + data.ERR_CD);
@@ -1074,16 +1086,18 @@
             }
         });
 
-        alog("gridSearch4()------------end");
+        alog("gridSearchIo()------------end");
     }
 
 
     //그리드 조회(FNC)
-    function gridSearch5(tinput){
-        alog("gridSearch5()------------start");
+    function gridSearchFnc(tinput){
+        alog("gridSearchFnc()------------start");
 
         //그리드 초기화
         mygridFnc.clearAll();
+
+        $("#spanFncCnt").text("-");
 
         //불러오기
         $.ajax({
@@ -1093,7 +1107,7 @@
             dataType: "json",
             async: true,
             success: function(data){
-                alog("   gridSearch5 json return----------------------");
+                alog("   gridSearchFnc json return----------------------");
                 alog("   json data : " + data);
                 alog("   json RTN_CD : " + data.RTN_CD);
                 alog("   json ERR_CD : " + data.ERR_CD);
@@ -1122,9 +1136,60 @@
             }
         });
 
-        alog("gridSearch5()------------end");
+        alog("gridSearchFnc()------------end");
     }
 
+
+    //그리드 조회(EVT)
+    function gridSearchEvt(tinput){
+        alog("gridSearchEvt()------------start");
+
+        //그리드 초기화
+        mygridEvt.clearAll();
+
+        $("#spanEvtCnt").text("-");
+
+        //불러오기
+        $.ajax({
+            type : "POST",
+            url : mygridEvt_url+"&CTLFNC=SEARCH&" + tinput ,
+            data : {xmldata : ""},
+            dataType: "json",
+            async: true,
+            success: function(data){
+                alog("   gridSearchEvt json return----------------------");
+                alog("   json data : " + data);
+                alog("   json RTN_CD : " + data.RTN_CD);
+                alog("   json ERR_CD : " + data.ERR_CD);
+                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+                //그리드에 데이터 반영
+                if(data.RTN_CD == "200"){
+					var row_cnt = 0;
+					if(data.RTN_DATA){
+                        $("#spanEvtCnt").text(data.RTN_DATA.rows.length);
+
+						mygridEvt.parse(data.RTN_DATA,"json");
+						row_cnt = data.RTN_DATA.rows.length;
+					}else{
+                        $("#spanEvtCnt").text("0");
+                    }
+					msgNotice("[EVT] 조회 성공했습니다. ("+row_cnt+"건)",1);
+
+                }else{
+                    msgError("[EVT] 서버 조회중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG,3);
+                }
+
+
+            },
+            error: function(error){
+				msgError("[EVT] Ajax http 500 error ( " + error + " )",3);
+                alog("[EVT] Ajax http 500 error ( " + error + " )");
+            }
+        });
+
+        alog("gridSearchEvt()------------end");
+    }
 
 
 
@@ -1506,6 +1571,74 @@
         }
     }
 
+    function viewEvt(){
+        if(isViewEvt){
+            isViewEvt = false;
+            mygridEvt.setColumnHidden(0,true); //PJTSEQ
+            mygridEvt.setColumnHidden(1,true); //PGMSEQ
+            mygridEvt.setColumnHidden(2,true); //GRPSEQ
+            mygridEvt.setColumnHidden(3,true); //EVTSEQ
+        }else{
+            isViewEvt = true;
+            mygridEvt.setColumnHidden(0,false); //PJTSEQ
+            mygridEvt.setColumnHidden(1,false); //PGMSEQ
+            mygridEvt.setColumnHidden(2,false); //GRPSEQ
+            mygridEvt.setColumnHidden(3,false); //EVTSEQ
+        }
+    }
+
+
+
+
+    function evtSave(){
+        alog("evtSave()------------start");
+
+        mygridEvt.setSerializationLevel(true,false,false,false,true,false);
+        var myXmlString = mygridEvt.serialize();
+
+		//컨디션 데이터 모두 말기
+        var ConAllData = $( "#condition1" ).serialize();
+        //alog("   ConAllData = " + ConAllData);
+
+        var xml = myXmlString;
+        xml = xml.replace(new RegExp("<row","g"),"\n<row");
+        xml = xml.replace(new RegExp("</row","g"),"\n</row");
+        xml = xml.replace(new RegExp("<cell","g"),"\n\t<cell");
+
+        //$("#tt").val(xml);
+
+        $.ajax({
+            type : "POST",
+            url : mygridEvt_url+"&CTLFNC=SAVE&" + lastinputEvt ,
+            data : {"EVT-XML" : myXmlString},
+            dataType: "json",
+            async: false,
+            success: function(data){
+                alog("   evtSave(async:false) return----------------------");
+                //alog("   json data : " + data);
+                //alog("   json RTN_CD : " + data.RTN_CD);
+                //alog("   json ERR_CD : " + data.ERR_CD);
+                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+                //그리드에 데이터 반영
+                if(data.RTN_CD == "200"){
+                    saveToGrid(mygridEvt,data.GRP_DATA[0]);
+                }else{
+                    msgError("[EVT] " + data.RTN_MSG);
+                }
+                
+            },
+            error: function(error){
+				msgError("[EVT] Ajax http 500 error ( " + error + " )");
+                alog("[EVT] Ajax http 500 error ( " + error + " )");
+            }
+        });
+
+        addstatusynEvt = false;
+        alog("evtSave()------------end");
+    }
+
+
     function fncSave(){
         alog("fncSave()------------start");
 
@@ -1545,7 +1678,7 @@
             }
         });
 
-        addstatusyn3 = false;
+        addstatusyn5 = false;
         alog("fncSave()------------end");
     }
 
@@ -2006,9 +2139,9 @@ function setGridGrp(tGrptype, tCombo, tPjtseq, tPgmseq, tGrpseq, tFncseq){
 		url : "/c.g/cg_code_json.php",
 		data : {PJTSEQ : tPjtseq, PGMSEQ : tPgmseq, GRPSEQ : tGrpseq , FNCSEQ : tFncseq},
 		dataType: "json",
-		async: false,
+		async: true,
 		success: function(data){
-			//alog("   getCodeJson json return----------------------");
+			alog("   setGridGrp(async:false) json return----------------------");
 			//alog("   json data : " + JSON.stringify(data.RTN_DATA));
 			//alog("   json RTN_CD : " + data.RTN_CD);
 			//alog("   json ERR_CD : " + data.ERR_CD);

@@ -328,7 +328,12 @@
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
                 //그리드에 데이터 반영
-                saveToGrid(tgrid,data);
+                if(data.RTN_CD == "200"){
+                    saveToGrid(tgrid,data);
+                }else{
+                    msgError(data.RTN_MSG,3);
+                }
+                
 
             },
             error: function(error){
@@ -385,8 +390,14 @@
                 //alog("   json ERR_CD : " + data.ERR_CD);
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
-                //그리드에 데이터 반영
-                saveToGrid(tgrid,data);
+                if(data.RTN_CD == "200"){
+                    //그리드에 데이터 반영
+                    saveToGrid(tgrid,data);
+                }else{
+                    msgError(data.RTN_MSG,3);
+                }
+
+
 
             },
             error: function(error){
@@ -440,8 +451,12 @@
                 //alog("   json ERR_CD : " + data.ERR_CD);
                 //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
-                //그리드에 데이터 반영
-                saveToGrid(tgrid,data);
+                if(data.RTN_CD == "200"){
+                    //그리드에 데이터 반영
+                    saveToGrid(tgrid,data);
+                }else{
+                    msgError(data.RTN_MSG,3);
+                }
 
             },
             error: function(error){

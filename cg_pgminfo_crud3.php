@@ -121,7 +121,7 @@
     $REQ["F_LAYOUTID"]    = $_POST['F_LAYOUTID'];
     $REQ["searchdd"]    = $_POST['searchdd'];
 
-
+    $REQ["EVT-XML"] = getXml2Array($_POST["EVT-XML"]);//EVT
     $REQ["GRP-XML"] = getXml2Array($_POST["GRP-XML"]);//GRP
     $REQ["FNC-XML"] = getXml2Array($_POST["FNC-XML"]);//FNC
     $REQ["IO-XML"] = getXml2Array($_POST["IO-XML"]);//IO
@@ -166,7 +166,13 @@
             break;
         case "FNC_SAVE" :
             echo $objService->goFncSave(); //
-            break;            
+            break;      
+        case "EVT_SEARCH" :
+            echo $objService->goEvtSearch(); //
+            break;
+        case "EVT_SAVE" :
+            echo $objService->goEvtSave(); //
+            break;                     
         case "IO_SEARCH" :
             echo $objService->goIoSearch(); //
             break;

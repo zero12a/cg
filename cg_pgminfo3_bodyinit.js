@@ -254,6 +254,8 @@
             alog("   rowID = " + rowID);
             alog("   celInd = " + celInd);
 
+            if(console)console.clear();
+
             //편집모드 일때는 하위 새로고침 안하게 하기
             if($("#GRP_EDIT_MODE").is(":checked"))return false;
 
@@ -276,7 +278,7 @@
             lastinput6 = RowAllData + "&" + ConAllData;
             lastinput5 = RowAllData + "&" + ConAllData;
 			lastinput4 = RowAllData + "&" + ConAllData;
-
+            lastinputEvt = RowAllData + "&" + ConAllData;
 
             //KEY컬럼만 자식에게 전달
             lastinput6json = jQuery.parseJSON('{ "__NAME":"lastinput6json"' +
@@ -294,13 +296,20 @@
                 '}');
 
             lastinput4json = jQuery.parseJSON('{ "__NAME":"lastinput4json"' +
-                ', "PJTSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PJTSEQ")).getValue()) + '"' +
-                ', "PGMSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PGMSEQ")).getValue()) + '"' +
-                ', "GRPSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPSEQ")).getValue()) + '"' +
-                ', "GRPTYPE" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPTYPE")  ).getValue()) + '"' +   
-                '}');
+            ', "PJTSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PJTSEQ")).getValue()) + '"' +
+            ', "PGMSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PGMSEQ")).getValue()) + '"' +
+            ', "GRPSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPSEQ")).getValue()) + '"' +
+            ', "GRPTYPE" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPTYPE")  ).getValue()) + '"' +   
+            '}');
 
-            
+            lastinputEvtjson = jQuery.parseJSON('{ "__NAME":"lastinputEvtjson"' +
+            ', "PJTSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PJTSEQ")).getValue()) + '"' +
+            ', "PGMSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("PGMSEQ")).getValue()) + '"' +
+            ', "GRPSEQ" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPSEQ")).getValue()) + '"' +
+            ', "GRPTYPE" : "' + q(mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPTYPE")  ).getValue()) + '"' +   
+            '}');
+
+                
 
             //IO컬럼의 OBJTYPE 다시 불러오기
             var grptype = mygridGrp.cells(lastrowid1,4).getValue();
@@ -649,14 +658,18 @@
             
 
             //그리드 2번 조회(Fnc)
-            gridSearch5(lastinput5);
+            gridSearchFnc(lastinput5);
 
             //그리드 4번 조회(Io)
-            gridSearch4(lastinput4);
+            gridSearchIo(lastinput4);
 
             //그리드 6번 조회(Inherrit)
             setGridGrp("GRID",mygridInherit.getCombo(mygridInherit.getColIndexById("CHILDGRPID")),$("#F_PJTSEQ").val(),$("#F_PGMSEQ").val(),lastinput6json.GRPSEQ,'');
             gridSearch6(lastinput6);
+
+            //그리드 evt번 조회(Evt)
+            setCodeCombo("GRID",mygridEvt.getCombo(mygridEvt.getColIndexById("EVTCD")),"EVT" + grptype);     
+            gridSearchEvt(lastinputEvt);
 
 
             alog("mygridGrp - onRowSelect ----------end");
@@ -940,6 +953,95 @@
 
         });
         //mygridSql.loadXML("cg_pjtinfo_crud3.php");
+
+
+
+
+        //5번째 그리드 초기화 (evt)
+        mygridEvt = new dhtmlXGridObject('gridEvt');
+		mygridEvt.setUserData("","gridTitle","gridEvt : evt list"); //글로별 변수에 그리드 타이블 넣기
+        mygridEvt.setImagePath(gridImagePath);
+        mygridEvt.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,EVTSEQ,USE,CD,NM,SRC,ORD,ADDDT,MODDT");
+        mygridEvt.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,EVTSEQ,USEYN,EVTCD,EVTNM,EVTSRC,EVTORD,ADDDT,MODDT");
+        mygridEvt.setInitWidths("50,50,50,50,25,40,40,30,50,50");
+        mygridEvt.setColTypes("ed,ed,ed,ed,ch,coro,ed,txttxt,ed,ro,ro");
+        mygridEvt.setColAlign("left,left,left,left,center,left,left,left,left,left,left");
+		mygridEvt.setColSorting("int,int,int,int,str,str,str,str,int,str,str");
+
+        //mygridSql.isColumnHidden(0);//PJTID숨기기
+
+        mygridEvt.enableSmartRendering(true);
+        mygridEvt.enableMultiselect(true);
+
+		//GRPTYPE 콤보
+		//setCodeCombo("GRID",mygridEvt.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNC");
+
+        mygridEvt.splitAt(5);//'freezes' 0 columns // ROW선택 이벤트
+        mygridEvt.init();
+        //mygridEvt.setAwaitedRowHeight(25);
+
+        mygridEvt.setColumnHidden(0,true); //PJTSEQ
+		mygridEvt.setColumnHidden(1,true); //PGMSEQ
+        mygridEvt.setColumnHidden(2,true); //GRPSEQ
+        mygridEvt.setColumnHidden(3,true); //FNCSEQ
+        //mygridEvt.setColumnHidden(mygridEvt.getColIndexById("USERDEFJS"),true); //USERDEFJS
+
+		mygridEvt.attachEvent("onCheck", function(rId,cInd,state){
+			// your code here
+            alog("mygridEvt - onCheck ----------start");
+            alog("   rId = " + rId);
+            alog("   cInd= " + cInd);
+            alog("   state = " + state);
+
+			mygridEvt.cells(rId,cInd).cell.wasChanged=true;//변경 상태 업데이트
+			mygridEvt.setRowTextBold(rId);//변경 상태 업데이트
+			mygridEvt.setUserData(rId,"!nativeeditor_status","updated");//변경 상태 업데이트
+
+		});
+
+
+
+        mygridEvt.attachEvent("onRowSelect",function(rowID,celInd){
+            alog("mygridEvt - onRowSelect ----------start1");
+            alog("   rowID = " + rowID);
+            alog("   celInd = " + celInd);
+
+            alog("mygridEvt - onRowSelect ----------end1");
+        });
+        mygridEvt.attachEvent("onRowSelect",function(rowID,celInd){
+            alog("mygridEvt - onRowSelect ----------start2");
+            alog("   rowID = " + rowID);
+            alog("   celInd = " + celInd);
+
+            alog("mygridEvt - onRowSelect ----------end2");
+        });
+
+        mygridEvt.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+
+            //alog("mygridEvt  onEditCell ------------------start");
+            //alog("       stage : " + stage);
+            //alog("       rId : " + rId);
+            //alog("       cInd : " + cInd);
+            //alog("       nValue : " + nValue);
+            //alog("       oValue : " + oValue);
+
+            RowEditStatus = mygridEvt.getUserData(rId,"!nativeeditor_status");
+            if(stage == 2
+                && RowEditStatus != "inserted"
+                && RowEditStatus != "deleted"
+                && nValue != oValue
+                ){
+                if(RowEditStatus == "") {
+                    mygridEvt.setUserData(rId,"!nativeeditor_status","updated");
+                    mygridEvt.setRowTextBold(rId);
+                }
+                mygridEvt.cells(rId,cInd).cell.wasChanged = true;
+            }
+            return true;
+
+        });
+        //mygridSql.loadXML("cg_pjtinfo_crud3.php");
+
 
 
         //6번째 그리드 초기화 (inherit)

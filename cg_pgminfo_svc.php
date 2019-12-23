@@ -753,6 +753,84 @@ class cg_pgminfo_svc
 		alog("PGMMNGService-goFncSave________________________end");
 	}	
 
+
+
+
+	/*
+	######################################################
+	##	EVT
+	######################################################
+	*/
+	public function goEvtSearch(){
+		global $REQ,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("cg_pgminfo_svc-goEvtSearch________________________start");
+		//CHARTBAR SEARCH____________________________start
+		$GRID["KEYCOLIDX"] = 3; // KEY 컬럼, 
+
+		//조회
+		//V_GRPNM : 팀별 현황 (보안취약점 갯수)
+		$GRID["SQL"]["R"] = $this->DAO->evtSearch($REQ); //SEARCH, 조회,TEAM
+		//암호화컬럼
+		$GRID["COLCRYPT"] = array();
+		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
+		//CHARTBAR_SEARCH____________________________end
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("cg_pgminfo_svc-goEvtSearch________________________end");
+	}
+
+	public function goEvtSave(){
+		global $REQ,$_RTIME;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("PGMMNGService-goEvtSave________________________start");
+		//GRID_SAVE____________________________start
+		$grpId="EVT";
+		$GRID["XML"]=$REQ[$grpId."-XML"];
+		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,GRPSEQ,EVTSEQ,USE,EVTCD,EVTNM,EVTSRC,EVTORD,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		//암호화컬럼
+		$GRID["COLCRYPT"] = array();	
+		$GRID["KEYCOLID"] = "EVTSEQ";  //KEY컬럼 COLID, 0
+		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
+		//저장
+		$GRID["SQL"]["D"] = $this->DAO->evtDel($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["U"] = $this->DAO->evtUpd($REQ); // SAVE, 저장, PJT
+		$GRID["SQL"]["C"] = $this->DAO->evtIns($REQ); // SAVE, 저장, PJT
+
+		$tmpVal = makeGridSaveJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME GRP]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_SAVE____________________________end
+
+
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("PGMMNGService-goEvtSave________________________end");
+	}	
+
+
+
+
+	/*
+	######################################################
+	##	GRP
+	######################################################
+	*/
 	public function goGrpSearch(){
 		global $REQ,$_RTIME;
 		$rtnVal = null;

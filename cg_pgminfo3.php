@@ -195,7 +195,22 @@ header("Pragma:no-cache");
                 </div>
             </div>
             <div class="GRID_OBJECT" >
-                <div id="grid5" width="100%" height="300px" style="background-color:white;z-index:40;"></div>
+                <div id="grid5" width="100%" height="173px" style="background-color:white;z-index:40;"></div>
+            </div>
+
+            <div  class="GRID_LABELGRP_SLIM" >
+                <div class="GRID_LABEL" >* 이벤트</div>
+                <div  class="GRID_LABELBTN"  >
+                    <span id="spanEvtCnt">N</span>
+                    <input type="button" name="some_name" value="V" onclick="viewEvt();">
+					<input type="button" name="some_name" value="S" onclick="evtSave();">
+					<input type="button" name="getevtcode" value="C" onclick="getEvtCode();">
+					<input type="button" name="add" value="+" onclick="addRowEvt();">
+					<input type="button" name="delete" value="-" onclick="delRow(mygridEvt);">
+                </div>
+            </div>
+            <div class="GRID_OBJECT" >
+                <div id="gridEvt" width="100%" height="100px" style="background-color:white;z-index:40;"></div>
             </div>
 
         </div>

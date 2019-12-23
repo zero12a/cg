@@ -63,7 +63,9 @@ function setG($G, $input, $tarray){
        $GS =  array("G","F");
     }else if( $input == "PGMFNC" || $input == "PGMFNC.OBJD"){
        $GS = "F";
-	}else if( $input == "PGMFNC.DIRECT" ){
+	}else if( $input == "PGMEVT" || $input == "PGMEVT.OBJD"){
+        $GS = "E";
+    }else if( $input == "PGMFNC.DIRECT" ){
 		$GS = array("G","F");
     }else if($input == "PGMGRP.REF" || $input == "CONDITION.REF" || $input == "PGMGRP.CHILD"){
        $GS = "GR";
@@ -185,7 +187,7 @@ function R($org,$G){
     //var_dump($G);
     $RtnVal = str_replace("{SELF}","{G.GRPID}_{I.COLID}",$RtnVal);
 
-    while(preg_match("/{([APGFSIRVC]+)\.([a-zA-Z0-9_]+)([-+#@]*)([0-9a-zA-Z:]*)}/",$RtnVal,$mat)){
+    while(preg_match("/{([APGFSIRVCE]+)\.([a-zA-Z0-9_]+)([-+#@]*)([0-9a-zA-Z:]*)}/",$RtnVal,$mat)){
         //echo "<br>org : " . HtmlEncode($org);
         //echo "<br>매칭0 : " . $mat[0];
         //alog("	GGGG : " . $G["P"]["PGMID"]);

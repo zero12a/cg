@@ -540,6 +540,30 @@ function getInput($input,$filetype,$param,$G){
         //$RtnVal = fetch_all($result,MYSQLI_ASSOC);
         $result->close();
 
+    }else if($input == "PGMEVT.OBJD"){
+        $T_SQL = sprintf("
+            select a.*
+                , b.GRPTYPE
+                , c.*
+            from CG_PGMEVT a 
+				join CG_PGMGRP b on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and a.GRPSEQ = b.GRPSEQ
+                join CG_OBJINFOD c on b.GRPTYPE = c.OBJTYPE and a.PJTSEQ = b.PJTSEQ and a.EVTCD = c.OBJVAL
+            where a.PJTSEQ = %d and a.PGMSEQ = %d and a.GRPSEQ = %d %s order by EVTORD asc
+            "
+            ,addSqlSlashes($F_PJTSEQ)
+            ,addSqlSlashes($F_PGMSEQ)
+            ,addSqlSlashes($G["G"]["GRPSEQ"])
+	        ,$AddSql
+        );
+        alog("SQL 558 (input " . $input . ") : " .$T_SQL);
+		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
+        $result = $db[$svrid]->query($T_SQL) or ServerMsg("500","560", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
+
+        //$line2 = null;
+        $RtnVal = fetch_all($result,MYSQLI_ASSOC);
+        //$RtnVal = fetch_all($result,MYSQLI_ASSOC);
+        $result->close();
+
     }else if($input == "PGMFNC.OBJD"){
         $T_SQL = sprintf("
             select a.*
@@ -555,7 +579,7 @@ function getInput($input,$filetype,$param,$G){
             ,addSqlSlashes($G["G"]["GRPSEQ"])
 	        ,$AddSql
         );
-        alog("SQL 561 (input " . $input . ") : " .$T_SQL);
+        //alog("SQL 561 (input " . $input . ") : " .$T_SQL);
 		if(isDbCache($T_SQL))return getDbCache($T_SQL); //#############################캐쉬#######################
         $result = $db[$svrid]->query($T_SQL) or ServerMsg("500","241", "[" . $db[$svrid]->errno . "] " . $db[$svrid]->error) ;
 
