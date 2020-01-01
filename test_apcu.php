@@ -1,5 +1,51 @@
 <?php
-//echo "<br>1111";
+
+
+//opcache on redis, file(opcache not folder), apcu
+// 1.77s, 0.99s, 0.0023s
+
+//redis에 모두 넣기
+require_once "/data/www/lib/php/vendor/autoload.php";
+
+echo 111;
+
+$startTm = microtime(true);
+
+
+  
+
+$startTm = microtime(true);
+for($i=0;$i<1000;$i++){
+    $redisClient = new Predis\Client(
+        array(
+            'scheme' => 'tcp',
+            'host'   => '172.17.0.1',
+            'port'   => 1234,
+            'timeout' => 1
+        )
+    );  
+
+    $tmp = json_decode($redisClient->get("myconfig"),true);
+    echo $i . " " ;
+    $redisClient->quit();
+}
+$endTm = microtime(true);
+echo "redis : <font color=blue>" . number_format($endTm-$startTm ,4). "</font>";
+
+
+
+echo "<hr>";
+
+
+$startTm = microtime(true);
+for($i=0;$i<1000;$i++){
+    include "./SC/incConfig.SC.php";
+    echo $i . " ";//. " = " . $CFG_LIBS_PATH_REDIS;
+}
+$endTm = microtime(true);
+echo "file : <font color=blue>" . number_format($endTm-$startTm ,4). "</font>";
+echo "<hr>";
+
 
 $tmp = '{
     "CFG_LIBS_PATH_REDIS": "/data/www/lib/php/vendor/predis/predis/autoload.php",
@@ -54,5 +100,15 @@ $tmp = '{
     "CFG_URL_LIBS_ROOT": "http://localhost:8070/"
 }';
 //apcu_store('foo', $tmp);
-echo "<br> foo = " . apcu_fetch('foo');
+
+$startTm = microtime(true);
+for($i=0;$i<1000;$i++){
+    $tmp = apcu_fetch('foo');
+    echo $i . " ";
+}
+$endTm = microtime(true);
+echo "apcu : <font color=blue>" . number_format($endTm-$startTm ,4) . "</font>";
+
+
+
 ?>
