@@ -42,27 +42,34 @@ require_once "../common/include/incUtil.php";
 <script>
 
     $( document ).ready(function() {
-        var editor = CodeMirror.fromTextArea(document.getElementById("codeMirror"), {
-            styleActiveLine: true,
-            indentWithTabs: true,
-            smartIndent: true,
-            tabSize: 4,
-            indentUnit: 4,
-            indentWithTabs: true,
-            lineNumbers: true,
-            matchBrackets: true,
-            autoCloseBrackets: true,
-            mode: "application/ld+json",
-            lineWrapping: true
-        });
+        if(document.getElementById("codeMirror")){
+            var editor = CodeMirror.fromTextArea(document.getElementById("codeMirror"), {
+                styleActiveLine: true,
+                indentWithTabs: true,
+                smartIndent: true,
+                tabSize: 4,
+                indentUnit: 4,
+                indentWithTabs: true,
+                lineNumbers: true,
+                matchBrackets: true,
+                autoCloseBrackets: true,
+                mode: "application/ld+json",
+                lineWrapping: true
+                });
 
-        editor.setSize("100%","500px");
+            editor.setSize("100%","500px");
+        }
+
 
         //비밀번호 입력창 초기화
         $("#CONFIG_PW").val("");
         alert("loaded");
     });
 
+    function clearLocalCache(){
+        $("#fnc").val("CONFIG_LOCAL_CACHE_CLEAR");
+        $("#tform").submit();
+    }
     
 
     function chkForm(){
@@ -75,20 +82,38 @@ require_once "../common/include/incUtil.php";
 
 </head>
 <body class="HTML_BODY">
-
+    <div class="GRID_LABEL" style="vertical-align:text-bottom;">* CONFIGMNG
+        <!--popup--><a href="?" target="_blank"><img src="./img/popup.png" height=10 align=absmiddle border=0></a>
+        <!--reload--><a href="javascript:location.reload();"><img src="./img/reload.png" width=11 height=10 align=absmiddle border=0></a>
+    </div>
+    <BR><BR>
 <?php
 
 //echo "aaa";    
 if($_POST["CONFIG_NM"] == ""){
 ?>
-    <form method="post">
+    <form name="tform" id="tform" method="post">
+    <input type="hidden" name="fnc" id="fnc" value="CONFIG_SEARCH">
     CONFIG_NM : <input type="text" name="CONFIG_NM" value="<?=$_POST["CONFIG_NM"]?>"><BR>
     CONFIG_PW : <input type="password" name="CONFIG_PW" value=""><BR>
-    <input type="submit" value="조회">
+    <input type="submit" value="조회"><input type="button" value="로컬캐쉬 삭제" onclick="clearLocalCache()">
 
     </form>
 <?php
-}else if($_POST["CONFIG_NM"] != "" && $_POST["codeMirror"] != ""){
+}else if($_POST["fnc"] == "CONFIG_LOCAL_CACHE_CLEAR"){
+?>
+    <form name="tform" id="tform" method="post">
+    <input type="hidden" name="fnc" id="fnc" value="CONFIG_SEARCH">
+    CONFIG_NM : <input type="text" name="CONFIG_NM" value="<?=$_POST["CONFIG_NM"]?>"><BR>
+    CONFIG_PW : <input type="password" name="CONFIG_PW" value=""><BR>
+    <input type="submit" value="조회"><input type="button" value="로컬캐쉬 삭제" onclick="clearLocalCache()">
+
+    </form>
+<?php
+
+    apcu_delete($_POST["CONFIG_NM"]);
+    echo $_POST["CONFIG_NM"] . " 로컬캐쉬가 삭제되었습니다.";
+}else if($_POST["fnc"] == "CONFIG_UPDATE" && $_POST["CONFIG_NM"] != "" && $_POST["codeMirror"] != ""){
     $redisClient = new Predis\Client(
         array(
             'scheme' => 'tcp',
@@ -142,7 +167,7 @@ if($_POST["CONFIG_NM"] == ""){
     }
     $redisClient->quit();
 
-}else{
+}else if ($_POST["fnc"] == "CONFIG_SEARCH"){
     $redisClient = new Predis\Client(
         array(
             'scheme' => 'tcp',
@@ -249,6 +274,7 @@ if($_POST["CONFIG_NM"] == ""){
 
 ?>
     <form method="post" onsubmit="return chkForm(this);">
+    <input type="hidden" name="fnc" id="fnc" value="CONFIG_UPDATE">
     CONFIG_NM : <?=$_POST["CONFIG_NM"]?> <input type="hidden" name="CONFIG_NM" value="<?=$_POST["CONFIG_NM"]?>"><BR>
     CONFIG_PW : OLD<input type="password" id="CONFIG_PW" name="CONFIG_PW" value="">,
     NEW <input type="password" name="CONFIG_PW_NEW" value="">,
