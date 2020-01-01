@@ -20,6 +20,7 @@
         <item text="OBJIFO" id="objinfo:/c.g/cg_objinfo3.php">cg_objinfo.php2</item>
         <item text="PGMINFO" id="pgminfo3:/c.g/cg_pgminfo3.php">cg_pgminfo.php3</item>
         <item text="PGM관리" id="pgmmng:/c.g/cg_pgmmng.php">cg_pgmmng.php</item>
+        <item text="CONFIG관리" id="pgmmng:/c.g/cg_configmng.php">cg_configmng.php</item>
         <item text="배포관리" id="DEPLOYPGM:/r.d/deploypgmView.php">deploypgmView.php</item>
 	</item>
 
