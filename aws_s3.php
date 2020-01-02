@@ -1,6 +1,7 @@
 <?php
 
 $CFG = require_once "../common/include/incConfig.php";
+
 require $CFG["CFG_LIBS_PATH_AWS"];
 
 use Aws\S3\S3Client;

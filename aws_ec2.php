@@ -9,7 +9,6 @@ $CFG = require_once __DIR__ . "/../common/include/incConfig.php";
 
 require_once $CFG["CFG_LIBS_PATH_AWS"];
 
-
 use Aws\Ec2\Ec2Client;
 use Aws\Ec2\Exception\Ec2Exception;
 use Aws\Exception\AwsException;
