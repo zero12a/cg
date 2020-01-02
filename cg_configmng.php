@@ -8,6 +8,7 @@ $CFG = require_once("../common/include/incConfig.php");
 
 require_once "../common/include/incUtil.php";
 
+//var_dump($CFG);
 
 ?>
 
