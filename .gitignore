@@ -15,4 +15,6 @@ incConfig.php
 incConfig.CG.php
 incConfig.SC.php
 
+# test file
+test*.php
 
