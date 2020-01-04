@@ -9,7 +9,7 @@ $CFG = require_once("../common/include/incConfig.php");
 require_once "../common/include/incUtil.php";
 
 //var_dump($CFG);
-
+if(trim($CFG["REDIS_HOST"]) == "")die("Config에 REDIS_HOST 값이 없습니다.");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -98,8 +98,12 @@ if($_POST["CONFIG_NM"] == ""){
     CONFIG_NM : <input type="text" name="CONFIG_NM" value="<?=$_POST["CONFIG_NM"]?>"><BR>
     CONFIG_PW : <input type="password" name="CONFIG_PW" value=""><BR>
     <input type="submit" value="조회"><input type="button" value="로컬캐쉬 삭제" onclick="clearLocalCache()">
-
     </form>
+    <BR>apcu :<BR>
+    <textarea style="font-size:9pt;width:100%;height:800px">
+    <?=json_encode(json_decode(apcu_fetch("CONFIG_CG")),JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)?>
+    </textarea>
+
 <?php
 }else if($_POST["fnc"] == "CONFIG_LOCAL_CACHE_CLEAR"){
 ?>
@@ -115,14 +119,18 @@ if($_POST["CONFIG_NM"] == ""){
     apcu_delete($_POST["CONFIG_NM"]);
     echo $_POST["CONFIG_NM"] . " 로컬캐쉬가 삭제되었습니다.";
 }else if($_POST["fnc"] == "CONFIG_UPDATE" && $_POST["CONFIG_NM"] != "" && $_POST["codeMirror"] != ""){
+    //echo "aaa";
     $redisClient = new Predis\Client(
         array(
             'scheme' => 'tcp',
             'host'   => $CFG["REDIS_HOST"],
             'port'   => $CFG["REDIS_PORT"],
-            'timeout' => 1
+            'timeout' => 3
         )
     );    
+
+    //echo "aaa";
+
     $pwStr = $redisClient->get("CONFIG_PW");
 
     //echo "000";    
@@ -159,6 +167,10 @@ if($_POST["CONFIG_NM"] == ""){
         $redisClient->set($_POST["CONFIG_NM"],json_encode($tmpArray));
 
 
+        //가입 채널에 변경 통보하기
+        $redisClient->publish("config.CONFIG_CG",$_POST["CONFIG_NM"] . " change redis config data.");
+
+
         $redisClient->quit();
         MsgBack("정상 저장되었습니다.");
 
@@ -169,6 +181,8 @@ if($_POST["CONFIG_NM"] == ""){
     $redisClient->quit();
 
 }else if ($_POST["fnc"] == "CONFIG_SEARCH"){
+    //echo "host : " . $CFG["REDIS_HOST"];
+    //echo "port : " . $CFG["REDIS_PORT"];
     $redisClient = new Predis\Client(
         array(
             'scheme' => 'tcp',
@@ -180,18 +194,18 @@ if($_POST["CONFIG_NM"] == ""){
 
 
     $pwStr = $redisClient->get("CONFIG_PW");
-
+    //echo "111";
     //echo "000";    
     if(trim($_POST["CONFIG_PW"]) != trim($pwStr)){
         $redisClient->quit();
         MsgBack("기존 비밀번호가 일치하지 않습니다.");
     }
-
+    //echo "222";
     $jsonStr = $redisClient->get($_POST["CONFIG_NM"]);   
     $redisClient->quit();
 
 
-
+    //echo "333";
 
     if(strlen($jsonStr) < 10){
         $jsonStr = json_encode(array(
