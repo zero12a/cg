@@ -7,7 +7,7 @@ set_time_limit(0);
 //subscribe.php
 //require 'Predis/Autoloader.php';
 
-echo "redis go<hr>\n";
+
 
 $CFG = require_once(__DIR__ . "/../../common/include/incConfig.php");
 
@@ -15,6 +15,8 @@ $CFG = require_once(__DIR__ . "/../../common/include/incConfig.php");
 if(!require_once(__DIR__ . "/../../common/include/incUtil.php"))die("require incUtil fail.");
 if(!require_once(__DIR__ . "/../../common/include/incSec.php"))die("require incSec fail.");
 if(!require_once(__DIR__ . "/../../common/include/incDB.php"))die("require incDB fail.");
+
+alog("predis_configCG.php__________________________go");
 
 //로딩 안해도 됨 기본적으로 infConfig에서 로딩함.
 //if(!require_once($CFG_LIBS_PATH_REDIS))die("require redis fail.");

@@ -35,12 +35,15 @@ for($i=0;$i<sizeof($watcherTarget);$i++){
 	}else{
 		echo "\n" .  6;		
 		alog($tmp["SEARCH_NM"] . " process not live.");
-		alog(" exec = " . $tmp["EXECUTE_SH"]);
+		//alog(" exec = " . $tmp["EXECUTE_SH"]);
 
 		$runCmd = $tmp["EXECUTE_SH"] . " > /dev/null 2>&1 &";
-		echo "\n" . $runCmd;
+		//$runCmd = $tmp["EXECUTE_SH"] . " &";
+		alog("cmd : " . $runCmd);
 
-		shell_exec( $runCmd );
+		$result = shell_exec( $runCmd );
+
+		alog("cmd result : " . $result);
 	}
 }
 echo "\n" . "\n" ;
