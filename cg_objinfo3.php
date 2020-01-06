@@ -141,7 +141,7 @@ header("Pragma:no-cache");
                 <div class="CON_OBJGRP" style="">
                     <div class="CON_LABEL" style="width:100px;">FILETYPE</div>
                     <div class="CON_OBJECT" style="width:400px;">
-					<input type="radio" name="F_FILETYPE" value="" id="F_FILETYPE" checked>전체
+					<input type="radio" name="F_FILETYPE" value="" id="F_FILETYPE">전체
 					<input type="radio" name="F_FILETYPE" value="HTMLJS" id="F_FILETYPE">HTMLJS
                     <input type="radio" name="F_FILETYPE" value="HTML" id="F_FILETYPE">HTML
 					<input type="radio" name="F_FILETYPE" value="SVRCTL" id="F_FILETYPE">SVRCTL

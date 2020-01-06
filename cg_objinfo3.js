@@ -36,14 +36,14 @@
         lastinput1.set("F_PJTID",$("#F_PJTID").val());
         
 
-		//파일 타입에 따른 콤보 변경
-		//alert($(':radio[name="F_FILETYPE"]:checked').val());
+        //파일 타입에 따른 콤보 변경
+        //alert($(':radio[name="F_FILETYPE"]:checked').val());
+		//alert($('input:radio[name="F_FILETYPE"]:checked').val());
 		var chk_filetype = $('input:radio[name="F_FILETYPE"]:checked').val();
 
-        dhtmlx.message({
-            text: "chk_filetype:" . chk_filetype,
-            expire: 1000
-        });
+        msgNotice("chk_filetype : " + chk_filetype ,2);
+
+
 		if(chk_filetype == "HTMLJS"){
 			alog("FNCHTML");
 			setCodeCombo("GRID",mygrid2.getCombo(mygrid2.getColIndexById("OBJVAL")),"FNCHTML");
@@ -791,7 +791,8 @@
             button:"F_START_DT_ICON"},{input:"F_END_DT",
             button:"F_END_DT_ICON"}]);
 
-
+        //첫번째 라이오 선택하게 하기
+        $('input:radio[name=F_FILETYPE]:input[value=""]').attr("checked", true);
 
         //코드 미러 초기화
         cm2 = CodeMirror.fromTextArea(document.getElementById('code2'), {
