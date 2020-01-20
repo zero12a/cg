@@ -238,7 +238,9 @@ if($_POST["CONFIG_NM"] == ""){
             //권한변경 및 개인정보 이력 저장 방식
             ,"CFG_AUTH_LOG" => "REDIS"//DB, REDIS
             ,"CFG_AUTH_REDIS" => "tcp://172.17.0.1:1234" //REDIS인 경우 REDIS 경로
-        
+            ,"CFG_OAUTH_HOST" => "172.17.0.1"
+            ,"CFG_OAUTH_PORT" => "8052"
+
             ,"CFG_SEC_KEY" => ""
             ,"CFG_SEC_IV" => ""
         
