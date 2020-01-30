@@ -240,6 +240,7 @@ if($_POST["CONFIG_NM"] == ""){
             ,"CFG_AUTH_REDIS" => "tcp://172.17.0.1:1234" //REDIS인 경우 REDIS 경로
             ,"CFG_OAUTH_HOST" => "172.17.0.1"
             ,"CFG_OAUTH_PORT" => "8052"
+            ,"CFG_MAKE_URL" => "http://localhost:8060"
 
             ,"CFG_SEC_KEY" => ""
             ,"CFG_SEC_IV" => ""

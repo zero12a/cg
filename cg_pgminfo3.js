@@ -54,11 +54,11 @@
     var lastSelectPgRowId; //마지막 선택한 그리드 프로퍼티 row
 
     function MakeQueue(pgmtype) {
-        window.open( "./make/cg_make_queue.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
+        window.open( makeRootUrl + "/m.k/cg_make_queue.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
 
     function Make(pgmtype) {
-        window.open( "./make/cg_make.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
+        window.open( makeRootUrl + "/m.k/cg_make.php?access_token=" + oauthToken + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
 
     function changeCodemirrorFontSize(sizeCmd){
@@ -94,7 +94,7 @@
             $("#make" + pgmtype).text(pgmtype);
             $.ajax({
                 type : "GET",
-                url : "./make/cg_make.php?TOKEN=" + token + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype,
+                url : makeRootUrl + "/m.k/cg_make.php?access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype,
                 dataType : "json",
                 async: true,
                 success: function(data){
