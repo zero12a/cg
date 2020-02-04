@@ -198,22 +198,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "LOGSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGSEQ")).getValue()) + '"' +
-			//', "URL" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("URL")).getValue()) + '"' +
-			//', "SESSIONID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("SESSIONID")).getValue()) + '"' +
-			//', "REQTOKEN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("REQTOKEN")).getValue()) + '"' +
-			//', "RESTOKEN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("RESTOKEN")).getValue()) + '"' +
-			//', "USERID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USERID")).getValue()) + '"' +
-			//', "USERSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USERSEQ")).getValue()) + '"' +
-			//', "LISTNM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LISTNM")).getValue()) + '"' +
-			//', "LOGLEVEL" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGLEVEL")).getValue()) + '"' +
-			//', "LOGDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGDT")).getValue()) + '"' +
-			//', "LOGMSG" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGMSG")).getValue()) + '"' +
-			//', "CHANNEL" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("CHANNEL")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADDDT")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
 				', "G2-LOGSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGSEQ")).getValue()) + '"' +
@@ -383,11 +367,7 @@ function G2_EXCEL(){
         alog("G2_SEARCH()------------end");
     }
 
-//새로고침	
-function G3_RELOAD(token){
-	alog("G3_RELOAD-----------------start");
-	G3_SEARCH(lastinputG3,token);
-}//디테일 검색	
+//디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
 
@@ -436,4 +416,9 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
+}
+//새로고침	
+function G3_RELOAD(token){
+	alog("G3_RELOAD-----------------start");
+	G3_SEARCH(lastinputG3,token);
 }
