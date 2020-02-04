@@ -5,8 +5,17 @@ header("Content-Type: text/html; charset=UTF-8"); //HTML
 
 $CFG = require_once('../../common/include/incConfig.php');//CG CONFIG
 
-require_once("../../common/include/incUtil.php");
-require_once('../../common/include/incRequest.php');//CG REQUEST
+include_once('../../common/include/incUtil.php');//CG UTIL
+include_once('../../common/include/incRequest.php');//CG REQUEST
+include_once('../../common/include/incDB.php');//CG DB
+include_once('../../common/include/incSec.php');//CG SEC
+include_once('../../common/include/incAuth.php');//CG AUTH
+include_once('../../common/include/incUser.php');//CG USER
+
+
+//인증 게이트웨이
+require_once('../../common/include/incLoginOauthGateway.php');//CG USER
+
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>	

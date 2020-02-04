@@ -22,7 +22,7 @@ class cg_pgminfo_dao
 		$RtnVal["SQLTXT"] = "
 		select
 			0, a.PJTSEQ, c.PJTID, a.PGMSEQ, '-' as STATUS, a.PGMID, a.PGMNM
-			, concat(a.VIEWURL,'^',c.PJTID,'/',a.VIEWURL,'^_blank') as VIEWURL
+			, concat(a.VIEWURL,'^http://localhost:8060/c.g/',c.PJTID,'/',a.VIEWURL,'^_blank') as VIEWURL
 			, concat('권한받기^http://localhost:8060/m.k/cg_pgminfo_getauth.php?PJTSEQ=',a.PJTSEQ,'&PGMSEQ=',a.PGMSEQ,'^_blank') as GETAUTH
 			, a.PGMTYPE
 			,b.VERDT, b.DEGREE, b.ADDDT as MAKEDT, a.ADDDT, a.MODDT
