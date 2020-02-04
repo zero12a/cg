@@ -36,6 +36,10 @@ header("Pragma:no-cache");
 
 
     <!--공통-->
+    <script type="text/javascript" charset="utf-8">
+        var makeRootUrl = "<?=$CFG["CFG_MAKE_URL"]?>";
+        var oauthToken = "<?=getAccessToken()?>";
+    </script>
     <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
     <link href="/common/common.css" rel="stylesheet" type="text/css" />
 

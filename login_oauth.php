@@ -7,7 +7,7 @@ $CFG = require_once("../common/include/incConfig.php");
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>rd login</title>
+    <title>cg login</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>/lib/bootstrap4/css/bootstrap.min.css">
