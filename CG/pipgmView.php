@@ -3,10 +3,22 @@
 //PGMNM : PIPGM
 header("Content-Type: text/html; charset=UTF-8"); //HTML
 
-$CFG = require_once('../../common/include/incConfig.php');//CG CONFIG
+//설정 함수 읽기
+$CFG = require_once '../../common/include/incConfig.php';
 
-require_once("../../common/include/incUtil.php");
-require_once('../../common/include/incRequest.php');//CG REQUEST
+//MONO Autoload
+require_once($CFG["CFG_LIBS_MONO_LOG"]);
+
+//LIBS
+include_once('../../common/include/incUtil.php');//CG UTIL
+include_once('../../common/include/incRequest.php');//CG REQUEST
+include_once('../../common/include/incDB.php');//CG DB
+include_once('../../common/include/incSec.php');//CG SEC
+include_once('../../common/include/incAuth.php');//CG AUTH
+include_once('../../common/include/incUser.php');//CG USER
+
+//인증 게이트웨이
+require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>	
@@ -31,7 +43,6 @@ require_once('../../common/include/incRequest.php');//CG REQUEST
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/selection/active-line.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR3-->
 
 <!--CSS 불러오기-->
-<link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>/common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->

@@ -246,30 +246,6 @@ setCodeCombo("FORMVIEW",$("#G3-COLSIZETYPE"),"COLSIZETYPE");
 	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //GRP목록
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-//사용자정의함수 : 사용자정의
-function G1_USERDEF(token){
-	alog("G1_USERDEF-----------------start");
-
-	alog("G1_USERDEF-----------------end");
-}
 //조건, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -302,16 +278,29 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
-//사용자정의함수 : 사용자정의
-function G2_USERDEF(token){
-	alog("G2_USERDEF-----------------start");
-
-	alog("G2_USERDEF-----------------end");
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //GRP목록
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("G1_SEARCHALL--------------------------end");
 }
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
+//사용자정의함수 : 사용자정의
+function G1_USERDEF(token){
+	alog("G1_USERDEF-----------------start");
+
+	alog("G1_USERDEF-----------------end");
 }
 //GRP목록
 function G2_CHKSAVE(token){
@@ -437,7 +426,41 @@ function G2_EXCEL(){
 
 	alog("G2_EXCEL()------------end");
 }
-//디테일 검색	
+//사용자정의함수 : 사용자정의
+function G2_USERDEF(token){
+	alog("G2_USERDEF-----------------start");
+
+	alog("G2_USERDEF-----------------end");
+}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
+}
+//	
+function G3_new(){
+       alog("[FromView] G3_new---------------start");
+	$("#G3-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G3-PJTSEQ").val("");//PJTSEQ 신규초기화	
+	$("#G3-PGMSEQ").val("");//PGMSEQ 신규초기화	
+	$("#G3-GRPSEQ").val("");//GRPSEQ 신규초기화	
+	$("#G3-GRPID").val("");//GRPID 신규초기화	
+	$("#G3-GRPNM").val("");//GRPNM 신규초기화	
+	$("#G3-GRPORD").val("");//GRPORD 신규초기화	
+	$("#G3-FREEZECNT").val("");//(Grid)FREEZECNT 신규초기화	
+	$("#G3-REFGRPID").val("");//REFGRPID 신규초기화	
+	$("#G3-GRPWIDTH").val("");//GRPWIDTH 신규초기화	
+	$("#G3-GRPHEIGHT").val("");//GRPHEIGHT 신규초기화	
+	$("#G3-LEGENDALIGN").val("");//(Chart)LEGENDALIGN 신규초기화	
+	$("#G3-STACKED").val("");//(Chart)STACKED 신규초기화	
+	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
+}
+//새로고침	
+function G3_reload(token){
+	alog("G3_reload-----------------start");
+	G3_SEARCH(lastinputG3,token);
+}//디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
 
@@ -603,27 +626,4 @@ function G3_save(token){
 			alog(error);
 		}
 	});
-}//	
-function G3_new(){
-       alog("[FromView] G3_new---------------start");
-	$("#G3-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G3-PJTSEQ").val("");//PJTSEQ 신규초기화	
-	$("#G3-PGMSEQ").val("");//PGMSEQ 신규초기화	
-	$("#G3-GRPSEQ").val("");//GRPSEQ 신규초기화	
-	$("#G3-GRPID").val("");//GRPID 신규초기화	
-	$("#G3-GRPNM").val("");//GRPNM 신규초기화	
-	$("#G3-GRPORD").val("");//GRPORD 신규초기화	
-	$("#G3-FREEZECNT").val("");//(Grid)FREEZECNT 신규초기화	
-	$("#G3-REFGRPID").val("");//REFGRPID 신규초기화	
-	$("#G3-GRPWIDTH").val("");//GRPWIDTH 신규초기화	
-	$("#G3-GRPHEIGHT").val("");//GRPHEIGHT 신규초기화	
-	$("#G3-LEGENDALIGN").val("");//(Chart)LEGENDALIGN 신규초기화	
-	$("#G3-STACKED").val("");//(Chart)STACKED 신규초기화	
-	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
-}
-//새로고침	
-function G3_reload(token){
-	alog("G3_reload-----------------start");
-	G3_SEARCH(lastinputG3,token);
 }
