@@ -83,6 +83,9 @@ header("Pragma:no-cache");
     <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 
     <!--공통-->
+    <script type="text/javascript" charset="utf-8">
+        var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
+    </script>
     <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>
 
 
@@ -110,8 +113,8 @@ header("Pragma:no-cache");
 
 	<div  class="GRID_LABELGRP" >
 		<div class="GRID_LABEL" >* OBJINFO3 
-			<!--popup--><a href="?" target="_blank"><img src="./img/popup.png" height=10 align=absmiddle border=0></a>
-			<!--reload--><a href="javascript:location.reload();"><img src="./img/reload.png" width=11 height=10 align=absmiddle border=0></a>		
+			<!--popup--><a href="?" target="_blank"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/popup.png" height=10 align=absmiddle border=0></a>
+			<!--reload--><a href="javascript:location.reload();"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/reload.png" width=11 height=10 align=absmiddle border=0></a>		
 		</div>
 		<div  class="GRID_LABELBTN"  >
             <input type="button" name="some_name" value="makeLocalFile" onclick="makeFile();">

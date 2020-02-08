@@ -27,6 +27,9 @@ if(trim($CFG["REDIS_HOST"]) == "")die("Config에 REDIS_HOST 값이 없습니다.
 	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js"></script>
 
     <!--공통-->
+    <script>
+    var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:port/
+    </script>
     <script src="/common/common.js?" type="text/javascript" charset="utf-8"></script>    
     <link href="/common/common.css?" rel="stylesheet" type="text/css" />
 
@@ -84,8 +87,8 @@ if(trim($CFG["REDIS_HOST"]) == "")die("Config에 REDIS_HOST 값이 없습니다.
 </head>
 <body class="HTML_BODY">
     <div class="GRID_LABEL" style="vertical-align:text-bottom;">* CONFIGMNG
-        <!--popup--><a href="?" target="_blank"><img src="./img/popup.png" height=10 align=absmiddle border=0></a>
-        <!--reload--><a href="javascript:location.reload();"><img src="./img/reload.png" width=11 height=10 align=absmiddle border=0></a>
+        <!--popup--><a href="?" target="_blank"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/popup.png" height=10 align=absmiddle border=0></a>
+        <!--reload--><a href="javascript:location.reload();"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/reload.png" width=11 height=10 align=absmiddle border=0></a>
     </div>
     <BR><BR>
 <?php
