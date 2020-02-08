@@ -34,6 +34,8 @@
     //컬럼ROW받기 GRPID,GRPTYPE,GRPNM,GRPORD,BRCNT,REFGRPID,GRPWIDTH,GRPHEIGHT,
  
 
+    //CFG
+    $REQ["CFG.CFG_MAKE_URL"] = $CFG["CFG_MAKE_URL"];
 
     //로그인 정보
     $REQ["ADDID"] = getUserSeq();
