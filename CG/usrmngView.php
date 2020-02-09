@@ -227,7 +227,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<!--I.COLID : USR_PWD-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						USR_PWD<img src="../img/crypt_lock.png" title="sha hashed" align="absmiddle">
+						USR_PWD<img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/crypt_lock.png" title="sha hashed" align="absmiddle">
 					</div>
 					<!-- style="width:200px;"-->
 					<div class="CON_OBJECT">
