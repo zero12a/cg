@@ -316,6 +316,8 @@ header("Pragma:no-cache");
                         <option value="#{USER.ID}">(입력) 유저ID</option>                        
                         <option value="#{USER.SEQ}">(입력) 유저SEQ</option>
                         <option value="#{SERVER.REMOTE_ADDR}">(입력) 접속자IP</option>
+                        <option value="#{CFG.CFG_MAKE_URL}">(입력) 설정-MAKE URL</option>
+                        <option value="#{CFG.CFG_CGWEG_URL}">(입력) 설정-CGWEB URL</option>
                         <option value="#{GRPID-COLID-DEL}">(입력) 파일삭제(FORM)</option>
                         <option value="#{GRPID-COLID-NM}">(입력) 파일이름(FORM)</option>
                         <option value="#{GRPID-COLID-SVRNM}">(입력) 파일서버이름(FORM)</option>

@@ -41,6 +41,7 @@ var obj_G3_GITINIT;   // GIT 글로벌 변수 선언
 var obj_G3_GITCOMMIT;   // GITCOMMIT 글로벌 변수 선언
 var obj_G3_GITPUSH;   // GITPUSH 글로벌 변수 선언
 var obj_G3_GITFORCEPUSH;   // GITFORCEPUSH 글로벌 변수 선언
+var obj_G3_GITVIEWCONFIG;   // GITVIEWCONFIG 글로벌 변수 선언
 var obj_G3_ADDDT;   // ADDDT 글로벌 변수 선언
 var obj_G3_MODDT;   // MODDT 글로벌 변수 선언
 //화면 초기화	
@@ -246,6 +247,7 @@ function G3_INIT(){
 
 
 
+
 	//컬럼 초기화
 	//PJTSEQ, PJTSEQ 초기화	
 	//PJTID, 프로젝트ID 초기화	
@@ -264,6 +266,7 @@ function G3_INIT(){
 	//GITCOMMIT, GITCOMMIT 초기화	
 	//GITPUSH, GITPUSH 초기화	
 	//GITFORCEPUSH, GITFORCEPUSH 초기화	
+	//GITVIEWCONFIG, GITVIEWCONFIG 초기화	
 	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
@@ -561,6 +564,17 @@ function G3_SEARCH(tinput,token){
 			}
 		}else{
 			alert("GITFORCEPUSH 컬럼이 없습니다.");
+		}
+		var tArr = data.RTN_DATA.GITVIEWCONFIG.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-GITVIEWCONFIG-LINK").attr("href",tArr[0]);//GITVIEWCONFIG 변수세팅
+				$("#G3-GITVIEWCONFIG-NM").text(tArr[1]);//GITVIEWCONFIG 변수세팅
+			}else{
+				alog("GITVIEWCONFIG의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("GITVIEWCONFIG 컬럼이 없습니다.");
 		}
 			$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
 			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
