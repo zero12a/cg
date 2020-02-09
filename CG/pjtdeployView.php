@@ -312,9 +312,36 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : GITINIT-->
 				<div  id="DIV_G3-GITINIT" class="CON_OBJGRP" style="">
-					<!-- style="width:200px;"-->
-					<div class="CON_OBJECT">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						GIT
+						</div>
+						<!-- style="width:80px;"-->
+					<div class="CON_OBJECT" style="width:80px;">
 					<a href="" target="_blank" name="G3-GITINIT-LINK" id="G3-GITINIT-LINK"><span id="G3-GITINIT-NM" name="G3-GITINIT-NM"></span></a>
+					</div>	
+			</div>	
+				<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GITCOMMIT-->
+				<div  id="DIV_G3-GITCOMMIT" class="CON_OBJGRP" style="">
+					<!-- style="width:80px;"-->
+					<div class="CON_OBJECT" style="width:80px;">
+					<a href="" target="_blank" name="G3-GITCOMMIT-LINK" id="G3-GITCOMMIT-LINK"><span id="G3-GITCOMMIT-NM" name="G3-GITCOMMIT-NM"></span></a>
+					</div>	
+			</div>	
+				<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GITPUSH-->
+				<div  id="DIV_G3-GITPUSH" class="CON_OBJGRP" style="">
+					<!-- style="width:80px;"-->
+					<div class="CON_OBJECT" style="width:80px;">
+					<a href="" target="_blank" name="G3-GITPUSH-LINK" id="G3-GITPUSH-LINK"><span id="G3-GITPUSH-NM" name="G3-GITPUSH-NM"></span></a>
+					</div>	
+			</div>	
+				<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GITFORCEPUSH-->
+				<div  id="DIV_G3-GITFORCEPUSH" class="CON_OBJGRP" style="">
+					<!-- style="width:80px;"-->
+					<div class="CON_OBJECT" style="width:80px;">
+					<a href="" target="_blank" name="G3-GITFORCEPUSH-LINK" id="G3-GITFORCEPUSH-LINK"><span id="G3-GITFORCEPUSH-NM" name="G3-GITFORCEPUSH-NM"></span></a>
 					</div>	
 			</div>	
 				</DIV><!--is_br_tab end-->

@@ -26,7 +26,10 @@ class pjtdeployDao
 	PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL
 	,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT
 	,DELYN
-	,concat(#,'/c.g/',PJTID,'/cg_cdeploy?CTL=INIT', '^GIT 초기화') as GITINIT
+	,concat(#{CFG.CFG_MAKE_URL},'/m.k/cg_cdeploy?PJTID=',PJTID,'&CTL=INIT', '^GIT 초기화') as GITINIT
+	,concat(#{CFG.CFG_MAKE_URL},'/m.k/cg_cdeploy?PJTID=',PJTID,'&CTL=COMMIT&MSG=Auto', '^GIT 커밋') as GITCOMMIT
+	,concat(#{CFG.CFG_MAKE_URL},'/m.k/cg_cdeploy?PJTID=',PJTID,'&CTL=PUSH', '^GIT 푸쉬') as GITPUSH
+	,concat(#{CFG.CFG_MAKE_URL},'/m.k/cg_cdeploy?PJTID=',PJTID,'&CTL=FORCE_PUSH', '^GIT 강제푸쉬') as GITFORCEPUSH
 	,ADDDT,MODDT 
 from
  CG_PJTINFO	
@@ -34,7 +37,7 @@ where PJTSEQ = #{G2-PJTSEQ}
 ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "si";
+		$RtnVal["BINDTYPE"] = "ssssi";
 		return $RtnVal;
     }  
 	//lstPjt    

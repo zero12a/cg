@@ -37,7 +37,10 @@ var obj_G3_PKGROOT;   // 패키지ROOT 글로벌 변수 선언
 var obj_G3_STARTDT;   // 시작일 글로벌 변수 선언
 var obj_G3_ENDDT;   // 종료일 글로벌 변수 선언
 var obj_G3_DELYN;   // 삭제YN 글로벌 변수 선언
-var obj_G3_GITINIT;   // GITINIT 글로벌 변수 선언
+var obj_G3_GITINIT;   // GIT 글로벌 변수 선언
+var obj_G3_GITCOMMIT;   // GITCOMMIT 글로벌 변수 선언
+var obj_G3_GITPUSH;   // GITPUSH 글로벌 변수 선언
+var obj_G3_GITFORCEPUSH;   // GITFORCEPUSH 글로벌 변수 선언
 var obj_G3_ADDDT;   // ADDDT 글로벌 변수 선언
 var obj_G3_MODDT;   // MODDT 글로벌 변수 선언
 //화면 초기화	
@@ -240,6 +243,9 @@ function G3_INIT(){
 
 
 
+
+
+
 	//컬럼 초기화
 	//PJTSEQ, PJTSEQ 초기화	
 	//PJTID, 프로젝트ID 초기화	
@@ -254,15 +260,13 @@ function G3_INIT(){
 	//달력 ENDDT, 종료일
 	$( "#G3-ENDDT" ).datepicker(dateFormatJson);
 	//DELYN, 삭제YN 초기화	
-	//GITINIT, GITINIT 초기화	
+	//GITINIT, GIT 초기화	
+	//GITCOMMIT, GITCOMMIT 초기화	
+	//GITPUSH, GITPUSH 초기화	
+	//GITFORCEPUSH, GITFORCEPUSH 초기화	
 	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -275,6 +279,11 @@ function G1_SEARCHALL(token){
 		//  호출
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
 }
 	function G2_SAVE(token){
 	alog("G2_SAVE()------------start");
@@ -512,13 +521,46 @@ function G3_SEARCH(tinput,token){
 		var tArr = data.RTN_DATA.GITINIT.split("^");
 		if(tArr){
 			if(tArr.length == 2){
-				$("#G3-GITINIT-LINK").attr("href",tArr[0]);//GITINIT 변수세팅
-				$("#G3-GITINIT-NM").text(tArr[1]);//GITINIT 변수세팅
+				$("#G3-GITINIT-LINK").attr("href",tArr[0]);//GIT 변수세팅
+				$("#G3-GITINIT-NM").text(tArr[1]);//GIT 변수세팅
 			}else{
 				alog("GITINIT의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
 			}
 		}else{
 			alert("GITINIT 컬럼이 없습니다.");
+		}
+		var tArr = data.RTN_DATA.GITCOMMIT.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-GITCOMMIT-LINK").attr("href",tArr[0]);//GITCOMMIT 변수세팅
+				$("#G3-GITCOMMIT-NM").text(tArr[1]);//GITCOMMIT 변수세팅
+			}else{
+				alog("GITCOMMIT의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("GITCOMMIT 컬럼이 없습니다.");
+		}
+		var tArr = data.RTN_DATA.GITPUSH.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-GITPUSH-LINK").attr("href",tArr[0]);//GITPUSH 변수세팅
+				$("#G3-GITPUSH-NM").text(tArr[1]);//GITPUSH 변수세팅
+			}else{
+				alog("GITPUSH의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("GITPUSH 컬럼이 없습니다.");
+		}
+		var tArr = data.RTN_DATA.GITFORCEPUSH.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-GITFORCEPUSH-LINK").attr("href",tArr[0]);//GITFORCEPUSH 변수세팅
+				$("#G3-GITFORCEPUSH-NM").text(tArr[1]);//GITFORCEPUSH 변수세팅
+			}else{
+				alog("GITFORCEPUSH의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("GITFORCEPUSH 컬럼이 없습니다.");
 		}
 			$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
 			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅

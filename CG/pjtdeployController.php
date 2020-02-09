@@ -56,6 +56,7 @@ if(!isLogin()){
 	JsonMsg("500","120",$ctl . " 권한이 없습니다.");
 }
 		//사용자 정보 가져오기
+	$REQ["CFG.CFG_MAKE_URL"] = $CFG["CFG_MAKE_URL"];
 //로그 저장 방식 결정
 //일반로그, 권한변경로그, PI로그
 //NORMAL, POWER, PI
@@ -123,8 +124,14 @@ $REQ["G3-ENDDT"] = reqPostString("G3-ENDDT",8);//종료일
 $REQ["G3-ENDDT"] = getFilter($REQ["G3-ENDDT"],"SAFETEXT","/--미 정의--/");	
 $REQ["G3-DELYN"] = reqPostString("G3-DELYN",1);//삭제YN	
 $REQ["G3-DELYN"] = getFilter($REQ["G3-DELYN"],"SAFETEXT","/--미 정의--/");	
-$REQ["G3-GITINIT"] = reqPostString("G3-GITINIT",100);//GITINIT	
+$REQ["G3-GITINIT"] = reqPostString("G3-GITINIT",100);//GIT	
 $REQ["G3-GITINIT"] = getFilter($REQ["G3-GITINIT"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-GITCOMMIT"] = reqPostString("G3-GITCOMMIT",100);//GITCOMMIT	
+$REQ["G3-GITCOMMIT"] = getFilter($REQ["G3-GITCOMMIT"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-GITPUSH"] = reqPostString("G3-GITPUSH",100);//GITPUSH	
+$REQ["G3-GITPUSH"] = getFilter($REQ["G3-GITPUSH"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-GITFORCEPUSH"] = reqPostString("G3-GITFORCEPUSH",118);//GITFORCEPUSH	
+$REQ["G3-GITFORCEPUSH"] = getFilter($REQ["G3-GITFORCEPUSH"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-ADDDT"] = reqPostString("G3-ADDDT",14);//ADDDT	
 $REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//MODDT	
