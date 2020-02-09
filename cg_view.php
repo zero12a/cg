@@ -9,33 +9,33 @@
 header("Content-Type: text/html; charset=UTF-8");
 
 //설정 함수 읽기
-$CFG = include_once './incConfig.php';
-if(!include_once '../common/include/incDB.php')			echo "include fail(2)";
-if(!include_once '../common/include/incUtil.php')		echo "include fail(3)";
-if(!include_once '../common/include/incSec.php')		echo "include fail(4)";
-if(!include_once '../common/include/incRequest.php')		echo "include fail(5)";
+$CFG = require_once '../common/include/incConfig.php';
+if(!require_once '../common/include/incDB.php')			echo "include fail(2)";
+if(!require_once '../common/include/incUtil.php')		echo "include fail(3)";
+if(!require_once '../common/include/incSec.php')		echo "include fail(4)";
+if(!require_once '../common/include/incRequest.php')		echo "include fail(5)";
 
 ?>
 <html>
 <head>
     <!--codemirror-->
-    <link rel=stylesheet href="/lib/codemirror/doc/docs.css">
-    <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
+    <link rel=stylesheet href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/doc/docs.css">
+    <link rel=stylesheet href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css">
 
-    <script src="/lib/codemirror/lib/codemirror.js"></script>
-    <script src="/lib/codemirror/mode/php/php.js"></script>
-    <script src="/lib/codemirror/mode/sql/sql.js"></script>
-    <script src="/lib/codemirror/addon/selection/active-line.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/php/php.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/sql/sql.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/selection/active-line.js"></script>
 
-    <script src="/lib/codemirror/mode/xml/xml.js"></script>
-    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>
-    <script src="/lib/codemirror/mode/css/css.js"></script>
-    <script src="/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/xml/xml.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/javascript/javascript.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/css/css.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
-    <script src="/lib/codemirror/addon/edit/matchbrackets.js"></script>
-    <script src="/lib/codemirror/addon/comment/continuecomment.js"></script>
-    <script src="/lib/codemirror/addon/comment/comment.js"></script>
-    <script src="/lib/codemirror/mode/clike/clike.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/comment/continuecomment.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/comment/comment.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/clike/clike.js"></script>
     <style>
         body {margin:0;padding:0}
 

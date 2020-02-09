@@ -176,14 +176,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "GRP_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("GRP_SEQ")).getValue()) + '"' +
-			//', "GRP_NM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("GRP_NM")).getValue()) + '"' +
-			//', "USE_YN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USE_YN")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//', "ADD_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADD_ID")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
 				', "G2-GRP_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("GRP_SEQ")).getValue()) + '"' +
@@ -328,18 +320,6 @@ function G3_INIT(){
 				goOpenerReturn(popG3json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
-			//', "CHK" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("CHK")).getValue()) + '"' +
-			//', "GA_SEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("GA_SEQ")).getValue()) + '"' +
-			//', "GRP_SEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("GRP_SEQ")).getValue()) + '"' +
-			//', "PGMID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PGMID")).getValue()) + '"' +
-			//', "MNU_NM" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MNU_NM")).getValue()) + '"' +
-			//', "AUTH_ID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("AUTH_ID")).getValue()) + '"' +
-			//', "AUTH_NM" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("AUTH_NM")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//', "ADD_ID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ADD_ID")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG3.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -472,18 +452,6 @@ function G4_INIT(){
 				goOpenerReturn(popG4json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG4json = jQuery.parseJSON('{ "__NAME":"lastinputG4json"' +
-			//', "CHK" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("CHK")).getValue()) + '"' +
-			//', "AUTH_SEQ" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("AUTH_SEQ")).getValue()) + '"' +
-			//', "PGMID" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("PGMID")).getValue()) + '"' +
-			//', "MNU_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("MNU_NM")).getValue()) + '"' +
-			//', "AUTH_ID" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("AUTH_ID")).getValue()) + '"' +
-			//', "AUTH_NM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("AUTH_NM")).getValue()) + '"' +
-			//', "USE_YN" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("USE_YN")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//', "MOD_DT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("MOD_DT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG4.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -513,6 +481,24 @@ function G4_INIT(){
         alog("G4_INIT()-------------------------end");
      }
 //D146 그룹별 기능 함수 출력		
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //그룹목록
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("G1_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 //조회조건, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -544,29 +530,6 @@ function G1_SAVE(){
 		}
 	});
 	alog("G1_SAVE-------------------end");	
-}
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //그룹목록
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
 }
 
 
@@ -646,6 +609,11 @@ function G2_RELOAD(token){
         }
 		alog("G2_HIDDENCOL()..................end");
     }
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
+}
 //새로고침	
 function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
@@ -776,11 +744,6 @@ function G3_CHKSAVE(token){
         }
 		alog("G3_HIDDENCOL()..................end");
     }
-//새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
-}
 function G4_CHKSAVE(token){
 	alog("G4_CHKSAVE()------------start");
 	tgrid = mygridG4;
@@ -906,3 +869,8 @@ function G4_CHKSAVE(token){
         }
 		alog("G4_HIDDENCOL()..................end");
     }
+//새로고침	
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
+}

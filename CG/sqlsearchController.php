@@ -15,7 +15,7 @@ include_once('../../common/include/incSec.php');//CG SEC
 include_once('../../common/include/incAuth.php');//CG AUTH
 include_once('../../common/include/incUser.php');//CG USER
 //하위에서 LOADDING LIB 처리
-	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
+array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
 //SAFE HTML 필더 로더
 $config = HTMLPurifier_Config::createDefault();
 $purifier = new HTMLPurifier($config);	
@@ -28,6 +28,7 @@ $log = getLogger(
 	, "PGM_ID"=>"SQLSEARCH"
 	, "REQTOKEN" => $reqToken
 	, "RESTOKEN" => $resToken
+	, "LOG_LEVEL" => Monolog\Logger::ERROR
 	)
 );
 $log->info("SqlsearchControl___________________________start");
@@ -169,7 +170,7 @@ $objService = new sqlsearchService();
 	//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
-			case "G1_SEARCHALL" :
+		case "G1_SEARCHALL" :
   		echo $objService->goG1Searchall(); //조건, 조회(전체)
   		break;
 	case "G1_SAVE" :

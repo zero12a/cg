@@ -185,21 +185,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "LOGIN_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGIN_SEQ")).getValue()) + '"' +
-			//', "USR_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USR_ID")).getValue()) + '"' +
-			//', "SESSION_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("SESSION_ID")).getValue()) + '"' +
-			//', "SUCCESS_YN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("SUCCESS_YN")).getValue()) + '"' +
-			//', "RESPONSE_MSG" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("RESPONSE_MSG")).getValue()) + '"' +
-			//', "PW_ERR_CNT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PW_ERR_CNT")).getValue()) + '"' +
-			//', "LOCKCD" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOCKCD")).getValue()) + '"' +
-			//', "USR_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USR_SEQ")).getValue()) + '"' +
-			//', "SERVER_NAME" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("SERVER_NAME")).getValue()) + '"' +
-			//', "REMOTE_ADDR" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("REMOTE_ADDR")).getValue()) + '"' +
-			//', "USER_AGENT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USER_AGENT")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -328,18 +313,6 @@ function G3_INIT(){
 				goOpenerReturn(popG3json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
-			//', "LOGIN_SEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("LOGIN_SEQ")).getValue()) + '"' +
-			//', "USR_ID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("USR_ID")).getValue()) + '"' +
-			//', "SESSION_ID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("SESSION_ID")).getValue()) + '"' +
-			//', "SUCCESS_YN" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("SUCCESS_YN")).getValue()) + '"' +
-			//', "LOCKCD" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("LOCKCD")).getValue()) + '"' +
-			//', "PW_ERR_CNT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PW_ERR_CNT")).getValue()) + '"' +
-			//', "LOCK_LIMIT_DT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("LOCK_LIMIT_DT")).getValue()) + '"' +
-			//', "USR_SEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("USR_SEQ")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG3.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -468,18 +441,6 @@ function G4_INIT(){
 				goOpenerReturn(popG4json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG4json = jQuery.parseJSON('{ "__NAME":"lastinputG4json"' +
-			//', "LAUTH_SEQ" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("LAUTH_SEQ")).getValue()) + '"' +
-			//', "REQ_TOKEN" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("REQ_TOKEN")).getValue()) + '"' +
-			//', "RES_TOKEN" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("RES_TOKEN")).getValue()) + '"' +
-			//', "USR_SEQ" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("USR_SEQ")).getValue()) + '"' +
-			//', "USR_ID" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("USR_ID")).getValue()) + '"' +
-			//', "PGMID" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("PGMID")).getValue()) + '"' +
-			//', "AUTH_ID" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("AUTH_ID")).getValue()) + '"' +
-			//', "SUCCESS_YN" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SUCCESS_YN")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG4.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -509,6 +470,11 @@ function G4_INIT(){
         alog("G4_INIT()-------------------------end");
      }
 //D146 그룹별 기능 함수 출력		
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 //, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -560,10 +526,10 @@ function G1_SEARCHALL(token){
 	G4_SEARCH(lastinputG4,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
 }
 //엑셀다운		
 function G2_EXCEL(){	
@@ -662,37 +628,6 @@ function G2_EXCEL(){
 		alog("G2_HIDDENCOL()..................end");
     }
 //새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
-}
-//엑셀다운		
-function G3_EXCEL(){	
-	alog("G3_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/c.g/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG3.setSerializationLevel(true,false,false,false,false,false);
-	var myXmlString = mygridG3.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("LOGIN_SEQ,USR_ID,SESSION_ID,SUCCESS_YN,LOCKCD,PW_ERR_CNT,LOCK_LIMIT_DT,USR_SEQ,ADD_DT");
-	$("#DATA_WIDTHS").val("120,100,200,60,60,40,60,60,60");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
-}
-    function G3_HIDDENCOL(){
-		alog("G3_HIDDENCOL()..................start");
-        if(isToggleHiddenColG3){
-            isToggleHiddenColG3 = false;     }else{
-            isToggleHiddenColG3 = true;
-        }
-		alog("G3_HIDDENCOL()..................end");
-    }
-//새로고침	
 function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
   G3_SEARCH(lastinputG3,token);
@@ -767,19 +702,32 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
-    function G4_HIDDENCOL(){
-		alog("G4_HIDDENCOL()..................start");
-        if(isToggleHiddenColG4){
-            isToggleHiddenColG4 = false;     }else{
-            isToggleHiddenColG4 = true;
-        }
-		alog("G4_HIDDENCOL()..................end");
-    }
-//새로고침	
-function G4_RELOAD(token){
-  alog("G4_RELOAD-----------------start");
-  G4_SEARCH(lastinputG4,token);
+//엑셀다운		
+function G3_EXCEL(){	
+	alog("G3_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/c.g/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG3.setSerializationLevel(true,false,false,false,false,false);
+	var myXmlString = mygridG3.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("LOGIN_SEQ,USR_ID,SESSION_ID,SUCCESS_YN,LOCKCD,PW_ERR_CNT,LOCK_LIMIT_DT,USR_SEQ,ADD_DT");
+	$("#DATA_WIDTHS").val("120,100,200,60,60,40,60,60,60");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
 }
+    function G3_HIDDENCOL(){
+		alog("G3_HIDDENCOL()..................start");
+        if(isToggleHiddenColG3){
+            isToggleHiddenColG3 = false;     }else{
+            isToggleHiddenColG3 = true;
+        }
+		alog("G3_HIDDENCOL()..................end");
+    }
 
 
 
@@ -867,4 +815,17 @@ function G4_EXCEL(){
 	$("#DATA_WIDTHS").val("60,60,60,60,100,200,120,60,60");
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
+}
+    function G4_HIDDENCOL(){
+		alog("G4_HIDDENCOL()..................start");
+        if(isToggleHiddenColG4){
+            isToggleHiddenColG4 = false;     }else{
+            isToggleHiddenColG4 = true;
+        }
+		alog("G4_HIDDENCOL()..................end");
+    }
+//새로고침	
+function G4_RELOAD(token){
+  alog("G4_RELOAD-----------------start");
+  G4_SEARCH(lastinputG4,token);
 }

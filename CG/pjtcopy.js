@@ -211,20 +211,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "CHKEDIT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("CHKEDIT")).getValue()) + '"' +
-			//', "PJTSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PJTSEQ")).getValue()) + '"' +
-			//', "CFGSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("CFGSEQ")).getValue()) + '"' +
-			//', "USEYN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USEYN")).getValue()) + '"' +
-			//', "CFGID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("CFGID")).getValue()) + '"' +
-			//', "CFGNM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("CFGNM")).getValue()) + '"' +
-			//', "MVCGBN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MVCGBN")).getValue()) + '"' +
-			//', "PATH" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PATH")).getValue()) + '"' +
-			//', "CFGORD" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("CFGORD")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MODDT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -357,21 +343,6 @@ function G3_INIT(){
 				goOpenerReturn(popG3json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
-			//', "CHKEDIT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("CHKEDIT")).getValue()) + '"' +
-			//', "PJTSEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PJTSEQ")).getValue()) + '"' +
-			//', "FILESEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("FILESEQ")).getValue()) + '"' +
-			//', "MKFILETYPE" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MKFILETYPE")).getValue()) + '"' +
-			//', "MKFILETYPENM" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MKFILETYPENM")).getValue()) + '"' +
-			//', "MKFILEFORMAT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MKFILEFORMAT")).getValue()) + '"' +
-			//', "MKFILEEXT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MKFILEEXT")).getValue()) + '"' +
-			//', "TEMPLATE" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("TEMPLATE")).getValue()) + '"' +
-			//', "FILEORD" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("FILEORD")).getValue()) + '"' +
-			//', "USEYN" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("USEYN")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MODDT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG3.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -501,19 +472,6 @@ function G4_INIT(){
 				goOpenerReturn(popG4json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG4json = jQuery.parseJSON('{ "__NAME":"lastinputG4json"' +
-			//', "PJTSEQ" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("PJTSEQ")).getValue()) + '"' +
-			//', "CFGSEQ" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("CFGSEQ")).getValue()) + '"' +
-			//', "USEYN" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("USEYN")).getValue()) + '"' +
-			//', "CFGID" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("CFGID")).getValue()) + '"' +
-			//', "CFGNM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("CFGNM")).getValue()) + '"' +
-			//', "MVCGBN" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("MVCGBN")).getValue()) + '"' +
-			//', "PATH" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("PATH")).getValue()) + '"' +
-			//', "CFGORD" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("CFGORD")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("MODDT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG4.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -644,20 +602,6 @@ function G5_INIT(){
 				goOpenerReturn(popG5json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG5json = jQuery.parseJSON('{ "__NAME":"lastinputG5json"' +
-			//', "PJTSEQ" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("PJTSEQ")).getValue()) + '"' +
-			//', "FILESEQ" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("FILESEQ")).getValue()) + '"' +
-			//', "MKFILETYPE" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("MKFILETYPE")).getValue()) + '"' +
-			//', "MKFILETYPENM" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("MKFILETYPENM")).getValue()) + '"' +
-			//', "MKFILEFORMAT" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("MKFILEFORMAT")).getValue()) + '"' +
-			//', "MKFILEEXT" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("MKFILEEXT")).getValue()) + '"' +
-			//', "TEMPLATE" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("TEMPLATE")).getValue()) + '"' +
-			//', "FILEORD" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("FILEORD")).getValue()) + '"' +
-			//', "USEYN" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("USEYN")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("MODDT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG5.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){

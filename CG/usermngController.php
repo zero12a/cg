@@ -15,7 +15,7 @@ include_once('../../common/include/incSec.php');//CG SEC
 include_once('../../common/include/incAuth.php');//CG AUTH
 include_once('../../common/include/incUser.php');//CG USER
 //하위에서 LOADDING LIB 처리
-	array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
+array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
 $reqToken = reqGetString("TOKEN",37);
 $resToken = uniqid();
 
@@ -25,6 +25,7 @@ $log = getLogger(
 	, "PGM_ID"=>"USERMNG"
 	, "REQTOKEN" => $reqToken
 	, "RESTOKEN" => $resToken
+	, "LOG_LEVEL" => Monolog\Logger::ERROR
 	)
 );
 $log->info("UsermngControl___________________________start");
@@ -210,7 +211,7 @@ $objService = new usermngService();
 	//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
-			case "G2_USERDEF" :
+		case "G2_USERDEF" :
   		echo $objService->goG2Userdef(); //사용자1, 비번변경
   		break;
 	case "G2_SEARCH" :

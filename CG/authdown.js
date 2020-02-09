@@ -209,15 +209,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "FNCSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FNCSEQ")).getValue()) + '"' +
-			//', "PGMID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PGMID")).getValue()) + '"' +
-			//', "AUTH_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("AUTH_ID")).getValue()) + '"' +
-			//', "AUTH_NM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("AUTH_NM")).getValue()) + '"' +
-			//', "USE_YN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USE_YN")).getValue()) + '"' +
-			//', "PGMID2" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PGMID2")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -247,11 +238,6 @@ function G2_INIT(){
         alog("G2_INIT()-------------------------end");
      }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 //조회조건, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -296,6 +282,11 @@ function G1_SEARCHALL(token){
 		//  호출
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
 }
     function G2_HIDDENCOL(){
 		alog("G2_HIDDENCOL()..................start");

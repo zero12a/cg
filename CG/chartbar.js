@@ -265,12 +265,6 @@ function G4_INIT(){
 				goOpenerReturn(popG4json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG4json = jQuery.parseJSON('{ "__NAME":"lastinputG4json"' +
-			//', "LOGIN_DT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("LOGIN_DT")).getValue()) + '"' +
-			//', "LOGIN_CNT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("LOGIN_CNT")).getValue()) + '"' +
-			//', "LOGIN_CNT2" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("LOGIN_CNT2")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG4.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -393,12 +387,6 @@ function G5_INIT(){
 				goOpenerReturn(popG5json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG5json = jQuery.parseJSON('{ "__NAME":"lastinputG5json"' +
-			//', "LOGIN_DT" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("LOGIN_DT")).getValue()) + '"' +
-			//', "LOGIN_CNT" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("LOGIN_CNT")).getValue()) + '"' +
-			//', "LOGIN_CNT2" : "' + q(mygridG5.cells(rowID,mygridG5.getColIndexById("LOGIN_CNT2")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG5.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -428,6 +416,22 @@ function G5_INIT(){
         alog("G5_INIT()-------------------------end");
      }
 //D146 그룹별 기능 함수 출력		
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //챠트
+				lastinputG3 = new HashMap(); //PIE
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	//  호출
+	G3_SEARCH(lastinputG3,token);
+	alog("G1_SEARCHALL--------------------------end");
+}
 //검색조건 초기화
 function G1_RESET(){
 	alog("G1_RESET--------------------------start");
@@ -464,22 +468,6 @@ function G1_SAVE(){
 		}
 	});
 	alog("G1_SAVE-------------------end");	
-}
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //챠트
-				lastinputG3 = new HashMap(); //PIE
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	//  호출
-	G3_SEARCH(lastinputG3,token);
-	alog("G1_SEARCHALL--------------------------end");
 }
     //그리드 조회(챠트)	
     function G2_SEARCH(tinput,token){

@@ -165,11 +165,6 @@ function G3_INIT(){
 				goOpenerReturn(popG3json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
-			//', "bb" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("bb")).getValue()) + '"' +
-			//', "aa" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("aa")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG3.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){

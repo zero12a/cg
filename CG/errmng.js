@@ -185,20 +185,6 @@ function G3_INIT(){
 				goOpenerReturn(popG3json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
-			//', "ERRLOGSEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ERRLOGSEQ")).getValue()) + '"' +
-			//', "SESSIONID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("SESSIONID")).getValue()) + '"' +
-			//', "REQID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("REQID")).getValue()) + '"' +
-			//', "ERRNO" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ERRNO")).getValue()) + '"' +
-			//', "ERRCD" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ERRCD")).getValue()) + '"' +
-			//', "ERRSTR" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ERRSTR")).getValue()) + '"' +
-			//', "ERRFILE" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ERRFILE")).getValue()) + '"' +
-			//', "ERRLINE" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ERRLINE")).getValue()) + '"' +
-			//', "ERRCONTEXT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ERRCONTEXT")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MODDT")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputG4json = jQuery.parseJSON('{ "__NAME":"lastinputG4json"' +
 				', "G3-ERRLOGSEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ERRLOGSEQ")).getValue()) + '"' +
@@ -245,13 +231,13 @@ setCodeCombo("FORMVIEW",$("#G4_ERRCD"),"PHPERRTYPE");
   alog("G4_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//조회 	
+	//조회 	
 function G1_BTNCLICK(){
 	   alog("G1_BTNCLICK()--------------------------start");
    SEARCHALL();
    alog("G1_BTNCLICK()--------------------------end");
 }
-	// CONDITIONSearch	
+// CONDITIONSearch	
 function G2_SEARCHALL(token){
 	alog("G2_SEARCHALL--------------------------start");
 	//입력값검증
@@ -264,11 +250,6 @@ function G2_SEARCHALL(token){
 	G3_SEARCH(lastinputG3,token);
 	alog("G2_SEARCHALL--------------------------end");
 }
-    function G3_ROWDELETE(){	
-        alog("G3_ROWDELETE()------------start");
-        delRow(mygridG3);
-        alog("G3_ROWDELETE()------------start");
-    }
 //사용자정의함수 : 사용자정의
 function G3_USERDEF(token){
 	alog("G3_USERDEF-----------------start");
@@ -425,15 +406,11 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
-//	
-function G4_NEW(){
-       alog("[FromView] G4_NEW---------------start");
-	$("#G4-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G4-SESSIONID").val("");//SESSIONID 신규초기화	
-	$("#G4-ERRFILE").val("");//에러파일 신규초기화
-       alog("DETAILNew30---------------end");
-}
+    function G3_ROWDELETE(){	
+        alog("G3_ROWDELETE()------------start");
+        delRow(mygridG3);
+        alog("G3_ROWDELETE()------------start");
+    }
 //새로고침	
 function G4_RELOAD(token){
 	alog("G4_RELOAD-----------------start");
@@ -575,4 +552,13 @@ function G4_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G4_SEARCH---------------end");
 
+}
+//	
+function G4_NEW(){
+       alog("[FromView] G4_NEW---------------start");
+	$("#G4-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G4-SESSIONID").val("");//SESSIONID 신규초기화	
+	$("#G4-ERRFILE").val("");//에러파일 신규초기화
+       alog("DETAILNew30---------------end");
 }

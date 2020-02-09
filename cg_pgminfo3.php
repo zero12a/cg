@@ -4,7 +4,7 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
     //로그인 검사
-    $CFG = include_once("../common/include/incConfig.php");
+    $CFG = require_once("../common/include/incConfig.php");
     
     require_once("../common/include/incUtil.php");
     require_once("../common/include/incUser.php");
@@ -70,9 +70,6 @@ header("Pragma:no-cache");
 
     </style>
 
-    <script>
-    var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
-    </script>
     <script src="cg_pgminfo3.js?<?=getRndVal(10)?>"></script>
     <script src="cg_pgminfo3_bodyinit.js?<?=getRndVal(10)?>"></script>
     <script src="cg_pgminfo3_pg.js?<?=getRndVal(10)?>"></script>

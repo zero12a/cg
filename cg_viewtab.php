@@ -9,11 +9,11 @@
 header("Content-Type: text/html; charset=UTF-8");
 
 //설정 함수 읽기
-$CFG = include_once './incConfig.php';
-if(!include_once '../common/include/incDB.php')			echo "include fail(2)";
-if(!include_once '../common/include/incUtil.php')		echo "include fail(3)";
-if(!include_once '../common/include/incSec.php')		echo "include fail(4)";
-if(!include_once '../common/include/incRequest.php')		echo "include fail(5)";
+$CFG = require_once '../common/include/incConfig.php';
+if(!require_once '../common/include/incDB.php')			echo "include fail(2)";
+if(!require_once '../common/include/incUtil.php')		echo "include fail(3)";
+if(!require_once '../common/include/incSec.php')		echo "include fail(4)";
+if(!require_once '../common/include/incRequest.php')		echo "include fail(5)";
 
 
 $F_PGMSEQ= reqGetNumber("pgmseq",10);
@@ -28,8 +28,8 @@ $F_PJTSEQ= reqGetNumber("pjtseq",10);
 
 
 	<!--dhmltx-->
-    <script src="/lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
 
 
 	<script>

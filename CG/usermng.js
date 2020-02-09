@@ -218,21 +218,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "USERSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USERSEQ")).getValue()) + '"' +
-			//', "EMAIL" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("EMAIL")).getValue()) + '"' +
-			//', "PASSWD" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PASSWD")).getValue()) + '"' +
-			//', "EMAILVALIDYN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("EMAILVALIDYN")).getValue()) + '"' +
-			//', "LASTPWCHGDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LASTPWCHGDT")).getValue()) + '"' +
-			//', "PWFAILCNT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PWFAILCNT")).getValue()) + '"' +
-			//', "LOCKYN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOCKYN")).getValue()) + '"' +
-			//', "FREEZEDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FREEZEDT")).getValue()) + '"' +
-			//', "LOCKDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOCKDT")).getValue()) + '"' +
-			//', "SERVERSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("SERVERSEQ")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MODDT")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
 				', "G2-USERSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USERSEQ")).getValue()) + '"' +
@@ -369,13 +354,6 @@ function G3_INIT(){
 				goOpenerReturn(popG3json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
-			//', "USERSEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("USERSEQ")).getValue()) + '"' +
-			//', "PJTSEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PJTSEQ")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MODDT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG3.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -508,22 +486,6 @@ function G4_INIT(){
 				goOpenerReturn(popG4json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG4json = jQuery.parseJSON('{ "__NAME":"lastinputG4json"' +
-			//', "SVRSEQ" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SVRSEQ")).getValue()) + '"' +
-			//', "SVRID" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SVRID")).getValue()) + '"' +
-			//', "SVRNM" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("SVRNM")).getValue()) + '"' +
-			//', "PJTSEQ" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("PJTSEQ")).getValue()) + '"' +
-			//', "USERSEQ" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("USERSEQ")).getValue()) + '"' +
-			//', "DBHOST" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("DBHOST")).getValue()) + '"' +
-			//', "DBPORT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("DBPORT")).getValue()) + '"' +
-			//', "DBNAME" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("DBNAME")).getValue()) + '"' +
-			//', "DBUSRID" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("DBUSRID")).getValue()) + '"' +
-			//', "DBUSRPW" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("DBUSRPW")).getValue()) + '"' +
-			//', "USEYN" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("USEYN")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG4.cells(rowID,mygridG4.getColIndexById("MODDT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG4.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -602,6 +564,24 @@ function C1_SEARCHALL(token){
 function C1_RESET(){
 	alog("C1_RESET--------------------------start");
 	$('#condition')[0].reset();
+}
+//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/c.g/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,false);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("USERSEQ,EMAIL,PASSWD,EMAILVALIDYN,LASTPWCHGDT,PWFAILCNT,LOCKYN,FREEZEDT,LOCKDT,SERVERSEQ,ADDDT,MODDT");
+	$("#DATA_WIDTHS").val("60,60,120,60,60,60,60,60,60,60,40,40");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
 }
     function G2_ROWDELETE(){	
         alog("G2_ROWDELETE()------------start");
@@ -845,23 +825,52 @@ function G2_RELOAD(token){
         alog("G2_SEARCH()------------end");
     }
 
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/c.g/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
+function G3_CHKSAVE(token){
+	alog("G3_CHKSAVE()------------start");
+	tgrid = mygridG3;
 
-	mygridG2.setSerializationLevel(true,false,false,false,false,false);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("USERSEQ,EMAIL,PASSWD,EMAILVALIDYN,LASTPWCHGDT,PWFAILCNT,LOCKYN,FREEZEDT,LOCKDT,SERVERSEQ,ADDDT,MODDT");
-	$("#DATA_WIDTHS").val("60,60,120,60,60,60,60,60,60,60,40,40");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
+	//체크된 ROW의 ID 배열로 불러오기
+	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
+	//alert(arrRows.length);
+
+        //전송용 post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+
+		if(typeof lastinputG3 != "undefined"){
+			var tKeys = lastinputG3.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
+			}
+		}
+	//CHK 배열 합치기
+	sendFormData.append("G3-CHK",arrRows);
+	$.ajax({
+		type : "POST",
+		url : url_G3_CHKSAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G3_CHKSAVE()------------end");
 }
 
 
@@ -1031,53 +1040,6 @@ function G3_USERDEF(token){
 function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
   G3_SEARCH(lastinputG3,token);
-}
-function G3_CHKSAVE(token){
-	alog("G3_CHKSAVE()------------start");
-	tgrid = mygridG3;
-
-	//체크된 ROW의 ID 배열로 불러오기
-	var arrRows =  tgrid.getCheckedRows(0); //0번째 CHK 컬럼
-	//alert(arrRows.length);
-
-        //전송용 post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-
-		if(typeof lastinputG3 != "undefined"){
-			var tKeys = lastinputG3.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],lastinputG3.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ lastinputG3.get(tKeys[i])); 
-			}
-		}
-	//CHK 배열 합치기
-	sendFormData.append("G3-CHK",arrRows);
-	$.ajax({
-		type : "POST",
-		url : url_G3_CHKSAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G3_CHKSAVE()------------end");
 }
 function G4_CHKSAVE(token){
 	alog("G4_CHKSAVE()------------start");

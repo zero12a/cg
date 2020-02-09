@@ -201,11 +201,11 @@ class menumngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//S
 		//V_GRPNM : 메뉴
+		array_push($GRID["SQL"]["C"], $this->DAO->insMenuG($REQ)); //SAVE, S,insMenuG
+		//V_GRPNM : 메뉴
 		array_push($GRID["SQL"]["U"], $this->DAO->updMenuG($REQ)); //SAVE, S,updMenuG
 		//V_GRPNM : 메뉴
 		array_push($GRID["SQL"]["D"], $this->DAO->delMenuG($REQ)); //SAVE, S,delMenuG
-		//V_GRPNM : 메뉴
-		array_push($GRID["SQL"]["C"], $this->DAO->insMenuG($REQ)); //SAVE, S,insMenuG
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");

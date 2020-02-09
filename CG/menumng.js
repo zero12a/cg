@@ -187,17 +187,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "FOLDER_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FOLDER_SEQ")).getValue()) + '"' +
-			//', "FOLDER_NM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FOLDER_NM")).getValue()) + '"' +
-			//', "USE_YN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USE_YN")).getValue()) + '"' +
-			//', "FOLDER_ORD" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FOLDER_ORD")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//', "ADD_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADD_ID")).getValue()) + '"' +
-			//', "MOD_DT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MOD_DT")).getValue()) + '"' +
-			//', "MOD_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MOD_ID")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
 				', "G2-FOLDER_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FOLDER_SEQ")).getValue()) + '"' +
@@ -340,22 +329,6 @@ function G3_INIT(){
 				goOpenerReturn(popG3json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
-			//', "CHK" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("CHK")).getValue()) + '"' +
-			//', "MNU_SEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MNU_SEQ")).getValue()) + '"' +
-			//', "PGMID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PGMID")).getValue()) + '"' +
-			//', "MNU_NM" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MNU_NM")).getValue()) + '"' +
-			//', "URL" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("URL")).getValue()) + '"' +
-			//', "PGMTYPE" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PGMTYPE")).getValue()) + '"' +
-			//', "MNU_ORD" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MNU_ORD")).getValue()) + '"' +
-			//', "FOLDER_SEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("FOLDER_SEQ")).getValue()) + '"' +
-			//', "USE_YN" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("USE_YN")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//', "ADD_ID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ADD_ID")).getValue()) + '"' +
-			//', "MOD_ID" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MOD_ID")).getValue()) + '"' +
-			//', "MOD_DT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("MOD_DT")).getValue()) + '"' +
-			//'}');
 		//A124
 		});
 		mygridG3.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){

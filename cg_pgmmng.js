@@ -53,8 +53,11 @@
             $.ajax({
                 type : "GET",
                 url : CFG_MAKE_URL  + "/m.k/cg_make.php?access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + pjtSeq + "&pgmseq=" + pgmSeq + "&pgmtype=" + pgmType,
-                dataType : "json",
+                dataType : "jsonp",
                 async: true,
+                xhrFields: {
+                    withCredentials: true
+                 },
                 success: function(data){
                     alog(" Return : " + data.RTN_CD + " / " + data.RTN_MSG);
 

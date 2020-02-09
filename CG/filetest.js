@@ -244,14 +244,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "FILESEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILESEQ")).getValue()) + '"' +
-			//', "FILESVRNM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILESVRNM")).getValue()) + '"' +
-			//', "FILENM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILENM")).getValue()) + '"' +
-			//', "FILETYPE" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILETYPE")).getValue()) + '"' +
-			//', "FILESIZE" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILESIZE")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
 				', "G2-FILESEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("FILESEQ")).getValue()) + '"' +

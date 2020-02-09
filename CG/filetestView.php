@@ -3,10 +3,22 @@
 //PGMNM : 폼뷰테스트
 header("Content-Type: text/html; charset=UTF-8"); //HTML
 
-$CFG = require_once('../../common/include/incConfig.php');//CG CONFIG
+//설정 함수 읽기
+$CFG = require_once '../../common/include/incConfig.php';
 
-require_once("../../common/include/incUtil.php");
-require_once('../../common/include/incRequest.php');//CG REQUEST
+//MONO Autoload
+require_once($CFG["CFG_LIBS_MONO_LOG"]);
+
+//LIBS
+include_once('../../common/include/incUtil.php');//CG UTIL
+include_once('../../common/include/incRequest.php');//CG REQUEST
+include_once('../../common/include/incDB.php');//CG DB
+include_once('../../common/include/incSec.php');//CG SEC
+include_once('../../common/include/incAuth.php');//CG AUTH
+include_once('../../common/include/incUser.php');//CG USER
+
+//인증 게이트웨이
+require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>	
@@ -31,13 +43,15 @@ require_once('../../common/include/incRequest.php');//CG REQUEST
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/selection/active-line.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR3-->
 
 <!--CSS 불러오기-->
-<link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>/common/common.css" type="text/css" charset="UTF-8"><!--FEATHER ICON CSS-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css" type="text/css" charset="UTF-8"><!--CODE MIRROR CSS-->
 <!--공통 js/css-->
+<script>
+var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:port/
+</script>
 <script src="/common/common.js?<?=getRndVal(10)?>"></script>
 <link rel="stylesheet" href="/common/common.css?<?=getRndVal(10)?>" type="text/css" charset="UTF-8">
 
@@ -66,8 +80,8 @@ require_once('../../common/include/incRequest.php');//CG REQUEST
 		<div class="CONDITION_LABELGRP">
 			<div class="CONDITION_LABEL"  style="">
 				<b>* 폼뷰테스트</b>	
-				<!--popup--><a href="?" target="_blank"><img src="/c.g/img/popup.png" height=10 align=absmiddle border=0></a>
-				<!--reload--><a href="javascript:location.reload();"><img src="/c.g/img/reload.png" width=11 height=10 align=absmiddle border=0></a>
+				<!--popup--><a href="?" target="_blank"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/popup.png" height=10 align=absmiddle border=0></a>
+				<!--reload--><a href="javascript:location.reload();"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
 			<div class="CONDITION_LABELBTN">				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G1_USERDEF" value="사용자정의" onclick="G1_USERDEF(uuidv4());">
 				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
@@ -110,7 +124,7 @@ require_once('../../common/include/incRequest.php');//CG REQUEST
 	## BI뷰  a - START
 	#####################################################
 	-->
-		<div class="GRP_OBJECT" style="width:25%;">
+		<div class="GRP_OBJECT" id="DIV-G4-CLICK" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
 				<div class="GRP_INNER" style="height:77px;overflow:hidden;">
 			<!--D101: STARTTXT, TAG-->
@@ -136,7 +150,7 @@ require_once('../../common/include/incRequest.php');//CG REQUEST
 	## BI뷰  b - START
 	#####################################################
 	-->
-		<div class="GRP_OBJECT" style="width:25%;">
+		<div class="GRP_OBJECT" id="DIV-G5-CLICK" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
 				<div class="GRP_INNER" style="height:77px;overflow:hidden;">
 			<!--D101: STARTTXT, TAG-->
@@ -161,7 +175,7 @@ require_once('../../common/include/incRequest.php');//CG REQUEST
 	## BI뷰  c - START
 	#####################################################
 	-->
-		<div class="GRP_OBJECT" style="width:25%;">
+		<div class="GRP_OBJECT" id="DIV-G6-CLICK" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
 				<div class="GRP_INNER" style="height:77px;overflow:hidden;">
 			<!--D101: STARTTXT, TAG-->
@@ -189,7 +203,7 @@ require_once('../../common/include/incRequest.php');//CG REQUEST
 	## BI뷰  d - START
 	#####################################################
 	-->
-		<div class="GRP_OBJECT" style="width:25%;">
+		<div class="GRP_OBJECT" id="DIV-G7-CLICK" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
 				<div class="GRP_INNER" style="height:77px;overflow:hidden;">
                 <div class="BI_LABEL" style="width:100%;">

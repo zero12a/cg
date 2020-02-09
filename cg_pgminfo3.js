@@ -54,11 +54,11 @@
     var lastSelectPgRowId; //마지막 선택한 그리드 프로퍼티 row
 
     function MakeQueue(pgmtype) {
-        window.open( makeRootUrl + "/m.k/cg_make_queue.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
+        window.open( CFG_MAKE_URL + "/m.k/cg_make_queue.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
 
     function Make(pgmtype) {
-        window.open( makeRootUrl + "/m.k/cg_make.php?access_token=" + oauthToken + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
+        window.open( CFG_MAKE_URL + "/m.k/cg_make.php?access_token=" + oauthToken + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
 
     function changeCodemirrorFontSize(sizeCmd){
@@ -94,7 +94,7 @@
             $("#make" + pgmtype).text(pgmtype);
             $.ajax({
                 type : "GET",
-                url : makeRootUrl + "/m.k/cg_make.php?access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype,
+                url : CFG_MAKE_URL + "/m.k/cg_make.php?access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype,
                 dataType : "json",
                 async: true,
                 success: function(data){
@@ -138,7 +138,8 @@
             alert("조회조건에 URL을 입력해 주세요.")
         }else{
             //window.open("./rst/" + $("#F_PGMURL").val() );//단일 프로젝트일때
-            window.open("./" + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val() );//멀티 프로젝트일때
+            //alert(CFG_MAKE_URL + "/c.g/" + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val());
+            window.open( CFG_MAKE_URL + "/c.g/"  + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val() );//멀티 프로젝트일때
         }
         
     }
@@ -2091,7 +2092,7 @@
     }
 
     function getAuth(){
-        window.open("cg_pgminfo_getauth.php?PJTSEQ=" + $("#F_PJTSEQ").val() + "&PGMSEQ=" + $("#F_PGMSEQ").val());
+        window.open(CFG_MAKE_URL + "/m.k/cg_pgminfo_getauth.php?PJTSEQ=" + $("#F_PJTSEQ").val() + "&PGMSEQ=" + $("#F_PGMSEQ").val());
     }
 
 
@@ -2136,7 +2137,7 @@ function setGridGrp(tGrptype, tCombo, tPjtseq, tPgmseq, tGrpseq, tFncseq){
 	//불러오기
 	$.ajax({
 		type : "GET",
-		url : "/c.g/cg_code_json.php",
+		url : "/common/cg_code_json.php",
 		data : {PJTSEQ : tPjtseq, PGMSEQ : tPgmseq, GRPSEQ : tGrpseq , FNCSEQ : tFncseq},
 		dataType: "json",
 		async: true,
@@ -2192,7 +2193,7 @@ function setGridSql(tGrptype, tCombo, tPjtseq, tPgmseq, tSvcseq){
 	//불러오기
 	$.ajax({
 		type : "GET",
-		url : "/c.g/cg_code_json.php",
+		url : "/common/cg_code_json.php",
 		data : {PJTSEQ : tPjtseq, PGMSEQ : tPgmseq, SVCSEQ : tSvcseq},
 		dataType: "json",
 		async: false,

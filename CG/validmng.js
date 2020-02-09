@@ -185,21 +185,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "ROWCHK" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ROWCHK")).getValue()) + '"' +
-			//', "VALIDSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("VALIDSEQ")).getValue()) + '"' +
-			//', "PJTSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PJTSEQ")).getValue()) + '"' +
-			//', "DATATYPE" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("DATATYPE")).getValue()) + '"' +
-			//', "VALIDID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("VALIDID")).getValue()) + '"' +
-			//', "VALIDNM" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("VALIDNM")).getValue()) + '"' +
-			//', "VALIDORD" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("VALIDORD")).getValue()) + '"' +
-			//', "VALIDTYPE" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("VALIDTYPE")).getValue()) + '"' +
-			//', "INVALIDMSG" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("INVALIDMSG")).getValue()) + '"' +
-			//', "MATSTR" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MATSTR")).getValue()) + '"' +
-			//', "ADDDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADDDT")).getValue()) + '"' +
-			//', "MODDT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("MODDT")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputF3json = jQuery.parseJSON('{ "__NAME":"lastinputF3json"' +
 				', "G2-VALIDSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("VALIDSEQ")).getValue()) + '"' +
@@ -243,6 +228,24 @@ function F3_INIT(){
   alog("F3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+// CONDITIONSearch	
+function C1_SEARCHALL(token){
+	alog("C1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : C1
+			lastinputG2 = new HashMap(); //목록
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("C1_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function C1_RESET(){
+	alog("C1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 //조회조건, 저장	
 function C1_SAVE(){
  alog("C1_SAVE-------------------start");
@@ -278,77 +281,6 @@ function C1_SAVE(){
 		}
 	});
 	alog("C1_SAVE-------------------end");	
-}
-// CONDITIONSearch	
-function C1_SEARCHALL(token){
-	alog("C1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : C1
-			lastinputG2 = new HashMap(); //목록
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("C1_SEARCHALL--------------------------end");
-}
-//검색조건 초기화
-function C1_RESET(){
-	alog("C1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-	function G2_SAVE(token){
-	alog("G2_SAVE()------------start");
-	tgrid = mygridG2;
-
-	tgrid.setSerializationLevel(true,false,false,false,true,false);
-	var myXmlString = tgrid.serialize();
-        //post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-		//for(var pair of lastinputG2.entries()) {
-		//	sendFormData.append(pair[0],pair[1]);
-   		//	//console.log(pair[0]+ ', '+ pair[1]); 
-		//}
-
-		if(typeof lastinputG2 != "undefined"){
-			var tKeys = lastinputG2.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],lastinputG2.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ lastinputG2.get(tKeys[i])); 
-			}
-		}
-	sendFormData.append("G2-XML" , myXmlString);
-	$.ajax({
-		type : "POST",
-		url : url_G2_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G2_SAVE()------------end");
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
 }
 
 
@@ -434,50 +366,58 @@ function G2_RELOAD(token){
         delRow(mygridG2);
         alog("G2_ROWDELETE()------------start");
     }
-//FORMVIEW DELETE
-function F3_DELETE(){	
-	alog("F3_DELETE---------------start");
+	function G2_SAVE(token){
+	alog("G2_SAVE()------------start");
+	tgrid = mygridG2;
 
-	//조회했는지 확인하기
-	if( $("#F3-CTLCUD").val() != "R" ){
-		alert("조회된 것만 삭제 가능합니다.");
-		return;
-	}
-	//확인
-	if(!confirm("정말로 삭제하시겠습니까?")){
-		return;
-	}
-	
-	//삭제처리 명령어
-	$("#F3-CTLCUD").val("D");
+	tgrid.setSerializationLevel(true,false,false,false,true,false);
+	var myXmlString = tgrid.serialize();
+        //post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+		//for(var pair of lastinputG2.entries()) {
+		//	sendFormData.append(pair[0],pair[1]);
+   		//	//console.log(pair[0]+ ', '+ pair[1]); 
+		//}
 
-	//폼객체를 불러와서
-	var form1 = $("#formviewF3")[0];
-
-	//FormData parameter에 담아줌
-	var formData = new FormData(form1);
-
+		if(typeof lastinputG2 != "undefined"){
+			var tKeys = lastinputG2.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG2.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG2.get(tKeys[i])); 
+			}
+		}
+	sendFormData.append("G2-XML" , myXmlString);
 	$.ajax({
 		type : "POST",
-		url : url_F3_DELETE,
-		data : formData,
+		url : url_G2_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
 		processData: false,
 		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 삭제되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
 		},
 		error: function(error){
-			alog("Error:");
-			alog(error);
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
 		}
 	});
+	
+	alog("G2_SAVE()------------end");
+}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
 }
 //새로고침	
 function F3_RELOAD(token){
@@ -593,4 +533,49 @@ function F3_NEW(){
 	$("#F3-CTLCUD").val("C");
 	//PMGIO 로직
        alog("DETAILNew30---------------end");
+}
+//FORMVIEW DELETE
+function F3_DELETE(){	
+	alog("F3_DELETE---------------start");
+
+	//조회했는지 확인하기
+	if( $("#F3-CTLCUD").val() != "R" ){
+		alert("조회된 것만 삭제 가능합니다.");
+		return;
+	}
+	//확인
+	if(!confirm("정말로 삭제하시겠습니까?")){
+		return;
+	}
+	
+	//삭제처리 명령어
+	$("#F3-CTLCUD").val("D");
+
+	//폼객체를 불러와서
+	var form1 = $("#formviewF3")[0];
+
+	//FormData parameter에 담아줌
+	var formData = new FormData(form1);
+
+	$.ajax({
+		type : "POST",
+		url : url_F3_DELETE,
+		data : formData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 삭제되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
 }

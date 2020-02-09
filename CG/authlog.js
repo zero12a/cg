@@ -193,18 +193,6 @@ function G2_INIT(){
 				goOpenerReturn(popG2json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG2json = jQuery.parseJSON('{ "__NAME":"lastinputG2json"' +
-			//', "LAUTH_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LAUTH_SEQ")).getValue()) + '"' +
-			//', "REQ_TOKEN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("REQ_TOKEN")).getValue()) + '"' +
-			//', "RES_TOKEN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("RES_TOKEN")).getValue()) + '"' +
-			//', "USR_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USR_SEQ")).getValue()) + '"' +
-			//', "USR_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("USR_ID")).getValue()) + '"' +
-			//', "PGMID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PGMID")).getValue()) + '"' +
-			//', "AUTH_ID" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("AUTH_ID")).getValue()) + '"' +
-			//', "SUCCESS_YN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("SUCCESS_YN")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
 				', "G2-RES_TOKEN" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("RES_TOKEN")).getValue()) + '"' +
@@ -340,19 +328,6 @@ function G3_INIT(){
 				goOpenerReturn(popG3json);
 				return;
 			}
-			//LAST SELECT ROW
-			//lastselectG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
-			//', "LAUTHD_SEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("LAUTHD_SEQ")).getValue()) + '"' +
-			//', "REQ_TOKEN" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("REQ_TOKEN")).getValue()) + '"' +
-			//', "RES_TOKEN" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("RES_TOKEN")).getValue()) + '"' +
-			//', "LAUTH_SEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("LAUTH_SEQ")).getValue()) + '"' +
-			//', "PARAM_COLIDS" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PARAM_COLIDS")).getValue()) + '"' +
-			//', "DD_COLIDS" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("DD_COLIDS")).getValue()) + '"' +
-			//', "PI_IN_COLIDS" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PI_IN_COLIDS")).getValue()) + '"' +
-			//', "PI_OUT_COLIDS" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("PI_OUT_COLIDS")).getValue()) + '"' +
-			//', "ROW_CNT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ROW_CNT")).getValue()) + '"' +
-			//', "ADD_DT" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("ADD_DT")).getValue()) + '"' +
-			//'}');
 		//A124
 			lastinputG4json = jQuery.parseJSON('{ "__NAME":"lastinputG4json"' +
 				', "G3-LAUTH_SEQ" : "' + q(mygridG3.cells(rowID,mygridG3.getColIndexById("LAUTH_SEQ")).getValue()) + '"' +
@@ -448,39 +423,6 @@ function G1_SEARCHALL(token){
 function G1_RESET(){
 	alog("G1_RESET--------------------------start");
 	$('#condition')[0].reset();
-}
-//그리드 행추가 : AUTH
-	function G2_ROWBULKADD(){
-		if( !(lastinputG2json)){
-			msgError("조회 후에 행추가 가능합니다",3);
-		}else{
-			var tCols = ["","","","","","","","",""];//초기값
-
-	var rowcnt = prompt("Please enter row's count", "input number");
-	if($.isNumeric(rowcnt)){
-		for(k=0;k<rowcnt;k++){
-			addRow(mygridG2,tCols);  
-		}
-	}
-			}
-	}
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/c.g/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG2.setSerializationLevel(true,false,false,false,false,false);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("LAUTH_SEQ,REQ_TOKEN,RES_TOKEN,USR_SEQ,USR_ID,PGMID,AUTH_ID,SUCCESS_YN,ADD_DT");
-	$("#DATA_WIDTHS").val("60,60,60,60,100,100,120,60,60");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
 }
     function G2_HIDDENCOL(){
 		alog("G2_HIDDENCOL()..................start");
@@ -617,19 +559,39 @@ function G2_CHKSAVE(token){
 	
 	alog("G2_CHKSAVE()------------end");
 }
-    function G3_ROWDELETE(){	
-        alog("G3_ROWDELETE()------------start");
-        delRow(mygridG3);
-        alog("G3_ROWDELETE()------------start");
-    }
-    function G3_HIDDENCOL(){
-		alog("G3_HIDDENCOL()..................start");
-        if(isToggleHiddenColG3){
-            isToggleHiddenColG3 = false;     }else{
-            isToggleHiddenColG3 = true;
-        }
-		alog("G3_HIDDENCOL()..................end");
-    }
+//그리드 행추가 : AUTH
+	function G2_ROWBULKADD(){
+		if( !(lastinputG2json)){
+			msgError("조회 후에 행추가 가능합니다",3);
+		}else{
+			var tCols = ["","","","","","","","",""];//초기값
+
+	var rowcnt = prompt("Please enter row's count", "input number");
+	if($.isNumeric(rowcnt)){
+		for(k=0;k<rowcnt;k++){
+			addRow(mygridG2,tCols);  
+		}
+	}
+			}
+	}
+//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/c.g/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,false);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("LAUTH_SEQ,REQ_TOKEN,RES_TOKEN,USR_SEQ,USR_ID,PGMID,AUTH_ID,SUCCESS_YN,ADD_DT");
+	$("#DATA_WIDTHS").val("60,60,60,60,100,100,120,60,60");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}
 
 
 
@@ -785,6 +747,19 @@ function G3_EXCEL(){
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
 }
+    function G3_ROWDELETE(){	
+        alog("G3_ROWDELETE()------------start");
+        delRow(mygridG3);
+        alog("G3_ROWDELETE()------------start");
+    }
+    function G3_HIDDENCOL(){
+		alog("G3_HIDDENCOL()..................start");
+        if(isToggleHiddenColG3){
+            isToggleHiddenColG3 = false;     }else{
+            isToggleHiddenColG3 = true;
+        }
+		alog("G3_HIDDENCOL()..................end");
+    }
 //새로고침	
 function G4_RELOAD(token){
 	alog("G4_RELOAD-----------------start");
