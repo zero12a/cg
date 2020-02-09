@@ -52,7 +52,7 @@
             alog("  nowQuqueCnt (before http request) = " + nowQueueCnt);
             $.ajax({
                 type : "GET",
-                url : CFG_MAKE_URL  + "/m.k/cg_make.php?access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + pjtSeq + "&pgmseq=" + pgmSeq + "&pgmtype=" + pgmType,
+                url : CFG_MAKE_URL  + "/m.k/cg_make.php?async=Y&access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + pjtSeq + "&pgmseq=" + pgmSeq + "&pgmtype=" + pgmType,
                 dataType : "jsonp",
                 async: true,
                 xhrFields: {

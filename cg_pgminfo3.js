@@ -94,8 +94,8 @@
             $("#make" + pgmtype).text(pgmtype);
             $.ajax({
                 type : "GET",
-                url : CFG_MAKE_URL + "/m.k/cg_make.php?access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype,
-                dataType : "json",
+                url : CFG_MAKE_URL + "/m.k/cg_make.php?async=Y&access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype,
+                dataType : "jsonp",
                 async: true,
                 success: function(data){
                     alog(" Return : " + data.RTN_CD + " / " + data.RTN_MSG);
@@ -352,11 +352,11 @@
 							alog( "   i : " + i);
 
 							//내 행 업데이트
-							tmp = tmp + "<a href=\"#\" onclick=\"selectLayoutD('" + data.RTN_DATA.rows[i].data[0] + "')\"><img src=\"./img/" + data.RTN_DATA.rows[i].data[0] +  ".png\" width=50 border=1></a> ";//LAYOUTID
+							tmp = tmp + "<a href=\"#\" onclick=\"selectLayoutD('" + data.RTN_DATA.rows[i].data[0] + "')\"><img src=\"" + CFG_URL_LIBS_ROOT + "img/" + data.RTN_DATA.rows[i].data[0] +  ".png\" width=50 border=1></a> ";//LAYOUTID
 
 						}
 						//내 행 업데이트
-						tmp = tmp + "<a href=\"#\" onclick=\"isLayoutLoaded=false;popSelectLayout.hide()\"><img src=\"./img/close.png\" border=0 width=15></a>";//LAYOUTID
+						tmp = tmp + "<a href=\"#\" onclick=\"isLayoutLoaded=false;popSelectLayout.hide()\"><img src=\"" + CFG_URL_LIBS_ROOT + "img/close.png\" border=0 width=15></a>";//LAYOUTID
 
 						isLayoutLoaded=true;
 
@@ -2071,7 +2071,7 @@
 
     function goSqlSearch(){
 		//alert(lastinput3json.SQLSEQ);
-		window.open("./CG/sqlsearchView.php","sqlsearch","width=800,height=600,scrollbars=yes");
+		window.open(CFG_MAKE_URL + "/c.g/CG/sqlsearchView.php","sqlsearch","width=800,height=600,scrollbars=yes");
     }
 
 	function goSqlpreview(){
