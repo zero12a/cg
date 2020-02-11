@@ -257,7 +257,7 @@ function G1_SEARCHALL(token){
 function G2_EXCEL(){	
 	alog("G2_EXCEL-----------------start");
 	var myForm = document.excelDownForm;
-	var url = "/c.g/cg_phpexcel.php";
+	var url = "/common/cg_phpexcel.php";
 	window.open("" ,"popForm",
 		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
 	myForm.action =url;
