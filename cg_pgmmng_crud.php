@@ -38,6 +38,7 @@
     $REQ["CFG.CFG_MAKE_URL"] = $CFG["CFG_MAKE_URL"];
 
     //로그인 정보
+    $REQ["USER.ACCESS_TOKEN"] = getAccessToken();
     $REQ["ADDID"] = getUserSeq();
     $REQ["MODID"] = $REQ["ADDID"];
 

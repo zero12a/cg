@@ -3,14 +3,14 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
-    $CFG = include_once "../common/include/incConfig.php";
-
-    include_once("../common/include/incUtil.php");
-	include_once('../common/include/incRequest.php');//CG REQUEST    
-	include_once('../common/include/incSec.php');//CG SEC    
-    include_once("../common/include/incDB.php");
-    include_once("../common/include/incUser.php");
-    include_once("./cg_pgminfo_svc.php");
+    $CFG = require_once "../common/include/incConfig.php";
+    require_once($CFG["CFG_LIBS_VENDOR"]);
+    require_once("../common/include/incUtil.php");
+	require_once('../common/include/incRequest.php');//CG REQUEST    
+	require_once('../common/include/incSec.php');//CG SEC    
+    require_once("../common/include/incDB.php");
+    require_once("../common/include/incUser.php");
+    require_once("./cg_pgminfo_svc.php");
 
 
     $log = getLogger(

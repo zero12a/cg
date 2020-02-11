@@ -7,6 +7,8 @@ var url_G1_RESET = "dbdeployController?CTLGRP=G1&CTLFNC=RESET";
 var obj_G1_DB; // DB 변수선언
 //그리드 변수 초기화	
 //컨트롤러 경로
+var url_G2_SQLCREATE = "dbdeployController?CTLGRP=G2&CTLFNC=SQLCREATE";
+//컨트롤러 경로
 var url_G2_SEARCH = "dbdeployController?CTLGRP=G2&CTLFNC=SEARCH";
 //컨트롤러 경로
 var url_G2_RELOAD = "dbdeployController?CTLGRP=G2&CTLFNC=RELOAD";
@@ -83,16 +85,16 @@ function G2_INIT(){
         mygridG2.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
 		mygridG2.setUserData("","gridTitle","G2 : 테이블목록"); //글로별 변수에 그리드 타이블 넣기
 		//헤더초기화
-        mygridG2.setHeader("DB,TABLE,SQLCREATE,ENGINE,ROWS,AI,CREATE,UPDATE,COLLATION,COMMENT");
-		mygridG2.setColumnIds("TABLE_SCHEMA,TABLE_NAME,SQLCREATE,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT");
-		mygridG2.setInitWidths("60,100,100,60,60,60,60,60,60,60");
-		mygridG2.setColTypes("ro,ro,link,ro,ro,ro,ro,ro,ro,ro");
+        mygridG2.setHeader("#master_checkbox,DB,TABLE,SQLCREATE,RESULT,ENGINE,ROWS,AI,CREATE,UPDATE,COLLATION,COMMENT");
+		mygridG2.setColumnIds("CHK,TABLE_SCHEMA,TABLE_NAME,SQLCREATE,RESULT,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT");
+		mygridG2.setInitWidths("30,60,100,100,50,60,60,60,60,60,60,60");
+		mygridG2.setColTypes("ch,ro,ro,link,ed,ro,ro,ro,ro,ro,ro,ro");
 	//가로 정렬	
-		mygridG2.setColAlign("left,left,left,left,right,right,left,left,left,left");
-		mygridG2.setColSorting("str,str,str,str,str,str,int,str,str,str");		//렌더링	
+		mygridG2.setColAlign("left,left,left,left,left,left,right,right,left,left,left,left");
+		mygridG2.setColSorting("int,str,str,str,str,str,str,str,int,str,str,str");		//렌더링	
 		mygridG2.enableSmartRendering(false);
 		mygridG2.enableMultiselect(true);
-		//mygridG2.setColValidators("G2_TABLE_SCHEMA,G2_TABLE_NAME,G2_SQLCREATE,G2_ENGINE,G2_TABLE_ROWS,G2_AUTO_INCREMENT,G2_CREATE_TIME,G2_UPDATE_TIME,G2_TABLE_COLLATION,G2_TABLE_COMMENT");
+		//mygridG2.setColValidators("G2_CHK,G2_TABLE_SCHEMA,G2_TABLE_NAME,G2_SQLCREATE,G2_RESULT,G2_ENGINE,G2_TABLE_ROWS,G2_AUTO_INCREMENT,G2_CREATE_TIME,G2_UPDATE_TIME,G2_TABLE_COLLATION,G2_TABLE_COMMENT");
 		mygridG2.splitAt(0);//'freezes' 0 columns 
 		mygridG2.init();
 
@@ -134,9 +136,11 @@ function G2_INIT(){
 				return false;
 			}
 		});
+		 // IO : CHK초기화	
 		 // IO : DB초기화	
 		 // IO : TABLE초기화	
 		 // IO : SQLCREATE초기화	
+		 // IO : RESULT초기화	
 		 // IO : ENGINE초기화	
 		 // IO : ROWS초기화	
 		 // IO : AI초기화	
@@ -148,6 +152,10 @@ function G2_INIT(){
 		mygridG2.attachEvent("onCheck",function(rowId, cellInd, state){
 			//onCheck is void return event
 			alog(rowId + " is onCheck.");
+			//ROW 마스터 체크 박스는 변경이면 실제 row 안함
+			if(  mygridG2.getColumnId(cellInd) == "ROWCHK" ){
+					mygridG2.cells(rowId,cellInd).cell.wasChanged = false;	
+			}	
 			//일반 체크 박스는 변경이면 실제 row 변경
 			if( 1 == 2 
 				){
@@ -258,8 +266,8 @@ function G2_EXCEL(){
 
 	mygridG2.setSerializationLevel(true,false,false,false,false,false);
 	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("TABLE_SCHEMA,TABLE_NAME,SQLCREATE,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT");
-	$("#DATA_WIDTHS").val("60,100,100,60,60,60,60,60,60,60");
+	$("#DATA_HEADERS").val("CHK,TABLE_SCHEMA,TABLE_NAME,SQLCREATE,RESULT,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT");
+	$("#DATA_WIDTHS").val("30,60,100,100,50,60,60,60,60,60,60,60");
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
 }
@@ -267,6 +275,47 @@ function G2_EXCEL(){
 function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
+}
+//사용자정의함수 : SQL생성
+function G2_SQLCREATE(token){
+	alog("G2_SQLCREATE-----------------start");
+	var checked=mygridG2.getCheckedRows(0);//table 목록
+	if(checked ==""){
+		return;
+	}else{
+		//alert(checked);
+		var arrTables = checked.split(",");
+
+		var colIndex = mygridG2.getColIndexById("RESULT");
+
+		for(t=0;t<arrTables.length;t++){
+			var tableNm = arrTables[t];
+
+			//alert(tableNm);
+			//alert("rowid, 컬럼순번:" + tableNm + ", " + colIndex);
+			//불러오기
+			$.ajax({
+				type : "GET",
+				url : CFG_CGWEB_URL + "/c.g/cg_cdeploy_db.php?TOKEN=" + token + "&DB=" + $("#G1-DB").val() + "&TABLE=" + tableNm ,
+				dataType: "jsonp",
+				async: false,
+				success: function(data){
+					alog("   gridG2 json return----------------------");
+
+					//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+					mygridG2.cells(data.ERR_CD,colIndex).setValue("O");
+					//alert("응답오케이:" + tableNm + ", " + colIndex);
+
+				},
+				error: function(error){
+					msgError("[테이블목록] Ajax http 500 error ( " + error + " )",3);
+					//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
+				}
+			});
+		}
+	}
+	alog("G2_SQLCREATE-----------------end");
 }
 
 

@@ -119,11 +119,11 @@ class copyttt8Service
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 마스터
-		array_push($GRID["SQL"]["D"], $this->DAO->delMasG($REQ)); //SAVE, 저장,MAS
-		//V_GRPNM : 마스터
 		array_push($GRID["SQL"]["U"], $this->DAO->updMasG($REQ)); //SAVE, 저장,MAS
 		//V_GRPNM : 마스터
 		array_push($GRID["SQL"]["C"], $this->DAO->insMasG($REQ)); //SAVE, 저장,MAS
+		//V_GRPNM : 마스터
+		array_push($GRID["SQL"]["D"], $this->DAO->delMasG($REQ)); //SAVE, 저장,MAS
 		//V_GRPNM : 마스터
 		array_push($GRID["SQL"]["U"], $this->DAO->hitMasG2($REQ)); //SAVE, 저장,MAS
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);

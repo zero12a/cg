@@ -315,6 +315,7 @@ header("Pragma:no-cache");
                         <option value="date_format(sysdate(),'%Y%m%d%H%i%s')">현재날짜</option>                          
                         <option value="#{USER.ID}">(입력) 유저ID</option>                        
                         <option value="#{USER.SEQ}">(입력) 유저SEQ</option>
+                        <option value="#{USER.ACCESS_TOKEN}">(입력) 인증토큰</option>                        
                         <option value="#{SERVER.REMOTE_ADDR}">(입력) 접속자IP</option>
                         <option value="#{CFG.CFG_MAKE_URL}">(입력) 설정-MAKE URL</option>
                         <option value="#{CFG.CFG_CGWEG_URL}">(입력) 설정-CGWEB URL</option>

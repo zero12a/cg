@@ -5,11 +5,12 @@
     header("Pragma:no-cache");
 
     $CFG = include_once("../common/include/incConfig.php");
+    require_once($CFG["CFG_LIBS_VENDOR"]);
 
     require_once("../common/include/incUtil.php");
     require_once("../common/include/incDB.php");
 
-    require_once($CFG["CFG_LIBS_PATH_AWS"]);
+    //require_once($CFG["CFG_LIBS_PATH_AWS"]);
 
     use Aws\S3\S3Client;
     use Aws\Exception\AwsException;

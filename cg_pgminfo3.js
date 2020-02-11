@@ -139,7 +139,7 @@
         }else{
             //window.open("./rst/" + $("#F_PGMURL").val() );//단일 프로젝트일때
             //alert(CFG_MAKE_URL + "/c.g/" + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val());
-            window.open( CFG_MAKE_URL + "/c.g/"  + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val() );//멀티 프로젝트일때
+            window.open( CFG_MAKE_URL + "/c.g/"  + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val() + "?access_token=" + oauthToken );//멀티 프로젝트일때
         }
         
     }
@@ -1399,7 +1399,7 @@
 	
 		tgrid = mygridGrp;
 
-        tgrid.setSerializationLevel(true,false,false,false,true,false);
+        tgrid.setSerializationLevel(true,false,false,false,true,true);
         var myXmlString = tgrid.serialize();
 
         //컨디션 데이터 모두 말기
@@ -1643,7 +1643,7 @@
     function fncSave(){
         alog("fncSave()------------start");
 
-        mygridFnc.setSerializationLevel(true,false,false,false,true,false);
+        mygridFnc.setSerializationLevel(true,false,false,false,true,true);
         var myXmlString = mygridFnc.serialize();
 
 		//컨디션 데이터 모두 말기

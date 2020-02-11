@@ -50,6 +50,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css" type="text/css" charset="UTF-8"><!--CODE MIRROR CSS-->
 <!--공통 js/css-->
 <script>
+var CFG_CGWEB_URL = "<?=$CFG["CFG_CGWEB_URL"]?>";  // 형식 http://url:port/
 var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:port/
 </script>
 <script src="/common/common.js?<?=getRndVal(10)?>"></script>
@@ -208,7 +209,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 				</div>	
 				<!-- style="width:100;"-->
 				<div class="CON_OBJECT">
-					<div name="G3-LOGSEQ" id="G3-LOGSEQ" style="width:100px;"></div>
+					<div name="G3-LOGSEQ" id="G3-LOGSEQ" style="background-color:white; width:100px;"></div>
 				</div>
 			</div>
 			<!--D101: STARTTXT, TAG-->

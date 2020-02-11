@@ -5,6 +5,7 @@ header("Pragma:no-cache");
 $_RTIME = array();
 array_push($_RTIME,array("[TIME 00.START]",microtime(true)));
 $CFG = require_once('../../common/include/incConfig.php');//CG CONFIG
+require_once($CFG["CFG_LIBS_VENDOR"]);
 require_once('dbdeployService.php');
 
 array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
@@ -75,25 +76,27 @@ $REQ["G1-DB"] = getFilter($REQ["G1-DB"],"CLEARTEXT","/--미 정의--/");
 
 //G2, 테이블목록
 $REQ["G2-TABLE_SCHEMA"] = reqPostString("G2-TABLE_SCHEMA",100);//DB	
-$REQ["G2-TABLE_SCHEMA"] = getFilter($REQ["G2-TABLE_SCHEMA"],"","//");	
+$REQ["G2-TABLE_SCHEMA"] = getFilter($REQ["G2-TABLE_SCHEMA"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-TABLE_NAME"] = reqPostString("G2-TABLE_NAME",100);//TABLE	
-$REQ["G2-TABLE_NAME"] = getFilter($REQ["G2-TABLE_NAME"],"","//");	
+$REQ["G2-TABLE_NAME"] = getFilter($REQ["G2-TABLE_NAME"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-SQLCREATE"] = reqPostString("G2-SQLCREATE",100);//SQLCREATE	
-$REQ["G2-SQLCREATE"] = getFilter($REQ["G2-SQLCREATE"],"","//");	
+$REQ["G2-SQLCREATE"] = getFilter($REQ["G2-SQLCREATE"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G2-RESULT"] = reqPostString("G2-RESULT",100);//RESULT	
+$REQ["G2-RESULT"] = getFilter($REQ["G2-RESULT"],"","//");	
 $REQ["G2-ENGINE"] = reqPostString("G2-ENGINE",100);//ENGINE	
-$REQ["G2-ENGINE"] = getFilter($REQ["G2-ENGINE"],"","//");	
+$REQ["G2-ENGINE"] = getFilter($REQ["G2-ENGINE"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-TABLE_ROWS"] = reqPostString("G2-TABLE_ROWS",100);//ROWS	
-$REQ["G2-TABLE_ROWS"] = getFilter($REQ["G2-TABLE_ROWS"],"","//");	
+$REQ["G2-TABLE_ROWS"] = getFilter($REQ["G2-TABLE_ROWS"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-AUTO_INCREMENT"] = reqPostString("G2-AUTO_INCREMENT",100);//AI	
-$REQ["G2-AUTO_INCREMENT"] = getFilter($REQ["G2-AUTO_INCREMENT"],"","//");	
+$REQ["G2-AUTO_INCREMENT"] = getFilter($REQ["G2-AUTO_INCREMENT"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-CREATE_TIME"] = reqPostNumber("G2-CREATE_TIME",100);//CREATE	
-$REQ["G2-CREATE_TIME"] = getFilter($REQ["G2-CREATE_TIME"],"","//");	
+$REQ["G2-CREATE_TIME"] = getFilter($REQ["G2-CREATE_TIME"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-UPDATE_TIME"] = reqPostString("G2-UPDATE_TIME",100);//UPDATE	
-$REQ["G2-UPDATE_TIME"] = getFilter($REQ["G2-UPDATE_TIME"],"","//");	
+$REQ["G2-UPDATE_TIME"] = getFilter($REQ["G2-UPDATE_TIME"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-TABLE_COLLATION"] = reqPostString("G2-TABLE_COLLATION",100);//COLLATION	
-$REQ["G2-TABLE_COLLATION"] = getFilter($REQ["G2-TABLE_COLLATION"],"","//");	
+$REQ["G2-TABLE_COLLATION"] = getFilter($REQ["G2-TABLE_COLLATION"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-TABLE_COMMENT"] = reqPostString("G2-TABLE_COMMENT",100);//COMMENT	
-$REQ["G2-TABLE_COMMENT"] = getFilter($REQ["G2-TABLE_COMMENT"],"","//");	
+$REQ["G2-TABLE_COMMENT"] = getFilter($REQ["G2-TABLE_COMMENT"],"CLEARTEXT","/--미 정의--/");	
 
 //G3, 테이블상세
 $REQ["G3-TABLE_SCHEMA"] = reqPostString("G3-TABLE_SCHEMA",100);//DB	
@@ -119,12 +122,14 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//테이블목록
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"TABLE_SCHEMA,TABLE_NAME,SQLCREATE,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT"
+		,"COLORD"=>"CHK,TABLE_SCHEMA,TABLE_NAME,SQLCREATE,RESULT,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT"
 		,"VALID"=>
 			array(
-			"TABLE_SCHEMA"=>array("STRING",100)	
+			"CHK"=>array("NUMBER",100)	
+			,"TABLE_SCHEMA"=>array("STRING",100)	
 			,"TABLE_NAME"=>array("STRING",100)	
 			,"SQLCREATE"=>array("STRING",100)	
+			,"RESULT"=>array("STRING",100)	
 			,"ENGINE"=>array("STRING",100)	
 			,"TABLE_ROWS"=>array("STRING",100)	
 			,"AUTO_INCREMENT"=>array("STRING",100)	
@@ -135,10 +140,24 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//테이블목록
 					)
 		,"FILTER"=>
 			array(
+			"CHK"=>array("REGEXMAT","/^([0-9a-zA-Z]|,)+$/")
+			,"TABLE_SCHEMA"=>array("CLEARTEXT","/--미 정의--/")
+			,"TABLE_NAME"=>array("CLEARTEXT","/--미 정의--/")
+			,"SQLCREATE"=>array("CLEARTEXT","/--미 정의--/")
+			,"ENGINE"=>array("CLEARTEXT","/--미 정의--/")
+			,"TABLE_ROWS"=>array("CLEARTEXT","/--미 정의--/")
+			,"AUTO_INCREMENT"=>array("CLEARTEXT","/--미 정의--/")
+			,"CREATE_TIME"=>array("CLEARTEXT","/--미 정의--/")
+			,"UPDATE_TIME"=>array("CLEARTEXT","/--미 정의--/")
+			,"TABLE_COLLATION"=>array("CLEARTEXT","/--미 정의--/")
+			,"TABLE_COMMENT"=>array("CLEARTEXT","/--미 정의--/")
 					)
 	)
 );
-array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
+$REQ["G2-CHK"] = $_POST["G2-CHK"];//CHK 받기
+//filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
+$REQ["G2-CHK"] = filterGridChk($REQ["G2-CHK"],"STRING",100,"CLEARTEXT","/--미 정의--/");//TABLE_NAME 입력값검증
+	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new dbdeployService();
 	//컨트롤 명령별 분개처리
