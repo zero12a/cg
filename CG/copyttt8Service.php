@@ -10,12 +10,11 @@ class copyttt8Service
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("Copyttt8Service-__construct");
 
 		$this->DAO = new copyttt8Dao();
-	    //$this->DB = db_s_open();
-		$this->DB["CG"] = db_obj_open(getDbSvrInfo("CG"));
+		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -119,11 +118,11 @@ class copyttt8Service
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : 마스터
+		array_push($GRID["SQL"]["D"], $this->DAO->delMasG($REQ)); //SAVE, 저장,MAS
+		//V_GRPNM : 마스터
 		array_push($GRID["SQL"]["U"], $this->DAO->updMasG($REQ)); //SAVE, 저장,MAS
 		//V_GRPNM : 마스터
 		array_push($GRID["SQL"]["C"], $this->DAO->insMasG($REQ)); //SAVE, 저장,MAS
-		//V_GRPNM : 마스터
-		array_push($GRID["SQL"]["D"], $this->DAO->delMasG($REQ)); //SAVE, 저장,MAS
 		//V_GRPNM : 마스터
 		array_push($GRID["SQL"]["U"], $this->DAO->hitMasG2($REQ)); //SAVE, 저장,MAS
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);

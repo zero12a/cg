@@ -4,16 +4,17 @@ header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 $_RTIME = array();
 array_push($_RTIME,array("[TIME 00.START]",microtime(true)));
-$CFG = include_once('../../common/include/incConfig.php');//CG CONFIG
-include_once('ddiomngService.php');
+$CFG = require_once('../../common/include/incConfig.php');//CG CONFIG
+require_once($CFG["CFG_LIBS_VENDOR"]);
+require_once('ddiomngService.php');
 
 array_push($_RTIME,array("[TIME 10.INCLUDE SERVICE]",microtime(true)));
-include_once('../../common/include/incUtil.php');//CG UTIL
-include_once('../../common/include/incRequest.php');//CG REQUEST
-include_once('../../common/include/incDB.php');//CG DB
-include_once('../../common/include/incSec.php');//CG SEC
-include_once('../../common/include/incAuth.php');//CG AUTH
-include_once('../../common/include/incUser.php');//CG USER
+require_once('../../common/include/incUtil.php');//CG UTIL
+require_once('../../common/include/incRequest.php');//CG REQUEST
+require_once('../../common/include/incDB.php');//CG DB
+require_once('../../common/include/incSec.php');//CG SEC
+require_once('../../common/include/incAuth.php');//CG AUTH
+require_once('../../common/include/incUser.php');//CG USER
 //하위에서 LOADDING LIB 처리
 array_push($_RTIME,array("[TIME 20.IMPORT]",microtime(true)));
 $reqToken = reqGetString("TOKEN",37);

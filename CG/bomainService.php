@@ -10,7 +10,7 @@ class bomainService
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("BomainService-__construct");
 
 		$this->DAO = new bomainDao();

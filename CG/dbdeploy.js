@@ -253,70 +253,6 @@ function G1_SEARCHALL(token){
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/common/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG2.setSerializationLevel(true,false,false,false,false,false);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("CHK,TABLE_SCHEMA,TABLE_NAME,SQLCREATE,RESULT,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT");
-	$("#DATA_WIDTHS").val("30,60,100,100,50,60,60,60,60,60,60,60");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
-}
-//사용자정의함수 : SQL생성
-function G2_SQLCREATE(token){
-	alog("G2_SQLCREATE-----------------start");
-	var checked=mygridG2.getCheckedRows(0);//table 목록
-	if(checked ==""){
-		return;
-	}else{
-		//alert(checked);
-		var arrTables = checked.split(",");
-
-		var colIndex = mygridG2.getColIndexById("RESULT");
-
-		for(t=0;t<arrTables.length;t++){
-			var tableNm = arrTables[t];
-
-			//alert(tableNm);
-			//alert("rowid, 컬럼순번:" + tableNm + ", " + colIndex);
-			//불러오기
-			$.ajax({
-				type : "GET",
-				url : CFG_CGWEB_URL + "/c.g/cg_cdeploy_db.php?TOKEN=" + token + "&DB=" + $("#G1-DB").val() + "&TABLE=" + tableNm ,
-				dataType: "jsonp",
-				async: false,
-				success: function(data){
-					alog("   gridG2 json return----------------------");
-
-					//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-					mygridG2.cells(data.ERR_CD,colIndex).setValue("O");
-					//alert("응답오케이:" + tableNm + ", " + colIndex);
-
-				},
-				error: function(error){
-					msgError("[테이블목록] Ajax http 500 error ( " + error + " )",3);
-					//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
-				}
-			});
-		}
-	}
-	alog("G2_SQLCREATE-----------------end");
-}
 
 
 
@@ -387,6 +323,70 @@ function G2_SQLCREATE(token){
         alog("G2_SEARCH()------------end");
     }
 
+//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/common/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("CHK,TABLE_SCHEMA,TABLE_NAME,SQLCREATE,RESULT,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT");
+	$("#DATA_WIDTHS").val("30,60,100,100,50,60,60,60,60,60,60,60");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}
+//사용자정의함수 : SQL생성
+function G2_SQLCREATE(token){
+	alog("G2_SQLCREATE-----------------start");
+	var checked=mygridG2.getCheckedRows(0);//table 목록
+	if(checked ==""){
+		return;
+	}else{
+		//alert(checked);
+		var arrTables = checked.split(",");
+
+		var colIndex = mygridG2.getColIndexById("RESULT");
+
+		for(t=0;t<arrTables.length;t++){
+			var tableNm = arrTables[t];
+
+			//alert(tableNm);
+			//alert("rowid, 컬럼순번:" + tableNm + ", " + colIndex);
+			//불러오기
+			$.ajax({
+				type : "GET",
+				url : CFG_CGWEB_URL + "/c.g/cg_cdeploy_db.php?TOKEN=" + token + "&DB=" + $("#G1-DB").val() + "&TABLE=" + tableNm ,
+				dataType: "jsonp",
+				async: false,
+				success: function(data){
+					alog("   gridG2 json return----------------------");
+
+					//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+					mygridG2.cells(data.ERR_CD,colIndex).setValue("O");
+					//alert("응답오케이:" + tableNm + ", " + colIndex);
+
+				},
+				error: function(error){
+					msgError("[테이블목록] Ajax http 500 error ( " + error + " )",3);
+					//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
+				}
+			});
+		}
+	}
+	alog("G2_SQLCREATE-----------------end");
+}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
+}
 //디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");

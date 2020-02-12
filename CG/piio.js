@@ -717,7 +717,56 @@ function G2_SEARCH(tinput,token){
 		alog("G2_SEARCH()------------end");
 }
 
-function G3_MODIFY(){
+//G3_SAVE
+//IO_FILE_YN = N	
+	//IO_FILE_YN = N	
+function G3_SAVE(token){	
+	alog("G3_SAVE---------------start");
+
+	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
+		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
+		return;
+	}
+
+	//전송용 데이터 생성하기
+	var sendFormData = new FormData($("#formviewG3")[0]);
+
+	sendFormData.append("G3-KEYYN",$('input[name="G3-KEYYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-SEQYN",$('input[name="G3-SEQYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-LBLHIDDENYN",$('input[name="G3-LBLHIDDENYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-HIDDENYN",$('input[name="G3-HIDDENYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-EDITYN",$('input[name="G3-EDITYN"]:checked').val());//radio 선택값 가져오기.
+	sendFormData.append("G3-FNINIT",obj_G3_FNINIT.getValue()); //FNINIT
+	sendFormData.append("G3-BRYN",$('input[name="G3-BRYN"]:checked').val());//radio 선택값 가져오기.
+	//컨디션 데이터 추가하기
+	conditionData = new FormData($("#condition")[0]);
+    var es, e, pair;
+    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
+		sendFormData.append(pair[0],pair[1]);
+    }
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 저장되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
+}function G3_MODIFY(){
        alog("[FromView] G3_MODIFY---------------start");
 	if( $("#G3-CTLCUD").val() == "C" ){
 		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
@@ -892,56 +941,6 @@ function G3_DELETE(){
 			//alert(data);
 			if(data && data.RTN_CD == "200"){
 				msgNotice("정상적으로 삭제되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
-}
-//G3_SAVE
-//IO_FILE_YN = N	
-	//IO_FILE_YN = N	
-function G3_SAVE(token){	
-	alog("G3_SAVE---------------start");
-
-	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
-		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
-		return;
-	}
-
-	//전송용 데이터 생성하기
-	var sendFormData = new FormData($("#formviewG3")[0]);
-
-	sendFormData.append("G3-KEYYN",$('input[name="G3-KEYYN"]:checked').val());//radio 선택값 가져오기.
-	sendFormData.append("G3-SEQYN",$('input[name="G3-SEQYN"]:checked').val());//radio 선택값 가져오기.
-	sendFormData.append("G3-LBLHIDDENYN",$('input[name="G3-LBLHIDDENYN"]:checked').val());//radio 선택값 가져오기.
-	sendFormData.append("G3-HIDDENYN",$('input[name="G3-HIDDENYN"]:checked').val());//radio 선택값 가져오기.
-	sendFormData.append("G3-EDITYN",$('input[name="G3-EDITYN"]:checked').val());//radio 선택값 가져오기.
-	sendFormData.append("G3-FNINIT",obj_G3_FNINIT.getValue()); //FNINIT
-	sendFormData.append("G3-BRYN",$('input[name="G3-BRYN"]:checked').val());//radio 선택값 가져오기.
-	//컨디션 데이터 추가하기
-	conditionData = new FormData($("#condition")[0]);
-    var es, e, pair;
-    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
-		sendFormData.append(pair[0],pair[1]);
-    }
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 저장되었습니다.",1);
 			}else{
 				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
 			}

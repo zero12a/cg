@@ -50,6 +50,7 @@ require_once("../common/include//incLoginCheck.php");//로그인 검사
 	var myLayout;
 	var myTree;
 	var tnum = 0;
+	var accessToken = "<?=getAccessToken()?>";
 
     function initBody(){
 		alog("initBody-----------------------------------start");
@@ -97,17 +98,21 @@ require_once("../common/include//incLoginCheck.php");//로그인 검사
         alog(myTree.getItemText(id));
 
         mnu_nm = myTree.getItemText(id);
-        mnu_seq = id.split(":")[0];
-        url = id.split(":")[1];
+        mnu_seq = id.split("^")[0];
+        url = id.split("^")[1];
          
         if(myTabbar.tabs(mnu_seq)){
             //myTabbar.tabs(id).set_actions(true);
             myTabbar.tabs(mnu_seq).setActive();
-        }else if(id.split(":").length > 1){
+        }else if(id.split("^").length > 1){
 			//alert("url go 1");
             myTabbar.addTab(mnu_seq, mnu_nm, null, null, true );
-            //myTabbar.tabs(id).attachURL("cg_pjtinfo.php");
-            myTabbar.tabs(mnu_seq).attachURL(url);
+			//myTabbar.tabs(id).attachURL("cg_pjtinfo.php");
+			
+			targetUrl = url + "?access_token=" + accessToken;
+			//alert(targetUrl);
+
+            myTabbar.tabs(mnu_seq).attachURL(targetUrl);
 			//alert("url go 2");			
         }
 

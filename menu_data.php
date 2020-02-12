@@ -11,17 +11,16 @@
 
     //ServerViewTxt("N","N","Y","Y");
 
-    $db=db_m_open();
+    $db=getDbConn($CFG["CFG_DB"]["CG"]);
 
     echo '
 <?xml version="1.0" encoding="utf-8"?>
 <tree id="0" radio="1">
 	<item   text="CG" id="cg" open="1">
-        <item text="OBJIFO" id="objinfo:/c.g/cg_objinfo3.php">cg_objinfo.php2</item>
-        <item text="PGMINFO" id="pgminfo3:/c.g/cg_pgminfo3.php">cg_pgminfo.php3</item>
-        <item text="PGM관리" id="pgmmng:/c.g/cg_pgmmng.php">cg_pgmmng.php</item>
-        <item text="CONFIG관리" id="configmng:/c.g/cg_configmng.php">cg_configmng.php</item>
-        <item text="배포관리" id="DEPLOYPGM:/r.d/deploypgmView.php">deploypgmView.php</item>
+        <item text="OBJIFO" id="objinfo^/c.g/cg_objinfo3.php">cg_objinfo.php2</item>
+        <item text="PGMINFO" id="pgminfo3^/c.g/cg_pgminfo3.php">cg_pgminfo.php3</item>
+        <item text="PGM관리" id="pgmmng^/c.g/cg_pgmmng.php">cg_pgmmng.php</item>
+        <item text="CONFIG관리" id="configmng^/c.g/cg_configmng.php">cg_configmng.php</item>
 	</item>
 
 ';
@@ -56,7 +55,7 @@ alog("---------------GRP PGM ---------------------START");
         $tPgmArray = make_grid_read_array($stmt);
         $subItemCnt = 0;
         foreach($tPgmArray->RTN_DATA->data as $tMap2) {
-            echo '      <item text="' . $tMap2["PGMNM"] . '" id="' . $tMap2["PGMSEQ"] . ":/c.g/" . $tMap["PJTID"] . "/" . $tMap2["VIEWURL"] . '"></item>' . PHP_EOL;
+            echo '      <item text="' . $tMap2["PGMNM"] . '" id="' . $tMap2["PGMSEQ"] . "^" . $CFG["CFG_MAKE_URL"] . "/c.g/" . $tMap["PJTID"] . "/" . $tMap2["VIEWURL"] . '"></item>' . PHP_EOL;
             $subItemCnt++;
         }
         if($subItemCnt == 0){

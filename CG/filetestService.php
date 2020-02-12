@@ -10,12 +10,11 @@ class filetestService
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("FiletestService-__construct");
 
 		$this->DAO = new filetestDao();
-	    //$this->DB = db_s_open();
-		$this->DB["SC"] = db_obj_open(getDbSvrInfo("SC"));
+		$this->DB["SC"] = getDbConn($CFG["CFG_DB"]["SC"]);
 	}
 	//파괴자
 	function __destruct(){

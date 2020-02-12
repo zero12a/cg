@@ -10,7 +10,7 @@ class errmngService
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("ErrmngService-__construct");
 
 		$this->DAO = new errmngDao();

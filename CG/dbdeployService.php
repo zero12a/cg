@@ -10,12 +10,11 @@ class dbdeployService
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("DbdeployService-__construct");
 
 		$this->DAO = new dbdeployDao();
-	    //$this->DB = db_s_open();
-		$this->DB["CG"] = db_obj_open(getDbSvrInfo("CG"));
+		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
 	}
 	//파괴자
 	function __destruct(){

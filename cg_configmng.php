@@ -246,6 +246,11 @@ if($_POST["CONFIG_NM"] == ""){
             ,"CFG_MAKE_URL" => "http://localhost:8060"
             ,"CFG_CGWEB_URL" => "http://localhost:8090"
 
+
+            ,"CFG_DB" => array(
+                "CG" => array("HOST"=>"172.17.0.1", "PORT"=>"3306", "DBNM"=>"CG", "ID"=>"cg", "PW"=>"cg1234qwer"),
+                "DATING" => array("HOST"=>"", "PORT"=>"", "DBNM"=>"", "ID"=>"", "PW"=>"")
+                )
             ,"CFG_SEC_KEY" => ""
             ,"CFG_SEC_IV" => ""
         

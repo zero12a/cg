@@ -11,10 +11,11 @@ class cg_pgminfo_svc
 	//생성자
 	function __construct(){
 		alog("cg_pgminfo_svc-__construct");
+		global $CFG;
 
 		$this->DAO = new cg_pgminfo_dao();
 	    //$this->DB = db_s_open();
-		$this->DB["CG"] = db_obj_open(getDbSvrInfo("CG"));
+		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
 	}
 	//파괴자
 	function __destruct(){

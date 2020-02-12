@@ -10,12 +10,11 @@ class loginService
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("LoginService-__construct");
 
 		$this->DAO = new loginDao();
-	    //$this->DB = db_s_open();
-		$this->DB["DATING"] = db_obj_open(getDbSvrInfo("DATING"));
+		$this->DB["DATING"] = getDbConn($CFG["CFG_DB"]["DATING"]);
 	}
 	//파괴자
 	function __destruct(){

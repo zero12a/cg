@@ -19,8 +19,8 @@
     use Aws\S3\Model\MultipartUpload\UploadBuilder;
 
     //ServerViewTxt("N","N","Y","Y");
-    $db["cg"]=db_m_open();
 
+    $db["cg"] = getDbConn($CFG["CFG_DB"]["CG"]);
 
     //그룹ID받기
     $F_GRPID = $_GET['F_GRPID'];

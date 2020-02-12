@@ -6,16 +6,16 @@ header("Content-Type: text/html; charset=UTF-8"); //HTML
 //설정 함수 읽기
 $CFG = require_once '../../common/include/incConfig.php';
 
-//MONO Autoload
-require_once($CFG["CFG_LIBS_MONO_LOG"]);
+//default lib Autoload
+require_once($CFG["CFG_LIBS_VENDOR"]);
 
 //LIBS
-include_once('../../common/include/incUtil.php');//CG UTIL
-include_once('../../common/include/incRequest.php');//CG REQUEST
-include_once('../../common/include/incDB.php');//CG DB
-include_once('../../common/include/incSec.php');//CG SEC
-include_once('../../common/include/incAuth.php');//CG AUTH
-include_once('../../common/include/incUser.php');//CG USER
+require_once('../../common/include/incUtil.php');//CG UTIL
+require_once('../../common/include/incRequest.php');//CG REQUEST
+require_once('../../common/include/incDB.php');//CG DB
+require_once('../../common/include/incSec.php');//CG SEC
+require_once('../../common/include/incAuth.php');//CG AUTH
+require_once('../../common/include/incUser.php');//CG USER
 
 //인증 게이트웨이
 require_once('../../common/include/incLoginOauthGateway.php');//CG USER
@@ -50,6 +50,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css" type="text/css" charset="UTF-8"><!--CODE MIRROR CSS-->
 <!--공통 js/css-->
 <script>
+var CFG_CGWEB_URL = "<?=$CFG["CFG_CGWEB_URL"]?>";  // 형식 http://url:port/
 var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:port/
 </script>
 <script src="/common/common.js?<?=getRndVal(10)?>"></script>
@@ -378,7 +379,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 				</div>	
 				<!-- style="width:60;"-->
 				<div class="CON_OBJECT">
-					<div name="G3-ADDDT" id="G3-ADDDT" style="width:60px;"></div>
+					<div name="G3-ADDDT" id="G3-ADDDT" style="background-color:white; width:60px;"></div>
 				</div>
 			</div>
 			</DIV><!--is_br_tab end-->
@@ -392,7 +393,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 				</div>	
 				<!-- style="width:60;"-->
 				<div class="CON_OBJECT">
-					<div name="G3-MODDT" id="G3-MODDT" style="width:60px;"></div>
+					<div name="G3-MODDT" id="G3-MODDT" style="background-color:white; width:60px;"></div>
 				</div>
 			</div>
 			</DIV><!--is_br_tab end-->
