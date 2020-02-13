@@ -235,11 +235,6 @@ function G3_INIT(){
 	//TABLE_SCHEMA, DB 초기화		//TABLE_NAME, TABLE 초기화		//ENGINE, ENGINE 초기화		//TABLE_ROWS, ROWS 초기화		//AUTO_INCREMENT, AI 초기화		//CREATE_TIME, CREATE 초기화		//UPDATE_TIME, UPDATE 초기화		//TABLE_COLLATION, COLLATION 초기화		//TABLE_COMMENT, COMMENT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -252,6 +247,11 @@ function G1_SEARCHALL(token){
 		//  호출
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
 }
 
 
@@ -323,24 +323,6 @@ function G1_SEARCHALL(token){
         alog("G2_SEARCH()------------end");
     }
 
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/common/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG2.setSerializationLevel(true,false,false,false,false,true);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("CHK,TABLE_SCHEMA,TABLE_NAME,SQLCREATE,RESULT,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT");
-	$("#DATA_WIDTHS").val("30,60,100,100,50,60,60,60,60,60,60,60");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
-}
 //사용자정의함수 : SQL생성
 function G2_SQLCREATE(token){
 	alog("G2_SQLCREATE-----------------start");
@@ -363,13 +345,14 @@ function G2_SQLCREATE(token){
 				type : "GET",
 				url : CFG_CGWEB_URL + "/c.g/cg_cdeploy_db.php?TOKEN=" + token + "&DB=" + $("#G1-DB").val() + "&TABLE=" + tableNm ,
 				dataType: "jsonp",
+				privateTableNm : tableNm,
 				async: false,
 				success: function(data){
 					alog("   gridG2 json return----------------------");
 
 					//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
 
-					mygridG2.cells(data.ERR_CD,colIndex).setValue("O");
+					mygridG2.cells(this.privateTableNm,colIndex).setValue("O");
 					//alert("응답오케이:" + tableNm + ", " + colIndex);
 
 				},
@@ -381,6 +364,24 @@ function G2_SQLCREATE(token){
 		}
 	}
 	alog("G2_SQLCREATE-----------------end");
+}
+//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/common/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("CHK,TABLE_SCHEMA,TABLE_NAME,SQLCREATE,RESULT,ENGINE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,TABLE_COMMENT");
+	$("#DATA_WIDTHS").val("30,60,100,100,50,60,60,60,60,60,60,60");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
 }
 //새로고침	
 function G2_RELOAD(token){

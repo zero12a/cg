@@ -51,7 +51,7 @@ class usermngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//비번변경
 		//V_GRPNM : 사용자1
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //USERDEF, 비번변경,
+		array_push($GRID["SQL"]["R"], $this->DAO->selUserG($REQ)); //USERDEF, 비번변경,사용자목록
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");
@@ -90,7 +90,7 @@ class usermngService
 
 		//조회
 		//V_GRPNM : 사용자1
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selUserG($REQ)); //SEARCH, 조회,사용자목록
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array("PASSWD"=>"HASH");
 		//필수 여부 검사
@@ -132,7 +132,9 @@ class usermngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//S
 		//V_GRPNM : 사용자1
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
+		array_push($GRID["SQL"]["U"], $this->DAO->updUserG($REQ)); //SAVE, S,사용자수정
+		//V_GRPNM : 사용자1
+		array_push($GRID["SQL"]["C"], $this->DAO->insUserG($REQ)); //SAVE, S,사용자추가
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");
@@ -216,7 +218,7 @@ class usermngService
 
 		//조회
 		//V_GRPNM : 프로젝트2
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selPjtG($REQ)); //SEARCH, 조회,프로젝목록
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -313,7 +315,7 @@ class usermngService
 
 		//조회
 		//V_GRPNM : 서버4
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selSvrG($REQ)); //SEARCH, 조회,서버록록
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array("DBUSRPW"=>"CRYPT");
 		//필수 여부 검사
@@ -355,9 +357,9 @@ class usermngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//S
 		//V_GRPNM : 서버4
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
+		array_push($GRID["SQL"]["C"], $this->DAO->insSvrG($REQ)); //SAVE, S,서버추가
 		//V_GRPNM : 서버4
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, S,
+		array_push($GRID["SQL"]["U"], $this->DAO->updSvrG($REQ)); //SAVE, S,서버변경
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");
