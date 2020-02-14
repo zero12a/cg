@@ -26,6 +26,7 @@ use GuzzleHttp\Exception\GuzzleException;
 $objAuth= new authObject();	
 
 //외부 파라미터 받기
+$REQ["CLIENT_ID"] = reqPostString("client_id",100);
 $REQ["access_token"] = reqPostString("access_token",100);
 $REQ["refresh_token"] = reqPostString("refresh_token",100);
 
@@ -33,6 +34,7 @@ $REQ["refresh_token"] = reqPostString("refresh_token",100);
 alog("REQ.access_token = ". $REQ["access_token"]);
 alog("REQ.refresh_token = ". $REQ["refresh_token"]);
 
+if($REQ["CLIENT_ID"] == ""){MsgBack("client_id 입력해 주세요.");}
 if($REQ["access_token"] == ""){MsgBack("access_token 입력해 주세요.");}
 if($REQ["refresh_token"] == ""){MsgBack("refresh_token 입력해 주세요.");}
 
@@ -172,17 +174,17 @@ function saveLoginLog($REQ){
     global $db, $_SERVER;
 
 
-    $coltype = "sssss isiss ss";
+    $coltype = "sssss isiss sss";
     $sql = "
         insert into CMN_LOG_LOGIN ( 
             USR_ID, SESSION_ID, SUCCESS_YN, RESPONSE_MSG, LOCKCD
             , PW_ERR_CNT, LOCK_LIMIT_DT, USR_SEQ, SERVER_NAME, REMOTE_ADDR
-            , USER_AGENT, AUTH_JSON
+            , USER_AGENT, AUTH_JSON, CLIENT_ID
             , ADD_DT
         ) values (
             #{USR_ID}, #{SESSION_ID}, #{SUCCESS_YN}, #{RESPONSE_MSG}, #{LOCKCD}
             , #{PW_ERR_CNT}, #{LOCK_LIMIT_DT},#{USR_SEQ}, #{SERVER_NAME}, #{REMOTE_ADDR}
-            , #{USER_AGENT}, #{AUTH_JSON}
+            , #{USER_AGENT}, #{AUTH_JSON}, #{CLIENT_ID}
             , date_format(sysdate(),'%Y%m%d%H%i%s')
         ) 
     ";
