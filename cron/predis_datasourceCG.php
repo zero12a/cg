@@ -16,7 +16,7 @@ if(!require_once(__DIR__ . "/../../common/include/incUtil.php"))die("require inc
 if(!require_once(__DIR__ . "/../../common/include/incSec.php"))die("require incSec fail.");
 if(!require_once(__DIR__ . "/../../common/include/incDB.php"))die("require incDB fail.");
 
-alog("predis_configCG.php__________________________go");
+alog("predis_datasourceCG.php__________________________go");
 
 //로딩 안해도 됨 기본적으로 infConfig에서 로딩함.
 //if(!require_once($CFG_LIBS_PATH_REDIS))die("require redis fail.");
@@ -45,7 +45,7 @@ $pubsub = $pubsubClient->pubSubLoop();
 
 
 // Subscribe to your channels
-$pubsub->subscribe('config.CONFIG_CG');
+$pubsub->subscribe('config.DATASOURCE_CG');
 
 
 // consume messages
@@ -67,7 +67,10 @@ foreach ($pubsub as $message) {
                 echo "Received the following message from {$message->channel}:",
                      PHP_EOL, "  {$message->payload}", PHP_EOL, PHP_EOL;
 
-                configReload();
+                
+                dataSourceSaveRedisFromDB();
+
+                datasourceReload();
             }
             break;
     }
@@ -79,17 +82,14 @@ $pubsubClient->quit();
 
 echo "########### end\n";
 
-$db->close();
 
-if($db)unset($db);
-
-function configReload(){
+function datasourceReload(){
     global $CFG;
     alog("configReload()...............start");
 
     $client = new GuzzleHttp\Client();
-    $res = $client->request('POST', 'http://localhost/common/include/incConfig.php', [
-        'ctl' => 'CONFIG'
+    $res = $client->request('GET', 'http://localhost/common/include/incConfig.php', [
+        'ctl' => 'DATASOURCE'
         ,'reload' => 'YES'
     ]);
     echo $res->getStatusCode();
@@ -99,10 +99,60 @@ function configReload(){
     echo $res->getBody();
 }
 
-function configSave(){
+function dataSourceSaveRedisFromDB(){
     global $CFG;
     alog("configSave()...............start");
 
+    //Get datasource list
+    $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);
+
+    $coltype = "";
+    $sql = "
+    select 
+        SVRSEQ
+        , SVRID
+        , DBHOST as HOST
+        , DBPORT as PORT
+        , DBNAME as DBNM
+        , DBUSRID as ID
+        , DBUSRPW as PW
+    from CG_SVR where USEYN='Y'";
+    
+    $stmt = makeStmt($db,$sql,$coltype,$REQ);
+    if(!$stmt)JsonMsg("500","300","SQL makeStmt 생성 실패 했습니다.");
+    $svrArray = getStmtArray($stmt);
+    $stmt->close();
+    $db->close();
+    if($db)unset($db);
+
+    /*
+    아래 구조로 변경하기
+    "CFG_DB": {
+        "CGCORE": {
+            "HOST": "172.17.0.1",
+            "PORT": "",
+            "DBNM": "",
+            "ID": "",
+            "PW": ""
+        },
+        "CGPJT1": {
+            "HOST": "172.17.0.1",
+            "PORT": "",
+            "DBNM": "",
+            "ID": "",
+            "PW": ""
+        }
+    }
+    */
+    $rtnArr = array();
+    for($t=0;$t<sizeof($svrArray);$t++){
+        $rtnArr[$svrArray[$t]["SVRID"]] = $svrArray[$t];
+    }
+    $jsonStr = json_encode($rtnArr);
+
+
+    //Save to redis
+    $cfgNm = "DATASOURCE_CG";
     $redisClient = new Predis\Client(
         array(
             'scheme' => 'tcp',
@@ -110,27 +160,13 @@ function configSave(){
             'port'   => $CFG["REDIS_PORT"],
             'timeout' => 0
         )
-    );    
-    
-
-    $cfgNm = "CONFIG_CG";
-
-    //json
-    $jsonStr = $redisClient->get($cfgNm);
+    );   
+    if($redisClient->get($cfgNm) != $jsonStr) $jsonStr = $redisClient->set($cfgNm,$jsonStr);
     $redisClient->quit();
 
-    $tmpArray = json_decode($jsonStr,true);
-
-    if(json_last_error() != JSON_ERROR_NONE){
-        //$redisClient->quit();
-        alog("JSON 문법 에러 발생 : " . json_last_error_msg());
-        return;
-    }
-
     //처음 로딩시 로컬캐시에 보관
-    apcu_store($cfgNm, $jsonStr);	
-    echo "CONFIG=========================================\n" . $jsonStr . "\n=========================================\n";
-    echo $cfgNm . " apcu 컨피그 반영완료 ";
+    //echo "CONFIG=========================================\n" . $jsonStr . "\n=========================================\n";
+    echo $cfgNm . " redis datasource 반영완료 ";
 }
 
 

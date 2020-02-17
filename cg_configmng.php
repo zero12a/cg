@@ -95,6 +95,10 @@ if(trim($CFG["REDIS_HOST"]) == "")die("Config에 REDIS_HOST 값이 없습니다.
 
 //echo "aaa";    
 if($_POST["CONFIG_NM"] == ""){
+    if($_POST["CONFIG_NM"] ==""){
+        $defaultConfig = "CONFIG_CG";
+        $defaultDatasource = "DATASOURCE_CG";
+    }
 ?>
     <form name="tform" id="tform" method="post">
     <input type="hidden" name="fnc" id="fnc" value="CONFIG_SEARCH">
@@ -102,9 +106,13 @@ if($_POST["CONFIG_NM"] == ""){
     CONFIG_PW : <input type="password" name="CONFIG_PW" value=""><BR>
     <input type="submit" value="조회"><input type="button" value="로컬캐쉬 삭제" onclick="clearLocalCache()">
     </form>
-    <BR>apcu :<BR>
-    <textarea style="font-size:9pt;width:100%;height:800px">
-    <?=json_encode(json_decode(apcu_fetch("CONFIG_CG")),JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)?>
+    <BR>apcu(CONFIG) :<BR>
+    <textarea style="font-size:9pt;width:100%;height:350px">
+    <?=json_encode(json_decode(apcu_fetch($defaultConfig)),JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)?>
+    </textarea>
+    <BR>apcu(DATASOURCE) :<BR>
+    <textarea style="font-size:9pt;width:100%;height:300px">
+    <?=json_encode(json_decode(apcu_fetch($defaultDatasource)),JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)?>
     </textarea>
 
 <?php
@@ -171,7 +179,7 @@ if($_POST["CONFIG_NM"] == ""){
 
 
         //가입 채널에 변경 통보하기
-        $redisClient->publish("config.CONFIG_CG",$_POST["CONFIG_NM"] . " change redis config data.");
+        $redisClient->publish("config." . $_POST["CONFIG_NM"],$_POST["CONFIG_NM"] . " change redis config data.");
 
 
         $redisClient->quit();
@@ -204,6 +212,7 @@ if($_POST["CONFIG_NM"] == ""){
         MsgBack("기존 비밀번호가 일치하지 않습니다.");
     }
     //echo "222";
+    //echo "############". $_POST["CONFIG_NM"];
     $jsonStr = $redisClient->get($_POST["CONFIG_NM"]);   
     $redisClient->quit();
 

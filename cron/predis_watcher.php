@@ -12,7 +12,11 @@ $watcherTarget = array(
 	array(
 			"SEARCH_NM"=>"predis_configCG.php"
 			,"EXECUTE_SH"=> $CFG["CFG_ROOT_DIR"] . "cron/predis_configCG.sh"
-	)		
+	),
+	array(
+		"SEARCH_NM"=>"predis_datasourceCG.php"
+		,"EXECUTE_SH"=> $CFG["CFG_ROOT_DIR"] . "cron/predis_datasourceCG.sh"
+	)
 );
 
 echo "\n" .  sizeof($watcherTarget);
