@@ -20,7 +20,7 @@ class dbdeployDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "dtlTable";
 		$RtnVal["SQLTXT"] = "SELECT
 TABLE_SCHEMA, TABLE_NAME,ENGINE,TABLE_ROWS,AUTO_INCREMENT
@@ -38,7 +38,7 @@ where TABLE_SCHEMA =  #{G1-DB} and TABLE_NAME = #{G2-TABLE_NAME}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "lstTable";
 		$RtnVal["SQLTXT"] = "SELECT
 0 as CHK,TABLE_SCHEMA, TABLE_NAME

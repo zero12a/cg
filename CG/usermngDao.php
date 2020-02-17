@@ -20,7 +20,7 @@ class usermngDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "chgUserPwG";
 		$RtnVal["SQLTXT"] = "update CG_USERS set
  PASSWD = #{PASSWD}
@@ -36,7 +36,7 @@ where USERSEQ = #{USERSEQ}";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "insSvrG";
 		$RtnVal["SQLTXT"] = "INSERT INTO CG_SVR (
 	SVRID,SVRNM,PJTSEQ,USERSEQ,DBHOST
@@ -57,7 +57,7 @@ where USERSEQ = #{USERSEQ}";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "insUserG";
 		$RtnVal["SQLTXT"] = "";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
@@ -70,7 +70,7 @@ where USERSEQ = #{USERSEQ}";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "selPjtG";
 		$RtnVal["SQLTXT"] = "select
 	USERSEQ, PJTSEQ, ADDDT, MODDT
@@ -80,7 +80,7 @@ where USERSEQ = #{G2-USERSEQ}
  ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "s";
+		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
 	//서버록록    
@@ -88,7 +88,7 @@ where USERSEQ = #{G2-USERSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "selSvrG";
 		$RtnVal["SQLTXT"] = "select
 	SVRSEQ,SVRID,SVRNM, PJTSEQ, USERSEQ
@@ -100,7 +100,7 @@ where USERSEQ = #{G2-USERSEQ}
 ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "s";
+		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
 	//사용자목록    
@@ -108,7 +108,7 @@ where USERSEQ = #{G2-USERSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "selUserG";
 		$RtnVal["SQLTXT"] = "select 
  USERSEQ, EMAIL,'--Hashed--' as PASSWD, EMAILVALIDYN,LASTPWCHGDT
@@ -127,7 +127,7 @@ from
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "updSvrG";
 		$RtnVal["SQLTXT"] = "update CG_SVR
 set
@@ -146,7 +146,7 @@ where SVRSEQ = #{SVRSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "updUserG";
 		$RtnVal["SQLTXT"] = "update CG_USERS set
  EMAIL = #{EMAIL}, PWFAILCNT = #{PWFAILCNT}, LOCKYN = #{LOCKYN},LOCKDT = #{LOCKDT}

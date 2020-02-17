@@ -14,7 +14,7 @@ class dbdeployService
 		$log->info("DbdeployService-__construct");
 
 		$this->DAO = new dbdeployDao();
-		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
+		$this->DB["CGPJT1"] = getDbConn($CFG["CFG_DB"]["CGPJT1"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -22,7 +22,7 @@ class dbdeployService
 		$log->info("DbdeployService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CG"])$this->DB["CG"]->close();
+		if($this->DB["CGPJT1"])$this->DB["CGPJT1"]->close();
 		unset($this->DB);
 	}
 	function __toString(){

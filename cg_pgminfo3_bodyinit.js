@@ -731,7 +731,9 @@
         mygridSql.init();
         
         //GRPTYPE 콤보
-		setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("SVRSEQ")),"DATASOURCE");
+        setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("SVRSEQ")),"SVRSEQ");
+        //setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("SVRSEQ")),"DATASOURCE");
+        
 		setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("CRUD")),"CRUD");
         setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("RTN_TYPE")),"RTN_TYPE");     
         //setCodeCombo("GRID",mygridSql.getCombo(mygridSql.getColIndexById("PSQLSEQ")),"PSQLSEQ");        

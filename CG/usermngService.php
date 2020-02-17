@@ -14,7 +14,7 @@ class usermngService
 		$log->info("UsermngService-__construct");
 
 		$this->DAO = new usermngDao();
-		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
+		$this->DB["CGCORE"] = getDbConn($CFG["CFG_DB"]["CGCORE"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -22,7 +22,7 @@ class usermngService
 		$log->info("UsermngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CG"])$this->DB["CG"]->close();
+		if($this->DB["CGCORE"])$this->DB["CGCORE"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
@@ -51,7 +51,7 @@ class usermngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//비번변경
 		//V_GRPNM : 사용자1
-		array_push($GRID["SQL"]["R"], $this->DAO->selUserG($REQ)); //USERDEF, 비번변경,사용자목록
+		array_push($GRID["SQL"]["C"], $this->DAO->insUserG($REQ)); //USERDEF, 비번변경,사용자추가
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");
@@ -357,9 +357,9 @@ class usermngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//S
 		//V_GRPNM : 서버4
-		array_push($GRID["SQL"]["C"], $this->DAO->insSvrG($REQ)); //SAVE, S,서버추가
-		//V_GRPNM : 서버4
 		array_push($GRID["SQL"]["U"], $this->DAO->updSvrG($REQ)); //SAVE, S,서버변경
+		//V_GRPNM : 서버4
+		array_push($GRID["SQL"]["C"], $this->DAO->insSvrG($REQ)); //SAVE, S,서버추가
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");
