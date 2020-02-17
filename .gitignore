@@ -3,12 +3,12 @@
 
 # file
 *.7z
-*.sql
 
 # folder
 /up
 /lib
 /BACKUP
+/md/BACKUP
 
 # config
 incConfig.php
