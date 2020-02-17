@@ -5,6 +5,7 @@ var url_G1_SEARCHALL = "dbdeployController?CTLGRP=G1&CTLFNC=SEARCHALL";
 var url_G1_RESET = "dbdeployController?CTLGRP=G1&CTLFNC=RESET";
 // 변수 선언	
 var obj_G1_DB; // DB 변수선언
+var obj_G1_TARGET_DB; // TARET_DB 변수선언
 //그리드 변수 초기화	
 //컨트롤러 경로
 var url_G2_SQLCREATE = "dbdeployController?CTLGRP=G2&CTLFNC=SQLCREATE";
@@ -14,6 +15,8 @@ var url_G2_SEARCH = "dbdeployController?CTLGRP=G2&CTLFNC=SEARCH";
 var url_G2_RELOAD = "dbdeployController?CTLGRP=G2&CTLFNC=RELOAD";
 //컨트롤러 경로
 var url_G2_EXCEL = "dbdeployController?CTLGRP=G2&CTLFNC=EXCEL";
+//컨트롤러 경로
+var url_G2_LOADFROMGITHUB = "dbdeployController?CTLGRP=G2&CTLFNC=LOADFROMGITHUB";
 //그리드 객체
 var mygridG2,isToggleHiddenColG2,lastinputG2,lastinputG2json,lastrowidG2;
 var lastselectG2json;//디테일 변수 초기화	
@@ -70,8 +73,10 @@ function popReturn(tGrpId,tRowId,tColId,tBtnNm,tJsonObj){
 function G1_INIT(){
   alog("G1_INIT()-------------------------start	");
 
+
 	//각 폼 오브젝트들 초기화
 	//DB, DB 초기화	
+	//TARGET_DB, TARET_DB 초기화	
   alog("G1_INIT()-------------------------end");
 }
 
@@ -235,11 +240,6 @@ function G3_INIT(){
 	//TABLE_SCHEMA, DB 초기화		//TABLE_NAME, TABLE 초기화		//ENGINE, ENGINE 초기화		//TABLE_ROWS, ROWS 초기화		//AUTO_INCREMENT, AI 초기화		//CREATE_TIME, CREATE 초기화		//UPDATE_TIME, UPDATE 초기화		//TABLE_COLLATION, COLLATION 초기화		//TABLE_COMMENT, COMMENT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -253,52 +253,10 @@ function G1_SEARCHALL(token){
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
-}
-//사용자정의함수 : SQL생성
-function G2_SQLCREATE(token){
-	alog("G2_SQLCREATE-----------------start");
-	var checked=mygridG2.getCheckedRows(0);//table 목록
-	if(checked ==""){
-		return;
-	}else{
-		//alert(checked);
-		var arrTables = checked.split(",");
-
-		var colIndex = mygridG2.getColIndexById("RESULT");
-
-		for(t=0;t<arrTables.length;t++){
-			var tableNm = arrTables[t];
-
-			//alert(tableNm);
-			//alert("rowid, 컬럼순번:" + tableNm + ", " + colIndex);
-			//불러오기
-			$.ajax({
-				type : "GET",
-				url : CFG_CGWEB_URL + "/c.g/cg_cdeploy_db.php?TOKEN=" + token + "&DB=" + $("#G1-DB").val() + "&TABLE=" + tableNm ,
-				dataType: "jsonp",
-				privateTableNm : tableNm,
-				async: false,
-				success: function(data){
-					alog("   gridG2 json return----------------------");
-
-					//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-					mygridG2.cells(this.privateTableNm,colIndex).setValue("O");
-					//alert("응답오케이:" + tableNm + ", " + colIndex);
-
-				},
-				error: function(error){
-					msgError("[테이블목록] Ajax http 500 error ( " + error + " )",3);
-					//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
-				}
-			});
-		}
-	}
-	alog("G2_SQLCREATE-----------------end");
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
 }
 
 
@@ -370,6 +328,53 @@ function G2_SQLCREATE(token){
         alog("G2_SEARCH()------------end");
     }
 
+//사용자정의함수 : LOAD TO DB FROM GITHUB
+function G2_LOADFROMGITHUB(token){
+	alog("G2_LOADFROMGITHUB-----------------start");
+
+var checked=mygridG2.getCheckedRows(0);//table 목록
+if(checked ==""){
+	return;
+}else{
+	//alert(checked);
+	var arrTables = checked.split(",");
+
+	var colIndex = mygridG2.getColIndexById("RESULT");
+
+	for(t=0;t<arrTables.length;t++){
+		var tableNm = arrTables[t];
+
+		//alert(tableNm);
+		//alert("rowid, 컬럼순번:" + tableNm + ", " + colIndex);
+		//불러오기
+		$.ajax({
+			type : "GET",
+			url : CFG_CGWEB_URL + "/c.g/cg_cdeploy_db.php?CTL=LOADFROMGITHUB&TOKEN=" + token + "&TARGET_DB=" + $("#G1-TARGET_DB").val()  + "&DB=" + $("#G1-DB").val() + "&TABLE=" + tableNm ,
+			dataType: "jsonp",
+			privateTableNm : tableNm,
+			async: false,
+			success: function(data){
+				alog("   gridG2 json return----------------------");
+
+				//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+				if(data.RTN_CD =="200"){
+					mygridG2.cells(this.privateTableNm,colIndex).setValue("O");
+				}else{
+					msgError(data.RTN_MSG + "(" + data.ERR_CD + ")",3);
+				}
+
+				//alert("응답오케이:" + tableNm + ", " + colIndex);
+
+			},
+			error: function(error){
+				msgError("[테이블목록] Ajax http 500 error ( " + error + " )",3);
+				//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
+			}
+		});
+	}
+}
+	alog("G2_LOADFROMGITHUB-----------------end");
+}
 //엑셀다운		
 function G2_EXCEL(){	
 	alog("G2_EXCEL-----------------start");
@@ -388,11 +393,54 @@ function G2_EXCEL(){
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
 }
+//사용자정의함수 : MAKE LOCAL SQL
+function G2_SQLCREATE(token){
+	alog("G2_SQLCREATE-----------------start");
+var checked=mygridG2.getCheckedRows(0);//table 목록
+if(checked ==""){
+	return;
+}else{
+	//alert(checked);
+	var arrTables = checked.split(",");
+
+	var colIndex = mygridG2.getColIndexById("RESULT");
+
+	for(t=0;t<arrTables.length;t++){
+		var tableNm = arrTables[t];
+
+		//alert(tableNm);
+		//alert("rowid, 컬럼순번:" + tableNm + ", " + colIndex);
+		//불러오기
+		$.ajax({
+			type : "GET",
+			url : CFG_CGWEB_URL + "/c.g/cg_cdeploy_db.php?CTL=MAKELOCALFILE&TOKEN=" + token + "&DB=" + $("#G1-DB").val() + "&TABLE=" + tableNm ,
+			dataType: "jsonp",
+			privateTableNm : tableNm,
+			async: false,
+			success: function(data){
+				alog("   gridG2 json return----------------------");
+
+				//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+				mygridG2.cells(this.privateTableNm,colIndex).setValue("O");
+				//alert("응답오케이:" + tableNm + ", " + colIndex);
+
+			},
+			error: function(error){
+				msgError("[테이블목록] Ajax http 500 error ( " + error + " )",3);
+				//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
+			}
+		});
+	}
+}
+	alog("G2_SQLCREATE-----------------end");
+}
 //새로고침	
-function G3_RELOAD(token){
-	alog("G3_RELOAD-----------------start");
-	G3_SEARCH(lastinputG3,token);
-}//디테일 검색	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
+}
+//디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
 
@@ -448,4 +496,9 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
+}
+//새로고침	
+function G3_RELOAD(token){
+	alog("G3_RELOAD-----------------start");
+	G3_SEARCH(lastinputG3,token);
 }

@@ -30,7 +30,7 @@ CREATE TABLE `oauth_users` (
   `last_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_seq`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,6 @@ CREATE TABLE `oauth_users` (
 
 LOCK TABLES `oauth_users` WRITE;
 /*!40000 ALTER TABLE `oauth_users` DISABLE KEYS */;
-INSERT INTO `oauth_users` VALUES (1,'demouser','206c80413b9a96c1312cc346b7d2517b84463edd','1','2');
 /*!40000 ALTER TABLE `oauth_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-18  5:44:48
+-- Dump completed on 2020-02-18  6:03:35

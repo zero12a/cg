@@ -102,6 +102,17 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 	<!--DB오브젝트출력-->						<input type="text" name="G1-DB" value="<?=getFilter(reqPostString("DB",30),"SAFEECHO","")?>" id="G1-DB" style="width:100px;">
 					</div>
 				</div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : TARGET_DB-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						TARET_DB
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--TARGET_DB오브젝트출력-->						<input type="text" name="G1-TARGET_DB" value="<?=getFilter(reqPostString("TARGET_DB",100),"SAFEECHO","")?>" id="G1-TARGET_DB" style="width:100px;">
+					</div>
+				</div>
 			</div><!-- is_br_tag end -->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
@@ -121,9 +132,10 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			</div>
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
-			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_SQLCREATE" value="SQL생성" onclick="G2_SQLCREATE(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_SQLCREATE" value="MAKE LOCAL SQL" onclick="G2_SQLCREATE(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_RELOAD" value="새로고침" onclick="G2_RELOAD(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_LOADFROMGITHUB" value="LOAD TO DB FROM GITHUB" onclick="G2_LOADFROMGITHUB(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>

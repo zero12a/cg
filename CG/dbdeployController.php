@@ -73,6 +73,8 @@ $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 //G1, 
 $REQ["G1-DB"] = reqPostString("G1-DB",30);//DB	
 $REQ["G1-DB"] = getFilter($REQ["G1-DB"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G1-TARGET_DB"] = reqPostString("G1-TARGET_DB",100);//TARET_DB	
+$REQ["G1-TARGET_DB"] = getFilter($REQ["G1-TARGET_DB"],"CLEARTEXT","/--미 정의--/");	
 
 //G2, 테이블목록
 $REQ["G2-TABLE_SCHEMA"] = reqPostString("G2-TABLE_SCHEMA",100);//DB	
