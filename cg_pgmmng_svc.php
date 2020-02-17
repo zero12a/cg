@@ -8,14 +8,15 @@ class cg_pgminfo_svc
 {
 	private $DAO;
 	private $DB;
+
 	//생성자
-	function __construct(){
+	function __construct($dsNm){
 		alog("cg_pgminfo_svc-__construct");
 		global $CFG;
 
 		$this->DAO = new cg_pgminfo_dao();
 	    //$this->DB = db_s_open();
-		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
+		$this->DB["CG"] = getDbConn($CFG["CFG_DB"][$dsNm]);
 	}
 	//파괴자
 	function __destruct(){

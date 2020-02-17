@@ -2125,7 +2125,7 @@
 
 
 
-//GRP목록 가져오기(FNC선택시, GRP선택시)
+//Inherit에 뿌려줄 GRP목록 가져오기(FNC선택시, GRP선택시)
 function setGridGrp(tGrptype, tCombo, tPjtseq, tPgmseq, tGrpseq, tFncseq){
 	alog("   setGridSql----------------------start");
 	//alog("		tPcd = " + tPcd);
@@ -2138,7 +2138,7 @@ function setGridGrp(tGrptype, tCombo, tPjtseq, tPgmseq, tGrpseq, tFncseq){
 	$.ajax({
 		type : "GET",
 		url : "/common/cg_code_json.php",
-		data : {PJTSEQ : tPjtseq, PGMSEQ : tPgmseq, GRPSEQ : tGrpseq , FNCSEQ : tFncseq},
+		data : {PCD : "GETGRPLIST", PJTSEQ : tPjtseq, PGMSEQ : tPgmseq, GRPSEQ : tGrpseq , FNCSEQ : tFncseq},
 		dataType: "json",
 		async: true,
 		success: function(data){
@@ -2194,7 +2194,7 @@ function setGridSql(tGrptype, tCombo, tPjtseq, tPgmseq, tSvcseq){
 	$.ajax({
 		type : "GET",
 		url : "/common/cg_code_json.php",
-		data : {PJTSEQ : tPjtseq, PGMSEQ : tPgmseq, SVCSEQ : tSvcseq},
+		data : {PCD:"GETSVCSQLLIST", PJTSEQ : tPjtseq, PGMSEQ : tPgmseq, SVCSEQ : tSvcseq},
 		dataType: "json",
 		async: false,
 		success: function(data){

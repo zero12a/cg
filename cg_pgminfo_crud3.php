@@ -32,7 +32,8 @@
 
     //ServerViewTxt("N","N","Y","Y");
 
-    $db=db_m_open();
+
+
 
 	//내부함수 호출 후 리던 배열 
 	$rtnArr = array();
@@ -50,6 +51,14 @@
 
     //컬럼ROW받기 GRPID,GRPTYPE,GRPNM,GRPORD,BRCNT,REFGRPID,GRPWIDTH,GRPHEIGHT,
  
+
+
+    
+    //var_dump($tarr);
+    //exit;
+
+    //프로젝트 정보 가져와서 데이터 소스 연결하기
+
 
 
     //로그인 정보
@@ -133,8 +142,17 @@
     //var_dump($REQ["SQL-XML"]);
     $REQ["SQLD-XML"] = getXml2Array($_POST["SQLD-XML"]);//SQLD
 
+    //해당 프로젝틔 데이터소스 가져오기
+    if(!is_numeric($F_PJTSEQ))$F_PJTSEQ = $REQ["POP_PJTSEQ"] ;
+
+    $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);
+    $sql = "select * from CG_PJTINFO where PJTSEQ = #{F_PJTSEQ}";
+    $stmt = makeStmt($db,$sql,$coltype="i",$map["F_PJTSEQ"] = $F_PJTSEQ);
+    $pjtInfo = getStmtArray($stmt)[0];
+
+
     //서비스 클래스 생성
-    $objService = new cg_pgminfo_svc();
+    $objService = new cg_pgminfo_svc($pjtInfo["DSNM"]);
 
     //컨트롤 명령 받기
     $ctl = "";

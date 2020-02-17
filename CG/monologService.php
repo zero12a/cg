@@ -14,7 +14,7 @@ class monologService
 		$log->info("MonologService-__construct");
 
 		$this->DAO = new monologDao();
-		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
+		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CGPJT1"]);
 	}
 	//파괴자
 	function __destruct(){

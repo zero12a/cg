@@ -20,7 +20,7 @@
 
     //ServerViewTxt("N","N","Y","Y");
 
-    $db["cg"] = getDbConn($CFG["CFG_DB"]["CG"]);
+    $db["cg"] = getDbConn($CFG["CFG_DB"]["CGCORE"]);
 
     //그룹ID받기
     $F_GRPID = $_GET['F_GRPID'];

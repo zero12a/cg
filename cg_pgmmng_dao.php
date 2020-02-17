@@ -29,7 +29,7 @@ class cg_pgminfo_dao
 		from 
 			CG_PGMINFO a
 				left outer join CG_PGMVER b on a.PJTSEQ = b.PJTSEQ and a.PGMSEQ = b.PGMSEQ and b.ACTIVEYN='Y'
-				join CG_PJTINFO c on a.PJTSEQ = c.PJTSEQ
+				join CGCORE.CG_PJTINFO c on a.PJTSEQ = c.PJTSEQ
 		where a.PJTSEQ = #{POP_PJTSEQ} and (a.PGMID = #{POP_PGMID} or a.PGMNM LIKE #{POP_PGMNM} or a.PGMTYPE LIKE #{POP_PGMTYPE})
 		order by a.PGMSEQ desc
 		";

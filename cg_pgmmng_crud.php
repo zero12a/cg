@@ -3,19 +3,34 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
-    $CFG = include_once("../common/include/incConfig.php");
-    include_once('../common/include/incSec.php');//CG SEC
-    include_once("../common/include/incUtil.php");
-	include_once('../common/include/incRequest.php');//CG REQUEST    
+    $CFG = require_once("../common/include/incConfig.php");
 
-    include_once("../common/include/incDB.php");
-    include_once("../common/include/incUser.php");
+    require_once($CFG["CFG_LIBS_VENDOR"]);
 
-    include_once("./cg_pgmmng_svc.php");
-    include_once('./cg_pgmmng_dao.php');
+    require_once('../common/include/incSec.php');//CG SEC
+    require_once("../common/include/incUtil.php");
+	require_once('../common/include/incRequest.php');//CG REQUEST    
+
+    require_once("../common/include/incDB.php");
+    require_once("../common/include/incUser.php");
+
+    require_once("./cg_pgmmng_svc.php");
+    require_once('./cg_pgmmng_dao.php');
     //ServerViewTxt("N","N","Y","Y");
 
-    $db=db_m_open();
+    //$reqToken = reqGetString("TOKEN",37);
+    $resToken = uniqid();
+
+
+    $log = getLogger(
+        array(
+        "LIST_NM"=>"log_CG"
+        , "PGM_ID"=>"DEPLOYMNG"
+        , "REQTOKEN" => $reqToken
+        , "RESTOKEN" => $resToken
+        , "LOG_LEVEL" => Monolog\Logger::DEBUG
+        )
+    );
 
 	//내부함수 호출 후 리던 배열 
 	$rtnArr = array();
@@ -31,8 +46,6 @@
     $F_START_DT = str_replace("-","",$_GET['F_START_DT']); //날짜 타입은 - 제거
     $F_END_DT = str_replace("-","",$_GET['F_END_DT']); //날짜 타입은 - 제거
 
-    //컬럼ROW받기 GRPID,GRPTYPE,GRPNM,GRPORD,BRCNT,REFGRPID,GRPWIDTH,GRPHEIGHT,
- 
 
     //CFG
     $REQ["CFG.CFG_MAKE_URL"] = $CFG["CFG_MAKE_URL"];
@@ -117,8 +130,33 @@
     $REQ["SQL-XML"] = getXml2Array($_POST["SQL-XML"]);//SQL
     $REQ["SQLD-XML"] = getXml2Array($_POST["SQLD-XML"]);//SQLD
 
+
+
+
+
+    //입력값 검증
+    if(!is_numeric($REQ["POP_PJTSEQ"]))JsonMsg("500","101","프로젝트 SEQ정보를 입력해주세요.(POP_PJTSEQ)");
+
+    //컬럼ROW받기 GRPID,GRPTYPE,GRPNM,GRPORD,BRCNT,REFGRPID,GRPWIDTH,GRPHEIGHT,
+ 
+    //프로젝트 정보에서 데이터소스 이름 가져오기
+    $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);
+    //var_dump($CFG["CFG_DB"]["CGCORE"]);    
+    $sql = "select * from CG_PJTINFO where PJTSEQ = #{POP_PJTSEQ}";
+    //echo $sql;
+    $stmt = makeStmt($db,$sql,$coltype="i",$REQ);
+    $pjtInfo = getStmtArray($stmt)[0];
+    $stmt->close();
+    $db->close();
+    //var_dump($pjtInfo);
+    if($pjtInfo["DSNM"] == "")JsonMsg("500","100","해당 프로젝트의 데이터소스 정보가 없습니다.");
+    //    var_dump($pjtInfo);
+    //exit;    
+
+
+
     //서비스 클래스 생성
-    $objService = new cg_pgminfo_svc();
+    $objService = new cg_pgminfo_svc($pjtInfo["DSNM"]);
 
     //컨트롤 명령 받기
     $ctl = "";

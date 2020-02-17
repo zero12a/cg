@@ -756,7 +756,7 @@
             //alog("   ConAllData = " + ConAllData);
 
             //마지막 선송 정보 저장
-            lastinput3 = RowAllData + "&" + ConAllData;
+            lastinput3 = ConAllData + "&" + RowAllData;
 
 
 			//KEY컬럼만 자식에게 전달
