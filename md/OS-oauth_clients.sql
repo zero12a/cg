@@ -16,31 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `oauth_users`
+-- Table structure for table `oauth_clients`
 --
 
-DROP TABLE IF EXISTS `oauth_users`;
+DROP TABLE IF EXISTS `oauth_clients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `oauth_users` (
-  `user_seq` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(2000) DEFAULT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`user_seq`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `oauth_clients` (
+  `client_id` varchar(80) NOT NULL,
+  `client_secret` varchar(80) NOT NULL,
+  `redirect_uri` varchar(2000) NOT NULL,
+  PRIMARY KEY (`client_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `oauth_users`
+-- Dumping data for table `oauth_clients`
 --
 
-LOCK TABLES `oauth_users` WRITE;
-/*!40000 ALTER TABLE `oauth_users` DISABLE KEYS */;
-INSERT INTO `oauth_users` VALUES (1,'demouser','206c80413b9a96c1312cc346b7d2517b84463edd','1','2');
-/*!40000 ALTER TABLE `oauth_users` ENABLE KEYS */;
+LOCK TABLES `oauth_clients` WRITE;
+/*!40000 ALTER TABLE `oauth_clients` DISABLE KEYS */;
+INSERT INTO `oauth_clients` VALUES ('cgback','backoffice','login_oauth_ok.php'),('demoapp','demopass',''),('svcfront','frontoffice','login_oauth_ok.php');
+/*!40000 ALTER TABLE `oauth_clients` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-18  6:04:24
+-- Dump completed on 2020-02-18  6:04:22

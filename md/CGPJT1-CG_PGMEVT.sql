@@ -1,6 +1,6 @@
 -- MySQL dump 10.17  Distrib 10.3.22-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: 172.17.0.1    Database: OS
+-- Host: 172.17.0.1    Database: CGPJT1
 -- ------------------------------------------------------
 -- Server version	5.7.20
 
@@ -16,31 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `oauth_users`
+-- Table structure for table `CG_PGMEVT`
 --
 
-DROP TABLE IF EXISTS `oauth_users`;
+DROP TABLE IF EXISTS `CG_PGMEVT`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `oauth_users` (
-  `user_seq` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(2000) DEFAULT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`user_seq`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `CG_PGMEVT` (
+  `PJTSEQ` int(11) NOT NULL,
+  `PGMSEQ` int(11) NOT NULL,
+  `GRPSEQ` int(11) NOT NULL,
+  `EVTSEQ` int(11) NOT NULL AUTO_INCREMENT,
+  `EVTCD` varchar(50) NOT NULL,
+  `EVTNM` varchar(200) NOT NULL,
+  `EVTORD` int(11) NOT NULL,
+  `EVTSRC` varchar(1000) NOT NULL,
+  `USEYN` varchar(1) NOT NULL DEFAULT 'Y',
+  `ADDID` int(11) NOT NULL,
+  `ADDDT` varchar(14) NOT NULL,
+  `MODID` int(11) DEFAULT NULL,
+  `MODDT` varchar(14) DEFAULT NULL,
+  PRIMARY KEY (`EVTSEQ`),
+  UNIQUE KEY `IDX_PGMEVT_EVTIDUNIQUE` (`PJTSEQ`,`PGMSEQ`,`GRPSEQ`,`EVTCD`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `oauth_users`
+-- Dumping data for table `CG_PGMEVT`
 --
 
-LOCK TABLES `oauth_users` WRITE;
-/*!40000 ALTER TABLE `oauth_users` DISABLE KEYS */;
-INSERT INTO `oauth_users` VALUES (1,'demouser','206c80413b9a96c1312cc346b7d2517b84463edd','1','2');
-/*!40000 ALTER TABLE `oauth_users` ENABLE KEYS */;
+LOCK TABLES `CG_PGMEVT` WRITE;
+/*!40000 ALTER TABLE `CG_PGMEVT` DISABLE KEYS */;
+INSERT INTO `CG_PGMEVT` VALUES (3,101,254,14,'ROWCLICK','클릭',1,'alert(\"클릭 했어요\");','N',1,'20191223165230',NULL,NULL),(3,101,253,15,'ROWCLICK','1',1,'alert(\"정말 클릭?\");\n','N',1,'20191223165248',NULL,NULL);
+/*!40000 ALTER TABLE `CG_PGMEVT` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-18  6:04:24
+-- Dump completed on 2020-02-18  6:04:43

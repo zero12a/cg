@@ -1,6 +1,6 @@
 -- MySQL dump 10.17  Distrib 10.3.22-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: 172.17.0.1    Database: OS
+-- Host: 172.17.0.1    Database: CGPJT1
 -- ------------------------------------------------------
 -- Server version	5.7.20
 
@@ -16,31 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `oauth_users`
+-- Table structure for table `CG_PGMPARAM`
 --
 
-DROP TABLE IF EXISTS `oauth_users`;
+DROP TABLE IF EXISTS `CG_PGMPARAM`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `oauth_users` (
-  `user_seq` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(2000) DEFAULT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`user_seq`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `CG_PGMPARAM` (
+  `PJTSEQ` int(11) NOT NULL,
+  `PGMSEQ` int(11) NOT NULL,
+  `GRPSEQ` int(11) NOT NULL,
+  `FNCSEQ` int(11) NOT NULL,
+  `PARAMSEQ` int(11) NOT NULL AUTO_INCREMENT,
+  `PARAMID` varchar(100) NOT NULL,
+  `PARAMORD` int(11) NOT NULL DEFAULT '0',
+  `ADDDT` varchar(14) NOT NULL,
+  `MODDT` varchar(14) DEFAULT NULL,
+  PRIMARY KEY (`PARAMSEQ`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `oauth_users`
+-- Dumping data for table `CG_PGMPARAM`
 --
 
-LOCK TABLES `oauth_users` WRITE;
-/*!40000 ALTER TABLE `oauth_users` DISABLE KEYS */;
-INSERT INTO `oauth_users` VALUES (1,'demouser','206c80413b9a96c1312cc346b7d2517b84463edd','1','2');
-/*!40000 ALTER TABLE `oauth_users` ENABLE KEYS */;
+LOCK TABLES `CG_PGMPARAM` WRITE;
+/*!40000 ALTER TABLE `CG_PGMPARAM` DISABLE KEYS */;
+INSERT INTO `CG_PGMPARAM` VALUES (3,20,12,8,1,'PGMSEQ',0,'20160525121502','20160525122320'),(3,20,12,8,3,'PJTSEQ',0,'20160525121914',NULL),(3,20,11,6,4,'PJTSEQ',10,'20160525124032',NULL),(3,20,11,6,5,'PJTNM',30,'20160525131704',NULL),(3,20,11,6,6,'PJTID',20,'20160525131704',NULL);
+/*!40000 ALTER TABLE `CG_PGMPARAM` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-18  6:04:24
+-- Dump completed on 2020-02-18  6:04:42
