@@ -235,6 +235,11 @@ function G3_INIT(){
 	//TABLE_SCHEMA, DB 초기화		//TABLE_NAME, TABLE 초기화		//ENGINE, ENGINE 초기화		//TABLE_ROWS, ROWS 초기화		//AUTO_INCREMENT, AI 초기화		//CREATE_TIME, CREATE 초기화		//UPDATE_TIME, UPDATE 초기화		//TABLE_COLLATION, COLLATION 초기화		//TABLE_COMMENT, COMMENT 초기화	  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -248,10 +253,52 @@ function G1_SEARCHALL(token){
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
+}
+//사용자정의함수 : SQL생성
+function G2_SQLCREATE(token){
+	alog("G2_SQLCREATE-----------------start");
+	var checked=mygridG2.getCheckedRows(0);//table 목록
+	if(checked ==""){
+		return;
+	}else{
+		//alert(checked);
+		var arrTables = checked.split(",");
+
+		var colIndex = mygridG2.getColIndexById("RESULT");
+
+		for(t=0;t<arrTables.length;t++){
+			var tableNm = arrTables[t];
+
+			//alert(tableNm);
+			//alert("rowid, 컬럼순번:" + tableNm + ", " + colIndex);
+			//불러오기
+			$.ajax({
+				type : "GET",
+				url : CFG_CGWEB_URL + "/c.g/cg_cdeploy_db.php?TOKEN=" + token + "&DB=" + $("#G1-DB").val() + "&TABLE=" + tableNm ,
+				dataType: "jsonp",
+				privateTableNm : tableNm,
+				async: false,
+				success: function(data){
+					alog("   gridG2 json return----------------------");
+
+					//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+					mygridG2.cells(this.privateTableNm,colIndex).setValue("O");
+					//alert("응답오케이:" + tableNm + ", " + colIndex);
+
+				},
+				error: function(error){
+					msgError("[테이블목록] Ajax http 500 error ( " + error + " )",3);
+					//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
+				}
+			});
+		}
+	}
+	alog("G2_SQLCREATE-----------------end");
 }
 
 
@@ -340,53 +387,6 @@ function G2_EXCEL(){
 	$("#DATA_WIDTHS").val("30,60,100,100,50,60,60,60,60,60,60,60");
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
-}
-//사용자정의함수 : SQL생성
-function G2_SQLCREATE(token){
-	alog("G2_SQLCREATE-----------------start");
-	var checked=mygridG2.getCheckedRows(0);//table 목록
-	if(checked ==""){
-		return;
-	}else{
-		//alert(checked);
-		var arrTables = checked.split(",");
-
-		var colIndex = mygridG2.getColIndexById("RESULT");
-
-		for(t=0;t<arrTables.length;t++){
-			var tableNm = arrTables[t];
-
-			//alert(tableNm);
-			//alert("rowid, 컬럼순번:" + tableNm + ", " + colIndex);
-			//불러오기
-			$.ajax({
-				type : "GET",
-				url : CFG_CGWEB_URL + "/c.g/cg_cdeploy_db.php?TOKEN=" + token + "&DB=" + $("#G1-DB").val() + "&TABLE=" + tableNm ,
-				dataType: "jsonp",
-				privateTableNm : tableNm,
-				async: false,
-				success: function(data){
-					alog("   gridG2 json return----------------------");
-
-					//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-					mygridG2.cells(this.privateTableNm,colIndex).setValue("O");
-					//alert("응답오케이:" + tableNm + ", " + colIndex);
-
-				},
-				error: function(error){
-					msgError("[테이블목록] Ajax http 500 error ( " + error + " )",3);
-					//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
-				}
-			});
-		}
-	}
-	alog("G2_SQLCREATE-----------------end");
 }
 //새로고침	
 function G3_RELOAD(token){

@@ -20,7 +20,7 @@ class pipgmDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "insPgmF";
 		$RtnVal["SQLTXT"] = "insert into CG_PGMINFO (
 	PJTSEQ, PGMID, PGMNM, VIEWURL
@@ -41,7 +41,7 @@ class pipgmDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "selPgmF";
 		$RtnVal["SQLTXT"] = "select
 	PJTSEQ, PGMSEQ, PGMID, PJTSEQ, PGMNM, VIEWURL, PGMTYPE, ADDDT, MODDT
@@ -59,7 +59,7 @@ where PJTSEQ = #{G2-PJTSEQ} and PGMSEQ = #{G2-PGMSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "selPgmG";
 		$RtnVal["SQLTXT"] = "select
 	PJTSEQ, PGMSEQ, PGMID, PGMNM, VIEWURL, PGMTYPE
@@ -83,7 +83,7 @@ order by PGMSEQ desc
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "updPgmF";
 		$RtnVal["SQLTXT"] = "update CG_PGMINFO set
 	PGMID = #{G3-PGMID}, PGMNM = #{G3-PGMNM}, VIEWURL = #{G3-VIEWURL}, PGMTYPE = #{G3-PGMTYPE}
