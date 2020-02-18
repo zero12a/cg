@@ -79,3 +79,30 @@ if(checked ==""){
 		});
 	}
 }
+
+
+
+$.ajax({
+	type : "GET",
+	url : "CFG_MAKE_URL + ""/common/cg_cdeploy_pubsub.php?PUBSUB=config.DATASOURCE_CG&MSG=1" ,
+	dataType: "jsonp",
+	privateTableNm : tableNm,
+	async: false,
+	success: function(data){
+		alog("   gridG2 json return----------------------");
+
+		//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+		if(data.RTN_CD =="200"){
+			msgNotice(data.RTN_MSG);
+		}else{
+			msgError(data.RTN_MSG + "(" + data.ERR_CD + ")",3);
+		}
+
+		//alert("응답오케이:" + tableNm + ", " + colIndex);
+
+	},
+	error: function(error){
+		msgError("[PUBSUB] Ajax http 500 error ( " + error + " )",3);
+		//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
+	}
+});
