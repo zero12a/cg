@@ -200,6 +200,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_HIDDENCOL" value="V" onclick="G4_HIDDENCOL(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_EXCEL" value="E" onclick="G4_EXCEL(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_CHKSAVE" value="선택저장" onclick="G4_CHKSAVE(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_PUBSUB" value="캐쉬반영" onclick="G4_PUBSUB(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>

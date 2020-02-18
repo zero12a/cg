@@ -68,6 +68,8 @@ var url_G4_HIDDENCOL = "usermngController?CTLGRP=G4&CTLFNC=HIDDENCOL";
 var url_G4_EXCEL = "usermngController?CTLGRP=G4&CTLFNC=EXCEL";
 //컨트롤러 경로
 var url_G4_CHKSAVE = "usermngController?CTLGRP=G4&CTLFNC=CHKSAVE";
+//컨트롤러 경로
+var url_G4_PUBSUB = "usermngController?CTLGRP=G4&CTLFNC=PUBSUB";
 //그리드 객체
 var mygridG4,isToggleHiddenColG4,lastinputG4,lastinputG4json,lastrowidG4;
 var lastselectG4json;//화면 초기화	
@@ -515,19 +517,6 @@ function G4_INIT(){
         alog("G4_INIT()-------------------------end");
      }
 //D146 그룹별 기능 함수 출력		
-// CONDITIONSearch	
-function C1_SEARCHALL(token){
-	alog("C1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : C1
-			lastinputG2 = new HashMap(); //사용자1
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("C1_SEARCHALL--------------------------end");
-}
 //검색조건 초기화
 function C1_RESET(){
 	alog("C1_RESET--------------------------start");
@@ -565,16 +554,19 @@ function C1_SAVE(){
 	});
 	alog("C1_SAVE-------------------end");	
 }
-    function G2_HIDDENCOL(){
-		alog("G2_HIDDENCOL()..................start");
-        if(isToggleHiddenColG2){
-            isToggleHiddenColG2 = false;            mygridG2.setColumnHidden(mygridG2.getColIndexById("USERSEQ"),true); //USERSEQ
-     }else{
-            isToggleHiddenColG2 = true;
-            mygridG2.setColumnHidden(mygridG2.getColIndexById("USERSEQ"),false); //USERSEQ
-        }
-		alog("G2_HIDDENCOL()..................end");
-    }
+// CONDITIONSearch	
+function C1_SEARCHALL(token){
+	alog("C1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : C1
+			lastinputG2 = new HashMap(); //사용자1
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("C1_SEARCHALL--------------------------end");
+}
 	function G2_SAVE(token){
 	alog("G2_SAVE()------------start");
 	tgrid = mygridG2;
@@ -825,6 +817,16 @@ function G2_EXCEL(){
 	
 	alog("G2_USERDEF()------------end");
 }
+    function G2_HIDDENCOL(){
+		alog("G2_HIDDENCOL()..................start");
+        if(isToggleHiddenColG2){
+            isToggleHiddenColG2 = false;            mygridG2.setColumnHidden(mygridG2.getColIndexById("USERSEQ"),true); //USERSEQ
+     }else{
+            isToggleHiddenColG2 = true;
+            mygridG2.setColumnHidden(mygridG2.getColIndexById("USERSEQ"),false); //USERSEQ
+        }
+		alog("G2_HIDDENCOL()..................end");
+    }
 //사용자정의함수 : 사용자정의
 function G3_USERDEF(token){
 	alog("G3_USERDEF-----------------start");
@@ -1041,95 +1043,7 @@ function G3_EXCEL(){
 			var tCols = [lastinputG3.get("G2-USERSEQ"),"","",""];//초기값
 			addRow(mygridG3,tCols);
 		}
-	}
-
-
-
-
-
-
-
-    //그리드 조회(서버4)	
-    function G4_SEARCH(tinput,token){
-        alog("G4_SEARCH()------------start");
-
-		var tGrid = mygridG4;
-
-        //그리드 초기화
-        tGrid.clearAll();
-        //post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-		if(typeof tinput != "undefined"){
-			var tKeys = tinput.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
-			}
-		}
-
-        //불러오기
-        $.ajax({
-            type : "POST",
-            url : url_G4_SEARCH+"&TOKEN=" + token + " &G4_CRUD_MODE=read" ,
-            data : sendFormData,
-			processData: false,
-			contentType: false,
-            dataType: "json",
-            async: true,
-            success: function(data){
-                alog("   gridG4 json return----------------------");
-                alog("   json data : " + data);
-                alog("   json RTN_CD : " + data.RTN_CD);
-                alog("   json ERR_CD : " + data.ERR_CD);
-                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-                //그리드에 데이터 반영
-                if(data.RTN_CD == "200"){
-					var row_cnt = 0;
-					if(data.RTN_DATA){
-						row_cnt = data.RTN_DATA.rows.length;
-						$("#spanG4Cnt").text(row_cnt);
-						tGrid.parse(data.RTN_DATA,function(){
-							//푸터 합계 처리	
-
-						},"json");
-						
-					}else{
-						$("#spanG4Cnt").text("-");
-					}
-					msgNotice("[서버4] 조회 성공했습니다. ("+row_cnt+"건)",1);
-
-                }else{
-                    msgError("[서버4] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
-                }
-            },
-            error: function(error){
-				msgError("[서버4] Ajax http 500 error ( " + error + " )",3);
-                alog("[서버4] Ajax http 500 error ( " + data.RTN_MSG + " )");
-            }
-        });
-        alog("G4_SEARCH()------------end");
-    }
-
-//엑셀다운		
-function G4_EXCEL(){	
-	alog("G4_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/common/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG4.setSerializationLevel(true,false,false,false,false,true);
-	var myXmlString = mygridG4.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("SVRSEQ,SVRID,SVRNM,PJTSEQ,USERSEQ,DBHOST,DBPORT,DBNAME,DBUSRID,DBUSRPW,USEYN,ADDDT,MODDT");
-	$("#DATA_WIDTHS").val("60,60,60,30,60,60,60,60,60,120,50,40,40");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
-}
-//행추가3 (서버4)	
+	}//행추가3 (서버4)	
 //그리드 행추가 : 서버4
 	function G4_ROWADD(){
 		if( !(lastinputG4)|| lastinputG4.get("G4-USERSEQ") == ""){
@@ -1157,6 +1071,35 @@ function G4_USERDEF(token){
         }
 		alog("G4_HIDDENCOL()..................end");
     }
+//사용자정의함수 : 캐쉬반영
+function G4_PUBSUB(token){
+	alog("G4_PUBSUB-----------------start");
+alert("go");
+$.ajax({
+	type : "GET",
+	url : "/common/cg_cdeploy_pubsub.php?PUBSUB=config.DATASOURCE_CG&MSG=1" ,
+	dataType: "json",
+	async: false,
+	success: function(data){
+		alog("   gridG2 json return----------------------");
+
+		//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+		if(data.RTN_CD =="200"){
+			msgNotice(data.RTN_MSG);
+		}else{
+			msgError(data.RTN_MSG + "(" + data.ERR_CD + ")",3);
+		}
+
+		//alert("응답오케이:" + tableNm + ", " + colIndex);
+
+	},
+	error: function(error){
+		msgError("[PUBSUB] Ajax http 500 error ( " + error + " )",3);
+		//alog("[테이블목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
+	}
+});
+	alog("G4_PUBSUB-----------------end");
+}
 	function G4_SAVE(token){
 	alog("G4_SAVE()------------start");
 	tgrid = mygridG4;
@@ -1256,4 +1199,92 @@ function G4_CHKSAVE(token){
 function G4_RELOAD(token){
   alog("G4_RELOAD-----------------start");
   G4_SEARCH(lastinputG4,token);
+}
+
+
+
+
+
+
+
+
+    //그리드 조회(서버4)	
+    function G4_SEARCH(tinput,token){
+        alog("G4_SEARCH()------------start");
+
+		var tGrid = mygridG4;
+
+        //그리드 초기화
+        tGrid.clearAll();
+        //post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+		if(typeof tinput != "undefined"){
+			var tKeys = tinput.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+			}
+		}
+
+        //불러오기
+        $.ajax({
+            type : "POST",
+            url : url_G4_SEARCH+"&TOKEN=" + token + " &G4_CRUD_MODE=read" ,
+            data : sendFormData,
+			processData: false,
+			contentType: false,
+            dataType: "json",
+            async: true,
+            success: function(data){
+                alog("   gridG4 json return----------------------");
+                alog("   json data : " + data);
+                alog("   json RTN_CD : " + data.RTN_CD);
+                alog("   json ERR_CD : " + data.ERR_CD);
+                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+                //그리드에 데이터 반영
+                if(data.RTN_CD == "200"){
+					var row_cnt = 0;
+					if(data.RTN_DATA){
+						row_cnt = data.RTN_DATA.rows.length;
+						$("#spanG4Cnt").text(row_cnt);
+						tGrid.parse(data.RTN_DATA,function(){
+							//푸터 합계 처리	
+
+						},"json");
+						
+					}else{
+						$("#spanG4Cnt").text("-");
+					}
+					msgNotice("[서버4] 조회 성공했습니다. ("+row_cnt+"건)",1);
+
+                }else{
+                    msgError("[서버4] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
+                }
+            },
+            error: function(error){
+				msgError("[서버4] Ajax http 500 error ( " + error + " )",3);
+                alog("[서버4] Ajax http 500 error ( " + data.RTN_MSG + " )");
+            }
+        });
+        alog("G4_SEARCH()------------end");
+    }
+
+//엑셀다운		
+function G4_EXCEL(){	
+	alog("G4_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/common/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG4.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG4.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("SVRSEQ,SVRID,SVRNM,PJTSEQ,USERSEQ,DBHOST,DBPORT,DBNAME,DBUSRID,DBUSRPW,USEYN,ADDDT,MODDT");
+	$("#DATA_WIDTHS").val("60,60,60,30,60,60,60,60,60,120,50,40,40");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
 }
