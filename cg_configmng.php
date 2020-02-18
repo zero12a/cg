@@ -106,15 +106,10 @@ if($_POST["CONFIG_NM"] == ""){
     CONFIG_PW : <input type="password" name="CONFIG_PW" value=""><BR>
     <input type="submit" value="조회"><input type="button" value="로컬캐쉬 삭제" onclick="clearLocalCache()">
     </form>
-    <BR>apcu(CONFIG) :<BR>
-    <textarea style="font-size:9pt;width:100%;height:350px">
+    <BR>apcu :<BR>
+    <textarea style="font-size:9pt;width:100%;height:500px">
     <?=json_encode(json_decode(apcu_fetch($defaultConfig)),JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)?>
     </textarea>
-    <BR>apcu(DATASOURCE) :<BR>
-    <textarea style="font-size:9pt;width:100%;height:300px">
-    <?=json_encode(json_decode(apcu_fetch($defaultDatasource)),JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)?>
-    </textarea>
-
 <?php
 }else if($_POST["fnc"] == "CONFIG_LOCAL_CACHE_CLEAR"){
 ?>
