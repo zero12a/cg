@@ -9,7 +9,7 @@
 
     require_once("../common/include/incUtil.php");
     require_once("../common/include/incDB.php");
-
+    require_once("../common/include/incSec.php");
     //require_once($CFG["CFG_LIBS_PATH_AWS"]);
 
     use Aws\S3\S3Client;

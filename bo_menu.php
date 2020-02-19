@@ -26,7 +26,10 @@ require_once("../common/include//incLoginCheck.php");//로그인 검사
     <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">	
     <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
 
-    <!--공통-->
+	<!--공통-->
+	<script>
+		var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
+	</script>
     <script src="/common/common.js" type="text/javascript" charset="utf-8"></script>
 
     <style>

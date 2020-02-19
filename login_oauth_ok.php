@@ -6,7 +6,7 @@ header("Pragma:no-cache");
 //error_reporting(E_ALL);
 
 $CFG = require_once("../common/include/incConfig.php");
-
+//echo "<pre>" . json_encode($CFG,JSON_PRETTY_PRINT);
 require_once("../common/include/incDB.php");
 require_once("../common/include/incSec.php");
 require_once("../common/include/incUtil.php");

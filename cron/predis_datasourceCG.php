@@ -88,15 +88,14 @@ function datasourceReload(){
     alog("configReload()...............start");
 
     $client = new GuzzleHttp\Client();
-    $res = $client->request('GET', 'http://localhost/common/include/incConfig.php', [
-        'ctl' => 'DATASOURCE'
-        ,'reload' => 'YES'
+    $res = $client->request('GET', 'http://localhost/common/include/incConfig.php?reload=YES', [
+        'postparam1' => 'YES'
     ]);
-    echo $res->getStatusCode();
+    echo("\nres->getStatusCode :" . $res->getStatusCode());
     // "200"
-    echo $res->getHeader('content-type')[0];
+    echo("\nres->content-type :" .  $res->getHeader('content-type')[0]);
     // 'application/json; charset=utf8'
-    echo $res->getBody();
+    echo("\nres->getBody :" .  $res->getBody());
 }
 
 function dataSourceSaveRedisFromDB(){
@@ -104,6 +103,7 @@ function dataSourceSaveRedisFromDB(){
     alog("configSave()...............start");
 
     //Get datasource list
+    var_dump($CFG["CFG_DB"]["CGCORE"]);
     $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);
 
     $coltype = "";
@@ -148,11 +148,11 @@ function dataSourceSaveRedisFromDB(){
     for($t=0;$t<sizeof($svrArray);$t++){
         $rtnArr[$svrArray[$t]["SVRID"]] = $svrArray[$t];
     }
-    $jsonStr = json_encode($rtnArr);
+    $newDataSourceJson = json_encode($rtnArr);
 
 
     //Save to redis
-    $cfgNm = "DATASOURCE_CG";
+    $cfgNm = "CONFIG_CG";
     $redisClient = new Predis\Client(
         array(
             'scheme' => 'tcp',
@@ -161,7 +161,21 @@ function dataSourceSaveRedisFromDB(){
             'timeout' => 0
         )
     );   
-    if($redisClient->get($cfgNm) != $jsonStr) $jsonStr = $redisClient->set($cfgNm,$jsonStr);
+
+    $oldConfigJson = $redisClient->get($cfgNm);
+    $oldConfigArray = json_decode($oldConfigJson,true);
+    echo "\nView old json..........\n". json_encode($oldConfigArray,JSON_PRETTY_PRINT);
+
+    $oldDataSourceArray = $oldConfigArray["CFG_DB"];
+    $oldDataSourceJson = json_encode($oldDataSourceArray);
+
+    if($oldDataSourceJson != $newDataSourceJson){
+        $newConfigArray = $oldConfigArray;
+        $newConfigArray["CFG_DB"] = json_decode($newDataSourceJson,true);
+        $newConfigJson = json_encode($newConfigArray);
+        echo "\nSave new json..........\n". json_encode($newConfigArray,JSON_PRETTY_PRINT);
+        $redisClient->set($cfgNm,$newConfigJson);
+    } 
     $redisClient->quit();
 
     //처음 로딩시 로컬캐시에 보관

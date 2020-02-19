@@ -7,7 +7,7 @@
 
     require_once("../common/include/incUtil.php");
     require_once("../common/include/incDB.php");
-
+    require_once("../common/include/incSec.php");
 
     //ServerViewTxt("N","N","Y","Y");
 
