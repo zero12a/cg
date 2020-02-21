@@ -24,6 +24,7 @@ var url_G3_SEARCH = "monologController?CTLGRP=G3&CTLFNC=SEARCH";
 var url_G3_RELOAD = "monologController?CTLGRP=G3&CTLFNC=RELOAD";
 var obj_G3_LOGSEQ;   // SEQ 글로벌 변수 선언
 var obj_G3_LOGMSG;   // MSG 글로벌 변수 선언
+var obj_G3_LOGWE;   // LOGWE 글로벌 변수 선언
 	var codeMirrorFontSizeG3Logmsg = 11; // MSG
 
 //MSG
@@ -41,6 +42,7 @@ function changeCodemirrorFontSizeG3Logmsg(sizeCmd){
 	obj_G3_LOGMSG .refresh();
 	alog("changeCodemirrorFontSizeG3Logmsg..........end");   
 }
+//{G.GRPID-LOGWE initval
 //화면 초기화	
 function initBody(){
      alog("initBody()-----------------------start");
@@ -238,6 +240,7 @@ function G3_INIT(){
   alog("G3_INIT()-------------------------start");
 
 
+
 	//컬럼 초기화
 	//LOGSEQ, SEQ 초기화			//코드 미러 초기화
         obj_G3_LOGMSG = CodeMirror.fromTextArea(document.getElementById('codeMirror_G3-LOGMSG'), {
@@ -258,6 +261,19 @@ function G3_INIT(){
 			}}
         });
 		obj_G3_LOGMSG .setSize("400px","px");
+    $('#G3-LOGWE').summernote({
+        placeholder: 'Input LOGWE',
+        tabsize: 2,
+        height: 400,
+		dialogsInBody: true,
+        callbacks: {
+          onImageUpload: function(files, editor, welEditable) {
+            for (var i = files.length - 1; i >= 0; i--) {
+              sendFileSummernote(files[i], this);
+            }
+          }
+        }
+      });
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
@@ -412,6 +428,8 @@ function G3_SEARCH(tinput,token){
 			//SETVAL  가져와서 세팅
 			$("#G3-LOGSEQ").text(data.RTN_DATA.LOGSEQ);//SEQ 변수세팅
 		obj_G3_LOGMSG.setValue(data.RTN_DATA.LOGMSG); //MSG 
+	$('#summernote').summernote('editor.insertText', data.RTN_DATA.LOGWE);
+	//$('#summernote').summernote('insertText', data.RTN_DATA.LOGWE);
         },
         error: function(error){
             alog("Error:");

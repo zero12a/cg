@@ -114,6 +114,8 @@ $REQ["G3-LOGSEQ"] = reqPostNumber("G3-LOGSEQ",30);//SEQ
 $REQ["G3-LOGSEQ"] = getFilter($REQ["G3-LOGSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-LOGMSG"] = reqPostString("G3-LOGMSG",300);//MSG	
 $REQ["G3-LOGMSG"] = getFilter($REQ["G3-LOGMSG"],"CLEARTEXT","/--미 정의--/");	
+$REQ["G3-LOGWE"] = reqPostString("G3-LOGWE",1000);//LOGWE	
+$REQ["G3-LOGWE"] = getFilter($REQ["G3-LOGWE"],"","//");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//로그	
 	//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
