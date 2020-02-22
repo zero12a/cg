@@ -15,6 +15,22 @@ class monologDao
 		global $log;
 		$log->info("MonologDao-__toString");
 	}
+	//insF    
+	public function insF($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "C";//CRUD 
+		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SQLID"] = "insF";
+		$RtnVal["SQLTXT"] = "insert into TEST (AA,BB,CC,DD)
+values(
+	#{G3-LOGMSG},#{G3-LOGWE}, 'c', date_format(sysdate(),'%Y%m%d%H%i%s')
+)";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "ss";
+		return $RtnVal;
+    }  
 	//selF    
 	public function selF($req){
 		//조회

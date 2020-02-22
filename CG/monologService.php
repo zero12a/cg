@@ -15,6 +15,7 @@ class monologService
 
 		$this->DAO = new monologDao();
 		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
+		$this->DB["DATING"] = getDbConn($CFG["CFG_DB"]["DATING"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -23,6 +24,7 @@ class monologService
 
 		unset($this->DAO);
 		if($this->DB["CG"])$this->DB["CG"]->close();
+		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
@@ -95,6 +97,58 @@ class monologService
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
 		$log->info("MONOLOGService-goG2Excel________________________end");
+	}
+	//상세, 저장TEST
+	public function goG3Save(){
+		global $REQ,$CFG,$_RTIME, $log;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		$log->info("MONOLOGService-goG3Save________________________start");
+		//FORMVIEW SAVE
+		$grpId="G3";
+		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
+		$GRID["KEYCOLID"] = "";  //KEY컬럼 COLID, -1
+		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
+	//암호화컬럼
+		$FORMVIEW["COLCRYPT"] = array();	
+			//CTLCUD 명령어에 따른 분개 처리
+		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
+
+			$FORMVIEW["SQL"] = array();
+			switch($FORMVIEW["FNCTYPE"]){
+				case "C":
+					array_push($FORMVIEW["SQL"],$this->DAO->insF($REQ)); 
+					break;
+				case "U":
+					break;
+				default : 
+					$log->info("(SVC) FNCTYPE을 찾을수 없습니다.");
+			}
+			//필수 여부 검사
+			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
+			if($tmpVal->RTN_CD == "500"){
+				$log->info("requireFormview - fail.");
+				$tmpVal->GRPID = $grpId;
+				echo json_encode($tmpVal);
+				exit;
+			}
+			$tmpVal = makeFormviewSaveJsonArray($FORMVIEW,$this->DB);
+			array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
+
+			$al->GRPID = $grpId;
+			array_push($rtnVal->GRP_DATA, $tmpVal);
+
+			//$rtnVal = makeFormviewSaveJson($FORMVIEW,$this->DB);
+
+		}//C,U 일때만 DB처리
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		$log->info("MONOLOGService-goG3Save________________________end");
 	}
 	//상세, 조회
 	public function goG3Search(){

@@ -171,6 +171,9 @@ switch ($ctl){
 	case "G2_EXCEL" :
   		echo $objService->goG2Excel(); //로그, 엑셀다운로드
   		break;
+	case "G3_SAVE" :
+  		echo $objService->goG3Save(); //상세, 저장TEST
+  		break;
 	case "G3_SEARCH" :
   		echo $objService->goG3Search(); //상세, 조회
   		break;

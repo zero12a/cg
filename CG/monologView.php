@@ -199,6 +199,8 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 				* 상세
 			</div>
 			<div class="FORMVIEW_LABELBTN"  style="">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_SAVE" value="저장TEST" onclick="G3_SAVE(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_NEW" value="NEW" onclick="G3_NEW(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
 			</div>
 		</div>
