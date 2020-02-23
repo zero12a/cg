@@ -12,13 +12,25 @@
     require_once("../common/include/incDB.php");
     //require_once("../common/include/incAuth.php");
     
-
-    
-    $db=db_m_open();
-
     //그룹ID받기
     $REQ["PJTSEQ"] = $_GET['PJTSEQ'];
     $REQ["PGMSEQ"] = $_GET['PGMSEQ'];
+
+    //프로젝트 정보에서 데이터소스 이름 가져오기
+    $svridCore = "CGCORE";
+    $db2 = getDbConn($CFG["CFG_DB"][$svridCore]);
+    $sql = "select * from CG_PJTINFO where PJTSEQ = #{PJTSEQ}";
+    $stmt = makeStmt($db2,$sql,$coltype="i",$REQ);
+    $pjtInfo = getStmtArray($stmt)[0];
+    $stmt->close();
+    $svridPjt = $pjtInfo["DSNM"];
+    $db2->close();
+
+    //echo "<BR>svridPjt1 = " . $svridPjt;
+
+    //타겟오픈
+    $db = getDbConn($CFG["CFG_DB"][$svridPjt]);
+
 
     //PJT정보 가져오기
     $to_coltype = "i";
@@ -27,9 +39,9 @@
         *
     FROM 
         CG.CG_PJTINFO 
-    WHERE PJTSEQ = #PJTSEQ#
+    WHERE PJTSEQ = #{PJTSEQ}
     ";    
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);    
+    $stmt = makeStmt($db,$sql, $to_coltype, $REQ);    
     if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
     $tPjt =  getStmtArray($stmt);
@@ -53,10 +65,10 @@
        *
     FROM 
         CG.CG_PGMINFO 
-    WHERE PJTSEQ = #PJTSEQ# and PGMSEQ=#PGMSEQ# 
+    WHERE PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} 
     ";    
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);    
-    if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+    $stmt = makeStmt($db,$sql, $to_coltype, $REQ);    
+    if(!$stmt)JsonMsg("500","110","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
     $tPgm =  getStmtArray($stmt);
     $stmt->close();
@@ -69,20 +81,20 @@
         ,concat(g.GRPID,'_',f.FNCID) as AUTH_ID
         ,concat(g.GRPNM,'_',f.FNCNM) as AUTH_NM 
     FROM 
-        CG.CG_PGMGRP g
-        JOIN CG.CG_PGMFNC f on g.GRPSEQ = f.GRPSEQ and g.PGMSEQ = f.PGMSEQ
-        JOIN CG.CG_PGMINFO p on p.PGMSEQ = g.PGMSEQ
-    WHERE p.PJTSEQ = #PJTSEQ# and p.PGMSEQ=#PGMSEQ# AND ( f.FNCTYPE != '' && f.FNCTYPE is not null )
+        CG_PGMGRP g
+        JOIN CG_PGMFNC f on g.GRPSEQ = f.GRPSEQ and g.PGMSEQ = f.PGMSEQ
+        JOIN CG_PGMINFO p on p.PGMSEQ = g.PGMSEQ
+    WHERE p.PJTSEQ = #{PJTSEQ} and p.PGMSEQ=#{PGMSEQ} AND ( f.FNCTYPE != '' && f.FNCTYPE is not null )
         order by p.PGMID,g.GRPORD asc,f.FNCORD asc        
     ";
 
     alog("cg_clode_json.php...............333");
 
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
+    $stmt = makeStmt($db,$sql, $to_coltype, $REQ);
 
     //alog("cg_clode_json.php...............444");
 
-    if(!$stmt)JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
+    if(!$stmt)JsonMsg("500","120","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 
     $tArr =  getStmtArray($stmt);
     $stmt->close();
@@ -166,4 +178,4 @@
     $strAuthJson = json_encode($sessAuth);
 
     $_SESSION['CG_AUTH'] = $sessAuth;
-?>세션부여 완료(CG_AUTH) : <?=$strAuthJson?>
+?><pre>세션부여 완료(CG_AUTH) : <?=json_encode($sessAuth,JSON_PRETTY_PRINT)?>

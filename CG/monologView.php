@@ -218,6 +218,9 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					<div name="G3-LOGSEQ" id="G3-LOGSEQ" style="background-color:white; width:100px;"></div>
 				</div>
 			</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : LOGMSG-->
 				<div class="CON_OBJGRP" style="">
@@ -235,6 +238,9 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<textarea id="codeMirror_G3-LOGMSG" name="codeMirror_G3-LOGMSG" ></textarea>
 					</div>
 				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : LOGWE-->
 				<div class="CON_OBJGRP" style="">
@@ -247,7 +253,10 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 	<textarea id="G3-LOGWE" name="G3-LOGWE"></textarea>
 					</div>
  				</div>
- 			<!--D101: STARTTXT, TAG-->
+ 			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : LOGWE-->
 				<div class="CON_OBJGRP" style="">
 			</DIV><!--is_br_tab end-->

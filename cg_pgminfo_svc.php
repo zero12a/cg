@@ -10,7 +10,7 @@ class cg_pgminfo_svc
 	private $DB;
 	//생성자
 	function __construct($dsNm){
-		alog("cg_pgminfo_svc-__construct");
+		alog("cg_pgminfo_svc-__construct dnNm : " . $dsNm);
 		global $CFG;
 
 		$this->DAO = new cg_pgminfo_dao();
