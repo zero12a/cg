@@ -88,9 +88,8 @@ function configReload(){
     alog("configReload()...............start");
 
     $client = new GuzzleHttp\Client();
-    $res = $client->request('POST', 'http://localhost/common/include/incConfig.php', [
-        'ctl' => 'CONFIG'
-        ,'reload' => 'YES'
+    $res = $client->request('GET', 'http://localhost/common/include/incConfig.php?reload=YES', [
+        'tt' => 'ttt'
     ]);
     echo $res->getStatusCode();
     // "200"

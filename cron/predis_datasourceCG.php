@@ -84,22 +84,55 @@ echo "########### end\n";
 
 
 function datasourceReload(){
-    global $CFG;
+    global $CFG,$REQ;
     alog("configReload()...............start");
 
     $client = new GuzzleHttp\Client();
     $res = $client->request('GET', 'http://localhost/common/include/incConfig.php?reload=YES', [
         'postparam1' => 'YES'
     ]);
-    echo("\nres->getStatusCode :" . $res->getStatusCode());
+    alog("res->getStatusCode :" . $res->getStatusCode());
     // "200"
-    echo("\nres->content-type :" .  $res->getHeader('content-type')[0]);
+    alog("res->content-type :" .  $res->getHeader('content-type')[0]);
     // 'application/json; charset=utf8'
-    echo("\nres->getBody :" .  $res->getBody());
+    alog("res->getBody :" .  $res->getBody());
+
+    $REQ["RESULT_MSG"] = $res->getBody();
+    if($res->getBody() == "RELOAD_OK"){
+        $REQ["RESULT_YN"] = "Y";
+    }else{
+        $REQ["RESULT_YN"] = "N";
+    }
+
+    //공통관련 db연결가져오기
+    $db = getDbConn($CFG["CFG_DB"]["OS"]);
+
+    //db에 처리결과 저장하기
+    alog("SERVER.HOSTNAME =" . $_SERVER["HOSTNAME"]);
+    alog("ENV.HOSTNAME =" . $_ENV["HOSTNAME"]);
+    $REQ["HOST_NM"] = $_SERVER["HOSTNAME"];
+    $coltype = "sssss";
+    $sql = "insert into CMN_CFG_HISTORY (
+            ACT_PGMID,OLD_CFG,NEW_CFG,RESULT_YN,RESULT_MSG
+            ,HOST_NM,ADD_DT
+        ) values (
+            'DATASOURCE',#{OLD_CFG},#{NEW_CFG},#{RESULT_YN},#{RESULT_MSG}
+            ,#{HOST_NM}
+            ,date_format(sysdate(),'%Y%m%d%H%i%s')
+        )
+        ";
+    $stmt = makeStmt($db,$sql,$coltype,$REQ);
+    if(!$stmt)alog("500/300/SQL makeStmt create fail 실패");
+    if(!$stmt->execute())alog("500/100/stmt execute fail 실패" . $db->errno . " -> " . $db->error);
+
+    $stmt->close();
+    $db->close();
+    if($db)unset($db);
+
 }
 
 function dataSourceSaveRedisFromDB(){
-    global $CFG;
+    global $CFG,$REQ;
     alog("configSave()...............start");
 
     //Get datasource list
@@ -163,6 +196,8 @@ function dataSourceSaveRedisFromDB(){
     );   
 
     $oldConfigJson = $redisClient->get($cfgNm);
+    $REQ["OLD_CFG"] = $oldConfigJson;
+
     $oldConfigArray = json_decode($oldConfigJson,true);
     echo "\nView old json..........\n". json_encode($oldConfigArray,JSON_PRETTY_PRINT);
 
@@ -175,6 +210,7 @@ function dataSourceSaveRedisFromDB(){
         $newConfigJson = json_encode($newConfigArray);
         echo "\nSave new json..........\n". json_encode($newConfigArray,JSON_PRETTY_PRINT);
         $redisClient->set($cfgNm,$newConfigJson);
+        $REQ["NEW_CFG"] = $newConfigJson;
     } 
     $redisClient->quit();
 
