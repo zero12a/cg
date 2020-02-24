@@ -289,6 +289,7 @@ if($_POST["CONFIG_NM"] == ""){
         
         
             //서버 PATH  정보들
+            ,"CFG_COMMON_DIR" => "/data/www/common/"
             ,"CFG_ROOT_DIR" => "/data/www/c.g/"
             ,"CFG_LC_DIR" => "/data/www/l.c/"
         
