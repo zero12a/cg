@@ -17,6 +17,10 @@ if(!require_once(__DIR__ . "/../../common/include/incSec.php"))die("require incS
 if(!require_once(__DIR__ . "/../../common/include/incDB.php"))die("require incDB fail.");
 
 alog("predis_datasourceCG.php__________________________go");
+alog("SERVER.HOSTNAME =" . $_SERVER["HOSTNAME"]);
+alog("SERVER.SCRIPT_NAME =" . $_SERVER["SCRIPT_NAME"]); 
+
+$REQ["HOST_NM"] = $_SERVER["HOSTNAME"];
 
 //로딩 안해도 됨 기본적으로 infConfig에서 로딩함.
 //if(!require_once($CFG_LIBS_PATH_REDIS))die("require redis fail.");
@@ -84,7 +88,7 @@ echo "########### end\n";
 
 
 function datasourceReload(){
-    global $CFG,$REQ;
+    global $CFG,$REQ,$_SERVER;
     alog("configReload()...............start");
 
     $client = new GuzzleHttp\Client();
@@ -108,9 +112,6 @@ function datasourceReload(){
     $db = getDbConn($CFG["CFG_DB"]["OS"]);
 
     //db에 처리결과 저장하기
-    alog("SERVER.HOSTNAME =" . $_SERVER["HOSTNAME"]);
-    alog("ENV.HOSTNAME =" . $_ENV["HOSTNAME"]);
-    $REQ["HOST_NM"] = $_SERVER["HOSTNAME"];
     $coltype = "sssss";
     $sql = "insert into CMN_CFG_HISTORY (
             ACT_PGMID,OLD_CFG,NEW_CFG,RESULT_YN,RESULT_MSG

@@ -18,6 +18,11 @@ if(!require_once(__DIR__ . "/../../common/include/incDB.php"))die("require incDB
 
 alog("predis_configCG.php__________________________go");
 
+alog("SERVER.HOSTNAME =" . $_SERVER["HOSTNAME"]);
+alog("SERVER.SCRIPT_NAME =" . $_SERVER["SCRIPT_NAME"]); 
+
+$REQ["HOST_NM"] = $_SERVER["HOSTNAME"];
+
 //로딩 안해도 됨 기본적으로 infConfig에서 로딩함.
 //if(!require_once($CFG_LIBS_PATH_REDIS))die("require redis fail.");
 
@@ -67,6 +72,7 @@ foreach ($pubsub as $message) {
                 echo "Received the following message from {$message->channel}:",
                      PHP_EOL, "  {$message->payload}", PHP_EOL, PHP_EOL;
 
+                $REQ = getConfig($REQ);
                 configReload();
             }
             break;
@@ -84,23 +90,54 @@ $db->close();
 if($db)unset($db);
 
 function configReload(){
-    global $CFG;
+    global $CFG,$REQ,$_SERVER;
     alog("configReload()...............start");
 
     $client = new GuzzleHttp\Client();
     $res = $client->request('GET', 'http://localhost/common/include/incConfig.php?reload=YES', [
         'tt' => 'ttt'
     ]);
-    echo $res->getStatusCode();
+    alog("res->getStatusCode : " . $res->getStatusCode());
     // "200"
-    echo $res->getHeader('content-type')[0];
+    alog("res->getHeader content-type: " . $res->getHeader('content-type')[0]);
     // 'application/json; charset=utf8'
-    echo $res->getBody();
+    alog("res->getBody : " . $res->getBody());
+
+    //처리 결과 DB에 저장
+    $REQ["RESULT_MSG"] = $res->getBody();
+    if($res->getBody() == "RELOAD_OK"){
+        $REQ["RESULT_YN"] = "Y";
+    }else{
+        $REQ["RESULT_YN"] = "N";
+    }
+
+    //공통관련 db연결가져오기
+    $db = getDbConn($CFG["CFG_DB"]["OS"]);
+
+    //db에 처리결과 저장하기
+
+    $coltype = "sssss";
+    $sql = "insert into CMN_CFG_HISTORY (
+            ACT_PGMID,OLD_CFG,NEW_CFG,RESULT_YN,RESULT_MSG
+            ,HOST_NM,ADD_DT
+        ) values (
+            'CONFIG',#{OLD_CFG},#{NEW_CFG},#{RESULT_YN},#{RESULT_MSG}
+            ,#{HOST_NM}
+            ,date_format(sysdate(),'%Y%m%d%H%i%s')
+        )
+        ";
+    $stmt = makeStmt($db,$sql,$coltype,$REQ);
+    if(!$stmt)alog("500/300/SQL makeStmt create fail 실패");
+    if(!$stmt->execute())alog("500/100/stmt execute fail 실패" . $db->errno . " -> " . $db->error);
+
+    $stmt->close();
+    $db->close();
+    if($db)unset($db);    
 }
 
-function configSave(){
+function getConfig($REQ){
     global $CFG;
-    alog("configSave()...............start");
+    alog("getConfig()...............start");
 
     $redisClient = new Predis\Client(
         array(
@@ -115,21 +152,14 @@ function configSave(){
     $cfgNm = "CONFIG_CG";
 
     //json
-    $jsonStr = $redisClient->get($cfgNm);
+    $jsonStrNew = $redisClient->get($cfgNm);
+    $jsonStrOld = $redisClient->get($cfgNm . "." . date("Ymd", time()));
+
     $redisClient->quit();
 
-    $tmpArray = json_decode($jsonStr,true);
-
-    if(json_last_error() != JSON_ERROR_NONE){
-        //$redisClient->quit();
-        alog("JSON 문법 에러 발생 : " . json_last_error_msg());
-        return;
-    }
-
-    //처음 로딩시 로컬캐시에 보관
-    apcu_store($cfgNm, $jsonStr);	
-    echo "CONFIG=========================================\n" . $jsonStr . "\n=========================================\n";
-    echo $cfgNm . " apcu 컨피그 반영완료 ";
+    $REQ["OLD_CFG"] = $jsonStrOld;
+    $REQ["NEW_CFG"] = $jsonStrNew;
+    return $REQ;
 }
 
 
