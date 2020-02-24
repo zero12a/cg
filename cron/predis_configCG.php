@@ -1,13 +1,6 @@
 <?php
-  
 //ini_set('default_socket_timeout', 0); //이 옵션 사용시 redis 연결 에러.
- 
 set_time_limit(0);
-
-//subscribe.php
-//require 'Predis/Autoloader.php';
-
-
 
 $CFG = require_once(__DIR__ . "/../../common/include/incConfig.php");
 
@@ -50,7 +43,7 @@ $pubsub = $pubsubClient->pubSubLoop();
 
 
 // Subscribe to your channels
-$pubsub->subscribe('config.CONFIG_CG');
+$pubsub->subscribe('config.' . $cfgNm); //cfgNm은 incConfig에서 온다.
 
 
 // consume messages
@@ -136,7 +129,7 @@ function configReload(){
 }
 
 function getConfig($REQ){
-    global $CFG;
+    global $CFG,$cfgNm;
     alog("getConfig()...............start");
 
     $redisClient = new Predis\Client(
@@ -149,7 +142,7 @@ function getConfig($REQ){
     );    
     
 
-    $cfgNm = "CONFIG_CG";
+    //$cfgNm = "CONFIG_CG";
 
     //json
     $jsonStrNew = $redisClient->get($cfgNm);

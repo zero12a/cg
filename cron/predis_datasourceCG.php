@@ -1,13 +1,6 @@
 <?php
-  
 //ini_set('default_socket_timeout', 0); //이 옵션 사용시 redis 연결 에러.
- 
 set_time_limit(0);
-
-//subscribe.php
-//require 'Predis/Autoloader.php';
-
-
 
 $CFG = require_once(__DIR__ . "/../../common/include/incConfig.php");
 
@@ -133,7 +126,7 @@ function datasourceReload(){
 }
 
 function dataSourceSaveRedisFromDB(){
-    global $CFG,$REQ;
+    global $CFG,$REQ,$cfgNm; //cfgNm은 incConfig.php에서 옴
     alog("configSave()...............start");
 
     //Get datasource list
@@ -186,7 +179,7 @@ function dataSourceSaveRedisFromDB(){
 
 
     //Save to redis
-    $cfgNm = "CONFIG_CG";
+    //$cfgNm = "CONFIG_CG";
     $redisClient = new Predis\Client(
         array(
             'scheme' => 'tcp',
