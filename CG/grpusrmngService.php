@@ -10,12 +10,11 @@ class grpusrmngService
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("GrpusrmngService-__construct");
 
 		$this->DAO = new grpusrmngDao();
-	    //$this->DB = db_s_open();
-		$this->DB["DATING"] = db_obj_open(getDbSvrInfo("DATING"));
+		$this->DB["OS"] = getDbConn($CFG["CFG_DB"]["OS"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -23,7 +22,7 @@ class grpusrmngService
 		$log->info("GrpusrmngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["DATING"])$this->DB["DATING"]->close();
+		if($this->DB["OS"])$this->DB["OS"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
@@ -77,7 +76,7 @@ class grpusrmngService
 
 		//조회
 		//V_GRPNM : 그룹
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selGrpG($REQ)); //SEARCH, 조회,그룹목록
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -129,7 +128,7 @@ class grpusrmngService
 
 		//조회
 		//V_GRPNM : 그룹에 속함
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selHoldG($REQ)); //SEARCH, 조회,권한보유사용자
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -164,7 +163,7 @@ class grpusrmngService
 		$GRID["CHK"]=$REQ[$grpId."-CHK"];
 		$GRID["KEYCOLID"] = "USR_SEQ";  //KEY컬럼 COLID, 2
 		//선택 삭제	
-		array_push($GRID["SQL"], $this->DAO->($REQ)); // CHKSAVE, 선택 삭제, 
+		array_push($GRID["SQL"], $this->DAO->delHoldG($REQ)); // CHKSAVE, 선택 삭제, 사용자권한삭제
 		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
 
@@ -194,7 +193,7 @@ class grpusrmngService
 
 		//조회
 		//V_GRPNM : 해당그룹에 미포함
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selNoG($REQ)); //SEARCH, 조회,권한미보유
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -229,7 +228,7 @@ class grpusrmngService
 		$GRID["CHK"]=$REQ[$grpId."-CHK"];
 		$GRID["KEYCOLID"] = "USR_SEQ";  //KEY컬럼 COLID, 1
 		//선택 추가	
-		array_push($GRID["SQL"], $this->DAO->($REQ)); // CHKSAVE, 선택 추가, 
+		array_push($GRID["SQL"], $this->DAO->insNoToHoldG($REQ)); // CHKSAVE, 선택 추가, 사용자추가
 		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
 		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
 
