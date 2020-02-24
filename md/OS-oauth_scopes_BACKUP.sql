@@ -16,31 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `CMN_LOG_CFM`
+-- Table structure for table `oauth_scopes`
 --
 
-DROP TABLE IF EXISTS `CMN_LOG_CFM`;
+DROP TABLE IF EXISTS `oauth_scopes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CMN_LOG_CFM` (
-  `CFM_SEQ` int(11) NOT NULL AUTO_INCREMENT,
-  `FROM_DT` varchar(24) NOT NULL,
-  `TO_DT` varchar(24) NOT NULL,
-  `CFM_DESC` varchar(1500) NOT NULL,
-  `ADD_DT` varchar(42) NOT NULL,
-  `ADD_ID` int(11) NOT NULL,
-  PRIMARY KEY (`CFM_SEQ`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `oauth_scopes` (
+  `scope` varchar(80) NOT NULL,
+  `is_default` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`scope`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `CMN_LOG_CFM`
+-- Dumping data for table `oauth_scopes`
 --
 
-LOCK TABLES `CMN_LOG_CFM` WRITE;
-/*!40000 ALTER TABLE `CMN_LOG_CFM` DISABLE KEYS */;
-INSERT INTO `CMN_LOG_CFM` VALUES (1,'20180510','20180511','sadasdasdas','20180511150713',1),(2,'20180510','20180511','sssss','20180511150722',1);
-/*!40000 ALTER TABLE `CMN_LOG_CFM` ENABLE KEYS */;
+LOCK TABLES `oauth_scopes` WRITE;
+/*!40000 ALTER TABLE `oauth_scopes` DISABLE KEYS */;
+INSERT INTO `oauth_scopes` VALUES ('mymenu1 menu2',1),('testmenu2 testmenu3',0);
+/*!40000 ALTER TABLE `oauth_scopes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-24 22:46:05
+-- Dump completed on 2020-02-18  6:04:23
