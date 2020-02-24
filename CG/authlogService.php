@@ -14,7 +14,7 @@ class authlogService
 		$log->info("AuthlogService-__construct");
 
 		$this->DAO = new authlogDao();
-		$this->DB["DATING"] = getDbConn($CFG["CFG_DB"]["DATING"]);
+		$this->DB["OS"] = getDbConn($CFG["CFG_DB"]["OS"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -22,7 +22,7 @@ class authlogService
 		$log->info("AuthlogService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["DATING"])$this->DB["DATING"]->close();
+		if($this->DB["OS"])$this->DB["OS"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
@@ -76,7 +76,7 @@ class authlogService
 
 		//조회
 		//V_GRPNM : AUTH
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->sAuthG($REQ)); //SEARCH, 조회,sAuthG
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -143,7 +143,7 @@ class authlogService
 
 		//조회
 		//V_GRPNM : AUTHD
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->sAuthdF($REQ)); //SEARCH, 조회,sAughdF
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -208,8 +208,8 @@ class authlogService
 		$FORMVIEW["COLCRYPT"] = array();
 		$FORMVIEW["SQL"] = array();
 	// SQL LOOP
-		// 
-		array_push($FORMVIEW["SQL"], $this->DAO->($REQ)); 
+		// sAughdF
+		array_push($FORMVIEW["SQL"], $this->DAO->sAuthdF($REQ)); 
 		//필수 여부 검사
 		$tmpVal = requireFormviewSearchArray($FORMVIEW["SQL"]);
 		if($tmpVal->RTN_CD == "500"){

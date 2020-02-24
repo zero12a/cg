@@ -20,7 +20,7 @@ class authlogDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SVRID"] = "OS";
 		$RtnVal["SQLID"] = "sAuthG";
 		$RtnVal["SQLTXT"] = "select
 	LAUTH_SEQ, REQ_TOKEN, RES_TOKEN, USR_SEQ, USR_ID
@@ -39,7 +39,7 @@ order by LAUTH_SEQ desc
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SVRID"] = "OS";
 		$RtnVal["SQLID"] = "sAuthdF";
 		$RtnVal["SQLTXT"] = "select
 	LAUTHD_SEQ, REQ_TOKEN, RES_TOKEN, LAUTH_SEQ, PREPARE_SQL
@@ -59,7 +59,7 @@ where LAUTHD_SEQ = #{G3-LAUTHD_SEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "DATING";
+		$RtnVal["SVRID"] = "OS";
 		$RtnVal["SQLID"] = "sAuthdG";
 		$RtnVal["SQLTXT"] = "select
 	LAUTHD_SEQ, REQ_TOKEN, RES_TOKEN, LAUTH_SEQ, PARAM_COLIDS
