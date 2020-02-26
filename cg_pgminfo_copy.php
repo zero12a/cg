@@ -3,23 +3,14 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
-    $CFG = include_once("./incConfig.php");
+    $CFG = include_once("../common/include/incConfig.php");
 
-    require_once("./include/incUtil.php");
-    require_once("./include/incDB.php");
-    require_once("./include/incUser.php");
-    require_once("./include/incRequest.php");
+    require_once("../common/include/incUtil.php");
+    require_once("../common/include/incDB.php");
+    require_once("../common/include/incSec.php");
+    require_once("../common/include/incUser.php");
+    require_once("../common/include/incRequest.php");
 
-    require_once($CFG["CFG_LIBS_SQL_PARSER"]);
-
-	
-
-    //ServerViewTxt("N","N","Y","Y");
-
-    $db=db_m_open();
-
-	//내부함수 호출 후 리던 배열 
-	$rtnArr = array();
 
 
     $REQ["PJTSEQ"] = reqPostNumber('FROM_PJTSEQ',10);
@@ -28,6 +19,28 @@
 
     $REQ["TO_PJTSEQ"] = reqPostNumber('TO_PJTSEQ',10);
     $REQ["TO_PGMID"] = reqPostString('TO_PGMID',30);
+
+
+    //ServerViewTxt("N","N","Y","Y");
+
+    //프로젝트의 데이터소스 정보 얻기
+    $db2 = getDbConn($CFG["CFG_DB"]["CGCORE"]);
+    $sql = "select * from CG_PJTINFO where PJTSEQ = #{PJTSEQ}";
+    $stmt = makeStmt($db2,$sql,$coltype="i",$REQ);
+    $pjtInfo = getStmtArray($stmt)[0];
+    $stmt->close();
+    $db2->close();
+
+
+
+    //프로젝트 db연결
+    $db = getDbConn($CFG["CFG_DB"][$pjtInfo["DSNM"]]);
+
+
+	//내부함수 호출 후 리던 배열 
+	$rtnArr = array();
+
+
 
 	alog("---------------GRP PGM ---------------------START");
 
@@ -41,8 +54,9 @@
             //500 FNC 가져오기
                 //600 SVC가져오기
                 //700 SQLR가져오기
-            //800 IO 가져오기
-            //900 INHERIT 가져오기
+            //800 EVT 가져오기
+            //900 IO 가져오기
+            //950 INHERIT 가져오기
 
     $fromArr = array();
 
@@ -300,9 +314,34 @@
         $row["PGMFNC"] = $tArr;
 
 
+        //800 EVT 가져오기
+        $REQ["GRPSEQ"] = $row["GRPSEQ"];
+        $coltype = "iii";
+        $sql = "
+            SELECT
+                *
+            FROM 
+                CG_PGMEVT
+            WHERE PJTSEQ = #{PJTSEQ} AND PGMSEQ = #{PGMSEQ} AND GRPSEQ = #{GRPSEQ}
+        ";
+
+        $stmt = makeStmt($db,$sql,$coltype,$REQ);
+        if(!$stmt)JsonMsg("500","600","SQL makeStmt 실패 했습니다.");
+        if(!$stmt->execute())JsonMsg("500","600","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+
+        $resultIo = $stmt->get_result();
+        $stmt->close();
+
+        $tArr = array();
+        while($rowCol = $resultIo->fetch_array(MYSQLI_ASSOC))
+        {
+            array_push($tArr,$rowCol);
+        }
+        $resultIo->close();
+        $row["PGMEVT"] = $tArr;
                         
 
-        //800 IO 가져오기
+        //900 IO 가져오기
         $REQ["GRPSEQ"] = $row["GRPSEQ"];
         $coltype = "iii";
         $sql = "
@@ -329,7 +368,7 @@
         $row["PGMIO"] = $tArr;
 
 
-        //900 INHERIT 가져오기
+        //950 INHERIT 가져오기
         $REQ["GRPSEQ"] = $row["GRPSEQ"];
         $coltype = "iii";
         $sql = "
@@ -376,8 +415,9 @@
         //500 FNC 넣기
             //600 SVC 넣기
             //700 SQLR 넣기
-        //800 IO 넣기
-        //900 INHERIT 넣기
+        //800 EVT 넣기
+        //900 IO 넣기
+        //950 INHERIT 넣기
 
     //100 PGMINFO 넣기
     $map = $toArr["PGMINFO"];
@@ -674,7 +714,42 @@
 
 
 
-        //800 IO 넣기
+
+
+        //800 EVT 넣기
+        for($t=0;$t<count($toArr["PGMGRP"][$i]["PGMEVT"]);$t++){
+            $ios = $toArr["PGMGRP"][$i]["PGMEVT"][$t];
+
+            $map["GRPSEQ"]       = $toArr["PGMGRP"][$i]["GRPSEQ"];
+            //EVTCD, EVTNM, EVTORD, EVTSRC, USEYN
+            $map["EVTCD"]        = $ios["EVTCD"];
+            $map["EVTNM"]        = $ios["EVTNM"];
+            $map["EVTORD"]        = $ios["EVTORD"];
+            $map["EVTSRC"]        = $ios["EVTSRC"];
+            $map["USEYN"]        = $ios["USEYN"];
+
+            $coltype = "iiiss iss";
+            $sql = "
+                insert into CG_PGMEVT (
+                    PJTSEQ, PGMSEQ, GRPSEQ, EVTCD, EVTNM
+                    , EVTORD, EVTSRC, USEYN
+                    , ADDDT, ADDID
+                ) values (
+                    #{PJTSEQ}, #{PGMSEQ}, #{GRPSEQ}, #{EVTCD}, #{EVTNM}
+                    , #{EVTORD}, #{EVTSRC}, #{USEYN}
+                    , date_format(sysdate(),'%Y%m%d%H%i%s'), 0
+                )
+            ";
+
+            $stmt = makeStmt($db,$sql,$coltype,$map);
+            if(!$stmt)JsonMsg("500","1800","SQL makeStmt 실패 했습니다.");
+            if(!$stmt->execute())JsonMsg("500","1800","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+            //$toArr["PGMGRP"][$i]["PGMFNC"][$t]["FNCSEQ"] = $db->insert_id;
+            $stmt->close();
+        }
+
+
+        //900 IO 넣기
         for($t=0;$t<count($toArr["PGMGRP"][$i]["PGMIO"]);$t++){
             $ios = $toArr["PGMGRP"][$i]["PGMIO"][$t];
 
@@ -732,13 +807,13 @@
             ";
 
             $stmt = makeStmt($db,$sql,$coltype,$map);
-            if(!$stmt)JsonMsg("500","1800","SQL makeStmt 실패 했습니다.");
-            if(!$stmt->execute())JsonMsg("500","1800","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+            if(!$stmt)JsonMsg("500","1900","SQL makeStmt 실패 했습니다.");
+            if(!$stmt->execute())JsonMsg("500","1900","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
             //$toArr["PGMGRP"][$i]["PGMFNC"][$t]["FNCSEQ"] = $db->insert_id;
             $stmt->close();
         }
 
-        //900 INHERIT 넣기
+        //950 INHERIT 넣기
         for($t=0;$t<count($toArr["PGMGRP"][$i]["PGMINHERIT"]);$t++){
             $inherits = $toArr["PGMGRP"][$i]["PGMINHERIT"][$t];
 
@@ -758,8 +833,8 @@
             ";
 
             $stmt = makeStmt($db,$sql,$coltype,$map);
-            if(!$stmt)JsonMsg("500","1900","SQL makeStmt 실패 했습니다.");
-            if(!$stmt->execute())JsonMsg("500","1900","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+            if(!$stmt)JsonMsg("500","1950","SQL makeStmt 실패 했습니다.");
+            if(!$stmt->execute())JsonMsg("500","1950","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
             //$toArr["PGMGRP"][$i]["PGMFNC"][$t]["FNCSEQ"] = $db->insert_id;
             $stmt->close();
         }

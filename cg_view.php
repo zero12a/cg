@@ -75,16 +75,28 @@ if(!require_once '../common/include/incRequest.php')		echo "include fail(5)";
 
 //SeverView();
 
-//db 오픈
-//$db = db_open();
-$db = db_m_open();
+$F_PJTSEQ = reqPostNumber("pjtseq",10);
+$F_PGMSEQ = reqPostNumber("pgmseq",10);
+$F_FILETYPE = reqPostString("filetype",20);
+
+//프로젝트의 데이터소스 정보 얻기
+$db2 = getDbConn($CFG["CFG_DB"]["CGCORE"]);
+$sql = "select * from CG_PJTINFO where PJTSEQ = #{PJTSEQ}";
+$stmt = makeStmt($db2,$sql,$coltype="i",$map["PJTSEQ"] = $F_PJTSEQ);
+$pjtInfo = getStmtArray($stmt)[0];
+$stmt->close();
+$db2->close();
+
+//echo "DSNM : " . $pjtInfo["DSNM"];
+
+//프로젝트 db연결
+$db = getDbConn($CFG["CFG_DB"][$pjtInfo["DSNM"]]);
+
 
 //전체 리플레서 정보
 $G = null;
 
-$F_PJTSEQ = reqPostNumber("pjtseq",10);
-$F_PGMSEQ = reqPostNumber("pgmseq",10);
-$F_FILETYPE = $_POST["filetype"];
+
 $RstCnt = 0;
 $NowFileType = "";
 

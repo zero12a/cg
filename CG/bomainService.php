@@ -74,7 +74,7 @@ class bomainService
 
 		//조회
 		//V_GRPNM : 감사
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->apiSearch($REQ)); //SEARCH, 조회,API찾기
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사

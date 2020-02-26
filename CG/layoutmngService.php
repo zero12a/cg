@@ -76,7 +76,7 @@ class layoutmngService
 
 		//조회
 		//V_GRPNM : LAYOUT
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->sLayoutG($REQ)); //SEARCH, 조회,LAYOUT
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -118,11 +118,11 @@ class layoutmngService
 		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : LAYOUT
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["U"], $this->DAO->uLayoutG($REQ)); //SAVE, 저장,LAYOUT
 		//V_GRPNM : LAYOUT
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["D"], $this->DAO->dLayoutG($REQ)); //SAVE, 저장,LAYOUTD
 		//V_GRPNM : LAYOUT
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["C"], $this->DAO->iLayoutG($REQ)); //SAVE, 저장,LAYOUT
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");
@@ -191,7 +191,7 @@ class layoutmngService
 
 		//조회
 		//V_GRPNM : LAYOUTD
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->sLayoutDG($REQ)); //SEARCH, 조회,LAYOUTD
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -233,11 +233,11 @@ class layoutmngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//저장
 		//V_GRPNM : LAYOUTD
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["U"], $this->DAO->uLayoutDG($REQ)); //SAVE, 저장,LAYOUTD
 		//V_GRPNM : LAYOUTD
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["C"], $this->DAO->iLayoutDG($REQ)); //SAVE, 저장,LAYOUTD
 		//V_GRPNM : LAYOUTD
-		array_push($GRID["SQL"][""], $this->DAO->($REQ)); //SAVE, 저장,
+		array_push($GRID["SQL"]["D"], $this->DAO->dLayoutDG($REQ)); //SAVE, 저장,LAYOUTD
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");

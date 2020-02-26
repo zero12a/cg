@@ -10,12 +10,11 @@ class authdownService
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("AuthdownService-__construct");
 
 		$this->DAO = new authdownDao();
-	    //$this->DB = db_s_open();
-		$this->DB["CG"] = db_obj_open(getDbSvrInfo("CG"));
+		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -77,7 +76,7 @@ class authdownService
 
 		//조회
 		//V_GRPNM : 권한목록
-		array_push($GRID["SQL"], $this->DAO->($REQ)); //SEARCH, 조회,
+		array_push($GRID["SQL"], $this->DAO->selAuthG($REQ)); //SEARCH, 조회,권한목록
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
