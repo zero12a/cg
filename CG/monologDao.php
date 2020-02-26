@@ -36,7 +36,7 @@ values(
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "selF";
 		$RtnVal["SQLTXT"] = "select LOGSEQ, URL, SESSIONID, REQTOKEN, RESTOKEN, USERID, USERSEQ, LISTNM, LOGLEVEL, LOGDT, LOGMSG, LOGMSG as LOGWE, CHANNEL, ADDDT
 from CG_MONOLOG
@@ -52,7 +52,7 @@ where  LOGSEQ = #{G2-LOGSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "selG";
 		$RtnVal["SQLTXT"] = "select LOGSEQ, URL, SESSIONID, REQTOKEN, RESTOKEN, USERID, USERSEQ, LISTNM, LOGLEVEL, LOGDT, LOGMSG, CHANNEL, ADDDT
 from CG_MONOLOG

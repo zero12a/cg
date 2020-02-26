@@ -12,13 +12,15 @@
     require_once("../common/include/incUser.php");
     require_once("./cg_pgminfo_svc.php");
 
-
+    $reqToken = reqGetString("TOKEN",37);
+    $resToken = uniqid();
     $log = getLogger(
         array(
         "LIST_NM"=>"log_CG"
         , "PGM_ID"=>"PGMINFO"
         , "REQTOKEN" => $reqToken
         , "RESTOKEN" => $resToken
+        , "LOG_LEVEL" => Monolog\Logger::DEBUG
         )
     );
 

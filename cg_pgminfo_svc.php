@@ -799,7 +799,7 @@ class cg_pgminfo_svc
 		//GRID_SAVE____________________________start
 		$grpId="EVT";
 		$GRID["XML"]=$REQ[$grpId."-XML"];
-		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,GRPSEQ,EVTSEQ,USE,EVTCD,EVTNM,EVTSRC,EVTORD,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
+		$GRID["COLORD"] = "PJTSEQ,PGMSEQ,GRPSEQ,EVTSEQ,USEYN,EVTCD,EVTNM,EVTSRC,EVTORD,ADDDT,MODDT"; //그리드 컬럼순서(Hidden컬럼포함)
 		//암호화컬럼
 		$GRID["COLCRYPT"] = array();	
 		$GRID["KEYCOLID"] = "EVTSEQ";  //KEY컬럼 COLID, 0

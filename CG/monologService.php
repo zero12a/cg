@@ -14,7 +14,7 @@ class monologService
 		$log->info("MonologService-__construct");
 
 		$this->DAO = new monologDao();
-		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
+		$this->DB["CGPJT1"] = getDbConn($CFG["CFG_DB"]["CGPJT1"]);
 		$this->DB["DATING"] = getDbConn($CFG["CFG_DB"]["DATING"]);
 	}
 	//파괴자
@@ -23,7 +23,7 @@ class monologService
 		$log->info("MonologService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CG"])$this->DB["CG"]->close();
+		if($this->DB["CGPJT1"])$this->DB["CGPJT1"]->close();
 		if($this->DB["DATING"])$this->DB["DATING"]->close();
 		unset($this->DB);
 	}
