@@ -1,25 +1,25 @@
 <?php
 //SVC
  
-//include_once('DdiomngInterface.php');
-include_once('ddiomngDao.php');
-//class DdiomngService implements DdiomngInterface
-class ddiomngService 
+//include_once('AuthdeployInterface.php');
+include_once('authdeployDao.php');
+//class AuthdeployService implements AuthdeployInterface
+class authdeployService 
 {
 	private $DAO;
 	private $DB;
 	//생성자
 	function __construct(){
 		global $log,$CFG;
-		$log->info("DdiomngService-__construct");
+		$log->info("AuthdeployService-__construct");
 
-		$this->DAO = new ddiomngDao();
+		$this->DAO = new authdeployDao();
 		$this->DB["CGPJT1"] = getDbConn($CFG["CFG_DB"]["CGPJT1"]);
 	}
 	//파괴자
 	function __destruct(){
 		global $log;
-		$log->info("DdiomngService-__destruct");
+		$log->info("AuthdeployService-__destruct");
 
 		unset($this->DAO);
 		if($this->DB["CGPJT1"])$this->DB["CGPJT1"]->close();
@@ -27,9 +27,9 @@ class ddiomngService
 	}
 	function __toString(){
 		global $log;
-		$log->info("DdiomngService-__toString");
+		$log->info("AuthdeployService-__toString");
 	}
-	//조건1, 조회(전체)
+	//, 조회(전체)
 	public function goG1Searchall(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -37,14 +37,14 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG1Searchall________________________start");
+		$log->info("AUTHDEPLOYService-goG1Searchall________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG1Searchall________________________end");
+		$log->info("AUTHDEPLOYService-goG1Searchall________________________end");
 	}
-	//조건1, 저장
+	//, 저장
 	public function goG1Save(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -52,14 +52,14 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG1Save________________________start");
+		$log->info("AUTHDEPLOYService-goG1Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG1Save________________________end");
+		$log->info("AUTHDEPLOYService-goG1Save________________________end");
 	}
-	//DATASIZE, 조회
+	//파일, 조회
 	public function goG2Search(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -67,16 +67,16 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG2Search________________________start");
+		$log->info("AUTHDEPLOYService-goG2Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
 		$GRID["GRPTYPE"] = "GRID_DHTMLX";
-		$GRID["KEYCOLIDX"] = 3; // KEY 컬럼, IOSEQ
+		$GRID["KEYCOLIDX"] = 3; // KEY 컬럼, FILESEQ
 
 		//조회
-		//V_GRPNM : DATASIZE
-		array_push($GRID["SQL"], $this->DAO->selSizeG($REQ)); //SEARCH, 조회,SIZE
+		//V_GRPNM : 파일
+		array_push($GRID["SQL"], $this->DAO->sFileG($REQ)); //SEARCH, 조회,FILE
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -94,9 +94,9 @@ class ddiomngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG2Search________________________end");
+		$log->info("AUTHDEPLOYService-goG2Search________________________end");
 	}
-	//DATASIZE, S
+	//파일, 저장
 	public function goG2Save(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -104,14 +104,29 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG2Save________________________start");
+		$log->info("AUTHDEPLOYService-goG2Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG2Save________________________end");
+		$log->info("AUTHDEPLOYService-goG2Save________________________end");
 	}
-	//DATASIZE, 선택저장
+	//파일, 엑셀다운로드
+	public function goG2Excel(){
+		global $REQ,$CFG,$_RTIME, $log;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		$log->info("AUTHDEPLOYService-goG2Excel________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		$log->info("AUTHDEPLOYService-goG2Excel________________________end");
+	}
+	//파일, 선택저장
 	public function goG2Chksave(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -119,27 +134,14 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG2Chksave________________________start");
-		//GRID_CHK_SAVE____________________________start
-		$GRID["SQL"] = array();
-		$grpId="G2";
-		$GRID["CHK"]=$REQ[$grpId."-CHK"];
-		$GRID["KEYCOLID"] = "IOSEQ";  //KEY컬럼 COLID, 3
-		//선택저장	
-		array_push($GRID["SQL"], $this->DAO->updSizeG($REQ)); // CHKSAVE, 선택저장, SIZE
-		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
-
-		$tmpVal->GRPID = $grpId;
-		array_push($rtnVal->GRP_DATA, $tmpVal);
-		//GRID_CHK_SAVE____________________________end
+		$log->info("AUTHDEPLOYService-goG2Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG2Chksave________________________end");
+		$log->info("AUTHDEPLOYService-goG2Chksave________________________end");
 	}
-	//DATATYPE, 조회
+	//SQL PGM, 조회
 	public function goG3Search(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -147,16 +149,16 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG3Search________________________start");
+		$log->info("AUTHDEPLOYService-goG3Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
 		$GRID["GRPTYPE"] = "GRID_DHTMLX";
-		$GRID["KEYCOLIDX"] = 3; // KEY 컬럼, IOSEQ
+		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, PGMSEQ
 
 		//조회
-		//V_GRPNM : DATATYPE
-		array_push($GRID["SQL"], $this->DAO->selTypeG($REQ)); //SEARCH, 조회,TYPE
+		//V_GRPNM : SQL PGM
+		array_push($GRID["SQL"], $this->DAO->sPgmG($REQ)); //SEARCH, 조회,PGM
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -174,9 +176,9 @@ class ddiomngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG3Search________________________end");
+		$log->info("AUTHDEPLOYService-goG3Search________________________end");
 	}
-	//DATATYPE, S
+	//SQL PGM, 저장
 	public function goG3Save(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -184,14 +186,29 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG3Save________________________start");
+		$log->info("AUTHDEPLOYService-goG3Save________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG3Save________________________end");
+		$log->info("AUTHDEPLOYService-goG3Save________________________end");
 	}
-	//DATATYPE, 선택저장
+	//SQL PGM, 엑셀다운로드
+	public function goG3Excel(){
+		global $REQ,$CFG,$_RTIME, $log;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		$log->info("AUTHDEPLOYService-goG3Excel________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		$log->info("AUTHDEPLOYService-goG3Excel________________________end");
+	}
+	//SQL PGM, 선택저장
 	public function goG3Chksave(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -199,27 +216,14 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG3Chksave________________________start");
-		//GRID_CHK_SAVE____________________________start
-		$GRID["SQL"] = array();
-		$grpId="G3";
-		$GRID["CHK"]=$REQ[$grpId."-CHK"];
-		$GRID["KEYCOLID"] = "IOSEQ";  //KEY컬럼 COLID, 3
-		//선택저장	
-		array_push($GRID["SQL"], $this->DAO->updTypeG($REQ)); // CHKSAVE, 선택저장, TYPE
-		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
-
-		$tmpVal->GRPID = $grpId;
-		array_push($rtnVal->GRP_DATA, $tmpVal);
-		//GRID_CHK_SAVE____________________________end
+		$log->info("AUTHDEPLOYService-goG3Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG3Chksave________________________end");
+		$log->info("AUTHDEPLOYService-goG3Chksave________________________end");
 	}
-	//VALIDSEQ, 조회
+	//SQL AUTH, 조회
 	public function goG4Search(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -227,16 +231,16 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG4Search________________________start");
+		$log->info("AUTHDEPLOYService-goG4Search________________________start");
 		//그리드 서버 조회 
 		//GRID_SEARCH____________________________start
 		$GRID["SQL"] = array();
 		$GRID["GRPTYPE"] = "GRID_DHTMLX";
-		$GRID["KEYCOLIDX"] = 3; // KEY 컬럼, IOSEQ
+		$GRID["KEYCOLIDX"] = 1; // KEY 컬럼, ROWID
 
 		//조회
-		//V_GRPNM : VALIDSEQ
-		array_push($GRID["SQL"], $this->DAO->selValidG($REQ)); //SEARCH, 조회,VALID
+		//V_GRPNM : SQL AUTH
+		array_push($GRID["SQL"], $this->DAO->sAuthG($REQ)); //SEARCH, 조회,AUTH
 	//암호화컬럼
 		$GRID["COLCRYPT"] = array();
 		//필수 여부 검사
@@ -254,9 +258,39 @@ class ddiomngService
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG4Search________________________end");
+		$log->info("AUTHDEPLOYService-goG4Search________________________end");
 	}
-	//VALIDSEQ, 선택저장
+	//SQL AUTH, 저장
+	public function goG4Save(){
+		global $REQ,$CFG,$_RTIME, $log;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		$log->info("AUTHDEPLOYService-goG4Save________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		$log->info("AUTHDEPLOYService-goG4Save________________________end");
+	}
+	//SQL AUTH, 엑셀다운로드
+	public function goG4Excel(){
+		global $REQ,$CFG,$_RTIME, $log;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		$log->info("AUTHDEPLOYService-goG4Excel________________________start");
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		$log->info("AUTHDEPLOYService-goG4Excel________________________end");
+	}
+	//SQL AUTH, 선택저장
 	public function goG4Chksave(){
 		global $REQ,$CFG,$_RTIME, $log;
 		$rtnVal = null;
@@ -264,25 +298,12 @@ class ddiomngService
 		$grpId = null;
 		$rtnVal->GRP_DATA = array();
 
-		$log->info("DDIOMNGService-goG4Chksave________________________start");
-		//GRID_CHK_SAVE____________________________start
-		$GRID["SQL"] = array();
-		$grpId="G4";
-		$GRID["CHK"]=$REQ[$grpId."-CHK"];
-		$GRID["KEYCOLID"] = "IOSEQ";  //KEY컬럼 COLID, 3
-		//선택저장	
-		array_push($GRID["SQL"], $this->DAO->updValidG($REQ)); // CHKSAVE, 선택저장, VALID
-		$tmpVal = makeGridChkJsonArray($GRID,$this->DB);
-		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
-
-		$tmpVal->GRPID = $grpId;
-		array_push($rtnVal->GRP_DATA, $tmpVal);
-		//GRID_CHK_SAVE____________________________end
+		$log->info("AUTHDEPLOYService-goG4Chksave________________________start");
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
 		echo json_encode($rtnVal);
-		$log->info("DDIOMNGService-goG4Chksave________________________end");
+		$log->info("AUTHDEPLOYService-goG4Chksave________________________end");
 	}
 }
                                                              

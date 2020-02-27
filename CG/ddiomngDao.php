@@ -20,7 +20,7 @@ class ddiomngDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "selSizeG";
 		$RtnVal["SQLTXT"] = "SELECT 
   0 as CHK, a.COLID,b.PGMSEQ,b.IOSEQ,a.DATASIZE AS DD_DATASIZE
@@ -40,7 +40,7 @@ ORDER BY COLID ASC";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "selTypeG";
 		$RtnVal["SQLTXT"] = "SELECT 
   0 as CHK, a.COLID,b.PGMSEQ,b.IOSEQ,a.DATATYPE AS DD_DATATYPE
@@ -60,7 +60,7 @@ ORDER BY COLID ASC";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "selValidG";
 		$RtnVal["SQLTXT"] = "SELECT 
   0 as CHK, a.COLID,b.PGMSEQ,b.IOSEQ,a.VALIDSEQ AS DD_VALIDSEQ
@@ -80,7 +80,7 @@ ORDER BY COLID ASC";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "updSizeG";
 		$RtnVal["SQLTXT"] = "update CG_PGMIO io JOIN CG_DD dd
 	on io.COLID = dd.COLID
@@ -99,7 +99,7 @@ where io.IOSEQ = #{IOSEQ}";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "updTypeG";
 		$RtnVal["SQLTXT"] = "update CG_PGMIO io JOIN CG_DD dd
 	on io.COLID = dd.COLID
@@ -118,7 +118,7 @@ where io.IOSEQ = #{IOSEQ}";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "updValidG";
 		$RtnVal["SQLTXT"] = "update CG_PGMIO io JOIN CG_DD dd
 	on io.COLID = dd.COLID
