@@ -18,7 +18,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		
 		$RtnVal["SQLTXT"] = "
 		select
@@ -39,7 +39,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
 		ifnull(b.DDSEQ,'') AS DDSEQ
@@ -69,7 +69,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLTXT"] = "
 		select a.CD,b.NM,a.CDVAL
 		from CG_CODED a join CG_CODED b on  a.CD = b.CD 
@@ -84,7 +84,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLTXT"] = "
         select
           GRPID,GRPTYPE,ORD,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT
@@ -101,7 +101,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLTXT"] = "
 		select
 			LAYOUTID,GRPCNT
@@ -118,7 +118,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
 			a.PJTSEQ, c.PJTID, a.PGMSEQ, a.PGMID, a.PGMNM, a.VIEWURL, a.PGMTYPE
@@ -145,7 +145,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["REQUIRE"] = array("G2-SQLSEQ");
 		$RtnVal["SQLTXT"] = "
 		select 
@@ -164,7 +164,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMSQLD (
 			PJTSEQ, PGMSEQ, SQLSEQ, COLID, SQLGBN
@@ -183,7 +183,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["REQUIRE"] = array("SQLGBN", "REQUIREYN");		
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMSQLD set
@@ -198,7 +198,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		delete from CG_PGMSQLD where PJTSEQ=#{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and COLSEQ = #{COLSEQ}
 		";
@@ -214,7 +214,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
 			SQLRSEQ,PJTSEQ,PGMSEQ,SVCSEQ,ifnull(SQLSEQ,0) as SQLSEQ,ORD,ADDDT,MODDT
@@ -231,7 +231,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMSQLR (
 			PJTSEQ,PGMSEQ,SVCSEQ,SQLSEQ,ORD
@@ -248,7 +248,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMSQLR set
 		SQLSEQ = #{SQLSEQ}, ORD = #{ORD}
@@ -262,7 +262,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		delete from CG_PGMSQLR where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLRSEQ = #{SQLRSEQ}
 		";
@@ -279,7 +279,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
 		SVCSEQ,PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,ORD,SVCGRPID,ADDDT,MODDT
@@ -296,7 +296,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMSVC (
 			PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,ORD
@@ -315,7 +315,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMSVC set
 		ORD = #{ORD}, SVCGRPID = #{SVCGRPID}
@@ -329,7 +329,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		delete from CG_PGMSVC where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SVCSEQ = #{SVCSEQ}
 		";
@@ -347,7 +347,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
 			INHERITSEQ,PJTSEQ,PGMSEQ,GRPSEQ,COLID,CHILDGRPID,ADDDT,MODDT
@@ -363,7 +363,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMINHERIT (
 			PJTSEQ,PGMSEQ,GRPSEQ,COLID,CHILDGRPID
@@ -380,7 +380,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMINHERIT set
 		COLID = #{COLID}, CHILDGRPID = #{CHILDGRPID}
@@ -394,7 +394,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		delete from CG_PGMINHERIT where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and INHERITSEQ = #{INHERITSEQ} 
 		";
@@ -412,7 +412,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
         select
 		  a.PJTSEQ, a.PGMSEQ, a.GRPSEQ, a.IOSEQ, b.DDSEQ
@@ -443,7 +443,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMIO (
 			PJTSEQ,PGMSEQ,GRPSEQ,COLID,COLORD
@@ -472,7 +472,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMIO set
 		COLID = #{COLID}, COLORD=#{COLORD}, COLNM=#{COLNM}, DATATYPE=#{DATATYPE}, DATASIZE=#{DATASIZE}
@@ -492,7 +492,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		delete from CG_PGMIO where PJTSEQ=#{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ} and GRPSEQ = #{G1-GRPSEQ} and IOSEQ = #{IOSEQ}
 		";
@@ -509,7 +509,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
             PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,IF(USEYN='Y',1,0) AS USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,concat(FNCID,' - ',FNCNM,'^^FNC') as PROPERTY,ifnull(USERDEFJS,'') as USERDEFJS,ADDDT,MODDT
@@ -525,7 +525,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMFNC (
 			PJTSEQ,PGMSEQ,GRPSEQ,FNCID,FNCCD
@@ -544,7 +544,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 	update CG_PGMFNC set
 		FNCID = #{FNCID}, FNCCD = #{FNCCD}, FNCNM = #{FNCNM}, FNCTYPE = #{FNCTYPE}, USEYN = case #{USEYN} when 1 then 'Y' else 'N' end
@@ -559,7 +559,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		delete from CG_PGMFNC where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ} and FNCSEQ = #{FNCSEQ}
 		";
@@ -577,7 +577,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
 			PJTSEQ,PGMSEQ,GRPSEQ,EVTSEQ,IF(USEYN='Y',1,0) AS USEYN,EVTCD,EVTNM,EVTSRC,EVTORD,ADDDT,MODDT
@@ -594,7 +594,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMEVT (
 			PJTSEQ,PGMSEQ,GRPSEQ,EVTCD,EVTNM
@@ -613,7 +613,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 	update CG_PGMEVT set
 		EVTCD = #{EVTCD}, EVTNM = #{EVTNM}, USEYN = case #{USEYN} when 1 then 'Y' else 'N' end
@@ -628,7 +628,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		delete from CG_PGMEVT where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ} and EVTSEQ = #{EVTSEQ}
 		";
@@ -645,7 +645,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,ifnull(PSQLSEQ,0) as PSQLSEQ,SQLTXT,ADDDT,MODDT 
 		from CG_PGMSQL 
@@ -660,7 +660,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMSQL (
 			PJTSEQ,PGMSEQ,SQLID,SQLNM,SVRSEQ
@@ -679,7 +679,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMSQL set
 			SQLID = #{SQLID}, SQLNM = #{SQLNM}, SVRSEQ = #{SVRSEQ}, CRUD = #{CRUD} , RTN_TYPE = #{RTN_TYPE}
@@ -694,7 +694,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		delete from CG_PGMSQL where PJTSEQ=#{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ}
 		";
@@ -707,7 +707,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
         PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,concat(GRPID,' - ',GRPNM,'^^GRP') as PROPERTY,ADDDT,MODDT
@@ -722,7 +722,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		insert into CG_PGMGRP (
 			PJTSEQ,PGMSEQ,GRPID,GRPNM,GRPTYPE
@@ -743,7 +743,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		update CG_PGMGRP set
             GRPID = #{GRPID}, GRPNM = #{GRPNM}, GRPTYPE = #{GRPTYPE}, GRPORD = #{GRPORD}, REFGRPID = #{REFGRPID}
@@ -759,7 +759,7 @@ class cg_pgminfo_dao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		delete from  CG_PGMGRP  where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ}	
 		";

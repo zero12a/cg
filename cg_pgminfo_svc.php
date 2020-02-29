@@ -9,20 +9,23 @@ class cg_pgminfo_svc
 	private $DAO;
 	private $DB;
 	//생성자
-	function __construct($dsNm){
+	function __construct(&$coreDb, $dsNm){
 		alog("cg_pgminfo_svc-__construct dnNm : " . $dsNm);
 		global $CFG;
 
 		$this->DAO = new cg_pgminfo_dao();
-	    //$this->DB = db_s_open();
-		$this->DB["CG"] = getDbConn($CFG["CFG_DB"][$dsNm]);
+		//$this->DB = db_s_open();
+		
+		$this->DB["CGCORE"] = $coreDb;
+		$this->DB["CGPJT"] = getDbConn($CFG["CFG_DB"][$dsNm]);
 	}
 	//파괴자
 	function __destruct(){
 		alog("cg_pgminfo_svc-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CG"])$this->DB["CG"]->close();
+		if($this->DB["CGCORE"])$this->DB["CGCORE"]->close();
+		if($this->DB["CGPJT"])$this->DB["CGPJT"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
@@ -546,7 +549,7 @@ class cg_pgminfo_svc
 
 
 		//데이터 딕셔너리에 추가/수정해 주기
-		$this->updateDd($GRID["XML"],$GRID["COLORD"],$this->DB["CG"],$REQ);
+		$this->updateDd($GRID["XML"],$GRID["COLORD"],$this->DB["CGPJT"],$REQ);
 
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
@@ -1019,8 +1022,8 @@ class cg_pgminfo_svc
 			where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and SQLGBN = 'O'
 			order by ORD asc ";
 			$to_coltype = "iii";
-			$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row));
-			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
+			$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
 			$arrOutputCols = getStmtArray($stmt);
 			$stmt->close();
 			//echo json_encode($arrOutputCols);
@@ -1032,8 +1035,8 @@ class cg_pgminfo_svc
 			where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and SQLGBN = 'I'
 			order by ORD asc ";
 			$to_coltype = "iii";
-			$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row));
-			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
+			$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
 			$arrInputCols = getStmtArray($stmt);
 			$stmt->close();
 			//echo json_encode($arrOutputCols);
@@ -1043,11 +1046,11 @@ class cg_pgminfo_svc
 			$sql = "delete from CG_PGMSQLD where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ}";
 			$to_coltype = "iii";
 			
-			$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row));
-			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
+			$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
 			$stmt->execute();
 			//echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
-			$to_affected_rows = $this->DB["CG"]->affected_rows;
+			$to_affected_rows = $this->DB["CGPJT"]->affected_rows;
 			$stmt->close();
 	
 	
@@ -1108,11 +1111,11 @@ class cg_pgminfo_svc
 
 
 	
-				$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
-				if(!$stmt)JsonMsg("500","102","stmt 생성 실패" . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
+				$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
+				if(!$stmt)JsonMsg("500","102","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
 				$stmt->execute();
 				//echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
-				$to_affected_rows = $this->DB["CG"]->affected_rows;
+				$to_affected_rows = $this->DB["CGPJT"]->affected_rows;
 				$stmt->close();
 	
 			}

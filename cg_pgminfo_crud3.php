@@ -154,7 +154,7 @@
 
 
     //서비스 클래스 생성
-    $objService = new cg_pgminfo_svc($pjtInfo["DSNM"]);
+    $objService = new cg_pgminfo_svc($db,$pjtInfo["DSNM"]);
 
     //컨트롤 명령 받기
     $ctl = "";
