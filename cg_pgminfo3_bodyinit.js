@@ -840,7 +840,7 @@
         mygridFnc.setInitWidths("50,50,50,35,30,50,50,50,30,50,40,50,50,50");
         mygridFnc.setColTypes("ed,ed,ed,ro,ch,ed,coro,ed,ed,ed,button,txttxt,ro,ro");
         mygridFnc.setColAlign("left,left,left,left,center,left,left,left,left,left,left,left,left,left");
-		mygridFnc.setColSorting("str,str,str,str,str,str,str,str,str,int,str,str,str,str");
+		mygridFnc.setColSorting("int,int,int,int,na,str,str,str,str,int,str,str,str,str");
 
         //mygridSql.isColumnHidden(0);//PJTID숨기기
 
@@ -968,7 +968,7 @@
         mygridEvt.setInitWidths("50,50,50,50,25,40,40,30,50,50");
         mygridEvt.setColTypes("ed,ed,ed,ed,ch,coro,ed,txttxt,ed,ro,ro");
         mygridEvt.setColAlign("left,left,left,left,center,left,left,left,left,left,left");
-		mygridEvt.setColSorting("int,int,int,int,str,str,str,str,int,str,str");
+		mygridEvt.setColSorting("int,int,int,int,na,str,str,str,int,str,str");
 
         //mygridSql.isColumnHidden(0);//PJTID숨기기
 

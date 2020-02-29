@@ -75,6 +75,8 @@ $REQ["G1-PJTSEQ"] = reqPostNumber("G1-PJTSEQ",20);//PJTSEQ
 $REQ["G1-PJTSEQ"] = getFilter($REQ["G1-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 
 //G2, PGM
+$REQ["G2-ROWCHKUP"] = reqPostNumber("G2-ROWCHKUP",1);//CHK	
+$REQ["G2-ROWCHKUP"] = getFilter($REQ["G2-ROWCHKUP"],"REGEXMAT","/^([0-9a-zA-Z]|,)+$/");	
 $REQ["G2-PGMSEQ"] = reqPostNumber("G2-PGMSEQ",30);//PGMSEQ	
 $REQ["G2-PGMSEQ"] = getFilter($REQ["G2-PGMSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-PGMID"] = reqPostString("G2-PGMID",20);//프로그램ID	
@@ -153,10 +155,10 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//PGM
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
-		,"COLORD"=>"CHK,PGMSEQ,PGMID,PGMNM,PKGGRP,VIEWURL,PGMTYPE,SECTYPE,ADDDT,MODDT"
+		,"COLORD"=>"ROWCHKUP,PGMSEQ,PGMID,PGMNM,PKGGRP,VIEWURL,PGMTYPE,SECTYPE,ADDDT,MODDT"
 		,"VALID"=>
 			array(
-			"CHK"=>array("NUMBER",1)	
+			"ROWCHKUP"=>array("NUMBER",1)	
 			,"PGMSEQ"=>array("NUMBER",30)	
 			,"PGMID"=>array("STRING",20)	
 			,"PGMNM"=>array("STRING",50)	
@@ -169,7 +171,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//PGM
 					)
 		,"FILTER"=>
 			array(
-			"CHK"=>array("REGEXMAT","/^([0-9a-zA-Z]|,)+$/")
+			"ROWCHKUP"=>array("REGEXMAT","/^([0-9a-zA-Z]|,)+$/")
 			,"PGMSEQ"=>array("REGEXMAT","/^[0-9]+$/")
 			,"PGMID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
 			,"PGMNM"=>array("CLEARTEXT","/--미 정의--/")
@@ -266,10 +268,7 @@ $REQ["G5-XML"] = filterGridXml(
 					)
 	)
 );
-$REQ["G2-CHK"] = $_POST["G2-CHK"];//CHK 받기
-//filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
-$REQ["G2-CHK"] = filterGridChk($REQ["G2-CHK"],"NUMBER",30,"REGEXMAT","/^[0-9]+$/");//PGMSEQ 입력값검증
-	$REQ["G4-CHK"] = $_POST["G4-CHK"];//CHK 받기
+$REQ["G4-CHK"] = $_POST["G4-CHK"];//CHK 받기
 //filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
 $REQ["G4-CHK"] = filterGridChk($REQ["G4-CHK"],"STRING",40,"SAFETEXT","/--미 정의--/");//ROWID 입력값검증
 	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
