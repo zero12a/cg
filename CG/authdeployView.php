@@ -200,6 +200,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_EXCEL" value="엑셀다운로드" onclick="G4_EXCEL(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_CHKSAVE" value="선택저장" onclick="G4_CHKSAVE(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_ADDROW" value="+" onclick="G4_ADDROW(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_SAVE" value="체크 저장" onclick="G4_SAVE(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>

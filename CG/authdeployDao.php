@@ -15,6 +15,29 @@ class authdeployDao
 		global $log;
 		$log->info("AuthdeployDao-__toString");
 	}
+	//insSvcAuth    
+	public function insSvcAuth($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "U";//CRUD 
+		$RtnVal["SVRID"] = "OS";
+		$RtnVal["SQLID"] = "insSvcAuth";
+		$RtnVal["SQLTXT"] = "insert into CMN_AUTH (
+	PGMID, AUTH_ID, AUTH_NM, USE_YN
+	,ADD_DT
+)
+select 
+	#{PGMID} as PGMID, #{AUTH_ID} as AUTH_ID, #{AUTH_NM} as AUTH_NM, 'Y' as USE_YN
+	, date_format(sysdate(),'%Y%m%d%H%i%s') as ADD_DT
+from CMN_MNU
+where 
+ 0 =  ( select count(MNU_SEQ)  from CMN_AUTH where PGMID = #{PGMID} and AUTH_ID = #{AUTH_ID})
+limit 1";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "sssss";
+		return $RtnVal;
+    }  
 	//insSvcPgm    
 	public function insSvcPgmG($req){
 		//조회
@@ -51,6 +74,7 @@ limit 1";
       ,p.PGMID 
       ,concat(g.GRPID,'_',f.FNCID) as AUTH_ID
       ,concat(g.GRPNM,'_',f.FNCNM) as AUTH_NM 
+	  ,f.ADDDT
   FROM 
       CG_PGMGRP g
       JOIN CG_PGMFNC f on g.GRPSEQ = f.GRPSEQ and g.PGMSEQ = f.PGMSEQ

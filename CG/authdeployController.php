@@ -26,7 +26,7 @@ $log = getLogger(
 	, "PGM_ID"=>"AUTHDEPLOY"
 	, "REQTOKEN" => $reqToken
 	, "RESTOKEN" => $resToken
-	, "LOG_LEVEL" => Monolog\Logger::INFO
+	, "LOG_LEVEL" => Monolog\Logger::ERROR
 	)
 );
 $log->info("AuthdeployControl___________________________start");
@@ -123,6 +123,8 @@ $REQ["G3-MOD_ID"] = reqPostString("G3-MOD_ID",30);//MOD_ID
 $REQ["G3-MOD_ID"] = getFilter($REQ["G3-MOD_ID"],"SAFETEXT","/--미 정의--/");	
 
 //G4, AUTH
+$REQ["G4-CHK"] = reqPostNumber("G4-CHK",1);//CHK	
+$REQ["G4-CHK"] = getFilter($REQ["G4-CHK"],"REGEXMAT","/^([0-9a-zA-Z]|,)+$/");	
 $REQ["G4-ROWID"] = reqPostString("G4-ROWID",40);//ROWID	
 $REQ["G4-ROWID"] = getFilter($REQ["G4-ROWID"],"SAFETEXT","/--미 정의--/");	
 $REQ["G4-PGMID"] = reqPostString("G4-PGMID",20);//프로그램ID	
@@ -131,6 +133,8 @@ $REQ["G4-AUTH_ID"] = reqPostString("G4-AUTH_ID",50);//AUTH_ID
 $REQ["G4-AUTH_ID"] = getFilter($REQ["G4-AUTH_ID"],"REGEXMAT","/^[a-zA-Z]{1}[_a-zA-Z0-9]*$/");	
 $REQ["G4-AUTH_NM"] = reqPostString("G4-AUTH_NM",50);//AUTH_NM	
 $REQ["G4-AUTH_NM"] = getFilter($REQ["G4-AUTH_NM"],"SAFETEXT","/--미 정의--/");	
+$REQ["G4-ADDDT"] = reqPostString("G4-ADDDT",14);//ADDDT	
+$REQ["G4-ADDDT"] = getFilter($REQ["G4-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
 
 //G5, SVC AUTH
 $REQ["G5-AUTH_SEQ"] = reqPostNumber("G5-AUTH_SEQ",10);//AUTH_SEQ	
@@ -223,7 +227,7 @@ $REQ["G3-XML"] = filterGridXml(
 $REQ["G4-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G4-XML"]
-		,"COLORD"=>"CHK,ROWID,PGMID,AUTH_ID,AUTH_NM"
+		,"COLORD"=>"CHK,ROWID,PGMID,AUTH_ID,AUTH_NM,ADDDT"
 		,"VALID"=>
 			array(
 			"CHK"=>array("NUMBER",1)	
@@ -231,6 +235,7 @@ $REQ["G4-XML"] = filterGridXml(
 			,"PGMID"=>array("STRING",20)	
 			,"AUTH_ID"=>array("STRING",50)	
 			,"AUTH_NM"=>array("STRING",50)	
+			,"ADDDT"=>array("STRING",14)	
 					)
 		,"FILTER"=>
 			array(
@@ -239,6 +244,7 @@ $REQ["G4-XML"] = filterGridXml(
 			,"PGMID"=>array("REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/")
 			,"AUTH_ID"=>array("REGEXMAT","/^[a-zA-Z]{1}[_a-zA-Z0-9]*$/")
 			,"AUTH_NM"=>array("SAFETEXT","/--미 정의--/")
+			,"ADDDT"=>array("REGEXMAT","/^[0-9]+$/")
 					)
 	)
 );
@@ -268,10 +274,7 @@ $REQ["G5-XML"] = filterGridXml(
 					)
 	)
 );
-$REQ["G4-CHK"] = $_POST["G4-CHK"];//CHK 받기
-//filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
-$REQ["G4-CHK"] = filterGridChk($REQ["G4-CHK"],"STRING",40,"SAFETEXT","/--미 정의--/");//ROWID 입력값검증
-	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
+array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new authdeployService();
 	//컨트롤 명령별 분개처리
@@ -312,6 +315,9 @@ switch ($ctl){
   		break;
 	case "G4_CHKSAVE" :
   		echo $objService->goG4Chksave(); //AUTH, 선택저장
+  		break;
+	case "G4_SAVE" :
+  		echo $objService->goG4Save(); //AUTH, 체크 저장
   		break;
 	case "G5_SEARCH" :
   		echo $objService->goG5Search(); //SVC AUTH, 조회

@@ -26,7 +26,7 @@ $log = getLogger(
 	, "PGM_ID"=>"PJTCOPY"
 	, "REQTOKEN" => $reqToken
 	, "RESTOKEN" => $resToken
-	, "LOG_LEVEL" => Monolog\Logger::ERROR
+	, "LOG_LEVEL" => Monolog\Logger::INFO
 	)
 );
 $log->info("PjtcopyControl___________________________start");
@@ -250,10 +250,11 @@ $REQ["G3-XML"] = filterGridXml(
 $REQ["G4-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G4-XML"]
-		,"COLORD"=>"PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT"
+		,"COLORD"=>"CHKROLLUP,PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT"
 		,"VALID"=>
 			array(
-			"PJTSEQ"=>array("NUMBER",20)	
+			"CHKROLLUP"=>array("STRING",100)	
+			,"PJTSEQ"=>array("NUMBER",20)	
 			,"CFGSEQ"=>array("NUMBER",30)	
 			,"USEYN"=>array("STRING",1)	
 			,"CFGID"=>array("STRING",30)	
@@ -282,10 +283,11 @@ $REQ["G4-XML"] = filterGridXml(
 $REQ["G5-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G5-XML"]
-		,"COLORD"=>"PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT"
+		,"COLORD"=>"CHKROLLUP,PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT"
 		,"VALID"=>
 			array(
-			"PJTSEQ"=>array("NUMBER",20)	
+			"CHKROLLUP"=>array("STRING",100)	
+			,"PJTSEQ"=>array("NUMBER",20)	
 			,"FILESEQ"=>array("STRING",30)	
 			,"MKFILETYPE"=>array("STRING",0)	
 			,"MKFILETYPENM"=>array("STRING",0)	
@@ -313,7 +315,13 @@ $REQ["G5-XML"] = filterGridXml(
 					)
 	)
 );
-array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
+$REQ["G4-CHK"] = $_POST["G4-CHK"];//CHK 받기
+//filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
+$REQ["G4-CHK"] = filterGridChk($REQ["G4-CHK"],"NUMBER",30,"REGEXMAT","/^[0-9]+$/");//CFGSEQ 입력값검증
+	$REQ["G5-CHK"] = $_POST["G5-CHK"];//CHK 받기
+//filterGridChk($tStr,$tDataType,$tDataSize,$tValidType,$tValidRule)
+$REQ["G5-CHK"] = filterGridChk($REQ["G5-CHK"],"STRING",30,"REGEXMAT","/^[0-9]+$/");//FILESEQ 입력값검증
+	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new pjtcopyService();
 	//컨트롤 명령별 분개처리
@@ -344,7 +352,7 @@ switch ($ctl){
   		echo $objService->goG4Save(); //to CFG, 저장
   		break;
 	case "G4_CHKSAVE" :
-  		echo $objService->goG4Chksave(); //to CFG, 선택저장
+  		echo $objService->goG4Chksave(); //to CFG, 선택삭제
   		break;
 	case "G5_SEARCH" :
   		echo $objService->goG5Search(); //to FILE, 조회
@@ -353,7 +361,7 @@ switch ($ctl){
   		echo $objService->goG5Save(); //to FILE, 저장
   		break;
 	case "G5_CHKSAVE" :
-  		echo $objService->goG5Chksave(); //to FILE, 선택저장
+  		echo $objService->goG5Chksave(); //to FILE, 선택 삭제
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");

@@ -306,6 +306,50 @@ class authdeployService
 		echo json_encode($rtnVal);
 		$log->info("AUTHDEPLOYService-goG4Chksave________________________end");
 	}
+	//AUTH, 체크 저장
+	public function goG4Save(){
+		global $REQ,$CFG,$_RTIME, $log;
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		$log->info("AUTHDEPLOYService-goG4Save________________________start");
+		//GRID_SAVE____________________________start
+		$GRID["SQL"]["C"] = array();
+		$GRID["SQL"]["U"] = array();
+		$GRID["SQL"]["D"] = array();
+		$grpId="G4";
+		$GRID["XML"]=$REQ[$grpId."-XML"];
+		$GRID["COLORD"] = "CHK,ROWID,PGMID,AUTH_ID,AUTH_NM,ADDDT"; //그리드 컬럼순서(Hidden컬럼포함)
+	//암호화컬럼
+		$GRID["COLCRYPT"] = array();	
+		$GRID["KEYCOLID"] = "ROWID";  //KEY컬럼 COLID, 1
+		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
+		//체크 저장
+		//V_GRPNM : AUTH
+		array_push($GRID["SQL"]["U"], $this->DAO->insSvcAuth($REQ)); //SAVE, 체크 저장,insSvcAuth
+		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
+		if($tmpVal->RTN_CD == "500"){
+			$log->info("requireGrid - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
+		$tmpVal = makeGridSaveJsonArray($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G4]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
+		//GRID_SAVE____________________________end
+
+
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		$log->info("AUTHDEPLOYService-goG4Save________________________end");
+	}
 	//SVC AUTH, 조회
 	public function goG5Search(){
 		global $REQ,$CFG,$_RTIME, $log;

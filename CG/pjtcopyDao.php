@@ -15,12 +15,38 @@ class pjtcopyDao
 		global $log;
 		$log->info("PjtcopyDao-__toString");
 	}
+	//delToCfg    
+	public function delToCfg($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CGPJT2";
+		$RtnVal["SQLID"] = "delToCfg";
+		$RtnVal["SQLTXT"] = "delete from CG_PJTCFG where CFGSEQ = #{CFGSEQ}";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "i";
+		return $RtnVal;
+    }  
+	//delToFile    
+	public function delToFile($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "D";//CRUD 
+		$RtnVal["SVRID"] = "CGPJT2";
+		$RtnVal["SQLID"] = "delToFile";
+		$RtnVal["SQLTXT"] = "delete from CG_PJTFILE where FILESEQ = #{FILESEQ}";
+		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
+		$RtnVal["REQUIRE"] = array(	);
+		$RtnVal["BINDTYPE"] = "s";
+		return $RtnVal;
+    }  
 	//CopyCFG    
 	public function iFromCFG($req){
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT2";
 		$RtnVal["SQLID"] = "iFromCFG";
 		$RtnVal["SQLTXT"] = "insert into CG_PJTCFG (
  PJTSEQ, CFGID, CFGNM, MVCGBN, PATH
@@ -42,7 +68,7 @@ class pjtcopyDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT2";
 		$RtnVal["SQLID"] = "iFromFile";
 		$RtnVal["SQLTXT"] = "INSERT INTO CG_PJTFILE (
 	PJTSEQ, MKFILETYPE, MKFILETYPENM, MKFILEFORMAT, MKFILEEXT
@@ -61,7 +87,7 @@ class pjtcopyDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sFromCFG";
 		$RtnVal["SQLTXT"] = "select 
  0 as CHKEDIT,PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT
@@ -78,7 +104,7 @@ where PJTSEQ = #{G1-FROM_PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sFromFile";
 		$RtnVal["SQLTXT"] = "SELECT 
  0 as CHKEDIT, PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT
@@ -95,10 +121,11 @@ WHERE PJTSEQ = #{G1-FROM_PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT2";
 		$RtnVal["SQLID"] = "sToCFG";
-		$RtnVal["SQLTXT"] = "select 
- PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT
+		$RtnVal["SQLTXT"] = "select
+	0 as CHK
+	, PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT
 from CG_PJTCFG
 where PJTSEQ = #{G1-TO_PJTSEQ} ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
@@ -111,9 +138,11 @@ where PJTSEQ = #{G1-TO_PJTSEQ} ";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT2";
 		$RtnVal["SQLID"] = "sToFile";
-		$RtnVal["SQLTXT"] = "SELECT PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT
+		$RtnVal["SQLTXT"] = "SELECT 
+	0 as CHK
+	, PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT
 FROM CG_PJTFILE
 WHERE PJTSEQ = #{G1-TO_PJTSEQ}
 ";
