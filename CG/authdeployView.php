@@ -129,7 +129,8 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_RELOAD" value="새로고침" onclick="G2_RELOAD(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_HIDDENCOL" value="숨김필드보기" onclick="G2_HIDDENCOL(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
-			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_CHKSAVE" value="선택저장" onclick="G2_CHKSAVE(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_ADDROW" value="+" onclick="G2_ADDROW(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_SAVE" value="체크 저장" onclick="G2_SAVE(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>
@@ -198,6 +199,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_HIDDENCOL" value="숨김필드보기" onclick="G4_HIDDENCOL(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_EXCEL" value="엑셀다운로드" onclick="G4_EXCEL(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_CHKSAVE" value="선택저장" onclick="G4_CHKSAVE(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G4_ADDROW" value="+" onclick="G4_ADDROW(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>

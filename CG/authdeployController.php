@@ -26,7 +26,7 @@ $log = getLogger(
 	, "PGM_ID"=>"AUTHDEPLOY"
 	, "REQTOKEN" => $reqToken
 	, "RESTOKEN" => $resToken
-	, "LOG_LEVEL" => Monolog\Logger::ERROR
+	, "LOG_LEVEL" => Monolog\Logger::INFO
 	)
 );
 $log->info("AuthdeployControl___________________________start");
@@ -289,8 +289,8 @@ switch ($ctl){
 	case "G2_EXCEL" :
   		echo $objService->goG2Excel(); //PGM, 엑셀다운로드
   		break;
-	case "G2_CHKSAVE" :
-  		echo $objService->goG2Chksave(); //PGM, 선택저장
+	case "G2_SAVE" :
+  		echo $objService->goG2Save(); //PGM, 체크 저장
   		break;
 	case "G3_SEARCH" :
   		echo $objService->goG3Search(); //SVC MENU, 조회

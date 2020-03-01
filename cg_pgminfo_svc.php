@@ -1013,6 +1013,9 @@ class cg_pgminfo_svc
 	
 			$parser = new PHPSQLParser($to_row["SQLTXT"]);
 			
+			//echo json_encode($parser);
+			//exit;
+
 			$sql_row = null;
 	
 			//기존정보 ouptput 가져오기 ( 나중에 삭제 후에 필수여부는 다시 update 해주기 )
@@ -1057,69 +1060,71 @@ class cg_pgminfo_svc
 			alog("        SELECT절 sizeof : " . sizeof($parser->parsed["SELECT"]) );
 			alog("        WHERE절 sizeof : " . sizeof($parser->parsed["WHERE"]) );
 	
-			//SELECT절이 있을 경우에만
-			for($s=0;$s<sizeof($parser->parsed["SELECT"]); $s++){
-				alog("  s : " . $s);
-				alog("      alias : " . $parser->parsed["SELECT"][$s]["alias"]);
-				alog("      alias.name : " . $parser->parsed["SELECT"][$s]["alias"]["name"]);
-				alog("      expr_type : " . $parser->parsed["SELECT"][$s]["expr_type"]);            
-				alog("      base_expr before : " . $parser->parsed["SELECT"][$s]["base_expr"]);
+			//SELECT절이 있을 경우에만 (다만 insert as select 구문은 제외)
+			if(sizeof($parser->parsed["INSERT"]) == 0){
+				for($s=0;$s<sizeof($parser->parsed["SELECT"]) ; $s++){
+					alog("  s : " . $s);
+					alog("      alias : " . $parser->parsed["SELECT"][$s]["alias"]);
+					alog("      alias.name : " . $parser->parsed["SELECT"][$s]["alias"]["name"]);
+					alog("      expr_type : " . $parser->parsed["SELECT"][$s]["expr_type"]);            
+					alog("      base_expr before : " . $parser->parsed["SELECT"][$s]["base_expr"]);
+		
+					// A.COLID를 COLID로 변경
+					$base_expr = $parser->parsed["SELECT"][$s]["base_expr"];
+					$base_expr = strpos($base_expr,".")>0?explode(".",$base_expr)[1]:$base_expr;
+		
+					//alog("      base_expr after : " . $base_expr);
+					$sql_row["COLID"] = is_array($parser->parsed["SELECT"][$s]["alias"])?$parser->parsed["SELECT"][$s]["alias"]["name"]:$base_expr;
+					$sql_row["DDCOLID"] = $sql_row["COLID"];
+		
+					alog("            OUTPUT 절 $s :  " . $sql_row["COLID"] );
+					$sql_row["SQLGBN"] = "O";
+					$sql_row["ORD"] = ($s+1) * 10;
 	
-				// A.COLID를 COLID로 변경
-				$base_expr = $parser->parsed["SELECT"][$s]["base_expr"];
-				$base_expr = strpos($base_expr,".")>0?explode(".",$base_expr)[1]:$base_expr;
+					//기존 순번째와 신규순번째의 colid가 일치하는 경우 필수 여부 그대로 넣어주기
+					if($sql_row["COLID"] == $arrOutputCols[$s]["COLID"]){
+						$sql_row["REQUIREYN"] = $arrOutputCols[$s]["REQUIREYN"];
+						$sql_row["ADDDT"] = $arrOutputCols[$s]["ADDDT"];
+						
+						//insert 이지만 update인것처럼 처리
+						$sql = "insert into CG_PGMSQLD (
+							PJTSEQ, PGMSEQ, SQLSEQ, SQLGBN, COLID
+							, DDCOLID, ORD, REQUIREYN
+							, ADDDT, MODDT
+						)values(
+							#{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{SQLGBN}, #{COLID}
+							, #{DDCOLID}, #{ORD}, #{REQUIREYN}
+							, #{ADDDT}, date_format(sysdate(),'%Y%m%d%H%i%s')
+						)
+						";
+						$to_coltype = "iiiss sis s";
+					}else{
+						//insert 처리
+						$sql = "insert into CG_PGMSQLD (
+							PJTSEQ, PGMSEQ, SQLSEQ, SQLGBN, COLID
+							, DDCOLID, ORD
+							, ADDDT
+						)values(
+							#{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{SQLGBN}, #{COLID}
+							, #{DDCOLID}, #{ORD}
+							, date_format(sysdate(),'%Y%m%d%H%i%s')
+						)
+						";
+						$to_coltype = "iiiss si";
+					}
 	
-				//alog("      base_expr after : " . $base_expr);
-				$sql_row["COLID"] = is_array($parser->parsed["SELECT"][$s]["alias"])?$parser->parsed["SELECT"][$s]["alias"]["name"]:$base_expr;
-				$sql_row["DDCOLID"] = $sql_row["COLID"];
 	
-				alog("            OUTPUT 절 $s :  " . $sql_row["COLID"] );
-				$sql_row["SQLGBN"] = "O";
-				$sql_row["ORD"] = ($s+1) * 10;
-
-				//기존 순번째와 신규순번째의 colid가 일치하는 경우 필수 여부 그대로 넣어주기
-				if($sql_row["COLID"] == $arrOutputCols[$s]["COLID"]){
-					$sql_row["REQUIREYN"] = $arrOutputCols[$s]["REQUIREYN"];
-					$sql_row["ADDDT"] = $arrOutputCols[$s]["ADDDT"];
-					
-					//insert 이지만 update인것처럼 처리
-					$sql = "insert into CG_PGMSQLD (
-						PJTSEQ, PGMSEQ, SQLSEQ, SQLGBN, COLID
-						, DDCOLID, ORD, REQUIREYN
-						, ADDDT, MODDT
-					)values(
-						#{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{SQLGBN}, #{COLID}
-						, #{DDCOLID}, #{ORD}, #{REQUIREYN}
-						, #{ADDDT}, date_format(sysdate(),'%Y%m%d%H%i%s')
-					)
-					";
-					$to_coltype = "iiiss sis s";
-				}else{
-					//insert 처리
-					$sql = "insert into CG_PGMSQLD (
-						PJTSEQ, PGMSEQ, SQLSEQ, SQLGBN, COLID
-						, DDCOLID, ORD
-						, ADDDT
-					)values(
-						#{PJTSEQ}, #{PGMSEQ}, #{SQLSEQ}, #{SQLGBN}, #{COLID}
-						, #{DDCOLID}, #{ORD}
-						, date_format(sysdate(),'%Y%m%d%H%i%s')
-					)
-					";
-					$to_coltype = "iiiss si";
+		
+					$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
+					if(!$stmt)JsonMsg("500","102","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
+					$stmt->execute();
+					//echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
+					$to_affected_rows = $this->DB["CGPJT"]->affected_rows;
+					$stmt->close();
+		
 				}
-
-
-	
-				$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
-				if(!$stmt)JsonMsg("500","102","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
-				$stmt->execute();
-				//echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
-				$to_affected_rows = $this->DB["CGPJT"]->affected_rows;
-				$stmt->close();
-	
+		
 			}
-	
 
 
 
@@ -1178,8 +1183,8 @@ class cg_pgminfo_svc
 					$to_coltype = "iiiss si";					
 				}
 	
-				$stmt = makeStmt($this->DB["CG"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
-				if(!$stmt) JsonMsg("500","103","stmt 생성 실패 " . $this->DB["CG"]->errno . " -> " . $this->DB["CG"]->error);
+				$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
+				if(!$stmt) JsonMsg("500","103","stmt 생성 실패 " . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
 				$stmt->execute();
 				//echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
 				$to_affected_rows = $this->DB["CG"]->affected_rows;
