@@ -112,7 +112,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 				생성일
 			</div>
 		<div class="CON_OBJECT">
-			<input type="text" name="G2-ADDDT" value="" id="G2-ADDDT" style="width:100px;">
+			<input type="text" name="G2-ADDDT" value="" id="G2-ADDDT" style="width:100px;" class="formatDate">
 		</div>
 	</div>
 			<!--D101: STARTTXT, TAG-->

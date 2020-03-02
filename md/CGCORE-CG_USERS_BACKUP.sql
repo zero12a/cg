@@ -16,33 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `CG_LAYOUT`
+-- Table structure for table `CG_USERS`
 --
 
-DROP TABLE IF EXISTS `CG_LAYOUT`;
+DROP TABLE IF EXISTS `CG_USERS`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CG_LAYOUT` (
-  `PJTSEQ` int(11) NOT NULL,
-  `LAYOUTID` varchar(3) COLLATE utf8_bin NOT NULL,
-  `GRPCNT` int(11) NOT NULL,
-  `USEYN` varchar(1) COLLATE utf8_bin NOT NULL DEFAULT 'Y',
-  `ADDDT` varchar(14) COLLATE utf8_bin NOT NULL,
-  `ADDID` int(11) NOT NULL,
-  `MODDT` varchar(14) COLLATE utf8_bin DEFAULT NULL,
-  `MODID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`PJTSEQ`,`LAYOUTID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `CG_USERS` (
+  `USERSEQ` int(11) NOT NULL,
+  `EMAIL` varchar(300) NOT NULL,
+  `PASSWD` varchar(300) NOT NULL,
+  `EMAILVALIDYN` varchar(1) NOT NULL,
+  `LASTPWCHGDT` varchar(14) NOT NULL,
+  `PWFAILCNT` int(11) NOT NULL DEFAULT '0',
+  `LOCKYN` varchar(1) NOT NULL,
+  `FREEZEDT` varchar(14) NOT NULL,
+  `LOCKDT` varchar(14) NOT NULL,
+  `SERVERSEQ` int(11) NOT NULL,
+  `ADDDT` varchar(14) NOT NULL,
+  `MODDT` varchar(14) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `CG_LAYOUT`
+-- Dumping data for table `CG_USERS`
 --
 
-LOCK TABLES `CG_LAYOUT` WRITE;
-/*!40000 ALTER TABLE `CG_LAYOUT` DISABLE KEYS */;
-INSERT INTO `CG_LAYOUT` VALUES (3,'2A',2,'Y','',0,NULL,NULL),(3,'3B',3,'Y','',0,NULL,NULL),(3,'3C',3,'Y','',0,NULL,NULL),(3,'4D',4,'Y','',0,NULL,NULL),(3,'4E',4,'Y','',0,NULL,NULL),(3,'4F',4,'Y','',0,NULL,NULL),(3,'4G',4,'Y','',0,NULL,NULL),(3,'4H',4,'Y','',0,NULL,NULL),(3,'4I',4,'Y','',0,NULL,NULL);
-/*!40000 ALTER TABLE `CG_LAYOUT` ENABLE KEYS */;
+LOCK TABLES `CG_USERS` WRITE;
+/*!40000 ALTER TABLE `CG_USERS` DISABLE KEYS */;
+INSERT INTO `CG_USERS` VALUES (1,'zero12a@gmail.com','3e453f868136a31be81a1923f4c4011ce83355b26b76834f0424dabfb3611b4784d9bcfb290831c3b0446ebfd42dcf2621ebdef6d1fee51c63a35e7ff7d75299','Y','20180122224831',0,'N','','',3,'20160415111111','20180122225108');
+/*!40000 ALTER TABLE `CG_USERS` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-03  7:09:57
+-- Dump completed on 2020-02-27  7:37:56
