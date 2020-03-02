@@ -1211,7 +1211,7 @@
 
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
         mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,30,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
-        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,txttxt,ed,ed,coro,ed,ed,ed,ed,ed,ro,ro"); //29
+        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,txttxt,co,ed,coro,ed,ed,ed,ed,ed,ro,ro"); //29
         mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
 		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
 
@@ -1234,7 +1234,8 @@
 		setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJALIGN")),"OBJALIGN");
         setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("VALIDSEQ")),"VALIDSEQ");
         setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("FOOTERMATH")),"GRIDFOOTER");
-        
+        setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("FORMAT")),"OBJFORMAT");
+
         //YN 콤보 채우기
         setCodeYN("GRID",mygridIo.getCombo(mygridIo.getColIndexById("BRYN")));
         setCodeYN("GRID",mygridIo.getCombo(mygridIo.getColIndexById("LBLHIDDENYN")));

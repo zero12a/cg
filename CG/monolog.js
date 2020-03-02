@@ -27,6 +27,7 @@ var url_G3_SEARCH = "monologController?CTLGRP=G3&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로
 var url_G3_RELOAD = "monologController?CTLGRP=G3&CTLFNC=RELOAD";
 var obj_G3_LOGSEQ;   // SEQ 글로벌 변수 선언
+var obj_G3_DATEHM;   // DATEHM 글로벌 변수 선언
 var obj_G3_LOGMSG;   // MSG 글로벌 변수 선언
 var obj_G3_LOGWE;   // LOGWE 글로벌 변수 선언
 	var codeMirrorFontSizeG3Logmsg = 11; // MSG
@@ -104,26 +105,26 @@ $("#G1-ADDDT").val(moment().format("YYYYMMDD"));
 function G2_INIT(){
   alog("G2_INIT()-------------------------start");
 
-        //그리드 초기화
-        mygridG2 = new dhtmlXGridObject('gridG2');
-        mygridG2.setDateFormat("%Y%m%d");
-        mygridG2.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-		mygridG2.setUserData("","gridTitle","G2 : 로그"); //글로별 변수에 그리드 타이블 넣기
-		//헤더초기화
-        mygridG2.setHeader("SEQ,URL,SESSION,REQTOKEN,RESTOKEN,ID,USERSEQ,LIST,LEVEL,DT,MSG,PGMID,ADDDT");
-		mygridG2.setColumnIds("LOGSEQ,URL,SESSIONID,REQTOKEN,RESTOKEN,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
-		mygridG2.setInitWidths("70,60,50,50,50,50,50,50,40,120,150,120,100");
-		mygridG2.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,txttxt,ro,ro");
+	//그리드 초기화
+	mygridG2 = new dhtmlXGridObject('gridG2');
+	mygridG2.setDateFormat("%Y%m%d");
+	mygridG2.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+	mygridG2.setUserData("","gridTitle","G2 : 로그"); //글로별 변수에 그리드 타이블 넣기
+	//헤더초기화
+	mygridG2.setHeader("SEQ,URL,SESSION,REQTOKEN,RESTOKEN,ID,USERSEQ,LIST,LEVEL,DT,MSG,PGMID,ADDDT");
+	mygridG2.setColumnIds("LOGSEQ,URL,SESSIONID,REQTOKEN,RESTOKEN,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
+	mygridG2.setInitWidths("70,60,50,50,50,50,50,50,40,120,150,120,100");
+	mygridG2.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,txttxt,ro,ro");
 	//가로 정렬	
-		mygridG2.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left");
-		mygridG2.setColSorting("int,str,str,str,str,str,int,str,str,str,str,str,str");		//렌더링	
-		mygridG2.enableSmartRendering(false);
-		mygridG2.enableMultiselect(true);
-		//mygridG2.setColValidators("G2_LOGSEQ,G2_URL,G2_SESSIONID,G2_REQTOKEN,G2_RESTOKEN,G2_USERID,G2_USERSEQ,G2_LISTNM,G2_LOGLEVEL,G2_LOGDT,G2_LOGMSG,G2_CHANNEL,G2_ADDDT");
-		mygridG2.splitAt(0);//'freezes' 0 columns 
-		mygridG2.init();
+	mygridG2.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left");
+	mygridG2.setColSorting("int,str,str,str,str,str,int,str,str,str,str,str,str");	//렌더링	
+	mygridG2.enableSmartRendering(false);
+	mygridG2.enableMultiselect(true);
+	//mygridG2.setColValidators("G2_LOGSEQ,G2_URL,G2_SESSIONID,G2_REQTOKEN,G2_RESTOKEN,G2_USERID,G2_USERSEQ,G2_LISTNM,G2_LOGLEVEL,G2_LOGDT,G2_LOGMSG,G2_CHANNEL,G2_ADDDT");
+	mygridG2.splitAt(0);//'freezes' 0 columns 
+	mygridG2.init();
 
-		mygridG2.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
+	mygridG2.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG2.enableBlockSelection(true);
 		mygridG2.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -176,12 +177,14 @@ function G2_INIT(){
 		 // IO : ADDDT초기화	
 	//onCheck
 		mygridG2.attachEvent("onCheck",function(rowId, cellInd, state){
-			//onCheck is void return event
-			alog(rowId + " is onCheck.");
-			//일반 체크 박스는 변경이면 실제 row 변경
+			alog("mygridG2  onCheck ------------------start");
+			alog("	rowId=" + rowId + ", cellInd=" + cellInd + ", state=" + state);
+
+			RowEditStatus = mygridG2.getUserData(rowId,"!nativeeditor_status");
+			alog("	RowEditStatus=" + RowEditStatus);
+			//[일반 체크] 박스는 변경이면 실제 row 변경
 			if( 1 == 2 
 				){
-				RowEditStatus = mygridG2.getUserData(rowId,"!nativeeditor_status");
 				if(RowEditStatus == ""){
 					mygridG2.setUserData(rowId,"!nativeeditor_status","updated");
 					mygridG2.setRowTextBold(rowId);
@@ -212,16 +215,15 @@ function G2_INIT(){
 		lastinputG3.set("G2-LOGSEQ", mygridG2.cells(rowID,mygridG2.getColIndexById("LOGSEQ")).getValue().replace(/&amp;/g, "&")); // 
 			G3_SEARCH(lastinputG3,uuidv4()); //자식그룹 호출 : 상세
 		});
-		mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+	//onEditCell 이벤트
+	mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+		alog("mygridG2  onEditCell ------------------start");
+		alog("	stage : " + stage + ", rId : " + rId + ", cInd : " + cInd + ", nValue : " + nValue + ", oValue : " + oValue);
 
-            alog("mygridG2  onEditCell ------------------start");
-            alog("       stage : " + stage);
-            alog("       rId : " + rId);
-            alog("       cInd : " + cInd);
-            alog("       nValue : " + nValue);
-            alog("       oValue : " + oValue);
+		RowEditStatus = mygridG2.getUserData(rId,"!nativeeditor_status");
+		alog("	RowEditStatus = " + RowEditStatus);
 
-            RowEditStatus = mygridG2.getUserData(rId,"!nativeeditor_status");
+		//체크박스 아닌 일반 컬럼
             if(stage == 2
                 && RowEditStatus != "inserted"
                 && RowEditStatus != "deleted"
@@ -233,9 +235,9 @@ function G2_INIT(){
                 }
                 mygridG2.cells(rId,cInd).cell.wasChanged = true;
             }
-            return true;
 
-		});
+            return true;
+	});
 		//1
 		mygridG2.attachEvent("onRowSelect",function(rowID,celInd){
 			alog("mygridG2. - onRowSelect ----------start");
@@ -246,8 +248,8 @@ function G2_INIT(){
 
 			alog("mygridG2. - onRowSelect ----------end");
 		});
-        alog("G2_INIT()-------------------------end");
-     }
+	alog("G2_INIT()-------------------------end");
+}
 //디테일 초기화	
 //상세 폼뷰 초기화
 function G3_INIT(){
@@ -255,8 +257,16 @@ function G3_INIT(){
 
 
 
+
 	//컬럼 초기화
-	//LOGSEQ, SEQ 초기화			//코드 미러 초기화
+	//LOGSEQ, SEQ 초기화
+	//DATEHM, DATEHM 초기화	
+	//G3-DATEHM
+	var cleave = new Cleave('.formatTime', {
+        time: true,
+        timePattern: ['h', 'm']
+    });
+		//코드 미러 초기화
         obj_G3_LOGMSG = CodeMirror.fromTextArea(document.getElementById('codeMirror_G3-LOGMSG'), {
             mode: "text/x-sql",
             styleActiveLine: true,
@@ -309,6 +319,24 @@ function G1_SEARCHALL(token){
 		//  호출
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
+}
+//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/common/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("LOGSEQ,URL,SESSIONID,REQTOKEN,RESTOKEN,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
+	$("#DATA_WIDTHS").val("70,60,50,50,50,50,50,50,40,120,150,120,100");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
 }
 
 
@@ -380,24 +408,6 @@ function G1_SEARCHALL(token){
         alog("G2_SEARCH()------------end");
     }
 
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/common/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG2.setSerializationLevel(true,false,false,false,false,true);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("LOGSEQ,URL,SESSIONID,REQTOKEN,RESTOKEN,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
-	$("#DATA_WIDTHS").val("70,60,50,50,50,50,50,50,40,120,150,120,100");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
-}
 //새로고침	
 function G3_RELOAD(token){
 	alog("G3_RELOAD-----------------start");
@@ -441,7 +451,8 @@ function G3_SEARCH(tinput,token){
             //모드 변경하기
             $("#G3-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
-			$("#G3-LOGSEQ").text(data.RTN_DATA.LOGSEQ);//SEQ 변수세팅
+	$("#G3-LOGSEQ").text(data.RTN_DATA.LOGSEQ);//SEQ 변수세팅
+			$("#G3-DATEHM").val(data.RTN_DATA.DATEHM);//DATEHM 변수세팅
 		obj_G3_LOGMSG.setValue(data.RTN_DATA.LOGMSG); //MSG 
 	//$('#summernote').summernote('editor.insertText', data.RTN_DATA.LOGWE);
 	$('#G3-LOGWE').summernote('reset'); //기존 데이터 지우기
@@ -465,6 +476,7 @@ function G3_NEW(){
 	$("#G3-CTLCUD").val("C");
 	//PMGIO 로직
 	$("#G3-LOGSEQ").text("");//SEQ 신규초기화
+	$("#G3-DATEHM").val("");//DATEHM 신규초기화	
 	obj_G3_LOGMSG.setValue(""); // MSG값 비우기
 	$('#G3-LOGWE').summernote('reset'); //기존 데이터 지우기
        alog("DETAILNew30---------------end");
