@@ -14,8 +14,7 @@ class pgmmngService
 		$log->info("PgmmngService-__construct");
 
 		$this->DAO = new pgmmngDao();
-		$this->DB["CGCORE"] = getDbConn($CFG["CFG_DB"]["CGCORE"]);
-		$this->DB["CGPJT1"] = getDbConn($CFG["CFG_DB"]["CGPJT1"]);
+		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -23,8 +22,7 @@ class pgmmngService
 		$log->info("PgmmngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CGCORE"])$this->DB["CGCORE"]->close();
-		if($this->DB["CGPJT1"])$this->DB["CGPJT1"]->close();
+		if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){

@@ -140,26 +140,26 @@ setCodeRadio("CONDITION", "G2-MYRADIO", "CRUD");
 function G3_INIT(){
   alog("G3_INIT()-------------------------start");
 
-        //그리드 초기화
-        mygridG3 = new dhtmlXGridObject('gridG3');
-        mygridG3.setDateFormat("%Y%m%d");
-        mygridG3.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-		mygridG3.setUserData("","gridTitle","G3 : PJT"); //글로별 변수에 그리드 타이블 넣기
-		//헤더초기화
-        mygridG3.setHeader("SEQ,프로젝트ID,프로젝트명,파일 CHARSET,UITOOL,서버언어,DEPLOYKEY,패키지ROOT,시작일,종료일,삭제YN,ADDDT,수정일");
-		mygridG3.setColumnIds("PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT,DELYN,ADDDT,MODDT");
-		mygridG3.setInitWidths("60,60,60,60,60,40,50,60,40,40,40,40,40");
-		mygridG3.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,dhxCalendar,dhxCalendar,ed,ed,ed");
+	//그리드 초기화
+	mygridG3 = new dhtmlXGridObject('gridG3');
+	mygridG3.setDateFormat("%Y%m%d");
+	mygridG3.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+	mygridG3.setUserData("","gridTitle","G3 : PJT"); //글로별 변수에 그리드 타이블 넣기
+	//헤더초기화
+	mygridG3.setHeader("SEQ,프로젝트ID,프로젝트명,파일 CHARSET,UITOOL,서버언어,DEPLOYKEY,패키지ROOT,시작일,종료일,삭제YN,ADDDT,수정일");
+	mygridG3.setColumnIds("PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT,DELYN,ADDDT,MODDT");
+	mygridG3.setInitWidths("60,60,60,60,60,40,50,60,40,40,40,40,40");
+	mygridG3.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,dhxCalendar,dhxCalendar,ed,ed,ed");
 	//가로 정렬	
-		mygridG3.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left");
-		mygridG3.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str");		//렌더링	
-		mygridG3.enableSmartRendering(false);
-		mygridG3.enableMultiselect(true);
-		//mygridG3.setColValidators("G3_PJTSEQ,G3_PJTID,G3_PJTNM,G3_FILECHARSET,G3_UITOOL,G3_SVRLANG,G3_DEPLOYKEY,G3_PKGROOT,G3_STARTDT,G3_ENDDT,G3_DELYN,G3_ADDDT,G3_MODDT");
-		mygridG3.splitAt(0);//'freezes' 0 columns 
-		mygridG3.init();
+	mygridG3.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left");
+	mygridG3.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str");	//렌더링	
+	mygridG3.enableSmartRendering(false);
+	mygridG3.enableMultiselect(true);
+	//mygridG3.setColValidators("G3_PJTSEQ,G3_PJTID,G3_PJTNM,G3_FILECHARSET,G3_UITOOL,G3_SVRLANG,G3_DEPLOYKEY,G3_PKGROOT,G3_STARTDT,G3_ENDDT,G3_DELYN,G3_ADDDT,G3_MODDT");
+	mygridG3.splitAt(0);//'freezes' 0 columns 
+	mygridG3.init();
 
-		mygridG3.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
+	mygridG3.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG3.enableBlockSelection(true);
 		mygridG3.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -212,12 +212,14 @@ function G3_INIT(){
 		 // IO : 수정일초기화	
 	//onCheck
 		mygridG3.attachEvent("onCheck",function(rowId, cellInd, state){
-			//onCheck is void return event
-			alog(rowId + " is onCheck.");
-			//일반 체크 박스는 변경이면 실제 row 변경
+			alog("mygridG3  onCheck ------------------start");
+			alog("	rowId=" + rowId + ", cellInd=" + cellInd + ", state=" + state);
+
+			RowEditStatus = mygridG3.getUserData(rowId,"!nativeeditor_status");
+			alog("	RowEditStatus=" + RowEditStatus);
+			//[일반 체크] 박스는 변경이면 실제 row 변경
 			if( 1 == 2 
 				){
-				RowEditStatus = mygridG3.getUserData(rowId,"!nativeeditor_status");
 				if(RowEditStatus == ""){
 					mygridG3.setUserData(rowId,"!nativeeditor_status","updated");
 					mygridG3.setRowTextBold(rowId);
@@ -266,16 +268,15 @@ function G3_INIT(){
 			G6_SEARCH(lastinputG6,uuidv4()); //자식그룹 호출 : CONFIG
 			G7_SEARCH(lastinputG7,uuidv4()); //자식그룹 호출 : FILE
 		});
-		mygridG3.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+	//onEditCell 이벤트
+	mygridG3.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+		alog("mygridG3  onEditCell ------------------start");
+		alog("	stage : " + stage + ", rId : " + rId + ", cInd : " + cInd + ", nValue : " + nValue + ", oValue : " + oValue);
 
-            alog("mygridG3  onEditCell ------------------start");
-            alog("       stage : " + stage);
-            alog("       rId : " + rId);
-            alog("       cInd : " + cInd);
-            alog("       nValue : " + nValue);
-            alog("       oValue : " + oValue);
+		RowEditStatus = mygridG3.getUserData(rId,"!nativeeditor_status");
+		alog("	RowEditStatus = " + RowEditStatus);
 
-            RowEditStatus = mygridG3.getUserData(rId,"!nativeeditor_status");
+		//체크박스 아닌 일반 컬럼
             if(stage == 2
                 && RowEditStatus != "inserted"
                 && RowEditStatus != "deleted"
@@ -287,35 +288,35 @@ function G3_INIT(){
                 }
                 mygridG3.cells(rId,cInd).cell.wasChanged = true;
             }
-            return true;
 
-		});
-        alog("G3_INIT()-------------------------end");
-     }
+            return true;
+	});
+	alog("G3_INIT()-------------------------end");
+}
 	//PGM 그리드 초기화
 function G4_INIT(){
   alog("G4_INIT()-------------------------start");
 
-        //그리드 초기화
-        mygridG4 = new dhtmlXGridObject('gridG4');
-        mygridG4.setDateFormat("%Y%m%d");
-        mygridG4.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-		mygridG4.setUserData("","gridTitle","G4 : PGM"); //글로별 변수에 그리드 타이블 넣기
-		//헤더초기화
-        mygridG4.setHeader("PJTSEQ,SEQ,프로그램ID,프로그램이름,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,로그인필요,ADDDT,MODDT");
-		mygridG4.setColumnIds("PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,LOGINYN,ADDDT,MODDT");
-		mygridG4.setInitWidths("40,50,100,100,100,60,60,60,60,40,70,60,60");
-		mygridG4.setColTypes("ed,ed,ed,ed,ed,co,ed,ed,co,ed,ed,ed,ed");
+	//그리드 초기화
+	mygridG4 = new dhtmlXGridObject('gridG4');
+	mygridG4.setDateFormat("%Y%m%d");
+	mygridG4.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+	mygridG4.setUserData("","gridTitle","G4 : PGM"); //글로별 변수에 그리드 타이블 넣기
+	//헤더초기화
+	mygridG4.setHeader("PJTSEQ,SEQ,프로그램ID,프로그램이름,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,로그인필요,ADDDT,MODDT");
+	mygridG4.setColumnIds("PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,LOGINYN,ADDDT,MODDT");
+	mygridG4.setInitWidths("40,50,100,100,100,60,60,60,60,40,70,60,60");
+	mygridG4.setColTypes("ed,ed,ed,ed,ed,co,ed,ed,co,ed,ed,ed,ed");
 	//가로 정렬	
-		mygridG4.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left");
-		mygridG4.setColSorting("int,int,str,str,str,str,str,str,str,str,str,str,str");		//렌더링	
-		mygridG4.enableSmartRendering(false);
-		mygridG4.enableMultiselect(true);
-		//mygridG4.setColValidators("G4_PJTSEQ,G4_PGMSEQ,G4_PGMID,G4_PGMNM,G4_VIEWURL,G4_PGMTYPE,G4_POPWIDTH,G4_POPHEIGHT,G4_SECTYPE,G4_PKGGRP,G4_LOGINYN,G4_ADDDT,G4_MODDT");
-		mygridG4.splitAt(0);//'freezes' 0 columns 
-		mygridG4.init();
+	mygridG4.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left");
+	mygridG4.setColSorting("int,int,str,str,str,str,str,str,str,str,str,str,str");	//렌더링	
+	mygridG4.enableSmartRendering(false);
+	mygridG4.enableMultiselect(true);
+	//mygridG4.setColValidators("G4_PJTSEQ,G4_PGMSEQ,G4_PGMID,G4_PGMNM,G4_VIEWURL,G4_PGMTYPE,G4_POPWIDTH,G4_POPHEIGHT,G4_SECTYPE,G4_PKGGRP,G4_LOGINYN,G4_ADDDT,G4_MODDT");
+	mygridG4.splitAt(0);//'freezes' 0 columns 
+	mygridG4.init();
 
-		mygridG4.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
+	mygridG4.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG4.enableBlockSelection(true);
 		mygridG4.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -368,12 +369,14 @@ function G4_INIT(){
 		 // IO : MODDT초기화	
 	//onCheck
 		mygridG4.attachEvent("onCheck",function(rowId, cellInd, state){
-			//onCheck is void return event
-			alog(rowId + " is onCheck.");
-			//일반 체크 박스는 변경이면 실제 row 변경
+			alog("mygridG4  onCheck ------------------start");
+			alog("	rowId=" + rowId + ", cellInd=" + cellInd + ", state=" + state);
+
+			RowEditStatus = mygridG4.getUserData(rowId,"!nativeeditor_status");
+			alog("	RowEditStatus=" + RowEditStatus);
+			//[일반 체크] 박스는 변경이면 실제 row 변경
 			if( 1 == 2 
 				){
-				RowEditStatus = mygridG4.getUserData(rowId,"!nativeeditor_status");
 				if(RowEditStatus == ""){
 					mygridG4.setUserData(rowId,"!nativeeditor_status","updated");
 					mygridG4.setRowTextBold(rowId);
@@ -398,16 +401,15 @@ function G4_INIT(){
 			}
 		//A124
 		});
-		mygridG4.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+	//onEditCell 이벤트
+	mygridG4.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+		alog("mygridG4  onEditCell ------------------start");
+		alog("	stage : " + stage + ", rId : " + rId + ", cInd : " + cInd + ", nValue : " + nValue + ", oValue : " + oValue);
 
-            alog("mygridG4  onEditCell ------------------start");
-            alog("       stage : " + stage);
-            alog("       rId : " + rId);
-            alog("       cInd : " + cInd);
-            alog("       nValue : " + nValue);
-            alog("       oValue : " + oValue);
+		RowEditStatus = mygridG4.getUserData(rId,"!nativeeditor_status");
+		alog("	RowEditStatus = " + RowEditStatus);
 
-            RowEditStatus = mygridG4.getUserData(rId,"!nativeeditor_status");
+		//체크박스 아닌 일반 컬럼
             if(stage == 2
                 && RowEditStatus != "inserted"
                 && RowEditStatus != "deleted"
@@ -419,35 +421,35 @@ function G4_INIT(){
                 }
                 mygridG4.cells(rId,cInd).cell.wasChanged = true;
             }
-            return true;
 
-		});
-        alog("G4_INIT()-------------------------end");
-     }
+            return true;
+	});
+	alog("G4_INIT()-------------------------end");
+}
 	//DD 그리드 초기화
 function G5_INIT(){
   alog("G5_INIT()-------------------------start");
 
-        //그리드 초기화
-        mygridG5 = new dhtmlXGridObject('gridG5');
-        mygridG5.setDateFormat("%Y%m%d");
-        mygridG5.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-		mygridG5.setUserData("","gridTitle","G5 : DD"); //글로별 변수에 그리드 타이블 넣기
-		//헤더초기화
-        mygridG5.setHeader("PJTSEQ,DDSEQ,컬럼ID,컬럼명,단축명,데이터타입,데이터사이즈,오브젝트타입,OBJ폼뷰,OBJ그리드,라벨가로,가벨세로,LBLALIGN,오브젝트가로,오브젝트세로,가로정렬,CRYPTCD,VALIDSEQ,PIYN,등록일,수정일");
-		mygridG5.setColumnIds("PJTSEQ,DDSEQ,COLID,COLNM,COLSNM,DATATYPE,DATASIZE,OBJTYPE,OBJTYPE_FORMVIEW,OBJTYPE_GRID,LBLWIDTH,LBLHEIGHT,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,CRYPTCD,VALIDSEQ,PIYN,ADDDT,MODDT");
-		mygridG5.setInitWidths("30,30,100,100,100,100,100,100,60,60,100,100,100,100,100,100,40,60,40,100,100");
-		mygridG5.setColTypes("ro,ro,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed");
+	//그리드 초기화
+	mygridG5 = new dhtmlXGridObject('gridG5');
+	mygridG5.setDateFormat("%Y%m%d");
+	mygridG5.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+	mygridG5.setUserData("","gridTitle","G5 : DD"); //글로별 변수에 그리드 타이블 넣기
+	//헤더초기화
+	mygridG5.setHeader("PJTSEQ,DDSEQ,컬럼ID,컬럼명,단축명,데이터타입,데이터사이즈,오브젝트타입,OBJ폼뷰,OBJ그리드,라벨가로,가벨세로,LBLALIGN,오브젝트가로,오브젝트세로,가로정렬,CRYPTCD,VALIDSEQ,PIYN,등록일,수정일");
+	mygridG5.setColumnIds("PJTSEQ,DDSEQ,COLID,COLNM,COLSNM,DATATYPE,DATASIZE,OBJTYPE,OBJTYPE_FORMVIEW,OBJTYPE_GRID,LBLWIDTH,LBLHEIGHT,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,CRYPTCD,VALIDSEQ,PIYN,ADDDT,MODDT");
+	mygridG5.setInitWidths("30,30,100,100,100,100,100,100,60,60,100,100,100,100,100,100,40,60,40,100,100");
+	mygridG5.setColTypes("ro,ro,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed");
 	//가로 정렬	
-		mygridG5.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-		mygridG5.setColSorting("int,int,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,int,str,str,str");		//렌더링	
-		mygridG5.enableSmartRendering(false);
-		mygridG5.enableMultiselect(true);
-		//mygridG5.setColValidators("G5_PJTSEQ,G5_DDSEQ,G5_COLID,G5_COLNM,G5_COLSNM,G5_DATATYPE,G5_DATASIZE,G5_OBJTYPE,G5_OBJTYPE_FORMVIEW,G5_OBJTYPE_GRID,G5_LBLWIDTH,G5_LBLHEIGHT,G5_LBLALIGN,G5_OBJWIDTH,G5_OBJHEIGHT,G5_OBJALIGN,G5_CRYPTCD,G5_VALIDSEQ,G5_PIYN,G5_ADDDT,G5_MODDT");
-		mygridG5.splitAt(3);//'freezes' 3 columns 
-		mygridG5.init();
+	mygridG5.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+	mygridG5.setColSorting("int,int,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,int,str,str,str");	//렌더링	
+	mygridG5.enableSmartRendering(false);
+	mygridG5.enableMultiselect(true);
+	//mygridG5.setColValidators("G5_PJTSEQ,G5_DDSEQ,G5_COLID,G5_COLNM,G5_COLSNM,G5_DATATYPE,G5_DATASIZE,G5_OBJTYPE,G5_OBJTYPE_FORMVIEW,G5_OBJTYPE_GRID,G5_LBLWIDTH,G5_LBLHEIGHT,G5_LBLALIGN,G5_OBJWIDTH,G5_OBJHEIGHT,G5_OBJALIGN,G5_CRYPTCD,G5_VALIDSEQ,G5_PIYN,G5_ADDDT,G5_MODDT");
+	mygridG5.splitAt(3);//'freezes' 3 columns 
+	mygridG5.init();
 
-		mygridG5.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
+	mygridG5.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG5.enableBlockSelection(true);
 		mygridG5.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -508,12 +510,14 @@ function G5_INIT(){
 		 // IO : 수정일초기화	
 	//onCheck
 		mygridG5.attachEvent("onCheck",function(rowId, cellInd, state){
-			//onCheck is void return event
-			alog(rowId + " is onCheck.");
-			//일반 체크 박스는 변경이면 실제 row 변경
+			alog("mygridG5  onCheck ------------------start");
+			alog("	rowId=" + rowId + ", cellInd=" + cellInd + ", state=" + state);
+
+			RowEditStatus = mygridG5.getUserData(rowId,"!nativeeditor_status");
+			alog("	RowEditStatus=" + RowEditStatus);
+			//[일반 체크] 박스는 변경이면 실제 row 변경
 			if( 1 == 2 
 				){
-				RowEditStatus = mygridG5.getUserData(rowId,"!nativeeditor_status");
 				if(RowEditStatus == ""){
 					mygridG5.setUserData(rowId,"!nativeeditor_status","updated");
 					mygridG5.setRowTextBold(rowId);
@@ -538,16 +542,15 @@ function G5_INIT(){
 			}
 		//A124
 		});
-		mygridG5.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+	//onEditCell 이벤트
+	mygridG5.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+		alog("mygridG5  onEditCell ------------------start");
+		alog("	stage : " + stage + ", rId : " + rId + ", cInd : " + cInd + ", nValue : " + nValue + ", oValue : " + oValue);
 
-            alog("mygridG5  onEditCell ------------------start");
-            alog("       stage : " + stage);
-            alog("       rId : " + rId);
-            alog("       cInd : " + cInd);
-            alog("       nValue : " + nValue);
-            alog("       oValue : " + oValue);
+		RowEditStatus = mygridG5.getUserData(rId,"!nativeeditor_status");
+		alog("	RowEditStatus = " + RowEditStatus);
 
-            RowEditStatus = mygridG5.getUserData(rId,"!nativeeditor_status");
+		//체크박스 아닌 일반 컬럼
             if(stage == 2
                 && RowEditStatus != "inserted"
                 && RowEditStatus != "deleted"
@@ -559,35 +562,35 @@ function G5_INIT(){
                 }
                 mygridG5.cells(rId,cInd).cell.wasChanged = true;
             }
-            return true;
 
-		});
-        alog("G5_INIT()-------------------------end");
-     }
+            return true;
+	});
+	alog("G5_INIT()-------------------------end");
+}
 	//CONFIG 그리드 초기화
 function G6_INIT(){
   alog("G6_INIT()-------------------------start");
 
-        //그리드 초기화
-        mygridG6 = new dhtmlXGridObject('gridG6');
-        mygridG6.setDateFormat("%Y%m%d");
-        mygridG6.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-		mygridG6.setUserData("","gridTitle","G6 : CONFIG"); //글로별 변수에 그리드 타이블 넣기
-		//헤더초기화
-        mygridG6.setHeader("PJTSEQ,SEQ,사용,CFGID,CFGNM,MVCGBN,PATH,ORD,ADDDT,MODDT");
-		mygridG6.setColumnIds("PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT");
-		mygridG6.setInitWidths("30,50,50,60,120,60,300,30,80,80");
-		mygridG6.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,ed,ed");
+	//그리드 초기화
+	mygridG6 = new dhtmlXGridObject('gridG6');
+	mygridG6.setDateFormat("%Y%m%d");
+	mygridG6.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+	mygridG6.setUserData("","gridTitle","G6 : CONFIG"); //글로별 변수에 그리드 타이블 넣기
+	//헤더초기화
+	mygridG6.setHeader("PJTSEQ,SEQ,사용,CFGID,CFGNM,MVCGBN,PATH,ORD,ADDDT,MODDT");
+	mygridG6.setColumnIds("PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT");
+	mygridG6.setInitWidths("30,50,50,60,120,60,300,30,80,80");
+	mygridG6.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,ed,ed");
 	//가로 정렬	
-		mygridG6.setColAlign("left,left,left,left,left,left,left,left,left,left");
-		mygridG6.setColSorting("int,int,str,str,str,str,str,int,str,str");		//렌더링	
-		mygridG6.enableSmartRendering(false);
-		mygridG6.enableMultiselect(true);
-		//mygridG6.setColValidators("G6_PJTSEQ,G6_CFGSEQ,G6_USEYN,G6_CFGID,G6_CFGNM,G6_MVCGBN,G6_PATH,G6_CFGORD,G6_ADDDT,G6_MODDT");
-		mygridG6.splitAt(0);//'freezes' 0 columns 
-		mygridG6.init();
+	mygridG6.setColAlign("left,left,left,left,left,left,left,left,left,left");
+	mygridG6.setColSorting("int,int,str,str,str,str,str,int,str,str");	//렌더링	
+	mygridG6.enableSmartRendering(false);
+	mygridG6.enableMultiselect(true);
+	//mygridG6.setColValidators("G6_PJTSEQ,G6_CFGSEQ,G6_USEYN,G6_CFGID,G6_CFGNM,G6_MVCGBN,G6_PATH,G6_CFGORD,G6_ADDDT,G6_MODDT");
+	mygridG6.splitAt(0);//'freezes' 0 columns 
+	mygridG6.init();
 
-		mygridG6.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
+	mygridG6.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG6.enableBlockSelection(true);
 		mygridG6.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -637,12 +640,14 @@ function G6_INIT(){
 		 // IO : MODDT초기화	
 	//onCheck
 		mygridG6.attachEvent("onCheck",function(rowId, cellInd, state){
-			//onCheck is void return event
-			alog(rowId + " is onCheck.");
-			//일반 체크 박스는 변경이면 실제 row 변경
+			alog("mygridG6  onCheck ------------------start");
+			alog("	rowId=" + rowId + ", cellInd=" + cellInd + ", state=" + state);
+
+			RowEditStatus = mygridG6.getUserData(rowId,"!nativeeditor_status");
+			alog("	RowEditStatus=" + RowEditStatus);
+			//[일반 체크] 박스는 변경이면 실제 row 변경
 			if( 1 == 2 
 				){
-				RowEditStatus = mygridG6.getUserData(rowId,"!nativeeditor_status");
 				if(RowEditStatus == ""){
 					mygridG6.setUserData(rowId,"!nativeeditor_status","updated");
 					mygridG6.setRowTextBold(rowId);
@@ -667,16 +672,15 @@ function G6_INIT(){
 			}
 		//A124
 		});
-		mygridG6.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+	//onEditCell 이벤트
+	mygridG6.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+		alog("mygridG6  onEditCell ------------------start");
+		alog("	stage : " + stage + ", rId : " + rId + ", cInd : " + cInd + ", nValue : " + nValue + ", oValue : " + oValue);
 
-            alog("mygridG6  onEditCell ------------------start");
-            alog("       stage : " + stage);
-            alog("       rId : " + rId);
-            alog("       cInd : " + cInd);
-            alog("       nValue : " + nValue);
-            alog("       oValue : " + oValue);
+		RowEditStatus = mygridG6.getUserData(rId,"!nativeeditor_status");
+		alog("	RowEditStatus = " + RowEditStatus);
 
-            RowEditStatus = mygridG6.getUserData(rId,"!nativeeditor_status");
+		//체크박스 아닌 일반 컬럼
             if(stage == 2
                 && RowEditStatus != "inserted"
                 && RowEditStatus != "deleted"
@@ -688,35 +692,35 @@ function G6_INIT(){
                 }
                 mygridG6.cells(rId,cInd).cell.wasChanged = true;
             }
-            return true;
 
-		});
-        alog("G6_INIT()-------------------------end");
-     }
+            return true;
+	});
+	alog("G6_INIT()-------------------------end");
+}
 	//FILE 그리드 초기화
 function G7_INIT(){
   alog("G7_INIT()-------------------------start");
 
-        //그리드 초기화
-        mygridG7 = new dhtmlXGridObject('gridG7');
-        mygridG7.setDateFormat("%Y%m%d");
-        mygridG7.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-		mygridG7.setUserData("","gridTitle","G7 : FILE"); //글로별 변수에 그리드 타이블 넣기
-		//헤더초기화
-        mygridG7.setHeader("PJTSEQ,SEQ,파일타입,타입명,포멧,확장자,템플릿,순번,사용,ADDDT,MODDT");
-		mygridG7.setColumnIds("PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT");
-		mygridG7.setInitWidths("20,50,50,50,50,50,50,50,50,50,50");
-		mygridG7.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed");
+	//그리드 초기화
+	mygridG7 = new dhtmlXGridObject('gridG7');
+	mygridG7.setDateFormat("%Y%m%d");
+	mygridG7.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+	mygridG7.setUserData("","gridTitle","G7 : FILE"); //글로별 변수에 그리드 타이블 넣기
+	//헤더초기화
+	mygridG7.setHeader("PJTSEQ,SEQ,파일타입,타입명,포멧,확장자,템플릿,순번,사용,ADDDT,MODDT");
+	mygridG7.setColumnIds("PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT");
+	mygridG7.setInitWidths("20,50,50,50,50,50,50,50,50,50,50");
+	mygridG7.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed");
 	//가로 정렬	
-		mygridG7.setColAlign("left,left,left,left,left,left,left,left,left,left,left");
-		mygridG7.setColSorting("int,str,str,str,str,str,str,str,str,str,str");		//렌더링	
-		mygridG7.enableSmartRendering(false);
-		mygridG7.enableMultiselect(true);
-		//mygridG7.setColValidators("G7_PJTSEQ,G7_FILESEQ,G7_MKFILETYPE,G7_MKFILETYPENM,G7_MKFILEFORMAT,G7_MKFILEEXT,G7_TEMPLATE,G7_FILEORD,G7_USEYN,G7_ADDDT,G7_MODDT");
-		mygridG7.splitAt(0);//'freezes' 0 columns 
-		mygridG7.init();
+	mygridG7.setColAlign("left,left,left,left,left,left,left,left,left,left,left");
+	mygridG7.setColSorting("int,str,str,str,str,str,str,str,str,str,str");	//렌더링	
+	mygridG7.enableSmartRendering(false);
+	mygridG7.enableMultiselect(true);
+	//mygridG7.setColValidators("G7_PJTSEQ,G7_FILESEQ,G7_MKFILETYPE,G7_MKFILETYPENM,G7_MKFILEFORMAT,G7_MKFILEEXT,G7_TEMPLATE,G7_FILEORD,G7_USEYN,G7_ADDDT,G7_MODDT");
+	mygridG7.splitAt(0);//'freezes' 0 columns 
+	mygridG7.init();
 
-		mygridG7.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
+	mygridG7.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG7.enableBlockSelection(true);
 		mygridG7.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -767,12 +771,14 @@ function G7_INIT(){
 		 // IO : MODDT초기화	
 	//onCheck
 		mygridG7.attachEvent("onCheck",function(rowId, cellInd, state){
-			//onCheck is void return event
-			alog(rowId + " is onCheck.");
-			//일반 체크 박스는 변경이면 실제 row 변경
+			alog("mygridG7  onCheck ------------------start");
+			alog("	rowId=" + rowId + ", cellInd=" + cellInd + ", state=" + state);
+
+			RowEditStatus = mygridG7.getUserData(rowId,"!nativeeditor_status");
+			alog("	RowEditStatus=" + RowEditStatus);
+			//[일반 체크] 박스는 변경이면 실제 row 변경
 			if( 1 == 2 
 				){
-				RowEditStatus = mygridG7.getUserData(rowId,"!nativeeditor_status");
 				if(RowEditStatus == ""){
 					mygridG7.setUserData(rowId,"!nativeeditor_status","updated");
 					mygridG7.setRowTextBold(rowId);
@@ -797,16 +803,15 @@ function G7_INIT(){
 			}
 		//A124
 		});
-		mygridG7.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+	//onEditCell 이벤트
+	mygridG7.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+		alog("mygridG7  onEditCell ------------------start");
+		alog("	stage : " + stage + ", rId : " + rId + ", cInd : " + cInd + ", nValue : " + nValue + ", oValue : " + oValue);
 
-            alog("mygridG7  onEditCell ------------------start");
-            alog("       stage : " + stage);
-            alog("       rId : " + rId);
-            alog("       cInd : " + cInd);
-            alog("       nValue : " + nValue);
-            alog("       oValue : " + oValue);
+		RowEditStatus = mygridG7.getUserData(rId,"!nativeeditor_status");
+		alog("	RowEditStatus = " + RowEditStatus);
 
-            RowEditStatus = mygridG7.getUserData(rId,"!nativeeditor_status");
+		//체크박스 아닌 일반 컬럼
             if(stage == 2
                 && RowEditStatus != "inserted"
                 && RowEditStatus != "deleted"
@@ -818,11 +823,11 @@ function G7_INIT(){
                 }
                 mygridG7.cells(rId,cInd).cell.wasChanged = true;
             }
-            return true;
 
-		});
-        alog("G7_INIT()-------------------------end");
-     }
+            return true;
+	});
+	alog("G7_INIT()-------------------------end");
+}
 //D146 그룹별 기능 함수 출력		
 // CONDITIONSearch	
 function G2_SEARCHALL(token){
@@ -837,6 +842,11 @@ function G2_SEARCHALL(token){
 	G3_SEARCH(lastinputG3,token);
 	alog("G2_SEARCHALL--------------------------end");
 }
+    function G3_ROWDELETE(){	
+        alog("G3_ROWDELETE()------------start");
+        delRow(mygridG3);
+        alog("G3_ROWDELETE()------------start");
+    }
 //새로고침	
 function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
@@ -970,10 +980,10 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
-    function G3_ROWDELETE(){	
-        alog("G3_ROWDELETE()------------start");
-        delRow(mygridG3);
-        alog("G3_ROWDELETE()------------start");
+    function G4_ROWDELETE(){	
+        alog("G4_ROWDELETE()------------start");
+        delRow(mygridG4);
+        alog("G4_ROWDELETE()------------start");
     }
 //엑셀다운		
 function G4_EXCEL(){	
@@ -1126,12 +1136,16 @@ function G4_RELOAD(token){
         alog("G4_SEARCH()------------end");
     }
 
-    function G4_ROWDELETE(){	
-        alog("G4_ROWDELETE()------------start");
-        delRow(mygridG4);
-        alog("G4_ROWDELETE()------------start");
-    }
-    function G5_ROWDELETE(){	
+//행추가3 (DD)	
+//그리드 행추가 : DD
+	function G5_ROWADD(){
+		if( !(lastinputG5)|| lastinputG5.get("G5-PJTSEQ") == ""){
+			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
+		}else{
+			var tCols = [lastinputG5.get("G3-PJTSEQ"),"","","","","","","","","","","","","","","","","","","",""];//초기값
+			addRow(mygridG5,tCols);
+		}
+	}    function G5_ROWDELETE(){	
         alog("G5_ROWDELETE()------------start");
         delRow(mygridG5);
         alog("G5_ROWDELETE()------------start");
@@ -1278,16 +1292,36 @@ function G5_RELOAD(token){
         alog("G5_SEARCH()------------end");
     }
 
-//행추가3 (DD)	
-//그리드 행추가 : DD
-	function G5_ROWADD(){
-		if( !(lastinputG5)|| lastinputG5.get("G5-PJTSEQ") == ""){
-			msgError("조회 후에 행추가 가능합니다. 또는 상속값이 없습니다.",3);
-		}else{
-			var tCols = [lastinputG5.get("G3-PJTSEQ"),"","","","","","","","","","","","","","","","","","","",""];//초기값
-			addRow(mygridG5,tCols);
-		}
-	}//새로고침	
+//사용자정의함수 : 사용자정의
+function G6_USERDEF(token){
+	alog("G6_USERDEF-----------------start");
+
+	alog("G6_USERDEF-----------------end");
+}
+//엑셀다운		
+function G6_EXCEL(){	
+	alog("G6_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/common/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG6.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG6.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT");
+	$("#DATA_WIDTHS").val("30,50,50,60,120,60,300,30,80,80");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}
+    function G6_ROWDELETE(){	
+        alog("G6_ROWDELETE()------------start");
+        delRow(mygridG6);
+        alog("G6_ROWDELETE()------------start");
+    }
+//새로고침	
 function G6_RELOAD(token){
   alog("G6_RELOAD-----------------start");
   G6_SEARCH(lastinputG6,token);
@@ -1420,15 +1454,9 @@ function G6_RELOAD(token){
 			var tCols = [lastinputG6.get("G3-PJTSEQ"),"","","","","","","","",""];//초기값
 			addRow(mygridG6,tCols);
 		}
-	}//사용자정의함수 : 사용자정의
-function G6_USERDEF(token){
-	alog("G6_USERDEF-----------------start");
-
-	alog("G6_USERDEF-----------------end");
-}
-//엑셀다운		
-function G6_EXCEL(){	
-	alog("G6_EXCEL-----------------start");
+	}//엑셀다운		
+function G7_EXCEL(){	
+	alog("G7_EXCEL-----------------start");
 	var myForm = document.excelDownForm;
 	var url = "/common/cg_phpexcel.php";
 	window.open("" ,"popForm",
@@ -1437,18 +1465,13 @@ function G6_EXCEL(){
 	myForm.method="post";
 	myForm.target="popForm";
 
-	mygridG6.setSerializationLevel(true,false,false,false,false,true);
-	var myXmlString = mygridG6.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT");
-	$("#DATA_WIDTHS").val("30,50,50,60,120,60,300,30,80,80");
+	mygridG7.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG7.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT");
+	$("#DATA_WIDTHS").val("20,50,50,50,50,50,50,50,50,50,50");
 	$("#DATA_ROWS").val(myXmlString);
 	myForm.submit();
 }
-    function G6_ROWDELETE(){	
-        alog("G6_ROWDELETE()------------start");
-        delRow(mygridG6);
-        alog("G6_ROWDELETE()------------start");
-    }
 	function G7_SAVE(token){
 	alog("G7_SAVE()------------start");
 	tgrid = mygridG7;
@@ -1592,22 +1615,4 @@ function G7_USERDEF(token){
 	alog("G7_USERDEF-----------------start");
 
 	alog("G7_USERDEF-----------------end");
-}
-//엑셀다운		
-function G7_EXCEL(){	
-	alog("G7_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/common/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG7.setSerializationLevel(true,false,false,false,false,true);
-	var myXmlString = mygridG7.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT");
-	$("#DATA_WIDTHS").val("20,50,50,50,50,50,50,50,50,50,50");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
 }
