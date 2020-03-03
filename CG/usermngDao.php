@@ -39,17 +39,19 @@ where USERSEQ = #{USERSEQ}";
 		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "insSvrG";
 		$RtnVal["SQLTXT"] = "INSERT INTO CG_SVR (
-	SVRID,SVRNM,PJTSEQ,USERSEQ,DBHOST
-	,DBPORT,DBNAME,DBUSRID,DBUSRPW,USEYN
-	,ADDDT
+	SVRID, SVRNM, PJTSEQ, USERSEQ, DBDRIVER
+	, DBHOST, DBPORT, DBNAME, DBUSRID, DBUSRPW
+	, USEYN
+	, ADDDT
 )VALUES(
-	#{SVRID},#{SVRNM},#{PJTSEQ}, #{USERSEQ},#{DBHOST}
-	,#{DBPORT},#{DBNAME},#{DBUSRID},#{DBUSRPW},#{USEYN}
+	#{SVRID},#{SVRNM},#{PJTSEQ}, #{USERSEQ}, #{DBDRIVER}
+	, #{DBHOST}, #{DBPORT}, #{DBNAME}, #{DBUSRID}, #{DBUSRPW}
+	, #{USEYN}
 	,date_format(sysdate(),'%Y%m%d%H%i%s')
 )";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "ssiissssss";
+		$RtnVal["BINDTYPE"] = "ssiisssssss";
 		return $RtnVal;
     }  
 	//사용자추가    
@@ -92,7 +94,8 @@ where USERSEQ = #{G2-USERSEQ}
 		$RtnVal["SQLID"] = "selSvrG";
 		$RtnVal["SQLTXT"] = "select
 	SVRSEQ,SVRID,SVRNM, PJTSEQ, USERSEQ
-	,DBHOST,DBPORT,DBNAME,DBUSRID,DBUSRPW,USEYN
+	,DBDRIVER, DBHOST, DBPORT, DBNAME, DBUSRID
+	, DBUSRPW,USEYN
 	,ADDDT, MODDT
 from 
 	CG_SVR
@@ -131,14 +134,14 @@ from
 		$RtnVal["SQLID"] = "updSvrG";
 		$RtnVal["SQLTXT"] = "update CG_SVR
 set
-	SVRNM = #{SVRNM}, USERSEQ = #{USERSEQ},DBHOST = #{DBHOST},DBPORT = #{DBPORT},DBNAME = #{DBNAME}
-	,DBUSRID = #{DBUSRID},DBUSRPW = #{DBUSRPW},USEYN = #{USEYN}
+	SVRNM = #{SVRNM}, USERSEQ = #{USERSEQ}, DBDRIVER = #{DBDRIVER}, DBHOST = #{DBHOST},DBPORT = #{DBPORT}
+	, DBNAME = #{DBNAME}, DBUSRID = #{DBUSRID}, DBUSRPW = #{DBUSRPW}, USEYN = #{USEYN}
 	, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
 where SVRSEQ = #{SVRSEQ}
 ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "sissssssi";
+		$RtnVal["BINDTYPE"] = "sisssssssi";
 		return $RtnVal;
     }  
 	//사용자수정    

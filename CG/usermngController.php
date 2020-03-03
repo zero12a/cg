@@ -120,6 +120,8 @@ $REQ["G4-PJTSEQ"] = reqPostNumber("G4-PJTSEQ",20);//PJTSEQ
 $REQ["G4-PJTSEQ"] = getFilter($REQ["G4-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G4-USERSEQ"] = reqPostNumber("G4-USERSEQ",20);//USERSEQ	
 $REQ["G4-USERSEQ"] = getFilter($REQ["G4-USERSEQ"],"","//");	
+$REQ["G4-DBDRIVER"] = reqPostString("G4-DBDRIVER",30);//DBDRIVER	
+$REQ["G4-DBDRIVER"] = getFilter($REQ["G4-DBDRIVER"],"","//");	
 $REQ["G4-DBHOST"] = reqPostString("G4-DBHOST",60);//DBHOST	
 $REQ["G4-DBHOST"] = getFilter($REQ["G4-DBHOST"],"","//");	
 $REQ["G4-DBPORT"] = reqPostString("G4-DBPORT",60);//DBPORT	
@@ -183,7 +185,7 @@ $REQ["G3-XML"] = filterGridXml(
 $REQ["G4-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G4-XML"]
-		,"COLORD"=>"SVRSEQ,SVRID,SVRNM,PJTSEQ,USERSEQ,DBHOST,DBPORT,DBNAME,DBUSRID,DBUSRPW,USEYN,ADDDT,MODDT"
+		,"COLORD"=>"SVRSEQ,SVRID,SVRNM,PJTSEQ,USERSEQ,DBDRIVER,DBHOST,DBPORT,DBNAME,DBUSRID,DBUSRPW,USEYN,ADDDT,MODDT"
 		,"VALID"=>
 			array(
 			"SVRSEQ"=>array("NUMBER",20)	
@@ -191,6 +193,7 @@ $REQ["G4-XML"] = filterGridXml(
 			,"SVRNM"=>array("STRING",100)	
 			,"PJTSEQ"=>array("NUMBER",20)	
 			,"USERSEQ"=>array("NUMBER",20)	
+			,"DBDRIVER"=>array("STRING",30)	
 			,"DBHOST"=>array("STRING",60)	
 			,"DBPORT"=>array("STRING",60)	
 			,"DBNAME"=>array("STRING",60)	
