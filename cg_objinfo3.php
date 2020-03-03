@@ -18,37 +18,7 @@ header("Pragma:no-cache");
 <head>
 	<title>OBJ</title>
     <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
-    <style>
-        body {margin:0;padding:0}
-        div,input {font-size: 11px;}
 
-        #F_START_DT, #F_END_DT {
-            border: 1px solid #909090;
-        }
-
-        /*탭 아이콘 보이게 표시*/
-        .cm-tab {
-         background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
-         background-position: right;
-         background-repeat: no-repeat;
-        }
-
-        .BODY_BOX {100%;background-color:yellowgreen;padding:5px 5px 5px 5px;}
-
-        .CON_LINE {position: relative;width:100%;overflow:auto;}
-        .CON_OBJGRP {position: relative;float:left;background-color: #eeeeee;vertical-align:middle ;}
-        .CON_LABEL {position: relative;float:left;background-color: #eeeeee;vertical-align:middle ;padding-left:5px;}
-        .CON_OBJECT {position: relative;float:left;background-color: #eeeeee;vertical-align:middle ;}
-        .CON_LINEBREAK {position: relative;height:5px;overflow:auto;}
-
-        .GRID_LABELGRP {position:relative;width:100%;height:22px;z-index:20;}
-        .GRID_LABEL {position:relative;float:left;width:60%;height:22px;line-height:22px;vertical-align:middle;z-index:30;}
-        .GRID_LABELBTN {position: relative;float:left;width:40%;height:22px;line-height:22px;vertical-align:middle;text-align:right;z-index:30;}
-        .GRID_OBJECT {position: relative;width:100%;padding:0 0 0 0;z-index:20;}
-
-        .GRP_LINE {position: relative;width:100%;z-index:10;overflow:auto;}
-        .GRP_OBJECT {position: relative;float:left;z-index:20;}
-    </style>
 
 	<!--jquery / json-->
 	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-1.12.4.min.js"></script>
@@ -87,7 +57,7 @@ header("Pragma:no-cache");
         var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
     </script>
     <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>
-
+    <link href="/common/common.css?<?=getRndVal(10)?>" rel="stylesheet" type="text/css" />
 
 
     <style>
