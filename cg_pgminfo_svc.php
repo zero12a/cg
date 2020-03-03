@@ -1148,7 +1148,7 @@ class cg_pgminfo_svc
 							
 				$to_sql = str_replace_once($mat[1].$mat[2].$mat[3],"?",$to_sql); //방금 찾은겨 치환
 	
-				alog("            INPUT 절 $s :  " . $sql_row["COLID"] );
+				alog("            INPUT 절 " . $s . " colid = " . $sql_row["COLID"] . " dd_colid = " . $sql_row["DDCOLID"]);
 				$sql_row["SQLGBN"] = "I";
 				$sql_row["ORD"] = ($s+1) * 10;
 
