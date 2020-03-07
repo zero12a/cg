@@ -22,7 +22,7 @@ class usrmngService
 		$log->info("UsrmngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["OS"])$this->DB["OS"]->close();
+		if($this->DB["OS"] && function_exists($this->DB["OS"]->close))$this->DB["OS"]->close();
 		unset($this->DB);
 	}
 	function __toString(){

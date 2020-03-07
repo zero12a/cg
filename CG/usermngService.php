@@ -22,7 +22,7 @@ class usermngService
 		$log->info("UsermngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CGCORE"])$this->DB["CGCORE"]->close();
+		//if($this->DB["CGCORE"] && $this->DB["OS"]->close($this->DB["CGCORE"]->close))$this->DB["CGCORE"]->close();
 		unset($this->DB);
 	}
 	function __toString(){

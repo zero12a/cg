@@ -149,9 +149,21 @@
 
     $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);
     $sql = "select * from CG_PJTINFO where PJTSEQ = #{F_PJTSEQ}";
-    $stmt = makeStmt($db,$sql,$coltype="i",$map["F_PJTSEQ"] = $F_PJTSEQ);
-    $pjtInfo = getStmtArray($stmt)[0];
 
+    $sqlMap = getSqlParam($sql,$coltype="i",$map["F_PJTSEQ"] = $F_PJTSEQ);
+    $stmt = getStmt($db,$sqlMap);
+    if(!$stmt)JsonMsg("500","100","stmt prepare error");
+
+
+    //if(!$stmt->execute($sqlMap["TO_PARAM"]))JsonMsg("500","100","stmt execute error");
+
+    //$pjtInfo = $stmt->fetchAll(PDO::FETCH_ASSOC)[0]; //해쉬맵
+    //var_dump($sqlMap["TO_PARAM"]);
+    //exit;
+
+    $pjtInfo = getStmtArray($db,$stmt,$sqlMap["TO_PARAM"])[0]; //해쉬맵
+    //var_dump($pjtInfo);
+    //exit;
 
     //서비스 클래스 생성
     $objService = new cg_pgminfo_svc($db,$pjtInfo["DSNM"]);
@@ -250,83 +262,5 @@
 $log->close();
 unset($log);
 exit;
-
-
-
-
-
-//VALID
-if($REQ["F_GRPID"] == "12" && $REQ["G12_CRUD_MODE"] == "read"){
-    $log->info("---------------GRP G12 ---------------------START");
-    $log->info("        G12_CRUD_MODE : " . $REQ["G12_CRUD_MODE"]);
-
-    $to_coltype = "ssss";
-    $sql = "
-          select
-			VALIDSEQ,PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,ORD,TIMETYPE,JOBTYPE,COLID,VAL1,VAL2,OPER,ANDOR,ACTION,MSG,SQLTXT,ADDDT,MODDT
-          from CG_VALID 
-		  where PJTID = #G5_PJTID# and PGMID = #G5_PGMID# and GRPID = #G5_GRPID# and FNCID = #G5_FNCID#
-		  order by ORD desc
-          ";
-    $log->info("        selected : " );
-    $stmt = make_stmt($db,$sql, $to_coltype, $REQ);
-    if(!$stmt)   JsonMsg("500","912","stmt 생성 실패" . $db->errno . " -> " . $db->error);
-
-    echo make_grid_read_json($stmt,0);
-
-    $db->close();
-
-}else if($REQ["F_GRPID"] == "12"){
-    $log->info("---------------GRP G12 ---------------------START");
-    $log->info("        G12_CRUD_MODE : " . $REQ["G12_CRUD_MODE"]);
-    $log->info("        xmldata : " .$_POST["xmldata"]);
-
-	$xml_array = getXml2Array($_POST["xmldata"]);
-
-
-    //echo "\nxml_array row sizeof : " . sizeof($xml_array["row"]);
-    //echo "\nxml_array is_assoc : " . is_assoc($xml_array["row"]);
-
-    $colord = "VALIDSEQ,PJTID,PGMID,GRPID,FNCID,ORD,TIMETYPE,JOBTYPE,COLID,VAL1,VAL2,OPER,ANDOR,ACTION,MSG,SQLTXT,ADDDT,MODDT";
-
-
-    $sql_inserted = "
-               insert into CG_VALID (
-									PJTID,PGMID,GRPID,FNCID,ORD
-									,TIMETYPE,JOBTYPE,COLID,VAL1,VAL2
-									,OPER,ANDOR,ACTION,MSG,SQLTXT
-									,ADDDT
-               ) values (
-									#PJTID#,#PGMID#,#GRPID#,#FNCID#,#ORD#
-									,#TIMETYPE#,#JOBTYPE#,#COLID#,#VAL1#,#VAL2#
-									,#OPER#,#ANDOR#,#ACTION#,#MSG#,#SQLTXT#
-									,date_format(sysdate(),'%Y%m%d%H%i%s')
-               )
-    ";
-    $sql_inserted_coltype = "ssssi sssss sssss";
-
-    $sql_deleted = " delete from CG_VALID where PJTID = #PJTID# and PGMID = #PGMID# and VALIDSEQ = #VALIDSEQ# ";
-    $sql_deleted_coltype = "ssi";
-
-    $sql_updated = "
-              update CG_VALID set
-					ORD = #ORD#,TIMETYPE = #TIMETYPE#,JOBTYPE = #JOBTYPE#,COLID = #COLID#,VAL1 = #VAL1#
-					,VAL2 = #VAL2#,OPER = #OPER#,ANDOR = #ANDOR#,ACTION = #ACTION#,MSG = #MSG#
-					,SQLTXT = #SQLTXT#
-					,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s')
-              where PJTID = #PJTID# and PGMID = #PGMID# and VALIDSEQ = #VALIDSEQ# 
-    ";
-    $sql_updated_coltype = "issss sssss s ssi";
-
-
-    echo make_grid_save_json($db,$REQ,$colord,$xml_array,$sql_inserted,$sql_inserted_coltype,$sql_deleted,$sql_deleted_coltype,$sql_updated,$sql_updated_coltype,"Y","VALIDSEQ");
-
-    //echo "\n\n\n xml to array : ";
-    //var_dump($xml_array);
-    $db->close();
-}
-
-
-
 
 ?>

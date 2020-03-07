@@ -24,8 +24,8 @@ class cg_pgminfo_svc
 		alog("cg_pgminfo_svc-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CGCORE"])$this->DB["CGCORE"]->close();
-		if($this->DB["CGPJT"])$this->DB["CGPJT"]->close();
+		if($this->DB["CGCORE"] && function_exists($this->DB["CGCORE"]->close) )$this->DB["CGCORE"]->close();
+		if($this->DB["CGPJT"] && function_exists($this->DB["CGPJT"]->close) )$this->DB["CGPJT"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
