@@ -569,7 +569,7 @@ if($REQ["F_GRPID"] == "1" && $REQ["G1_CRUD_MODE"] == "read"){
     $rtnVal->ERR_CD = "200";
     echo json_encode($rtnVal);
     
-    $db["cg"]->close();
+    closeDb($db["cg"]);
 
 }else if($REQ["F_GRPID"] == "1"){
     alog("---------------GRP G1 ---------------------START");
@@ -656,7 +656,7 @@ if($REQ["F_GRPID"] == "2" && $REQ["G2_CRUD_MODE"] == "read"){
     $rtnVal->ERR_CD = "200";
     echo json_encode($rtnVal);
     
-    $db["cg"]->close();
+    closeDb($db["cg"]);
 
 }else if($REQ["F_GRPID"] == "2"){
     alog("---------------GRP G2 ---------------------START");
@@ -710,7 +710,7 @@ if($REQ["F_GRPID"] == "2" && $REQ["G2_CRUD_MODE"] == "read"){
     $rtnVal->ERR_CD = "200";
     echo json_encode($rtnVal);
 
-	$db["cg"]->close();
+	closeDb($db["cg"]);
 }
 
 

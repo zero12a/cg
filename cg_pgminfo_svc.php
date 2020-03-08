@@ -1025,10 +1025,14 @@ class cg_pgminfo_svc
 			where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and SQLGBN = 'O'
 			order by ORD asc ";
 			$to_coltype = "iii";
-			$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			//$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row));
+
+			$sqlMap = getSqlParam($sql,$to_coltype, array_merge($REQ,$to_row));
+			$stmt = getStmt($this->DB["CGPJT"],$sqlMap);
 			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
+
 			$arrOutputCols = getStmtArray($stmt);
-			$stmt->close();
+			closeStmt($stmt);
 			//echo json_encode($arrOutputCols);
 
 			//기존정보 input 가져오기 ( 나중에 삭제 후에 필수여부는 다시 update 해주기 )
@@ -1038,10 +1042,15 @@ class cg_pgminfo_svc
 			where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ} and SQLGBN = 'I'
 			order by ORD asc ";
 			$to_coltype = "iii";
-			$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row));
-			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
+			//$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			//if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
+
+			$sqlMap = getSqlParam($sql,$to_coltype, array_merge($REQ,$to_row));
+			$stmt = getStmt($this->DB["CGPJT"],$sqlMap);
+			if(!$stmt) JsonMsg("500","102","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
+
 			$arrInputCols = getStmtArray($stmt);
-			$stmt->close();
+			closeStmt($stmt);
 			//echo json_encode($arrOutputCols);
 
 			
@@ -1049,12 +1058,20 @@ class cg_pgminfo_svc
 			$sql = "delete from CG_PGMSQLD where  PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and SQLSEQ = #{SQLSEQ}";
 			$to_coltype = "iii";
 			
-			$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row));
-			if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
+
+			//$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row));
+			//if(!$stmt) JsonMsg("500","101","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
+
+
+			$sqlMap = getSqlParam($sql,$to_coltype, array_merge($REQ,$to_row));
+			$stmt = getStmt($this->DB["CGPJT"],$sqlMap);
+			if(!$stmt) JsonMsg("500","102","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
 			$stmt->execute();
+
+
 			//echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
 			$to_affected_rows = $this->DB["CGPJT"]->affected_rows;
-			$stmt->close();
+			closeStmt($stmt);
 	
 	
 			alog("        SELECT절 sizeof : " . sizeof($parser->parsed["SELECT"]) );
@@ -1113,14 +1130,15 @@ class cg_pgminfo_svc
 						$to_coltype = "iiiss si";
 					}
 	
-	
+					$sqlMap = getSqlParam($sql,$to_coltype, array_merge($REQ,$to_row,$sql_row));
+					$stmt = getStmt($this->DB["CGPJT"],$sqlMap);
 		
-					$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
+					//$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
 					if(!$stmt)JsonMsg("500","102","stmt 생성 실패" . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
 					$stmt->execute();
 					//echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
 					$to_affected_rows = $this->DB["CGPJT"]->affected_rows;
-					$stmt->close();
+					closeStmt($stmt);
 		
 				}
 		
@@ -1183,12 +1201,15 @@ class cg_pgminfo_svc
 					$to_coltype = "iiiss si";					
 				}
 	
-				$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
+				$sqlMap = getSqlParam($sql,$to_coltype, array_merge($REQ,$to_row,$sql_row));
+				$stmt = getStmt($this->DB["CGPJT"],$sqlMap);
+	
+				//$stmt = makeStmt($this->DB["CGPJT"],$sql, $to_coltype, array_merge($REQ,$to_row,$sql_row));
 				if(!$stmt) JsonMsg("500","103","stmt 생성 실패 " . $this->DB["CGPJT"]->errno . " -> " . $this->DB["CGPJT"]->error);
 				$stmt->execute();
 				//echo "\n db affected_rows : " .  $db->affected_rows; //stmt를 클로즈 하기 전에 해야
 				$to_affected_rows = $this->DB["CG"]->affected_rows;
-				$stmt->close();
+				closeStmt($stmt);
 	
 				$s++;
 				//echo "\ntosql : " . $tosql;

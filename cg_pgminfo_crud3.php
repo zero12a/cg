@@ -161,7 +161,7 @@
     //var_dump($sqlMap["TO_PARAM"]);
     //exit;
 
-    $pjtInfo = getStmtArray($db,$stmt,$sqlMap["TO_PARAM"])[0]; //해쉬맵
+    $pjtInfo = getStmtArray($stmt)[0]; //해쉬맵
     //var_dump($pjtInfo);
     //exit;
 

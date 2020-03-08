@@ -143,11 +143,13 @@
     $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);
     //var_dump($CFG["CFG_DB"]["CGCORE"]);    
     $sql = "select * from CG_PJTINFO where PJTSEQ = #{POP_PJTSEQ}";
-    //echo $sql;
-    $stmt = makeStmt($db,$sql,$coltype="i",$REQ);
-    $pjtInfo = getStmtArray($stmt)[0];
-    $stmt->close();
-    $db->close();
+
+    $sqlMap = getSqlParam($sql,$coltype="i",$REQ);
+    $stmt = getStmt($db,$sqlMap);
+    $pjtInfo = getStmtArray($db,$stmt,$sqlMap["TO_PARAM"])[0];
+    
+    closeStmt($stmt);
+    closeDb($db);
     //var_dump($pjtInfo);
     if($pjtInfo["DSNM"] == "")JsonMsg("500","100","해당 프로젝트의 데이터소스 정보가 없습니다.");
     //    var_dump($pjtInfo);

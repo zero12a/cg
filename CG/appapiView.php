@@ -30,12 +30,16 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/cleave.min.js" type="text/javascript" charset="UTF-8"></script> <!--CLEAVE JS-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/tableExport.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/Chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/popper.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Poper Js-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/js/bootstrap.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Min Js-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/summernote/summernote-bs4.min.js" type="text/javascript" charset="UTF-8"></script> <!--WebEditor Summbernote-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/locale/bootstrap-table-ko-KR.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS Lang-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR1-->
@@ -46,6 +50,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
+<link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/summernote/summernote-bs4.min.css" type="text/css" charset="UTF-8"><!--WebEditor Summbernote-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css" type="text/css" charset="UTF-8"><!--CODE MIRROR CSS-->
 <!--공통 js/css-->
@@ -101,7 +106,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:80px;"-->
 					<div class="CON_OBJECT">
-	<!--API_SEQ오브젝트출력-->						<input type="text" name="C2-API_SEQ" value="<?=getFilter(reqPostString("API_SEQ",10),"SAFEECHO","")?>" id="C2-API_SEQ" style="width:80px;">
+	<!--API_SEQ오브젝트출력-->						<input type="text" name="C2-API_SEQ" value="<?=getFilter(reqPostString("API_SEQ",10),"SAFEECHO","")?>" id="C2-API_SEQ" style="width:80px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -112,7 +117,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:80px;"-->
 					<div class="CON_OBJECT">
-	<!--API_NM오브젝트출력-->						<input type="text" name="C2-API_NM" value="<?=getFilter(reqPostString("API_NM",50),"SAFEECHO","")?>" id="C2-API_NM" style="width:80px;">
+	<!--API_NM오브젝트출력-->						<input type="text" name="C2-API_NM" value="<?=getFilter(reqPostString("API_NM",50),"SAFEECHO","")?>" id="C2-API_NM" style="width:80px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -123,7 +128,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:60px;"-->
 					<div class="CON_OBJECT">
-	<!--PGM_ID오브젝트출력-->						<input type="text" name="C2-PGM_ID" value="<?=getFilter(reqPostString("PGM_ID",50),"SAFEECHO","")?>" id="C2-PGM_ID" style="width:60px;">
+	<!--PGM_ID오브젝트출력-->						<input type="text" name="C2-PGM_ID" value="<?=getFilter(reqPostString("PGM_ID",50),"SAFEECHO","")?>" id="C2-PGM_ID" style="width:60px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -134,7 +139,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:60px;"-->
 					<div class="CON_OBJECT">
-	<!--URL오브젝트출력-->						<input type="text" name="C2-URL" value="<?=getFilter(reqPostString("URL",50),"SAFEECHO","")?>" id="C2-URL" style="width:60px;">
+	<!--URL오브젝트출력-->						<input type="text" name="C2-URL" value="<?=getFilter(reqPostString("URL",50),"SAFEECHO","")?>" id="C2-URL" style="width:60px;" class="">
 					</div>
 				</div>
 			</div><!-- is_br_tag end -->
@@ -317,7 +322,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:120px;"-->
 					<div class="CON_OBJECT">
-	<!--API_SEQ오브젝트출력-->						<input type="text" name="F4-API_SEQ" value="" id="F4-API_SEQ" style="width:120px;">
+	<!--API_SEQ오브젝트출력-->						<input type="text" name="F4-API_SEQ" value="" id="F4-API_SEQ" style="width:120px;" class="">
 					</div>
 				</div>
 		<!--D101: STARTTXT, TAG-->
@@ -326,7 +331,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 				달력
 			</div>
 		<div class="CON_OBJECT">
-			<input type="text" name="F4-CAL" value="" id="F4-CAL" style="width:120px;">
+			<input type="text" name="F4-CAL" value="" id="F4-CAL" style="width:120px;" class="">
 		</div>
 	</div>
 			</DIV><!--is_br_tab end-->
@@ -340,7 +345,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:120px;"-->
 					<div class="CON_OBJECT">
-	<!--API_NM오브젝트출력-->						<input type="text" name="F4-API_NM" value="" id="F4-API_NM" style="width:120px;">
+	<!--API_NM오브젝트출력-->						<input type="text" name="F4-API_NM" value="" id="F4-API_NM" style="width:120px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -354,7 +359,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:120px;"-->
 					<div class="CON_OBJECT">
-	<!--PGM_ID오브젝트출력-->						<input type="text" name="F4-PGM_ID" value="" id="F4-PGM_ID" style="width:120px;">
+	<!--PGM_ID오브젝트출력-->						<input type="text" name="F4-PGM_ID" value="" id="F4-PGM_ID" style="width:120px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -368,7 +373,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:120px;"-->
 					<div class="CON_OBJECT">
-	<!--URL오브젝트출력-->						<input type="text" name="F4-URL" value="" id="F4-URL" style="width:120px;">
+	<!--URL오브젝트출력-->						<input type="text" name="F4-URL" value="" id="F4-URL" style="width:120px;" class="">
 					</div>
 				</div>
 			</DIV>
@@ -430,7 +435,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:200px;"-->
 					<div class="CON_OBJECT">
-	<!--MYFILESVRNM오브젝트출력-->						<input type="text" name="F4-MYFILESVRNM" value="" id="F4-MYFILESVRNM" style="width:200px;">
+	<!--MYFILESVRNM오브젝트출력-->						<input type="text" name="F4-MYFILESVRNM" value="" id="F4-MYFILESVRNM" style="width:200px;" class="">
 					</div>
 				</div>
 				</DIV>

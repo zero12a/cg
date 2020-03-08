@@ -23,7 +23,7 @@ class appapiDao
 		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "delApi";
 		$RtnVal["SQLTXT"] = "UPDATE APP_API SET DEL_YN='Y' WHERE API_SEQ = #{F4-API_SEQ}
- ";
+";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array("F4-API_SEQ"	);
 		$RtnVal["BINDTYPE"] = "i";

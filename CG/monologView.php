@@ -102,7 +102,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 				ADDDT
 			</div>
 		<div class="CON_OBJECT">
-			<input type="text" name="G1-ADDDT" value="" id="G1-ADDDT" style="width:80px;">
+			<input type="text" name="G1-ADDDT" value="" id="G1-ADDDT" style="width:80px;" class="">
 		</div>
 	</div>
 			<!--D101: STARTTXT, TAG-->
@@ -250,27 +250,6 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<textarea id="codeMirror_G3-LOGMSG" name="codeMirror_G3-LOGMSG" ></textarea>
 					</div>
 				</div>
-			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : LOGWE-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:70px;text-align:;">
- 						LOGWE
- 					</div>
- 					<!-- style="width:400px;"-->
-					<div class="CON_OBJECT">
- 	<!--LOGWE오브젝트출력 checkbox-->
-	<textarea id="G3-LOGWE" name="G3-LOGWE"></textarea>
-					</div>
- 				</div>
- 			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : LOGWE-->
-				<div class="CON_OBJGRP" style="">
 			</DIV><!--is_br_tab end-->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    

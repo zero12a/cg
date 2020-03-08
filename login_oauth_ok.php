@@ -165,7 +165,7 @@ function getMyGrpIntroUrl(){
     if(!$stmt->execute())JsonMsg("500","100","stmt 실행 실패" . $db->errno . " -> " . $db->error);
     
 
-    $tArr =  getStmtArray($stmt,$REQ);
+    $tArr =  getStmtArray($stmt);
     $stmt->close();
     return $tArr;
 }

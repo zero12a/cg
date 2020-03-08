@@ -5,6 +5,8 @@
 
     $CFG = include_once("../common/include/incConfig.php");
 
+    require_once($CFG["CFG_LIBS_VENDOR"]);
+
     require_once("../common/include/incUser.php");
     require_once("../common/include/incAuth.php");
     require_once("../common/include/incUtil.php");

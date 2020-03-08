@@ -2160,7 +2160,7 @@ function setGridGrp(tGrptype, tCombo, tPjtseq, tPgmseq, tGrpseq, tFncseq){
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
 
-						tCombo.put(data.RTN_DATA.rows[i].data[0],data.RTN_DATA.rows[i].data[1]);
+						tCombo.put(data.RTN_DATA.rows[i][0],data.RTN_DATA.rows[i][1]);
 					}
 				}else{
 					alog("	그룹 타입이 없습니다");
@@ -2217,7 +2217,7 @@ function setGridSql(tGrptype, tCombo, tPjtseq, tPgmseq, tSvcseq){
 					for(var i=0;i<data.RTN_DATA.rows.length;i++){
 						//alog(data.RTN_DATA.rows[i].data[1] + "=" + data.RTN_DATA.rows[i].data[2]);
 
-						tCombo.put(data.RTN_DATA.rows[i].data[0],data.RTN_DATA.rows[i].data[1]);
+						tCombo.put(data.RTN_DATA.rows[i][0],data.RTN_DATA.rows[i][1]);
 					}
 				}else{
 					alog("	그룹 타입이 없습니다");
