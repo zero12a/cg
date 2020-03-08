@@ -22,7 +22,7 @@ class ddiomngService
 		$log->info("DdiomngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CGPJT1"])$this->DB["CGPJT1"]->close();
+		if($this->DB["CGPJT1"])closeDb($this->DB["CGPJT1"]);
 		unset($this->DB);
 	}
 	function __toString(){

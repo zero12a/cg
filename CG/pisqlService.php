@@ -22,7 +22,7 @@ class pisqlService
 		$log->info("PisqlService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CG"])$this->DB["CG"]->close();
+		if($this->DB["CG"])closeDb($this->DB["CG"]);
 		unset($this->DB);
 	}
 	function __toString(){

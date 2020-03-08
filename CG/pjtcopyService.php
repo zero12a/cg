@@ -23,8 +23,8 @@ class pjtcopyService
 		$log->info("PjtcopyService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CGPJT1"])$this->DB["CGPJT1"]->close();
-		if($this->DB["CGPJT2"])$this->DB["CGPJT2"]->close();
+		if($this->DB["CGPJT1"])closeDb($this->DB["CGPJT1"]);
+		if($this->DB["CGPJT2"])closeDb($this->DB["CGPJT2"]);
 		unset($this->DB);
 	}
 	function __toString(){

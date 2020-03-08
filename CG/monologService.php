@@ -23,8 +23,8 @@ class monologService
 		$log->info("MonologService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CGPJT1"])$this->DB["CGPJT1"]->close();
-		if($this->DB["DATING"])$this->DB["DATING"]->close();
+		if($this->DB["CGPJT1"])closeDb($this->DB["CGPJT1"]);
+		if($this->DB["DATING"])closeDb($this->DB["DATING"]);
 		unset($this->DB);
 	}
 	function __toString(){

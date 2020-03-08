@@ -54,9 +54,9 @@ function initBody(){
    //dhtmlx 메시지 박스 초기화
    dhtmlx.message.position="bottom";
 	G1_INIT();	
-		G2_INIT();	
-		G3_INIT();	
-	      feather.replace();
+	G2_INIT();	
+	G3_INIT();	
+      feather.replace();
 	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
@@ -208,9 +208,22 @@ function G3_INIT(){
 	$("#G3-PGMSEQ").attr("readonly",true);
 	//SQLSEQ, SQLSEQ 초기화	
 	//ORD, ORD 초기화	
-	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
+	//ADDDT, ADDDT 초기화
+	//MODDT, MODDT 초기화
+  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+//사용자정의함수 : 사용자정의
+function G1_USERDEF(token){
+	alog("G1_USERDEF-----------------start");
+
+	alog("G1_USERDEF-----------------end");
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 //, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -256,16 +269,10 @@ function G1_SEARCHALL(token){
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-//사용자정의함수 : 사용자정의
-function G1_USERDEF(token){
-	alog("G1_USERDEF-----------------start");
-
-	alog("G1_USERDEF-----------------end");
-}
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
 }
 //
 function G2_CHKSAVE(token){
@@ -398,9 +405,14 @@ function G2_USERDEF(token){
 	alog("G2_USERDEF-----------------end");
 }
 //새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
+function G3_RELOAD(token){
+	alog("G3_RELOAD-----------------start");
+	G3_SEARCH(lastinputG3,token);
+}//사용자정의함수 : 사용자정의
+function G3_USERDEF(token){
+	alog("G3_USERDEF-----------------start");
+
+	alog("G3_USERDEF-----------------end");
 }
 //FORMVIEW DELETE
 function G3_DELETE(){	
@@ -514,7 +526,9 @@ function G3_NEW(){
 	$("#G3-PGMSEQ").val("");//PGMSEQ 신규초기화	
 	$("#G3-SQLSEQ").val("");//SQLSEQ 신규초기화	
 	$("#G3-ORD").val("");//ORD 신규초기화	
-	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
+	$("#G3-ADDDT").text("");//ADDDT 신규초기화
+	$("#G3-MODDT").text("");//MODDT 신규초기화
+       alog("DETAILNew30---------------end");
 }
 //디테일 검색	
 function G3_SEARCH(tinput,token){
@@ -561,8 +575,8 @@ function G3_SEARCH(tinput,token){
 			$("#G3-PGMSEQ").val(data.RTN_DATA.PGMSEQ);//PGMSEQ 변수세팅
 			$("#G3-SQLSEQ").val(data.RTN_DATA.SQLSEQ);//SQLSEQ 변수세팅
 			$("#G3-ORD").val(data.RTN_DATA.ORD);//ORD 변수세팅
-			$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
-			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
+	$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
+	$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
         },
         error: function(error){
             alog("Error:");
@@ -571,14 +585,4 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
-}
-//새로고침	
-function G3_RELOAD(token){
-	alog("G3_RELOAD-----------------start");
-	G3_SEARCH(lastinputG3,token);
-}//사용자정의함수 : 사용자정의
-function G3_USERDEF(token){
-	alog("G3_USERDEF-----------------start");
-
-	alog("G3_USERDEF-----------------end");
 }

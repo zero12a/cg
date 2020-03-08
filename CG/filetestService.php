@@ -22,7 +22,7 @@ class filetestService
 		$log->info("FiletestService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["SC"])$this->DB["SC"]->close();
+		if($this->DB["SC"])closeDb($this->DB["SC"]);
 		unset($this->DB);
 	}
 	function __toString(){

@@ -1,6 +1,6 @@
 <?php
 //PGMID : AUTHDEPLOY
-//PGMNM : 권한 배포
+//PGMNM : 메뉴/권한 배포
 header("Content-Type: text/html; charset=UTF-8"); //HTML
 
 //설정 함수 읽기
@@ -22,7 +22,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>	
-<title>권한 배포</title>
+<title>메뉴/권한 배포</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
 <!--JS 불러오기-->
@@ -30,6 +30,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/cleave.min.js" type="text/javascript" charset="UTF-8"></script> <!--CLEAVE JS-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/tableExport.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
@@ -84,7 +85,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 		<div class="CONDITION_LABELGRP">
 			<div class="CONDITION_LABEL"  style="">
-				<b>* 권한 배포</b>	
+				<b>* 메뉴/권한 배포</b>	
 				<!--popup--><a href="?" target="_blank"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
@@ -104,7 +105,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:40px;"-->
 					<div class="CON_OBJECT">
-	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G1-PJTSEQ" value="<?=getFilter(reqPostString("PJTSEQ",20),"SAFEECHO","")?>" id="G1-PJTSEQ" style="width:40px;">
+	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G1-PJTSEQ" value="<?=getFilter(reqPostString("PJTSEQ",20),"SAFEECHO","")?>" id="G1-PJTSEQ" style="width:40px;" class="">
 					</div>
 				</div>
 			</div><!-- is_br_tag end -->

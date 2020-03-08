@@ -30,6 +30,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/cleave.min.js" type="text/javascript" charset="UTF-8"></script> <!--CLEAVE JS-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/tableExport.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
@@ -79,7 +80,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 	-->
  	<div class="GRP_OBJECT" style="width:100%;">
         <div class="GRP_GAP"><!--흰색 바깥 여백-->
-            <div class="GRP_INNER" style="height:64px;">	
+            <div class="GRP_INNER" style="height:74px;">	
 		
 	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 		<div class="CONDITION_LABELGRP">
@@ -93,7 +94,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G1_RESET" value="입력 초기화" onclick="G1_RESET(uuidv4());">
 			</div>
 		</div>
-		<div style="height:22px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
+		<div style="height:32px;border-radius:3px;-moz-border-radius: 3px;" class="CONDITION_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 			<!--D101: STARTTXT, TAG-->
@@ -104,7 +105,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--FROM_PJTSEQ오브젝트출력-->						<input type="text" name="G1-FROM_PJTSEQ" value="<?=getFilter(reqPostString("FROM_PJTSEQ",20),"SAFEECHO","")?>" id="G1-FROM_PJTSEQ" style="width:100px;">
+	<!--FROM_PJTSEQ오브젝트출력-->						<input type="text" name="G1-FROM_PJTSEQ" value="<?=getFilter(reqPostString("FROM_PJTSEQ",20),"SAFEECHO","")?>" id="G1-FROM_PJTSEQ" style="width:100px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -115,7 +116,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--TO_PJTSEQ오브젝트출력-->						<input type="text" name="G1-TO_PJTSEQ" value="<?=getFilter(reqPostString("TO_PJTSEQ",20),"SAFEECHO","")?>" id="G1-TO_PJTSEQ" style="width:100px;">
+	<!--TO_PJTSEQ오브젝트출력-->						<input type="text" name="G1-TO_PJTSEQ" value="<?=getFilter(reqPostString("TO_PJTSEQ",20),"SAFEECHO","")?>" id="G1-TO_PJTSEQ" style="width:100px;" class="">
 					</div>
 				</div>
 			</div><!-- is_br_tag end -->

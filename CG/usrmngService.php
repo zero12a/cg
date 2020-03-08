@@ -14,7 +14,7 @@ class usrmngService
 		$log->info("UsrmngService-__construct");
 
 		$this->DAO = new usrmngDao();
-		$this->DB["OS"] = getDbConn($CFG["CFG_DB"]["OS"]);
+		$this->DB["DATING"] = getDbConn($CFG["CFG_DB"]["DATING"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -22,7 +22,7 @@ class usrmngService
 		$log->info("UsrmngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["OS"] && function_exists($this->DB["OS"]->close))$this->DB["OS"]->close();
+		if($this->DB["DATING"])closeDb($this->DB["DATING"]);
 		unset($this->DB);
 	}
 	function __toString(){

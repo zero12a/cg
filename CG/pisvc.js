@@ -56,9 +56,9 @@ function initBody(){
    //dhtmlx 메시지 박스 초기화
    dhtmlx.message.position="bottom";
 	G1_INIT();	
-		G2_INIT();	
-		G3_INIT();	
-	      feather.replace();
+	G2_INIT();	
+	G3_INIT();	
+      feather.replace();
 	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
@@ -231,9 +231,35 @@ function G3_INIT(){
 	$("#G3-FNCSEQ").attr("readonly",true);
 	//SVCGRPID, SVCGRPID 초기화	
 	//ORD, ORD 초기화	
-	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
+	//ADDDT, ADDDT 초기화
+	//MODDT, MODDT 초기화
+  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
+// CONDITIONSearch	
+function G1_SEARCHALL(token){
+	alog("G1_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : G1
+			lastinputG2 = new HashMap(); //
+		//  호출
+	G2_SEARCH(lastinputG2,token);
+	alog("G1_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
+//사용자정의함수 : 사용자정의
+function G1_USERDEF(token){
+	alog("G1_USERDEF-----------------start");
+
+	alog("G1_USERDEF-----------------end");
+}
 //, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -266,29 +292,16 @@ function G1_SAVE(){
 	});
 	alog("G1_SAVE-------------------end");	
 }
-// CONDITIONSearch	
-function G1_SEARCHALL(token){
-	alog("G1_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : G1
-			lastinputG2 = new HashMap(); //
-		//  호출
-	G2_SEARCH(lastinputG2,token);
-	alog("G1_SEARCHALL--------------------------end");
-}
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 //사용자정의함수 : 사용자정의
-function G1_USERDEF(token){
-	alog("G1_USERDEF-----------------start");
+function G2_USERDEF(token){
+	alog("G2_USERDEF-----------------start");
 
-	alog("G1_USERDEF-----------------end");
+	alog("G2_USERDEF-----------------end");
+}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
 }
 //
 function G2_CHKSAVE(token){
@@ -415,88 +428,6 @@ function G2_EXCEL(){
 	alog("G2_EXCEL()------------end");
 }
 //사용자정의함수 : 사용자정의
-function G2_USERDEF(token){
-	alog("G2_USERDEF-----------------start");
-
-	alog("G2_USERDEF-----------------end");
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
-}
-//	
-function G3_NEW(){
-       alog("[FromView] G3_NEW---------------start");
-	$("#G3-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G3-SVCSEQ").val("");//SVCSEQ 신규초기화	
-	$("#G3-PJTSEQ").val("");//PJTSEQ 신규초기화	
-	$("#G3-PGMSEQ").val("");//PGMSEQ 신규초기화	
-	$("#G3-GRPSEQ").val("");//GRPSEQ 신규초기화	
-	$("#G3-FNCSEQ").val("");//FNCSEQ 신규초기화	
-	$("#G3-SVCGRPID").val("");//SVCGRPID 신규초기화	
-	$("#G3-ORD").val("");//ORD 신규초기화	
-	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
-}
-//디테일 검색	
-function G3_SEARCH(tinput,token){
-       alog("(FORMVIEW) G3_SEARCH---------------start");
-
-	//post 만들기
-	sendFormData = new FormData($("#condition")[0]);
-	if(typeof tinput != "undefined"){
-		var tKeys = tinput.keys();
-		for(i=0;i<tKeys.length;i++) {
-			sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
-			//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
-		}
-	}
-
-    $.ajax({
-        type : "POST",
-        url : url_G3_SEARCH+"&TOKEN=" + token + "&G3_CRUD_MODE=SEARCH" ,
-        data : sendFormData,
-		processData: false,
-		contentType: false,
-        dataType: "json",
-        success: function(data){
-            alog(data);
-
-			if(data && data.RTN_CD == "200"){
-				if(data.RTN_DATA){
-					msgNotice("정상적으로 조회되었습니다.",1);
-				}else{
-					msgNotice("정상적으로 조회되었으나 데이터가 없습니다.",2);
-					return;
-				}
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-				return;
-			}
-
-            //모드 변경하기
-            $("#G3-CTLCUD").val("R");
-			//SETVAL  가져와서 세팅
-			$("#G3-SVCSEQ").val(data.RTN_DATA.SVCSEQ);//SVCSEQ 변수세팅
-			$("#G3-PJTSEQ").val(data.RTN_DATA.PJTSEQ);//PJTSEQ 변수세팅
-			$("#G3-PGMSEQ").val(data.RTN_DATA.PGMSEQ);//PGMSEQ 변수세팅
-			$("#G3-GRPSEQ").val(data.RTN_DATA.GRPSEQ);//GRPSEQ 변수세팅
-			$("#G3-FNCSEQ").val(data.RTN_DATA.FNCSEQ);//FNCSEQ 변수세팅
-			$("#G3-SVCGRPID").val(data.RTN_DATA.SVCGRPID);//SVCGRPID 변수세팅
-			$("#G3-ORD").val(data.RTN_DATA.ORD);//ORD 변수세팅
-			$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
-			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
-        },
-        error: function(error){
-            alog("Error:");
-            alog(error);
-        }
-    });
-    alog("(FORMVIEW) G3_SEARCH---------------end");
-
-}
-//사용자정의함수 : 사용자정의
 function G3_USERDEF(token){
 	alog("G3_USERDEF-----------------start");
 
@@ -607,4 +538,76 @@ function G3_SAVE(token){
 			alog(error);
 		}
 	});
+}//	
+function G3_NEW(){
+       alog("[FromView] G3_NEW---------------start");
+	$("#G3-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G3-SVCSEQ").val("");//SVCSEQ 신규초기화	
+	$("#G3-PJTSEQ").val("");//PJTSEQ 신규초기화	
+	$("#G3-PGMSEQ").val("");//PGMSEQ 신규초기화	
+	$("#G3-GRPSEQ").val("");//GRPSEQ 신규초기화	
+	$("#G3-FNCSEQ").val("");//FNCSEQ 신규초기화	
+	$("#G3-SVCGRPID").val("");//SVCGRPID 신규초기화	
+	$("#G3-ORD").val("");//ORD 신규초기화	
+	$("#G3-ADDDT").text("");//ADDDT 신규초기화
+	$("#G3-MODDT").text("");//MODDT 신규초기화
+       alog("DETAILNew30---------------end");
+}
+//디테일 검색	
+function G3_SEARCH(tinput,token){
+       alog("(FORMVIEW) G3_SEARCH---------------start");
+
+	//post 만들기
+	sendFormData = new FormData($("#condition")[0]);
+	if(typeof tinput != "undefined"){
+		var tKeys = tinput.keys();
+		for(i=0;i<tKeys.length;i++) {
+			sendFormData.append(tKeys[i],tinput.get(tKeys[i]));
+			//console.log(tKeys[i]+ '='+ tinput.get(tKeys[i])); 
+		}
+	}
+
+    $.ajax({
+        type : "POST",
+        url : url_G3_SEARCH+"&TOKEN=" + token + "&G3_CRUD_MODE=SEARCH" ,
+        data : sendFormData,
+		processData: false,
+		contentType: false,
+        dataType: "json",
+        success: function(data){
+            alog(data);
+
+			if(data && data.RTN_CD == "200"){
+				if(data.RTN_DATA){
+					msgNotice("정상적으로 조회되었습니다.",1);
+				}else{
+					msgNotice("정상적으로 조회되었으나 데이터가 없습니다.",2);
+					return;
+				}
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+				return;
+			}
+
+            //모드 변경하기
+            $("#G3-CTLCUD").val("R");
+			//SETVAL  가져와서 세팅
+			$("#G3-SVCSEQ").val(data.RTN_DATA.SVCSEQ);//SVCSEQ 변수세팅
+			$("#G3-PJTSEQ").val(data.RTN_DATA.PJTSEQ);//PJTSEQ 변수세팅
+			$("#G3-PGMSEQ").val(data.RTN_DATA.PGMSEQ);//PGMSEQ 변수세팅
+			$("#G3-GRPSEQ").val(data.RTN_DATA.GRPSEQ);//GRPSEQ 변수세팅
+			$("#G3-FNCSEQ").val(data.RTN_DATA.FNCSEQ);//FNCSEQ 변수세팅
+			$("#G3-SVCGRPID").val(data.RTN_DATA.SVCGRPID);//SVCGRPID 변수세팅
+			$("#G3-ORD").val(data.RTN_DATA.ORD);//ORD 변수세팅
+	$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
+	$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
+        },
+        error: function(error){
+            alog("Error:");
+            alog(error);
+        }
+    });
+    alog("(FORMVIEW) G3_SEARCH---------------end");
+
 }

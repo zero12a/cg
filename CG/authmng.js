@@ -49,9 +49,9 @@ function initBody(){
    //dhtmlx 메시지 박스 초기화
    dhtmlx.message.position="bottom";
 	G1_INIT();	
-		G2_INIT();	
-		G3_INIT();	
-	      feather.replace();
+	G2_INIT();	
+	G3_INIT();	
+      feather.replace();
 	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
@@ -175,26 +175,26 @@ function G1_INIT(){
 function G2_INIT(){
   alog("G2_INIT()-------------------------start");
 
-        //그리드 초기화
-        mygridG2 = new dhtmlXGridObject('gridG2');
-        mygridG2.setDateFormat("%Y%m%d");
-        mygridG2.setImagePath("lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-		mygridG2.setUserData("","gridTitle","G2 : 권한목록"); //글로별 변수에 그리드 타이블 넣기
-		//헤더초기화
-        mygridG2.setHeader("#master_checkbox,AUTH_SEQ,프로그램ID,AUTH_ID,AUTH_NM,USE_YN,ADD,MOD,PGMID2");
-		mygridG2.setColumnIds("CHK,AUTH_SEQ,PGMID,AUTH_ID,AUTH_NM,USE_YN,ADD_DT,MOD_DT,PGMID2");
-		mygridG2.setInitWidths("50,60,100,120,120,60,60,60,120");
-		mygridG2.setColTypes("ch,ro,ed,ed,ed,ed,ro,ro,button");
+	//그리드 초기화
+	mygridG2 = new dhtmlXGridObject('gridG2');
+	mygridG2.setDateFormat("%Y%m%d");
+	mygridG2.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
+	mygridG2.setUserData("","gridTitle","G2 : 권한목록"); //글로별 변수에 그리드 타이블 넣기
+	//헤더초기화
+	mygridG2.setHeader("#master_checkbox,AUTH_SEQ,프로그램ID,AUTH_ID,AUTH_NM,USE_YN,ADD,MOD,PGMID2");
+	mygridG2.setColumnIds("CHK,AUTH_SEQ,PGMID,AUTH_ID,AUTH_NM,USE_YN,ADD_DT,MOD_DT,PGMID2");
+	mygridG2.setInitWidths("50,60,100,120,120,60,60,60,120");
+	mygridG2.setColTypes("ch,ro,ed,ed,ed,ed,ro,ro,button");
 	//가로 정렬	
-		mygridG2.setColAlign("left,left,left,left,left,left,left,left,right");
-		mygridG2.setColSorting("int,int,str,str,str,str,str,str,str");		//렌더링	
-		mygridG2.enableSmartRendering(false);
-		mygridG2.enableMultiselect(true);
-		//mygridG2.setColValidators("G2_CHK,G2_AUTH_SEQ,G2_PGMID,G2_AUTH_ID,G2_AUTH_NM,G2_USE_YN,G2_ADD_DT,G2_MOD_DT,G2_PGMID2");
-		mygridG2.splitAt(0);//'freezes' 0 columns 
-		mygridG2.init();
+	mygridG2.setColAlign("left,left,left,left,left,left,left,left,right");
+	mygridG2.setColSorting("na,int,str,str,str,str,str,str,str");	//렌더링	
+	mygridG2.enableSmartRendering(false);
+	mygridG2.enableMultiselect(true);
+	//mygridG2.setColValidators("G2_CHK,G2_AUTH_SEQ,G2_PGMID,G2_AUTH_ID,G2_AUTH_NM,G2_USE_YN,G2_ADD_DT,G2_MOD_DT,G2_PGMID2");
+	mygridG2.splitAt(0);//'freezes' 0 columns 
+	mygridG2.init();
 
-		mygridG2.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
+	mygridG2.attachEvent("onDhxCalendarCreated", function(myCal){ myCal.loadUserLanguage( "kr" ); });
 		//블럭선택 및 복사
 		mygridG2.enableBlockSelection(true);
 		mygridG2.attachEvent("onKeyPress",function(code,ctrl,shift){
@@ -243,16 +243,18 @@ function G2_INIT(){
 		 // IO : PGMID2초기화	
 	//onCheck
 		mygridG2.attachEvent("onCheck",function(rowId, cellInd, state){
-			//onCheck is void return event
-			alog(rowId + " is onCheck.");
-			//ROW 마스터 체크 박스는 변경이면 실제 row 안함
-			if(  mygridG2.getColumnId(cellInd) == "ROWCHK" ){
-					mygridG2.cells(rowId,cellInd).cell.wasChanged = false;	
+			alog("mygridG2  onCheck ------------------start");
+			alog("	rowId=" + rowId + ", cellInd=" + cellInd + ", state=" + state);
+
+			RowEditStatus = mygridG2.getUserData(rowId,"!nativeeditor_status");
+			alog("	RowEditStatus=" + RowEditStatus);
+			//[마스터체크] ROW 마스터 체크 박스는 변경이면 실제 row 변경 안함
+			if(  mygridG2.getColumnId(cellInd) == "CHK" ){
+				mygridG2.cells(rowId,cellInd).cell.wasChanged = false;	
 			}	
-			//일반 체크 박스는 변경이면 실제 row 변경
+			//[일반 체크] 박스는 변경이면 실제 row 변경
 			if( 1 == 2 
 				){
-				RowEditStatus = mygridG2.getUserData(rowId,"!nativeeditor_status");
 				if(RowEditStatus == ""){
 					mygridG2.setUserData(rowId,"!nativeeditor_status","updated");
 					mygridG2.setRowTextBold(rowId);
@@ -283,16 +285,15 @@ function G2_INIT(){
 		lastinputG3.set("G2-AUTH_SEQ", mygridG2.cells(rowID,mygridG2.getColIndexById("AUTH_SEQ")).getValue().replace(/&amp;/g, "&")); // 
 			G3_SEARCH(lastinputG3,uuidv4()); //자식그룹 호출 : 권한상세
 		});
-		mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+	//onEditCell 이벤트
+	mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
+		alog("mygridG2  onEditCell ------------------start");
+		alog("	stage : " + stage + ", rId : " + rId + ", cInd : " + cInd + ", nValue : " + nValue + ", oValue : " + oValue);
 
-            alog("mygridG2  onEditCell ------------------start");
-            alog("       stage : " + stage);
-            alog("       rId : " + rId);
-            alog("       cInd : " + cInd);
-            alog("       nValue : " + nValue);
-            alog("       oValue : " + oValue);
+		RowEditStatus = mygridG2.getUserData(rId,"!nativeeditor_status");
+		alog("	RowEditStatus = " + RowEditStatus);
 
-            RowEditStatus = mygridG2.getUserData(rId,"!nativeeditor_status");
+		//체크박스 아닌 일반 컬럼
             if(stage == 2
                 && RowEditStatus != "inserted"
                 && RowEditStatus != "deleted"
@@ -304,11 +305,11 @@ function G2_INIT(){
                 }
                 mygridG2.cells(rId,cInd).cell.wasChanged = true;
             }
-            return true;
 
-		});
-        alog("G2_INIT()-------------------------end");
-     }
+            return true;
+	});
+	alog("G2_INIT()-------------------------end");
+}
 //디테일 초기화	
 //권한상세 폼뷰 초기화
 function G3_INIT(){
@@ -371,7 +372,7 @@ function G1_RESET(){
 	alog("G2_SAVE()------------start");
 	tgrid = mygridG2;
 
-	tgrid.setSerializationLevel(true,false,false,false,true,false);
+	tgrid.setSerializationLevel(true,false,false,false,true,true);
 	var myXmlString = tgrid.serialize();
         //post 만들기
 		sendFormData = new FormData($("#condition")[0]);
@@ -556,14 +557,14 @@ function G2_CHKSAVE(token){
 function G2_EXCEL(){	
 	alog("G2_EXCEL-----------------start");
 	var myForm = document.excelDownForm;
-	var url = "/c.g/cg_phpexcel.php";
+	var url = "/common/cg_phpexcel.php";
 	window.open("" ,"popForm",
 		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
 	myForm.action =url;
 	myForm.method="post";
 	myForm.target="popForm";
 
-	mygridG2.setSerializationLevel(true,false,false,false,false,false);
+	mygridG2.setSerializationLevel(true,false,false,false,false,true);
 	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
 	$("#DATA_HEADERS").val("CHK,AUTH_SEQ,PGMID,AUTH_ID,AUTH_NM,USE_YN,ADD_DT,MOD_DT,PGMID2");
 	$("#DATA_WIDTHS").val("50,60,100,120,120,60,60,60,120");

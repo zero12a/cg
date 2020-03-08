@@ -22,7 +22,7 @@ class grpusrmngService
 		$log->info("GrpusrmngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["OS"])$this->DB["OS"]->close();
+		if($this->DB["OS"])closeDb($this->DB["OS"]);
 		unset($this->DB);
 	}
 	function __toString(){

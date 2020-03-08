@@ -22,7 +22,7 @@ class groupmngService
 		$log->info("GroupmngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["DATING"])$this->DB["DATING"]->close();
+		if($this->DB["DATING"])closeDb($this->DB["DATING"]);
 		unset($this->DB);
 	}
 	function __toString(){

@@ -26,7 +26,7 @@ $log = getLogger(
 	, "PGM_ID"=>"PJTCOPY"
 	, "REQTOKEN" => $reqToken
 	, "RESTOKEN" => $resToken
-	, "LOG_LEVEL" => Monolog\Logger::INFO
+	, "LOG_LEVEL" => Monolog\Logger::ERROR
 	)
 );
 $log->info("PjtcopyControl___________________________start");

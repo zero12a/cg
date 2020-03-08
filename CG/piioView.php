@@ -30,12 +30,16 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/cleave.min.js" type="text/javascript" charset="UTF-8"></script> <!--CLEAVE JS-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/tableExport.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/Chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/popper.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Poper Js-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/js/bootstrap.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Min Js-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/summernote/summernote-bs4.min.js" type="text/javascript" charset="UTF-8"></script> <!--WebEditor Summbernote-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/locale/bootstrap-table-ko-KR.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS Lang-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR1-->
@@ -46,6 +50,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
+<link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/summernote/summernote-bs4.min.css" type="text/css" charset="UTF-8"><!--WebEditor Summbernote-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css" type="text/css" charset="UTF-8"><!--CODE MIRROR CSS-->
 <!--공통 js/css-->
@@ -101,7 +106,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--COLID오브젝트출력-->						<input type="text" name="G1-COLID" value="<?=getFilter(reqPostString("COLID",30),"SAFEECHO","")?>" id="G1-COLID" style="width:100px;">
+	<!--COLID오브젝트출력-->						<input type="text" name="G1-COLID" value="<?=getFilter(reqPostString("COLID",30),"SAFEECHO","")?>" id="G1-COLID" style="width:100px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -112,7 +117,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--COLNM오브젝트출력-->						<input type="text" name="G1-COLNM" value="<?=getFilter(reqPostString("COLNM",30),"SAFEECHO","")?>" id="G1-COLNM" style="width:100px;">
+	<!--COLNM오브젝트출력-->						<input type="text" name="G1-COLNM" value="<?=getFilter(reqPostString("COLNM",30),"SAFEECHO","")?>" id="G1-COLNM" style="width:100px;" class="">
 					</div>
 				</div>
 					<!-- GRPSEQ -->
@@ -586,7 +591,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G3-PJTSEQ" value="" id="G3-PJTSEQ" style="width:100px;">
+	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G3-PJTSEQ" value="" id="G3-PJTSEQ" style="width:100px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -597,7 +602,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--PGMSEQ오브젝트출력-->						<input type="text" name="G3-PGMSEQ" value="" id="G3-PGMSEQ" style="width:100px;">
+	<!--PGMSEQ오브젝트출력-->						<input type="text" name="G3-PGMSEQ" value="" id="G3-PGMSEQ" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -611,7 +616,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--GRPSEQ오브젝트출력-->						<input type="text" name="G3-GRPSEQ" value="" id="G3-GRPSEQ" style="width:100px;">
+	<!--GRPSEQ오브젝트출력-->						<input type="text" name="G3-GRPSEQ" value="" id="G3-GRPSEQ" style="width:100px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -622,7 +627,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--IOSEQ오브젝트출력-->						<input type="text" name="G3-IOSEQ" value="" id="G3-IOSEQ" style="width:100px;">
+	<!--IOSEQ오브젝트출력-->						<input type="text" name="G3-IOSEQ" value="" id="G3-IOSEQ" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -636,7 +641,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--COLORD오브젝트출력-->						<input type="text" name="G3-COLORD" value="" id="G3-COLORD" style="width:100px;">
+	<!--COLORD오브젝트출력-->						<input type="text" name="G3-COLORD" value="" id="G3-COLORD" style="width:100px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -647,7 +652,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--COLID오브젝트출력-->						<input type="text" name="G3-COLID" value="" id="G3-COLID" style="width:100px;">
+	<!--COLID오브젝트출력-->						<input type="text" name="G3-COLID" value="" id="G3-COLID" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -661,7 +666,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--COLNM오브젝트출력-->						<input type="text" name="G3-COLNM" value="" id="G3-COLNM" style="width:100px;">
+	<!--COLNM오브젝트출력-->						<input type="text" name="G3-COLNM" value="" id="G3-COLNM" style="width:100px;" class="">
 					</div>
 				</div>
 		<!--, 데이터타입-->
@@ -691,7 +696,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--DATASIZE오브젝트출력-->						<input type="text" name="G3-DATASIZE" value="" id="G3-DATASIZE" style="width:100px;">
+	<!--DATASIZE오브젝트출력-->						<input type="text" name="G3-DATASIZE" value="" id="G3-DATASIZE" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV>
@@ -713,7 +718,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--POPUP오브젝트출력-->						<input type="text" name="G3-POPUP" value="" id="G3-POPUP" style="width:100px;">
+	<!--POPUP오브젝트출력-->						<input type="text" name="G3-POPUP" value="" id="G3-POPUP" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -766,7 +771,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--LBLWIDTH오브젝트출력-->						<input type="text" name="G3-LBLWIDTH" value="" id="G3-LBLWIDTH" style="width:100px;">
+	<!--LBLWIDTH오브젝트출력-->						<input type="text" name="G3-LBLWIDTH" value="" id="G3-LBLWIDTH" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV>
@@ -788,7 +793,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--OBJWIDTH오브젝트출력-->						<input type="text" name="G3-OBJWIDTH" value="" id="G3-OBJWIDTH" style="width:100px;">
+	<!--OBJWIDTH오브젝트출력-->						<input type="text" name="G3-OBJWIDTH" value="" id="G3-OBJWIDTH" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -802,7 +807,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--OBJHEIGHT오브젝트출력-->						<input type="text" name="G3-OBJHEIGHT" value="" id="G3-OBJHEIGHT" style="width:100px;">
+	<!--OBJHEIGHT오브젝트출력-->						<input type="text" name="G3-OBJHEIGHT" value="" id="G3-OBJHEIGHT" style="width:100px;" class="">
 					</div>
 				</div>
 		<!--, 가로정렬-->
@@ -883,7 +888,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--FORMAT오브젝트출력-->						<input type="text" name="G3-FORMAT" value="" id="G3-FORMAT" style="width:100px;">
+	<!--FORMAT오브젝트출력-->						<input type="text" name="G3-FORMAT" value="" id="G3-FORMAT" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV>
@@ -905,7 +910,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--FOOTERNM오브젝트출력-->						<input type="text" name="G3-FOOTERNM" value="" id="G3-FOOTERNM" style="width:100px;">
+	<!--FOOTERNM오브젝트출력-->						<input type="text" name="G3-FOOTERNM" value="" id="G3-FOOTERNM" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -919,7 +924,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--ICONNM오브젝트출력-->						<input type="text" name="G3-ICONNM" value="" id="G3-ICONNM" style="width:100px;">
+	<!--ICONNM오브젝트출력-->						<input type="text" name="G3-ICONNM" value="" id="G3-ICONNM" style="width:100px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -930,7 +935,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--ICONSTYLE오브젝트출력-->						<input type="text" name="G3-ICONSTYLE" value="" id="G3-ICONSTYLE" style="width:100px;">
+	<!--ICONSTYLE오브젝트출력-->						<input type="text" name="G3-ICONSTYLE" value="" id="G3-ICONSTYLE" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -944,7 +949,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--LBLSTYLE오브젝트출력-->						<input type="text" name="G3-LBLSTYLE" value="" id="G3-LBLSTYLE" style="width:100px;">
+	<!--LBLSTYLE오브젝트출력-->						<input type="text" name="G3-LBLSTYLE" value="" id="G3-LBLSTYLE" style="width:100px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -955,7 +960,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--OBJSTYLE오브젝트출력-->						<input type="text" name="G3-OBJSTYLE" value="" id="G3-OBJSTYLE" style="width:100px;">
+	<!--OBJSTYLE오브젝트출력-->						<input type="text" name="G3-OBJSTYLE" value="" id="G3-OBJSTYLE" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -969,7 +974,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--OBJ2STYLE오브젝트출력-->						<input type="text" name="G3-OBJ2STYLE" value="" id="G3-OBJ2STYLE" style="width:100px;">
+	<!--OBJ2STYLE오브젝트출력-->						<input type="text" name="G3-OBJ2STYLE" value="" id="G3-OBJ2STYLE" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->

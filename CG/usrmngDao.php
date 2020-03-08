@@ -20,7 +20,7 @@ class usrmngDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "OS";
+		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "insUsrG";
 		$RtnVal["SQLTXT"] = "INSERT INTO CMN_USR(
 	USR_ID, USR_NM, USR_PWD, ADD_DT, ADD_ID
@@ -37,7 +37,7 @@ class usrmngDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "OS";
+		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "selUsrF";
 		$RtnVal["SQLTXT"] = "select 
 	USR_SEQ, USR_ID, USR_NM, '--Hashed--' as USR_PWD, PW_CHG_DT, PHONE
@@ -55,7 +55,7 @@ where USR_SEQ = #{G2-USR_SEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "OS";
+		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "selUsrG";
 		$RtnVal["SQLTXT"] = "select 
 	USR_SEQ, USR_ID, USR_NM, '--hashed--' as USR_PWD, PW_CHG_DT, PHONE
@@ -72,7 +72,7 @@ where USR_ID like if(#{G1-USR_ID}='','%',#{G1-USR_ID})";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "OS";
+		$RtnVal["SVRID"] = "DATING";
 		$RtnVal["SQLID"] = "updUsrPwG";
 		$RtnVal["SQLTXT"] = "update CMN_USR set
 	USR_PWD = #{USR_PWD}, PW_CHG_DT = date_format(sysdate(),'%Y%m%d%H%i%s')

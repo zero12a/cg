@@ -30,6 +30,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/cleave.min.js" type="text/javascript" charset="UTF-8"></script> <!--CLEAVE JS-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/tableExport.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
@@ -104,7 +105,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--PGMID오브젝트출력-->						<input type="text" name="G1-PGMID" value="<?=getFilter(reqPostString("PGMID",20),"SAFEECHO","")?>" id="G1-PGMID" style="width:100px;">
+	<!--PGMID오브젝트출력-->						<input type="text" name="G1-PGMID" value="<?=getFilter(reqPostString("PGMID",20),"SAFEECHO","")?>" id="G1-PGMID" style="width:100px;" class="">
 					</div>
 				</div>
 			<!--D101: STARTTXT, TAG-->
@@ -115,7 +116,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:30px;"-->
 					<div class="CON_OBJECT">
-	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G1-PJTSEQ" value="<?=getFilter(reqPostString("PJTSEQ",20),"SAFEECHO","")?>" id="G1-PJTSEQ" style="width:30px;">
+	<!--PJTSEQ오브젝트출력-->						<input type="text" name="G1-PJTSEQ" value="<?=getFilter(reqPostString("PJTSEQ",20),"SAFEECHO","")?>" id="G1-PJTSEQ" style="width:30px;" class="">
 					</div>
 				</div>
 			</div><!-- is_br_tag end -->

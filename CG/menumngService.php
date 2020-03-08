@@ -10,12 +10,11 @@ class menumngService
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("MenumngService-__construct");
 
 		$this->DAO = new menumngDao();
-	    //$this->DB = db_s_open();
-		$this->DB["DATING"] = db_obj_open(getDbSvrInfo("DATING"));
+		$this->DB["DATING"] = getDbConn($CFG["CFG_DB"]["DATING"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -23,7 +22,7 @@ class menumngService
 		$log->info("MenumngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["DATING"])$this->DB["DATING"]->close();
+		if($this->DB["DATING"])closeDb($this->DB["DATING"]);
 		unset($this->DB);
 	}
 	function __toString(){
@@ -201,11 +200,11 @@ class menumngService
 		$GRID["SEQYN"] = "Y";  //시퀀스 컬럼 유무
 		//S
 		//V_GRPNM : 메뉴
-		array_push($GRID["SQL"]["C"], $this->DAO->insMenuG($REQ)); //SAVE, S,insMenuG
-		//V_GRPNM : 메뉴
 		array_push($GRID["SQL"]["U"], $this->DAO->updMenuG($REQ)); //SAVE, S,updMenuG
 		//V_GRPNM : 메뉴
 		array_push($GRID["SQL"]["D"], $this->DAO->delMenuG($REQ)); //SAVE, S,delMenuG
+		//V_GRPNM : 메뉴
+		array_push($GRID["SQL"]["C"], $this->DAO->insMenuG($REQ)); //SAVE, S,insMenuG
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");

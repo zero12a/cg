@@ -56,9 +56,9 @@ function initBody(){
    //dhtmlx 메시지 박스 초기화
    dhtmlx.message.position="bottom";
 	G1_INIT();	
-		G2_INIT();	
-		G3_INIT();	
-	      feather.replace();
+	G2_INIT();	
+	G3_INIT();	
+      feather.replace();
 	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
@@ -216,12 +216,17 @@ function G3_INIT(){
 
 
 	//컬럼 초기화
-	//SQLSEQ, SQLSEQ 초기화		//COLSEQ, COLSEQ 초기화		//PJTSEQ, PJTSEQ 초기화		//PGMSEQ, PGMSEQ 초기화		//SQLGBN, SQLGBN 초기화	
+	//SQLSEQ, SQLSEQ 초기화
+	//COLSEQ, COLSEQ 초기화
+	//PJTSEQ, PJTSEQ 초기화
+	//PGMSEQ, PGMSEQ 초기화
+	//SQLGBN, SQLGBN 초기화	
 	//COLID, 컬럼ID 초기화	
 	//DDCOLID, DDCOLID 초기화	
 	//REQUIREYN, 필수 초기화	
 	//ORD, ORD 초기화	
-	//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
+	//MODDT, MODDT 초기화
+  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
 //사용자정의함수 : 사용자정의
@@ -415,17 +420,36 @@ function G2_SEARCH(tinput,token){
 		alog("G2_SEARCH()------------end");
 }
 
+function G3_MODIFY(){
+       alog("[FromView] G3_MODIFY---------------start");
+	if( $("#G3-CTLCUD").val() == "C" ){
+		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+	if( $("#G3-CTLCUD").val() == "D" ){
+		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
+		return;
+	}
+
+	$("#G3-CTLCUD").val("U");
+       alog("[FromView] G3_MODIFY---------------end");
+}
 //	
 function G3_NEW(){
        alog("[FromView] G3_NEW---------------start");
 	$("#G3-CTLCUD").val("C");
 	//PMGIO 로직
-	$("#G3-SQLSEQ").text("");//SQLSEQ 신규초기화		$("#G3-COLSEQ").text("");//COLSEQ 신규초기화		$("#G3-PJTSEQ").text("");//PJTSEQ 신규초기화		$("#G3-PGMSEQ").text("");//PGMSEQ 신규초기화		$("#G3-SQLGBN").val("");//SQLGBN 신규초기화	
+	$("#G3-SQLSEQ").text("");//SQLSEQ 신규초기화
+	$("#G3-COLSEQ").text("");//COLSEQ 신규초기화
+	$("#G3-PJTSEQ").text("");//PJTSEQ 신규초기화
+	$("#G3-PGMSEQ").text("");//PGMSEQ 신규초기화
+	$("#G3-SQLGBN").val("");//SQLGBN 신규초기화	
 	$("#G3-COLID").val("");//컬럼ID 신규초기화	
 	$("#G3-DDCOLID").val("");//DDCOLID 신규초기화	
 	$("#G3-REQUIREYN").val("");//필수 신규초기화	
 	$("#G3-ORD").val("");//ORD 신규초기화	
-	$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
+	$("#G3-MODDT").text("");//MODDT 신규초기화
+       alog("DETAILNew30---------------end");
 }
 //디테일 검색	
 function G3_SEARCH(tinput,token){
@@ -466,16 +490,16 @@ function G3_SEARCH(tinput,token){
             //모드 변경하기
             $("#G3-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
-			$("#G3-SQLSEQ").text(data.RTN_DATA.SQLSEQ);//SQLSEQ 변수세팅
-			$("#G3-COLSEQ").text(data.RTN_DATA.COLSEQ);//COLSEQ 변수세팅
-			$("#G3-PJTSEQ").text(data.RTN_DATA.PJTSEQ);//PJTSEQ 변수세팅
-			$("#G3-PGMSEQ").text(data.RTN_DATA.PGMSEQ);//PGMSEQ 변수세팅
+	$("#G3-SQLSEQ").text(data.RTN_DATA.SQLSEQ);//SQLSEQ 변수세팅
+	$("#G3-COLSEQ").text(data.RTN_DATA.COLSEQ);//COLSEQ 변수세팅
+	$("#G3-PJTSEQ").text(data.RTN_DATA.PJTSEQ);//PJTSEQ 변수세팅
+	$("#G3-PGMSEQ").text(data.RTN_DATA.PGMSEQ);//PGMSEQ 변수세팅
 			$("#G3-SQLGBN").val(data.RTN_DATA.SQLGBN);//SQLGBN 변수세팅
 			$("#G3-COLID").val(data.RTN_DATA.COLID);//컬럼ID 변수세팅
 			$("#G3-DDCOLID").val(data.RTN_DATA.DDCOLID);//DDCOLID 변수세팅
 			$("#G3-REQUIREYN").val(data.RTN_DATA.REQUIREYN);//필수 변수세팅
 			$("#G3-ORD").val(data.RTN_DATA.ORD);//ORD 변수세팅
-			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
+	$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
         },
         error: function(error){
             alog("Error:");
@@ -582,17 +606,4 @@ function G3_SAVE(token){
 			alog(error);
 		}
 	});
-}function G3_MODIFY(){
-       alog("[FromView] G3_MODIFY---------------start");
-	if( $("#G3-CTLCUD").val() == "C" ){
-		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-	if( $("#G3-CTLCUD").val() == "D" ){
-		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-
-	$("#G3-CTLCUD").val("U");
-       alog("[FromView] G3_MODIFY---------------end");
 }

@@ -852,11 +852,6 @@ function G2_SEARCHALL(token){
 	G3_SEARCH(lastinputG3,token);
 	alog("G2_SEARCHALL--------------------------end");
 }
-    function G3_ROWDELETE(){	
-        alog("G3_ROWDELETE()------------start");
-        delRow(mygridG3);
-        alog("G3_ROWDELETE()------------start");
-    }
 //새로고침	
 function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
@@ -990,6 +985,11 @@ function G3_RELOAD(token){
         alog("G3_SEARCH()------------end");
     }
 
+    function G3_ROWDELETE(){	
+        alog("G3_ROWDELETE()------------start");
+        delRow(mygridG3);
+        alog("G3_ROWDELETE()------------start");
+    }
     function G4_ROWDELETE(){	
         alog("G4_ROWDELETE()------------start");
         delRow(mygridG4);
@@ -1146,6 +1146,82 @@ function G4_RELOAD(token){
         alog("G4_SEARCH()------------end");
     }
 
+    function G5_ROWDELETE(){	
+        alog("G5_ROWDELETE()------------start");
+        delRow(mygridG5);
+        alog("G5_ROWDELETE()------------start");
+    }
+//엑셀다운		
+function G5_EXCEL(){	
+	alog("G5_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/common/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG5.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG5.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("PJTSEQ,DDSEQ,COLID,COLNM,COLSNM,DATATYPE,DATASIZE,OBJTYPE,OBJTYPE_FORMVIEW,OBJTYPE_GRID,LBLWIDTH,LBLHEIGHT,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,CRYPTCD,VALIDSEQ,PIYN,ADDDT,MODDT");
+	$("#DATA_WIDTHS").val("30,30,100,100,100,100,100,100,60,60,100,100,100,100,100,100,40,60,40,100,100");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}
+	function G5_SAVE(token){
+	alog("G5_SAVE()------------start");
+	tgrid = mygridG5;
+
+	tgrid.setSerializationLevel(true,false,false,false,true,true);
+	var myXmlString = tgrid.serialize();
+        //post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+		//for(var pair of lastinputG5.entries()) {
+		//	sendFormData.append(pair[0],pair[1]);
+   		//	//console.log(pair[0]+ ', '+ pair[1]); 
+		//}
+
+		if(typeof lastinputG5 != "undefined"){
+			var tKeys = lastinputG5.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG5.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG5.get(tKeys[i])); 
+			}
+		}
+	sendFormData.append("G5-XML" , myXmlString);
+	$.ajax({
+		type : "POST",
+		url : url_G5_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G5_SAVE()------------end");
+}
+//새로고침	
+function G5_RELOAD(token){
+  alog("G5_RELOAD-----------------start");
+  G5_SEARCH(lastinputG5,token);
+}
 
 
 
@@ -1226,89 +1302,7 @@ function G4_RELOAD(token){
 			var tCols = [lastinputG5.get("G3-PJTSEQ"),"","","","","","","","","","","","","","","","","","","",""];//초기값
 			addRow(mygridG5,tCols);
 		}
-	}    function G5_ROWDELETE(){	
-        alog("G5_ROWDELETE()------------start");
-        delRow(mygridG5);
-        alog("G5_ROWDELETE()------------start");
-    }
-//엑셀다운		
-function G5_EXCEL(){	
-	alog("G5_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/common/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG5.setSerializationLevel(true,false,false,false,false,true);
-	var myXmlString = mygridG5.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("PJTSEQ,DDSEQ,COLID,COLNM,COLSNM,DATATYPE,DATASIZE,OBJTYPE,OBJTYPE_FORMVIEW,OBJTYPE_GRID,LBLWIDTH,LBLHEIGHT,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,CRYPTCD,VALIDSEQ,PIYN,ADDDT,MODDT");
-	$("#DATA_WIDTHS").val("30,30,100,100,100,100,100,100,60,60,100,100,100,100,100,100,40,60,40,100,100");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
-}
-	function G5_SAVE(token){
-	alog("G5_SAVE()------------start");
-	tgrid = mygridG5;
-
-	tgrid.setSerializationLevel(true,false,false,false,true,true);
-	var myXmlString = tgrid.serialize();
-        //post 만들기
-		sendFormData = new FormData($("#condition")[0]);
-		//for(var pair of lastinputG5.entries()) {
-		//	sendFormData.append(pair[0],pair[1]);
-   		//	//console.log(pair[0]+ ', '+ pair[1]); 
-		//}
-
-		if(typeof lastinputG5 != "undefined"){
-			var tKeys = lastinputG5.keys();
-			for(i=0;i<tKeys.length;i++) {
-				sendFormData.append(tKeys[i],lastinputG5.get(tKeys[i]));
-				//console.log(tKeys[i]+ '='+ lastinputG5.get(tKeys[i])); 
-			}
-		}
-	sendFormData.append("G5-XML" , myXmlString);
-	$.ajax({
-		type : "POST",
-		url : url_G5_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		dataType: "json",
-		async: false,
-		success: function(data){
-			alog("   json return----------------------");
-			alog("   json data : " + data);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("Ajax http 500 error ( " + error + " )");
-			alog("Ajax http 500 error ( " + error + " )");
-		}
-	});
-	
-	alog("G5_SAVE()------------end");
-}
-//새로고침	
-function G5_RELOAD(token){
-  alog("G5_RELOAD-----------------start");
-  G5_SEARCH(lastinputG5,token);
-}
-//사용자정의함수 : 사용자정의
-function G6_USERDEF(token){
-	alog("G6_USERDEF-----------------start");
-
-	alog("G6_USERDEF-----------------end");
-}
-//엑셀다운		
+	}//엑셀다운		
 function G6_EXCEL(){	
 	alog("G6_EXCEL-----------------start");
 	var myForm = document.excelDownForm;
@@ -1465,28 +1459,10 @@ function G6_RELOAD(token){
 			addRow(mygridG6,tCols);
 		}
 	}//사용자정의함수 : 사용자정의
-function G7_USERDEF(token){
-	alog("G7_USERDEF-----------------start");
+function G6_USERDEF(token){
+	alog("G6_USERDEF-----------------start");
 
-	alog("G7_USERDEF-----------------end");
-}
-//엑셀다운		
-function G7_EXCEL(){	
-	alog("G7_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/common/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG7.setSerializationLevel(true,false,false,false,false,true);
-	var myXmlString = mygridG7.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT");
-	$("#DATA_WIDTHS").val("20,50,50,50,50,50,50,50,50,50,50");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
+	alog("G6_USERDEF-----------------end");
 }
 	function G7_SAVE(token){
 	alog("G7_SAVE()------------start");
@@ -1626,3 +1602,27 @@ function G7_RELOAD(token){
         delRow(mygridG7);
         alog("G7_ROWDELETE()------------start");
     }
+//사용자정의함수 : 사용자정의
+function G7_USERDEF(token){
+	alog("G7_USERDEF-----------------start");
+
+	alog("G7_USERDEF-----------------end");
+}
+//엑셀다운		
+function G7_EXCEL(){	
+	alog("G7_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/common/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG7.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG7.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT");
+	$("#DATA_WIDTHS").val("20,50,50,50,50,50,50,50,50,50,50");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}

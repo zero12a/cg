@@ -222,19 +222,6 @@ setCodeCombo("FORMVIEW",$("#F4-REQ_DATATYPE"),"REQDATATYPE");
   alog("F4_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-// CONDITIONSearch	
-function C2_SEARCHALL(token){
-	alog("C2_SEARCHALL--------------------------start");
-	//입력값검증
-	//폼의 모든값 구하기
-	var ConAllData = $( "#condition" ).serialize();
-	alog("ConAllData:" + ConAllData);
-	//json : C2
-			lastinputG3 = new HashMap(); //그리드1
-		//  호출
-	G3_SEARCH(lastinputG3,token);
-	alog("C2_SEARCHALL--------------------------end");
-}
 //사용자정의함수 : 테스트
 function C2_sss(token){
 	alog("C2_sss-----------------start");
@@ -286,6 +273,19 @@ function C2_SAVE(){
 		}
 	});
 	alog("C2_SAVE-------------------end");	
+}
+// CONDITIONSearch	
+function C2_SEARCHALL(token){
+	alog("C2_SEARCHALL--------------------------start");
+	//입력값검증
+	//폼의 모든값 구하기
+	var ConAllData = $( "#condition" ).serialize();
+	alog("ConAllData:" + ConAllData);
+	//json : C2
+			lastinputG3 = new HashMap(); //그리드1
+		//  호출
+	G3_SEARCH(lastinputG3,token);
+	alog("C2_SEARCHALL--------------------------end");
 }
 //그리드1 엑셀 내려받기
 function G3_EXCEL2(){
@@ -423,11 +423,7 @@ function G3_RELOAD(token){
   alog("G3_RELOAD-----------------start");
   G3_SEARCH(lastinputG3,token);
 }
-//새로고침	
-function F4_RELOAD(token){
-	alog("F4_RELOAD-----------------start");
-	F4_SEARCH(lastinputF4,token);
-}function F4_MOD(){
+function F4_MOD(){
        alog("[FromView] F4_MOD---------------start");
 	if( $("#F4-CTLCUD").val() == "C" ){
 		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
@@ -639,4 +635,9 @@ function F4_NEW(){
 	$("#F4-ADD_DT").text("");//ADD 신규초기화
 	$("#F4-MOD_DT").text("");//MOD 신규초기화
        alog("DETAILNew30---------------end");
+}
+//새로고침	
+function F4_RELOAD(token){
+	alog("F4_RELOAD-----------------start");
+	F4_SEARCH(lastinputF4,token);
 }

@@ -10,12 +10,11 @@ class authmngService
 	private $DB;
 	//생성자
 	function __construct(){
-		global $log;
+		global $log,$CFG;
 		$log->info("AuthmngService-__construct");
 
 		$this->DAO = new authmngDao();
-	    //$this->DB = db_s_open();
-		$this->DB["DATING"] = db_obj_open(getDbSvrInfo("DATING"));
+		$this->DB["DATING"] = getDbConn($CFG["CFG_DB"]["DATING"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -23,7 +22,7 @@ class authmngService
 		$log->info("AuthmngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["DATING"])$this->DB["DATING"]->close();
+		if($this->DB["DATING"])closeDb($this->DB["DATING"]);
 		unset($this->DB);
 	}
 	function __toString(){

@@ -285,11 +285,6 @@ function G3_INIT(){
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
 	alog("G1_SEARCHALL--------------------------start");
@@ -303,23 +298,10 @@ function G1_SEARCHALL(token){
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/common/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG2.setSerializationLevel(true,false,false,false,false,true);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("LOGSEQ,URL,SESSIONID,REQTOKEN,RESTOKEN,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
-	$("#DATA_WIDTHS").val("70,60,50,50,50,50,50,50,40,120,150,120,100");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
 }
 
 
@@ -391,7 +373,68 @@ function G2_EXCEL(){
         alog("G2_SEARCH()------------end");
     }
 
-//새로고침	
+//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/common/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("LOGSEQ,URL,SESSIONID,REQTOKEN,RESTOKEN,USERID,USERSEQ,LISTNM,LOGLEVEL,LOGDT,LOGMSG,CHANNEL,ADDDT");
+	$("#DATA_WIDTHS").val("70,60,50,50,50,50,50,50,40,120,150,120,100");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}
+//G3_SAVE
+//IO_FILE_YN = N	
+	//IO_FILE_YN = N	
+function G3_SAVE(token){	
+	alog("G3_SAVE---------------start");
+
+	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
+		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
+		return;
+	}
+
+	//전송용 데이터 생성하기
+	var sendFormData = new FormData($("#formviewG3")[0]);
+
+	sendFormData.append("G3-LOGMSG",obj_G3_LOGMSG.getValue()); //MSG
+	//컨디션 데이터 추가하기
+	conditionData = new FormData($("#condition")[0]);
+    var es, e, pair;
+    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
+		sendFormData.append(pair[0],pair[1]);
+    }
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				msgNotice("정상적으로 저장되었습니다.",1);
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
+}//새로고침	
 function G3_RELOAD(token){
 	alog("G3_RELOAD-----------------start");
 	G3_SEARCH(lastinputG3,token);
@@ -455,48 +498,4 @@ function G3_NEW(){
 	$("#G3-DATEHM").val("");//DATEHM 신규초기화	
 	obj_G3_LOGMSG.setValue(""); // MSG값 비우기
        alog("DETAILNew30---------------end");
-}
-//G3_SAVE
-//IO_FILE_YN = N	
-	//IO_FILE_YN = N	
-function G3_SAVE(token){	
-	alog("G3_SAVE---------------start");
-
-	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
-		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
-		return;
-	}
-
-	//전송용 데이터 생성하기
-	var sendFormData = new FormData($("#formviewG3")[0]);
-
-	sendFormData.append("G3-LOGMSG",obj_G3_LOGMSG.getValue()); //MSG
-	//컨디션 데이터 추가하기
-	conditionData = new FormData($("#condition")[0]);
-    var es, e, pair;
-    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
-		sendFormData.append(pair[0],pair[1]);
-    }
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 저장되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
 }

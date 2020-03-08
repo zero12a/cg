@@ -1,44 +1,49 @@
 //글로벌 변수 선언
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SEARCHALL = "logloginController?CTLGRP=G1&CTLFNC=SEARCHALL";
+var url_G1_SEARCHALL = "srcdeployController?CTLGRP=G1&CTLFNC=SEARCHALL";
 //버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_SAVE = "logloginController?CTLGRP=G1&CTLFNC=SAVE";
-//버틀 그룹쪽에서 컨틀롤러 호출
-var url_G1_RESET = "logloginController?CTLGRP=G1&CTLFNC=RESET";
-//조건 변수 선언	
-var obj_G1_USR_ID; // USR_ID 변수선언
-var obj_G1_REMOTE_ADDR; // IP 변수선언
-var obj_G1_FROM_DT; // FROM_DT 변수선언
-var obj_G1_TO_DT; // ~ 변수선언
+var url_G1_RESET = "srcdeployController?CTLGRP=G1&CTLFNC=RESET";
+// 변수 선언	
+var obj_G1_PJTNM; // 프로젝트명 변수선언
 //그리드 변수 초기화	
 //컨트롤러 경로
-var url_G2_SEARCH = "logloginController?CTLGRP=G2&CTLFNC=SEARCH";
+var url_G2_SEARCH = "srcdeployController?CTLGRP=G2&CTLFNC=SEARCH";
 //컨트롤러 경로
-var url_G2_RELOAD = "logloginController?CTLGRP=G2&CTLFNC=RELOAD";
+var url_G2_SAVE = "srcdeployController?CTLGRP=G2&CTLFNC=SAVE";
 //컨트롤러 경로
-var url_G2_HIDDENCOL = "logloginController?CTLGRP=G2&CTLFNC=HIDDENCOL";
+var url_G2_RELOAD = "srcdeployController?CTLGRP=G2&CTLFNC=RELOAD";
 //컨트롤러 경로
-var url_G2_EXCEL = "logloginController?CTLGRP=G2&CTLFNC=EXCEL";
+var url_G2_EXCEL = "srcdeployController?CTLGRP=G2&CTLFNC=EXCEL";
 //그리드 객체
 var mygridG2,isToggleHiddenColG2,lastinputG2,lastinputG2json,lastrowidG2;
 var lastselectG2json;//디테일 변수 초기화	
 
 //폼뷰 컨트롤러 경로
-var url_G3_SEARCH = "logloginController?CTLGRP=G3&CTLFNC=SEARCH";
+var url_G3_RELOAD = "srcdeployController?CTLGRP=G3&CTLFNC=RELOAD";
 //폼뷰 컨트롤러 경로
-var url_G3_SAVE = "logloginController?CTLGRP=G3&CTLFNC=SAVE";
+var url_G3_EXCEL = "srcdeployController?CTLGRP=G3&CTLFNC=EXCEL";
 //폼뷰 컨트롤러 경로
-var url_G3_RELOAD = "logloginController?CTLGRP=G3&CTLFNC=RELOAD";
+var url_G3_SEARCH = "srcdeployController?CTLGRP=G3&CTLFNC=SEARCH";
 //폼뷰 컨트롤러 경로
-var url_G3_NEW = "logloginController?CTLGRP=G3&CTLFNC=NEW";
-//폼뷰 컨트롤러 경로
-var url_G3_MODIFY = "logloginController?CTLGRP=G3&CTLFNC=MODIFY";
-//폼뷰 컨트롤러 경로
-var url_G3_DELETE = "logloginController?CTLGRP=G3&CTLFNC=DELETE";
-var obj_G3_LOGIN_SEQ;   // SEQ 글로벌 변수 선언
-var obj_G3_SESSION_ID;   // SESSION_ID 글로벌 변수 선언
-var obj_G3_USER_AGENT;   // BROWSER 글로벌 변수 선언
-var obj_G3_AUTH_JSON;   // AUTH 글로벌 변수 선언
+var url_G3_SAVE = "srcdeployController?CTLGRP=G3&CTLFNC=SAVE";
+var obj_G3_PJTSEQ;   // PJTSEQ 글로벌 변수 선언
+var obj_G3_PJTID;   // 프로젝트ID 글로벌 변수 선언
+var obj_G3_PJTNM;   // 프로젝트명 글로벌 변수 선언
+var obj_G3_FILECHARSET;   // 파일 CHARSET 글로벌 변수 선언
+var obj_G3_UITOOL;   // UITOOL 글로벌 변수 선언
+var obj_G3_SVRLANG;   // 서버언어 글로벌 변수 선언
+var obj_G3_DEPLOYKEY;   // DEPLOYKEY 글로벌 변수 선언
+var obj_G3_PKGROOT;   // 패키지ROOT 글로벌 변수 선언
+var obj_G3_STARTDT;   // 시작일 글로벌 변수 선언
+var obj_G3_ENDDT;   // 종료일 글로벌 변수 선언
+var obj_G3_DELYN;   // 삭제YN 글로벌 변수 선언
+var obj_G3_GITINIT;   // GIT 글로벌 변수 선언
+var obj_G3_GITCOMMIT;   // GITCOMMIT 글로벌 변수 선언
+var obj_G3_GITPUSH;   // GITPUSH 글로벌 변수 선언
+var obj_G3_GITFORCEPUSH;   // GITFORCEPUSH 글로벌 변수 선언
+var obj_G3_GITVIEWCONFIG;   // GITVIEWCONFIG 글로벌 변수 선언
+var obj_G3_ADDDT;   // ADDDT 글로벌 변수 선언
+var obj_G3_MODDT;   // MODDT 글로벌 변수 선언
 //화면 초기화	
 function initBody(){
      alog("initBody()-----------------------start");
@@ -78,20 +83,12 @@ function popReturn(tGrpId,tRowId,tColId,tBtnNm,tJsonObj){
 function G1_INIT(){
   alog("G1_INIT()-------------------------start	");
 
-
-
-
 	//각 폼 오브젝트들 초기화
-	//USR_ID, USR_ID 초기화	
-	//REMOTE_ADDR, IP 초기화	
-	//달력 FROM_DT, FROM_DT
-	$( "#G1-FROM_DT" ).datepicker(dateFormatJson);
-	//달력 TO_DT, ~
-	$( "#G1-TO_DT" ).datepicker(dateFormatJson);
+	//PJTNM, 프로젝트명 초기화	
   alog("G1_INIT()-------------------------end");
 }
 
-	//목록 그리드 초기화
+	//프로젝트목록 그리드 초기화
 function G2_INIT(){
   alog("G2_INIT()-------------------------start");
 
@@ -99,18 +96,18 @@ function G2_INIT(){
 	mygridG2 = new dhtmlXGridObject('gridG2');
 	mygridG2.setDateFormat("%Y%m%d");
 	mygridG2.setImagePath(CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/"); //DHTMLX IMG
-	mygridG2.setUserData("","gridTitle","G2 : 목록"); //글로별 변수에 그리드 타이블 넣기
+	mygridG2.setUserData("","gridTitle","G2 : 프로젝트목록"); //글로별 변수에 그리드 타이블 넣기
 	//헤더초기화
-	mygridG2.setHeader("SEQ,USR_ID,SESSION_ID,SUCCESS_YN,USR_SEQ,SVR_NM,IP,BROWSER,ADD");
-	mygridG2.setColumnIds("LOGIN_SEQ,USR_ID,SESSION_ID,SUCCESS_YN,USR_SEQ,SERVER_NAME,REMOTE_ADDR,USER_AGENT,ADD_DT");
-	mygridG2.setInitWidths("60,60,60,60,60,60,60,120,60");
-	mygridG2.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro");
+	mygridG2.setHeader("PJTSEQ,프로젝트ID,프로젝트명,파일 CHARSET,UITOOL,서버언어,DEPLOYKEY,패키지ROOT,시작일,종료일,삭제YN,ADDDT,MODDT");
+	mygridG2.setColumnIds("PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT,DELYN,ADDDT,MODDT");
+	mygridG2.setInitWidths("100,60,60,60,30,40,50,60,40,40,40,100,100");
+	mygridG2.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,dhxCalendar,dhxCalendar,ed,ro,ro");
 	//가로 정렬	
-	mygridG2.setColAlign("left,left,left,left,left,left,left,left,left");
-	mygridG2.setColSorting("int,str,str,str,int,str,str,str,str");	//렌더링	
+	mygridG2.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left");
+	mygridG2.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str");	//렌더링	
 	mygridG2.enableSmartRendering(false);
 	mygridG2.enableMultiselect(true);
-	//mygridG2.setColValidators("G2_LOGIN_SEQ,G2_USR_ID,G2_SESSION_ID,G2_SUCCESS_YN,G2_USR_SEQ,G2_SERVER_NAME,G2_REMOTE_ADDR,G2_USER_AGENT,G2_ADD_DT");
+	//mygridG2.setColValidators("G2_PJTSEQ,G2_PJTID,G2_PJTNM,G2_FILECHARSET,G2_UITOOL,G2_SVRLANG,G2_DEPLOYKEY,G2_PKGROOT,G2_STARTDT,G2_ENDDT,G2_DELYN,G2_ADDDT,G2_MODDT");
 	mygridG2.splitAt(0);//'freezes' 0 columns 
 	mygridG2.init();
 
@@ -152,15 +149,19 @@ function G2_INIT(){
 				return false;
 			}
 		});
-		 // IO : SEQ초기화	
-		 // IO : USR_ID초기화	
-		 // IO : SESSION_ID초기화	
-		 // IO : SUCCESS_YN초기화	
-		 // IO : USR_SEQ초기화	
-		 // IO : SVR_NM초기화	
-		 // IO : IP초기화	
-		 // IO : BROWSER초기화	
-		 // IO : ADD초기화	
+		 // IO : PJTSEQ초기화	
+		 // IO : 프로젝트ID초기화	
+		 // IO : 프로젝트명초기화	
+		 // IO : 파일 CHARSET초기화	
+		 // IO : UITOOL초기화	
+		 // IO : 서버언어초기화	
+		 // IO : DEPLOYKEY초기화	
+		 // IO : 패키지ROOT초기화	
+		 // IO : 시작일초기화	
+		 // IO : 종료일초기화	
+		 // IO : 삭제YN초기화	
+		 // IO : ADDDT초기화	
+		 // IO : MODDT초기화	
 	//onCheck
 		mygridG2.attachEvent("onCheck",function(rowId, cellInd, state){
 			alog("mygridG2  onCheck ------------------start");
@@ -195,11 +196,11 @@ function G2_INIT(){
 			}
 		//A124
 			lastinputG3json = jQuery.parseJSON('{ "__NAME":"lastinputG3json"' +
-				', "G2-LOGIN_SEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("LOGIN_SEQ")).getValue()) + '"' +
+				', "G2-PJTSEQ" : "' + q(mygridG2.cells(rowID,mygridG2.getColIndexById("PJTSEQ")).getValue()) + '"' +
 			'}');
-		lastinputG3 = new HashMap(); // 상세
-		lastinputG3.set("G2-LOGIN_SEQ", mygridG2.cells(rowID,mygridG2.getColIndexById("LOGIN_SEQ")).getValue().replace(/&amp;/g, "&")); // 
-			G3_SEARCH(lastinputG3,uuidv4()); //자식그룹 호출 : 상세
+		lastinputG3 = new HashMap(); // 배포 상세
+		lastinputG3.set("G2-PJTSEQ", mygridG2.cells(rowID,mygridG2.getColIndexById("PJTSEQ")).getValue().replace(/&amp;/g, "&")); // 
+			G3_SEARCH(lastinputG3,uuidv4()); //자식그룹 호출 : 배포 상세
 		});
 	//onEditCell 이벤트
 	mygridG2.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
@@ -227,18 +228,48 @@ function G2_INIT(){
 	alog("G2_INIT()-------------------------end");
 }
 //디테일 초기화	
-//상세 폼뷰 초기화
+//배포 상세 폼뷰 초기화
 function G3_INIT(){
   alog("G3_INIT()-------------------------start");
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//컬럼 초기화
-	//LOGIN_SEQ, SEQ 초기화	
-	$("#G3-LOGIN_SEQ").attr("readonly",true);
-	//SESSION_ID, SESSION_ID 초기화
-	//USER_AGENT, BROWSER 초기화
+	//PJTSEQ, PJTSEQ 초기화	
+	//PJTID, 프로젝트ID 초기화	
+	//PJTNM, 프로젝트명 초기화	
+	//FILECHARSET, 파일 CHARSET 초기화	
+	//UITOOL, UITOOL 초기화	
+	//SVRLANG, 서버언어 초기화	
+	//DEPLOYKEY, DEPLOYKEY 초기화	
+	//PKGROOT, 패키지ROOT 초기화	
+	//달력 STARTDT, 시작일
+	$( "#G3-STARTDT" ).datepicker(dateFormatJson);
+	//달력 ENDDT, 종료일
+	$( "#G3-ENDDT" ).datepicker(dateFormatJson);
+	//DELYN, 삭제YN 초기화	
+	//GITINIT, GIT 초기화	
+	//GITCOMMIT, GITCOMMIT 초기화	
+	//GITPUSH, GITPUSH 초기화	
+	//GITFORCEPUSH, GITFORCEPUSH 초기화	
+	//GITVIEWCONFIG, GITVIEWCONFIG 초기화	
+	//ADDDT, ADDDT 초기화
+	//MODDT, MODDT 초기화
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
@@ -246,38 +277,6 @@ function G3_INIT(){
 function G1_RESET(){
 	alog("G1_RESET--------------------------start");
 	$('#condition')[0].reset();
-}
-//조건, 저장	
-function G1_SAVE(){
- alog("G1_SAVE-------------------start");
-	//FormData parameter에 담아줌	
-	var formData = new FormData();	//G1 getparams	
-//var params = { CTL : "G1_SAVE"};
-	$.ajax({	
-		type : "POST",
-		url : url_G1_SAVE  ,
-		data : formData,
-		processData: false,
-		contentType: false,
-		async: false,
-		success: function(tdata){
-			alog("   json return----------------------");
-			alog("   json data : " + tdata);
-			data = jQuery.parseJSON(tdata);
-			alog("   json RTN_CD : " + data.RTN_CD);
-			alog("   json ERR_CD : " + data.ERR_CD);
-			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
-
-			//그리드에 데이터 반영
-			saveToGroup(data);
-
-		},
-		error: function(error){
-			msgError("[G1] Ajax http 500 error ( " + error + " )");
-			alog("[G1] Ajax http 500 error ( " + error + " )");
-		}
-	});
-	alog("G1_SAVE-------------------end");	
 }
 // CONDITIONSearch	
 function G1_SEARCHALL(token){
@@ -287,24 +286,82 @@ function G1_SEARCHALL(token){
 	var ConAllData = $( "#condition" ).serialize();
 	alog("ConAllData:" + ConAllData);
 	//json : G1
-			lastinputG2 = new HashMap(); //목록
+			lastinputG2 = new HashMap(); //프로젝트목록
 		//  호출
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-    function G2_HIDDENCOL(){
-		alog("G2_HIDDENCOL()..................start");
-        if(isToggleHiddenColG2){
-            isToggleHiddenColG2 = false;     }else{
-            isToggleHiddenColG2 = true;
-        }
-		alog("G2_HIDDENCOL()..................end");
-    }
 //새로고침	
 function G2_RELOAD(token){
   alog("G2_RELOAD-----------------start");
   G2_SEARCH(lastinputG2,token);
 }
+	function G2_SAVE(token){
+	alog("G2_SAVE()------------start");
+	tgrid = mygridG2;
+
+	tgrid.setSerializationLevel(true,false,false,false,true,true);
+	var myXmlString = tgrid.serialize();
+        //post 만들기
+		sendFormData = new FormData($("#condition")[0]);
+		//for(var pair of lastinputG2.entries()) {
+		//	sendFormData.append(pair[0],pair[1]);
+   		//	//console.log(pair[0]+ ', '+ pair[1]); 
+		//}
+
+		if(typeof lastinputG2 != "undefined"){
+			var tKeys = lastinputG2.keys();
+			for(i=0;i<tKeys.length;i++) {
+				sendFormData.append(tKeys[i],lastinputG2.get(tKeys[i]));
+				//console.log(tKeys[i]+ '='+ lastinputG2.get(tKeys[i])); 
+			}
+		}
+	sendFormData.append("G2-XML" , myXmlString);
+	$.ajax({
+		type : "POST",
+		url : url_G2_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		async: false,
+		success: function(data){
+			alog("   json return----------------------");
+			alog("   json data : " + data);
+			alog("   json RTN_CD : " + data.RTN_CD);
+			alog("   json ERR_CD : " + data.ERR_CD);
+			//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+			//그리드에 데이터 반영
+			saveToGroup(data);
+
+		},
+		error: function(error){
+			msgError("Ajax http 500 error ( " + error + " )");
+			alog("Ajax http 500 error ( " + error + " )");
+		}
+	});
+	
+	alog("G2_SAVE()------------end");
+}
+//엑셀다운		
+function G2_EXCEL(){	
+	alog("G2_EXCEL-----------------start");
+	var myForm = document.excelDownForm;
+	var url = "/common/cg_phpexcel.php";
+	window.open("" ,"popForm",
+		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
+	myForm.action =url;
+	myForm.method="post";
+	myForm.target="popForm";
+
+	mygridG2.setSerializationLevel(true,false,false,false,false,true);
+	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
+	$("#DATA_HEADERS").val("PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG,DEPLOYKEY,PKGROOT,STARTDT,ENDDT,DELYN,ADDDT,MODDT");
+	$("#DATA_WIDTHS").val("100,60,60,60,30,40,50,60,40,40,40,100,100");
+	$("#DATA_ROWS").val(myXmlString);
+	myForm.submit();
+}
 
 
 
@@ -313,7 +370,7 @@ function G2_RELOAD(token){
 
 
 
-    //그리드 조회(목록)	
+    //그리드 조회(프로젝트목록)	
     function G2_SEARCH(tinput,token){
         alog("G2_SEARCH()------------start");
 
@@ -361,38 +418,20 @@ function G2_RELOAD(token){
 					}else{
 						$("#spanG2Cnt").text("-");
 					}
-					msgNotice("[목록] 조회 성공했습니다. ("+row_cnt+"건)",1);
+					msgNotice("[프로젝트목록] 조회 성공했습니다. ("+row_cnt+"건)",1);
 
                 }else{
-                    msgError("[목록] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
+                    msgError("[프로젝트목록] 서버 조회중 에러가 발생했습니다.RTN_CD : " + data.RTN_CD + "ERR_CD : " + data.ERR_CD + "RTN_MSG :" + data.RTN_MSG,3);
                 }
             },
             error: function(error){
-				msgError("[목록] Ajax http 500 error ( " + error + " )",3);
-                alog("[목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
+				msgError("[프로젝트목록] Ajax http 500 error ( " + error + " )",3);
+                alog("[프로젝트목록] Ajax http 500 error ( " + data.RTN_MSG + " )");
             }
         });
         alog("G2_SEARCH()------------end");
     }
 
-//엑셀다운		
-function G2_EXCEL(){	
-	alog("G2_EXCEL-----------------start");
-	var myForm = document.excelDownForm;
-	var url = "/common/cg_phpexcel.php";
-	window.open("" ,"popForm",
-		  "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-	myForm.action =url;
-	myForm.method="post";
-	myForm.target="popForm";
-
-	mygridG2.setSerializationLevel(true,false,false,false,false,true);
-	var myXmlString = mygridG2.serialize();        //컨디션 데이터 모두 말기
-	$("#DATA_HEADERS").val("LOGIN_SEQ,USR_ID,SESSION_ID,SUCCESS_YN,USR_SEQ,SERVER_NAME,REMOTE_ADDR,USER_AGENT,ADD_DT");
-	$("#DATA_WIDTHS").val("60,60,60,60,60,60,60,120,60");
-	$("#DATA_ROWS").val(myXmlString);
-	myForm.submit();
-}
 //G3_SAVE
 //IO_FILE_YN = N	
 	//IO_FILE_YN = N	
@@ -435,21 +474,7 @@ function G3_SAVE(token){
 			alog(error);
 		}
 	});
-}function G3_MODIFY(){
-       alog("[FromView] G3_MODIFY---------------start");
-	if( $("#G3-CTLCUD").val() == "C" ){
-		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-	if( $("#G3-CTLCUD").val() == "D" ){
-		alert("조회 후 수정 가능합니다. 삭제 모드에서는 수정할 수 없습니다.")
-		return;
-	}
-
-	$("#G3-CTLCUD").val("U");
-       alog("[FromView] G3_MODIFY---------------end");
-}
-//디테일 검색	
+}//디테일 검색	
 function G3_SEARCH(tinput,token){
        alog("(FORMVIEW) G3_SEARCH---------------start");
 
@@ -488,10 +513,74 @@ function G3_SEARCH(tinput,token){
             //모드 변경하기
             $("#G3-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
-			$("#G3-LOGIN_SEQ").val(data.RTN_DATA.LOGIN_SEQ);//SEQ 변수세팅
-	$("#G3-SESSION_ID").text(data.RTN_DATA.SESSION_ID);//SESSION_ID 변수세팅
-	$("#G3-USER_AGENT").text(data.RTN_DATA.USER_AGENT);//BROWSER 변수세팅
-		$("#G3-AUTH_JSON").val(data.RTN_DATA.AUTH_JSON);//AUTH 오브젝트 값세팅
+			$("#G3-PJTSEQ").val(data.RTN_DATA.PJTSEQ);//PJTSEQ 변수세팅
+			$("#G3-PJTID").val(data.RTN_DATA.PJTID);//프로젝트ID 변수세팅
+			$("#G3-PJTNM").val(data.RTN_DATA.PJTNM);//프로젝트명 변수세팅
+			$("#G3-FILECHARSET").val(data.RTN_DATA.FILECHARSET);//파일 CHARSET 변수세팅
+			$("#G3-UITOOL").val(data.RTN_DATA.UITOOL);//UITOOL 변수세팅
+			$("#G3-SVRLANG").val(data.RTN_DATA.SVRLANG);//서버언어 변수세팅
+			$("#G3-DEPLOYKEY").val(data.RTN_DATA.DEPLOYKEY);//DEPLOYKEY 변수세팅
+			$("#G3-PKGROOT").val(data.RTN_DATA.PKGROOT);//패키지ROOT 변수세팅
+	$("#G3-STARTDT").val(data.RTN_DATA.STARTDT);//시작일 오브젝트 값 세팅
+	$("#G3-ENDDT").val(data.RTN_DATA.ENDDT);//종료일 오브젝트 값 세팅
+			$("#G3-DELYN").val(data.RTN_DATA.DELYN);//삭제YN 변수세팅
+		var tArr = data.RTN_DATA.GITINIT.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-GITINIT-LINK").attr("href",tArr[0]);//GIT 변수세팅
+				$("#G3-GITINIT-NM").text(tArr[1]);//GIT 변수세팅
+			}else{
+				alog("GITINIT의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("GITINIT 컬럼이 없습니다.");
+		}
+		var tArr = data.RTN_DATA.GITCOMMIT.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-GITCOMMIT-LINK").attr("href",tArr[0]);//GITCOMMIT 변수세팅
+				$("#G3-GITCOMMIT-NM").text(tArr[1]);//GITCOMMIT 변수세팅
+			}else{
+				alog("GITCOMMIT의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("GITCOMMIT 컬럼이 없습니다.");
+		}
+		var tArr = data.RTN_DATA.GITPUSH.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-GITPUSH-LINK").attr("href",tArr[0]);//GITPUSH 변수세팅
+				$("#G3-GITPUSH-NM").text(tArr[1]);//GITPUSH 변수세팅
+			}else{
+				alog("GITPUSH의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("GITPUSH 컬럼이 없습니다.");
+		}
+		var tArr = data.RTN_DATA.GITFORCEPUSH.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-GITFORCEPUSH-LINK").attr("href",tArr[0]);//GITFORCEPUSH 변수세팅
+				$("#G3-GITFORCEPUSH-NM").text(tArr[1]);//GITFORCEPUSH 변수세팅
+			}else{
+				alog("GITFORCEPUSH의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("GITFORCEPUSH 컬럼이 없습니다.");
+		}
+		var tArr = data.RTN_DATA.GITVIEWCONFIG.split("^");
+		if(tArr){
+			if(tArr.length == 2){
+				$("#G3-GITVIEWCONFIG-LINK").attr("href",tArr[0]);//GITVIEWCONFIG 변수세팅
+				$("#G3-GITVIEWCONFIG-NM").text(tArr[1]);//GITVIEWCONFIG 변수세팅
+			}else{
+				alog("GITVIEWCONFIG의 멀티값(" + tArr.length + ")이 잘못되었습니다.");
+			}
+		}else{
+			alert("GITVIEWCONFIG 컬럼이 없습니다.");
+		}
+	$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
+	$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
         },
         error: function(error){
             alog("Error:");
@@ -501,63 +590,8 @@ function G3_SEARCH(tinput,token){
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
 }
-//	
-function G3_NEW(){
-       alog("[FromView] G3_NEW---------------start");
-	$("#G3-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G3-LOGIN_SEQ").val("");//SEQ 신규초기화	
-	$("#G3-SESSION_ID").text("");//SESSION_ID 신규초기화
-	$("#G3-USER_AGENT").text("");//BROWSER 신규초기화
-	$("#G3-AUTH_JSON").val("");//AUTH 신규초기화
-       alog("DETAILNew30---------------end");
-}
 //새로고침	
 function G3_RELOAD(token){
 	alog("G3_RELOAD-----------------start");
 	G3_SEARCH(lastinputG3,token);
-}//FORMVIEW DELETE
-function G3_DELETE(){	
-	alog("G3_DELETE---------------start");
-
-	//조회했는지 확인하기
-	if( $("#G3-CTLCUD").val() != "R" ){
-		alert("조회된 것만 삭제 가능합니다.");
-		return;
-	}
-	//확인
-	if(!confirm("정말로 삭제하시겠습니까?")){
-		return;
-	}
-	
-	//삭제처리 명령어
-	$("#G3-CTLCUD").val("D");
-
-	//폼객체를 불러와서
-	var form1 = $("#formviewG3")[0];
-
-	//FormData parameter에 담아줌
-	var formData = new FormData(form1);
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_DELETE,
-		data : formData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 삭제되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
 }

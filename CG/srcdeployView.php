@@ -1,6 +1,6 @@
 <?php
-//PGMID : PIFNC
-//PGMNM : PIFNC
+//PGMID : SRCDEPLOY
+//PGMNM : 소스 배포
 header("Content-Type: text/html; charset=UTF-8"); //HTML
 
 //설정 함수 읽기
@@ -22,7 +22,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>	
-<title>PIFNC</title>
+<title>소스 배포</title>
 <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
 <!--CSS/JS 불러오기-->
 <!--JS 불러오기-->
@@ -61,7 +61,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 <script src="/common/common.js?<?=getRndVal(10)?>"></script>
 <link rel="stylesheet" href="/common/common.css?<?=getRndVal(10)?>" type="text/css" charset="UTF-8">
 
-<script src="pifnc.js?<?=getRndVal(10)?>"></script>
+<script src="srcdeploy.js?<?=getRndVal(10)?>"></script>
 <script>
 	//팝업창인 경우 오프너에게서 파라미터 받기
     var grpId = "<?=getFilter(reqPostString("GRPID",20),"SAFEECHO","")?>";
@@ -85,13 +85,11 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 	  		<div style="width:0px;height:0px;overflow: hidden"><form id="condition" onsubmit="return false;"></div>
 		<div class="CONDITION_LABELGRP">
 			<div class="CONDITION_LABEL"  style="">
-				<b>* PIFNC</b>	
+				<b>* 소스 배포</b>	
 				<!--popup--><a href="?" target="_blank"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/popup.png" height=10 align=absmiddle border=0></a>
 				<!--reload--><a href="javascript:location.reload();"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 			</div>	
-			<div class="CONDITION_LABELBTN">				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G1_USERDEF" value="사용자정의" onclick="G1_USERDEF(uuidv4());">
-				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
-				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G1_SAVE" value="저장" onclick="G1_SAVE(uuidv4());">
+			<div class="CONDITION_LABELBTN">				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G1_SEARCHALL" value="조회(전체)" onclick="G1_SEARCHALL(uuidv4());">
 				<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G1_RESET" value="입력 초기화" onclick="G1_RESET(uuidv4());">
 			</div>
 		</div>
@@ -99,37 +97,14 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<DIV class="CON_LINE" is_br_tag>
 		<!--컨디션 IO리스트-->
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : FNCID-->
+			<!--I.COLID : PJTNM-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						FNCID
+						프로젝트명
 					</div>
-					<!-- style="width:70px;"-->
+					<!-- style="width:60px;"-->
 					<div class="CON_OBJECT">
-	<!--FNCID오브젝트출력-->						<input type="text" name="G1-FNCID" value="<?=getFilter(reqPostString("FNCID",30),"SAFEECHO","")?>" id="G1-FNCID" style="width:70px;" class="">
-					</div>
-				</div>
-					<!-- GRPSEQ -->
-					<div class="CON_OBJECT" style="display:none">
-						<input type="text" name="G1-GRPSEQ" value="<?=getFilter(reqGetString("GRPSEQ",30),"SAFEECHO","")?>" id="G1-GRPSEQ">
-					</div>
-					<!-- PGMSEQ -->
-					<div class="CON_OBJECT" style="display:none">
-						<input type="text" name="G1-PGMSEQ" value="<?=getFilter(reqGetString("PGMSEQ",30),"SAFEECHO","")?>" id="G1-PGMSEQ">
-					</div>
-					<!-- PJTSEQ -->
-					<div class="CON_OBJECT" style="display:none">
-						<input type="text" name="G1-PJTSEQ" value="<?=getFilter(reqGetString("PJTSEQ",20),"SAFEECHO","")?>" id="G1-PJTSEQ">
-					</div>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : FNCNM-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						FNCNM
-					</div>
-					<!-- style="width:70px;"-->
-					<div class="CON_OBJECT">
-	<!--FNCNM오브젝트출력-->						<input type="text" name="G1-FNCNM" value="<?=getFilter(reqPostString("FNCNM",30),"SAFEECHO","")?>" id="G1-FNCNM" style="width:70px;" class="">
+	<!--PJTNM오브젝트출력-->						<input type="text" name="G1-PJTNM" value="<?=getFilter(reqPostString("PJTNM",100),"SAFEECHO","")?>" id="G1-PJTNM" style="width:60px;" class="">
 					</div>
 				</div>
 			</div><!-- is_br_tag end -->
@@ -147,183 +122,18 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 		<div  class="GRID_LABELGRP">
 			<div class="GRID_LABELGRP_GAP">	<!--그리드만 필요-->
   			<div id="div_gridG2_GRID_LABEL"class="GRID_LABEL" >
-	  				*       
+	  				* 프로젝트목록      
 			</div>
 			<div id="div_gridG2_GRID_LABELBTN" class="GRID_LABELBTN"  style="">
 				<span id="spanG2Cnt" name="그리드 ROW 갯수">N</span>
-			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_USERDEF" value="사용자정의" onclick="G2_USERDEF(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_SAVE" value="저장" onclick="G2_SAVE(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_RELOAD" value="새로고침" onclick="G2_RELOAD(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_EXCEL" value="엑셀다운로드" onclick="G2_EXCEL(uuidv4());">
-			<input type="button" class="btn btn-secondary  btn-sm" name="BTN_G2_CHKSAVE" value="선택저장" onclick="G2_CHKSAVE(uuidv4());">
 			</div>
 			</div><!--GAP-->
 		</div>
 		<div  class="GRID_OBJECT"  style="">
-<!--
-data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정상 처리됨
--->
-<table id="btG2"
-			data-toggle="table"
-			data-height="457"
-			data-virtual-scroll="true"
-			data-click-to-select="false"
-			data-resizable="true"
-			class="table table-bordered table-striped"
-			data-id-field="FNCSEQ"			>
-			<thead>
-				<tr>
-					<th
-						data-field="ROWID"
-						data-sortable="false"
-						data-visible="false"
-						data-align="right"
-						data-width="100"
-						data-width-unit="px"
-						>ROWID</th>
-					<th
-						data-field="PJTSEQ"
-						data-width="100" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>PJTSEQ
-					</th>
-					<th
-						data-field="PGMSEQ"
-						data-width="100" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>PGMSEQ
-					</th>
-					<th
-						data-field="GRPSEQ"
-						data-width="100" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>GRPSEQ
-					</th>
-					<th
-						data-field="FNCSEQ"
-						data-width="60" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>FNCSEQ
-					</th>
-					<th
-						data-field="FNCID"
-						data-width="70" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>FNCID
-					</th>
-					<th
-						data-field="FNCCD"
-						data-width="70" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>FNCCD
-					</th>
-					<th
-						data-field="FNCNM"
-						data-width="70" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>FNCNM
-					</th>
-					<th
-						data-field="FNCTYPE"
-						data-width="70" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>FNCTYPE
-					</th>
-					<th
-						data-field="FNCORD"
-						data-width="70" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>FNCORD
-					</th>
-					<th
-						data-field="USEYN"
-						data-width="50" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>사용
-					</th>
-					<th
-						data-field="USERDEFJS"
-						data-width="" 
-						data-align=""
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>USERDEFJS
-					</th>
-					<th
-						data-field="LINK"
-						data-width="100" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					data-formatter="bt4TableLinkFormatter"
-					>LINK
-					</th>
-					<th
-						data-field="ADDDT"
-						data-width="60" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>ADDDT
-					</th>
-					<th
-						data-field="MODDT"
-						data-width="60" 
-						data-align="left"
-						data-width-unit="px"
-						data-sortable="true" 
-						data-visible="true"
-						data-halign="center"
-					>MODDT
-					</th>
-					</tr>            
-				</thead>
-        </table>
+			<div id="gridG2"  style="background-color:white;overflow:hidden;height:455px;width:100%;"></div>
 		</div>
 		</div>
 	</div>
@@ -334,7 +144,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 	-->
 	<!--
 	#####################################################
-	## 폼뷰  - START
+	## 폼뷰 배포 상세 - START
 	#####################################################
 	-->
     <div class="GRP_OBJECT" style="width:50%;">
@@ -347,23 +157,17 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 			</div>	
 		<div class="FORMVIEW_LABELGRP">
 			<div class="FORMVIEW_LABEL"  style="">
-				* 
+				* 배포 상세
 			</div>
 			<div class="FORMVIEW_LABELBTN"  style="">
-			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_USERDEF" value="사용자정의" onclick="G3_USERDEF(uuidv4());">
-			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_SAVE" value="저장" onclick="G3_SAVE(uuidv4());">
 			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_RELOAD" value="새로고침" onclick="G3_RELOAD(uuidv4());">
-			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_NEW" value="신규" onclick="G3_NEW(uuidv4());">
-			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_MODIFY" value="수정" onclick="G3_MODIFY(uuidv4());">
-			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_DELETE" value="삭제" onclick="G3_DELETE(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_EXCEL" value="엑셀다운로드" onclick="G3_EXCEL(uuidv4());">
+			<input type="button" class="btn btn-secondary  btn-sm"  name="BTN_G3_SAVE" value="저장" onclick="G3_SAVE(uuidv4());">
 			</div>
 		</div>
 		<div style="height:452px;" class="FORMVIEW_OBJECT">
 			<DIV class="CON_LINE" is_br_tag>
 			<!--OBJECT LIST PRINT.-->
-			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : PJTSEQ-->
 				<div class="CON_OBJGRP" style="">
@@ -379,147 +183,182 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : PGMSEQ-->
+			<!--I.COLID : PJTID-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						PGMSEQ
+						프로젝트ID
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--PGMSEQ오브젝트출력-->						<input type="text" name="G3-PGMSEQ" value="" id="G3-PGMSEQ" style="width:100px;" class="">
+	<!--PJTID오브젝트출력-->						<input type="text" name="G3-PJTID" value="" id="G3-PJTID" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : GRPSEQ-->
+			<!--I.COLID : PJTNM-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						GRPSEQ
+						프로젝트명
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--GRPSEQ오브젝트출력-->						<input type="text" name="G3-GRPSEQ" value="" id="G3-GRPSEQ" style="width:100px;" class="">
+	<!--PJTNM오브젝트출력-->						<input type="text" name="G3-PJTNM" value="" id="G3-PJTNM" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : FNCSEQ-->
+			<!--I.COLID : FILECHARSET-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						FNCSEQ
+						파일 CHARSET
 					</div>
-					<!-- style="width:60px;"-->
+					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--FNCSEQ오브젝트출력-->						<input type="text" name="G3-FNCSEQ" value="" id="G3-FNCSEQ" style="width:60px;" class="">
+	<!--FILECHARSET오브젝트출력-->						<input type="text" name="G3-FILECHARSET" value="" id="G3-FILECHARSET" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : FNCID-->
+			<!--I.COLID : UITOOL-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						FNCID
+						UITOOL
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--FNCID오브젝트출력-->						<input type="text" name="G3-FNCID" value="" id="G3-FNCID" style="width:100px;" class="">
+	<!--UITOOL오브젝트출력-->						<input type="text" name="G3-UITOOL" value="" id="G3-UITOOL" style="width:100px;" class="">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : SVRLANG-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						서버언어
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--SVRLANG오브젝트출력-->						<input type="text" name="G3-SVRLANG" value="" id="G3-SVRLANG" style="width:100px;" class="">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : DEPLOYKEY-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						DEPLOYKEY
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--DEPLOYKEY오브젝트출력-->						<input type="text" name="G3-DEPLOYKEY" value="" id="G3-DEPLOYKEY" style="width:100px;" class="">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : PKGROOT-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						패키지ROOT
+					</div>
+					<!-- style="width:100px;"-->
+					<div class="CON_OBJECT">
+	<!--PKGROOT오브젝트출력-->						<input type="text" name="G3-PKGROOT" value="" id="G3-PKGROOT" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV>
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
-		<!--, FNCCD-->
+		<!--D101: STARTTXT, TAG-->
+		<!--I.COLID : STARTDT-->
 		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:100px;text-align:left;">
-				FNCCD
+				시작일
 			</div>
-			<div class="CON_OBJECT" style="width:100px;">
-				<select id="G3-FNCCD" name="G3-FNCCD" style="width:100px"></select>
-			</div>
+		<div class="CON_OBJECT">
+			<input type="text" name="G3-STARTDT" value="" id="G3-STARTDT" style="width:100px;" class="">
 		</div>
+	</div>
+		<!--D101: STARTTXT, TAG-->
+		<!--I.COLID : ENDDT-->
+		<div class="CON_OBJGRP" style="">			<div class="CON_LABEL" style="width:100px;text-align:left;">
+				종료일
+			</div>
+		<div class="CON_OBJECT">
+			<input type="text" name="G3-ENDDT" value="" id="G3-ENDDT" style="width:100px;" class="">
+		</div>
+	</div>
 			</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : FNCNM-->
+			<!--I.COLID : DELYN-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						FNCNM
+						삭제YN
 					</div>
+					<!-- style="width:40px;"-->
+					<div class="CON_OBJECT">
+	<!--DELYN오브젝트출력-->						<input type="text" name="G3-DELYN" value="" id="G3-DELYN" style="width:40px;" class="">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GITINIT-->
+				<div  id="DIV_G3-GITINIT" class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						GIT
+						</div>
+						<!-- style="width:80px;"-->
+					<div class="CON_OBJECT" style="width:80px;">
+					<a href="" target="_blank" name="G3-GITINIT-LINK" id="G3-GITINIT-LINK"><span id="G3-GITINIT-NM" name="G3-GITINIT-NM"></span></a>
+					</div>	
+			</div>	
+				<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GITCOMMIT-->
+				<div  id="DIV_G3-GITCOMMIT" class="CON_OBJGRP" style="">
+					<!-- style="width:80px;"-->
+					<div class="CON_OBJECT" style="width:80px;">
+					<a href="" target="_blank" name="G3-GITCOMMIT-LINK" id="G3-GITCOMMIT-LINK"><span id="G3-GITCOMMIT-NM" name="G3-GITCOMMIT-NM"></span></a>
+					</div>	
+			</div>	
+				<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GITPUSH-->
+				<div  id="DIV_G3-GITPUSH" class="CON_OBJGRP" style="">
+					<!-- style="width:80px;"-->
+					<div class="CON_OBJECT" style="width:80px;">
+					<a href="" target="_blank" name="G3-GITPUSH-LINK" id="G3-GITPUSH-LINK"><span id="G3-GITPUSH-NM" name="G3-GITPUSH-NM"></span></a>
+					</div>	
+			</div>	
+				<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GITFORCEPUSH-->
+				<div  id="DIV_G3-GITFORCEPUSH" class="CON_OBJGRP" style="">
+					<!-- style="width:80px;"-->
+					<div class="CON_OBJECT" style="width:80px;">
+					<a href="" target="_blank" name="G3-GITFORCEPUSH-LINK" id="G3-GITFORCEPUSH-LINK"><span id="G3-GITFORCEPUSH-NM" name="G3-GITFORCEPUSH-NM"></span></a>
+					</div>	
+			</div>	
+				<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : GITVIEWCONFIG-->
+				<div  id="DIV_G3-GITVIEWCONFIG" class="CON_OBJGRP" style="">
 					<!-- style="width:100px;"-->
-					<div class="CON_OBJECT">
-	<!--FNCNM오브젝트출력-->						<input type="text" name="G3-FNCNM" value="" id="G3-FNCNM" style="width:100px;" class="">
-					</div>
-				</div>
-			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : FNCTYPE-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						FNCTYPE
-					</div>
-					<!-- style="width:100px;"-->
-					<div class="CON_OBJECT">
-	<!--FNCTYPE오브젝트출력-->						<input type="text" name="G3-FNCTYPE" value="" id="G3-FNCTYPE" style="width:100px;" class="">
-					</div>
-				</div>
-			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : FNCORD-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						FNCORD
-					</div>
-					<!-- style="width:70px;"-->
-					<div class="CON_OBJECT">
-	<!--FNCORD오브젝트출력-->						<input type="text" name="G3-FNCORD" value="" id="G3-FNCORD" style="width:70px;" class="">
-					</div>
-				</div>
-			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : USEYN-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:100px;text-align:left;">
- 						사용
- 					</div>
- 					<!-- style="width:50px;"-->
-					<div class="CON_OBJECT">
- 	<!--USEYN오브젝트출력 radio-->
-	<div name="G3-USEYN-HOLDER" id="G3-USEYN-HOLDER"  style="width:50px;"></div>
-					</div>
- 				</div>
- 			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
-			<!--D101: STARTTXT, TAG-->
-			<!--I.COLID : USERDEFJS-->
-				<div class="CON_OBJGRP" style="">
-					<div class="CON_LABEL" style="width:100px;text-align:left;">
-						USERDEFJS
-					</div>
-					<!-- style="width:400px;height:300px;"-->
-					<div class="CON_OBJECT">
-			<!--USERDEFJS오브젝트출력-->
-			<span style="height:31px;overflow:hidden">
-				<input class="btn btn-secondary  btn-sm" type="button" name="bigFont" value="+" onclick="changeCodemirrorFontSizeG3Userdefjs('+')">
-				<input class="btn btn-secondary  btn-sm" type="button" name="bigFont" value="-" onclick="changeCodemirrorFontSizeG3Userdefjs('-')">
-			</span>
-
-			<textarea id="codeMirror_G3-USERDEFJS" name="codeMirror_G3-USERDEFJS" ></textarea>
-					</div>
-				</div>
-			</DIV><!--is_br_tab end-->
+					<div class="CON_OBJECT" style="width:100px;">
+					<a href="" target="_blank" name="G3-GITVIEWCONFIG-LINK" id="G3-GITVIEWCONFIG-LINK"><span id="G3-GITVIEWCONFIG-NM" name="G3-GITVIEWCONFIG-NM"></span></a>
+					</div>	
+			</div>	
+				</DIV><!--is_br_tab end-->
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 		<!--D101: STARTTXT, TAG-->
@@ -528,23 +367,20 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 				<div class="CON_LABEL" style="width:100px;text-align:left;">	
 					ADDDT	
 				</div>	
-				<!-- style="width:60;"-->
+				<!-- style="width:100;"-->
 				<div class="CON_OBJECT">
-					<div name="G3-ADDDT" id="G3-ADDDT" style="background-color:white; width:60px;"></div>
+					<div name="G3-ADDDT" id="G3-ADDDT" style="background-color:white; width:100px;"></div>
 				</div>
 			</div>
-			</DIV><!--is_br_tab end-->
-			<DIV class="OBJ_BR"></DIV>
-			<DIV class="CON_LINE" is_br_tag>
 		<!--D101: STARTTXT, TAG-->
 		<!--I.COLID : MODDT-->
 			<div class="CON_OBJGRP" style="">
 				<div class="CON_LABEL" style="width:100px;text-align:left;">	
 					MODDT	
 				</div>	
-				<!-- style="width:60;"-->
+				<!-- style="width:100;"-->
 				<div class="CON_OBJECT">
-					<div name="G3-MODDT" id="G3-MODDT" style="background-color:white; width:60px;"></div>
+					<div name="G3-MODDT" id="G3-MODDT" style="background-color:white; width:100px;"></div>
 				</div>
 			</div>
 			</DIV><!--is_br_tab end-->

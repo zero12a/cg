@@ -47,9 +47,9 @@ function initBody(){
    //dhtmlx 메시지 박스 초기화
    dhtmlx.message.position="bottom";
 	G1_INIT();	
-		G2_INIT();	
-		G3_INIT();	
-	      feather.replace();
+	G2_INIT();	
+	G3_INIT();	
+      feather.replace();
 	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
@@ -206,20 +206,11 @@ alert('fnchange');//haha
 
 		alog('G3-PGMTYPE onChange-----------------end');
 	});
-	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
+	//ADDDT, ADDDT 초기화
+	//MODDT, MODDT 초기화
+  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
-//사용자정의함수 : 사용자정의
-function G1_USERDEF(token){
-	alog("G1_USERDEF-----------------start");
-
-	alog("G1_USERDEF-----------------end");
-}
 //검색, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -264,6 +255,36 @@ function G1_SEARCHALL(token){
 		//  호출
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
+}
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
+//사용자정의함수 : 사용자정의
+function G1_USERDEF(token){
+	alog("G1_USERDEF-----------------start");
+
+	alog("G1_USERDEF-----------------end");
+}
+//PGM목록 엑셀 내려받기
+function G2_EXCEL(){
+	alog("G2_EXCEL()-------------------------start");
+
+	$btG2.tableExport({type:'excel'});
+
+	alog("G2_EXCEL()------------end");
+}
+//사용자정의함수 : 사용자정의
+function G2_USERDEF(token){
+	alog("G2_USERDEF-----------------start");
+
+	alog("G2_USERDEF-----------------end");
+}
+//새로고침	
+function G2_RELOAD(token){
+  alog("G2_RELOAD-----------------start");
+  G2_SEARCH(lastinputG2,token);
 }
 //PGM목록
 function G2_CHKSAVE(token){
@@ -381,37 +402,6 @@ function G2_SEARCH(tinput,token){
 		alog("G2_SEARCH()------------end");
 }
 
-//PGM목록 엑셀 내려받기
-function G2_EXCEL(){
-	alog("G2_EXCEL()-------------------------start");
-
-	$btG2.tableExport({type:'excel'});
-
-	alog("G2_EXCEL()------------end");
-}
-//사용자정의함수 : 사용자정의
-function G2_USERDEF(token){
-	alog("G2_USERDEF-----------------start");
-
-	alog("G2_USERDEF-----------------end");
-}
-//새로고침	
-function G2_RELOAD(token){
-  alog("G2_RELOAD-----------------start");
-  G2_SEARCH(lastinputG2,token);
-}
-//	
-function G3_new(){
-       alog("[FromView] G3_new---------------start");
-	$("#G3-CTLCUD").val("C");
-	//PMGIO 로직
-	$("#G3-PGMSEQ").val("");//PGMSEQ 신규초기화	
-	$("#G3-PGMID").val("");//프로그램ID 신규초기화	
-	$("#G3-PJTSEQ").val("");//PJTSEQ 신규초기화	
-	$("#G3-PGMNM").val("");//프로그램이름 신규초기화	
-	$("#G3-VIEWURL").val("");//VIEWURL 신규초기화	
-	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
-}
 function G3_mod(){
        alog("[FromView] G3_mod---------------start");
 	if( $("#G3-CTLCUD").val() == "C" ){
@@ -475,8 +465,8 @@ function G3_SEARCH(tinput,token){
 			$("#G3-PGMNM").val(data.RTN_DATA.PGMNM);//프로그램이름 변수세팅
 			$("#G3-VIEWURL").val(data.RTN_DATA.VIEWURL);//VIEWURL 변수세팅
 			$("#G3-PGMTYPE").val(data.RTN_DATA.PGMTYPE);//PGMTYPE 변수세팅
-			$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
-			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
+	$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
+	$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
         },
         error: function(error){
             alog("Error:");
@@ -528,4 +518,17 @@ function G3_save(token){
 			alog(error);
 		}
 	});
+}//	
+function G3_new(){
+       alog("[FromView] G3_new---------------start");
+	$("#G3-CTLCUD").val("C");
+	//PMGIO 로직
+	$("#G3-PGMSEQ").val("");//PGMSEQ 신규초기화	
+	$("#G3-PGMID").val("");//프로그램ID 신규초기화	
+	$("#G3-PJTSEQ").val("");//PJTSEQ 신규초기화	
+	$("#G3-PGMNM").val("");//프로그램이름 신규초기화	
+	$("#G3-VIEWURL").val("");//VIEWURL 신규초기화	
+	$("#G3-ADDDT").text("");//ADDDT 신규초기화
+	$("#G3-MODDT").text("");//MODDT 신규초기화
+       alog("DETAILNew30---------------end");
 }

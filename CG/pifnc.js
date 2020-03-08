@@ -77,9 +77,9 @@ function initBody(){
    //dhtmlx 메시지 박스 초기화
    dhtmlx.message.position="bottom";
 	G1_INIT();	
-		G2_INIT();	
-		G3_INIT();	
-	      feather.replace();
+	G2_INIT();	
+	G3_INIT();	
+      feather.replace();
 	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
@@ -304,7 +304,9 @@ setCodeRadio("FORMVIEW", "G3-USEYN", "YN","");
 			}}
         });
 		obj_G3_USERDEFJS .setSize("400px","269px");
-	//ADDDT, ADDDT 초기화		//MODDT, MODDT 초기화	  alog("G3_INIT()-------------------------end");
+	//ADDDT, ADDDT 초기화
+	//MODDT, MODDT 초기화
+  alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
 //검색조건 초기화
@@ -625,7 +627,10 @@ function G3_NEW(){
 	$("#G3-FNCTYPE").val("");//FNCTYPE 신규초기화	
 	$("#G3-FNCORD").val("");//FNCORD 신규초기화	
 	$("#G3-USEYN").val("");//사용 신규초기화	
-obj_G3_USERDEFJS.setValue(""); // USERDEFJS값 비우기	$("#G3-ADDDT").text("");//ADDDT 신규초기화		$("#G3-MODDT").text("");//MODDT 신규초기화	       alog("DETAILNew30---------------end");
+	obj_G3_USERDEFJS.setValue(""); // USERDEFJS값 비우기
+	$("#G3-ADDDT").text("");//ADDDT 신규초기화
+	$("#G3-MODDT").text("");//MODDT 신규초기화
+       alog("DETAILNew30---------------end");
 }
 //디테일 검색	
 function G3_SEARCH(tinput,token){
@@ -677,8 +682,8 @@ function G3_SEARCH(tinput,token){
 			$("#G3-FNCORD").val(data.RTN_DATA.FNCORD);//FNCORD 변수세팅
 			$('input:radio[name="G3-USEYN"][value=' + data.RTN_DATA.USEYN + ']').click();
 		obj_G3_USERDEFJS.setValue(data.RTN_DATA.USERDEFJS); //USERDEFJS 
-			$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
-			$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
+	$("#G3-ADDDT").text(data.RTN_DATA.ADDDT);//ADDDT 변수세팅
+	$("#G3-MODDT").text(data.RTN_DATA.MODDT);//MODDT 변수세팅
         },
         error: function(error){
             alog("Error:");

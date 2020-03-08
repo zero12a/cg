@@ -30,12 +30,16 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-3.4.1.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY CORE-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY UI-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/FileSaver.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT SAVER-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/cleave.min.js" type="text/javascript" charset="UTF-8"></script> <!--CLEAVE JS-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/tableExport/tableExport.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 TABLE EXPORT-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js" type="text/javascript" charset="UTF-8"></script> <!--JQUERY JSON-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/hashmap.js" type="text/javascript" charset="UTF-8"></script> <!--HASHMAP-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="UTF-8"></script> <!--DHTMLX CORE-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/Chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/popper.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Poper Js-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/js/bootstrap.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Min Js-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/moment.min.js" type="text/javascript" charset="UTF-8"></script> <!--Moment Date-->
+<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/summernote/summernote-bs4.min.js" type="text/javascript" charset="UTF-8"></script> <!--WebEditor Summbernote-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/locale/bootstrap-table-ko-KR.min.js" type="text/javascript" charset="UTF-8"></script> <!--BT4 Table JS Lang-->
 <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.js" type="text/javascript" charset="UTF-8"></script> <!--CODE MIRROR1-->
@@ -46,6 +50,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="UTF-8"><!--DHTMLX CORE-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-ui.min.css" type="text/css" charset="UTF-8"><!--JQUERY UI-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap4/css/bootstrap.min.css" type="text/css" charset="UTF-8"><!--BOOTSTRAP V4-->
+<link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/summernote/summernote-bs4.min.css" type="text/css" charset="UTF-8"><!--WebEditor Summbernote-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/bootstrap-table/bootstrap-table.min.css" type="text/css" charset="UTF-8"><!--BT4 Table CSS-->
 <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css" type="text/css" charset="UTF-8"><!--CODE MIRROR CSS-->
 <!--공통 js/css-->
@@ -101,7 +106,7 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--COLID오브젝트출력-->						<input type="text" name="G1-COLID" value="<?=getFilter(reqPostString("COLID",30),"SAFEECHO","")?>" id="G1-COLID" style="width:100px;">
+	<!--COLID오브젝트출력-->						<input type="text" name="G1-COLID" value="<?=getFilter(reqPostString("COLID",30),"SAFEECHO","")?>" id="G1-COLID" style="width:100px;" class="">
 					</div>
 				</div>
 					<!-- PGMSEQ -->
@@ -371,7 +376,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:50px;"-->
 					<div class="CON_OBJECT">
-	<!--SQLGBN오브젝트출력-->						<input type="text" name="G3-SQLGBN" value="" id="G3-SQLGBN" style="width:50px;">
+	<!--SQLGBN오브젝트출력-->						<input type="text" name="G3-SQLGBN" value="" id="G3-SQLGBN" style="width:50px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -385,7 +390,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:100px;"-->
 					<div class="CON_OBJECT">
-	<!--COLID오브젝트출력-->						<input type="text" name="G3-COLID" value="" id="G3-COLID" style="width:100px;">
+	<!--COLID오브젝트출력-->						<input type="text" name="G3-COLID" value="" id="G3-COLID" style="width:100px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -399,7 +404,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:50px;"-->
 					<div class="CON_OBJECT">
-	<!--DDCOLID오브젝트출력-->						<input type="text" name="G3-DDCOLID" value="" id="G3-DDCOLID" style="width:50px;">
+	<!--DDCOLID오브젝트출력-->						<input type="text" name="G3-DDCOLID" value="" id="G3-DDCOLID" style="width:50px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -413,7 +418,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:50px;"-->
 					<div class="CON_OBJECT">
-	<!--REQUIREYN오브젝트출력-->						<input type="text" name="G3-REQUIREYN" value="" id="G3-REQUIREYN" style="width:50px;">
+	<!--REQUIREYN오브젝트출력-->						<input type="text" name="G3-REQUIREYN" value="" id="G3-REQUIREYN" style="width:50px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
@@ -427,7 +432,7 @@ data-toggle : 이 옵션이 있어야 데이터 load 처리시 동적으로 정�
 					</div>
 					<!-- style="width:30px;"-->
 					<div class="CON_OBJECT">
-	<!--ORD오브젝트출력-->						<input type="text" name="G3-ORD" value="" id="G3-ORD" style="width:30px;">
+	<!--ORD오브젝트출력-->						<input type="text" name="G3-ORD" value="" id="G3-ORD" style="width:30px;" class="">
 					</div>
 				</div>
 			</DIV><!--is_br_tab end-->
