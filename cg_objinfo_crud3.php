@@ -515,7 +515,7 @@ if($REQ["F_GRPID"] == "6" && $REQ["G6_CRUD_MODE"] == "SAVE"){
     }
     echo "</table><pre>";
 
-    $db["cg"]->close();
+    closeDb($db["cg"]);
 
 
     //echo json_encode($rowsI);
@@ -617,7 +617,7 @@ if($REQ["F_GRPID"] == "1" && $REQ["G1_CRUD_MODE"] == "read"){
     $rtnVal->ERR_CD = "200";
     echo json_encode($rtnVal);
 
-    $db["cg"]->close();
+    closeDb($db["cg"]);
 }
 
 
@@ -741,7 +741,7 @@ if($REQ["F_GRPID"] == "3" && $REQ["G3_CRUD_MODE"] == "read"){
     $rtnVal->ERR_CD = "200";
     echo json_encode($rtnVal);
     
-    $db["cg"]->close();
+    closeDb($db["cg"]);
 
 
 }else if($REQ["F_GRPID"] == "3"){
@@ -796,7 +796,7 @@ if($REQ["F_GRPID"] == "3" && $REQ["G3_CRUD_MODE"] == "read"){
     $rtnVal->ERR_CD = "200";
     echo json_encode($rtnVal);
 
-    $db["cg"]->close();
+    closeDb($db["cg"]);
 
 }
 
@@ -826,7 +826,8 @@ if($REQ["F_GRPID"] == "5" && $REQ["G5_CRUD_MODE"] == "read"){
     $rtnVal->ERR_CD = "200";
     echo json_encode($rtnVal);
     
-    $db["cg"]->close();
+    closeDb($db["cg"]);
+
 
 }else if($REQ["F_GRPID"] == "5"){
     alog("---------------GRP G5 ---------------------START");
@@ -878,7 +879,8 @@ if($REQ["F_GRPID"] == "5" && $REQ["G5_CRUD_MODE"] == "read"){
     $rtnVal->ERR_CD = "200";
     echo json_encode($rtnVal);
 
-    $db["cg"]->close();
+    closeDb($db["cg"]);
+
 }
 
 

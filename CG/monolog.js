@@ -29,7 +29,6 @@ var url_G3_RELOAD = "monologController?CTLGRP=G3&CTLFNC=RELOAD";
 var obj_G3_LOGSEQ;   // SEQ 글로벌 변수 선언
 var obj_G3_DATEHM;   // DATEHM 글로벌 변수 선언
 var obj_G3_LOGMSG;   // MSG 글로벌 변수 선언
-var obj_G3_LOGWE;   // LOGWE 글로벌 변수 선언
 	var codeMirrorFontSizeG3Logmsg = 11; // MSG
 
 //MSG
@@ -47,7 +46,6 @@ function changeCodemirrorFontSizeG3Logmsg(sizeCmd){
 	obj_G3_LOGMSG .refresh();
 	alog("changeCodemirrorFontSizeG3Logmsg..........end");   
 }
-//{G.GRPID-LOGWE initval
 //화면 초기화	
 function initBody(){
      alog("initBody()-----------------------start");
@@ -55,9 +53,9 @@ function initBody(){
    //dhtmlx 메시지 박스 초기화
    dhtmlx.message.position="bottom";
 	G1_INIT();	
-		G2_INIT();	
-		G3_INIT();	
-	      feather.replace();
+	G2_INIT();	
+	G3_INIT();	
+      feather.replace();
 	alog("initBody()-----------------------end");
 } //initBody()	
 //팝업띄우기		
@@ -257,7 +255,6 @@ function G3_INIT(){
 
 
 
-
 	//컬럼 초기화
 	//LOGSEQ, SEQ 초기화
 	//DATEHM, DATEHM 초기화	
@@ -285,20 +282,6 @@ function G3_INIT(){
 			}}
         });
 		obj_G3_LOGMSG .setSize("400px","px");
-    $('#G3-LOGWE').summernote({
-        placeholder: 'Input LOGWE',
-        tabsize: 2,
-		width: 400,
-        height: 200,
-		dialogsInBody: true,
-        callbacks: {
-          onImageUpload: function(files, editor, welEditable) {
-            for (var i = files.length - 1; i >= 0; i--) {
-              sendFileSummernote(files[i], this);
-            }
-          }
-        }
-      });
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
@@ -454,13 +437,6 @@ function G3_SEARCH(tinput,token){
 	$("#G3-LOGSEQ").text(data.RTN_DATA.LOGSEQ);//SEQ 변수세팅
 			$("#G3-DATEHM").val(data.RTN_DATA.DATEHM);//DATEHM 변수세팅
 		obj_G3_LOGMSG.setValue(data.RTN_DATA.LOGMSG); //MSG 
-	//$('#summernote').summernote('editor.insertText', data.RTN_DATA.LOGWE);
-	$('#G3-LOGWE').summernote('reset'); //기존 데이터 지우기
-	if(data.RTN_DATA.LOGWE.indexOf('</p>') < 0 ){
-		 $('#G3-LOGWE').summernote('pasteHTML', "<p>" + data.RTN_DATA.LOGWE + "</p>"); //html컨텐츠 아니면 좌우로 <p></p>감싸기
-	}else{
-		$('#G3-LOGWE').summernote('pasteHTML', data.RTN_DATA.LOGWE); //html컨텐츠 아니면 좌우로 <p></p>감싸기
-	}
         },
         error: function(error){
             alog("Error:");
@@ -478,7 +454,6 @@ function G3_NEW(){
 	$("#G3-LOGSEQ").text("");//SEQ 신규초기화
 	$("#G3-DATEHM").val("");//DATEHM 신규초기화	
 	obj_G3_LOGMSG.setValue(""); // MSG값 비우기
-	$('#G3-LOGWE').summernote('reset'); //기존 데이터 지우기
        alog("DETAILNew30---------------end");
 }
 //G3_SAVE
@@ -496,7 +471,7 @@ function G3_SAVE(token){
 	var sendFormData = new FormData($("#formviewG3")[0]);
 
 	sendFormData.append("G3-LOGMSG",obj_G3_LOGMSG.getValue()); //MSG
-	sendFormData.append("G3-LOGWE",$('#G3-LOGWE').summernote('code')); //LOGWE	//컨디션 데이터 추가하기
+	//컨디션 데이터 추가하기
 	conditionData = new FormData($("#condition")[0]);
     var es, e, pair;
     for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {

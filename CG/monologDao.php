@@ -25,7 +25,8 @@ class monologDao
 		$RtnVal["SQLTXT"] = "insert into TEST (AA,BB,CC,DD)
 values(
 	99,#{G3-LOGMSG},#{G3-LOGWE}, date_format(sysdate(),'%Y%m%d%H%i%s')
-)";
+)
+";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "ss";
@@ -38,7 +39,7 @@ values(
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
 		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "selF";
-		$RtnVal["SQLTXT"] = "select LOGSEQ, URL, SESSIONID, REQTOKEN, RESTOKEN, USERID, USERSEQ, LISTNM, LOGLEVEL, LOGDT, LOGMSG, LOGMSG as LOGWE, CHANNEL, ADDDT
+		$RtnVal["SQLTXT"] = "select LOGSEQ, URL, SESSIONID, REQTOKEN, RESTOKEN, USERID, USERSEQ, LISTNM, LOGLEVEL, LOGDT, LOGMSG, CHANNEL, ADDDT
 from CG_MONOLOG
 where  LOGSEQ = #{G2-LOGSEQ}
 ";

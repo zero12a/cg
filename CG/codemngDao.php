@@ -20,7 +20,7 @@ class codemngDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "delDtlG";
 		$RtnVal["SQLTXT"] = "delete from CG_CODED 
 where PCD = #{PCD} and CD = #{CD}
@@ -35,7 +35,7 @@ where PCD = #{PCD} and CD = #{CD}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "delMasG";
 		$RtnVal["SQLTXT"] = "delete from CG_CODE
 where PCD = #{PCD} 
@@ -50,7 +50,7 @@ where PCD = #{PCD}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "insDtlG";
 		$RtnVal["SQLTXT"] = "insert into CG_CODED (
 	CD,NM,CDDESC,PCD
@@ -73,7 +73,7 @@ where PCD = #{PCD}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "insMasG";
 		$RtnVal["SQLTXT"] = "insert into CG_CODE (
 	PCD,PNM,PCDDESC,ORD
@@ -94,7 +94,7 @@ where PCD = #{PCD}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "selDtlG";
 		$RtnVal["SQLTXT"] = "select
 	CODED_SEQ,CD,NM,CDDESC,PCD,ORD
@@ -114,7 +114,7 @@ order by ORD ";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "selMasD";
 		$RtnVal["SQLTXT"] = "select 
 	'LINESTART' as MYRADIO, 'LINESTART,LINEEND' as MYCHECK, '20191212' as ADD_DT
@@ -132,7 +132,7 @@ order by ORD asc";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "selMasG";
 		$RtnVal["SQLTXT"] = "select 
 	PCD,PNM,PCDDESC,ORD
@@ -140,7 +140,7 @@ order by ORD asc";
 	,ADDDT,MODDT
 from 
 	CG_CODE
-order by PCD asc";
+order by ORD asc";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
 		$RtnVal["BINDTYPE"] = "";
@@ -151,7 +151,7 @@ order by PCD asc";
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "updDtlG";
 		$RtnVal["SQLTXT"] = "update  CG_CODED set
 	CD = #{CD}, NM = #{NM}, CDDESC = #{CDDESC},ORD = #{ORD}, CDVAL = #{CDVAL}, CDVAL2 = #{CDVAL2}
@@ -170,7 +170,7 @@ where  CODED_SEQ = #{CODED_SEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SVRID"] = "CG";
 		$RtnVal["SQLID"] = "updMasG";
 		$RtnVal["SQLTXT"] = "update CG_CODE set
 	PNM = #{PNM}, PCDDESC = #{PCDDESC}, ORD = #{ORD}, UITOOL = #{UITOOL}, USEYN = #{USEYN}

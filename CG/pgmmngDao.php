@@ -20,7 +20,7 @@ class pgmmngDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "fileC";
 		$RtnVal["SQLTXT"] = "INSERT INTO CG_PJTFILE (
 	PJTSEQ, MKFILETYPE, MKFILETYPENM, MKFILEFORMAT, MKFILEEXT
@@ -39,15 +39,14 @@ class pgmmngDao
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "fileR";
 		$RtnVal["SQLTXT"] = "SELECT PJTSEQ,FILESEQ,MKFILETYPE,MKFILETYPENM,MKFILEFORMAT,MKFILEEXT,TEMPLATE,FILEORD,USEYN,ADDDT,MODDT
 FROM CG_PJTFILE
-WHERE PJTSEQ = #{G3-PJTSEQ}
-";
+WHERE PJTSEQ = #{G3-PJTSEQ}";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "s";
+		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
 	//FILE    
@@ -55,7 +54,7 @@ WHERE PJTSEQ = #{G3-PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "fileU";
 		$RtnVal["SQLTXT"] = "UPDATE CG_PJTFILE SET
 	MKFILETYPE = #{MKFILETYPE}, MKFILETYPENM = #{MKFILETYPENM}, MKFILEFORMAT = #{MKFILEFORMAT}, MKFILEEXT = #{MKFILEEXT}, TEMPLATE = #{TEMPLATE}
@@ -73,7 +72,7 @@ WHERE PJTSEQ = #{PJTSEQ} AND FILESEQ = #{FILESEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "impC";
 		$RtnVal["SQLTXT"] = "insert into CG_PJTCFG (
  PJTSEQ, CFGID, CFGNM, MVCGBN, PATH
@@ -95,7 +94,7 @@ WHERE PJTSEQ = #{PJTSEQ} AND FILESEQ = #{FILESEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "impD";
 		$RtnVal["SQLTXT"] = "delete from CG_PJTCFG
 where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ} 
@@ -110,16 +109,17 @@ where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "impR";
 		$RtnVal["SQLTXT"] = "select 
  PJTSEQ,CFGSEQ,USEYN,CFGID,CFGNM,MVCGBN,PATH,CFGORD,ADDDT,MODDT
 from CG_PJTCFG
 where PJTSEQ = #{G3-PJTSEQ} 
+
 ";
 		$RtnVal["PARENT_FNCTYPE"] = ""; // PSQLSEQ가 있으면 상위 SQL이 존재	
 		$RtnVal["REQUIRE"] = array(	);
-		$RtnVal["BINDTYPE"] = "s";
+		$RtnVal["BINDTYPE"] = "i";
 		return $RtnVal;
     }  
 	//CONFIG    
@@ -127,7 +127,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "impU";
 		$RtnVal["SQLTXT"] = "update CG_PJTCFG set
 	CFGID = #{CFGID}, CFGNM = #{CFGNM}, MVCGBN = #{MVCGBN}, PATH = #{PATH}, USEYN = #{USEYN}
@@ -145,7 +145,7 @@ where PJTSEQ = #{PJTSEQ} and CFGSEQ = #{CFGSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "sql1";
 		$RtnVal["SQLTXT"] = "select
 	PJTSEQ,PJTID,PJTNM,FILECHARSET,UITOOL
@@ -165,7 +165,7 @@ where DELYN = 'N'
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sql10";
 		$RtnVal["SQLTXT"] = "select 
  a.PJTSEQ, a.DDSEQ, a.COLID, a.COLNM, a.COLSNM
@@ -188,7 +188,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sql11";
 		$RtnVal["SQLTXT"] = "insert into CG_DD (
 	PJTSEQ, COLID, COLNM, COLSNM, DATATYPE
@@ -213,7 +213,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sql12";
 		$RtnVal["SQLTXT"] = "update CG_DD
 set
@@ -234,7 +234,7 @@ where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sql13";
 		$RtnVal["SQLTXT"] = "delete from CG_DD 
 where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ} 
@@ -249,7 +249,7 @@ where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "sql2";
 		$RtnVal["SQLTXT"] = "update CG_PJTINFO set DELYN = 'Y' where PJTSEQ = #{PJTSEQ} 
 ";
@@ -263,7 +263,7 @@ where PJTSEQ = #{PJTSEQ} and DDSEQ = #{DDSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "sql3";
 		$RtnVal["SQLTXT"] = "update CG_PJTINFO set 
 PJTID = #{PJTID}, PJTNM = #{PJTNM},FILECHARSET = #{FILECHARSET}, UITOOL = #{UITOOL}
@@ -283,7 +283,7 @@ where PJTSEQ = #{PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGCORE";
 		$RtnVal["SQLID"] = "sql4";
 		$RtnVal["SQLTXT"] = "insert into CG_PJTINFO (
 	PJTID,PJTNM,FILECHARSET,UITOOL,SVRLANG
@@ -305,7 +305,7 @@ where PJTSEQ = #{PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "R";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sql6";
 		$RtnVal["SQLTXT"] = "select PJTSEQ,PGMSEQ,PGMID,PGMNM,VIEWURL,PGMTYPE,POPWIDTH,POPHEIGHT,SECTYPE,PKGGRP,LOGINYN,ADDDT,MODDT 
 from
@@ -322,7 +322,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "C";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sql7";
 		$RtnVal["SQLTXT"] = "insert into CG_PGMINFO(
 	 PJTSEQ, PGMID, PGMNM, PKGGRP, PGMTYPE
@@ -344,7 +344,7 @@ where PJTSEQ = #{G3-PJTSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "U";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sql8";
 		$RtnVal["SQLTXT"] = "update
  CG_PGMINFO
@@ -364,7 +364,7 @@ where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ}
 		//조회
 		$RtnVal = null;
 		$RtnVal["FNCTYPE"] = "D";//CRUD 
-		$RtnVal["SVRID"] = "CG";
+		$RtnVal["SVRID"] = "CGPJT1";
 		$RtnVal["SQLID"] = "sql9";
 		$RtnVal["SQLTXT"] = "delete from CG_PGMINFO
 where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} 

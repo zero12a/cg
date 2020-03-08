@@ -146,7 +146,7 @@
 
     $sqlMap = getSqlParam($sql,$coltype="i",$REQ);
     $stmt = getStmt($db,$sqlMap);
-    $pjtInfo = getStmtArray($db,$stmt,$sqlMap["TO_PARAM"])[0];
+    $pjtInfo = getStmtArray($stmt)[0];
     
     closeStmt($stmt);
     closeDb($db);
