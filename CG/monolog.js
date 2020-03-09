@@ -29,6 +29,7 @@ var url_G3_RELOAD = "monologController?CTLGRP=G3&CTLFNC=RELOAD";
 var obj_G3_LOGSEQ;   // SEQ 글로벌 변수 선언
 var obj_G3_DATEHM;   // DATEHM 글로벌 변수 선언
 var obj_G3_LOGMSG;   // MSG 글로벌 변수 선언
+var obj_G3_LOGWE;   // LOGWE 글로벌 변수 선언
 	var codeMirrorFontSizeG3Logmsg = 11; // MSG
 
 //MSG
@@ -46,6 +47,7 @@ function changeCodemirrorFontSizeG3Logmsg(sizeCmd){
 	obj_G3_LOGMSG .refresh();
 	alog("changeCodemirrorFontSizeG3Logmsg..........end");   
 }
+//{G.GRPID-LOGWE initval
 //화면 초기화	
 function initBody(){
      alog("initBody()-----------------------start");
@@ -255,6 +257,7 @@ function G3_INIT(){
 
 
 
+
 	//컬럼 초기화
 	//LOGSEQ, SEQ 초기화
 	//DATEHM, DATEHM 초기화	
@@ -282,6 +285,20 @@ function G3_INIT(){
 			}}
         });
 		obj_G3_LOGMSG .setSize("400px","px");
+    $('#G3-LOGWE').summernote({
+        placeholder: 'Input LOGWE',
+        tabsize: 2,
+		width: 400,
+        height: 200,
+		dialogsInBody: true,
+        callbacks: {
+          onImageUpload: function(files, editor, welEditable) {
+            for (var i = files.length - 1; i >= 0; i--) {
+              sendFileSummernote(files[i], this);
+            }
+          }
+        }
+      });
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
@@ -437,6 +454,13 @@ function G3_SEARCH(tinput,token){
 	$("#G3-LOGSEQ").text(data.RTN_DATA.LOGSEQ);//SEQ 변수세팅
 			$("#G3-DATEHM").val(data.RTN_DATA.DATEHM);//DATEHM 변수세팅
 		obj_G3_LOGMSG.setValue(data.RTN_DATA.LOGMSG); //MSG 
+	//$('#summernote').summernote('editor.insertText', data.RTN_DATA.LOGWE);
+	$('#G3-LOGWE').summernote('reset'); //기존 데이터 지우기
+	if(data.RTN_DATA.LOGWE.indexOf('</p>') < 0 ){
+		 $('#G3-LOGWE').summernote('pasteHTML', "<p>" + data.RTN_DATA.LOGWE + "</p>"); //html컨텐츠 아니면 좌우로 <p></p>감싸기
+	}else{
+		$('#G3-LOGWE').summernote('pasteHTML', data.RTN_DATA.LOGWE); //html컨텐츠 아니면 좌우로 <p></p>감싸기
+	}
         },
         error: function(error){
             alog("Error:");
@@ -454,6 +478,7 @@ function G3_NEW(){
 	$("#G3-LOGSEQ").text("");//SEQ 신규초기화
 	$("#G3-DATEHM").val("");//DATEHM 신규초기화	
 	obj_G3_LOGMSG.setValue(""); // MSG값 비우기
+	$('#G3-LOGWE').summernote('reset'); //기존 데이터 지우기
        alog("DETAILNew30---------------end");
 }
 //G3_SAVE
@@ -471,7 +496,7 @@ function G3_SAVE(token){
 	var sendFormData = new FormData($("#formviewG3")[0]);
 
 	sendFormData.append("G3-LOGMSG",obj_G3_LOGMSG.getValue()); //MSG
-	//컨디션 데이터 추가하기
+	sendFormData.append("G3-LOGWE",$('#G3-LOGWE').summernote('code')); //LOGWE	//컨디션 데이터 추가하기
 	conditionData = new FormData($("#condition")[0]);
     var es, e, pair;
     for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
@@ -489,7 +514,14 @@ function G3_SAVE(token){
 			data = jQuery.parseJSON(tdata);
 			//alert(data);
 			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 저장되었습니다.",1);
+
+				if(typeof(data.GRP_DATA) == "undefined" || data.GRP_DATA[0] == null || typeof(data.GRP_DATA[0].RTN_DATA) == "undefined"){
+					msgNotice("오류를 발생하지 않았으나, 처리 내역이 없습니다.(GRP_DATA is null, SQL미등록)",1);
+				}else{
+					affectedRows = data.GRP_DATA[0].RTN_DATA;
+					msgNotice("정상적으로 저장되었습니다. [영향받은건수:" + affectedRows + "]",1);
+				}
+
 			}else{
 				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
 			}

@@ -59,6 +59,9 @@ header("Pragma:no-cache");
 
 
     <style>
+        @import url(//fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+        
+        html,body,div,span,td,a,p {font-family: "Nanum Gothic Coding", monospace;}
 
         input[type=button]{
             padding: 3px 5px 3px 5px;

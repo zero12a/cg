@@ -61,6 +61,10 @@ header("Pragma:no-cache");
 
 
     <style>
+        @import url(//fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+        
+        html,body,div,span,td,a,p {font-family: "Nanum Gothic Coding", monospace;}
+
         .CodeMirror {
             border-top: 1px solid black;
             border-bottom: 1px solid black;

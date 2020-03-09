@@ -250,6 +250,21 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<textarea id="codeMirror_G3-LOGMSG" name="codeMirror_G3-LOGMSG" ></textarea>
 					</div>
 				</div>
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : LOGWE-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:70px;text-align:;">
+ 						LOGWE
+ 					</div>
+ 					<!-- style="width:400px;"-->
+					<div class="CON_OBJECT">
+ 	<!--LOGWE오브젝트출력 checkbox-->
+	<textarea id="G3-LOGWE" name="G3-LOGWE"></textarea>
+					</div>
+ 				</div>
+ 			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : LOGWE-->
+				<div class="CON_OBJGRP" style="">
 			</DIV><!--is_br_tab end-->
 		</div>
 		<div style="width:0px;height:0px;overflow: hidden"></form></div>    
