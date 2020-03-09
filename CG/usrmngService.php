@@ -14,7 +14,7 @@ class usrmngService
 		$log->info("UsrmngService-__construct");
 
 		$this->DAO = new usrmngDao();
-		$this->DB["DATING"] = getDbConn($CFG["CFG_DB"]["DATING"]);
+		$this->DB["OS"] = getDbConn($CFG["CFG_DB"]["OS"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -22,7 +22,7 @@ class usrmngService
 		$log->info("UsrmngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["DATING"])closeDb($this->DB["DATING"]);
+		if($this->DB["OS"])closeDb($this->DB["OS"]);
 		unset($this->DB);
 	}
 	function __toString(){
@@ -119,6 +119,8 @@ class usrmngService
 		//저장
 		//V_GRPNM : 회원목록
 		array_push($GRID["SQL"]["C"], $this->DAO->insUsrG($REQ)); //SAVE, 저장,회원등록
+		//V_GRPNM : 회원목록
+		array_push($GRID["SQL"]["D"], $this->DAO->delUsrG($REQ)); //SAVE, 저장,회원삭제G
 		$tmpVal = requireGridSaveArray($GRID["COLORD"],$GRID["XML"],$GRID["SQL"]);
 		if($tmpVal->RTN_CD == "500"){
 			$log->info("requireGrid - fail.");
@@ -256,6 +258,44 @@ class usrmngService
 		$rtnVal->GRP_DATA = array();
 
 		$log->info("USRMNGService-goG3Save________________________start");
+		//FORMVIEW SAVE
+		$grpId="G3";
+		$FORMVIEW["FNCTYPE"] = $REQ[$grpId . "-CTLCUD"]; 
+		$GRID["KEYCOLID"] = "";  //KEY컬럼 COLID, -1
+		$GRID["SEQYN"] = "N";  //시퀀스 컬럼 유무
+	//암호화컬럼
+		$FORMVIEW["COLCRYPT"] = array("USR_PWD"=>"HASH");	
+			//CTLCUD 명령어에 따른 분개 처리
+		if( $FORMVIEW["FNCTYPE"] == "C" || $FORMVIEW["FNCTYPE"] == "U"){ 
+
+			$FORMVIEW["SQL"] = array();
+			switch($FORMVIEW["FNCTYPE"]){
+				case "C":
+					array_push($FORMVIEW["SQL"],$this->DAO->insUsrF($REQ)); 
+					break;
+				case "U":
+					array_push($FORMVIEW["SQL"],$this->DAO->updUsrF($REQ));
+					break;
+				default : 
+					$log->info("(SVC) FNCTYPE을 찾을수 없습니다.");
+			}
+			//필수 여부 검사
+			$tmpVal = requireFormviewSaveArray($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"]);
+			if($tmpVal->RTN_CD == "500"){
+				$log->info("requireFormview - fail.");
+				$tmpVal->GRPID = $grpId;
+				echo json_encode($tmpVal);
+				exit;
+			}
+			$tmpVal = makeFormviewSaveJsonArray($FORMVIEW,$this->DB);
+			array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
+
+			$al->GRPID = $grpId;
+			array_push($rtnVal->GRP_DATA, $tmpVal);
+
+			//$rtnVal = makeFormviewSaveJson($FORMVIEW,$this->DB);
+
+		}//C,U 일때만 DB처리
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";
@@ -271,6 +311,24 @@ class usrmngService
 		$rtnVal->GRP_DATA = array();
 
 		$log->info("USRMNGService-goG3Delete________________________start");
+//FORMVIEW DELETE
+		$grpId="G3";
+		$FORMVIEW["FNCTYPE"] = $REQ[$grpId."-CTLCUD"]; 
+		$FORMVIEW["SQL"][$FORMVIEW["FNCTYPE"]] = $this->DAO->delUsrF($REQ); 
+
+		//필수 여부 검사
+		$tmpVal = requireFormviewSave($FORMVIEW["SQL"],$FORMVIEW["FNCTYPE"] );
+		if($tmpVal->RTN_CD == "500"){
+			$log->info("requireFormviewSave - fail.");
+			$tmpVal->GRPID = $grpId;
+			echo json_encode($tmpVal);
+			exit;
+		}
+		$tmpVal = makeFormviewSaveJson($FORMVIEW,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G3]",microtime(true)));
+
+		$tmpVal->GRPID = $grpId;
+		array_push($rtnVal->GRP_DATA, $tmpVal);
 		//처리 결과 리턴
 		$rtnVal->RTN_CD = "200";
 		$rtnVal->ERR_CD = "200";

@@ -117,7 +117,7 @@ $REQ["G3-DATEHM"] = getFilter($REQ["G3-DATEHM"],"","//");
 $REQ["G3-LOGMSG"] = reqPostString("G3-LOGMSG",300);//MSG	
 $REQ["G3-LOGMSG"] = getFilter($REQ["G3-LOGMSG"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//로그	
-	//,  입력값 필터 
+//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
@@ -159,7 +159,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//로그
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new monologService();
-	//컨트롤 명령별 분개처리
+//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
 		case "G1_SEARCHALL" :

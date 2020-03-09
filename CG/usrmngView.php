@@ -202,6 +202,20 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 			<DIV class="OBJ_BR"></DIV>
 			<DIV class="CON_LINE" is_br_tag>
 			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : USR_SEQ-->
+				<div class="CON_OBJGRP" style="">
+					<div class="CON_LABEL" style="width:100px;text-align:left;">
+						USR_SEQ
+					</div>
+					<!-- style="width:200px;"-->
+					<div class="CON_OBJECT">
+	<!--USR_SEQ오브젝트출력-->						<input type="text" name="G3-USR_SEQ" value="" id="G3-USR_SEQ" style="width:200px;" class="">
+					</div>
+				</div>
+			</DIV><!--is_br_tab end-->
+			<DIV class="OBJ_BR"></DIV>
+			<DIV class="CON_LINE" is_br_tag>
+			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : USR_ID-->
 				<div class="CON_OBJGRP" style="">
 					<div class="CON_LABEL" style="width:100px;text-align:left;">

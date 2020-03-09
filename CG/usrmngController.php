@@ -123,7 +123,7 @@ $REQ["G3-ADD_DT"] = getFilter($REQ["G3-ADD_DT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G3-MOD_DT"] = reqPostString("G3-MOD_DT",14);//MOD	
 $REQ["G3-MOD_DT"] = getFilter($REQ["G3-MOD_DT"],"SAFETEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//회원목록	
-	//,  입력값 필터 
+//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
@@ -161,7 +161,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//회원목록
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new usrmngService();
-	//컨트롤 명령별 분개처리
+//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
 		case "G1_SEARCHALL" :

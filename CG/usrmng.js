@@ -255,6 +255,7 @@ function G3_INIT(){
 
 
 	//컬럼 초기화
+	//USR_SEQ, USR_SEQ 초기화	
 	//USR_ID, USR_ID 초기화	
 	//USR_NM, USR_NM 초기화	
 	//USR_PWD, USR_PWD 초기화	
@@ -264,11 +265,6 @@ function G3_INIT(){
   alog("G3_INIT()-------------------------end");
 }
 //D146 그룹별 기능 함수 출력		
-//검색조건 초기화
-function G1_RESET(){
-	alog("G1_RESET--------------------------start");
-	$('#condition')[0].reset();
-}
 //조회조건, 저장	
 function G1_SAVE(){
  alog("G1_SAVE-------------------start");
@@ -314,21 +310,11 @@ function G1_SEARCHALL(token){
 	G2_SEARCH(lastinputG2,token);
 	alog("G1_SEARCHALL--------------------------end");
 }
-    function G2_HIDDENCOL(){
-		alog("G2_HIDDENCOL()..................start");
-        if(isToggleHiddenColG2){
-            isToggleHiddenColG2 = false;            mygridG2.setColumnHidden(mygridG2.getColIndexById("USR_SEQ"),true); //USR_SEQ
-     }else{
-            isToggleHiddenColG2 = true;
-            mygridG2.setColumnHidden(mygridG2.getColIndexById("USR_SEQ"),false); //USR_SEQ
-        }
-		alog("G2_HIDDENCOL()..................end");
-    }
-    function G2_ROWDELETE(){	
-        alog("G2_ROWDELETE()------------start");
-        delRow(mygridG2);
-        alog("G2_ROWDELETE()------------start");
-    }
+//검색조건 초기화
+function G1_RESET(){
+	alog("G1_RESET--------------------------start");
+	$('#condition')[0].reset();
+}
 	function G2_SAVE(token){
 	alog("G2_SAVE()------------start");
 	tgrid = mygridG2;
@@ -574,7 +560,125 @@ function G2_EXCEL(){
 			var tCols = ["","","","","","","","","","",""];//초기값
 			addRow(mygridG2,tCols);
 		}
-	}function G3_MODIFY(){
+	}    function G2_HIDDENCOL(){
+		alog("G2_HIDDENCOL()..................start");
+        if(isToggleHiddenColG2){
+            isToggleHiddenColG2 = false;            mygridG2.setColumnHidden(mygridG2.getColIndexById("USR_SEQ"),true); //USR_SEQ
+     }else{
+            isToggleHiddenColG2 = true;
+            mygridG2.setColumnHidden(mygridG2.getColIndexById("USR_SEQ"),false); //USR_SEQ
+        }
+		alog("G2_HIDDENCOL()..................end");
+    }
+    function G2_ROWDELETE(){	
+        alog("G2_ROWDELETE()------------start");
+        delRow(mygridG2);
+        alog("G2_ROWDELETE()------------start");
+    }
+//새로고침	
+function G3_RELOAD(token){
+	alog("G3_RELOAD-----------------start");
+	G3_SEARCH(lastinputG3,token);
+}//FORMVIEW DELETE
+function G3_DELETE(){	
+	alog("G3_DELETE---------------start");
+
+	//조회했는지 확인하기
+	if( $("#G3-CTLCUD").val() != "R" ){
+		alert("조회된 것만 삭제 가능합니다.");
+		return;
+	}
+	//확인
+	if(!confirm("정말로 삭제하시겠습니까?")){
+		return;
+	}
+	
+	//삭제처리 명령어
+	$("#G3-CTLCUD").val("D");
+
+	//폼객체를 불러와서
+	var form1 = $("#formviewG3")[0];
+
+	//FormData parameter에 담아줌
+	var formData = new FormData(form1);
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_DELETE,
+		data : formData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+				if(typeof(data.GRP_DATA) == "undefined" || data.GRP_DATA[0] == null || typeof(data.GRP_DATA[0].RTN_DATA) == "undefined"){
+					msgNotice("오류를 발생하지 않았으나, 처리 내역이 없습니다.(GRP_DATA is null, SQL미등록)",1);
+				}else{
+					affectedRows = data.GRP_DATA[0].RTN_DATA;
+					msgNotice("정상적으로 삭제되었습니다. [영향받은건수:" + affectedRows + "]",1);
+				}
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
+}
+//G3_SAVE
+//IO_FILE_YN = N	
+	//IO_FILE_YN = N	
+function G3_SAVE(token){	
+	alog("G3_SAVE---------------start");
+
+	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
+		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
+		return;
+	}
+
+	//전송용 데이터 생성하기
+	var sendFormData = new FormData($("#formviewG3")[0]);
+
+	//컨디션 데이터 추가하기
+	conditionData = new FormData($("#condition")[0]);
+    var es, e, pair;
+    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
+		sendFormData.append(pair[0],pair[1]);
+    }
+
+	$.ajax({
+		type : "POST",
+		url : url_G3_SAVE + "&TOKEN=" + token,
+		data : sendFormData,
+		processData: false,
+		contentType: false,
+		success: function(tdata){
+			alog(tdata);
+			data = jQuery.parseJSON(tdata);
+			//alert(data);
+			if(data && data.RTN_CD == "200"){
+
+				if(typeof(data.GRP_DATA) == "undefined" || data.GRP_DATA[0] == null || typeof(data.GRP_DATA[0].RTN_DATA) == "undefined"){
+					msgNotice("오류를 발생하지 않았으나, 처리 내역이 없습니다.(GRP_DATA is null, SQL미등록)",1);
+				}else{
+					affectedRows = data.GRP_DATA[0].RTN_DATA;
+					msgNotice("정상적으로 저장되었습니다. [영향받은건수:" + affectedRows + "]",1);
+				}
+
+			}else{
+				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
+			}
+		},
+		error: function(error){
+			alog("Error:");
+			alog(error);
+		}
+	});
+}function G3_MODIFY(){
        alog("[FromView] G3_MODIFY---------------start");
 	if( $("#G3-CTLCUD").val() == "C" ){
 		alert("조회 후 수정 가능합니다. 신규 모드에서는 수정할 수 없습니다.")
@@ -593,6 +697,7 @@ function G3_NEW(){
        alog("[FromView] G3_NEW---------------start");
 	$("#G3-CTLCUD").val("C");
 	//PMGIO 로직
+	$("#G3-USR_SEQ").val("");//USR_SEQ 신규초기화	
 	$("#G3-USR_ID").val("");//USR_ID 신규초기화	
 	$("#G3-USR_NM").val("");//USR_NM 신규초기화	
 	$("#G3-USR_PWD").val("");//USR_PWD 신규초기화	
@@ -640,6 +745,7 @@ function G3_SEARCH(tinput,token){
             //모드 변경하기
             $("#G3-CTLCUD").val("R");
 			//SETVAL  가져와서 세팅
+			$("#G3-USR_SEQ").val(data.RTN_DATA.USR_SEQ);//USR_SEQ 변수세팅
 			$("#G3-USR_ID").val(data.RTN_DATA.USR_ID);//USR_ID 변수세팅
 			$("#G3-USR_NM").val(data.RTN_DATA.USR_NM);//USR_NM 변수세팅
 			$("#G3-USR_PWD").val(data.RTN_DATA.USR_PWD);//USR_PWD 변수세팅
@@ -654,96 +760,4 @@ function G3_SEARCH(tinput,token){
     });
     alog("(FORMVIEW) G3_SEARCH---------------end");
 
-}
-//새로고침	
-function G3_RELOAD(token){
-	alog("G3_RELOAD-----------------start");
-	G3_SEARCH(lastinputG3,token);
-}//FORMVIEW DELETE
-function G3_DELETE(){	
-	alog("G3_DELETE---------------start");
-
-	//조회했는지 확인하기
-	if( $("#G3-CTLCUD").val() != "R" ){
-		alert("조회된 것만 삭제 가능합니다.");
-		return;
-	}
-	//확인
-	if(!confirm("정말로 삭제하시겠습니까?")){
-		return;
-	}
-	
-	//삭제처리 명령어
-	$("#G3-CTLCUD").val("D");
-
-	//폼객체를 불러와서
-	var form1 = $("#formviewG3")[0];
-
-	//FormData parameter에 담아줌
-	var formData = new FormData(form1);
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_DELETE,
-		data : formData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 삭제되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
-}
-//G3_SAVE
-//IO_FILE_YN = N	
-	//IO_FILE_YN = N	
-function G3_SAVE(token){	
-	alog("G3_SAVE---------------start");
-
-	if( !( $("#G3-CTLCUD").val() == "C" || $("#G3-CTLCUD").val() == "U") ){
-		alert("신규 또는 수정 모드 진입 후 저장할 수 있습니다.")
-		return;
-	}
-
-	//전송용 데이터 생성하기
-	var sendFormData = new FormData($("#formviewG3")[0]);
-
-	//컨디션 데이터 추가하기
-	conditionData = new FormData($("#condition")[0]);
-    var es, e, pair;
-    for (es = conditionData.entries(); !(e = es.next()).done && (pair = e.value);) {
-		sendFormData.append(pair[0],pair[1]);
-    }
-
-	$.ajax({
-		type : "POST",
-		url : url_G3_SAVE + "&TOKEN=" + token,
-		data : sendFormData,
-		processData: false,
-		contentType: false,
-		success: function(tdata){
-			alog(tdata);
-			data = jQuery.parseJSON(tdata);
-			//alert(data);
-			if(data && data.RTN_CD == "200"){
-				msgNotice("정상적으로 저장되었습니다.",1);
-			}else{
-				msgError("오류가 발생했습니다("+ data.ERR_CD + ")." + data.RTN_MSG,3);
-			}
-		},
-		error: function(error){
-			alog("Error:");
-			alog(error);
-		}
-	});
 }
