@@ -192,11 +192,11 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* 기능</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanFncCnt">N</span>
-                    <input type="button" name="some_name" value="V" onclick="view5();">
-					<input type="button" name="some_name" value="S" onclick="fncSave();">
-					<input type="button" name="getfnccode" value="C" onclick="getFncCode();">
-					<input type="button" name="add" value="+" onclick="addRow5();">
-					<input type="button" name="delete" value="-" onclick="delRow(mygridFnc);">
+                    <input type="button" name="some_name" value="V" onclick="view5();"><input 
+                    type="button" name="some_name" value="S" onclick="fncSave();"><input 
+                    type="button" name="getfnccode" value="C" onclick="getFncCode();"><input 
+                    type="button" name="add" value="+" onclick="addRow5();"><input 
+                    type="button" name="delete" value="-" onclick="delRow(mygridFnc);">
                 </div>
             </div>
             <div class="GRID_OBJECT" >
@@ -207,11 +207,12 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* 이벤트</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanEvtCnt">N</span>
-                    <input type="button" name="some_name" value="V" onclick="viewEvt();">
-					<input type="button" name="some_name" value="S" onclick="evtSave();">
-					<input type="button" name="getevtcode" value="C" onclick="getEvtCode();">
-					<input type="button" name="add" value="+" onclick="addRowEvt();">
-					<input type="button" name="delete" value="-" onclick="delRow(mygridEvt);">
+                    <input 
+                    type="button" name="some_name" value="V" onclick="viewEvt();"><input 
+                    type="button" name="some_name" value="S" onclick="evtSave();"><input 
+                    type="button" name="getevtcode" value="C" onclick="getEvtCode();"><input 
+                    type="button" name="add" value="+" onclick="addRowEvt();"><input 
+                    type="button" name="delete" value="-" onclick="delRow(mygridEvt);">
                 </div>
             </div>
             <div class="GRID_OBJECT" >
@@ -226,12 +227,12 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* 오브젝트</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanIoCnt">N</span>
-                    <input type="button" name="some_name" value="V" onclick="viewIo();">                
-				    <input type="button" name="some_name" value="S" onclick="save4();">
-					<input type="button" name="ttt" value="C" onclick="getColOutput();">
-					<input type="button" name="add" value="+" onclick="addRow4();">
-                    <input type="button" name="delete" value="-" onclick="delRow(mygridIo);">
-                    <input type="button" name="reload" value="R" onclick="gridReload4()">
+                    <input type="button" name="some_name" value="V" onclick="viewIo();"><input 
+                    type="button" name="some_name" value="S" onclick="save4();"><input 
+                    type="button" name="ttt" value="C" onclick="getColOutput();"><input 
+                    type="button" name="add" value="+" onclick="addRow4();"><input 
+                    type="button" name="delete" value="-" onclick="delRow(mygridIo);"><input 
+                    type="button" name="reload" value="R" onclick="gridReload4()">
                 </div>
             </div>
             <div class="GRID_OBJECT" >
@@ -266,8 +267,7 @@ header("Pragma:no-cache");
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanSvcCnt">N</span>
 					<input type="button" name="some_name" value="S" onclick="save9();"><input 
-                    type="button" name="add" value="+" onclick="addRow9();">
-                    <input type="button" name="delete" value="-" onclick="delRow(mygridSvc);">
+                    type="button" name="add" value="+" onclick="addRow9();"><input type="button" name="delete" value="-" onclick="delRow(mygridSvc);">
                 </div>
             </div>
             <div class="GRID_OBJECT" >
@@ -337,11 +337,11 @@ header("Pragma:no-cache");
                         <option value="LINK1^NM1,LINK2^NM2,LINK3^NM3 ~">(출력NV) 이미지뷰어(FORM)</option>   
                         <option value="LINK^NM">(출력2V) 파일(FORM)</option>     
                         <option value="VAL1^VAL2">(출력2V) BIVIEW</option>                                
-                    </select>
-                    <input type="button" name="bigFont" value="+" onclick="changeCodemirrorFontSize('+')">
-                    <input type="button" name="bigFont" value="-" onclick="changeCodemirrorFontSize('-')">
-                    <input type="button" name="SqlSearch" value="Sql검색" onclick="goSqlSearch();">
-                    <input type="button" name="SqlPreview" value="Preview" onclick="goSqlpreview();">
+                    </select><input 
+                    type="button" name="bigFont" value="+" onclick="changeCodemirrorFontSize('+')"><input 
+                    type="button" name="bigFont" value="-" onclick="changeCodemirrorFontSize('-')"><input 
+                    type="button" name="SqlSearch" value="Sql검색" onclick="goSqlSearch();"><input 
+                    type="button" name="SqlPreview" value="Preview" onclick="goSqlpreview();">
                 </div>
             </div>
             <div class="GRID_OBJECT" >
