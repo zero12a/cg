@@ -3,20 +3,57 @@ header("Content-Type: text/html; charset=UTF-8");
 header("Cache-Control:no-cache");
 header("Pragma:no-cache");
 
+    //로그인 검사
+    $CFG = require_once("../common/include/incConfig.php");
+    
+    require_once($CFG["CFG_LIBS_VENDOR"]);
+
 	//로그인 검사
-    require_once("./include/incUtil.php");
-    require_once("./include/incUser.php");
-    require_once("./include/incDB.php");
-    require_once("./incConfig.php");
+    require_once("../common/include/incUtil.php");
+    require_once("../common/include/incUser.php");
+    require_once("../common/include/incSec.php");
+    require_once("../common/include/incDB.php");
+    require_once("../common/include/incRequest.php");    
+    //require_once("./incConfig.php");
 
-    require_once("./include/incLoginCheck.php");//로그인 검사
+    require_once("../common/include/incLoginCheck.php");//로그인 검사
 
-	//외부 파라미터 받기
-	$REQ["SQLSEQ"] = $_GET["SQLSEQ"];
+
+    $log = getLogger(
+        array(
+        "LIST_NM"=>"log_CG"
+        , "PGM_ID"=>"SQLPREVIEW"
+        , "REQTOKEN" => $reqToken
+        , "RESTOKEN" => $resToken
+        , "LOG_LEVEL" => Monolog\Logger::INFO
+        )
+    );
+
+
+
+    //외부 파라미터 받기
+	$REQ["SVRSEQ"] = reqGetNumber("SVRSEQ",3);    
+	$REQ["SQLSEQ"] = reqGetNumber("SQLSEQ",10);
+    $REQ["PJTSEQ"] = reqGetNumber("PJTSEQ",3);
+    
+    //프로젝트seq가지고 core에서 프로젝트 ds정보 가져오기
+    $svridCore = "CGCORE";
+    $db[$svridCore] = getDbConn($CFG["CFG_DB"][$svridCore]);
+    $sql = "select * from CG_PJTINFO where PJTSEQ = #{PJTSEQ}";
+    
+    //$stmt = makeStmt($db[$svridCore],$sql,$coltype="i",$map["F_PJTSEQ"] = $F_PJTSEQ);
+    //$pjtInfo = getStmtArray($stmt)[0];
+    
+    $sqlMap = getSqlParam($sql,$coltype="i",$REQ);
+    $stmt = getStmt($db[$svridCore],$sqlMap);
+    $pjtInfo = getStmtArray($stmt)[0];
+    closeStmt($stmt);
+
 
     //DB연결정보 가져오기
-    $svrid = "CG";
-    $db[$svrid]=db_m_open();
+    $svrid = $pjtInfo["DSNM"];
+    //echo "svrid = " . $svrid;
+    $db[$svrid] = getDbConn($CFG["CFG_DB"][$svrid]);
 
 
     //sqlseq로 db에서 sql쿼리문 가져오기
@@ -78,28 +115,28 @@ header("Pragma:no-cache");
     .GRP_OBJECT {position: relative;float:left;z-index:20;}
 </style>
 	<!--jquery / json-->
-	<script src="./lib/jquery-1.11.1.min.js"></script>
-	<script src="./lib/json2.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-1.12.4.min.js"></script>
+	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js"></script>
 
 	<!--dhmltx-->
-    <script src="./lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="./lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>/lib/dhtmlxSuite/codebase/dhtmlx.css" type="text/css" charset="utf-8">
 
     <!--chart-->
-    <script src="/lib/chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
-    <script src="/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/Chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
+    <script src="/common/chartjs_util.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->
 
     <!--codemirror-->
-    <link rel=stylesheet href="/lib/codemirror/lib/codemirror.css">
+    <link rel=stylesheet href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.css">
 
-    <script src="/lib/codemirror/lib/codemirror.js"></script>
-    <script src="/lib/codemirror/mode/sql/sql.js"></script>
-    <script src="/lib/codemirror/mode/javascript/javascript.js"></script>    
-    <script src="/lib/codemirror/addon/selection/active-line.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/lib/codemirror.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/sql/sql.js"></script>
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/mode/javascript/javascript.js"></script>    
+    <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/selection/active-line.js"></script>
 
     <!--공통-->
-    <script src="./common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
-    <link href="./common/common.css" rel="stylesheet" type="text/css" />
+    <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
+    <link href="/common/common.css" rel="stylesheet" type="text/css" />
 
 
 
@@ -294,14 +331,15 @@ header("Pragma:no-cache");
 
 
 		//alog("	serializeJson:" + myJsonString);
-		tinput = "&SQLSEQ=<?=$REQ["SQLSEQ"]?>";
+		tinput = "&PJTSEQ=<?=$REQ["PJTSEQ"]?>&SVRSEQ=<?=$REQ["SVRSEQ"]?>&SQLSEQ=<?=$REQ["SQLSEQ"]?>&KEYCOLIDX=" + $("#KEYCOLIDX").val();
 
+        //alert(mygrid1.cells(mygrid1.getSelectedRowId(), 1).getValue());
 		//alert($("#code").val());
         //불러오기
         $.ajax({
             type : "POST",
             url : mygrid2_url+"&G2_CRUD_MODE=read&" + tinput ,
-            data : {"PARAM-XML" : myXmlString, sqltxt : $("#code").val(), colords : colords, crud : crud},
+            data : {"PARAM-XML" : myXmlString,  sqltxt : $("#code").val(), colords : colords, crud : crud},
             dataType: "json",
             async: true,
             success: function(data){
@@ -352,14 +390,15 @@ header("Pragma:no-cache");
 <div id="BODY_BOX" class="BODY_BOX">
 	<div  class="GRID_LABELGRP" >
 		<div class="GRID_LABEL" >* SQL PREVIEW 
-			<!--popup--><a href="?" target="_blank"><img src="./img/popup.png" height=10 align=absmiddle border=0></a>
-			<!--reload--><a href="javascript:location.reload();"><img src="./img/reload.png" width=11 height=10 align=absmiddle border=0></a>
+			<!--popup--><a href="?" target="_blank"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/popup.png" height=10 align=absmiddle border=0></a>
+			<!--reload--><a href="javascript:location.reload();"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 		</div>
 	</div>
 
     <div class="GRP_LINE" style="">
 
         <div class="GRP_OBJECT" style="width:70%;">
+        KEYCOLIDX : <input type="text" id="KEYCOLIDX" name="KEYCOLIDX" value=1>
             <textarea id="code" name="code"><?=$rstMap->RTN_DATA["SQLTXT"]?></textarea>
         </div>
         <div class="GRP_OBJECT" style="width:30%;">

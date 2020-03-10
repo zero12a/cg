@@ -3,39 +3,57 @@
     header("Cache-Control:no-cache");
     header("Pragma:no-cache");
 
-
-    require_once("./include/incUtil.php");
-    require_once("./incConfig.php");
-    require_once("./include/incDB.php");
-	require_once("./include/incSEC.php");
+    //로그인 검사
+    $CFG = require_once("../common/include/incConfig.php");
+    
+	require_once($CFG["CFG_LIBS_VENDOR"]);
 	
-    require_once("./lib/PHP-SQL-Parser/src/PHPSQLParser.php");
+	//로그인 검사
+    require_once("../common/include/incUtil.php");
+    require_once("../common/include/incUser.php");
+    require_once("../common/include/incSec.php");
+    require_once("../common/include/incDB.php");
+	require_once("../common/include/incRequest.php");    
+
+    require_once("/data/www/lib/php/PHP-SQL-Parser/src/PHPSQLParser.php");
 
 	
 
     //ServerViewTxt("N","N","Y","Y");
 	//외부 파라미터 받기
-	$REQ["SQLSEQ"] = $_GET["SQLSEQ"];
-	$REQ["crud"] = $_POST["crud"];	
+	$REQ["KEYCOLIDX"] = reqGetNumber("KEYCOLIDX",2);
+
+	$REQ["SVRSEQ"] = reqGetNumber("SVRSEQ",3);    
+	$REQ["SQLSEQ"] = reqGetNumber("SQLSEQ",10);
+    $REQ["PJTSEQ"] = reqGetNumber("PJTSEQ",3);
 	
-	$map["XML"] = getXml2Array($_POST["PARAM-XML"]);//GRP
+	$REQ["crud"] = reqPostString("crud",10);	
+	
+	$map["XML"] = getXml2Array(reqPostString("PARAM-XML",1000));//GRP
 	//$REQ["colords"] = $_POST["colords"];
 
-	$svrid = "CG";
-    $db[$svrid]=db_m_open();
+	//10. 해당 프로젝트의 데이터 소스 정보 가져오기
+	$svridCore = "CGCORE";
+	$db[$svridCore] = getDbConn($CFG["CFG_DB"][$svridCore]);
+	$sql = "select SVRID as DSNM from CG_SVR where SVRSEQ = #{SVRSEQ}";
 	
-	//현재 프로젝트의 db연결 정보 가져오기
-	$map["SQL"]["R"]["SVRID"] = $svrid;
-	$map["SQL"]["R"]["SQLTXT"] = "select a.SVRSEQ,b.SVRID from CG_PGMSQL a join CG_SVR b on a.SVRSEQ = b.SVRSEQ where a.SQLSEQ = #{SQLSEQ}";
-	$map["SQL"]["R"]["BINDTYPE"] = "i";
-    $rtnMap = makeFormviewSearchJson($map,$db);
+	$sqlMap = getSqlParam($sql,$coltype="i",$REQ);
+	//echo "<hr><pre>" . jsonView($sqlMap);
+	$stmt = getStmt($db[$svridCore],$sqlMap);
+	$svrInfo = getStmtArray($stmt)[0];
 
-	$svrid2 = $rtnMap->RTN_DATA["SVRID"];
-	//db 닫기
-	$db[$svrid]->close();
+	//echo "<hr><pre>" . jsonView($svrInfo);
+
+	$svridPjt = $svrInfo["DSNM"];
+	closeStmt($stmt);
+	//closeDb($db[$svridCore]);
+
+	//20. 헤당 데이터소스 정보로 서비스 db연결하기
+	if($svridPjt  == "")JsonMsg("500","501", "svrInfo DSNM is empty.");
+	$db[$svridPjt] = getDbConn($CFG["CFG_DB"][$svridPjt ]);
+
 	
-	//db 열기
-	$db2 = db_obj_open(getDbSvrInfo($svrid2));
+
 
 
 	//내부함수 호출 후 리던 배열 
@@ -107,15 +125,29 @@ if($F_GRPID == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 	}
 	//alog("to_coltype=" . $to_coltype);
 
+	/*
     $stmt = makeStmt($db2,$sql, $to_coltype, $REQ);
-	if(!$stmt)   JsonMsg("500","100","stmt 생성 실패" . $db->errno . " -> " . $db->error);
 	
+	$sqlMap = getSqlParam($sql,$coltype="i",$REQ);
+	echo "<hr><pre>" . jsonView($sqlMap);
+	$stmt = getStmt($db[$svridPjt],$sqlMap);
+
+	if(!$stmt)   JsonMsg("500","100","stmt create fail" . $db->errno . " -> " . $db->error);
+	*/
 	if($REQ["crud"] =="R"){
-		echo make_grid_read_json($stmt,2);
-		$db2->close();
+
+		$map["KEYCOLIDX"] = $REQ["KEYCOLIDX"];
+		$map["SQL"]["R"]["SQLTXT"] = $sql;
+		$map["SQL"]["R"]["BINDTYPE"] = $to_coltype;
+		$map["SQL"]["R"]["SVRID"] = $svridPjt;
+
+		echo json_encode(makeGridSearchJson($map,$db));
+
+		//echo make_grid_read_json($stmt,2);
+		closeDb($db[$svridPjt]);
 	}else{
-		if(!$stmt->execute())JsonMsg("500","410","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
-		$db2->close();
+		if(!$stmt->execute())JsonMsg("500","410","stmt execute fail" . $stmt->errno . " -> " . $stmt->error);
+		closeDb($db[$svridPjt]);
 		JsonMsg("200","200","처리 성공");
 	}
 

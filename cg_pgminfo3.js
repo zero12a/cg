@@ -2075,8 +2075,10 @@
     }
 
 	function goSqlpreview(){
-		//alert(lastinput3json.SQLSEQ);
-		window.open("cg_sqlpreview.php?SQLSEQ="+lastinput3json.SQLSEQ,"sqlpreview","width=1024,height=600,scrollbars=yes");
+        //alert(lastinput3json.SQLSEQ);
+        var SVRSEQ = mygridSql.cells(mygridSql.getSelectedRowId(), mygridSql.getColIndexById("SVRSEQ")).getValue();
+        var SQLSEQ = mygridSql.cells(mygridSql.getSelectedRowId(), mygridSql.getColIndexById("SQLSEQ")).getValue();
+		window.open("cg_sqlpreview.php?SVRSEQ=" + SVRSEQ + "&SQLSEQ="+ SQLSEQ + "&PJTSEQ=" + $("#F_PJTSEQ").val(),"sqlpreview","width=1024,height=600,scrollbars=yes");
     }
     
     function goSqlChange(tmp){
