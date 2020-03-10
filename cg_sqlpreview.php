@@ -135,6 +135,9 @@ header("Pragma:no-cache");
     <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/codemirror/addon/selection/active-line.js"></script>
 
     <!--공통-->
+    <script>
+    var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
+    </script>
     <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
     <link href="/common/common.css" rel="stylesheet" type="text/css" />
 
@@ -227,7 +230,11 @@ header("Pragma:no-cache");
 
 		mygrid1_addparam();
 
+        <?php
+        //crud is R
+        if($rstMap->RTN_DATA["CRUD"] == "R"){
 
+        ?>
         //그리드 초기화(실행결과)
         mygrid2 = new dhtmlXGridObject('grid2');
 		mygrid2.setUserData("","gridTitle","grid1 : group list"); //글로별 변수에 그리드 타이블 넣기
@@ -279,7 +286,9 @@ header("Pragma:no-cache");
         mygrid2.enableMultiselect(false);
         mygrid2.init();
 
-
+        <?php
+        }//crud is R
+        ?>
 
 
 		alog("initBody-----------------------------end");
@@ -314,14 +323,13 @@ header("Pragma:no-cache");
 	function sqlExecute(){
         alog("sqlExecute()------------start");
 
-		var tGrid = mygrid2;
 
         var crud = "<?=$rstMap->RTN_DATA["CRUD"]?>";
 
         //그리드 초기화
-        tGrid.clearAll();
-
-
+        if(crud == "R"){
+            mygrid2.clearAll();
+        }
         //var myJsonString = mygrid1.serializeJson();
         
         mygrid1.setSerializationLevel(true,false,false,false,true,false);
@@ -355,15 +363,15 @@ header("Pragma:no-cache");
 					if(data.RTN_DATA){
 
                         if(crud == "R"){
-                            tGrid.parse(data.RTN_DATA,"json");
+                            mygrid2.parse(data.RTN_DATA,"json");
                             row_cnt = data.RTN_DATA.rows.length;
                             msgNotice("[SELECT RESULT] 조회 성공했습니다. ("+row_cnt+"건)",3);
                         }else{
-                            msgNotice(dat.RTN_MSG,3);
+                            msgNotice(data.RTN_MSG,3);
                         }
 
                     }else{
-                        msgNotice(dat.RTN_MSG,3);
+                        msgNotice(data.RTN_MSG,3);
                     }
 
 

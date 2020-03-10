@@ -302,8 +302,7 @@ header("Pragma:no-cache");
 					<input type="button" name="some_name" value="S" onclick="saveSql();"><input 
                     type="button" name="add" value="+" onclick="addRow2();"><input 
                     type="button" name="delete" value="-" onclick="delRow(mygridSql);"><input 
-                    type="button" name="reload" value="R" onclick="gridReload2();"><input 
-                    type="button" name="SqlPreview" value="P" onclick="goSqlpreview();">
+                    type="button" name="reload" value="R" onclick="gridReload2();">
                 </div>
             </div>
             <div class="GRID_OBJECT" ><div id="grid2" width="99%" height="320px" style="background-color:white;z-index:40;"></div>

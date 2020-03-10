@@ -29,7 +29,7 @@
 	
 	$REQ["crud"] = reqPostString("crud",10);	
 	
-	$map["XML"] = getXml2Array(reqPostString("PARAM-XML",1000));//GRP
+	$map["XML"] = getXml2Array(reqPostString("PARAM-XML",10000));//GRP
 	//$REQ["colords"] = $_POST["colords"];
 
 	//10. 해당 프로젝트의 데이터 소스 정보 가져오기
@@ -128,9 +128,7 @@ if($F_GRPID == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 	/*
     $stmt = makeStmt($db2,$sql, $to_coltype, $REQ);
 	
-	$sqlMap = getSqlParam($sql,$coltype="i",$REQ);
-	echo "<hr><pre>" . jsonView($sqlMap);
-	$stmt = getStmt($db[$svridPjt],$sqlMap);
+
 
 	if(!$stmt)   JsonMsg("500","100","stmt create fail" . $db->errno . " -> " . $db->error);
 	*/
@@ -146,6 +144,10 @@ if($F_GRPID == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 		//echo make_grid_read_json($stmt,2);
 		closeDb($db[$svridPjt]);
 	}else{
+		$sqlMap = getSqlParam($sql,$to_coltype,$REQ);
+		//echo "<hr><pre>" . jsonView($sqlMap);
+		$stmt = getStmt($db[$svridPjt],$sqlMap);
+		if(!$stmt)   JsonMsg("500","100","stmt create fail" . $db->errno . " -> " . $db->error);
 		if(!$stmt->execute())JsonMsg("500","410","stmt execute fail" . $stmt->errno . " -> " . $stmt->error);
 		closeDb($db[$svridPjt]);
 		JsonMsg("200","200","처리 성공");
