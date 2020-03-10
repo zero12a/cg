@@ -1018,7 +1018,16 @@
         alog("gridSearch3()------------end");
     }
 
-
+	//그리드 다시 조회
+	function reloadFnc(){
+		gridSearchFnc(lastinput5);
+    }
+    
+	//그리드 다시 조회
+	function reloadEvt(){
+		gridSearchEvt(lastinputEvt);
+    }
+        
 	//그리드 다시 조회
 	function gridReload4(){
 		gridSearchIo(lastinput4);

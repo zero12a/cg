@@ -196,7 +196,8 @@ header("Pragma:no-cache");
                     type="button" name="some_name" value="S" onclick="fncSave();"><input 
                     type="button" name="getfnccode" value="C" onclick="getFncCode();"><input 
                     type="button" name="add" value="+" onclick="addRow5();"><input 
-                    type="button" name="delete" value="-" onclick="delRow(mygridFnc);">
+                    type="button" name="delete" value="-" onclick="delRow(mygridFnc);"><input 
+                    type="button" name="reload" value="R" onclick="reloadFnc();">
                 </div>
             </div>
             <div class="GRID_OBJECT" >
@@ -212,7 +213,8 @@ header("Pragma:no-cache");
                     type="button" name="some_name" value="S" onclick="evtSave();"><input 
                     type="button" name="getevtcode" value="C" onclick="getEvtCode();"><input 
                     type="button" name="add" value="+" onclick="addRowEvt();"><input 
-                    type="button" name="delete" value="-" onclick="delRow(mygridEvt);">
+                    type="button" name="delete" value="-" onclick="delRow(mygridEvt);"><input 
+                    type="button" name="reload" value="R" onclick="reloadEvt();">
                 </div>
             </div>
             <div class="GRID_OBJECT" >
