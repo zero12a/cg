@@ -125,6 +125,8 @@ if($F_GRPID == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 	}
 	//alog("to_coltype=" . $to_coltype);
 
+	//var_dump($REQ);
+	//exit;
 	/*
     $stmt = makeStmt($db2,$sql, $to_coltype, $REQ);
 	
@@ -149,8 +151,23 @@ if($F_GRPID == "2" && $REQ["G2_CRUD_MODE"] == "read"){
 		$stmt = getStmt($db[$svridPjt],$sqlMap);
 		if(!$stmt)   JsonMsg("500","100","stmt create fail" . $db->errno . " -> " . $db->error);
 		if(!$stmt->execute())JsonMsg("500","410","stmt execute fail" . $stmt->errno . " -> " . $stmt->error);
+
+		if($stmt instanceof PDOStatement){
+			//pdo
+			$to_affected_rows = $stmt->rowCount();
+		}else{
+			//mysqli
+			$to_affected_rows = $db[$svridPjt]->affected_rows;
+		}
+
 		closeDb($db[$svridPjt]);
-		JsonMsg("200","200","처리 성공");
+		
+		$RtnData->RTN_CD = "200";
+		$RtnData->ERR_CD = "200";
+		$RtnData->RTN_MSG = "처리 성공 (영향받은 건수:". $to_affected_rows . ")";
+		$RtnData->RTN_DATA["SQLMAP"] = $sqlMap;
+		
+		echo json_encode($RtnData);
 	}
 
 

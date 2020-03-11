@@ -367,6 +367,7 @@ header("Pragma:no-cache");
                             row_cnt = data.RTN_DATA.rows.length;
                             msgNotice("[SELECT RESULT] 조회 성공했습니다. ("+row_cnt+"건)",3);
                         }else{
+                            $("#grid2").html("<pre>" + data.RTN_DATA.SQLMAP.DEBUG_SQL + "<pre>");
                             msgNotice(data.RTN_MSG,3);
                         }
 
