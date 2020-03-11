@@ -128,8 +128,8 @@ $REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//MODDT	
 $REQ["G3-MODDT"] = getFilter($REQ["G3-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//마스터	
-	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//상세	
-	//,  입력값 필터 
+$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//상세	
+//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
@@ -207,7 +207,7 @@ $REQ["G3-XML"] = filterGridXml(
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new codemngService();
-	//컨트롤 명령별 분개처리
+//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
 		case "G1_SAVE" :

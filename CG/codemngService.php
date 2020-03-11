@@ -14,7 +14,7 @@ class codemngService
 		$log->info("CodemngService-__construct");
 
 		$this->DAO = new codemngDao();
-		$this->DB["CG"] = getDbConn($CFG["CFG_DB"]["CG"]);
+		$this->DB["CGCORE"] = getDbConn($CFG["CFG_DB"]["CGCORE"]);
 	}
 	//파괴자
 	function __destruct(){
@@ -22,7 +22,7 @@ class codemngService
 		$log->info("CodemngService-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CG"])closeDb($this->DB["CG"]);
+		if($this->DB["CGCORE"])closeDb($this->DB["CGCORE"]);
 		unset($this->DB);
 	}
 	function __toString(){
