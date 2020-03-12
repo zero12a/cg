@@ -58,6 +58,7 @@ require_once('../../common/include/incLoginOauthGateway.php');//CG USER
 var CFG_CGWEB_URL = "<?=$CFG["CFG_CGWEB_URL"]?>";  // 형식 http://url:port/
 var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:port/
 </script>
+<script src="/common/chartjs_util.js"></script>
 <script src="/common/common.js?<?=getRndVal(10)?>"></script>
 <link rel="stylesheet" href="/common/common.css?<?=getRndVal(10)?>" type="text/css" charset="UTF-8">
 
@@ -108,21 +109,21 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 	-->
 		<div class="GRP_OBJECT" id="DIV-G2-CLICK" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
-				<div class="GRP_INNER" style="height:194px;overflow:hidden;">
+				<div class="GRP_INNER" style="height:74px;overflow:hidden;">
 			<!--D101: STARTTXT, TAG-->
 			<!--I.COLID : VAL1-->
                 <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
                         <i style="padding-top:9px;"
                         width="50"
                         height="50"
-                        data-feather=""></i>
+                        data-feather="moon"></i>
                 </div>
                 <div class="BI_VALUE"
                  style="width:70%;">
                     <span id="G2-VAL1-VALUE">Value</span>
                 </div>
                 <div class="BI_LABEL" style="width:70%;">
-                    <span id="G2-VAL1-LABEL">VAL1</span>
+                    <span id="G2-VAL1-LABEL">프로그램갯수</span>
                 </div>
 				</div>
 			</div>
@@ -134,8 +135,22 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 	-->
 		<div class="GRP_OBJECT" id="DIV-G3-CLICK" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
-				<div class="GRP_INNER" style="height:194px;overflow:hidden;">
-				</div>
+				<div class="GRP_INNER" style="height:74px;overflow:hidden;">
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : VAL1-->
+                <div class="BI_LABEL" style="width:100%;">
+                    <span id="G3-VAL1-LABEL">VAL1</span>
+                </div>
+                <div class="BI_VALUE" style="width:80%;float:left;">
+                    <span id="G3-VAL1-VALUE">Value</span>
+                </div>            
+                <div class="BI_ICON" style="width:20%;text-align:right;">
+                        <i style="padding-left:5px;padding-top:0px;"
+                        color="silver" 
+                        width="30"
+                        height="30"
+                        data-feather="moon"></i>
+                </div>				</div>
 			</div>
 		</div>
 	<!--
@@ -145,8 +160,25 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 	-->
 		<div class="GRP_OBJECT" id="DIV-G4-CLICK" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
-				<div class="GRP_INNER" style="height:194px;overflow:hidden;">
-				</div>
+				<div class="GRP_INNER" style="height:74px;overflow:hidden;">
+			<!--D101: STARTTXT, TAG-->
+			<!--I.COLID : VAL1-->
+ 				<div class="BI_LABEL" style="float:left;width:70%;">
+                    <span id="G4-VAL1-LABEL">설정값 및 DD</span>
+                </div>
+                <div class="BI_ICON" style="text-align:right;width:30%;">
+                        <i style="padding-right:5px;padding-top:0px;"
+                        color="silver" 
+                        width="22"
+                        height="22"
+                        data-feather="moon"></i>
+                </div>
+                <div class="BI_VALUE" style="float:left;width:70%;">
+                    <span id="G4-VAL1-VALUE1">Value1</span>
+                </div>
+                <div class="BI_VALUE2 BI_VALUE2_TYPE3" style="font-width:bold;">
+                    <span id="G4-VAL1-VALUE2">Value2</span>
+                </div>				</div>
 			</div>
 		</div>
 	<!--
@@ -156,10 +188,46 @@ var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";  // 형식 http://url:
 	-->
 		<div class="GRP_OBJECT" id="DIV-G5-CLICK" style="width:25%;">
 			<div class="GRP_GAP"><!--흰색 바깥 여백-->
-				<div class="GRP_INNER" style="height:194px;overflow:hidden;">
-				</div>
+				<div class="GRP_INNER" style="height:74px;overflow:hidden;">
+                <div class="BI_LABEL" style="width:100%;">
+                    <span id="G5-VAL1-LABEL">VAL1</span>
+                </div>
+                <div style="float:left;width:80%">
+                    <div class="BI_VALUE" style="float:left;text-align:left;">
+                    	<span id="G5-VAL1-VALUE1">Value1</span>
+                    </div>    
+                    <div class="BI_VALUE2 BI_VALUE2_TYPE4">
+                    	<span id="G5-VAL1-VALUE2">Value2</span>
+                    </div>   
+                </div>
+                <div class="BI_ICON" style="text-align:right;width:20%;">
+                        <i style="padding-left:5px;padding-top:0px;"
+                        color="silver" 
+                        width="30"
+                        height="30"
+                        data-feather="moon"></i>
+                </div>				</div>
 			</div>
 		</div>
+	<!--
+	#####################################################
+	## 챠트바 6 - START
+	#####################################################
+	-->
+    <div class="GRP_OBJECT" style="width:100%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:194px;">
+		<div class="CHART_LABELGRP">
+			<div class="CHART_LABEL"  style="">
+					* 6				</div>	
+				<div class="CHART_LABELBTN">
+			</div>
+		</div>
+			<div class="CHART_OBJECT" style="border-radius:3px;-moz-border-radius: 3px;">
+				<canvas id="canvasG6" style="width:100%;height:152px"></canvas>
+		</div>
+			</div></div>
+	</div>
 <div style="width:0px;height:0px;overflow: hidden">
 	<form name="excelDownForm" id="excelDownForm">
 	<input type="hidden" name="DATA_HEADERS" id="DATA_HEADERS">

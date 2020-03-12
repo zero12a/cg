@@ -69,17 +69,19 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //FILE먼저 : G3, 2
 //FILE먼저 : G4, 3
 //FILE먼저 : G5, 4
+//FILE먼저 : G6, 6
 
-//G1, 
+//G1,  - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 
-//G2, 1
-$REQ["G2-VAL1"] = getFilter($REQ["G2-VAL1"],"","//");	
+//G2, 1 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 
-//G3, 2
+//G3, 2 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 
-//G4, 3
+//G4, 3 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 
-//G5, 4
+//G5, 4 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
+
+//G6, 6 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 //,  입력값 필터 
 	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
@@ -101,6 +103,9 @@ switch ($ctl){
   		break;
 	case "G5_SEARCH" :
   		echo $objService->goG5Search(); //4, 조회
+  		break;
+	case "G6_SEARCH" :
+  		echo $objService->goG6Search(); //6, 조회
   		break;
 	default:
 		JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");

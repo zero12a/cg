@@ -68,11 +68,11 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //FILE먼저 : G2, 마스터
 //FILE먼저 : G3, 상세
 
-//G1, 1
+//G1, 1 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G1-ADD_DT"] = reqPostString("G1-ADD_DT",14);//ADD	
 $REQ["G1-ADD_DT"] = getFilter($REQ["G1-ADD_DT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G2, 마스터
+//G2, 마스터 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G2-PCD"] = reqPostString("G2-PCD",30);//PCD	
 $REQ["G2-PCD"] = getFilter($REQ["G2-PCD"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-PNM"] = reqPostString("G2-PNM",100);//PNM	
@@ -92,7 +92,7 @@ $REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G2-MODDT"] = reqPostString("G2-MODDT",14);//MODDT	
 $REQ["G2-MODDT"] = getFilter($REQ["G2-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G3, 상세
+//G3, 상세 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G3-CODED_SEQ"] = reqPostNumber("G3-CODED_SEQ",30);//SEQ	
 $REQ["G3-CODED_SEQ"] = getFilter($REQ["G3-CODED_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-CD"] = reqPostString("G3-CD",30);//CD	
