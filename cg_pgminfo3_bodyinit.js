@@ -1010,22 +1010,47 @@
 
             alog("mygridEvt - onRowSelect ----------end1");
         });
-        mygridEvt.attachEvent("onRowSelect",function(rowID,celInd){
-            alog("mygridEvt - onRowSelect ----------start2");
-            alog("   rowID = " + rowID);
-            alog("   celInd = " + celInd);
 
-            alog("mygridEvt - onRowSelect ----------end2");
-        });
 
         mygridEvt.attachEvent("onEditCell", function(stage,rId,cInd,nValue,oValue){
 
-            //alog("mygridEvt  onEditCell ------------------start");
-            //alog("       stage : " + stage);
-            //alog("       rId : " + rId);
-            //alog("       cInd : " + cInd);
-            //alog("       nValue : " + nValue);
-            //alog("       oValue : " + oValue);
+            alog("mygridEvt  onEditCell ------------------start");
+            alog("       stage : " + stage);
+            alog("       rId : " + rId);
+            alog("       cInd : " + cInd);
+            alog("       nValue : " + nValue);
+            alog("       oValue : " + oValue);
+
+            //cd값이 변경된 경우 해당 cd의 파라미터 힌트정보(coded desc)가져와서 SRC가 비워져 있으면 넣기
+            if( stage == 2
+                && RowEditStatus == "inserted" 
+                && mygridEvt.cells(rId,mygridEvt.getColIndexById("EVTSRC")).getValue() == ""
+                ){
+                
+                //서버에서 DD가져오기
+				$.ajax({
+					type : "POST",
+					url : "/common/cg_code_json.php?PCD=EVT" + lastinputEvtjson.GRPTYPE + "&CD=" + nValue,
+					data : { aa :  11 },
+					dataType: "json",
+					success: function(data){
+						alog("   json return----------------------");
+						alog("   json data : " + data);
+						alog("   json RTN_CD : " + data.RTN_CD);
+						alog("   json ERR_CD : " + data.ERR_CD);
+						alog("   json RTN_MSG : " + data.RTN_MSG);
+
+						//그리드 저장 처리
+						if(data.RTN_CD == "200"){
+							if(data.RTN_DATA){
+                                //alert(data.RTN_DATA.CDDESC);
+                                mygridEvt.cells(rId,mygridEvt.getColIndexById("EVTSRC")).setValue(data.RTN_DATA.CDDESC);
+                            }
+                        }
+                    }
+                });
+
+            }
 
             RowEditStatus = mygridEvt.getUserData(rId,"!nativeeditor_status");
             if(stage == 2

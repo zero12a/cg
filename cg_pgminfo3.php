@@ -210,8 +210,8 @@ header("Pragma:no-cache");
                     <span id="spanEvtCnt">N</span>
                     <input 
                     type="button" name="some_name" value="V" onclick="viewEvt();"><input 
-                    type="button" name="some_name" value="S" onclick="evtSave();"><input 
-                    type="button" name="getevtcode" value="C" onclick="getEvtCode();"><input 
+                    type="button" name="some_name" value="S" onclick="evtSave();"><!--<input 
+                    type="button" name="getevtcode" value="C" onclick="getEvtCode();">--><input 
                     type="button" name="add" value="+" onclick="addRowEvt();"><input 
                     type="button" name="delete" value="-" onclick="delRow(mygridEvt);"><input 
                     type="button" name="reload" value="R" onclick="reloadEvt();">
