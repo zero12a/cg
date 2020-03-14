@@ -266,28 +266,6 @@ if($_POST["CONFIG_NM"] == ""){
             //업로드 가능 이미지 확장자
             ,"CFG_IMG_EXT" => array( "JPG", "JPEG", "PNG", "GIF", "BMP" )
         
-            
-            ,"CFG_UPLOAD_URL" => "/data/www/up/"
-        
-            ,"mysql_host" => "172.17.0.1"
-            ,"mysql_userid" => ""
-            ,"mysql_passwd" => ""
-            ,"mysql_db" => ""
-        
-        
-            ,"mysql_m_host" => "172.17.0.1"
-            ,"mysql_m_userid" => ""
-            ,"mysql_m_passwd" => ""
-            ,"mysql_m_db" => ""
-            ,"mysql_m_port" => ""
-        
-        
-            ,"mysql_s_host" => "172.17.0.1"
-            ,"mysql_s_userid" => ""
-            ,"mysql_s_passwd" => ""
-            ,"mysql_s_db" => ""
-        
-        
             //서버 PATH  정보들
             ,"CFG_COMMON_DIR" => "/data/www/common/"
             ,"CFG_ROOT_DIR" => "/data/www/c.g/"
@@ -304,9 +282,10 @@ if($_POST["CONFIG_NM"] == ""){
             ,"CFG_DEPLOY_GITHUB_URL"  =>   ""     
 
             //저장 경로 정보들	
-            ,"CFG_LOG_PATH" => "/data/www/c.g/log/cg_" . date("Ymd"). ".log"//코드 그룹
-            ,"CFG_LOG_PATH2" => "/data/www/c.g/log/cg2_" . date("Ymd"). ".log" //make 로그
+            ,"CFG_LOG_PATH" => "/data/www/log/"//코드 그룹
+            ,"CFG_LOG_PATH2" => "/data/www/log/" //make 로그
             ,"CFG_UPLOAD_DIR" => "/data/www/up/" 	  //업로드 폴더
+            ,"CFG_UPLOAD_ALLOW_EXT" => array("jpg", "gif", "png","peng","bmp","svg","xls","xlsx","doc","docx","ppt","pptx","pdf","hwp","txt")
         ));
     }
 
