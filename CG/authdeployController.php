@@ -70,11 +70,11 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //FILE먼저 : G4, AUTH
 //FILE먼저 : G5, SVC AUTH
 
-//G1, 
+//G1,  - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G1-PJTSEQ"] = reqPostNumber("G1-PJTSEQ",20);//PJTSEQ	
 $REQ["G1-PJTSEQ"] = getFilter($REQ["G1-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 
-//G2, PGM
+//G2, PGM - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G2-ROWCHKUP"] = reqPostNumber("G2-ROWCHKUP",1);//CHK	
 $REQ["G2-ROWCHKUP"] = getFilter($REQ["G2-ROWCHKUP"],"REGEXMAT","/^([0-9a-zA-Z]|,)+$/");	
 $REQ["G2-PGMSEQ"] = reqPostNumber("G2-PGMSEQ",30);//PGMSEQ	
@@ -96,7 +96,7 @@ $REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G2-MODDT"] = reqPostString("G2-MODDT",14);//MODDT	
 $REQ["G2-MODDT"] = getFilter($REQ["G2-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G3, SVC MENU
+//G3, SVC MENU - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G3-MNU_SEQ"] = reqPostString("G3-MNU_SEQ",20);//MNU_SEQ	
 $REQ["G3-MNU_SEQ"] = getFilter($REQ["G3-MNU_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-MNU_NM"] = reqPostString("G3-MNU_NM",30);//MNU_NM	
@@ -122,7 +122,7 @@ $REQ["G3-MOD_DT"] = getFilter($REQ["G3-MOD_DT"],"CLEARTEXT","/--미 정의--/");
 $REQ["G3-MOD_ID"] = reqPostString("G3-MOD_ID",30);//MOD_ID	
 $REQ["G3-MOD_ID"] = getFilter($REQ["G3-MOD_ID"],"SAFETEXT","/--미 정의--/");	
 
-//G4, AUTH
+//G4, AUTH - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G4-CHK"] = reqPostNumber("G4-CHK",1);//CHK	
 $REQ["G4-CHK"] = getFilter($REQ["G4-CHK"],"REGEXMAT","/^([0-9a-zA-Z]|,)+$/");	
 $REQ["G4-ROWID"] = reqPostString("G4-ROWID",40);//ROWID	
@@ -136,7 +136,7 @@ $REQ["G4-AUTH_NM"] = getFilter($REQ["G4-AUTH_NM"],"SAFETEXT","/--미 정의--/")
 $REQ["G4-ADDDT"] = reqPostString("G4-ADDDT",14);//ADDDT	
 $REQ["G4-ADDDT"] = getFilter($REQ["G4-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G5, SVC AUTH
+//G5, SVC AUTH - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G5-AUTH_SEQ"] = reqPostNumber("G5-AUTH_SEQ",10);//AUTH_SEQ	
 $REQ["G5-AUTH_SEQ"] = getFilter($REQ["G5-AUTH_SEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G5-PGMID"] = reqPostString("G5-PGMID",20);//프로그램ID	
@@ -152,10 +152,10 @@ $REQ["G5-ADD_DT"] = getFilter($REQ["G5-ADD_DT"],"CLEARTEXT","/--미 정의--/");
 $REQ["G5-MOD_DT"] = reqPostString("G5-MOD_DT",14);//MOD	
 $REQ["G5-MOD_DT"] = getFilter($REQ["G5-MOD_DT"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//PGM	
-	$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//SVC MENU	
-	$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//AUTH	
-	$REQ["G5-XML"] = getXml2Array($_POST["G5-XML"]);//SVC AUTH	
-	//,  입력값 필터 
+$REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//SVC MENU	
+$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//AUTH	
+$REQ["G5-XML"] = getXml2Array($_POST["G5-XML"]);//SVC AUTH	
+//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
@@ -277,7 +277,7 @@ $REQ["G5-XML"] = filterGridXml(
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new authdeployService();
-	//컨트롤 명령별 분개처리
+//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
 		case "G1_SEARCHALL" :

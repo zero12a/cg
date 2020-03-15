@@ -70,11 +70,11 @@ $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 //FILE먼저 : G2, 프로젝트목록
 //FILE먼저 : G3, 배포 상세
 
-//G1, 
+//G1,  - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G1-PJTNM"] = reqPostString("G1-PJTNM",100);//프로젝트명	
 $REQ["G1-PJTNM"] = getFilter($REQ["G1-PJTNM"],"SAFETEXT","/--미 정의--/");	
 
-//G2, 프로젝트목록
+//G2, 프로젝트목록 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G2-PJTSEQ"] = reqPostNumber("G2-PJTSEQ",20);//PJTSEQ	
 $REQ["G2-PJTSEQ"] = getFilter($REQ["G2-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-PJTID"] = reqPostString("G2-PJTID",30);//프로젝트ID	
@@ -102,7 +102,7 @@ $REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G2-MODDT"] = reqPostString("G2-MODDT",14);//MODDT	
 $REQ["G2-MODDT"] = getFilter($REQ["G2-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G3, 배포 상세
+//G3, 배포 상세 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G3-PJTSEQ"] = reqPostNumber("G3-PJTSEQ",20);//PJTSEQ	
 $REQ["G3-PJTSEQ"] = getFilter($REQ["G3-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-PJTID"] = reqPostString("G3-PJTID",30);//프로젝트ID	
@@ -125,22 +125,8 @@ $REQ["G3-ENDDT"] = reqPostString("G3-ENDDT",8);//종료일
 $REQ["G3-ENDDT"] = getFilter($REQ["G3-ENDDT"],"SAFETEXT","/--미 정의--/");	
 $REQ["G3-DELYN"] = reqPostString("G3-DELYN",1);//삭제YN	
 $REQ["G3-DELYN"] = getFilter($REQ["G3-DELYN"],"SAFETEXT","/--미 정의--/");	
-$REQ["G3-GITINIT"] = reqPostString("G3-GITINIT",100);//GIT	
-$REQ["G3-GITINIT"] = getFilter($REQ["G3-GITINIT"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G3-GITCOMMIT"] = reqPostString("G3-GITCOMMIT",100);//GITCOMMIT	
-$REQ["G3-GITCOMMIT"] = getFilter($REQ["G3-GITCOMMIT"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G3-GITPUSH"] = reqPostString("G3-GITPUSH",100);//GITPUSH	
-$REQ["G3-GITPUSH"] = getFilter($REQ["G3-GITPUSH"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G3-GITFORCEPUSH"] = reqPostString("G3-GITFORCEPUSH",118);//GITFORCEPUSH	
-$REQ["G3-GITFORCEPUSH"] = getFilter($REQ["G3-GITFORCEPUSH"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G3-GITVIEWCONFIG"] = reqPostString("G3-GITVIEWCONFIG",100);//GITVIEWCONFIG	
-$REQ["G3-GITVIEWCONFIG"] = getFilter($REQ["G3-GITVIEWCONFIG"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G3-ADDDT"] = reqPostString("G3-ADDDT",14);//ADDDT	
-$REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//MODDT	
-$REQ["G3-MODDT"] = getFilter($REQ["G3-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//프로젝트목록	
-	//,  입력값 필터 
+//,  입력값 필터 
 	$REQ["G2-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G2-XML"]
@@ -182,7 +168,7 @@ $REQ["G2-XML"] = getXml2Array($_POST["G2-XML"]);//프로젝트목록
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new srcdeployService();
-	//컨트롤 명령별 분개처리
+//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
 		case "G1_SEARCHALL" :

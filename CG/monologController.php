@@ -69,7 +69,7 @@ $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 //FILE먼저 : G2, 로그
 //FILE먼저 : G3, 상세
 
-//G1, 
+//G1,  - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G1-ADDDT"] = reqPostString("G1-ADDDT",14);//ADDDT	
 $REQ["G1-ADDDT"] = getFilter($REQ["G1-ADDDT"],"REGEXMAT","/^[0-9]{8}$/");	
 $REQ["G1-LISTNM"] = reqPostString("G1-LISTNM",30);//LIST	
@@ -81,7 +81,7 @@ $REQ["G1-LOGMSG"] = getFilter($REQ["G1-LOGMSG"],"CLEARTEXT","/--미 정의--/");
 $REQ["G1-CHANNEL"] = reqPostString("G1-CHANNEL",30);//PGMID	
 $REQ["G1-CHANNEL"] = getFilter($REQ["G1-CHANNEL"],"CLEARTEXT","/--미 정의--/");	
 
-//G2, 로그
+//G2, 로그 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G2-LOGSEQ"] = reqPostNumber("G2-LOGSEQ",30);//SEQ	
 $REQ["G2-LOGSEQ"] = getFilter($REQ["G2-LOGSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G2-URL"] = reqPostString("G2-URL",50);//URL	
@@ -109,9 +109,7 @@ $REQ["G2-CHANNEL"] = getFilter($REQ["G2-CHANNEL"],"CLEARTEXT","/--미 정의--/"
 $REQ["G2-ADDDT"] = reqPostString("G2-ADDDT",14);//ADDDT	
 $REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G3, 상세
-$REQ["G3-LOGSEQ"] = reqPostNumber("G3-LOGSEQ",30);//SEQ	
-$REQ["G3-LOGSEQ"] = getFilter($REQ["G3-LOGSEQ"],"REGEXMAT","/^[0-9]+$/");	
+//G3, 상세 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G3-DATEHM"] = reqPostString("G3-DATEHM",100);//DATEHM	
 $REQ["G3-DATEHM"] = getFilter($REQ["G3-DATEHM"],"","//");	
 $REQ["G3-LOGMSG"] = reqPostString("G3-LOGMSG",300);//MSG	

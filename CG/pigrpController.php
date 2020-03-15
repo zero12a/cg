@@ -70,7 +70,7 @@ $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 //FILE먼저 : G2, GRP목록
 //FILE먼저 : G3, GRP상세
 
-//G1, 조건
+//G1, 조건 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G1-PJTSEQ"] = reqPostNumber("G1-PJTSEQ",20);//PJTSEQ	
 $REQ["G1-PJTSEQ"] = getFilter($REQ["G1-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G1-PGMSEQ"] = reqPostNumber("G1-PGMSEQ",30);//PGMSEQ	
@@ -78,29 +78,9 @@ $REQ["G1-PGMSEQ"] = getFilter($REQ["G1-PGMSEQ"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G1-GRPNM"] = reqPostString("G1-GRPNM",100);//GRPNM	
 $REQ["G1-GRPNM"] = getFilter($REQ["G1-GRPNM"],"CLEARTEXT","/--미 정의--/");	
 
-//G2, GRP목록
-$REQ["G2-PJTSEQ"] = reqPostNumber("G2-PJTSEQ",20);//PJTSEQ	
-$REQ["G2-PJTSEQ"] = getFilter($REQ["G2-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-PGMSEQ"] = reqPostNumber("G2-PGMSEQ",30);//PGMSEQ	
-$REQ["G2-PGMSEQ"] = getFilter($REQ["G2-PGMSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-GRPSEQ"] = reqPostNumber("G2-GRPSEQ",30);//GRPSEQ	
-$REQ["G2-GRPSEQ"] = getFilter($REQ["G2-GRPSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-GRPID"] = reqPostString("G2-GRPID",30);//GRPID	
-$REQ["G2-GRPID"] = getFilter($REQ["G2-GRPID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G2-GRPTYPE"] = reqPostString("G2-GRPTYPE",10);//GRPTYPE	
-$REQ["G2-GRPTYPE"] = getFilter($REQ["G2-GRPTYPE"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G2-GRPNM"] = reqPostString("G2-GRPNM",100);//GRPNM	
-$REQ["G2-GRPNM"] = getFilter($REQ["G2-GRPNM"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-GRPORD"] = reqPostNumber("G2-GRPORD",30);//GRPORD	
-$REQ["G2-GRPORD"] = getFilter($REQ["G2-GRPORD"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-LINK"] = reqPostString("G2-LINK",100);//LINK	
-$REQ["G2-LINK"] = getFilter($REQ["G2-LINK"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-ADDDT"] = reqPostString("G2-ADDDT",14);//ADDDT	
-$REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-MODDT"] = reqPostString("G2-MODDT",14);//MODDT	
-$REQ["G2-MODDT"] = getFilter($REQ["G2-MODDT"],"REGEXMAT","/^[0-9]+$/");	
+//G2, GRP목록 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 
-//G3, GRP상세
+//G3, GRP상세 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G3-PJTSEQ"] = reqPostNumber("G3-PJTSEQ",20);//PJTSEQ	
 $REQ["G3-PJTSEQ"] = getFilter($REQ["G3-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-PGMSEQ"] = reqPostNumber("G3-PGMSEQ",30);//PGMSEQ	
@@ -131,15 +111,11 @@ $REQ["G3-LEGENDALIGN"] = reqPostString("G3-LEGENDALIGN",10);//(Chart)LEGENDALIGN
 $REQ["G3-LEGENDALIGN"] = getFilter($REQ["G3-LEGENDALIGN"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
 $REQ["G3-STACKED"] = reqPostString("G3-STACKED",10);//(Chart)STACKED	
 $REQ["G3-STACKED"] = getFilter($REQ["G3-STACKED"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G3-ADDDT"] = reqPostString("G3-ADDDT",14);//ADDDT	
-$REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//MODDT	
-$REQ["G3-MODDT"] = getFilter($REQ["G3-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 //,  입력값 필터 
 	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new pigrpService();
-	//컨트롤 명령별 분개처리
+//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
 		case "G1_SEARCHALL" :

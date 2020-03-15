@@ -72,7 +72,7 @@ array_push($_RTIME,array("[TIME 30.AUTH_CHECK]",microtime(true)));
 //FILE먼저 : G6, CONFIG
 //FILE먼저 : G7, FILE
 
-//G2, 2
+//G2, 2 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G2-PJTID"] = reqPostString("G2-PJTID",30);//프로젝트ID	
 $REQ["G2-PJTID"] = getFilter($REQ["G2-PJTID"],"","//");	
 $REQ["G2-ADDDT"] = reqPostString("G2-ADDDT",14);//생성일	
@@ -80,7 +80,7 @@ $REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"","//");
 $REQ["G2-MYRADIO"] = reqPostString("G2-MYRADIO",30);//나의라디오	
 $REQ["G2-MYRADIO"] = getFilter($REQ["G2-MYRADIO"],"","//");	
 
-//G3, PJT
+//G3, PJT - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G3-PJTSEQ"] = reqPostNumber("G3-PJTSEQ",20);//SEQ	
 $REQ["G3-PJTSEQ"] = getFilter($REQ["G3-PJTSEQ"],"","//");	
 $REQ["G3-PJTID"] = reqPostString("G3-PJTID",30);//프로젝트ID	
@@ -108,7 +108,7 @@ $REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"","//");
 $REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//수정일	
 $REQ["G3-MODDT"] = getFilter($REQ["G3-MODDT"],"","//");	
 
-//G4, PGM
+//G4, PGM - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G4-PJTSEQ"] = reqPostNumber("G4-PJTSEQ",20);//PJTSEQ	
 $REQ["G4-PJTSEQ"] = getFilter($REQ["G4-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G4-PGMSEQ"] = reqPostNumber("G4-PGMSEQ",30);//SEQ	
@@ -136,7 +136,7 @@ $REQ["G4-ADDDT"] = getFilter($REQ["G4-ADDDT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G4-MODDT"] = reqPostString("G4-MODDT",14);//MODDT	
 $REQ["G4-MODDT"] = getFilter($REQ["G4-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G5, DD
+//G5, DD - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G5-PJTSEQ"] = reqPostNumber("G5-PJTSEQ",20);//PJTSEQ	
 $REQ["G5-PJTSEQ"] = getFilter($REQ["G5-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G5-DDSEQ"] = reqPostNumber("G5-DDSEQ",10);//DDSEQ	
@@ -180,7 +180,7 @@ $REQ["G5-ADDDT"] = getFilter($REQ["G5-ADDDT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G5-MODDT"] = reqPostString("G5-MODDT",14);//수정일	
 $REQ["G5-MODDT"] = getFilter($REQ["G5-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G6, CONFIG
+//G6, CONFIG - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G6-PJTSEQ"] = reqPostNumber("G6-PJTSEQ",20);//PJTSEQ	
 $REQ["G6-PJTSEQ"] = getFilter($REQ["G6-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G6-CFGSEQ"] = reqPostNumber("G6-CFGSEQ",30);//SEQ	
@@ -202,7 +202,7 @@ $REQ["G6-ADDDT"] = getFilter($REQ["G6-ADDDT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G6-MODDT"] = reqPostString("G6-MODDT",14);//MODDT	
 $REQ["G6-MODDT"] = getFilter($REQ["G6-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 
-//G7, FILE
+//G7, FILE - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G7-PJTSEQ"] = reqPostNumber("G7-PJTSEQ",20);//PJTSEQ	
 $REQ["G7-PJTSEQ"] = getFilter($REQ["G7-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G7-FILESEQ"] = reqPostString("G7-FILESEQ",30);//SEQ	
@@ -226,11 +226,11 @@ $REQ["G7-ADDDT"] = getFilter($REQ["G7-ADDDT"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G7-MODDT"] = reqPostString("G7-MODDT",14);//MODDT	
 $REQ["G7-MODDT"] = getFilter($REQ["G7-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-XML"] = getXml2Array($_POST["G3-XML"]);//PJT	
-	$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//PGM	
-	$REQ["G5-XML"] = getXml2Array($_POST["G5-XML"]);//DD	
-	$REQ["G6-XML"] = getXml2Array($_POST["G6-XML"]);//CONFIG	
-	$REQ["G7-XML"] = getXml2Array($_POST["G7-XML"]);//FILE	
-	//,  입력값 필터 
+$REQ["G4-XML"] = getXml2Array($_POST["G4-XML"]);//PGM	
+$REQ["G5-XML"] = getXml2Array($_POST["G5-XML"]);//DD	
+$REQ["G6-XML"] = getXml2Array($_POST["G6-XML"]);//CONFIG	
+$REQ["G7-XML"] = getXml2Array($_POST["G7-XML"]);//FILE	
+//,  입력값 필터 
 	$REQ["G3-XML"] = filterGridXml(
 	array(
 		"XML"=>$REQ["G3-XML"]
@@ -418,7 +418,7 @@ $REQ["G7-XML"] = filterGridXml(
 array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new pgmmngService();
-	//컨트롤 명령별 분개처리
+//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
 		case "G3_SEARCH" :

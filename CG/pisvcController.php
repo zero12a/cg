@@ -70,7 +70,7 @@ $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 //FILE먼저 : G2, 
 //FILE먼저 : G3, 
 
-//G1, 
+//G1,  - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G1-SVCGRPID"] = reqPostString("G1-SVCGRPID",30);//SVCGRPID	
 $REQ["G1-SVCGRPID"] = getFilter($REQ["G1-SVCGRPID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
 $REQ["G1-PJTSEQ"] = reqPostNumber("G1-PJTSEQ",20);//PJTSEQ	
@@ -82,29 +82,9 @@ $REQ["G1-GRPSEQ"] = getFilter($REQ["G1-GRPSEQ"],"REGEXMAT","/^[0-9]+$/");
 $REQ["G1-FNCSEQ"] = reqPostNumber("G1-FNCSEQ",30);//FNCSEQ	
 $REQ["G1-FNCSEQ"] = getFilter($REQ["G1-FNCSEQ"],"REGEXMAT","/^[0-9]+$/");	
 
-//G2, 
-$REQ["G2-SVCSEQ"] = reqPostNumber("G2-SVCSEQ",30);//SVCSEQ	
-$REQ["G2-SVCSEQ"] = getFilter($REQ["G2-SVCSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-PJTSEQ"] = reqPostNumber("G2-PJTSEQ",20);//PJTSEQ	
-$REQ["G2-PJTSEQ"] = getFilter($REQ["G2-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-PGMSEQ"] = reqPostNumber("G2-PGMSEQ",30);//PGMSEQ	
-$REQ["G2-PGMSEQ"] = getFilter($REQ["G2-PGMSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-GRPSEQ"] = reqPostNumber("G2-GRPSEQ",30);//GRPSEQ	
-$REQ["G2-GRPSEQ"] = getFilter($REQ["G2-GRPSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-FNCSEQ"] = reqPostNumber("G2-FNCSEQ",30);//FNCSEQ	
-$REQ["G2-FNCSEQ"] = getFilter($REQ["G2-FNCSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-SVCGRPID"] = reqPostString("G2-SVCGRPID",30);//SVCGRPID	
-$REQ["G2-SVCGRPID"] = getFilter($REQ["G2-SVCGRPID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G2-ORD"] = reqPostNumber("G2-ORD",10);//ORD	
-$REQ["G2-ORD"] = getFilter($REQ["G2-ORD"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-LINK"] = reqPostString("G2-LINK",100);//LINK	
-$REQ["G2-LINK"] = getFilter($REQ["G2-LINK"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-ADDDT"] = reqPostString("G2-ADDDT",14);//ADDDT	
-$REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-MODDT"] = reqPostString("G2-MODDT",14);//MODDT	
-$REQ["G2-MODDT"] = getFilter($REQ["G2-MODDT"],"REGEXMAT","/^[0-9]+$/");	
+//G2,  - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 
-//G3, 
+//G3,  - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G3-SVCSEQ"] = reqPostNumber("G3-SVCSEQ",30);//SVCSEQ	
 $REQ["G3-SVCSEQ"] = getFilter($REQ["G3-SVCSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-PJTSEQ"] = reqPostNumber("G3-PJTSEQ",20);//PJTSEQ	
@@ -119,15 +99,11 @@ $REQ["G3-SVCGRPID"] = reqPostString("G3-SVCGRPID",30);//SVCGRPID
 $REQ["G3-SVCGRPID"] = getFilter($REQ["G3-SVCGRPID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
 $REQ["G3-ORD"] = reqPostNumber("G3-ORD",10);//ORD	
 $REQ["G3-ORD"] = getFilter($REQ["G3-ORD"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-ADDDT"] = reqPostString("G3-ADDDT",14);//ADDDT	
-$REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//MODDT	
-$REQ["G3-MODDT"] = getFilter($REQ["G3-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 //,  입력값 필터 
 	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new pisvcService();
-	//컨트롤 명령별 분개처리
+//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
 		case "G1_SEARCHALL" :

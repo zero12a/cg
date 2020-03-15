@@ -70,31 +70,13 @@ $REQ["G3-CTLCUD"] = reqPostString("G3-CTLCUD",2);
 //FILE먼저 : G2, PGM목록
 //FILE먼저 : G3, PGM상세
 
-//G1, 검색
+//G1, 검색 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G1-PJTSEQ"] = reqPostNumber("G1-PJTSEQ",20);//PJTSEQ	
 $REQ["G1-PJTSEQ"] = getFilter($REQ["G1-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
 
-//G2, PGM목록
-$REQ["G2-PJTSEQ"] = reqPostNumber("G2-PJTSEQ",20);//PJTSEQ	
-$REQ["G2-PJTSEQ"] = getFilter($REQ["G2-PJTSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-PGMSEQ"] = reqPostNumber("G2-PGMSEQ",30);//PGMSEQ	
-$REQ["G2-PGMSEQ"] = getFilter($REQ["G2-PGMSEQ"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-PGMID"] = reqPostString("G2-PGMID",20);//프로그램ID	
-$REQ["G2-PGMID"] = getFilter($REQ["G2-PGMID"],"REGEXMAT","/^[a-zA-Z]{1}[a-zA-Z0-9]*$/");	
-$REQ["G2-PGMNM"] = reqPostString("G2-PGMNM",50);//프로그램이름	
-$REQ["G2-PGMNM"] = getFilter($REQ["G2-PGMNM"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-VIEWURL"] = reqPostString("G2-VIEWURL",30);//VIEWURL	
-$REQ["G2-VIEWURL"] = getFilter($REQ["G2-VIEWURL"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-PGMTYPE"] = reqPostString("G2-PGMTYPE",10);//PGMTYPE	
-$REQ["G2-PGMTYPE"] = getFilter($REQ["G2-PGMTYPE"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-LINK"] = reqPostString("G2-LINK",100);//LINK	
-$REQ["G2-LINK"] = getFilter($REQ["G2-LINK"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G2-ADDDT"] = reqPostString("G2-ADDDT",14);//ADDDT	
-$REQ["G2-ADDDT"] = getFilter($REQ["G2-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G2-MODDT"] = reqPostString("G2-MODDT",14);//MODDT	
-$REQ["G2-MODDT"] = getFilter($REQ["G2-MODDT"],"REGEXMAT","/^[0-9]+$/");	
+//G2, PGM목록 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 
-//G3, PGM상세
+//G3, PGM상세 - RW속성 오브젝트만 필터 적용 ( RO속성은 제외 )
 $REQ["G3-PGMSEQ"] = reqPostNumber("G3-PGMSEQ",30);//PGMSEQ	
 $REQ["G3-PGMSEQ"] = getFilter($REQ["G3-PGMSEQ"],"REGEXMAT","/^[0-9]+$/");	
 $REQ["G3-PGMID"] = reqPostString("G3-PGMID",20);//프로그램ID	
@@ -107,15 +89,11 @@ $REQ["G3-VIEWURL"] = reqPostString("G3-VIEWURL",30);//VIEWURL
 $REQ["G3-VIEWURL"] = getFilter($REQ["G3-VIEWURL"],"CLEARTEXT","/--미 정의--/");	
 $REQ["G3-PGMTYPE"] = reqPostString("G3-PGMTYPE",10);//PGMTYPE	
 $REQ["G3-PGMTYPE"] = getFilter($REQ["G3-PGMTYPE"],"CLEARTEXT","/--미 정의--/");	
-$REQ["G3-ADDDT"] = reqPostString("G3-ADDDT",14);//ADDDT	
-$REQ["G3-ADDDT"] = getFilter($REQ["G3-ADDDT"],"REGEXMAT","/^[0-9]+$/");	
-$REQ["G3-MODDT"] = reqPostString("G3-MODDT",14);//MODDT	
-$REQ["G3-MODDT"] = getFilter($REQ["G3-MODDT"],"REGEXMAT","/^[0-9]+$/");	
 //,  입력값 필터 
 	array_push($_RTIME,array("[TIME 40.REQ_VALID]",microtime(true)));
 	//서비스 클래스 생성
 $objService = new pipgmService();
-	//컨트롤 명령별 분개처리
+//컨트롤 명령별 분개처리
 $log->info("ctl:" . $ctl);
 switch ($ctl){
 		case "G1_SEARCHALL" :
