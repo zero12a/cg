@@ -126,7 +126,7 @@ alog("---------------GRP PGM ---------------------START");
                 //pdo
                 //echo "444";                
                 while( $tMap2 = $stmt2->fetch(PDO::FETCH_ASSOC) ) {
-                    echo '      <item text="' . $tMap2["PGMNM"] . '" id="' . $tMap2["PGMSEQ"] . "^" . $CFG["CFG_MAKE_URL"] . "/c.g/" . $tMap["PJTID"] . "/" . $tMap2["VIEWURL"] . '"></item>' . PHP_EOL;
+                    echo '      <item text="' . $tMap2["PGMNM"] . '" id="' . $tMap2["PGMSEQ"] . "^" . $CFG["CFG_DEMO_URL"] . "/d.s/" . $tMap["PJTID"] . "/" . $tMap2["VIEWURL"] . '"></item>' . PHP_EOL;
                     $subItemCnt++;
                 }
             }else{
@@ -136,7 +136,7 @@ alog("---------------GRP PGM ---------------------START");
                 //echo "<br>리턴 결과 row수 : " . getRowCount($result);
                 while ($tMap2 = $result->fetch_array(MYSQLI_ASSOC)){
 
-                    echo '      <item text="' . $tMap2["PGMNM"] . '" id="' . $tMap2["PGMSEQ"] . "^" . $CFG["CFG_MAKE_URL"] . "/c.g/" . $tMap["PJTID"] . "/" . $tMap2["VIEWURL"] . '"></item>' . PHP_EOL;
+                    echo '      <item text="' . $tMap2["PGMNM"] . '" id="' . $tMap2["PGMSEQ"] . "^" . $CFG["CFG_DEMO_URL"] . "/d.s/" . $tMap["PJTID"] . "/" . $tMap2["VIEWURL"] . '"></item>' . PHP_EOL;
                     $subItemCnt++;
                 }
             }
