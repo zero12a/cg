@@ -51,6 +51,7 @@ header("Pragma:no-cache");
     <!--공통-->
     <script type="text/javascript" charset="utf-8">
         var CFG_MAKE_URL = "<?=$CFG["CFG_MAKE_URL"]?>";
+        var CFG_DEMO_URL = "<?=$CFG["CFG_DEMO_URL"]?>";        
         var oauthToken = "<?=getAccessToken()?>";
         var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
     </script>

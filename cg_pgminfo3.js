@@ -139,7 +139,7 @@
         }else{
             //window.open("./rst/" + $("#F_PGMURL").val() );//단일 프로젝트일때
             //alert(CFG_MAKE_URL + "/c.g/" + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val());
-            window.open( CFG_MAKE_URL + "/c.g/"  + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val() + "?access_token=" + oauthToken );//멀티 프로젝트일때
+            window.open( CFG_DEMO_URL + "/d.s/"  + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val() + "?access_token=" + oauthToken );//멀티 프로젝트일때
         }
         
     }
@@ -2103,7 +2103,7 @@
     }
 
     function getAuth(){
-        window.open(CFG_MAKE_URL + "/m.k/cg_pgminfo_getauth.php?PJTSEQ=" + $("#F_PJTSEQ").val() + "&PGMSEQ=" + $("#F_PGMSEQ").val());
+        window.open(CFG_DEMO_URL + "/d.s/cg_pgminfo_getauth.php?PJTSEQ=" + $("#F_PJTSEQ").val() + "&PGMSEQ=" + $("#F_PGMSEQ").val());
     }
 
 

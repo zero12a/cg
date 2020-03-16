@@ -248,6 +248,7 @@ if($_POST["CONFIG_NM"] == ""){
             ,"CFG_OAUTH_HOST" => "172.17.0.1"
             ,"CFG_OAUTH_PORT" => "8052"
             ,"CFG_MAKE_URL" => "http://localhost:8060"
+            ,"CFG_DEMO_URL" => "http://localhost:8040"
             ,"CFG_CGWEB_URL" => "http://localhost:8090"
 
 
