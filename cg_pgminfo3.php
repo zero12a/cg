@@ -324,10 +324,12 @@ header("Pragma:no-cache");
                         <option value="#{SERVER.REMOTE_ADDR}">(입력) 접속자IP</option>
                         <option value="#{CFG.CFG_MAKE_URL}">(입력) 설정-MAKE URL</option>
                         <option value="#{CFG.CFG_CGWEG_URL}">(입력) 설정-CGWEB URL</option>
-                        <option value="#{GRPID-COLID-DEL}">(입력) 파일삭제(FORM)</option>
-                        <option value="#{GRPID-COLID-NM}">(입력) 파일이름(FORM)</option>
-                        <option value="#{GRPID-COLID-SVRNM}">(입력) 파일서버이름(FORM)</option>
-                        <option value="#{GRPID-COLID-SIZE}">(입력) 파일SIZE(FORM)</option>                        
+                        <option value="#{GRPID-COLID_DEL}">(입력) 파일삭제(FORM)</option>
+                        <option value="#{GRPID-COLID_NM}">(입력) 파일이름(FORM)</option>
+                        <option value="#{GRPID-COLID_SVRNM}">(입력) 파일서버이름(FORM)</option>
+                        <option value="#{GRPID-COLID_SIZE}">(입력) 파일SIZE(FORM)</option>              
+                        <option value="#{GRPID-COLID_HASH}">(입력) 파일HASH(FORM)</option>      
+                        <option value="#{GRPID-COLID_IMGTYPE}">(입력) 파일이미지타입(FORM)</option>                
                         <option value="#{GRPID-COLID}">(입력) 체크[값1,값2,값3~] (FORM)</option>      
                         <option value="#{GRPID-COLID}">(입력) 라디오 (FORM)</option>      
                         <option value="#{GRPID-COLID}">(입력) 코드검색[CD만저장됨] (FORM)</option>            
