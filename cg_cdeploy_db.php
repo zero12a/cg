@@ -13,7 +13,7 @@ if(!include_once '../common/include/incRequest.php')		echo "include fail(6)";
 
 $old_path = getcwd();
 //echo "<BR>\n old_path =  " . $old_path ;
-chdir($CFG["CFG_DEPLOY_MAKE_ROOT"] . "/md");
+chdir("./md");
 
 $new_path = getcwd();
 //echo "<BR>\n new_path =  " . $new_path ;
@@ -43,7 +43,7 @@ if($F_CTL =="MAKELOCALFILE"){
     $sqlFileNmmasterBackup = $F_DB . "-" . $F_TABLE . "_BACKUP.sql";
     
     //10 기본 파일 백업하고
-    $sh = "mysqldump --single-transaction " . $F_DB . " -h" . $CFG["mysql_m_host"] . " -u" . $CFG["mysql_m_userid"] . " -p" . $CFG["mysql_m_passwd"] . " " . $F_TABLE . " > " . $sqlFileNm;
+    $sh = "mysqldump --single-transaction " . $F_DB . " -h" . $CFG["CFG_DB"][$F_DB]["HOST"] . " -u" .$CFG["CFG_DB"][$F_DB]["ID"] . " -p" . aes_decrypt($CFG["CFG_DB"][$F_DB]["PW"],$CFG["CFG_SEC_KEY"]) . " " . $F_TABLE . " > " . $sqlFileNm;
     //echo "<BR> sh = " . $sh;
     //echo "<BR>\n 10. mysqldump db is " . $F_DB . ", table is " . $F_TABLE . " = " . shell_exec($sh . " 2>&1");
     
@@ -76,7 +76,7 @@ if($F_CTL =="MAKELOCALFILE"){
     shell_exec($sh1 . " 2>&1");
 
     //20 기존DB 백업하기
-    $sh2 = "mysqldump --single-transaction " . $F_TARGET_DB . " -h" . $CFG["mysql_m_host"] . " -u" . $CFG["mysql_m_userid"] . " -p" . $CFG["mysql_m_passwd"] . " " . $F_TABLE . " > " . $sqlFileNmBackup;
+    $sh2 = "mysqldump --single-transaction " . $F_TARGET_DB .  " -h" . $CFG["CFG_DB"][$F_DB]["HOST"] . " -u" .$CFG["CFG_DB"][$F_DB]["ID"] . " -p" . aes_decrypt($CFG["CFG_DB"][$F_DB]["PW"],$CFG["CFG_SEC_KEY"]) . " " . $F_TABLE . " > " . $sqlFileNmBackup;
     shell_exec($sh2 . " 2>&1");
 
     //30 db에 부어 넣기.
