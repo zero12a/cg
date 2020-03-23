@@ -237,7 +237,7 @@ class cg_pgminfo_dao
 			PJTSEQ,PGMSEQ,SVCSEQ,SQLSEQ,ORD
 			,ADDDT
 		) values (
-			#{PJTSEQ},#{PGMSEQ},#{SVCSEQ},#{SQLSEQ},#{ORD}
+			#{PJTSEQ},#{PGMSEQ},#{SVCSEQ},#{SQLSEQ},ifnull(#{ORD},10)
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 		";
@@ -303,7 +303,7 @@ class cg_pgminfo_dao
 			,SVCGRPID
 			,ADDDT
 		) values (
-			#{PJTSEQ},#{PGMSEQ},#{GRPSEQ},#{FNCSEQ},#{ORD}
+			#{PJTSEQ},#{PGMSEQ},#{GRPSEQ},#{FNCSEQ},ifnull(#{ORD},10)
 			,#{SVCGRPID}
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)

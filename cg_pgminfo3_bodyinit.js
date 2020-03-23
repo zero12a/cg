@@ -1457,6 +1457,10 @@
             alog("   rowID = " + rowID);
             alog("   celInd = " + celInd);
 
+            //상태가 편집모드이면 선택시 반응 없음
+            RowEditStatus = mygridSvc.getUserData(rowID,"!nativeeditor_status");
+            if(RowEditStatus == "inserted" || RowEditStatus == "deleted" || RowEditStatus == "updated"){return false;}
+            
 
             lastrowid5 = rowID;
 
