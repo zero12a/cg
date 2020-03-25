@@ -513,7 +513,8 @@ class cg_pgminfo_dao
 		$RtnVal["SQLTXT"] = "
 		select
             PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,IF(USEYN='Y',1,0) AS USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,concat(FNCID,' - ',FNCNM,'^^FNC') as PROPERTY,ifnull(USERDEFJS,'') as USERDEFJS,ADDDT,MODDT
-    from CG_PGMFNC where PJTSEQ = #{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ} and GRPSEQ = #{G1-GRPSEQ}
+		from CG_PGMFNC where PJTSEQ = #{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ} and GRPSEQ = #{G1-GRPSEQ}
+		order by FNCORD asc
 		";
 		$RtnVal["BINDTYPE"] = "iii";
 
