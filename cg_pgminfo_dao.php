@@ -668,7 +668,7 @@ class cg_pgminfo_dao
 			,ADDDT
 		) values (
 			#{PJTSEQ},#{PGMSEQ},#{SQLID},#{SQLNM},#{SVRSEQ}
-			,#{CRUD},#{RTN_TYPE},#{SQLORD},#{SQLTXT},ifnull(#{PSQLSEQ},0)
+			,#{CRUD},#{RTN_TYPE},ifnull(#{SQLORD},10),#{SQLTXT},ifnull(#{PSQLSEQ},0)
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 		";
@@ -702,7 +702,11 @@ class cg_pgminfo_dao
 		return $RtnVal;
 	}  
 	
-
+	/*
+	######################################################
+	##	GRP
+	######################################################
+	*/
 	public function grpSearch($req){
 		//조회
 		$RtnVal = null;
@@ -710,7 +714,7 @@ class cg_pgminfo_dao
 		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
-        PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,concat(GRPID,' - ',GRPNM,'^^GRP') as PROPERTY,ADDDT,MODDT
+        PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,concat(GRPID,' - ',GRPNM,'^^GRP') as PROPERTY,METHOD,ADDDT,MODDT
       from CG_PGMGRP where PJTSEQ = #{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ}
       order by GRPORD	
 		";
@@ -727,16 +731,18 @@ class cg_pgminfo_dao
 		insert into CG_PGMGRP (
 			PJTSEQ,PGMSEQ,GRPID,GRPNM,GRPTYPE
             ,GRPORD,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT
-            ,BRYN,FREEZECNT,COLSIZETYPE,LEGENDALIGN,STACKED
+			,BRYN,FREEZECNT,COLSIZETYPE,LEGENDALIGN,STACKED
+			,METHOD
 			,ADDDT
 		) values (
 			#{PJTSEQ}, #{PGMSEQ}, #{GRPID}, #{GRPNM}, #{GRPTYPE}
             ,#{GRPORD}, #{REFGRPID}, #{VBOX}, #{GRPWIDTH}, #{GRPHEIGHT}
-            ,#{BRYN}, #{FREEZECNT}, if(#{COLSIZETYPE}='','X',#{COLSIZETYPE}),#{LEGENDALIGN},#{STACKED}
+			,#{BRYN}, #{FREEZECNT}, if(#{COLSIZETYPE}='','X',#{COLSIZETYPE}),#{LEGENDALIGN},#{STACKED}
+			,ifnull(#{METHOD},'POST')
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 		";
-		$RtnVal["BINDTYPE"] = "iisss issss sissss";
+		$RtnVal["BINDTYPE"] = "iisss issss sissss s";
 		return $RtnVal;
     }  
 	public function grpUpd($req){
@@ -748,11 +754,11 @@ class cg_pgminfo_dao
 		update CG_PGMGRP set
             GRPID = #{GRPID}, GRPNM = #{GRPNM}, GRPTYPE = #{GRPTYPE}, GRPORD = #{GRPORD}, REFGRPID = #{REFGRPID}
             , GRPWIDTH = #{GRPWIDTH}, GRPHEIGHT = #{GRPHEIGHT}, BRYN = #{BRYN}, FREEZECNT = #{FREEZECNT}, COLSIZETYPE = #{COLSIZETYPE}
-            , VBOX = #{VBOX}, LEGENDALIGN = #{LEGENDALIGN}, STACKED = #{STACKED}
+            , VBOX = #{VBOX}, LEGENDALIGN = #{LEGENDALIGN}, STACKED = #{STACKED}, METHOD = #{METHOD}
             , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
 		where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ}
 		";
-		$RtnVal["BINDTYPE"] = "sssis sssis sss iii";
+		$RtnVal["BINDTYPE"] = "sssis sssis ssss iii";
 		return $RtnVal;
     }  
 	public function grpDel($req){

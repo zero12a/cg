@@ -12,7 +12,7 @@
     var mygridSql,dp2,addstatusyn2,lastinput2,lastinput2json,lastrowid2,isView2;
     var mygridCol,dp3,addstatusyn3,lastinput3,lastinput3json,lastrowid3,isView3;
     var mygridIo,dp4,addstatusyn4,lastinput4,lastinput4json,lastrowid4,isViewIo;
-    var mygridFnc,dp5,addstatusyn5,lastinput5,lastinput5json,lastrowid5,isView5;
+    var mygridFnc,dp5,addstatusyn5,lastinput5,lastinput5json,lastrowid5,isViewFnc;
     var mygridEvt,dpEvt,addstatusynEvt,lastinputEvt,lastinputEvtJson,lastrowidEvt,isViewEvt;
     var mygridInherit,dp6,addstatusyn6,lastinput6,lastinput6json,lastrowid6,isView6;
     var mygridSqlR,dp7,addstatusyn7,lastinput7,lastinput7json,lastrowid7,isView7;
@@ -1382,6 +1382,7 @@
             mygridGrp.setColumnHidden(mygridGrp.getColIndexById("COLSIZETYPE"),true); //그리드용
             mygridGrp.setColumnHidden(mygridGrp.getColIndexById("LEGENDALIGN"),true); //챠트
             mygridGrp.setColumnHidden(mygridGrp.getColIndexById("STACKED"),true); //챠트
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("METHOD"),true); //폼뷰-컨디션
     
         }else{
             isViewGrp = true;
@@ -1392,7 +1393,8 @@
             mygridGrp.setColumnHidden(mygridGrp.getColIndexById("COLSIZETYPE"),false); //그리드용
             mygridGrp.setColumnHidden(mygridGrp.getColIndexById("LEGENDALIGN"),false); //챠트
             mygridGrp.setColumnHidden(mygridGrp.getColIndexById("STACKED"),false); //챠트
-    
+            mygridGrp.setColumnHidden(mygridGrp.getColIndexById("METHOD"),false); //폼뷰-컨디션            
+
         }
 
     }
@@ -1565,15 +1567,15 @@
 
 
 
-    function view5(){
-        if(isView5){
-            isView5 = false;
+    function viewFnc(){
+        if(viewFnc){
+            viewFnc = false;
             mygridFnc.setColumnHidden(0,true); //PJTSEQ
             mygridFnc.setColumnHidden(1,true); //PGMSEQ
             mygridFnc.setColumnHidden(2,true); //GRPSEQ
             mygridFnc.setColumnHidden(3,true); //FNCSEQ
         }else{
-            isView5 = true;
+            viewFnc = true;
             mygridFnc.setColumnHidden(0,false); //PJTSEQ
             mygridFnc.setColumnHidden(1,false); //PGMSEQ
             mygridFnc.setColumnHidden(2,false); //GRPSEQ

@@ -98,6 +98,33 @@
                 grpPropertyGrid("divPgGrpGrid","(GRP) 그리드",x,y,300,200);
 
 
+            }else if(grpType == "FORMVIEW" || grpType == "CONDITION"){
+                var formMethod = mygridGrp.cells(rowId,mygridGrp.getColIndexById("METHOD")).getValue();
+
+                var setObj = {
+                    METHOD: formMethod
+                };
+        
+                //그리드만 있는거 COLSIZETYPE
+                //챠트BAR만 있는거 LEGENDALIGN, 스택여부
+                //챠트PIE만 있는거 LEGENDALIGN
+                //챠트BAR2Y만 있는거 LEGENDALIGN
+
+                var metaObj = {
+                    METHOD: {group : groupNm, name : '폼 Method',  type: 'options', options: [
+                        {text:'- 선택 -', value: ''}
+                        ,{text:'POST', value: 'POST'}
+                        ,{text:'GET', value: 'GET'}
+                    ]}
+                };
+
+        
+                // Lets create the grid for it
+                $('#divPgGrpFormview').jqPropertyGrid(setObj, {meta: metaObj, callback: pgGrpFormviewChange});
+
+                grpPropertyGrid("divPgGrpFormview","(GRP) 폼뷰",x,y,300,200);
+
+
             }else if(grpType == "CHARTBAR" || grpType == "CHARTPIE" || grpType == "CHARTBAR2Y"){
                 
                 var legendAlign = mygridGrp.cells(rowId,mygridGrp.getColIndexById("LEGENDALIGN")).getValue();
@@ -148,6 +175,22 @@
             mygridFnc.cells(lastSelectPgRowId,mygridFnc.getColIndexById("USERDEFJS")).cell.wasChanged = true;	
         }
     }
+
+    function pgGrpFormviewChange(grid, name, value) {
+        // handle callback
+        alog("pgGrpFormviewChange() grid=" + grid + ", name=" + name + ", value=" + value);
+
+        //오브젝트 모든 정보 가져와서 행의 값 변경하기
+        var objJson = $('#divPgGrpFormview').jqPropertyGrid('get');
+        mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("METHOD")).setValue(objJson.METHOD);
+
+        if(mygridGrp.getUserData(lastSelectPgRowId,"!nativeeditor_status") == ""){
+            mygridGrp.setUserData(lastSelectPgRowId,"!nativeeditor_status","updated");
+            mygridGrp.setRowTextBold(lastSelectPgRowId);
+            mygridGrp.cells(lastSelectPgRowId,mygridGrp.getColIndexById("METHOD")).cell.wasChanged = true;	
+        }
+    }
+
 
     function pgGrpGridChange(grid, name, value) {
         // handle callback

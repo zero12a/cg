@@ -193,7 +193,7 @@ header("Pragma:no-cache");
                 <div class="GRID_LABEL" >* 기능</div>
                 <div  class="GRID_LABELBTN"  >
                     <span id="spanFncCnt">N</span>
-                    <input type="button" name="some_name" value="V" onclick="view5();"><input 
+                    <input type="button" name="some_name" value="V" onclick="viewFnc();"><input 
                     type="button" name="some_name" value="S" onclick="fncSave();"><input 
                     type="button" name="getfnccode" value="C" onclick="getFncCode();"><input 
                     type="button" name="add" value="+" onclick="addRow5();"><input 
@@ -425,6 +425,7 @@ header("Pragma:no-cache");
     </div>
 
     <!--그룹타입에 따른 프로퍼티 그리드-->
+    <div id="divPgGrpFormview" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
     <div id="divPgGrpGrid" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
     <div id="divPgGrpChart" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
     <div id="divPgFncUserdefJS" style="position:absolute;top:0px;left:0px;width:100%;height:321px;display: none;z-index;35">
