@@ -54,6 +54,7 @@ header("Pragma:no-cache");
         var CFG_DEMO_URL = "<?=$CFG["CFG_DEMO_URL"]?>";        
         var oauthToken = "<?=getAccessToken()?>";
         var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
+        var CFG_URL_CODE_API = "<?=$CFG["CFG_URL_CODE_API"]?>";
     </script>
     <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
     <link href="/common/common.css?<?=getRndVal(10)?>" rel="stylesheet" type="text/css" />

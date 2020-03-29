@@ -287,6 +287,10 @@ if($_POST["CONFIG_NM"] == ""){
             ,"CFG_LOG_PATH2" => "/data/www/log/" //make 로그
             ,"CFG_UPLOAD_DIR" => "/data/www/up/" 	  //업로드 폴더
             ,"CFG_UPLOAD_ALLOW_EXT" => array("jpg", "gif", "png","peng","bmp","svg","xls","xlsx","doc","docx","ppt","pptx","pdf","hwp","txt")
+
+            //경로들
+            ,"CFG_URL_LIBS_ROOT" => "http://localhost:8070/" //라이브러리들
+            ,"CFG_URL_CODE_API" => "/d.s/CG/codeapiView.php"
         ));
     }
 

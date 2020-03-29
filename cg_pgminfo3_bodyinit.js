@@ -237,8 +237,11 @@
 
 		mygridGrp.enableSmartRendering(false);
         mygridGrp.enableMultiselect(true);
-		//GRPTYPE 콤보
-		setCodeCombo("GRID",mygridGrp.getCombo(mygridGrp.getColIndexById("GRPTYPE")),"GRPTYPE");
+
+        //GRPTYPE 콤보
+        //apiCodeCombo("Grp","GRPTYPE",{"PCD":"GRPTYPE"},"");
+
+	    setCodeCombo("GRID",mygridGrp.getCombo(mygridGrp.getColIndexById("GRPTYPE")),"GRPTYPE");
         setCodeCombo("GRID",mygridGrp.getCombo(mygridGrp.getColIndexById("COLSIZETYPE")),"COLSIZETYPE");
         setCodeCombo("GRID",mygridGrp.getCombo(mygridGrp.getColIndexById("VBOX")),"VBOX");        
         setCodeCombo("GRID",mygridGrp.getCombo(mygridGrp.getColIndexById("LEGENDALIGN")),"LEGENDALIGN");        
