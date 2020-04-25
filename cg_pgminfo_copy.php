@@ -26,10 +26,14 @@
     //프로젝트의 데이터소스 정보 얻기
     $db2 = getDbConn($CFG["CFG_DB"]["CGCORE"]);
     $sql = "select * from CG_PJTINFO where PJTSEQ = #{PJTSEQ}";
-    $stmt = makeStmt($db2,$sql,$coltype="i",$REQ);
+
+    $sqlMap = getSqlParam($sql,$coltype="i",$REQ);
+    $stmt = getStmt($db2,$sqlMap);
+
+    //$stmt = makeStmt($db2,$sql,$coltype="i",$REQ);
     $pjtInfo = getStmtArray($stmt)[0];
-    $stmt->close();
-    $db2->close();
+    closeStmt($stmt);
+    closeDb($db2);
 
 
 
@@ -601,19 +605,20 @@
         $map["COLSIZETYPE"]     = $grps["COLSIZETYPE"];
         $map["LEGENDALIGN"]     = $grps["LEGENDALIGN"];
         $map["STACKED"]         = $grps["STACKED"];
+        $map["METHOD"]         = $grps["METHOD"];
 
-        $coltype = "iisss iisis sssss ss";
+        $coltype = "iisss iisis sssss sss";
         $sql = "
             insert into CG_PGMGRP (
                 PJTSEQ, PGMSEQ, GRPID, GRPTYPE, GRPNM
                 , GRPORD, FREEZECNT, VBOX, COLBRCNT, REFGRPID
                 , GRPWIDTH, GRPHEIGHT, GRPPADDING, BRYN, COLSIZETYPE
-                , LEGENDALIGN, STACKED, ADDDT
+                , LEGENDALIGN, STACKED, METHOD, ADDDT
             ) values (
                 #{PJTSEQ}, #{PGMSEQ}, #{GRPID}, #{GRPTYPE}, #{GRPNM} 
                 , #{GRPORD}, #{FREEZECNT}, #{VBOX}, #{COLBRCNT}, #{REFGRPID}
                 , #{GRPWIDTH}, #{GRPHEIGHT}, #{GRPPADDING}, #{BRYN}, #{COLSIZETYPE}
-                , #{LEGENDALIGN}, #{STACKED}, date_format(sysdate(),'%Y%m%d%H%i%s')
+                , #{LEGENDALIGN}, #{STACKED}, #{METHOD}, date_format(sysdate(),'%Y%m%d%H%i%s')
             )
         ";
     
