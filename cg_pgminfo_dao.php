@@ -428,6 +428,7 @@ class cg_pgminfo_dao
 		  , ifnull(a.OBJSTYLE,'') as OBJSTYLE
 		  , ifnull(a.OBJ2STYLE,'') as OBJ2STYLE		
 		  , ifnull(a.PLACEHOLDER,'') as  PLACEHOLDER 
+		  , ifnull(a.BTNHIDDENYN,'') as BTNHIDDENYN
           , a.ADDDT, a.MODDT
         from CG_PGMIO a
             left outer join CG_DD b on a.PJTSEQ = b.PJTSEQ and a.COLID = b.COLID
@@ -453,7 +454,7 @@ class cg_pgminfo_dao
 			,HIDDENYN,EDITYN,FNINIT,KEYYN,SEQYN
 			,VALIDSEQ,POPUP,FORMAT,FOOTERNM,FOOTERMATH
 			,ICONNM, ICONSTYLE, LBLSTYLE, OBJSTYLE, OBJ2STYLE
-			,FNCHANGE, PLACEHOLDER
+			,FNCHANGE, PLACEHOLDER, BTNHIDDENYN
 			,ADDDT,ADDID
 		) values (
 			#{F_PJTSEQ}, #{F_PGMSEQ}, #{G1-GRPSEQ}, #{COLID}, #{COLORD}
@@ -462,11 +463,11 @@ class cg_pgminfo_dao
 			,#{HIDDENYN},if(#{EDITYN}='','Y', #{EDITYN}), #{FNINIT}, #{KEYYN}, #{SEQYN}
 			,#{VALIDSEQ}, #{POPUP}, #{FORMAT}, #{FOOTERNM}, #{FOOTERMATH}
 			,#{ICONNM}, #{ICONSTYLE}, #{LBLSTYLE}, #{OBJSTYLE}, #{OBJ2STYLE}
-			,#{FNCHANGE}, #{PLACEHOLDER}
+			,#{FNCHANGE}, #{PLACEHOLDER}, #{BTNHIDDENYN}
 			,date_format(sysdate(),'%Y%m%d%H%i%s'),#{ADDID}
 		)
 		";
-		$RtnVal["BINDTYPE"] = "iiisi ssiss sssss ssssss issss sssss ss i";
+		$RtnVal["BINDTYPE"] = "iiisi ssiss sssss ssssss issss sssss sss i";
 		return $RtnVal;
     }  
 	public function ioUpd($req){
@@ -482,11 +483,11 @@ class cg_pgminfo_dao
 		, KEYYN=#{KEYYN}, SEQYN = #{SEQYN}, BRYN=#{BRYN}, VALIDSEQ = #{VALIDSEQ}, POPUP = #{POPUP}
 		, FORMAT = #{FORMAT}, FOOTERNM = #{FOOTERNM}, FOOTERMATH = #{FOOTERMATH}
 		, ICONNM = #{ICONNM}, ICONSTYLE = #{ICONSTYLE}, LBLSTYLE = #{LBLSTYLE}, OBJSTYLE = #{OBJSTYLE}, OBJ2STYLE = #{OBJ2STYLE}
-		, FNCHANGE = #{FNCHANGE}, PLACEHOLDER = #{PLACEHOLDER}
+		, FNCHANGE = #{FNCHANGE}, PLACEHOLDER = #{PLACEHOLDER}, BTNHIDDENYN = #{BTNHIDDENYN}
 		, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{MODID}
   		where PJTSEQ=#{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ} and GRPSEQ = #{G1-GRPSEQ} and IOSEQ = #{IOSEQ}
 		";
-		$RtnVal["BINDTYPE"] = "sissi sssss sssss sssis sss sssss ss i iiii";
+		$RtnVal["BINDTYPE"] = "sissi sssss sssss sssis sss sssss sss i iiii";
 		return $RtnVal;
     }  
 	public function ioDel($req){
