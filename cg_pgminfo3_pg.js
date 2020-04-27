@@ -63,7 +63,67 @@
             }else{
                 msgError(fncCd + "의 프로퍼티 레이어가 정의되지 않았습니다.",3);
             }
-            
+        }else if(tGrpId == "IO"){
+            var objType = mygridIo.cells(rowId,mygridIo.getColIndexById("OBJTYPE")).getValue();
+            //alert(objType);
+
+            if(objType == "CODEMIRROR" || objType == "SIGNPAD"){
+                //버튼컨트롤 프로퍼티
+
+                var btnHiddenYn = mygridIo.cells(rowId,mygridIo.getColIndexById("BTNHIDDENYN")).getValue()
+
+                //IoBtn
+                var setObj = {
+                    BTNHIDDENYN: btnHiddenYn
+                };
+
+                var metaObj = {
+                    BTNHIDDENYN: {group: 'Iobtn', name : '버튼 감추기 여부',  type: 'options', options: [
+                        {text:'- 선택 -', value: ''}
+                        ,{text:'Y', value: 'Y'}
+                        ,{text:'N', value: 'N'}
+                    ]}
+                };
+
+                // Lets create the grid for it
+                $('#divPgIoBtn').jqPropertyGrid(setObj, {meta: metaObj, callback: pgIoBtnChange});
+
+                grpPropertyGrid("divPgIoBtn","(IO) 버튼컨트롤있는 오브젝트",x,y,300,200);
+
+            }else if(objType == "CODESEARCH"){
+                //팝업 프로퍼티
+                var txtPopup = mygridIo.cells(rowId,mygridIo.getColIndexById("POPUP")).getValue()
+
+                tCombo = mygridIo.getCombo(mygridIo.getColIndexById("POPUP"));
+                alog(tCombo);
+
+                pgCombo = [];
+                pgCombo[0] = {text:'- 선택 -', value: ''};
+                for(i=0;i<tCombo.keys.length;i++){
+                    pgCombo[i+1] = {
+                        text: tCombo.values[i], value: tCombo.keys[i]
+                    };
+                }
+                alog(pgCombo);
+
+                //IoBtn
+                var setObj = {
+                    POPUP: txtPopup
+                };
+
+                var metaObj = {
+                    POPUP: {group: 'PopUp', name : '팝업 프로그램',  type: 'options', options: pgCombo}
+                };
+
+                // Lets create the grid for it
+                $('#divPgIoPopup').jqPropertyGrid(setObj, {meta: metaObj, callback: pgIoPopupChange});
+
+                grpPropertyGrid("divPgIoPopup","(IO) 코드서치 팝업",x,y,300,200);
+            }else{
+                alert("IO그리드에 해당 프로퍼티가 없습니다.");
+            }
+
+
         }else if(tGrpId =="GRP"){
             //mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue() 
             var grpType = mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue();
@@ -157,6 +217,38 @@
 
         }
     }
+
+    function pgIoPopupChange(grid, name, value) {
+        alog("pgIoPopupChange() grid=" + grid + ", name=" + name + ", value=" + value);
+
+        //오브젝트 모든 정보 가져와서 행의 값 변경하기
+        var objJson = $('#divPgIoPopup').jqPropertyGrid('get');
+        alog("  POPUP=" + objJson.POPUP);
+        mygridIo.cells(lastSelectPgRowId,mygridIo.getColIndexById("POPUP")).setValue(objJson.POPUP);
+
+        if(mygridIo.getUserData(lastSelectPgRowId,"!nativeeditor_status") == ""){
+            mygridIo.setUserData(lastSelectPgRowId,"!nativeeditor_status","updated");
+            mygridIo.setRowTextBold(lastSelectPgRowId);
+            mygridIo.cells(lastSelectPgRowId,mygridIo.getColIndexById("POPUP")).cell.wasChanged = true;	
+        }
+    }
+
+
+    function pgIoBtnChange(grid, name, value) {
+        alog("pgIoBtnChange() grid=" + grid + ", name=" + name + ", value=" + value);
+
+        //오브젝트 모든 정보 가져와서 행의 값 변경하기
+        var objJson = $('#divPgIoBtn').jqPropertyGrid('get');
+        alog("  BTNHIDDENYN=" + objJson.BTNHIDDENYN);
+        mygridIo.cells(lastSelectPgRowId,mygridIo.getColIndexById("BTNHIDDENYN")).setValue(objJson.BTNHIDDENYN);
+
+        if(mygridIo.getUserData(lastSelectPgRowId,"!nativeeditor_status") == ""){
+            mygridIo.setUserData(lastSelectPgRowId,"!nativeeditor_status","updated");
+            mygridIo.setRowTextBold(lastSelectPgRowId);
+            mygridIo.cells(lastSelectPgRowId,mygridIo.getColIndexById("BTNHIDDENYN")).cell.wasChanged = true;	
+        }
+    }
+
 
     function pgFncChange(grid, name, value) {
         // handle callback

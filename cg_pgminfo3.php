@@ -432,7 +432,9 @@ header("Pragma:no-cache");
     <div id="divPgFncUserdefJS" style="position:absolute;top:0px;left:0px;width:100%;height:321px;display: none;z-index;35">
         <textarea id="codemFnc" name="codemFnc"></textarea>
     </div>
-
+    <div id="divPgIoPopup" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
+    <div id="divPgIoBtn" style="position:absolute;top:0px;left:0px;width:100%;display: none;z-index;5"></div>
+    
 </div>
 
 

@@ -229,9 +229,9 @@
         mygridGrp = new dhtmlXGridObject('grid1');
 		mygridGrp.setUserData("","gridTitle","grid1 : group list"); //글로별 변수에 그리드 타이블 넣기
         mygridGrp.setImagePath(gridImagePath);
-        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,METHOD,ADDDT,MODDT");
+        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PPT,METHOD,ADDDT,MODDT");
         mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,METHOD,ADDDT,MODDT");
-        mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,30,30,30,50,50")
+        mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,30,25,30,50,50")
         mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,ed,button,ed,ro,ro");
 		mygridGrp.setColSorting("str,str,str,str,str,int,int,int,int,str,str,str,str,str,str,str,str,str,str");
 
@@ -257,7 +257,6 @@
             alog("   rowID = " + rowID);
             alog("   celInd = " + celInd);
 
-            if(console)console.clear();
 
             //편집모드 일때는 하위 새로고침 안하게 하기
             if($("#GRP_EDIT_MODE").is(":checked"))return false;
@@ -335,7 +334,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),false);       
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),false);    
                     
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
@@ -376,7 +375,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);
 
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
@@ -417,7 +416,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);
 
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
@@ -458,7 +457,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),false);    
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),false);    
 
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
@@ -501,7 +500,7 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);   
 
                     
-                    mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);   
+
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),true); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),true);  
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),true); 
@@ -838,9 +837,9 @@
         mygridFnc = new dhtmlXGridObject('grid5');
 		mygridFnc.setUserData("","gridTitle","grid5 : fnc list"); //글로별 변수에 그리드 타이블 넣기
         mygridFnc.setImagePath(gridImagePath);
-        mygridFnc.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USE,FNCID,FNCCD,FNCNM,FNCTYPE,ORD,PROPERTY,UESRDEFJS,ADDDT,MODDT");
+        mygridFnc.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USE,FNCID,FNCCD,FNCNM,FNCTYPE,ORD,PPT,UESRDEFJS,ADDDT,MODDT");
         mygridFnc.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,PROPERTY,USERDEFJS,ADDDT,MODDT");
-        mygridFnc.setInitWidths("50,50,50,35,30,50,50,50,30,50,40,50,50,50");
+        mygridFnc.setInitWidths("50,50,50,35,30,50,50,50,30,50,25,50,50,50");
         mygridFnc.setColTypes("ed,ed,ed,ro,ch,ed,coro,ed,ed,ed,button,txttxt,ro,ro");
         mygridFnc.setColAlign("left,left,left,left,center,left,left,left,left,left,left,left,left,left");
 		mygridFnc.setColSorting("int,int,int,int,na,str,str,str,str,int,str,str,str,str");
@@ -1233,15 +1232,15 @@
         mygridIo = new dhtmlXGridObject('grid4');
 		mygridIo.setUserData("","gridTitle","grid3 : io list"); //글로별 변수에 그리드 타이블 넣기
         mygridIo.setImagePath(gridImagePath);
-        mygridIo.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,ORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FNCHANGE,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,PLACEHOLDER,BTNHIDDENYN,ADDDT,MODDT"); //29
+        mygridIo.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,ORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,PPT,POP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FNCHANGE,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,PLACEHOLDER,BTNHIDDENYN,ADDDT,MODDT"); //29
 
-        mygridIo.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,COLORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,POPUP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FNCHANGE,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,PLACEHOLDER,BTNHIDDENYN,ADDDT,MODDT"); //29
+        mygridIo.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,IOSEQ,DDSEQ,COLID,COLORD,COLNM,DATATYPE,VALIDSEQ,DATASIZE,OBJTYPE,PROPERTY,POPUP,BRYN,LBLHIDDENYN,LBLWIDTH,LBLALIGN,OBJWIDTH,OBJHEIGHT,OBJALIGN,KEYYN,SEQYN,HIDDENYN,EDITYN,FNINIT,FNCHANGE,FORMAT,FOOTERNM,FOOTERMATH,ICONNM,ICONSTYLE,LBLSTYLE,OBJSTYLE,OBJ2STYLE,PLACEHOLDER,BTNHIDDENYN,ADDDT,MODDT"); //29
 
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,30,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
-        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,txttxt,co,ed,coro,ed,ed,ed,ed,ed,ed,coro,ro,ro"); //29
-        mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
-		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
+        mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,50,30,50,25,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
+        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,button,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,txttxt,co,ed,coro,ed,ed,ed,ed,ed,ed,coro,ro,ro"); //29
+        mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
+		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
 
         mygridIo.enableSmartRendering(true);
         mygridIo.enableMultiselect(true);
@@ -1253,6 +1252,8 @@
         mygridIo.setColumnHidden(2,true); //GRPSEQ
         mygridIo.setColumnHidden(3,true); //IOSEQ
         mygridIo.setColumnHidden(4,true); //DDSEQ
+        mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);   
+        mygridIo.setColumnHidden(mygridIo.getColIndexById("BTNHIDDENYN"),true); 
 
 		//GRPTYPE 콤보
 		setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("DATATYPE")),"DATATYPE");

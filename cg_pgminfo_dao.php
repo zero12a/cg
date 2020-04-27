@@ -417,7 +417,7 @@ class cg_pgminfo_dao
         select
 		  a.PJTSEQ, a.PGMSEQ, a.GRPSEQ, a.IOSEQ, b.DDSEQ
           , a.COLID, a.COLORD, a.COLNM, a.DATATYPE,ifnull(a.VALIDSEQ,'') AS VALIDSEQ
-          , a.DATASIZE, a.OBJTYPE, a.POPUP, a.BRYN, a.LBLHIDDENYN
+          , a.DATASIZE, a.OBJTYPE, concat(a.COLID,' - ',a.COLNM,'^^IO') as PROPERTY, a.POPUP, a.BRYN, a.LBLHIDDENYN
           , a.LBLWIDTH, a.LBLALIGN, a.OBJWIDTH, a.OBJHEIGHT, a.OBJALIGN
 		  , a.KEYYN, a.SEQYN, a.HIDDENYN, a.EDITYN, a.FNINIT
 		  , ifnull(a.FNCHANGE,'') as FNCHANGE, a.FORMAT, a.FOOTERNM

@@ -2055,6 +2055,44 @@
         //$('#pgChart').css("display","");
         //$('#pgChart').css({top:200, left:500, position:'absolute'});
         //$('#pgChart').show();
+
+
+        //IoPopup
+        var setObj3 = {
+            POPUP: ''
+        };
+
+        // This is the metadata object that describes the target object properties (optional)
+
+        var metaObj3 = {
+            POPUP: {group: 'Popup', name : '팝업 프로그램 선택',  type: 'options', options: [
+                {text:'- 선택 -', value: ''}
+                ,{text:'TOP', value: 'TOP'}
+                ,{text:'LEFT', value: 'LEFT'}
+                ,{text:'RIGHT', value: 'RIGHT'}
+                ,{text:'BOTTOM', value: 'BOTTOM'}
+            ]}
+        };
+
+        $('#divPgIoPopup').jqPropertyGrid(setObj2, {meta: metaObj2});        
+
+
+        //IoBtn
+        var setObj4 = {
+            BTNHIDDENYN: ''
+        };
+
+        // This is the metadata object that describes the target object properties (optional)
+
+        var metaObj4 = {
+            BTNHIDDENYN: {group: 'Iobtn', name : '버튼 감추기 여부',  type: 'options', options: [
+                {text:'- 선택 -', value: ''}
+                ,{text:'Y', value: 'Y'}
+                ,{text:'N', value: 'N'}
+            ]}
+        };
+
+        $('#divPgIoBtn').jqPropertyGrid(setObj4, {meta: metaObj4});           
     }
 
     function viewGrid3(){
