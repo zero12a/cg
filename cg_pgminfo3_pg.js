@@ -90,7 +90,7 @@
 
                 grpPropertyGrid("divPgIoBtn","(IO) 버튼컨트롤있는 오브젝트",x,y,300,200);
 
-            }else if(objType == "CODESEARCH"){
+            }else if(objType == "CODESEARCH" || objType == "BUTTON" ){
                 //팝업 프로퍼티
                 var txtPopup = mygridIo.cells(rowId,mygridIo.getColIndexById("POPUP")).getValue()
 

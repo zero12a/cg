@@ -201,6 +201,13 @@
             $("#F_PGMURL").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("VIEWURL")).getValue()));
             $("#F_PGMTYPE").val(q(mygridPgm.cells(rowID,mygridPgm.getColIndexById("PGMTYPE")).getValue()));
 
+            //프로그램이 팝업타입이면 IO에서 POPUP컬럼보이게 처리
+            if($("#F_PGMTYPE").val() != "POPUP"){
+                mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);  
+            }else{
+                mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);  
+            }
+
 			if(myWins && myWins.window("pgmwindow"))myWins.window("pgmwindow").hide();
 			
 			return true;
@@ -1252,7 +1259,11 @@
         mygridIo.setColumnHidden(2,true); //GRPSEQ
         mygridIo.setColumnHidden(3,true); //IOSEQ
         mygridIo.setColumnHidden(4,true); //DDSEQ
-        mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);   
+
+        //프로그램타입이 팝업이 아닐때 팝업 숨기기
+        if($("#F_PGMTYPE").val() != "POPUP"){
+            mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);   
+        }
         mygridIo.setColumnHidden(mygridIo.getColIndexById("BTNHIDDENYN"),true); 
 
 		//GRPTYPE 콤보

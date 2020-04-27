@@ -1855,13 +1855,21 @@
             mygridIo.setColumnHidden(2,true); //GRPSEQ
             mygridIo.setColumnHidden(3,true); //IOSEQ
             mygridIo.setColumnHidden(4,true); //DDSEQ
+            if($("#F_PGMTYPE").val() != "POPUP"){
+                mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),true);
+            }   
+            mygridIo.setColumnHidden(mygridIo.getColIndexById("BTNHIDDENYN"),true); 
         }else{
             isViewIo = true;
             mygridIo.setColumnHidden(0,false); //PJTSEQ
             mygridIo.setColumnHidden(1,false); //PGMSEQ
             mygridIo.setColumnHidden(2,false); //GRPSEQ
             mygridIo.setColumnHidden(3,false); //IOSEQ
-            mygridIo.setColumnHidden(4,false); //DDSEQ            
+            mygridIo.setColumnHidden(4,false); //DDSEQ    
+            if($("#F_PGMTYPE").val() != "POPUP"){
+                mygridIo.setColumnHidden(mygridIo.getColIndexById("POPUP"),false);   
+            }
+            mygridIo.setColumnHidden(mygridIo.getColIndexById("BTNHIDDENYN"),false);         
         }
 
     }
