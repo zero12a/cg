@@ -1245,7 +1245,7 @@
 
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
         mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,50,30,50,25,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
-        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,codesearch,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,txttxt,co,ed,coro,ed,ed,ed,ed,ed,ed,coro,ro,ro"); //29
+        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,codesearch,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,txttxt,coro,ed,coro,ed,ed,ed,ed,ed,ed,coro,ro,ro"); //29
         mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
 		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
 
