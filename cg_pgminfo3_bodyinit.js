@@ -239,7 +239,7 @@
         mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PPT,METHOD,ADDDT,MODDT");
         mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,METHOD,ADDDT,MODDT");
         mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,30,25,30,50,50")
-        mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,ed,button,ed,ro,ro");
+        mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,ed,codesearch,ed,ro,ro");
 		mygridGrp.setColSorting("str,str,str,str,str,int,int,int,int,str,str,str,str,str,str,str,str,str,str");
 
 		mygridGrp.enableSmartRendering(false);
@@ -847,7 +847,7 @@
         mygridFnc.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USE,FNCID,FNCCD,FNCNM,FNCTYPE,ORD,PPT,UESRDEFJS,ADDDT,MODDT");
         mygridFnc.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,FNCSEQ,USEYN,FNCID,FNCCD,FNCNM,FNCTYPE,FNCORD,PROPERTY,USERDEFJS,ADDDT,MODDT");
         mygridFnc.setInitWidths("50,50,50,35,30,50,50,50,30,50,25,50,50,50");
-        mygridFnc.setColTypes("ed,ed,ed,ro,ch,ed,coro,ed,ed,ed,button,txttxt,ro,ro");
+        mygridFnc.setColTypes("ed,ed,ed,ro,ch,ed,coro,ed,ed,ed,codesearch,txttxt,ro,ro");
         mygridFnc.setColAlign("left,left,left,left,center,left,left,left,left,left,left,left,left,left");
 		mygridFnc.setColSorting("int,int,int,int,na,str,str,str,str,int,str,str,str,str");
 
@@ -1245,7 +1245,7 @@
 
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
         mygridIo.setInitWidths("50,50,50,50,50,50,30,50,50,50,30,50,25,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50"); //29
-        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,button,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,txttxt,co,ed,coro,ed,ed,ed,ed,ed,ed,coro,ro,ro"); //29
+        mygridIo.setColTypes("ed,ed,ed,ro,ro,ed,ed,ed,coro,coro,ed,coro,codesearch,coro,coro,coro,ed,coro,ed,ed,coro,coro,coro,coro,coro,txttxt,txttxt,co,ed,coro,ed,ed,ed,ed,ed,ed,coro,ro,ro"); //29
         mygridIo.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");//29
 		mygridIo.setColSorting("str,str,str,str,str,str,int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");//29
 
