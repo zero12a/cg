@@ -86,6 +86,8 @@
         makeSyncFileLineSum = 0;
         //요청 토큰
         //var token = uuidv4();
+        
+        startDate = _.now(); //lodash.js
 
         for(i=0;i<types.length;i++){
             alog("MakeAsync = "  + types[i]);
@@ -119,7 +121,11 @@
                             && $("#makeSVRSVC").text() == "R"
                             && $("#makeSVRDAO").text() == "R"
                         ){
-                            alert("생성된 파일의 라인수 합계는 " + makeSyncFileLineSum);
+                            endDate = _.now(); //lodash.js
+                            
+                            makeDate = endDate - startDate;
+                            //alert("생성된 파일의 라인수 합계는 " + makeSyncFileLineSum);
+                            alert("총 실행 시간(초)은 " + (makeDate/1000));
                         };
                         
                     }
@@ -446,7 +452,10 @@
 							,data.RTN_DATA.rows[i].data[5] //GRPWIDTH
 							,data.RTN_DATA.rows[i].data[6] //GRPHEIGHT
 							,""
-							,""
+                            ,""
+                            ,""
+                            ,""
+                            ,"POST" //METHOD
 							];//초기값
 						
 						addRow(mygridGrp,tCols);
@@ -665,6 +674,7 @@
 							,data.RTN_DATA.rows[i].data[5] //VALIDSEQ                            
 							,data.RTN_DATA.rows[i].data[6] //DATASIZE
                             ,data.RTN_DATA.rows[i].data[7] //OBJTYPE
+                            ,""
                             ,data.RTN_DATA.rows[i].data[8] //POPUP
 							,"N" //BRYN
 							,"N" //LBLHIDDENYN
