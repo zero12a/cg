@@ -786,9 +786,14 @@
             $map["ICONSTYLE"]        = $ios["ICONSTYLE"];
             $map["LBLSTYLE"]        = $ios["LBLSTYLE"];
             $map["OBJSTYLE"]        = $ios["OBJSTYLE"];
-            $map["OBJ2STYLE"]        = $ios["OBJ2STYLE"];
 
-            $coltype = "iiiis ssiis sssss sssss sssss sssss s";
+            $map["OBJ2STYLE"]        = $ios["OBJ2STYLE"];
+            $map["PLACEHOLDER"]        = $ios["PLACEHOLDER"];
+            $map["BTNHIDDENYN"]        = $ios["BTNHIDDENYN"];
+            $map["FILTER"]        = $ios["FILTER"];
+
+
+            $coltype = "iiiis ssiis sssss sssss sssss sssss ssss";
             $sql = "
                 insert into CG_PGMIO (
                     PJTSEQ, PGMSEQ, GRPSEQ, COLORD, COLID
@@ -797,7 +802,7 @@
                     , LBLALIGN, OBJWIDTH, OBJHEIGHT, OBJALIGN, HIDDENYN
                     , EDITYN, FNINIT, BRYN, FORMAT, FOOTERNM
                     , FOOTERMATH, ICONNM, ICONSTYLE, LBLSTYLE, OBJSTYLE
-                    , OBJ2STYLE
+                    , OBJ2STYLE, PLACEHOLDER, BTNHIDDENYN, FILTER
                     , ADDDT, ADDID
                 ) values (
                     #{PJTSEQ}, #{PGMSEQ}, #{GRPSEQ}, #{COLORD}, #{COLID}
@@ -806,7 +811,7 @@
                     ,#{LBLALIGN}, #{OBJWIDTH}, #{OBJHEIGHT}, #{OBJALIGN}, #{HIDDENYN}
                     ,#{EDITYN}, #{FNINIT}, #{BRYN}, #{FORMAT}, #{FOOTERNM}
                     ,#{FOOTERMATH}, #{ICONNM}, #{ICONSTYLE}, #{LBLSTYLE}, #{OBJSTYLE}
-                    ,#{OBJ2STYLE}
+                    ,#{OBJ2STYLE}, #{PLACEHOLDER}, #{BTNHIDDENYN}, #{FILTER}
                     , date_format(sysdate(),'%Y%m%d%H%i%s'), 0
                 )
             ";
