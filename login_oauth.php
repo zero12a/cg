@@ -26,6 +26,9 @@ $CFG = require_once("../common/include/incConfig.php");
     <!--dhmltx/공통-->
     <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/Chart.min.js" type="text/javascript" charset="UTF-8"></script> <!--Chart.js-->    
     <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+    var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
+    </script>
     <script src="/common/common.js"></script>
 
 
@@ -41,10 +44,10 @@ $CFG = require_once("../common/include/incConfig.php");
 
 
     $( document ).ready( function() {
-        //alog("페이지 준비 완료1");
+        alog("페이지 준비 완료1");
 
         $( "#btnLogin" ).click(function() {
-            //alert( "Login go." + $("#F_EMAIL").val()  );
+            alog( "Login go." + $("#F_EMAIL").val()  );
 
             var req_token = uuidv4();
             //alert(req_token);
