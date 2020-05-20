@@ -372,6 +372,9 @@
                     //(IO) OBJTYPE 다시 불러오기
                     setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTGRID");
 
+                    //필터 불러오기
+                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("FILTER")),"FILTER");
+                    
                     //BRYN, LBLHIDDEN, LBLWIDTH 숨기기
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("DATATYPE"),false); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("FORMAT"),false);                       
@@ -446,7 +449,55 @@
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("ICONNM"),true); 
                     mygridIo.setColumnHidden(mygridIo.getColIndexById("ICONSTYLE"),true); 
 
-                    break;                    
+                    break;     
+                
+                
+                case "GRIDJQX":
+                    //(FNC) FNCTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCGRIDJQX");
+
+                    //(IO) OBJTYPE 다시 불러오기
+                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("OBJTYPE")),"CTGRIDJQX");
+
+                    //필터 불러오기
+                    setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("FILTER")),"FILTERGRIDJQX");
+
+
+                    //BRYN, LBLHIDDEN, LBLWIDTH 숨기기
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATATYPE"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FORMAT"),false);                       
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("BRYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLHIDDENYN"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLWIDTH"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLALIGN"),true);                    
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJHEIGHT"),true);
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("EDITYN"),true);
+
+
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("VALIDSEQ"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("DATASIZE"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJWIDTH"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJALIGN"),false);                     
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("KEYYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("SEQYN"),false);   
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("HIDDENYN"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FNINIT"),false);   
+
+                    //그리드 전용 컬럼 숨기기  
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERNM"),false); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("FOOTERMATH"),false);   
+                    
+                    //스타일 전용 컬럼(BIVEIW 사용중)
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("LBLSTYLE"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJSTYLE"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("OBJ2STYLE"),true); 
+                    
+                    //BIVIEW 전용 컬럼
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("ICONNM"),true); 
+                    mygridIo.setColumnHidden(mygridIo.getColIndexById("ICONSTYLE"),true); 
+
+                    break;
+
                 case "FORMVIEW":
                     //(FNC) FNCTYPE 다시 불러오기
                     setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCFORMVIEW");
@@ -1275,7 +1326,7 @@
         setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("VALIDSEQ")),"VALIDSEQ");
         setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("FOOTERMATH")),"GRIDFOOTER");
         setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("FORMAT")),"OBJFORMAT");
-        setCodeCombo("GRID",mygridIo.getCombo(mygridIo.getColIndexById("FILTER")),"FILTER");
+
 
         //YN 콤보 채우기
         setCodeYN("GRID",mygridIo.getCombo(mygridIo.getColIndexById("BRYN")));
