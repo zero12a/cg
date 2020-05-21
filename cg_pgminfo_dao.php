@@ -718,7 +718,7 @@ class cg_pgminfo_dao
 		$RtnVal["SVRID"] = "CGPJT";
 		$RtnVal["SQLTXT"] = "
 		select
-        PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,concat(GRPID,' - ',GRPNM,'^^GRP') as PROPERTY,METHOD,ADDDT,MODDT
+        PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,concat(GRPID,' - ',GRPNM,'^^GRP') as PROPERTY,METHOD,KEYCOLID,ADDDT,MODDT
       from CG_PGMGRP where PJTSEQ = #{F_PJTSEQ} and PGMSEQ = #{F_PGMSEQ}
       order by GRPORD	
 		";
@@ -736,17 +736,17 @@ class cg_pgminfo_dao
 			PJTSEQ,PGMSEQ,GRPID,GRPNM,GRPTYPE
             ,GRPORD,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT
 			,BRYN,FREEZECNT,COLSIZETYPE,LEGENDALIGN,STACKED
-			,METHOD
+			,METHOD,KEYCOLID
 			,ADDDT
 		) values (
 			#{PJTSEQ}, #{PGMSEQ}, #{GRPID}, #{GRPNM}, #{GRPTYPE}
             ,#{GRPORD}, #{REFGRPID}, #{VBOX}, #{GRPWIDTH}, #{GRPHEIGHT}
 			,#{BRYN}, #{FREEZECNT}, if(#{COLSIZETYPE}='','X',#{COLSIZETYPE}),#{LEGENDALIGN},#{STACKED}
-			,ifnull(#{METHOD},'POST')
+			,ifnull(#{METHOD},'POST'),#{KEYCOLID}
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 		";
-		$RtnVal["BINDTYPE"] = "iisss issss sissss s";
+		$RtnVal["BINDTYPE"] = "iisss issss sissss ss";
 		return $RtnVal;
     }  
 	public function grpUpd($req){
@@ -758,11 +758,11 @@ class cg_pgminfo_dao
 		update CG_PGMGRP set
             GRPID = #{GRPID}, GRPNM = #{GRPNM}, GRPTYPE = #{GRPTYPE}, GRPORD = #{GRPORD}, REFGRPID = #{REFGRPID}
             , GRPWIDTH = #{GRPWIDTH}, GRPHEIGHT = #{GRPHEIGHT}, BRYN = #{BRYN}, FREEZECNT = #{FREEZECNT}, COLSIZETYPE = #{COLSIZETYPE}
-            , VBOX = #{VBOX}, LEGENDALIGN = #{LEGENDALIGN}, STACKED = #{STACKED}, METHOD = #{METHOD}
+            , VBOX = #{VBOX}, LEGENDALIGN = #{LEGENDALIGN}, STACKED = #{STACKED}, METHOD = #{METHOD}, KEYCOLID = #{KEYCOLID}
             , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
 		where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ}
 		";
-		$RtnVal["BINDTYPE"] = "sssis sssis ssss iii";
+		$RtnVal["BINDTYPE"] = "sssis sssis sssss iii";
 		return $RtnVal;
     }  
 	public function grpDel($req){
