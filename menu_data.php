@@ -36,6 +36,7 @@
         <item text="PGMINFO" id="pgminfo3^/c.g/cg_pgminfo3.php">cg_pgminfo.php3</item>
         <item text="PGM관리" id="pgmmng^/c.g/cg_pgmmng.php">cg_pgmmng.php</item>
         <item text="CONFIG관리" id="configmng^/c.g/cg_configmng.php">cg_configmng.php</item>
+        <item text="REDIS관리" id="redismng^http://localhost:8040/d.s/CG/redismngView.php">redismngView.php</item>
 	</item>
 
 ';
