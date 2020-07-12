@@ -1615,7 +1615,7 @@
     function evtSave(){
         alog("evtSave()------------start");
 
-        mygridEvt.setSerializationLevel(true,false,false,false,true,false);
+        mygridEvt.setSerializationLevel(true,false,false,false,true,true);
         var myXmlString = mygridEvt.serialize();
 
 		//컨디션 데이터 모두 말기

@@ -131,15 +131,29 @@ if($_POST["CONFIG_NM"] == ""){
 
     //var_dump($CFG);
 
-    $redisClient = new Predis\Client(
-        array(
-            'scheme' => 'tcp',
-            'host'   => $CFG["REDIS_HOST"],
-            'port'   => $CFG["REDIS_PORT"],
-            'password' => $CFG["REDIS_PASSWD"],
-            'timeout' => 3
-        )
-    );
+    if($CFG["REDIS_PASSWD"] != ""){
+        $redisClient = new Predis\Client(
+            array(
+                'scheme' => 'tcp',
+                'host'   => $CFG["REDIS_HOST"],
+                'port'   => $CFG["REDIS_PORT"],
+                'password' => $CFG["REDIS_PASSWD"],
+                'timeout' => 3
+            )
+        );
+
+    }else{
+        $redisClient = new Predis\Client(
+            array(
+                'scheme' => 'tcp',
+                'host'   => $CFG["REDIS_HOST"],
+                'port'   => $CFG["REDIS_PORT"],
+                'timeout' => 3
+            )
+        );
+
+    }
+
 
 
 
@@ -201,17 +215,28 @@ if($_POST["CONFIG_NM"] == ""){
     //echo "<Br>REDIS_HOST= " . $CFG["REDIS_HOST"];
     //echo "<Br>REDIS_PORT= " . $CFG["REDIS_PORT"];
     //echo "<Br>REDIS_PASSWD= " . $CFG["REDIS_PASSWD"];
-    
-    $redisClient1 = new Predis\Client(
-        array(
-            'scheme' => 'tcp',
-            'host'   => $CFG["REDIS_HOST"],
-            'port'   => $CFG["REDIS_PORT"],
-            'password'   => $CFG["REDIS_PASSWD"],
-            'timeout' => 1
-        )
-    );
-        
+    if($CFG["REDIS_PASSWD"] != ""){
+
+        $redisClient = new Predis\Client(
+            array(
+                'scheme' => 'tcp',
+                'host'   => $CFG["REDIS_HOST"],
+                'port'   => $CFG["REDIS_PORT"],
+                'password'   => $CFG["REDIS_PASSWD"],
+                'timeout' => 1
+            )
+        );
+    }else{
+        $redisClient = new Predis\Client(
+            array(
+                'scheme' => 'tcp',
+                'host'   => $CFG["REDIS_HOST"],
+                'port'   => $CFG["REDIS_PORT"],
+                'timeout' => 1
+            )
+        );
+    }
+            
     //echo "000";
     //  echo $redisClient1->info();
 
