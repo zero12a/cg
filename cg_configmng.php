@@ -334,6 +334,7 @@ if($_POST["CONFIG_NM"] == ""){
             //경로들
             ,"CFG_URL_LIBS_ROOT" => "http://localhost:8070/" //라이브러리들
             ,"CFG_URL_CODE_API" => "/d.s/CG/codeapiView.php"
+            ,"CFG_RD_URL_MNU_ROOT" => "/d.s/CG/" //RD서비스 루트 경로
         ));
     }
 
