@@ -782,6 +782,9 @@
 		//dhtmlx 메시지 박스 초기화
 		dhtmlx.message.position="bottom"
 
+        //메시지 박스2
+        toastr.options.closeButton = true;
+        toastr.options.positionClass = 'toast-bottom-right';
 
         //프로젝트 id초기화
         $("#F_PJTID").val("CG");

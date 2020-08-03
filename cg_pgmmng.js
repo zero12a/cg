@@ -233,7 +233,9 @@
 		//dhtmlx 메시지 박스 초기화
 		dhtmlx.message.position="bottom"
 
-
+        //메시지 박스2
+        toastr.options.closeButton = true;
+        toastr.options.positionClass = 'toast-bottom-right';
 
         //그리드 초기화(PGM)
         mygridPgm = new dhtmlXGridObject('gridPgm');
