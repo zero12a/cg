@@ -57,6 +57,7 @@ header("Pragma:no-cache");
     <script type="text/javascript" charset="utf-8">
         var CFG_URL_LIBS_ROOT = "<?=$CFG["CFG_URL_LIBS_ROOT"]?>";
     </script>
+    <script src="/common/common_dhtmlx.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>    
     <script src="/common/common.js?<?=getRndVal(10)?>" type="text/javascript" charset="utf-8"></script>
     <link href="/common/common.css?<?=getRndVal(10)?>" rel="stylesheet" type="text/css" />
     <link href="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/toastr.min.css" rel="stylesheet" type="text/css" />
