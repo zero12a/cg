@@ -1024,6 +1024,10 @@
             alog("mygrid1 - onRowSelect ----------start");
             alog("   rowID = " + rowID);
             alog("   celInd = " + celInd);
+
+            RowEditStatus = mygrid1.getUserData(rowID,"!nativeeditor_status");
+            if(RowEditStatus == "inserted" || RowEditStatus == "updated" )return;
+
             mygrid2.clearAll();
 
             selrowid1 = rowID;
@@ -1095,8 +1099,25 @@
             alog("   celInd = " + celInd);
 
 
+
+
             selrowid2 = rowID;
 
+
+
+
+
+            //세팅하기
+            //alert(mygrid2.cells(rowID,celInd).getValue());
+            cidx = mygrid2.getColIndexById("SRCTXT");
+            //cm2.setValue(xmlCdataRemove(mygrid2.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t")));
+            cm2.setValue(mygrid2.cells(rowID,cidx).getValue());
+
+
+
+
+            RowEditStatus = mygrid2.getUserData(rowID,"!nativeeditor_status");
+            if(RowEditStatus == "inserted" || RowEditStatus == "updated" )return;            
 
             //그리드 3처리
             mygrid3.clearAll();
@@ -1109,14 +1130,6 @@
 
             //그리드 2 조회
             gridSearch3(lastinput3);
-
-
-            //세팅하기
-            //alert(mygrid2.cells(rowID,celInd).getValue());
-            cidx = mygrid2.getColIndexById("SRCTXT");
-            //cm2.setValue(xmlCdataRemove(mygrid2.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t")));
-            cm2.setValue(mygrid2.cells(rowID,cidx).getValue());
-
 
 
             alog("mygrid2 - onRowSelect ----------end");
@@ -1183,6 +1196,19 @@
             selrowid3 = rowID;
 
 
+            //세팅하기
+            //alert(mygrid2.cells(rowID,celInd).getValue());
+            cidx = mygrid3.getColIndexById("SRCTXT");
+           // cm3.setValue(xmlCdataRemove(mygrid3.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t")));
+            cm3.setValue(mygrid3.cells(rowID,cidx).getValue());
+
+
+
+
+
+            RowEditStatus = mygrid3.getUserData(rowID,"!nativeeditor_status");
+            if(RowEditStatus == "inserted" || RowEditStatus == "updated" )return;
+
             //그리드 3처리
             mygrid4.clearAll();
 
@@ -1194,11 +1220,6 @@
             gridSearch4(lastinput4);
 
 
-            //세팅하기
-            //alert(mygrid2.cells(rowID,celInd).getValue());
-            cidx = mygrid3.getColIndexById("SRCTXT");
-           // cm3.setValue(xmlCdataRemove(mygrid3.cells(rowID,cidx).getValue().replace(/\\n/g,"\n").replace(/\\t/g,"\t")));
-            cm3.setValue(mygrid3.cells(rowID,cidx).getValue());
 
             alog("mygrid3 - onRowSelect ----------end");
         });
