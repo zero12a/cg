@@ -8,7 +8,7 @@ $CFG = require_once("../common/include/incConfig.php");
 ?><!DOCTYPE html>
 <html>
 <head>
-    <title><?=$CFG["CFG_PROJECT_NAME"]?></title>
+    <title>CG CORE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
   <!--css-->
@@ -34,44 +34,34 @@ $CFG = require_once("../common/include/incConfig.php");
         app
         clipped
       >
-        <v-list dense>
+        <v-subheader>Menus</v-subheader>
 
-        
-          <v-subheader>Menus</v-subheader>
+        <v-treeview
+        v-model="tree"
+        :open="open"
+        :items="myMenu"
+        :active="active"
+        activatable
+        item-key="name"
+        open-on-click
+        dense
+        >
 
-          <!--그냥 메뉴-->
-          <div v-for="m in myMenu" :key="m.id">
-          
-          <v-list-item v-if="m.submenus.length == 0" link  @click="addTab(m.id,m.nm,m.url);">
-            <v-list-item-icon>
-             <v-icon>{{m.icon}}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{m.nm}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+        <template v-slot:prepend="{ item, open }">
+            <v-icon v-if="item.children">
+            {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
+            </v-icon>
+            <v-icon v-else>mdi-file-document-outline
+            </v-icon>
+        </template>
+        <template v-slot:label="{ item, open }" @click="">
+          <div v-if="!item.url">{{ item.name }}</div>
+          <div v-else @click="addTab(item.id, item.name, item.url)">{{ item.name }}</div>
+        </template>
+
+        </v-treeview>  
 
 
-          <!--하위메뉴 있는 메뉴폴더 -->
-          <v-list-group v-else no-action>
-            <template v-slot:activator  @click="addTab(m.id,m.nm,m.url);">
-              <v-list-item-icon>
-                <v-icon>{{m.icon}}</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>{{m.nm}}</v-list-item-title>
-              </v-list-item-content>
-            </template>
-            <v-list-item v-for="s in m.submenus" :key="s.id" link   @click="addTab(s.id,s.nm,s.url);">
-              <v-list-item-content>
-                <v-list-item-title>{{s.nm}}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-
-          </div>
-
-        </v-list>
       </v-navigation-drawer>
   
       <v-app-bar
@@ -80,7 +70,7 @@ $CFG = require_once("../common/include/incConfig.php");
         dense
       >
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title><?=$CFG["CFG_PROJECT_NAME"]?></v-toolbar-title>
+        <v-toolbar-title>CG CORE</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -160,6 +150,9 @@ new Vue({
         mytab : [],
         myMenu : [],
         myNotice : [],
+        open: ['core'],
+        tree: [],
+        active: [],        
         dark_theme : false,
         CFG_RD_URL_MNU_ROOT : '<?=$CFG["CFG_RD_URL_MNU_ROOT"]?>'
     }),
@@ -223,7 +216,7 @@ new Vue({
         addTab: function(tId,tNm,tUrl2){
             alog("addTab().........................start");
 
-            var tUrl = this.CFG_RD_URL_MNU_ROOT + tUrl2;
+            var tUrl = tUrl2;
 
             tJson = {id:tId,name:tNm,link:tUrl,isdisplay:""};
 

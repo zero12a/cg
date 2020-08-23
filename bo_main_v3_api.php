@@ -33,70 +33,56 @@ $log = getLogger(
 
 if($CTL == "getMenu"){
 
-    $db = getDbConn($CFG["CFG_DB"]["OS"]);
-    $sql = "select 
-        mnu1_seq as mnu1_seq
-        , m1.FOLDER_YN
-        , m1.PGMID as id
-        , case when m1.FOLDER_YN = 'Y' then 
-                m1.FOLDER_NM
-            else
-                m.mnu_nm
-            end
-            as nm
-        , m.url as url
-        , mnu_icon as icon
-        from CMN_MNU1 m1
-            left outer join CMN_MNU m on m1.PGMID = m.PGMID
-        order by m1.MNU_ORD asc
+    $rtnVal = array();
+    $rtnVal[0] = array( "id" => "CORE", "pjtid" => "CGCORE", "name" => "CORE");
+    $rtnVal[0]["children"][0] = array("id" => "objinfo", "name" => "OBJINFO", "url" => "/c.g/cg_objinfo3.php");
+    $rtnVal[0]["children"][1] = array("id" => "pgminfo3", "name" => "PGMINFO", "url" => "/c.g/cg_pgminfo3.php");
+    $rtnVal[0]["children"][2] = array("id" => "pgmmng", "name" => "PGMMNG", "url" => "/c.g/cg_pgmmng.php");
+    $rtnVal[0]["children"][3] = array("id" => "configmng", "name" => "CFG_MNG", "url" => "/c.g/cg_configmng.php");
+    $rtnVal[0]["children"][4] = array("id" => "redismng", "name" => "REDIS_MNG", "url" => "http://localhost:8040/d.s/CG/redismngView.php");
+
+
+
+    //모든 프로젝트의 데이터 소스 정보 불러오기
+    $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);    
+    $sql = "
+    select PJTSEQ,PJTID,PJTNM,DSNM from CG_PJTINFO where DELYN='N'
         ";
-    
     $sqlMap = getSqlParam($sql,$coltype="",$REQ);
     $stmt = getStmt($db,$sqlMap);
-    $mnu1Info = getStmtArray($stmt);
+    $arrPjtInfo = getStmtArray($stmt);
     closeStmt($stmt);
 
+    for($i=0;$i<sizeof($arrPjtInfo); $i++){
+        $tMap = $arrPjtInfo[$i];
 
-    for($i=0;$i<count($mnu1Info);$i++){
-        if($mnu1Info[$i]["FOLDER_YN"] == "Y"){
-            //echo $i . PHP_EOL;
-            $sql = "select 
-            mnu2_seq as mnu2_seq
-            , m2.PGMID as id
-            , m.mnu_nm as nm
-            , m.url as url
-            from CMN_MNU2 m2
-                left outer join CMN_MNU m on m2.PGMID = m.PGMID
-            where MNU1_SEQ = #{MNU1_SEQ} 
-            order by m2.MNU_ORD asc
-            ";
+        if($tMap["DSNM"] !=""){
+            $dbPjt=getDbConn($CFG["CFG_DB"][$tMap["DSNM"]]);
 
-            $REQ = array();
-            alog("mnu1_seq = " . $mnu1Info[$i]["mnu1_seq"]);
-            $REQ["MNU1_SEQ"] = $mnu1Info[$i]["mnu1_seq"];
+            $REQ["PJTSEQ"] = $tMap["PJTSEQ"];
+            //echo "<BR>DSNM : " .  $tMap["DSNM"] ;
+            //echo "<BR>PJTSEQ : " .  $REQ["PJTSEQ"] ;
 
+            $sql = " select PGMSEQ,PGMID as id,PGMNM as name,concat('http://localhost:8040/d.s/CG/', VIEWURL) as url from CG_PGMINFO where PJTSEQ = #{PJTSEQ} ";
             $sqlMap = getSqlParam($sql,$coltype="i",$REQ);
-            $stmt = getStmt($db,$sqlMap);
-            $mnu2Info = getStmtArray($stmt);
+            $stmt = getStmt($dbPjt,$sqlMap);
+            $arrPgmInfo = getStmtArray($stmt);
             closeStmt($stmt);
-            if(sizeof($mnu2Info) > 0){
-                $mnu1Info[$i]["submenus"] = $mnu2Info;
-                //$mnu1Info[$i]["submenu_cnt"] = sizeof($mnu2Info);
-            }else{
-                $mnu1Info[$i]["submenus"] = array();
-                //$mnu1Info[$i]["submenu_cnt"] = "0";
-            }
-        }else{
-            $mnu1Info[$i]["submenus"] = array();
-            //$mnu1Info[$i]["submenu_cnt"] = "0";
-        }
-     
+            closeDb($dbPjt);
 
+            $pjtInfo = array( "id" => $tMap["PJTSEQ"], "pjtid" => $tMap["PJTID"],"name" => $tMap["PJTNM"], "children" => $arrPgmInfo);
+
+        }else{
+            $pjtInfo = array( "id" => $tMap["PJTSEQ"], "pjtid" => $tMap["PJTID"], "name" => $tMap["PJTNM"], "children" => array());
+        }
+
+        array_push($rtnVal,$pjtInfo); 
     }
 
-    echo json_encode($mnu1Info);
 
-    closeDb($db);
+    echo json_encode($rtnVal);
+
+
 
 }else if($CTL == "getUserInfo"){
 
