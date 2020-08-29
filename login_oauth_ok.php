@@ -139,7 +139,7 @@ $db->close();unset($objAuth);
 //header("Location : ./bo_main_v2.php")
 ?>
 <script>
-location = "bo_menu.php";
+location = "bo_main_v3.php";
 </script>
 <?php
 

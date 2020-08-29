@@ -104,6 +104,8 @@ if($CTL == "getMenu"){
     $arrIntroUrl = getStmtArray($stmt);
     closeStmt($stmt);
 
+    //접속 세션 토크
+    //$rtnVal["accessToken"] = getAccessToken();
 
     //세션에서 인트로URL 가져오기
     $rtnVal["intro"] = $arrIntroUrl;

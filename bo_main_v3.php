@@ -5,6 +5,8 @@ header("Pragma:no-cache");
 
 
 $CFG = require_once("../common/include/incConfig.php");	
+require_once("../common/include/incUtil.php");
+require_once("../common/include/incUser.php");
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +36,9 @@ $CFG = require_once("../common/include/incConfig.php");
         app
         clipped
       >
+
         <v-subheader>Menus</v-subheader>
+
 
         <v-treeview
         v-model="tree"
@@ -68,6 +72,7 @@ $CFG = require_once("../common/include/incConfig.php");
         app
         clipped-left
         dense
+        v-if="topNavi"
       >
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>CG CORE</v-toolbar-title>
@@ -75,8 +80,13 @@ $CFG = require_once("../common/include/incConfig.php");
         <v-spacer></v-spacer>
 
         <v-switch 
-        class="pt-5"
+        class="pt-5 pr-2"
         v-model="dark_theme" @change="changeTheme" label="Dark theme"></v-switch>
+
+        <v-switch 
+        class="pt-5"
+        v-model="topNavi" label="Show Top"></v-switch>
+
         <v-btn icon>
           <v-badge
             color="green"
@@ -90,39 +100,63 @@ $CFG = require_once("../common/include/incConfig.php");
         </v-btn>
       </v-app-bar>
   
-      <v-main>
+      <v-main id="vmain">
         <v-container
           class="pa-0 fill-height"
-          fluid
+          fluid 
+          v-resize="resizeTabContent"
+          id="vcontainer"
         >
-
         <v-layout
           justify-center
           align-center 
-          class=""
         >
-          <v-flex id="vflex" text-xs-center fill-height>
-            <v-tabs
-                dark
-                background-color="light-blue darken-2"
-                show-arrows
-                v-on:change="changeTabs"
-                v-model="active_tab"
-            >
-                <v-tabs-slider color="teal lighten-3"></v-tabs-slider>
+          <v-flex id="vflex" text-xs-center fill-height
+          fluid 
+          >
 
-                <v-tab
-                v-for="i in mytab"
-                :key="i.id"
-                class="pr-0"
-                @click="changeTab(i.id)"
-                >
-                {{ i.name }}&nbsp;<v-btn icon small @click.prevent="closeTab(i.id)"><v-icon small>fas fa-times</v-icon></v-btn>
-                </v-tab>
-            </v-tabs>
+          <v-row no-gutters>
+            <v-col
+              class="light-blue darken-3"
+              
+              md="auto"
+              style="cursor: pointer"
+            >
+              <v-icon @click="goNaviToggle" class="pt-0 ma-0 px-1" small>mdi-resize</v-icon><br>
+              <v-icon @click="goFullScreen" class="pt-0 ma-0 px-1" small>{{isFullScreen? 'mdi-fullscreen-exit':'mdi-fullscreen'}}</v-icon>
+            </v-col>
+            <v-col
+
+            >
+              <v-tabs
+                  dark
+                  background-color="light-blue darken-2"
+                  show-arrows
+                  v-on:change="changeTabs"
+                  v-model="active_tab"
+                  next-icon="mdi-arrow-right-bold-box-outline"
+                  prev-icon="mdi-arrow-left-bold-box-outline"
+              >
+                  <v-tabs-slider color="teal lighten-3"></v-tabs-slider>
+
+                  <v-tab
+                  v-for="i in mytab"
+                  :key="i.id"
+                  class="pr-0"
+                  @click="changeTab(i.id)"
+                  >
+                  {{ i.name }}&nbsp;<v-btn icon small @click.prevent="closeTab(i.id)"><v-icon small>fas fa-times</v-icon></v-btn>
+                  </v-tab>
+              </v-tabs>
+            </v-col>
+
+          </v-row>
+
+
+
         
-            <div id="tabContent" class="divTab" ref="refTabContent"
-             style="overflow:hidden;"></div>
+            <div id="tabContent" class="divTab" ref="refTabContent" 
+             style="overflow:hidden;backgroud-color:blue;"></div>
 
 
             </v-flex>
@@ -154,18 +188,106 @@ new Vue({
         tree: [],
         active: [],        
         dark_theme : false,
+        topNavi : true,
+        isFullScreen : false,
+        accessToken : '<?=getAccessToken()?>',
         CFG_RD_URL_MNU_ROOT : '<?=$CFG["CFG_RD_URL_MNU_ROOT"]?>'
     }),
 
     created () {
         this.$vuetify.theme.dark = this.dark_theme
     },
+    watch: {
+      topNavi: function (newVal, oldVal){
+        alog("watch.topNavi()...............................start");
+        this.resizeTabContent();
+      },
+      drawer: function(newVal, oldVal){
+        alog("watch.drawer()...............................start");
+        alog("  newVal = " + newVal);
+      },
+      accessToken: function(newVal, oldVal){
+        alog("watch.accessToken()...............................start");
+        alog("  newVal = " + newVal);
+      }
+    },
     mounted () {
       alog("vue.mounted()...............................start");
       this.loadMenus();
       this.loadUserInfo();
+      this.resizeTabContent();
     },
     methods:{
+        goNaviToggle: function(){
+          alog("methods.goNaviToggle()...............................start");
+          if(!this.topNavi){
+            this.topNavi = true;
+            this.drawer = true;
+          }else{
+            this.topNavi = false;
+            this.drawer = false;
+          }
+        },
+        /* View in fullscreen */
+        goFullScreen: function () {
+          alog("methods.goFullScreen()...............................start");
+          var elem = document.getElementById("vcontainer");
+
+
+          if(this.isFullScreen == false){
+            //var elem = $("#vmain");
+            if (elem.requestFullscreen) {
+              alog("requestFullscreen");
+              elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+              alog("mozRequestFullScreen");
+              elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+              alog("webkitRequestFullscreen");
+              elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+              alog("msRequestFullscreen");
+              elem.msRequestFullscreen();
+            }
+
+            this.isFullScreen = true;
+          }else{
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+              document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+              document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+              document.msExitFullscreen();
+            }
+
+            this.isFullScreen = false;
+          }
+
+        },
+        resizeTabContent: function(){
+          //alog("methods.resizeTabContent()...............................start");
+          //main이 리사이즈 되면 탭 컨텐츠도 사이즈 변경 ( 탭컨텐츠 = main - header 48 - tabs 48 )
+
+          //$("#vmain").height()
+          if(this.top_navi_hidden){
+            $("#vcontainer").height(window.innerHeight);
+            $("#tabContent").height(window.innerHeight - 48);
+            $(".divTab").height(window.innerHeight - 48);
+          }else{
+            $("#vcontainer").height(window.innerHeight - 48);
+            $("#tabContent").height(window.innerHeight - 48 - 48);
+            $(".divTab").height(window.innerHeight - 48 - 48);
+          }
+
+          
+          //alog("window.innerHeight = " + window.innerHeight);
+          //alog("vmain.height = "  + $("#vmain").height());
+          //alog("vcontainer.height = "  + $("#vcontainer").height());
+          //alog("tabContent.height = "  + $("#tabContent").height());
+
+        },
         changeTheme: function(){
           alog("methods.changeTheme()...............................start");
           this.$vuetify.theme.dark = this.dark_theme;
@@ -200,6 +322,7 @@ new Vue({
                 for(i=0;i<data.intro.length;i++){
                   self.addTab(data.intro[i].PGMID,data.intro[i].MNU_NM,data.intro[i].URL);
                 }
+                //self.accessToken = data.accessToken;
             })
             .fail(function() {
                 alert( "error" );
@@ -216,7 +339,7 @@ new Vue({
         addTab: function(tId,tNm,tUrl2){
             alog("addTab().........................start");
 
-            var tUrl = tUrl2;
+            var tUrl = tUrl2 + "?accessToken=" + this.accessToken;
 
             tJson = {id:tId,name:tNm,link:tUrl,isdisplay:""};
 
