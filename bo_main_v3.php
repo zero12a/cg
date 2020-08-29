@@ -37,8 +37,7 @@ require_once("../common/include/incUser.php");
         clipped
       >
 
-        <v-subheader>Menus</v-subheader>
-
+        <v-subheader  dense>Menus</v-subheader>
 
         <v-treeview
         v-model="tree"
@@ -85,7 +84,7 @@ require_once("../common/include/incUser.php");
 
         <v-switch 
         class="pt-5"
-        v-model="topNavi" label="Show Top"></v-switch>
+        v-model="topNavi" label="Top navi"></v-switch>
 
         <v-btn icon>
           <v-badge
@@ -271,7 +270,7 @@ new Vue({
           //main이 리사이즈 되면 탭 컨텐츠도 사이즈 변경 ( 탭컨텐츠 = main - header 48 - tabs 48 )
 
           //$("#vmain").height()
-          if(this.top_navi_hidden){
+          if(!this.topNavi){
             $("#vcontainer").height(window.innerHeight);
             $("#tabContent").height(window.innerHeight - 48);
             $(".divTab").height(window.innerHeight - 48);
