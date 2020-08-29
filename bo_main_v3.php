@@ -339,7 +339,7 @@ new Vue({
         addTab: function(tId,tNm,tUrl2){
             alog("addTab().........................start");
 
-            var tUrl = tUrl2 + "?accessToken=" + this.accessToken;
+            var tUrl = tUrl2 + "?access_token=" + this.accessToken;
 
             tJson = {id:tId,name:tNm,link:tUrl,isdisplay:""};
 
