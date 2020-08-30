@@ -54,10 +54,10 @@ require_once("../common/include/incUser.php");
             <v-icon v-if="item.children">
             {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
             </v-icon>
-            <v-icon v-else>mdi-file-document-outline
+            <v-icon v-else  @click="addTab(item.id, item.name, item.url)">mdi-file-document-outline
             </v-icon>
         </template>
-        <template v-slot:label="{ item, open }" @click="">
+        <template v-slot:label="{ item, open }">
           <div v-if="!item.url">{{ item.name }}</div>
           <div v-else @click="addTab(item.id, item.name, item.url)">{{ item.name }}</div>
         </template>
@@ -318,9 +318,9 @@ new Vue({
             .done(function(data) {
                 alog( "loadUserInfo.done()......................success" );
                 alog(data);
-                for(i=0;i<data.intro.length;i++){
-                  self.addTab(data.intro[i].PGMID,data.intro[i].MNU_NM,data.intro[i].URL);
-                }
+                //for(i=0;i<data.intro.length;i++){
+                  //self.addTab(data.intro[i].PGMID,data.intro[i].MNU_NM,data.intro[i].URL);
+                //}
                 //self.accessToken = data.accessToken;
             })
             .fail(function() {
@@ -397,7 +397,7 @@ new Vue({
               tmp += '</div>';
 
               $("#tabContent").append( $(tmp) );
-              //document.getElementById("iframe-"+ tId).src = tUrl;
+
             }
 
 
