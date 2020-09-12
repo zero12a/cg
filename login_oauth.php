@@ -40,7 +40,7 @@ $CFG = require_once("../common/include/incConfig.php");
         <v-row align="center">
             <v-spacer></v-spacer>
             <v-col cols="6">
-                <p class="text-center text-h3"><v-icon x-large>mdi-lock</v-icon>Login</p>
+                <p class="text-center text-h3"><v-icon x-large>mdi-login</v-icon>Login</p>
             </v-col>
             <v-spacer></v-spacer>
         </v-row>
@@ -52,6 +52,7 @@ $CFG = require_once("../common/include/incConfig.php");
 
                 label="ID"
                 v-model="id"
+                prepend-icon="mdi-account"
                 ></v-text-field>
             </v-col>
             <v-spacer></v-spacer>
@@ -66,6 +67,7 @@ $CFG = require_once("../common/include/incConfig.php");
                 type="password"
                 label="PASSWORD"
                 v-model="passwd"
+                prepend-icon="mdi-lock"
                 ></v-text-field>
             </v-col>
             <v-spacer></v-spacer>
