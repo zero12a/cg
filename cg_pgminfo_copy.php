@@ -640,16 +640,17 @@
             $map["FNCTYPE"]      = $fncs["FNCTYPE"];
             $map["FNCORD"]       = $fncs["FNCORD"];
             $map["USEYN"]        = $fncs["USEYN"];
+            $map["USERDEFJS"]    = $fncs["USERDEFJS"];
 
-            $coltype = "iiiss ssis";
+            $coltype = "iiiss ssiss";
             $sql = "
                 insert into CG_PGMFNC (
                     PJTSEQ, PGMSEQ, GRPSEQ, FNCID, FNCCD
-                    , FNCNM, FNCTYPE, FNCORD, USEYN
+                    , FNCNM, FNCTYPE, FNCORD, USEYN, USERDEFJS
                     , ADDDT
                 ) values (
                     #{PJTSEQ}, #{PGMSEQ}, #{GRPSEQ}, #{FNCID}, #{FNCCD}
-                    ,#{FNCNM}, #{FNCTYPE}, #{FNCORD}, #{USEYN}
+                    ,#{FNCNM}, #{FNCTYPE}, #{FNCORD}, #{USEYN}, #{USERDEFJS}
                     , date_format(sysdate(),'%Y%m%d%H%i%s')
                 )
             ";
