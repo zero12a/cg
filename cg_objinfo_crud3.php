@@ -12,11 +12,7 @@
     require_once("../common/include/incSec.php");
     //require_once($CFG["CFG_LIBS_PATH_AWS"]);
 
-    use Aws\S3\S3Client;
-    use Aws\Exception\AwsException;
-    use Aws\S3\Exception\S3Exception;
-    use Aws\Common\Exception\MultipartUploadException;
-    use Aws\S3\Model\MultipartUpload\UploadBuilder;
+
 
     //ServerViewTxt("N","N","Y","Y");
 
