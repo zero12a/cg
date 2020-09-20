@@ -1,5 +1,16 @@
-    
+    var grpInfo = new HashMap();
 
+    grpInfo.set(
+        "Io", 
+            {
+                "GRPTYPE": "GRID"
+                ,"GRPNM": "오브젝트"
+                ,"KEYCOLID": "COLSEQ"
+                ,"SEQYN": "N"
+                ,"COLS": [				
+                ]
+            }
+    ); //컨디션1
 
     //정적 변수 선언
     var gridImagePath = CFG_URL_LIBS_ROOT + "lib/dhtmlxSuite/codebase/imgs/";
