@@ -62,6 +62,37 @@ class cg_pgminfo_svc
 	}	
 	
 
+
+
+	public function goDdObjSearch(){
+		global $REQ,$_RTIME,$CFG;
+		//
+		$rtnVal = null;
+		$tmpVal = null;
+		$grpId = null;
+		$rtnVal->GRP_DATA = array();
+
+		alog("cg_pgminfo_svc-goDdObjSearch________________________start");
+		//CHARTBAR SEARCH____________________________start
+		$GRID["KEYCOLIDX"] = 2; // KEY 컬럼, 
+
+		//조회
+		//V_GRPNM : 팀별 현황 (보안취약점 갯수)
+		$GRID["SQL"]["R"] = $this->DAO->ddObjSearch($REQ); //SEARCH, 조회,TEAM
+		//암호화컬럼
+		$GRID["COLCRYPT"] = array();
+		$rtnVal = makeGridSearchJson($GRID,$this->DB);
+		array_push($_RTIME,array("[TIME 50.DB_TIME G2]",microtime(true)));
+		//CHARTBAR_SEARCH____________________________end
+		//처리 결과 리턴
+		$rtnVal->RTN_CD = "200";
+		$rtnVal->ERR_CD = "200";
+		echo json_encode($rtnVal);
+		alog("cg_pgminfo_svc-goDdObjSearch________________________end");
+	}	
+	
+
+
 	public function goIocdSearch(){
 		global $REQ,$_RTIME, $CFG;
 		//
@@ -661,17 +692,20 @@ class cg_pgminfo_svc
 			
 
 			//데이터 딕셔너리 오브젝트 타입 등록하기
-			$to_coltype = "iss i iss i";
+			$to_coltype = "issss sss i issss sss i";
 			$sql = "
 				insert into CG_DDOBJ (
-					DDSEQ,GRPTYPE,OBJTYPE
+					DDSEQ,GRPTYPE,OBJTYPE,LBLALIGN,LBLWIDTH
+					,OBJALIGN,OBJHEIGHT,OBJWIDTH
 					,ADDDT, ADDID
 				) values (
-					#{DDSEQ},#{G1-GRPTYPE},#{OBJTYPE}
+					#{DDSEQ},#{G1-GRPTYPE},#{OBJTYPE},#{LBLALIGN},#{LBLWIDTH}
+					,#{OBJALIGN},#{OBJHEIGHT},#{OBJWIDTH}
 					,date_format(sysdate(),'%Y%m%d%H%i%s'), #{ADDID}
 				)
 				ON DUPLICATE KEY 
-					UPDATE DDSEQ = #{DDSEQ}, GRPTYPE = #{G1-GRPTYPE}, OBJTYPE = #{OBJTYPE}
+					UPDATE DDSEQ = #{DDSEQ}, GRPTYPE = #{G1-GRPTYPE}, OBJTYPE = #{OBJTYPE}, LBLALIGN = #{LBLALIGN}, LBLWIDTH = #{LBLWIDTH}
+					,OBJALIGN = #{OBJALIGN}, OBJHEIGHT = #{OBJHEIGHT}, OBJWIDTH = #{OBJWIDTH}
 					,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{MODID}
 				";
 			

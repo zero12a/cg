@@ -1424,7 +1424,52 @@
 
 
             //컬럼이름이나 컬럼ID로 DD 검색하기 ( cInd == COLID 컬러ID, cInd == COLNM 컬럼명 )
-            if(stage == 2 && cInd == mygridIo.getColIndexById("DATATYPE") ){
+            t_colid =  mygridIo.cells(rId,mygridIo.getColIndexById("COLID")).getValue();
+
+            if(stage == 2 && cInd == mygridIo.getColIndexById("OBJTYPE") &&  t_colid != ""){
+                //dd obj불러오기
+                t_objtype = mygridIo.cells(rId,mygridIo.getColIndexById("OBJTYPE")).getValue();
+                
+				//서버에서 DD가져오기
+				$.ajax({
+					type : "POST",
+					url : mygridDd_url+"&CTLFNC=OBJ_SEARCH&" + lastinput5 + "&G1_GRPTYPE=" + lastinput4json.GRPTYPE,
+					data : { searchcolid :  t_colid, searchobjtype :  t_objtype, searchgrptype : lastinput4json.GRPTYPE},
+					dataType: "json",
+					success: function(data){
+						alog("   json return----------------------");
+						alog("   json data : " + data);
+						alog("   json RTN_CD : " + data.RTN_CD);
+						alog("   json ERR_CD : " + data.ERR_CD);
+						alog("   json RTN_MSG : " + data.RTN_MSG);
+
+						//그리드 저장 처리
+						if(data.RTN_CD == "200"){
+							if(data.RTN_DATA){
+								for(var i=0;i<data.RTN_DATA.rows.length;i++){
+									//alog( "   i : " + i);
+                                    mygridIo.cells(rId,mygridIo.getColIndexById("LBLALIGN")).setValue(data.RTN_DATA.rows[i].data[0]);//DDSEQ
+                                    mygridIo.cells(rId,mygridIo.getColIndexById("LBLWIDTH")).setValue(data.RTN_DATA.rows[i].data[1]);//DDSEQ
+                                    mygridIo.cells(rId,mygridIo.getColIndexById("OBJALIGN")).setValue(data.RTN_DATA.rows[i].data[2]);//DDSEQ
+                                    mygridIo.cells(rId,mygridIo.getColIndexById("OBJHEIGHT")).setValue(data.RTN_DATA.rows[i].data[3]);//DDSEQ
+                                    mygridIo.cells(rId,mygridIo.getColIndexById("OBJWIDTH")).setValue(data.RTN_DATA.rows[i].data[4]);//DDSEQ
+								}
+                            }
+                            msgNotice("DDOBJ를 조회해서 업데이트 했습니다." + data.RTN_DATA.rows.length + "건",3);
+						}else{
+							msgError("[DD] 서버 저장중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG,3);
+						}
+
+
+					},
+					error: function(error){
+						msgError("[DD] Ajax http 500 error ( " + error + " )",3);
+						alog("[DD] Ajax http 500 error ( " + error + " )");
+					}
+                });
+                
+
+
 
             }else if(stage == 2 && cInd == mygridIo.getColIndexById("COLID") ){
             //컬럼이름이나 컬럼ID로 DD 검색하기 ( cInd == COLID 컬러ID, cInd == COLNM 컬럼명 )    
@@ -1518,7 +1563,10 @@
                                     //alog(125);
 										
 								}
-							}
+                            }
+                            
+                            msgNotice("DD를 조회해서 업데이트 했습니다." + data.RTN_DATA.rows.length + "건",3);
+
 						}else{
 							msgError("[DD] 서버 저장중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG,3);
 						}

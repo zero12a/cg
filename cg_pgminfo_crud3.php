@@ -131,6 +131,9 @@
 
     $REQ["F_LAYOUTID"]    = $_POST['F_LAYOUTID'];
     $REQ["searchdd"]    = $_POST['searchdd'];
+    $REQ["searchcolid"]    = $_POST['searchcolid'];
+    $REQ["searchobjtype"]    = $_POST['searchobjtype'];
+    $REQ["searchgrptype"]    = $_POST['searchgrptype'];
 
     $REQ["EVT-XML"] = getXml2Array($_POST["EVT-XML"]);//EVT
     $REQ["GRP-XML"] = getXml2Array($_POST["GRP-XML"]);//GRP
@@ -252,7 +255,10 @@
             break;  
         case "DD_SEARCH" :
             echo $objService->goDdSearch(); //
-            break;                                            
+            break;           
+        case "DD_OBJ_SEARCH" :
+            echo $objService->goDdObjSearch(); //
+            break;                                                        
         default:
             JsonMsg("500","110","처리 명령을 찾을 수 없습니다. (no search ctl)");
             break;

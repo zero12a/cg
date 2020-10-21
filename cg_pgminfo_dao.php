@@ -14,6 +14,27 @@ class cg_pgminfo_dao
 	}
 	
 
+	public function ddObjSearch($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "CGPJT";
+		
+		$RtnVal["SQLTXT"] = "
+		select
+			ifnull(b.LBLALIGN,'') as LBLALIGN
+			,ifnull(b.LBLWIDTH,'') as LBLWIDTH
+			,ifnull(b.OBJALIGN,'') as OBJALIGN
+			,ifnull(b.OBJHEIGHT,'') as OBJHEIGHT
+			,ifnull(b.OBJWIDTH,'') as OBJWIDTH
+		from CG_DD a
+			left outer join CG_DDOBJ b on a.DDSEQ = b.DDSEQ and b.GRPTYPE = #{searchgrptype}
+		where a.PJTSEQ=#{F_PJTSEQ} and a.COLID = #{searchcolid} and b.OBJTYPE = #{searchobjtype}
+		";
+		$RtnVal["BINDTYPE"] = "siss";
+
+		return $RtnVal;
+	}  
 	public function ddSearch($req){
 		//조회
 		$RtnVal = null;
