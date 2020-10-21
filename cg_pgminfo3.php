@@ -348,7 +348,8 @@ header("Pragma:no-cache");
                         <option value="CHK1,CHK2,CHK3 ~">(출력NV) 체크박스(FORM)</option>        
                         <option value="LINK1^NM1,LINK2^NM2,LINK3^NM3 ~">(출력NV) 이미지뷰어(FORM)</option>   
                         <option value="LINK^NM">(출력2V) 파일(FORM)</option>     
-                        <option value="VAL1^VAL2">(출력2V) BIVIEW</option>                                
+                        <option value="VAL1^VAL2">(출력2V) BIVIEW</option>                   
+                        <option value="/common/cg_read_filestore.php?fileinfo=TimsStamp|FileStoreId|FileSvrNm|FileOrgNm">(출력1V) 파일조회</option>                    
                     </select><input 
                     type="button" name="bigFont" value="+" onclick="changeCodemirrorFontSize('+')"><input 
                     type="button" name="bigFont" value="-" onclick="changeCodemirrorFontSize('-')"><input 
