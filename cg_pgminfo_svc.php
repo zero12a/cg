@@ -645,13 +645,13 @@ class cg_pgminfo_svc
 				alog("데이터딕셔너리 UPDATE : " . $tarray["COLID"]);
 
 				//이미 존재
-				$to_coltype = "ssiss sssss is i is";
+				$to_coltype = "ssiss sssss iss i is";
 				$sql = "
 					update CG_DD set
 						COLNM = #{COLNM}, DATATYPE = #{DATATYPE}, DATASIZE = #{DATASIZE}, OBJTYPE = #{OBJTYPE}, LBLWIDTH = #{LBLWIDTH}
-						,LBLHEIGHT = #{LBLHEIGHT}, LBLALIGN = #{LBLALIGN},  OBJWIDTH = #{OBJWIDTH}, OBJHEIGHT = #{OBJHEIGHT}, OBJALIGN = #{OBJALIGN}
-						, VALIDSEQ = #{VALIDSEQ}, POPUP = #{POPUP}
-						,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{MODID}
+						, LBLHEIGHT = #{LBLHEIGHT}, LBLALIGN = #{LBLALIGN},  OBJWIDTH = #{OBJWIDTH}, OBJHEIGHT = #{OBJHEIGHT}, OBJALIGN = #{OBJALIGN}
+						, VALIDSEQ = #{VALIDSEQ}, POPUP = #{POPUP}, STOREID = #{STOREID}
+						, MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{MODID}
 					where PJTSEQ = #{F_PJTSEQ} and COLID = #{COLID}
 					";
 				
@@ -665,17 +665,17 @@ class cg_pgminfo_svc
 				alog("데이터딕셔너리 INSERT : " . $tarray["COLID"]);
 
 				//신규 추가
-				$to_coltype = "isssi sssss ssis i";
+				$to_coltype = "isssi sssss ssiss i";
 				$sql = "
 					insert into CG_DD (
 						PJTSEQ, COLID, COLNM, DATATYPE, DATASIZE
 						,OBJTYPE, LBLWIDTH, LBLHEIGHT, LBLALIGN, OBJWIDTH
-						,OBJHEIGHT, OBJALIGN, VALIDSEQ, POPUP
+						,OBJHEIGHT, OBJALIGN, VALIDSEQ, POPUP, STOREID
 						,ADDDT, ADDID
 					) values (
 						#{F_PJTSEQ}, #{COLID}, #{COLNM}, #{DATATYPE}, #{DATASIZE}
 						,#{OBJTYPE}, #{LBLWIDTH}, #{LBLHEIGHT}, #{LBLALIGN}, #{OBJWIDTH}
-						,#{OBJHEIGHT}, #{OBJALIGN}, #{VALIDSEQ}, #{POPUP}
+						,#{OBJHEIGHT}, #{OBJALIGN}, #{VALIDSEQ}, #{POPUP}, #{STOREID}
 						,date_format(sysdate(),'%Y%m%d%H%i%s'), #{ADDID}
 					)
 					";
@@ -692,20 +692,20 @@ class cg_pgminfo_svc
 			
 
 			//데이터 딕셔너리 오브젝트 타입 등록하기
-			$to_coltype = "issss sss i issss sss i";
+			$to_coltype = "issss ssss i issss ssss i";
 			$sql = "
 				insert into CG_DDOBJ (
 					DDSEQ,GRPTYPE,OBJTYPE,LBLALIGN,LBLWIDTH
-					,OBJALIGN,OBJHEIGHT,OBJWIDTH
-					,ADDDT, ADDID
+					, OBJALIGN, OBJHEIGHT, OBJWIDTH, FNINIT
+					, ADDDT, ADDID
 				) values (
-					#{DDSEQ},#{G1-GRPTYPE},#{OBJTYPE},#{LBLALIGN},#{LBLWIDTH}
-					,#{OBJALIGN},#{OBJHEIGHT},#{OBJWIDTH}
+					#{DDSEQ}, #{G1-GRPTYPE}, #{OBJTYPE}, #{LBLALIGN}, #{LBLWIDTH}
+					,#{OBJALIGN}, #{OBJHEIGHT}, #{OBJWIDTH}, #{FNINIT}
 					,date_format(sysdate(),'%Y%m%d%H%i%s'), #{ADDID}
 				)
 				ON DUPLICATE KEY 
 					UPDATE DDSEQ = #{DDSEQ}, GRPTYPE = #{G1-GRPTYPE}, OBJTYPE = #{OBJTYPE}, LBLALIGN = #{LBLALIGN}, LBLWIDTH = #{LBLWIDTH}
-					,OBJALIGN = #{OBJALIGN}, OBJHEIGHT = #{OBJHEIGHT}, OBJWIDTH = #{OBJWIDTH}
+					,OBJALIGN = #{OBJALIGN}, OBJHEIGHT = #{OBJHEIGHT}, OBJWIDTH = #{OBJWIDTH}, FNINIT = #{FNINIT}
 					,MODDT = date_format(sysdate(),'%Y%m%d%H%i%s'), MODID = #{MODID}
 				";
 			

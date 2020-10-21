@@ -1453,7 +1453,8 @@
                                     mygridIo.cells(rId,mygridIo.getColIndexById("OBJALIGN")).setValue(data.RTN_DATA.rows[i].data[2]);//DDSEQ
                                     mygridIo.cells(rId,mygridIo.getColIndexById("OBJHEIGHT")).setValue(data.RTN_DATA.rows[i].data[3]);//DDSEQ
                                     mygridIo.cells(rId,mygridIo.getColIndexById("OBJWIDTH")).setValue(data.RTN_DATA.rows[i].data[4]);//DDSEQ
-								}
+                                    mygridIo.cells(rId,mygridIo.getColIndexById("FNINIT")).setValue(data.RTN_DATA.rows[i].data[5]);//DDSEQ
+                                }
                             }
                             msgNotice("DDOBJ를 조회해서 업데이트 했습니다." + data.RTN_DATA.rows.length + "건",3);
 						}else{
@@ -1534,20 +1535,20 @@
                                     mygridIo.cells(rId,mygridIo.getColIndexById("POPUP")).setValue(data.RTN_DATA.rows[i].data[7]);//POPUP
 									//alog(1232);
 									//alert("LBLWIDTH:" + mygridIo.getColIndexById("LBLWIDTH"));
-									mygridIo.cells(rId,mygridIo.getColIndexById("LBLWIDTH")).setValue(data.RTN_DATA.rows[i].data[8]);//LBLWIDTH
+									//mygridIo.cells(rId,mygridIo.getColIndexById("LBLWIDTH")).setValue(data.RTN_DATA.rows[i].data[8]);//LBLWIDTH
                                     //alog(1233);
 
 									//alert("OBJWIDTH:" + mygridIo.getColIndexById("OBJWIDTH"));
-									mygridIo.cells(rId,mygridIo.getColIndexById("OBJWIDTH")).setValue(data.RTN_DATA.rows[i].data[10]);//OBJWIDTH
+									//mygridIo.cells(rId,mygridIo.getColIndexById("OBJWIDTH")).setValue(data.RTN_DATA.rows[i].data[10]);//OBJWIDTH
                                     //alog(1234);
 									//alert("OBJHEIGHT:" + mygridIo.getColIndexById("OBJHEIGHT"));
-									mygridIo.cells(rId,mygridIo.getColIndexById("OBJHEIGHT")).setValue(data.RTN_DATA.rows[i].data[11]);//OBJHEIGHT
+									//mygridIo.cells(rId,mygridIo.getColIndexById("OBJHEIGHT")).setValue(data.RTN_DATA.rows[i].data[11]);//OBJHEIGHT
                                     //alog(1235);
 									mygridIo.cells(rId,mygridIo.getColIndexById("VALIDSEQ")).setValue(data.RTN_DATA.rows[i].data[12]);//VALIDSEQ
 
                                     //정렬
-                                    mygridIo.cells(rId,mygridIo.getColIndexById("LBLALIGN")).setValue(data.RTN_DATA.rows[i].data[13]);
-                                    mygridIo.cells(rId,mygridIo.getColIndexById("OBJALIGN")).setValue(data.RTN_DATA.rows[i].data[14]);
+                                    //mygridIo.cells(rId,mygridIo.getColIndexById("LBLALIGN")).setValue(data.RTN_DATA.rows[i].data[13]);
+                                    //mygridIo.cells(rId,mygridIo.getColIndexById("OBJALIGN")).setValue(data.RTN_DATA.rows[i].data[14]);
                                     //alog(124);
 
 									//기타 기본값

@@ -27,6 +27,7 @@ class cg_pgminfo_dao
 			,ifnull(b.OBJALIGN,'') as OBJALIGN
 			,ifnull(b.OBJHEIGHT,'') as OBJHEIGHT
 			,ifnull(b.OBJWIDTH,'') as OBJWIDTH
+			,ifnull(b.FNINIT,'') as FNINIT
 		from CG_DD a
 			left outer join CG_DDOBJ b on a.DDSEQ = b.DDSEQ and b.GRPTYPE = #{searchgrptype}
 		where a.PJTSEQ=#{F_PJTSEQ} and a.COLID = #{searchcolid} and b.OBJTYPE = #{searchobjtype}
