@@ -34,12 +34,12 @@ $log = getLogger(
 if($CTL == "getMenu"){
 
     $rtnVal = array();
-    $rtnVal[0] = array( "id" => "CGCORE", "nm" => "CORE", "url" => "");
-    $rtnVal[0]["submenus"][0] = array("id" => "objinfo", "nm" => "OBJINFO", "url" => "/c.g/cg_objinfo3.php");
-    $rtnVal[0]["submenus"][1] = array("id" => "pgminfo3", "nm" => "PGMINFO", "url" => "/c.g/cg_pgminfo3.php");
-    $rtnVal[0]["submenus"][2] = array("id" => "pgmmng", "nm" => "PGMMNG", "url" => "/c.g/cg_pgmmng.php");
-    $rtnVal[0]["submenus"][3] = array("id" => "configmng", "nm" => "CFG_MNG", "url" => "/c.g/cg_configmng.php");
-    $rtnVal[0]["submenus"][4] = array("id" => "redismng", "nm" => "REDIS_MNG", "url" => "http://localhost:8040/d.s/CG/redismngView.php");
+    $rtnVal[0] = array( "id" => "CORE", "pjtid" => "CGCORE", "name" => "CORE");
+    $rtnVal[0]["children"][0] = array("id" => "objinfo", "name" => "OBJINFO", "url" => "/c.g/cg_objinfo3.php");
+    $rtnVal[0]["children"][1] = array("id" => "pgminfo3", "name" => "PGMINFO", "url" => "/c.g/cg_pgminfo3.php");
+    $rtnVal[0]["children"][2] = array("id" => "pgmmng", "name" => "PGMMNG", "url" => "/c.g/cg_pgmmng.php");
+    $rtnVal[0]["children"][3] = array("id" => "configmng", "name" => "CFG_MNG", "url" => "/c.g/cg_configmng.php");
+    $rtnVal[0]["children"][4] = array("id" => "redismng", "name" => "REDIS_MNG", "url" => "http://localhost:8040/d.s/CG/redismngView.php");
 
 
 
@@ -63,17 +63,17 @@ if($CTL == "getMenu"){
             //echo "<BR>DSNM : " .  $tMap["DSNM"] ;
             //echo "<BR>PJTSEQ : " .  $REQ["PJTSEQ"] ;
 
-            $sql = " select PGMSEQ as seq,PGMID as id,PGMNM as nm,concat('http://localhost:8040/d.s/CG/', VIEWURL) as url from CG_PGMINFO where PJTSEQ = #{PJTSEQ} ";
+            $sql = " select PGMSEQ,PGMID as id,PGMNM as name,concat('http://localhost:8040/d.s/CG/', VIEWURL) as url from CG_PGMINFO where PJTSEQ = #{PJTSEQ} ";
             $sqlMap = getSqlParam($sql,$coltype="i",$REQ);
             $stmt = getStmt($dbPjt,$sqlMap);
             $arrPgmInfo = getStmtArray($stmt);
             closeStmt($stmt);
             closeDb($dbPjt);
 
-            $pjtInfo = array( "seq" => $tMap["PJTSEQ"], "id" => $tMap["PJTID"],"nm" => $tMap["PJTNM"],"url" => "", "submenus" => $arrPgmInfo);
+            $pjtInfo = array( "id" => $tMap["PJTSEQ"], "pjtid" => $tMap["PJTID"],"name" => $tMap["PJTNM"], "children" => $arrPgmInfo);
 
         }else{
-            $pjtInfo = array( "seq" => $tMap["PJTSEQ"], "id" => $tMap["PJTID"], "nm" => $tMap["PJTNM"],"url" => "", "submenus" => array());
+            $pjtInfo = array( "id" => $tMap["PJTSEQ"], "pjtid" => $tMap["PJTID"], "name" => $tMap["PJTNM"], "children" => array());
         }
 
         array_push($rtnVal,$pjtInfo); 

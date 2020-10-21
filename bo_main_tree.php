@@ -46,46 +46,35 @@ require_once("../common/include/incUser.php");
         app
         clipped
       >
-        <v-list
-        expand=true
-        dense>
-           
-          <v-subheader>Menus</v-subheader>
 
-          <!--그냥 메뉴-->
-          <div v-for="m in myMenu" :key="m.id">
+        <v-subheader  dense>Menus</v-subheader>
 
-          <v-list-item v-if="m.submenus.length == 0" link  @click="addTab(m.id,m.nm,m.url);">
-            <v-list-item-icon>
-            <v-icon>mdi-folder</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{m.nm}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+        <v-treeview
+        v-model="myMenuTree"
+        :open="myMenuOpen"
+        :items="myMenu"
+        :active="myMenuActive"
+        activatable
+        item-key="id"
+        open-on-click
+        @update:active="treeNodeActive"
+        dense
+        >
 
+        <template v-slot:prepend="{ item, open }">
+            <v-icon v-if="item.children">
+            {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
+            </v-icon>
+            <v-icon v-else  @click="addTab(item.id, item.name, item.url)">mdi-file-document-outline
+            </v-icon>
+        </template>
+        <template v-slot:label="{ item, open }">
+          <div v-if="!item.url">{{ item.name }}</div>
+          <div v-else @click="addTab(item.id, item.name, item.url)">{{ item.name }}</div>
+        </template>
 
-          <!--하위메뉴 있는 메뉴폴더 -->
-          <v-list-group v-else no-action>
-            <template v-slot:activator  @click="addTab(m.id,m.nm,m.url);">
-            
-              <v-list-item-icon>
-                <v-icon>mdi-folder</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>{{m.nm}}</v-list-item-title>
-              </v-list-item-content>
-            </template>
-            <v-list-item v-for="s in m.submenus" :key="s.id" link   @click="addTab(s.id,s.nm,s.url);">
-              <v-list-item-content>
-                <v-list-item-title>{{s.nm}}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
+        </v-treeview>  
 
-          </div>
-
-          </v-list>
 
       </v-navigation-drawer>
   
@@ -201,7 +190,6 @@ new Vue({
 
     data: () => ({
         drawer: null,
-        myValue: null,
         active_tab : null, //0, 1, 2, 3 ~ 숫자 인덱스 순서임
         mytab : [],
         myMenuTree : [],
