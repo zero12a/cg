@@ -590,6 +590,8 @@
     for($i=0;$i<count($toArr["PGMGRP"]);$i++){
         $grps = $toArr["PGMGRP"][$i];
 
+
+        $map["PGRPID"]           = $grps["PGRPID"];
         $map["GRPID"]           = $grps["GRPID"];
         $map["GRPTYPE"]         = $grps["GRPTYPE"];
         $map["GRPNM"]           = $grps["GRPNM"];
@@ -605,20 +607,28 @@
         $map["COLSIZETYPE"]     = $grps["COLSIZETYPE"];
         $map["LEGENDALIGN"]     = $grps["LEGENDALIGN"];
         $map["STACKED"]         = $grps["STACKED"];
-        $map["METHOD"]         = $grps["METHOD"];
+        $map["METHOD"]          = $grps["METHOD"];
+        $map["KEYCOLID"]        = $grps["KEYCOLID"];
+        $map["SEQYN"]           = $grps["SEQYN"];
+        $map["SPLITDIRECTION"]  = $grps["SPLITDIRECTION"];
+        $map["SPLITGUTTERSIZE"] = $grps["SPLITGUTTERSIZE"];
 
-        $coltype = "iisss iisis sssss sss";
+        $coltype = "iisss iisis sssss sssss ssi";
         $sql = "
             insert into CG_PGMGRP (
                 PJTSEQ, PGMSEQ, GRPID, GRPTYPE, GRPNM
                 , GRPORD, FREEZECNT, VBOX, COLBRCNT, REFGRPID
                 , GRPWIDTH, GRPHEIGHT, GRPPADDING, BRYN, COLSIZETYPE
-                , LEGENDALIGN, STACKED, METHOD, ADDDT
+                , LEGENDALIGN, STACKED, METHOD, KEYCOLID, SEQYN
+                , PGRPID, SPLITDIRECTION, SPLITGUTTERSIZE
+                , ADDDT
             ) values (
                 #{PJTSEQ}, #{PGMSEQ}, #{GRPID}, #{GRPTYPE}, #{GRPNM} 
                 , #{GRPORD}, #{FREEZECNT}, #{VBOX}, #{COLBRCNT}, #{REFGRPID}
                 , #{GRPWIDTH}, #{GRPHEIGHT}, #{GRPPADDING}, #{BRYN}, #{COLSIZETYPE}
-                , #{LEGENDALIGN}, #{STACKED}, #{METHOD}, date_format(sysdate(),'%Y%m%d%H%i%s')
+                , #{LEGENDALIGN}, #{STACKED}, #{METHOD}, #{KEYCOLID}, #{SEQYN},
+                , #{PGRPID}, #{SPLITDIRECTION}, #{SPLITGUTTERSIZE}
+                , date_format(sysdate(),'%Y%m%d%H%i%s')
             )
         ";
     

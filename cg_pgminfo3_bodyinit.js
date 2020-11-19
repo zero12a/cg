@@ -239,11 +239,11 @@
         mygridGrp = new dhtmlXGridObject('grid1');
 		mygridGrp.setUserData("","gridTitle","grid1 : group list"); //글로별 변수에 그리드 타이블 넣기
         mygridGrp.setImagePath(gridImagePath);
-        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PPT,METHOD,KEYCOLID,SEQYN,ADDDT,MODDT");
-        mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,METHOD,KEYCOLID,SEQYN,ADDDT,MODDT");
-        mygridGrp.setInitWidths("50,50,40,40,40,50,30,30,40,30,40,40,30,30,30,25,30,30,20,50,50")
-        mygridGrp.setColTypes("ed,ed,ro,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,ed,codesearch,ed,ed,ed,ro,ro");
-		mygridGrp.setColSorting("str,str,str,str,str,int,int,int,int,str,str,str,str,str,str,str,str,str,str,str,str");
+        mygridGrp.setHeader("PJTSEQ,PGMSEQ,GRPSEQ,PGRPID,GRPID,GRPTYPE,GRPNM,ORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PPT,METHOD,KEYCOLID,SEQYN,SPLITDIRECTION,SPLITGUTTERSIZE,SPLITMINSIZE,ADDDT,MODDT");
+        mygridGrp.setColumnIds("PJTSEQ,PGMSEQ,GRPSEQ,PGRPID,GRPID,GRPTYPE,GRPNM,GRPORD,FREEZECNT,REFGRPID,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN,STACKED,PROPERTY,METHOD,KEYCOLID,SEQYN,SPLITDIRECTION,SPLITGUTTERSIZE,SPLITMINSIZE,ADDDT,MODDT");
+        mygridGrp.setInitWidths("50,50,40,40,40,40,50,30,30,40,30,40,40,30,30,30,25,30,30,20,50,20,30,50,50");
+        mygridGrp.setColTypes("ed,ed,ro,ed,ed,coro,ed,ed,ed,ed,coro,ed,ed,coro,coro,ed,codesearch,ed,ed,ed,ed,ed,ed,ro,ro");
+		mygridGrp.setColSorting("int,int,int,int,str,str,int,int,int,int,str,str,str,str,str,str,str,str,str,str,str,int,int,str,str");
 
 		mygridGrp.enableSmartRendering(false);
         mygridGrp.enableMultiselect(true);
