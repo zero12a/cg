@@ -626,7 +626,7 @@
                 #{PJTSEQ}, #{PGMSEQ}, #{GRPID}, #{GRPTYPE}, #{GRPNM} 
                 , #{GRPORD}, #{FREEZECNT}, #{VBOX}, #{COLBRCNT}, #{REFGRPID}
                 , #{GRPWIDTH}, #{GRPHEIGHT}, #{GRPPADDING}, #{BRYN}, #{COLSIZETYPE}
-                , #{LEGENDALIGN}, #{STACKED}, #{METHOD}, #{KEYCOLID}, #{SEQYN},
+                , #{LEGENDALIGN}, #{STACKED}, #{METHOD}, #{KEYCOLID}, #{SEQYN}
                 , #{PGRPID}, #{SPLITDIRECTION}, #{SPLITGUTTERSIZE}
                 , date_format(sysdate(),'%Y%m%d%H%i%s')
             )

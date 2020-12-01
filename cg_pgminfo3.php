@@ -421,7 +421,7 @@ header("Pragma:no-cache");
             </div>
             <div class="CON_OBJGRP" style="">
                 <div class="CON_LABEL" style="width:80px;">to PGMID</div>
-                <div class="CON_OBJECT" style="width:100px;"><input type="text" name="TO_PGMID" value="" id="TO_PGMID" style="width:80px;"></div>
+                <div class="CON_OBJECT" style="width:200px;"><input type="text" name="TO_PGMID" value="" id="TO_PGMID" style="width:180px;"></div>
             </div>  
             <div class="CON_OBJGRP" style="">
                 <div class="CON_OBJECT" style="width:150px;">

@@ -18,11 +18,17 @@
 
     //프로젝트의 데이터소스 정보 얻기
     $db2 = getDbConn($CFG["CFG_DB"]["CGCORE"]);
+    //var_dump($db2);
     $sql = "select * from CG_PJTINFO where PJTSEQ = #{PJTSEQ}";
-    $stmt = makeStmt($db2,$sql,$coltype="i",$REQ);
+    //$stmt = makeStmt($db2,$sql,$coltype="i",$REQ);
+
+    
+    $sqlMap = getSqlParam($sql,$coltype="i",$REQ);
+    $stmt = getStmt($db2,$sqlMap);
     $pjtInfo = getStmtArray($stmt)[0];
-    $stmt->close();
-    $db2->close();
+
+    closeStmt($stmt);
+    closeDb($db2);
 
     //echo "DSNM : " . $pjtInfo["DSNM"];
 
@@ -147,7 +153,7 @@
 
     $db->close();
 
-    JsonMsg("200","100","정상적으로 Copy 성공하였습니다.");
+    JsonMsg("200","100","정상적으로 Delete 성공하였습니다.");
 
     
 ?>
