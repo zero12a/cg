@@ -274,9 +274,16 @@
 
             //상태가 편집모드이면 선택시 반응 없음
             RowEditStatus = mygridGrp.getUserData(rowID,"!nativeeditor_status");
-			if(RowEditStatus == "inserted" || RowEditStatus == "deleted" || RowEditStatus == "updated"){return false;}
-
+            if(RowEditStatus == "inserted" || RowEditStatus == "deleted" || RowEditStatus == "updated"){return false;}
+            
             lastrowid1 = rowID;
+
+            //해당행의 grptype의 LAYOUT이면 반응 없음
+            var grptype = mygridGrp.cells(lastrowid1,mygridGrp.getColIndexById("GRPTYPE")).getValue();
+
+            if(grptype == "LAYOUT")return false;
+
+
 
             //선택된 ROW의 모든컬럼 추출하기
             var RowAllData;
@@ -324,7 +331,7 @@
                 
 
             //IO컬럼의 OBJTYPE 다시 불러오기
-            var grptype = mygridGrp.cells(lastrowid1,4).getValue();
+
             alog(grptype);
             switch(grptype) {
                 case "CONDITION":
@@ -502,6 +509,7 @@
                     break;
 
                 case "GRIDWIX":
+                    //alert(1);
                         //(FNC) FNCTYPE 다시 불러오기
                         setCodeCombo("GRID",mygridFnc.getCombo(mygridFnc.getColIndexById("FNCCD")),"FNCGRIDWIX");
     

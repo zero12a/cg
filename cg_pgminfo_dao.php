@@ -119,6 +119,25 @@ class cg_pgminfo_dao
 		return $RtnVal;
 	}  
 
+
+	public function layoutsSearch($req){
+		//조회
+		$RtnVal = null;
+		$RtnVal["FNCTYPE"] = "R";//CRUD 
+		$RtnVal["SVRID"] = "CGCORE";
+		$RtnVal["SQLTXT"] = "
+        select
+			GRPID, REFGRPID, ORD, GRPTYPE, GRPWIDTH
+			, GRPHEIGHT, PGRPID, SPLITGUTTERSIZE, SPLITDIRECTION, SPLITMINSIZE
+        from CG_LAYOUTS
+        where LAYOUTID = #{F_LAYOUTID}
+        order by ORD desc
+		";
+		$RtnVal["BINDTYPE"] = "is";
+
+		return $RtnVal;
+	}  
+
 	public function layoutSearch($req){
 		//조회
 		$RtnVal = null;

@@ -250,6 +250,9 @@
         case "LAYOUTD_SEARCH" :
             echo $objService->goLayoutdSearch(); //
             break;     
+        case "LAYOUTS_SEARCH" :
+            echo $objService->goLayoutsSearch(); //
+            break;                 
         case "FNCCD_SEARCH" :
             echo $objService->goFnccdSearch(); //
             break;  

@@ -43,6 +43,7 @@
     var mygridSqlR_url = "cg_pgminfo_crud3.php?CTLGRP=SQLR&";
     var mygridLayout_url = "cg_pgminfo_crud3.php?CTLGRP=LAYOUT&";
     var mygridLayoutD_url = "cg_pgminfo_crud3.php?CTLGRP=LAYOUTD&";
+    var mygridLayoutS_url = "cg_pgminfo_crud3.php?CTLGRP=LAYOUTS&";
 
     var mygridSvc_url = "cg_pgminfo_crud3.php?CTLGRP=SVC&"; //SVC
     var mygridPgm_url = "cg_pgminfo_crud3.php?CTLGRP=PGM&"; //팝업윈도우 프로그램 검색
@@ -324,6 +325,80 @@
 
 
 
+    //그리드 조회
+    function selectLayoutSplit(tinput){
+        alog("selectLayout()------------start");
+		var x = window.dhx4.absLeft(tinput);
+		var y = window.dhx4.absTop(tinput);
+		var w = tinput.offsetWidth;
+		var h = tinput.offsetHeight;
+
+        //$("#div_layout").show();
+
+		if(popSelectLayout){
+			popSelectLayout.show(x,y,w,h);
+			return;
+		}
+
+
+		if(!isLayoutLoaded){
+
+			//불러오기
+			$.ajax({
+				type : "POST",
+				url : mygridLayout_url+"&CTLFNC=SEARCH&" + lastCondition ,
+				data : {xmldata : ""},
+				dataType: "json",
+				async: true,
+				success: function(data){
+					alog("   gridSearcLayout json return----------------------");
+					alog("   json data : " + data);
+					alog("   json RTN_CD : " + data.RTN_CD);
+					alog("   json ERR_CD : " + data.ERR_CD);
+					//alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+					//그리드에 데이터 반영
+					if(data.RTN_CD == "200"){
+						alog(JSON.stringify(data.RTN_DATA));
+
+						var tmp="";
+
+                        
+						for(var i=0;i<data.RTN_DATA.rows.length;i++){
+							alog( "   i : " + i);
+
+							//내 행 업데이트
+							tmp = tmp + "<a href=\"#\" onclick=\"selectLayoutS('" + data.RTN_DATA.rows[i].data[0] + "')\"><img src=\"" + CFG_URL_LIBS_ROOT + "img/" + data.RTN_DATA.rows[i].data[0] +  ".png\" width=50 border=1></a> ";//LAYOUTID
+
+						}
+						//내 행 업데이트
+						tmp = tmp + "<a href=\"#\" onclick=\"isLayoutLoaded=false;popSelectLayout.hide()\"><img src=\"" + CFG_URL_LIBS_ROOT + "img/close.png\" border=0 width=15></a>";//LAYOUTID
+
+						isLayoutLoaded=true;
+
+						//팝업 객체 띄우기
+						popSelectLayout = new dhtmlXPopup();
+						popSelectLayout.attachHTML(tmp);
+
+						popSelectLayout.show(x,y,w,h);
+
+
+					}else{
+						msgError("서버 조회중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG,3);
+					}
+
+
+				},
+				error: function(error){
+					msgError("Ajax http 500 error ( " + error + " )");
+					alog("Ajax http 500 error ( " + error + " )");
+				}
+			});
+		}else{
+			alog("이미지 레이아웃 로딩함");
+		}
+        alog("selectLayout()------------end");
+    }
 
 
     //그리드 조회
@@ -467,6 +542,112 @@
                             ,""
                             ,""
                             ,"POST" //METHOD
+							];//초기값
+						
+						addRow(mygridGrp,tCols);
+
+
+                        //내 행 업데이트
+                        //$("#div_layout").append("<a href=\"#\" onclick=\"selectLayoutD('" + data.RTN_DATA.rows[i].data[0] + "')\"><img src=\"./img/" + data.RTN_DATA.rows[i].data[0] +  ".png\" width=100></a>");//LAYOUTID
+
+
+                    }
+
+                }else{
+                    msgError("서버 조회중 에러가 발생했습니다.\nRTN_CD : " + data.RTN_CD + "\nERR_CD : " + data.ERR_CD + "\nRTN_MSG :" + data.RTN_MSG,3);
+                }
+
+
+            },
+            error: function(error){
+				msgError("Ajax http 500 error ( " + error + " )",3);
+                alog("Ajax http 500 error ( " + error + " )");
+            }
+        });
+
+        alog("selectLayoutD()------------end");
+    }
+
+
+    //그리드 조회
+    function selectLayoutS(tlayoutid){
+        alog("selectLayoutS()------------start");
+        alog("	tlayoutid : " + tlayoutid);
+
+        $("#div_layout").hide();
+		if(tlayoutid=="")return;
+
+        //기존 행이 있는지 검사해서 삭제 여부 묻기
+        if(mygridGrp.getRowsNum() > 0 && !confirm("이미 등록된 행이 있습니다. 삭제 후 재등록 하시겠습니까?")){return}
+
+        //조회후에 선택 가능
+        if(!lastinput1json || !lastinput1json.PJTSEQ ){
+            alert("프로그램 조회 후에 레이아웃 선택가능합니다.");
+            return;
+        }
+        
+        mygridGrp.clearAll();
+
+        //불러오기
+        $.ajax({
+            type : "POST",
+            url : mygridLayoutS_url+"&CTLFNC=SEARCH&" + lastCondition ,
+            data : {xmldata : "", F_LAYOUTID : tlayoutid},
+            dataType: "json",
+            async: true,
+            success: function(data){
+                alog("   gridSearchLayoutD json return----------------------");
+                alog("   json data : " + data);
+                alog("   json RTN_CD : " + data.RTN_CD);
+                alog("   json ERR_CD : " + data.ERR_CD);
+                //alog("   json RTN_MSG length : " + data.RTN_MSG.length);
+
+                //그리드에 데이터 반영
+                if(data.RTN_CD == "200"){
+                    alog(JSON.stringify(data.RTN_DATA));
+
+                    var tCols;
+                    $("#spanGrpCnt").text(data.RTN_DATA.rows.length);
+
+                    for(var i=0;i<data.RTN_DATA.rows.length;i++){
+                        alog( "   i : " + i);
+
+
+                        //GRP GRID 컬럼순서
+                        // PJTSEQ, PGMSEQ, GRPSEQ, PGRPID, GRPID
+                        // , GRPTYPE, GRPNM, GRPORD, FREEZECNT, REFGRPID
+                        // ,VBOX,GRPWIDTH,GRPHEIGHT,COLSIZETYPE,LEGENDALIGN
+                        // ,STACKED,PROPERTY,METHOD,KEYCOLID,SEQYN
+                        // ,SPLITDIRECTION,SPLITGUTTERSIZE,SPLITMINSIZE,ADDDT,MODDT
+
+                        //LAYOUTS 컬럼순서
+                        //  GRPID, REFGRPID, ORD, GRPTYPE, GRPWIDTH
+			            //  ,GRPHEIGHT, PGRPID, SPLITGUTTERSIZE, SPLITDIRECTION, SPLITMINSIZE
+
+                        tCols = [
+							lastinput1json.PJTSEQ   //1
+                            ,lastinput1json.PGMSEQ
+                            ,"" //GRPSEQ
+                            ,data.RTN_DATA.rows[i].data[6] //PGRPID
+							,data.RTN_DATA.rows[i].data[0] //GRPID
+							,data.RTN_DATA.rows[i].data[3] //GRPTYPE
+							,"" //GRPNM
+							,data.RTN_DATA.rows[i].data[2] //ORD
+							,0 //FREEZECNT
+							,data.RTN_DATA.rows[i].data[1] //REFGRPID
+							,"" //VBOX
+							,data.RTN_DATA.rows[i].data[4] //GRPWIDTH
+							,data.RTN_DATA.rows[i].data[5] //GRPHEIGHT
+							,""//COLSIZETYPE
+                            ,""//LEGENDALIGN
+                            ,""//STACKED
+                            ,""//PROPERTY
+                            ,"POST" //METHOD
+                            ,"" //KEYCOLID
+                            ,"" //SEQYN
+                            ,data.RTN_DATA.rows[i].data[8]  //SPLITDIRECTION
+                            ,data.RTN_DATA.rows[i].data[7]  //SPLITGUTTERSIZE
+                            ,data.RTN_DATA.rows[i].data[9]  //SPLITMINSIZE
 							];//초기값
 						
 						addRow(mygridGrp,tCols);
