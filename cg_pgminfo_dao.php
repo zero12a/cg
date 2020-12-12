@@ -795,7 +795,7 @@ class cg_pgminfo_dao
 			,date_format(sysdate(),'%Y%m%d%H%i%s')
 		)
 		";
-		$RtnVal["BINDTYPE"] = "iisss issss sissss sssss ii";
+		$RtnVal["BINDTYPE"] = "iisss issss sissss sssss ss";
 		return $RtnVal;
     }  
 	public function grpUpd($req){
@@ -812,7 +812,7 @@ class cg_pgminfo_dao
             , MODDT =date_format(sysdate(),'%Y%m%d%H%i%s')
 		where PJTSEQ = #{PJTSEQ} and PGMSEQ = #{PGMSEQ} and GRPSEQ = #{GRPSEQ}
 		";
-		$RtnVal["BINDTYPE"] = "sssis sssis sssss sssii iii";
+		$RtnVal["BINDTYPE"] = "sssis sssis sssss sssss iii";
 		return $RtnVal;
     }  
 	public function grpDel($req){
