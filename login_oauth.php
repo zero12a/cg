@@ -137,7 +137,7 @@ new Vue({
       },
       goLogin: function(){
           
-        var login_url = "http://localhost:8052/newToken/?";
+        var login_url = "http://localhost:<?=$CFG["CFG_OAUTH_PORT"]?>/o.s/os2ctl.php";
 
         //post param nm : client_id, client_secret, username, password
         var client_id = "svcfront";
@@ -151,7 +151,7 @@ new Vue({
         //서버에서 DD가져오기
         $.ajax({
             type : "POST",
-            url : login_url + "req_token=" + req_token,
+            url : login_url + "?CTL=newToken&req_token=" + req_token,
             data : { "client_id" : client_id, "client_secret" : client_secret, "username" : tId , "password" :  tPasswd  },
             dataType: "json",
             success: function(data){
