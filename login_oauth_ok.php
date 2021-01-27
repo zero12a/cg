@@ -15,7 +15,7 @@ require_once("../common/include/incAuth.php");
 require_once("../common/include/incRequest.php");
 
 //guzzle clint를 통해 access_token에 대한 resource 정보 가져오기
-require_once "../lib/php/vendor/autoload.php";
+require_once $CFG["CFG_LIBS_VENDOR"];
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -47,10 +47,12 @@ $client = new GuzzleHttp\Client();
 //     'body' => 'grant_type=password&client_id=demoapp&client_secret=demopass&username=demouser&password=testpass'
 
 $resJsonStr = "";
+//echo 1111;
+
 try{
     $fullUrl = "http://" . $CFG["CFG_OAUTH_HOST"] . ":" .  $CFG["CFG_OAUTH_PORT"] . "/o.s/os2ctl.php";
     //echo $fullUrl;
-
+    //echo 2222;
     $res = $client->request('GET',$fullUrl , [
         'timeout' => 1,
         'connect_timeout' => 1,
@@ -60,7 +62,7 @@ try{
             ,'access_token' => $REQ["access_token"]
         ]
     ]);
-    
+    //echo 3333;
     //echo "<hr>" . $res->getStatusCode();
     // "200"
     //echo "<hr>" . $res->getHeader('content-type')[0];
@@ -72,21 +74,24 @@ try{
     if(trim($res->getStatusCode()) != "200"){
         MsgBack("인증 정보를 요청 결과 오류가 발생했습니다.(rescode : " . $res->getStatusCode() . ")");
     }
-
+    //echo 4444;
     $resJsonStr = $res->getBody();
     $resArr = json_decode($resJsonStr,true);//true : stdclass가 아닌 그냥 배열로
     //var_dump($resArr);
+    //exit; 
 
 }catch(ClientException $e) {
     alog("ClientException : " . $e->getMessage());
     //echo $e->getMessage() . "\n";
     //echo $e->getRequest()->getMethod();
+    JsonMsg("500","301","OS2인증서버에 ClientException 오류발생.");
 }catch(GuzzleException $e) {
     alog("GuzzleException : " . $e->getMessage());
     //echo $e->getMessage() . "\n";
     //echo $e->getRequest()->getMethod();
+    JsonMsg("500","302","OS2인증서버에 GuzzleException 오류발생.");
 }
-
+//echo 55555;
 
 //사용자 정보 세팅
 $REQ["USR_SEQ"] = $resArr["RTN_DATA"]["USER_INFO"]["USR_SEQ"];
