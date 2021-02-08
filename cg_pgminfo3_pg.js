@@ -128,7 +128,7 @@
             //mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue() 
             var grpType = mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue();
             alog("grpType=" + grpType);
-            if(grpType == "GRID"){
+            if(grpType == "GRID" || grpType == "GRIDWIX"){
                 var freezeCnt = mygridGrp.cells(rowId,mygridGrp.getColIndexById("FREEZECNT")).getValue();
                 var colSizeType = mygridGrp.cells(rowId,mygridGrp.getColIndexById("COLSIZETYPE")).getValue();
 
