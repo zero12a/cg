@@ -528,6 +528,7 @@
 							lastinput1json.PJTSEQ   //1
                             ,lastinput1json.PGMSEQ
                             ,null //GRPSEQ
+                            ,"" //PGRPID
 							,data.RTN_DATA.rows[i].data[0] //GRPID
 							,data.RTN_DATA.rows[i].data[1] //GRPTYPE
 							,"" //GRPNM
