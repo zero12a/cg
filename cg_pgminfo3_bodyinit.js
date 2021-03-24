@@ -829,13 +829,13 @@
         mygridSql = new dhtmlXGridObject('grid2');
 		mygridSql.setUserData("","gridTitle","grid2 : sql list"); //글로별 변수에 그리드 타이블 넣기
         mygridSql.setImagePath(gridImagePath);
-        mygridSql.setHeader("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,PSQLID,SQLTXT,ADDDT,MODDT");
-        mygridSql.setColumnIds("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,CRUD,RTN_TYPE,SQLORD,PSQLSEQ,SQLTXT,ADDDT,MODDT");
+        mygridSql.setHeader("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,SVRIDPARAM,CRUD,RTN_TYPE,SQLORD,PSQLID,SQLTXT,ADDDT,MODDT");
+        mygridSql.setColumnIds("PJTSEQ,PGMSEQ,SQLSEQ,SQLID,SQLNM,SVRSEQ,SVRIDPARAM,CRUD,RTN_TYPE,SQLORD,PSQLSEQ,SQLTXT,ADDDT,MODDT");
         //mygridSql.attachHeader("#connector_text_filter,#connector_text_filter,#connector_text_filter,#connector_text_filter")
-        mygridSql.setInitWidths("50,50,50,50,50,40,40,50,50,50,50,50,50")
-        mygridSql.setColTypes("ro,ed,ro,ed,ed,coro,coro,coro,ed,coro,txt,ro,ro");
-        mygridSql.setColAlign("left,left,left,left,left,left,left,,left,left,left,left,left,left")
-		mygridSql.setColSorting("str,str,int,str,str,str,str,str,int,str,str,str,str");
+        mygridSql.setInitWidths("50,50,50,50,50,40,40,50,50,50,50,50,50,50")
+        mygridSql.setColTypes("ro,ed,ro,ed,ed,coro,ed,coro,coro,ed,coro,txt,ro,ro");
+        mygridSql.setColAlign("left,left,left,left,left,left,left,left,,left,left,left,left,left,left")
+		mygridSql.setColSorting("str,str,int,str,str,str,str,str,str,int,str,str,str,str");
 
         //mygridSql.setColumnHidden(0,true);
         //mygridSql.isColumnHidden(0);//PJTID숨기기
