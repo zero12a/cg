@@ -67,7 +67,7 @@
             var objType = mygridIo.cells(rowId,mygridIo.getColIndexById("OBJTYPE")).getValue();
             //alert(objType);
 
-            if(objType == "CODEMIRROR" || objType == "SIGNPAD"){
+            if(objType == "CODEMIRROR" || objType == "SIGNPAD" || objType == "WEJODIT"){
                 //버튼컨트롤 프로퍼티
 
                 var btnHiddenYn = mygridIo.cells(rowId,mygridIo.getColIndexById("BTNHIDDENYN")).getValue()
