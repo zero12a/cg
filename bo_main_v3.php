@@ -232,6 +232,32 @@ new Vue({
       accessToken: function(newVal, oldVal){
         alog("watch.accessToken()...............................start");
         alog("  newVal = " + newVal);
+      },
+      active_tab : function(val){
+        alog("[watch] active_tab = " + val);
+        if(typeof val == 'undefined')return; //탭이 하나도 없으면 처리하지 마세요
+
+        var tId = this.mytab[val].id;
+        for(t=0;t<this.mytab.length;t++){
+          //alog(t + "   #div-"+ this.mytab[t].id);
+          if(this.mytab[t].id == tId){
+              this.mytab[t].isdisplay = "";
+              //$("#div-"+ this.mytab[t].id).css("display","");
+              alog("tId 를 노출 = " + tId);
+
+              $("#div-"+ this.mytab[t].id).css("visibility","visible");
+              $("#div-"+ this.mytab[t].id).css("z-index","1");
+              //$("#div-"+ this.mytab[t].id).css("top","0px");   
+          }else{
+              this.mytab[t].isdisplay = "none";
+              //$("#div-"+ this.mytab[t].id).css("display","none");
+
+              $("#div-"+ this.mytab[t].id).css("visibility","hidden");
+              $("#div-"+ this.mytab[t].id).css("z-index","0");
+              //$("#div-"+ this.mytab[t].id).css("top","-5000px");                    
+          }
+        }
+
       }
     },
     mounted () {
@@ -358,7 +384,7 @@ new Vue({
         },        
         changeTabs: function(tHref){
             alog("changeTabs().........................start");
-            alog(this);
+            //alog(this);
             //alog("  tHref=" + tHref);
 
             //alert(tmp);
@@ -436,24 +462,7 @@ new Vue({
             //alog(this);
             alog("  tId=" + tId);
             //alog("  active_tab = " + this.active_tab);
-            for(t=0;t<this.mytab.length;t++){
-                //alog(t + "   #div-"+ this.mytab[t].id);
-                if(this.mytab[t].id == tId){
-                    this.mytab[t].isdisplay = "";
-                    //$("#div-"+ this.mytab[t].id).css("display","");
 
-                    $("#div-"+ this.mytab[t].id).css("visibility","visible");
-                    $("#div-"+ this.mytab[t].id).css("z-index","1");
-                    //$("#div-"+ this.mytab[t].id).css("top","0px");   
-                }else{
-                    this.mytab[t].isdisplay = "none";
-                    //$("#div-"+ this.mytab[t].id).css("display","none");
-
-                    $("#div-"+ this.mytab[t].id).css("visibility","hidden");
-                    $("#div-"+ this.mytab[t].id).css("z-index","0");
-                    //$("#div-"+ this.mytab[t].id).css("top","-5000px");                    
-                }
-            }
             //alert(tmp);
         },
         closeTab: function(tId){
@@ -462,38 +471,33 @@ new Vue({
             //alog("  active_tab = " + this.active_tab);
 
             var otherActive = "";
+            var closeIndex ;
             for(t=0;t<this.mytab.length;t++){
 
                 if(this.mytab[t].id == tId){
                   //this.$refs["ref-" + this.mytab[t].id][0].remove();
 
                   //활성화 상태
-                  var isDisplay = this.mytab[t].isdisplay + "";
-
-                  //배열에서 지우기
-                  $("#div-"+ this.mytab[t].id).remove(); //오브젝트 삭제
-
-                  this.mytab.splice(t,1);
-
-                  //보여주던 탭이 닫쳤으면 활성화탭 넘겨주기
-                  if(isDisplay == "" && this.mytab.length > 0){
-                    this.active_tab = 0;//첫번째 탭으로 보내기
-                    this.mytab[0].isdisplay = "";
-                  }else{
-                    //닫힌 탭이 중간이고 우측이 활성화 탭이면 활성화 탭 숫자 1 줄이기
-                    if(t < this.active_tab){
-                      this.active_tab--;
-                    }
-                  }
-                  if(this.mytab.length>0){
-                    //$("#div-"+ this.mytab[this.active_tab].id).css("display","");
-                    $("#div-"+ this.mytab[this.active_tab].id).css("visibility","visible");
-                    $("#div-"+ this.mytab[this.active_tab].id).css("z-index","1");
-                    //$("#div-"+ this.mytab[this.active_tab].id).css("top","0px");
-                  }
+                  closeIndex = t;
 
                 }
             }
+
+            //배열에서 지우기
+            $("#div-"+ this.mytab[closeIndex].id).remove(); //오브젝트 삭제
+            
+            // this.$delete(obj, key)
+            if(this.mytab.length > 1){
+              if(this.active_tab>0){
+                alog("active_tab 1빼기");
+                this.active_tab--;
+              }else{
+                alog("active_tab 동일값 세팅");
+                this.active_tab = "0"; //숫자 0으로 세팅시 변화가 없기때문에 문자"0"으로 세팅하기
+              }
+            }
+            Vue.delete(this.mytab, closeIndex);
+
             
         }
     }
