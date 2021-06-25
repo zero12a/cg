@@ -109,13 +109,10 @@ header("Pragma:no-cache");
             <div style="width:0px;height:0px;overflow: hidden"><form id="condition1"></div>
 
             <div class="CON_LINE" style="">
-                <div class="CON_OBJGRP" style="">
-                    <div class="CON_LABEL" style="width:100px;">PJTID *</div>
-                    <div class="CON_OBJECT" style="width:150px;"><input type="text" name="F_PJTID" value="" id="F_PJTID"></div>
-                </div>
+
                 <div class="CON_OBJGRP" style="">
                     <div class="CON_LABEL" style="width:100px;">OBJTYPE</div>
-                    <div class="CON_OBJECT" style="width:150px;"><input type="text" name="F_OBJTYPE" value="" id="F_OBJTYPE"></div>
+                    <div class="CON_OBJECT" style="width:150px;"><input type="text" name="F_OBJTYPE" value="" id="F_OBJTYPE" style="width:100%;"></div>
                 </div>
                 <div class="CON_OBJGRP" style="">
                     <div class="CON_LABEL" style="width:100px;">FILETYPE</div>

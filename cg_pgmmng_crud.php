@@ -25,7 +25,7 @@
     $log = getLogger(
         array(
         "LIST_NM"=>"log_CG"
-        , "PGM_ID"=>"DEPLOYMNG"
+        , "PGM_ID"=>"PGMMNG"
         , "REQTOKEN" => $reqToken
         , "RESTOKEN" => $resToken
         , "LOG_LEVEL" => Monolog\Logger::DEBUG

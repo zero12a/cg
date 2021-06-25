@@ -15,7 +15,7 @@ header("Pragma:no-cache");
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>PGM</title>
+	<title>PGM MNG</title>
 
 	<meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -56,7 +56,7 @@ header("Pragma:no-cache");
 
 
 <div  class="GRID_LABELGRP" >
-		<div class="GRID_LABEL" >* PGMINFO3
+		<div class="GRID_LABEL" >* PGM MNG
 			<!--popup--><a href="?" target="_blank"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/popup.png" height=10 align=absmiddle border=0></a>
 			<!--reload--><a href="javascript:location.reload();"><img src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>img/reload.png" width=11 height=10 align=absmiddle border=0></a>
 		</div>

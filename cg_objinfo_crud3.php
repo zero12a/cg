@@ -14,6 +14,19 @@
 
 
 
+    $resToken = uniqid();
+    $log = getLoggerStdout(
+        array(
+        "LIST_NM"=>"log_CG"
+        , "PGM_ID"=>"PGMINFO"
+        , "REQTOKEN" => $reqToken
+        , "RESTOKEN" => $resToken
+        , "LOG_LEVEL" => Monolog\Logger::DEBUG
+        )
+    );
+
+
+    
     //ServerViewTxt("N","N","Y","Y");
 
     $db["cg"] = getDbConn($CFG["CFG_DB"]["CGCORE"]);
