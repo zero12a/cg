@@ -474,18 +474,21 @@
         $map["RTN_TYPE"]    = $sqls["RTN_TYPE"];
         $map["SQLORD"]      = $sqls["SQLORD"];
         $map["SQLTXT"]      = $sqls["SQLTXT"];
-        $map["PSQLSEQ"]      = $sqls["PSQLSEQ"];
+        $map["PSQLSEQ"]     = $sqls["PSQLSEQ"];
+        $map["SVRIDPARAM"]  = $sqls["SVRIDPARAM"];
 
-        $coltype = "iissi ssisi";
+        $coltype = "iissi ssisi s";
         $sql = "
             /*200 SQL 넣기*/
             insert into CG_PGMSQL (
                 PJTSEQ, PGMSEQ, SQLID, SQLNM, SVRSEQ
                 , CRUD, RTN_TYPE, SQLORD, SQLTXT, PSQLSEQ
+                , SVRIDPARAM
                 , ADDDT
             ) values (
                 #{PJTSEQ}, #{PGMSEQ}, #{SQLID}, #{SQLNM}, #{SVRSEQ}
-                ,#{CRUD}, #{RTN_TYPE}, #{SQLORD}, #{SQLTXT}, ifnull(#{PSQLSEQ},0)
+                , #{CRUD}, #{RTN_TYPE}, #{SQLORD}, #{SQLTXT}, ifnull(#{PSQLSEQ},0)
+                , #{SVRIDPARAM}
                 ,date_format(sysdate(),'%Y%m%d%H%i%s')
             )
         ";
@@ -819,7 +822,7 @@
             $map["FILTER"]        = $ios["FILTER"];
 
 
-            $coltype = "iiiis ssiis sssss sssss sssss sssss ssss";
+            $coltype = "iiiis ssiis sssss sssss sssss sssss sssss";
             $sql = "
                 insert into CG_PGMIO (
                     PJTSEQ, PGMSEQ, GRPSEQ, COLORD, COLID
@@ -828,7 +831,7 @@
                     , LBLALIGN, OBJWIDTH, OBJHEIGHT, OBJALIGN, HIDDENYN
                     , EDITYN, FNINIT, BRYN, FORMAT, FOOTERNM
                     , FOOTERMATH, ICONNM, ICONSTYLE, LBLSTYLE, OBJSTYLE
-                    , OBJ2STYLE, PLACEHOLDER, BTNHIDDENYN, FILTER
+                    , OBJ2STYLE, PLACEHOLDER, BTNHIDDENYN, FILTER, STOREID
                     , ADDDT, ADDID
                 ) values (
                     #{PJTSEQ}, #{PGMSEQ}, #{GRPSEQ}, #{COLORD}, #{COLID}
@@ -837,7 +840,7 @@
                     ,#{LBLALIGN}, #{OBJWIDTH}, #{OBJHEIGHT}, #{OBJALIGN}, #{HIDDENYN}
                     ,#{EDITYN}, #{FNINIT}, #{BRYN}, #{FORMAT}, #{FOOTERNM}
                     ,#{FOOTERMATH}, #{ICONNM}, #{ICONSTYLE}, #{LBLSTYLE}, #{OBJSTYLE}
-                    ,#{OBJ2STYLE}, #{PLACEHOLDER}, #{BTNHIDDENYN}, #{FILTER}
+                    ,#{OBJ2STYLE}, #{PLACEHOLDER}, #{BTNHIDDENYN}, #{FILTER}, #{STOREID}
                     , date_format(sysdate(),'%Y%m%d%H%i%s'), 0
                 )
             ";
