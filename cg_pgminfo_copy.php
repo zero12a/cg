@@ -35,10 +35,25 @@
     closeStmt($stmt);
     closeDb($db2);
 
-
-
     //프로젝트 db연결
     $db = getDbConn($CFG["CFG_DB"][$pjtInfo["DSNM"]]);
+
+
+    //프로젝트의 데이터소스 정보 얻기
+    $db2 = getDbConn($CFG["CFG_DB"]["CGCORE"]);
+    $sql = "select * from CG_PJTINFO where PJTSEQ = #{TO_PJTSEQ}";
+
+    $sqlMap = getSqlParam($sql,$coltype="i",$REQ);
+    $stmt = getStmt($db2,$sqlMap);
+
+    //$stmt = makeStmt($db2,$sql,$coltype="i",$REQ);
+    $toPjtInfo = getStmtArray($stmt)[0];
+    closeStmt($stmt);
+    closeDb($db2);
+    
+
+    //프로젝트 db연결
+    $toDb = getDbConn($CFG["CFG_DB"][$toPjtInfo["DSNM"]]);
 
 
 	//내부함수 호출 후 리던 배열 
@@ -441,10 +456,10 @@
         )
     ";
 
-    $stmt = makeStmt($db,$sql,$coltype,$map);
+    $stmt = makeStmt($toDb,$sql,$coltype,$map);
     if(!$stmt)JsonMsg("500","1100","SQL makeStmt 실패 했습니다.");
-    if(!$stmt->execute())JsonMsg("500","1100","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
-    $toArr["PGMSEQ"] = $db->insert_id;
+    if(!$stmt->execute())JsonMsg("500","1100","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+    $toArr["PGMSEQ"] = $toDb->insert_id;
     $stmt->close();
 
     //200 SQL 넣기
@@ -475,11 +490,11 @@
             )
         ";
     
-        $stmt = makeStmt($db,$sql,$coltype,$map);
+        $stmt = makeStmt($toDb,$sql,$coltype,$map);
         if(!$stmt)JsonMsg("500","1200","SQL makeStmt 실패 했습니다.");
         if(!$stmt->execute())JsonMsg("500","1200","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
-        $toArr["PGMSQL"][$i]["SQLSEQ"] = $db->insert_id;
-        $sqlOldNew[$sqls["SQLSEQ"]] = $db->insert_id;//구SEQ에 매핑되는 신SEQ 넣기
+        $toArr["PGMSQL"][$i]["SQLSEQ"] = $toDb->insert_id;
+        $sqlOldNew[$sqls["SQLSEQ"]] = $toDb->insert_id;//구SEQ에 매핑되는 신SEQ 넣기
         $stmt->close();
 
         //300 SQlCOL 넣기
@@ -506,9 +521,9 @@
                 )
             ";
         
-            $stmt = makeStmt($db,$sql,$coltype,$map);
+            $stmt = makeStmt($toDb,$sql,$coltype,$map);
             if(!$stmt)JsonMsg("500","1300","SQL makeStmt 실패 했습니다.");
-            if(!$stmt->execute())JsonMsg("500","1300","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+            if(!$stmt->execute())JsonMsg("500","1300","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
             //$toArr["PGMSQL"][$i]["SQLSEQ"] = $db->insert_id;
             $stmt->close();
         }
@@ -541,10 +556,10 @@
                 )
             ";
         
-            $stmt = makeStmt($db,$sql,$coltype,$map);
+            $stmt = makeStmt($toDb,$sql,$coltype,$map);
             if(!$stmt)JsonMsg("500","1200","SQL makeStmt 실패 했습니다.");
-            if(!$stmt->execute())JsonMsg("500","1200","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
-            $toArr["PGMSQL"][$i]["PGMSQLCHILD"][$t]["SQLSEQ"] = $db->insert_id;
+            if(!$stmt->execute())JsonMsg("500","1200","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+            $toArr["PGMSQL"][$i]["PGMSQLCHILD"][$t]["SQLSEQ"] = $toDb->insert_id;
             $stmt->close();
 
 
@@ -573,9 +588,9 @@
                     )
                 ";
 
-                $stmt = makeStmt($db,$sql,$coltype,$map);
+                $stmt = makeStmt($toDb,$sql,$coltype,$map);
                 if(!$stmt)JsonMsg("500","1300","SQL makeStmt 실패 했습니다.");
-                if(!$stmt->execute())JsonMsg("500","1300","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+                if(!$stmt->execute())JsonMsg("500","1300","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
                 //$toArr["PGMSQL"][$i]["SQLSEQ"] = $db->insert_id;
                 $stmt->close();
             }
@@ -632,10 +647,10 @@
             )
         ";
     
-        $stmt = makeStmt($db,$sql,$coltype,$map);
+        $stmt = makeStmt($toDb,$sql,$coltype,$map);
         if(!$stmt)JsonMsg("500","1400","SQL makeStmt 실패 했습니다.");
-        if(!$stmt->execute())JsonMsg("500","1400","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
-        $toArr["PGMGRP"][$i]["GRPSEQ"] = $db->insert_id;
+        if(!$stmt->execute())JsonMsg("500","1400","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+        $toArr["PGMGRP"][$i]["GRPSEQ"] = $toDb->insert_id;
         $stmt->close();
 
 
@@ -665,10 +680,10 @@
                 )
             ";
 
-            $stmt = makeStmt($db,$sql,$coltype,$map);
+            $stmt = makeStmt($toDb,$sql,$coltype,$map);
             if(!$stmt)JsonMsg("500","1500","SQL makeStmt 실패 했습니다.");
-            if(!$stmt->execute())JsonMsg("500","1500","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
-            $toArr["PGMGRP"][$i]["PGMFNC"][$t]["FNCSEQ"] = $db->insert_id;
+            if(!$stmt->execute())JsonMsg("500","1500","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+            $toArr["PGMGRP"][$i]["PGMFNC"][$t]["FNCSEQ"] = $toDb->insert_id;
             $stmt->close();
 
             //600 SVC가져오기
@@ -691,10 +706,10 @@
                     )
                 ";
     
-                $stmt = makeStmt($db,$sql,$coltype,$map);
+                $stmt = makeStmt($toDb,$sql,$coltype,$map);
                 if(!$stmt)JsonMsg("500","1600","SQL makeStmt 실패 했습니다.");
-                if(!$stmt->execute())JsonMsg("500","1600","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
-                $toArr["PGMGRP"][$i]["PGMFNC"][$t]["PGMSVC"][$u]["SVCSEQ"] = $db->insert_id;
+                if(!$stmt->execute())JsonMsg("500","1600","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+                $toArr["PGMGRP"][$i]["PGMFNC"][$t]["PGMSVC"][$u]["SVCSEQ"] = $toDb->insert_id;
                 $stmt->close();
 
 
@@ -717,9 +732,9 @@
                         )
                     ";
         
-                    $stmt = makeStmt($db,$sql,$coltype,$map);
+                    $stmt = makeStmt($toDb,$sql,$coltype,$map);
                     if(!$stmt)JsonMsg("500","1700","SQL makeStmt 실패 했습니다.");
-                    if(!$stmt->execute())JsonMsg("500","1700","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+                    if(!$stmt->execute())JsonMsg("500","1700","stmt 실행 실패" . $smt->errno . " -> " . $stmt->error);
                     //$toArr["PGMGRP"][$i]["PGMFNC"][$t]["PGMSVC"][$u]["SVCSEQ"] = $db->insert_id;
                     $stmt->close();
                 }
@@ -757,10 +772,10 @@
                 )
             ";
 
-            $stmt = makeStmt($db,$sql,$coltype,$map);
+            $stmt = makeStmt($toDb,$sql,$coltype,$map);
             if(!$stmt)JsonMsg("500","1800","SQL makeStmt 실패 했습니다.");
-            if(!$stmt->execute())JsonMsg("500","1800","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
-            //$toArr["PGMGRP"][$i]["PGMFNC"][$t]["FNCSEQ"] = $db->insert_id;
+            if(!$stmt->execute())JsonMsg("500","1800","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
+            //$toArr["PGMGRP"][$i]["PGMFNC"][$t]["FNCSEQ"] = $toDb->insert_id;
             $stmt->close();
         }
 
@@ -827,9 +842,9 @@
                 )
             ";
 
-            $stmt = makeStmt($db,$sql,$coltype,$map);
+            $stmt = makeStmt($toDb,$sql,$coltype,$map);
             if(!$stmt)JsonMsg("500","1900","SQL makeStmt 실패 했습니다.");
-            if(!$stmt->execute())JsonMsg("500","1900","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+            if(!$stmt->execute())JsonMsg("500","1900","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
             //$toArr["PGMGRP"][$i]["PGMFNC"][$t]["FNCSEQ"] = $db->insert_id;
             $stmt->close();
         }
@@ -853,9 +868,9 @@
                 )
             ";
 
-            $stmt = makeStmt($db,$sql,$coltype,$map);
+            $stmt = makeStmt($toDb,$sql,$coltype,$map);
             if(!$stmt)JsonMsg("500","1950","SQL makeStmt 실패 했습니다.");
-            if(!$stmt->execute())JsonMsg("500","1950","stmt 실행 실패" . $dtmt->errno . " -> " . $stmt->error);
+            if(!$stmt->execute())JsonMsg("500","1950","stmt 실행 실패" . $stmt->errno . " -> " . $stmt->error);
             //$toArr["PGMGRP"][$i]["PGMFNC"][$t]["FNCSEQ"] = $db->insert_id;
             $stmt->close();
         }
@@ -864,8 +879,8 @@
 
 
 
-    $db->close();
-
+    closeDb($db);
+    closeDb($toDb);
 
     JsonMsg("200","100","정상적으로 Copy 성공하였습니다.");
 

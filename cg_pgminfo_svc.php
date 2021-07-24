@@ -17,6 +17,7 @@ class cg_pgminfo_svc
 		//$this->DB = db_s_open();
 		
 		$this->DB["CGCORE"] = $coreDb;
+		alog("sql dsnm = " . $dsNm);
 		$this->DB["CGPJT"] = getDbConn($CFG["CFG_DB"][$dsNm]);
 	}
 	//파괴자

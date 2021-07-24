@@ -20,7 +20,7 @@
         , "PGM_ID"=>"PGMINFO"
         , "REQTOKEN" => $reqToken
         , "RESTOKEN" => $resToken
-        , "LOG_LEVEL" => Monolog\Logger::DEBUG
+        , "LOG_LEVEL" => Monolog\Logger::ERROR
         )
     );
 
@@ -122,9 +122,9 @@
     $REQ["POP_PGMID"]    = $_POST['POP_PGMID'];
     $REQ["POP_PGMNM"]    = $_POST['POP_PGMNM'];
     $REQ["POP_PJTSEQ"]    = $_POST['POP_PJTSEQ'];
-	$log->info("POP_PGMID=" . $_POST['POP_PGMID']);
-	$log->info("POP_PGMNM=" . $_POST['POP_PGMNM']);
-	$log->info("POP_PJTSEQ=" . $_POST['POP_PJTSEQ']);
+	//$log->info("POP_PGMID=" . $_POST['POP_PGMID']);
+	//$log->info("POP_PGMNM=" . $_POST['POP_PGMNM']);
+	//$log->info("POP_PJTSEQ=" . $_POST['POP_PJTSEQ']);
 
 	$REQ["POP_PGMNM"] = "%" . $REQ["POP_PGMNM"] . "%";
 	
@@ -148,12 +148,17 @@
     $REQ["SQLD-XML"] = getXml2Array($_POST["SQLD-XML"]);//SQLD
 
     //해당 프로젝틔 데이터소스 가져오기
+
+    //alog("POP_PJTSEQ = " . $REQ["POP_PJTSEQ"]);
+
     if(!is_numeric($F_PJTSEQ))$F_PJTSEQ = $REQ["POP_PJTSEQ"] ;
+    //alog("F_PJTSEQ = " . $F_PJTSEQ);
 
     $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);
     $sql = "select * from CG_PJTINFO where PJTSEQ = #{F_PJTSEQ}";
 
-    $sqlMap = getSqlParam($sql,$coltype="i",$map["F_PJTSEQ"] = $F_PJTSEQ);
+    $sqlMap = getSqlParam($sql,$coltype="i", array("F_PJTSEQ" => $F_PJTSEQ) );
+
     $stmt = getStmt($db,$sqlMap);
     if(!$stmt)JsonMsg("500","100","stmt prepare error");
 

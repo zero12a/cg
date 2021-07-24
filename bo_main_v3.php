@@ -76,7 +76,7 @@ require_once("../common/include/incUser.php");
                 <v-list-item-title>{{m.nm}}</v-list-item-title>
               </v-list-item-content>
             </template>
-            <v-list-item v-for="s in m.submenus" :key="s.id" link   @click="addTab(s.id,s.nm,s.url);">
+            <v-list-item v-for="s in m.submenus" :key="s.id" link   @click="addTab(s.id,s.nm,s.url);" style="min-height:33px;">
               <v-list-item-content>
                 <v-list-item-title>{{s.nm}}</v-list-item-title>
               </v-list-item-content>
