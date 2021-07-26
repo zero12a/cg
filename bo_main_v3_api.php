@@ -46,7 +46,7 @@ if($CTL == "getMenu"){
     //모든 프로젝트의 데이터 소스 정보 불러오기
     $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);    
     $sql = "
-    select PJTSEQ,PJTID,PJTNM,DSNM from CG_PJTINFO where DELYN='N' ORDER BY PJTORD asc
+    select PJTSEQ, PJTID, PJTNM, DSNM from CG_PJTINFO where DELYN='N' ORDER BY PJTORD asc
         ";
     $sqlMap = getSqlParam($sql,$coltype="",$REQ);
     $stmt = getStmt($db,$sqlMap);
@@ -60,11 +60,16 @@ if($CTL == "getMenu"){
             $dbPjt=getDbConn($CFG["CFG_DB"][$tMap["DSNM"]]);
 
             $REQ["PJTSEQ"] = $tMap["PJTSEQ"];
+            $REQ["PJTID"] = $tMap["PJTID"];
             //echo "<BR>DSNM : " .  $tMap["DSNM"] ;
             //echo "<BR>PJTSEQ : " .  $REQ["PJTSEQ"] ;
 
-            $sql = " select PGMSEQ as seq,PGMID as id,PGMNM as nm,concat('http://localhost:8040/d.s/CG/', VIEWURL) as url from CG_PGMINFO where PJTSEQ = #{PJTSEQ} order by PGMORD asc, PGMSEQ desc";
-            $sqlMap = getSqlParam($sql,$coltype="i",$REQ);
+            $sql = " 
+            select PGMSEQ as seq, pgmid, concat(#{PJTID},'-',PGMID) as id, PGMNM as nm, concat('http://localhost:8040/d.s/',#{PJTID},'/', VIEWURL) as url 
+            from CG_PGMINFO 
+            where PJTSEQ = #{PJTSEQ} 
+            order by PGMORD asc, PGMSEQ desc";
+            $sqlMap = getSqlParam($sql,$coltype="ssi",$REQ);
             $stmt = getStmt($dbPjt,$sqlMap);
             $arrPgmInfo = getStmtArray($stmt);
             closeStmt($stmt);

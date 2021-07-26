@@ -99,6 +99,8 @@ require_once("../common/include/incUser.php");
         <v-toolbar-title>CG CORE</v-toolbar-title>
 
         <v-spacer></v-spacer>
+        
+        <v-icon @click="goFullScreen" class="pt-0 ma-0 px-1" >{{isFullScreen? 'mdi-fullscreen-exit':'mdi-fullscreen'}}</v-icon>
 
         <v-switch 
         class="pt-5 pr-2"
@@ -135,47 +137,27 @@ require_once("../common/include/incUser.php");
           <v-flex id="vflex" text-xs-center fill-height
           fluid 
           >
-
-          <v-row no-gutters>
-            <v-col
-              class="light-blue darken-3"
-              
-              md="auto"
-              style="cursor: pointer"
+            <v-tabs
+                dark
+                background-color="light-blue darken-2"
+                show-arrows
+                v-on:change="changeTabs"
+                v-model="active_tab"
+                next-icon="mdi-arrow-right-bold-box-outline"
+                prev-icon="mdi-arrow-left-bold-box-outline"
             >
-              <v-icon @click="goNaviToggle" class="pt-0 ma-0 px-1" small>mdi-resize</v-icon><br>
-              <v-icon @click="goFullScreen" class="pt-0 ma-0 px-1" small>{{isFullScreen? 'mdi-fullscreen-exit':'mdi-fullscreen'}}</v-icon>
-            </v-col>
-            <v-col
+                <v-tabs-slider color="teal lighten-3"></v-tabs-slider>
 
-            >
-              <v-tabs
-                  dark
-                  background-color="light-blue darken-2"
-                  show-arrows
-                  v-on:change="changeTabs"
-                  v-model="active_tab"
-                  next-icon="mdi-arrow-right-bold-box-outline"
-                  prev-icon="mdi-arrow-left-bold-box-outline"
-              >
-                  <v-tabs-slider color="teal lighten-3"></v-tabs-slider>
+                <v-tab
+                v-for="i in mytab"
+                :key="i.id"
+                class="pr-0"
+                @click="changeTab(i.id)"
+                >
+                {{ i.name }}&nbsp;<v-btn icon small @click.prevent="closeTab(i.id)"><v-icon small>fas fa-times</v-icon></v-btn>
+                </v-tab>
+            </v-tabs>
 
-                  <v-tab
-                  v-for="i in mytab"
-                  :key="i.id"
-                  class="pr-0"
-                  @click="changeTab(i.id)"
-                  >
-                  {{ i.name }}&nbsp;<v-btn icon small @click.prevent="closeTab(i.id)"><v-icon small>fas fa-times</v-icon></v-btn>
-                  </v-tab>
-              </v-tabs>
-            </v-col>
-
-          </v-row>
-
-
-
-        
             <div id="tabContent" class="divTab" ref="refTabContent" 
              style="overflow:hidden;backgroud-color:blue;"></div>
 
