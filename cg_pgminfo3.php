@@ -24,6 +24,8 @@ header("Pragma:no-cache");
     <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 
 	<!--jquery / json-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
 	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/jquery/jquery-1.12.4.min.js"></script>
     <script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/toastr.min.js"></script>
 	<script src="<?=$CFG["CFG_URL_LIBS_ROOT"]?>lib/json2.min.js"></script>
