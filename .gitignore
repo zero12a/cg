@@ -17,3 +17,5 @@ incConfig.*.php
 # test file
 test*.php
 
+# key파일
+*.key
