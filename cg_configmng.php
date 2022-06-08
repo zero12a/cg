@@ -238,7 +238,9 @@ if($_POST["CONFIG_NM"] == ""){
     }
             
     //echo "000";
-    //  echo $redisClient1->info();
+    //var_dump($redisClient->info()["server"]["redis_version"]);
+    //$redisClient->info();
+
 
     //echo "111";
     $pwStr = $redisClient->get("CONFIG_PW");
@@ -257,7 +259,7 @@ if($_POST["CONFIG_NM"] == ""){
     //echo "444";
     //echo "333";
 
-    if(strlen($jsonStr) < 10){
+    if(strlen($jsonStr) < 50){
         $jsonStr = json_encode(array(
             "FRIST_LOAD_DT" => date("Y.m.d H:i:s")
             ,"CFG_LIBS_PATH_REDIS" => "/data/www/lib/php/vendor/predis/predis/autoload.php" // predis/predis 
@@ -289,15 +291,15 @@ if($_POST["CONFIG_NM"] == ""){
             ,"CFG_AUTH_LOG" => "REDIS"//DB, REDIS
             ,"CFG_AUTH_REDIS" => "tcp://172.17.0.1:1234" //REDIS인 경우 REDIS 경로
             ,"CFG_OAUTH_HOST" => "172.17.0.1"
-            ,"CFG_OAUTH_PORT" => "8052"
+            ,"CFG_OAUTH_PORT" => "18052"
             ,"CFG_MAKE_URL" => "http://localhost:8060"
             ,"CFG_DEMO_URL" => "http://localhost:8040"
             ,"CFG_CGWEB_URL" => "http://localhost:8090"
 
 
             ,"CFG_DB" => array(
-                "CG" => array("HOST"=>"172.17.0.1", "PORT"=>"3306", "DBNM"=>"CG", "ID"=>"cg", "PW"=>"cg1234qwer"),
-                "DATING" => array("HOST"=>"", "PORT"=>"", "DBNM"=>"", "ID"=>"", "PW"=>"")
+                "CG" => array("DRIVER"=>"MYSQLI", "HOST"=>"172.17.0.1", "PORT"=>"3306", "DBNM"=>"CG", "ID"=>"cg", "PW"=>"cg1234qwer"),
+                "DATING" => array("DRIVER"=>"PDO_MYSQL", "HOST"=>"", "PORT"=>"", "DBNM"=>"", "ID"=>"", "PW"=>"")
                 )
             ,"CFG_SEC_KEY" => ""
             ,"CFG_SEC_IV" => ""
