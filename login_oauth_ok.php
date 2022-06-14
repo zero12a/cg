@@ -98,6 +98,8 @@ $REQ["USR_SEQ"] = $resArr["RTN_DATA"]["USER_INFO"]["USR_SEQ"];
 $REQ["USR_ID"] = $resArr["RTN_DATA"]["USER_INFO"]["USR_ID"];
 $REQ["USR_NM"] = $resArr["RTN_DATA"]["USER_INFO"]["USR_NM"];
 
+//var_dump($REQ);
+
 
 //마지막 로그인세션 기록용(중복로그인 방지)
 $objAuth->setLastSession($REQ["USR_SEQ"] ,session_id());
@@ -142,7 +144,7 @@ $LoginSeq = saveLoginLog($REQ);
 setLoginSeq($LoginSeq);     
 
 //객체 해제
-$db->close();unset($objAuth);
+closeDb($db);unset($objAuth);
 
 //메인 페이지로 이동
 //ob_start();
@@ -167,16 +169,21 @@ function getMyGrpIntroUrl(){
             join CMN_MNU c on b.INTRO_PGMID = c.PGMID
         where a.USR_SEQ = #{USR_SEQ}
     ";
+
+    //alog("USR_SEQ=". $REQ["USR_SEQ"]);
     
-    $stmt = makeStmt($db,$sql,$coltype,$REQ);
+    $objSqlParam = getSqlParam($sql,$coltype,$REQ);
+    $stmt = getStmt($db,$objSqlParam);
+
+    //$stmt = makeStmt($db,$sql,$coltype,$REQ);
     
-    if(!$stmt)JsonMsg("500","300","SQL makeStmt 실패 했습니다.");
+    if(!$stmt)JsonMsg("500","301","SQL makeStmt 실패 했습니다.");
     
     if(!$stmt->execute())JsonMsg("500","100","stmt 실행 실패" . $db->errno . " -> " . $db->error);
     
 
     $tArr =  getStmtArray($stmt);
-    $stmt->close();
+    closeStmt($stmt);
     return $tArr;
 }
 
@@ -198,10 +205,12 @@ function saveLoginLog($REQ){
             , date_format(sysdate(),'%Y%m%d%H%i%s')
         ) 
     ";
+    $objSqlParam = getSqlParam($sql,$coltype,$REQ);
+    $stmt = getStmt($db,$objSqlParam);
+
+    //$stmt = makeStmt($db,$sql,$coltype,$REQ);
     
-    $stmt = makeStmt($db,$sql,$coltype,$REQ);
-    
-    if(!$stmt)JsonMsg("500","300","SQL makeStmt 생성 실패 했습니다.");
+    if(!$stmt)JsonMsg("500","302","SQL makeStmt 생성 실패 했습니다.");
     
     if(!$stmt->execute())JsonMsg("500","100","stmt 실행 실패 " .  $stmt->error);
     

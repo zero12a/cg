@@ -21,6 +21,7 @@ require_once("../common/include/incLoginCheck.php");//로그인 검사
 $reqToken = reqGetString("TOKEN",37);
 $CTL = reqGetString("CTL",20);
 $resToken = uniqid();
+/*
 $log = getLoggerStdout(
     array(
     "LIST_NM"=>"log_CG"
@@ -30,6 +31,7 @@ $log = getLoggerStdout(
     , "LOG_LEVEL" => Monolog\Logger::DEBUG
     )
 );
+*/
 
 if($CTL == "getMenu"){
 
@@ -52,6 +54,7 @@ if($CTL == "getMenu"){
     $stmt = getStmt($db,$sqlMap);
     $arrPjtInfo = getStmtArray($stmt);
     closeStmt($stmt);
+    alog("sizeof(arrPjtInfo) = " . sizeof($arrPjtInfo) );
 
     for($i=0;$i<sizeof($arrPjtInfo); $i++){
         $tMap = $arrPjtInfo[$i];
