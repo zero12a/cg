@@ -64,15 +64,16 @@ if($CTL == "getMenu"){
 
             $REQ["PJTSEQ"] = $tMap["PJTSEQ"];
             $REQ["PJTID"] = $tMap["PJTID"];
+            $REQ["CFG_DEMO_URL"] = $CFG["CFG_DEMO_URL"];
             //echo "<BR>DSNM : " .  $tMap["DSNM"] ;
             //echo "<BR>PJTSEQ : " .  $REQ["PJTSEQ"] ;
 
             $sql = " 
-            select PGMSEQ as seq, pgmid, concat(#{PJTID},'-',PGMID) as id, PGMNM as nm, concat('http://localhost:8040/d.s/',#{PJTID},'/', VIEWURL) as url 
+            select PGMSEQ as seq, pgmid, concat(#{PJTID},'-',PGMID) as id, PGMNM as nm, concat(#{CFG_DEMO_URL}, '/d.s/',#{PJTID},'/', VIEWURL) as url 
             from CG_PGMINFO 
             where PJTSEQ = #{PJTSEQ} 
             order by PGMORD asc, PGMSEQ desc";
-            $sqlMap = getSqlParam($sql,$coltype="ssi",$REQ);
+            $sqlMap = getSqlParam($sql,$coltype="sssi",$REQ);
             $stmt = getStmt($dbPjt,$sqlMap);
             $arrPgmInfo = getStmtArray($stmt);
             closeStmt($stmt);
