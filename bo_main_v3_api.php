@@ -41,7 +41,7 @@ if($CTL == "getMenu"){
     $rtnVal[0]["submenus"][1] = array("id" => "pgminfo3", "nm" => "PGMINFO", "url" => "/c.g/cg_pgminfo3.php");
     $rtnVal[0]["submenus"][2] = array("id" => "pgmmng", "nm" => "PGMMNG", "url" => "/c.g/cg_pgmmng.php");
     $rtnVal[0]["submenus"][3] = array("id" => "configmng", "nm" => "CFG_MNG", "url" => "/c.g/cg_configmng.php");
-    $rtnVal[0]["submenus"][4] = array("id" => "redismng", "nm" => "REDIS_MNG", "url" => "http://localhost:8040/d.s/CG/redismngView.php");
+    $rtnVal[0]["submenus"][4] = array("id" => "redismng", "nm" => "REDIS_MNG", "url" => $CFG["CFG_DEMO_URL"] . "/d.s/CG/redismngView.php");
 
 
 
