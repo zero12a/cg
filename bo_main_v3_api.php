@@ -44,7 +44,6 @@ if($CTL == "getMenu"){
     $rtnVal[0]["submenus"][4] = array("id" => "redismng", "nm" => "REDIS_MNG", "url" => $CFG["CFG_DEMO_URL"] . "/d.s/CG/redismngView.php");
 
 
-
     //모든 프로젝트의 데이터 소스 정보 불러오기
     $db = getDbConn($CFG["CFG_DB"]["CGCORE"]);    
     $sql = "
