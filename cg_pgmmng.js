@@ -19,7 +19,7 @@
 
     
     function Make(pgmtype) {
-        window.open( CFG_MAKE_URL  + "/m.k/cg_make.php?access_token=" + oauthToken + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
+        window.open( "http://" + window.location.hostname  + ":8060/m.k/cg_make.php?access_token=" + oauthToken + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
 
     //비동기 예시
@@ -52,7 +52,7 @@
             alog("  nowQuqueCnt (before http request) = " + nowQueueCnt);
             $.ajax({
                 type : "GET",
-                url : CFG_MAKE_URL  + "/m.k/cg_make.php?async=Y&access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + pjtSeq + "&pgmseq=" + pgmSeq + "&pgmtype=" + pgmType,
+                url : "http://" + window.location.hostname  + ":8060/m.k/cg_make.php?async=Y&access_token=" + oauthToken + "&TOKEN=" + token + "&pjtseq=" + pjtSeq + "&pgmseq=" + pgmSeq + "&pgmtype=" + pgmType,
                 dataType : "jsonp",
                 async: true,
                 xhrFields: {
