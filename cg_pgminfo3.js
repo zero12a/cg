@@ -66,11 +66,11 @@
     var lastSelectPgRowId; //마지막 선택한 그리드 프로퍼티 row
 
     function MakeQueue(pgmtype) {
-        window.open( CFG_MAKE_URL + "/m.k/cg_make_queue.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
+        window.open( "http://" + window.location.hostname + ":8060/m.k/cg_make_queue.php?pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
 
     function Make(pgmtype) {
-        window.open( CFG_MAKE_URL + "/m.k/cg_make.php?access_token=" + oauthToken + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
+        window.open( "http://" + window.location.hostname + ":8060/m.k/cg_make.php?access_token=" + oauthToken + "&pjtseq=" + $("#F_PJTSEQ").val() + "&pgmseq=" + $("#F_PGMSEQ").val()+ "&pgmtype=" + pgmtype ) ;
     }
 
     function changeCodemirrorFontSize(sizeCmd){
@@ -258,7 +258,7 @@
         }else{
             //window.open("./rst/" + $("#F_PGMURL").val() );//단일 프로젝트일때
             //alert(CFG_MAKE_URL + "/c.g/" + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val());
-            window.open( CFG_DEMO_URL + "/d.s/"  + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val() + "?access_token=" + oauthToken );//멀티 프로젝트일때
+            window.open( "http://" + window.location.hostname + ":8040/d.s/"  + $("#F_PJTID").val() + "/" + $("#F_PGMURL").val() + "?access_token=" + oauthToken );//멀티 프로젝트일때
         }
         
     }
