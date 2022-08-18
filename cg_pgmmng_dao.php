@@ -22,8 +22,8 @@ class cg_pgminfo_dao
 		$RtnVal["SQLTXT"] = "
 		select
 			0, a.PJTSEQ, c.PJTID, a.PGMSEQ, '-' as STATUS, a.PGMID, a.PGMNM
-			, concat(a.VIEWURL,'^javascript:linkRun(\'/', c.PJTID ,'/', a.VIEWURL ,'\');^_blank') as VIEWURL
-			, concat('권한받기^',#{CFG.CFG_DEMO_URL},'/d.s/cg_pgminfo_getauth.php?PJTSEQ=',a.PJTSEQ,'&PGMSEQ=',a.PGMSEQ,'^_blank') as GETAUTH
+			, concat(a.VIEWURL,'^http://',#{CFG.CFG_DEMO_URL},':8040/d.s/',c.PJTID,'/',a.VIEWURL,'?access_token=',#{USER.ACCESS_TOKEN},'^_blank') as VIEWURL
+			, concat('권한받기^http://',#{CFG.CFG_DEMO_URL},':8040/d.s/cg_pgminfo_getauth.php?PJTSEQ=',a.PJTSEQ,'&PGMSEQ=',a.PGMSEQ,'^_blank') as GETAUTH
 			, a.PGMTYPE
 			,b.VERDT, b.DEGREE, b.ADDDT as MAKEDT, a.ADDDT, a.MODDT
 		from 
@@ -33,7 +33,7 @@ class cg_pgminfo_dao
 		where a.PJTSEQ = #{POP_PJTSEQ} and (a.PGMID = #{POP_PGMID} or a.PGMNM LIKE #{POP_PGMNM} or a.PGMTYPE LIKE #{POP_PGMTYPE})
 		order by a.PGMSEQ desc
 		";
-		$RtnVal["BINDTYPE"] = "s isss";
+		$RtnVal["BINDTYPE"] = "sss isss";
 
 		return $RtnVal;
 	}  

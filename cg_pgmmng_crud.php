@@ -49,7 +49,8 @@
 
     //CFG
     $REQ["CFG.CFG_MAKE_URL"] = $CFG["CFG_MAKE_URL"];
-    $REQ["CFG.CFG_DEMO_URL"] = $CFG["CFG_DEMO_URL"];
+    //$REQ["CFG.CFG_DEMO_URL"] = $CFG["CFG_DEMO_URL"];
+    $REQ["CFG.CFG_DEMO_URL"] = explode(":",$_SERVER["HTTP_HOST"])[0];
 
     //로그인 정보
     $REQ["USER.ACCESS_TOKEN"] = getAccessToken();
