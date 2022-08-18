@@ -116,6 +116,14 @@
         httpAsync(token,requestQueue);
     }
 
+    function linkRun(t){
+        alert(t);
+        window.open("http://"  + window.location.hostname + ":8040/" + t + "?access_token=" + oauthToken);
+    }
+
+    function linkGetAuth(t){
+        window.open("http://"  + window.location.hostname + ":8040//d.s/cg_pgminfo_getauth.php?PJTSEQ=" + t + "?access_token=" + oauthToken);
+    }
     
 
     function Run() {

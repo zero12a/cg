@@ -2455,7 +2455,7 @@
     }
 
     function getAuth(){
-        window.open(CFG_DEMO_URL + "/d.s/cg_pgminfo_getauth.php?PJTSEQ=" + $("#F_PJTSEQ").val() + "&PGMSEQ=" + $("#F_PGMSEQ").val());
+        window.open("http://" + window.location.hostname + ":8040/d.s/cg_pgminfo_getauth.php?PJTSEQ=" + $("#F_PJTSEQ").val() + "&PGMSEQ=" + $("#F_PGMSEQ").val());
     }
 
 
