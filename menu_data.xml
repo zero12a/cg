@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tree id="0" radio="1">
+	<item   text="CG" id="cg" open="1">
+        <item text="PJTINFO" id="pjtinfo" url="./rst/test2View.php">test2View</item>
+        <item text="CODE" id="code" url="cg_code.php">cg_code.php2</item>
+        <item text="OBJIFO2" id="objinfo2" url="cg_objinfo.php">cg_objinfo.php2</item>
+        <item text="PGMINFO2" id="pgminfo2" url="cg_pgminfo2.php">cg_pgminfo.php2</item>
+        <item text="PGMINFO3" id="pgminfo3" url="cg_pgminfo3.php">cg_pgminfo.php3</item>
+        <item text="LAYOUT" id="layout" url="cg_layout.php">cg_pgminfo.php2</item>
+        <item text="SRCINFO" id="srcinfo" url="cg_srcinfo.php">cg_pgminfo.php2</item>
+        <item text="newtab" id="newtab" ></item>
+	</item>
+    <item   text="BC" id="bc" open="1">
+        <item text="TBLINFO" id="tblinfo" url="cg_pjtinfo.php">cg_pjtinfo.php2</item>
+    </item>
+</tree>

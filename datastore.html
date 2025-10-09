@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+<link rel="stylesheet" type="text/css" href="lib/dhtmlx.css" />
+<script language=javascript src="lib/dhtmlx.js"></script>
+<script language=javascript src="lib/jquery-1.11.1.min.js"></script>
+<script language=javascript>
+	var myDataStore1=null;
+	var myDataStore2=null;
+
+
+	function bodyInit(){
+		myDataStore1 = new dhtmlXDataStore();
+		myDataStore1.parse([
+			{id:"1", name:"한글입니다."},
+			{id:"2", name:"Customer Service"},
+			{id:"3", name:"Developing Department"}
+		]);
+
+
+		myDataStore2 = new dhtmlXDataStore({
+			url:"data/datastore.json",
+			datatype:"json"
+		});
+
+		log("bodyInit end");
+
+
+	}
+
+	function addData1(){
+		log("addData1-----------------start()");
+
+		myDataStore1.add({
+				  id:"4",
+				  name:"한글입니다.2"
+		});
+		log("addData1-----------------end()");
+	}
+	function addBlank1(){
+		myDataStore1.add({});
+	}
+	function addData2(){
+		log("addData2-----------------start()");
+
+		myDataStore2.add({
+				  id:"4",
+				  name:"한글입니다.2"
+		});
+		log("addData2-----------------end()");
+	}
+
+	function removeData1(){
+		log("removeData1-----------------start()");
+
+		var ids = ["1", "2", "3"];
+
+		//log("delete data: " + $("#tids").val());
+		myDataStore1.remove(ids);
+		log("removeData1-----------------end()");
+	}
+	function removeData2(){
+		log("removeData1-----------------start()");
+
+		//var id = myGrid.getSelectedRowId()
+
+		log("delete data: " + $("#tids").val());
+		myDataStore1.remove($("#tids").val());
+		log("removeData1-----------------end()");
+	}
+	function addBlank2(){
+		myDataStore2.add({});
+	}
+
+	function viewData1(){
+		log("viewData1-----------------start()");
+
+		var tmp = myDataStore1.serialize();
+		log(typeof tmp);
+
+		$("#tarea1").val(JSON.stringify(tmp));
+		log("viewData1-----------------end()");
+
+	}
+
+	function viewData2(){
+		log("viewData2-----------------start()");
+
+		var tmp = myDataStore2.serialize();
+		log(typeof tmp);
+
+		$("#tarea2").val(JSON.stringify(tmp));
+		log("viewData2-----------------end()");
+
+	}
+
+	function log(tmp){
+		console.log(tmp);
+	}
+
+</script>
+
+ </head>
+ <body onload="bodyInit();">
+  감사합니다.
+<form>
+<table border=0 style="width:100%">
+	<tr><td>
+		<input type="button" value="addData1()" onclick="addData1()">
+		<input type="button" value="addBlank1()" onclick="addBlank1()">
+		<input type="button" value="addData2()" onclick="addData2()">
+		<input type="button" value="addBlank2()" onclick="addBlank2()">
+		<input type="button" value="removeData1()" onclick="removeData1()">
+		<input type="button" value="removeData2()" onclick="removeData2()">
+		remove id <input type=text style="width:50px" id="tids">
+		<input type="button" value="viewData1()" onclick="viewData1()">
+		<input type="button" value="viewData2()" onclick="viewData2()">
+		
+	</td></tr>
+	<tr><td>
+	  <textarea id="tarea1" style="width:100%;height:200px"></textarea>
+	  <textarea id="tarea2" style="width:100%;height:200px"></textarea>
+	</td></tr>
+</table>
+</form>
+
+ </body>
+</html>

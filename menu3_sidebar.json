@@ -1,0 +1,8 @@
+{
+	"items": 
+		[
+			{"id": "recent", "text": "프로젝트 관리", "icon": "img/popup.png", "selected": true, "bubble" : 6},
+			{"id": "desktop", "text": "DB 관리", "icon": "img/popup.png", "bubble" : 1},
+			{"id": "desktop", "text": "파일 관리", "icon": "img/popup.png", "bubble" : 1}
+		]
+}

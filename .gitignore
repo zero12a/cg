@@ -1,0 +1,21 @@
+# Log file
+*.log
+
+# file
+*.7z
+
+# folder
+/up
+/lib
+/BACKUP
+/md/BACKUP
+
+# config
+incConfig.php
+incConfig.*.php
+
+# test file
+test*.php
+
+# key파일
+*.key

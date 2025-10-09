@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <title></title>
+  <meta http-equiv="Context-Type" context="text/html;charset=UTF-8" />
+  <script src="/lib/feather.min.js"></script>
+  <style>
+      html {font-family: "Nanum Gothic", sans-serif;margin:0;padding:0;height:100%;}
+body {background-color:rgb(237, 237, 238); font-family: "Nanum Gothic", sans-serif;margin:0;padding:3px;}
+
+.HTML_BODY {margin:0px;padding:5px;}
+
+*,*::before,*::after {  
+    box-sizing: border-box;
+}
+
+
+
+
+.GRP_LINE {background-color:#eeeeee;position: relative;width:100%;z-index:10;overflow:auto;}
+.GRP_OBJECT {position: relative;float:left;z-index:20;padding:0px 0px 0px 0px}
+.GRP_OBJECT_VBOX {position: relative;float:left;z-index:20;padding:0px 0px 0px 0px}
+.GRP_GAP {padding:3px 3px 3px 3px;} /*GRP 간의 여백*/
+.GRP_INNER {overflow: visible;background-color: white;border-radius:2px;padding:5px 5px 5px 5px;}
+
+.BI_OBJGRP {border:0px solid black;padding:0px 0px 0px 0px;position: relative;float:left;vertical-align:middle ;overflow:auto;z-index:25;}
+.BI_OBJINNER {bborder-radius:5px;padding:5px 5px 5px 5px;height:70px;}
+.BI_LABEL {height:22px;color:gray;text-align:left;font-size:11pt;height:22px;position: relative;vertical-align:middle ;overflow:auto;z-index:30;}
+.BI_ICON {;overflow:hidden;overflow-y:hidden;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_VALUE {height:45px;font-weight:bold;text-align:left;font-size:24pt;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_VALUE2 {font-size:11pt;position: relative;vertical-align:middle;overflow:auto;z-index:30;}
+.BI_VALUE2_TYPE3 {color:gray;width:30%;padding-top:12px;text-align:right;}
+.BI_VALUE2_TYPE4 {color:white;border-radius:5px;float:left;text-align:left;margin-top:12pt;background-color:gray;}
+
+.BI_LINE {position: relative;width:100%;overflow:auto;z-index:20;}
+.GRP_GAP {padding:3px 3px 3px 3px;}
+
+
+.BI_LINEPADDING {position: relative;height:5px;overflow:auto;z-index:20;}
+  </style>
+  <body>
+
+    <!--type1 -->
+
+    <div class="GRP_OBJECT" style="width:25%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:77px">
+                <div class="BI_ICON" style="float:left;width:30%;text-align:center;">
+                        <i style="padding-top:9px;color:yellow"
+                        width="50"
+                        height="50"
+                        data-feather="eye"></i>
+                </div>
+                <div class="BI_VALUE"
+                 style="width:70%;">
+                    <span>412</span>
+                </div>
+                <div class="BI_LABEL" style="width:70%;">
+                    <span>desc hahha</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+
+    <!--type2-->
+    <div class="GRP_OBJECT" style="width:25%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:77px">
+                <div class="BI_LABEL" style="width:100%;">
+                    title
+                </div>
+                <div class="BI_VALUE" style="width:80%;float:left;">
+                        <span>412</span>
+                </div>            
+                <div class="BI_ICON" style="width:20%;text-align:right;">
+                        <i style="padding-left:5px;padding-top:0px;"
+                        color="silver" 
+                        width="30"
+                        height="30"
+                        data-feather="eye"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--type3-->
+    <div class="GRP_OBJECT" style="width:25%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:77px">
+                <div class="BI_LABEL" style="float:left;width:70%;">
+                    title
+                </div>
+                <div class="BI_ICON" style="text-align:right;width:30%;">
+                        <i style="padding-right:5px;padding-top:0px;"
+                        color="silver" 
+                        width="22"
+                        height="22"
+                        data-feather="eye"></i>
+                </div>
+                <div class="BI_VALUE" style="float:left;width:70%;">
+                        <span>412</span>
+                </div>
+                <div class="BI_VALUE2 BI_VALUE2_TYPE3">
+                        <b>12%</b>
+                </div>
+            </div>     
+        </div>
+    </div>
+
+
+    <!--type4-->
+
+    <div class="GRP_OBJECT" style="width:25%;">
+        <div class="GRP_GAP"><!--흰색 바깥 여백-->
+            <div class="GRP_INNER" style="height:77px">
+                <div class="BI_LABEL" style="width:100%;">
+                    title
+                </div>
+                <div style="float:left;width:80%">
+                    <div class="BI_VALUE" style="float:left;text-align:left;">
+                            <span>412</span>
+                    </div>    
+                    <div class="BI_VALUE2 BI_VALUE2_TYPE4">
+                            +12%
+                    </div>   
+                </div>
+                <div class="BI_ICON" style="text-align:right;width:20%;">
+                        <i style="padding-left:5px;padding-top:0px;"
+                        color="silver" 
+                        width="30"
+                        height="30"
+                        data-feather="eye"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>11111
+    <br>22222
+    
+    <script>
+      //feather.icons.circle.toSvg({ 'width': '100px','height': '200px' });
+      //이미지
+      feather.replace();
+
+      //SVG는 불필요
+      //feather.icons.circle.toSvg({ 'stroke-width': 5 });
+
+      //alert(feather.icons.eye.toString());
+    </script>
+  </body>
+</html>
