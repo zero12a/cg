@@ -24,6 +24,8 @@
         )
     );
 
+    $_RTIME = array();
+
     //php 7.3에서 동작안함..ㅠㅠ (개선을 직접 했음.)
     //https://github.com/soundintheory/php-sql-parser
     //https://code.google.com/archive/p/php-sql-parser/downloads

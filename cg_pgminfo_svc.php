@@ -38,10 +38,10 @@ class cg_pgminfo_svc
 	public function goDdSearch(){
 		global $REQ,$_RTIME,$CFG;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
+
 
 		alog("cg_pgminfo_svc-goDdSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -68,10 +68,10 @@ class cg_pgminfo_svc
 	public function goDdObjSearch(){
 		global $REQ,$_RTIME,$CFG;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
+
 
 		alog("cg_pgminfo_svc-goDdObjSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -97,10 +97,10 @@ class cg_pgminfo_svc
 	public function goIocdSearch(){
 		global $REQ,$_RTIME, $CFG;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
+
 
 		alog("cg_pgminfo_svc-goIocdSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -124,10 +124,10 @@ class cg_pgminfo_svc
 	public function goFnccdSearch(){
 		global $REQ,$_RTIME, $CFG;
 		//$CFG_UPLOAD_DIR
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
+
 
 		alog("cg_pgminfo_svc-goFnccdSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -151,10 +151,10 @@ class cg_pgminfo_svc
 	public function goLayoutdSearch(){
 		global $REQ,$_RTIME,$CFG;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
+
 
 		alog("cg_pgminfo_svc-goLayoutdSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -179,10 +179,9 @@ class cg_pgminfo_svc
 	public function goLayoutsSearch(){
 		global $REQ,$_RTIME,$CFG;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goLayoutsSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -206,10 +205,9 @@ class cg_pgminfo_svc
 	public function goLayoutSearch(){
 		global $REQ,$CFG,$_RTIME;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goLayoutSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -235,10 +233,9 @@ class cg_pgminfo_svc
 	public function goPgmSearch(){
 		global $REQ,$CFG,$_RTIME;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goPgmSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -262,10 +259,9 @@ class cg_pgminfo_svc
 	public function goSqldSearch(){
 		global $REQ,$CFG,$_RTIME;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goSqldSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -300,10 +296,9 @@ class cg_pgminfo_svc
 	public function goSqldSave(){
 		global $REQ,$CFG,$_RTIME;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("PGMMNGService-goSqldSave________________________start");
 		//GRID_SAVE____________________________start
@@ -348,10 +343,9 @@ class cg_pgminfo_svc
 	public function goSqlrSearch(){
 		global $REQ,$CFG,$_RTIME;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goSqlrSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -376,10 +370,9 @@ class cg_pgminfo_svc
 	public function goSqlrSave(){
 		global $REQ,$CFG,$_RTIME;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("PGMMNGService-goSqlrSave________________________start");
 		//GRID_SAVE____________________________start
@@ -416,10 +409,9 @@ class cg_pgminfo_svc
 	public function goSvcSearch(){
 		global $REQ,$CFG,$_RTIME;
 		//
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goSvcSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -443,10 +435,9 @@ class cg_pgminfo_svc
 	public function goSvcSave(){
 		global $REQ,$CFG,$_RTIME;
 		//$CFG_UPLOAD_DIR
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("PGMMNGService-goSvcSave________________________start");
 		//GRID_SAVE____________________________start
@@ -484,10 +475,9 @@ class cg_pgminfo_svc
 	public function goInheritSearch(){
 		global $REQ,$CFG,$_RTIME;
 		//$CFG_UPLOAD_DIR
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goInheritSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -513,10 +503,9 @@ class cg_pgminfo_svc
 	public function goInheritSave(){
 		global $REQ,$CFG,$_RTIME;
 		//$CFG_UPLOAD_DIR
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("PGMMNGService-goInheritSave________________________start");
 		//GRID_SAVE____________________________start
@@ -554,10 +543,9 @@ class cg_pgminfo_svc
 	*/
 	public function goIoSearch(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goIoSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -580,10 +568,9 @@ class cg_pgminfo_svc
 
 	public function goIoSave(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("PGMMNGService-goIoSave________________________start");
 		//GRID_SAVE____________________________start
@@ -758,10 +745,9 @@ class cg_pgminfo_svc
 	*/
 	public function goFncSearch(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goFncSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -786,10 +772,9 @@ class cg_pgminfo_svc
 
 	public function goFncSave(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("PGMMNGService-goFncSave________________________start");
 		//GRID_SAVE____________________________start
@@ -830,10 +815,9 @@ class cg_pgminfo_svc
 	*/
 	public function goEvtSearch(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goEvtSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -856,10 +840,9 @@ class cg_pgminfo_svc
 
 	public function goEvtSave(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("PGMMNGService-goEvtSave________________________start");
 		//GRID_SAVE____________________________start
@@ -900,10 +883,9 @@ class cg_pgminfo_svc
 	*/
 	public function goGrpSearch(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goGrpSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -927,10 +909,9 @@ class cg_pgminfo_svc
 
 	public function goGrpSave(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("PGMMNGService-goGrpSave________________________start");
 		//GRID_SAVE____________________________start
@@ -968,10 +949,9 @@ class cg_pgminfo_svc
 	*/	
 	public function goSqlSearch(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goSqlSearch________________________start");
 		//CHARTBAR SEARCH____________________________start
@@ -994,10 +974,9 @@ class cg_pgminfo_svc
 	
 	public function goSqlSave(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("PGMMNGService-goSqlSave________________________start");
 		//GRID_SAVE____________________________start

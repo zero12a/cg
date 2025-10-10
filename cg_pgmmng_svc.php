@@ -23,7 +23,9 @@ class cg_pgminfo_svc
 		alog("cg_pgminfo_svc-__destruct");
 
 		unset($this->DAO);
-		if($this->DB["CG"])$this->DB["CG"]->close();
+		closeDb($this->DB["CG"]);
+
+		//if($this->DB["CG"])$this->DB["CG"]->close();
 		unset($this->DB);
 	}
 	function __toString(){
@@ -32,10 +34,9 @@ class cg_pgminfo_svc
 
 	public function goPgmSearch(){
 		global $REQ,$_RTIME;
-		$rtnVal = null;
+		$rtnVal = new stdClass(); $rtnVal->GRP_DATA = array();
 		$tmpVal = null;
 		$grpId = null;
-		$rtnVal->GRP_DATA = array();
 
 		alog("cg_pgminfo_svc-goPgmSearch________________________start");
 		//CHARTBAR SEARCH____________________________start

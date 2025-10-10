@@ -21,6 +21,8 @@
     //$reqToken = reqGetString("TOKEN",37);
     $resToken = uniqid();
 
+    $_RTIME = array();
+
 
     $log = getLoggerStdout(
         array(
