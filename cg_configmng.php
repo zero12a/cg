@@ -320,7 +320,7 @@ if($_POST["CONFIG_NM"] == ""){
             //배포 관련 정보
             ,"CFG_DEPLOY_DIR" => "/data/www/r.d/"
             ,"CFG_DEPLOY_KEY" => ""
-            ,"CFG_DEPLOY_MAKE_ROOT"  =>   "/data/www/c.g/"
+            ,"CFG_DEPLOY_MAKE_ROOT"  =>   "/data/www/d.s/"
             ,"CFG_DEPLOY_GITHUB_USR_NM"  =>   ""
             ,"CFG_DEPLOY_GITHUB_USR_EML"  =>   ""
             ,"CFG_DEPLOY_GITHUB_USR_ID"  =>   ""
