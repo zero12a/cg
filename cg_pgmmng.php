@@ -72,7 +72,7 @@ header("Pragma:no-cache");
                 <div class="CON_OBJECT" style="width:90px;"><input type="text" name="POP_PGMID" value="" id="POP_PGMID" style="width:80px;"></div>
             </div>
             <div class="CON_OBJGRP" style="">
-                <div class="CON_LABEL" style="width:50px;">PGMNM</div>
+                <div class="CON_LABEL" style="width:55px;">PGMNM</div>
                 <div class="CON_OBJECT" style="width:90px;"><input type="text" name="POP_PGMNM" value="" id="POP_PGMNM" style="width:80px;"></div>
             </div>
             <div class="CON_OBJGRP" style="">

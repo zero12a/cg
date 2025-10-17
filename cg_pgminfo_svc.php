@@ -1120,7 +1120,7 @@ class cg_pgminfo_svc
 			alog("        WHERE절 sizeof : " . sizeof($parser->parsed["WHERE"]) );
 	
 			//SELECT절이 있을 경우에만 (다만 insert as select 구문은 제외)
-			if(sizeof($parser->parsed["INSERT"]) == 0){
+			if(sizeof($parser->parsed["INSERT"] ?? []) == 0){
 				for($s=0;$s<sizeof($parser->parsed["SELECT"]) ; $s++){
 					alog("  s : " . $s);
 					alog("      alias : " . $parser->parsed["SELECT"][$s]["alias"]);
