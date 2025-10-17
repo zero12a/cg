@@ -84,7 +84,8 @@ $db2 = getDbConn($CFG["CFG_DB"]["CGCORE"]);
 $sql = "select * from CG_PJTINFO where PJTSEQ = #{PJTSEQ}";
 //$stmt = makeStmt($db2,$sql,$coltype="i",$map["PJTSEQ"] = $F_PJTSEQ);
 
-$sqlMap = getSqlParam($sql,$coltype="i",$map["PJTSEQ"] = $F_PJTSEQ);
+$map["PJTSEQ"] = $F_PJTSEQ;
+$sqlMap = getSqlParam($sql,$coltype="i",$map);
 $stmt = getStmt($db2,$sqlMap);
 
 $pjtInfo = getStmtArray($stmt)[0];
