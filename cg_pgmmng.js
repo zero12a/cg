@@ -39,8 +39,8 @@
             alog("loopCnt = "  + loopCnt);
 
             if(nowQueueCnt >= maxQueueSize){
-                alog("  sleep 1000");
-                await waiting(1000);
+                alog("  sleep 10");
+                await waiting(10);//1초가 1000임
                 continue;
             }
 

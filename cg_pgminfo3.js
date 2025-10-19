@@ -109,66 +109,91 @@
         msgNotice("Axios로 비동기 요청 5개 발송",3);
         Promise.all([
             axios.get(urls["HTML"], {transitional: { forcedJSONParsing: true }}).then(function (response) {
-                if(response.RTN_CD != "200"){
+                alog(response.data);
+                res = response.data;
+                var fixedRes = res.replace(/MakeAsync\(/g,'').replace(/\)/g,'');
+                var resJson = JSON.parse(fixedRes);
+
+                if(resJson.RTN_CD == "200"){
                     endDate = _.now(); //lodash.js        
                     makeDate = endDate - startDate;
 
                     msgNotice("HTML 완료, 소요(초) = " + (Math.round((makeDate/1000*10))/10),5); //소숫점 1자리까지만 표기
                     $("#makeHTML").text("R");
                 }else{
-                    msgError("MakeAsync(HTML) 응답오류 : " + response.RTN_MSG);
+                    msgError("MakeAsync(HTML) 응답오류 : " + resJson.RTN_MSG);
                 }
               })
               .catch(function (error) {
                 msgError("MakeAsync(HTML) Ajax http 500 error ( " + error + " )");
               }),
             axios.get(urls["HTMLJS"], {transitional: { forcedJSONParsing: true }}).then(function (response) {
-                if(response.RTN_CD != "200"){
+                alog(response.data);
+                res = response.data;
+                var fixedRes = res.replace(/MakeAsync\(/g,'').replace(/\)/g,'');
+                var resJson = JSON.parse(fixedRes);
+
+                if(resJson.RTN_CD == "200"){
                     endDate = _.now(); //lodash.js        
                     makeDate = endDate - startDate;
                     msgNotice("HTMLJS 완료, 소요(초) = " + (Math.round((makeDate/1000*10))/10),5);
                     $("#makeHTMLJS").text("R");
                 }else{
-                    msgError("MakeAsync(HTMLJS) 응답오류 : " + response.RTN_MSG);
+                    msgError("MakeAsync(HTMLJS) 응답오류 : " + resJson.RTN_MSG);
                 }
               })
               .catch(function (error) {
                 msgError("MakeAsync(HTMLJS) Ajax http 500 error ( " + error + " )");
               }),
             axios.get(urls["SVRCTL"], {transitional: { forcedJSONParsing: true }}).then(function (response) {
-                if(response.RTN_CD != "200"){
+                alog(response.data);
+                res = response.data;
+                var fixedRes = res.replace(/MakeAsync\(/g,'').replace(/\)/g,'');
+                var resJson = JSON.parse(fixedRes);
+
+                if(resJson.RTN_CD == "200"){
                     endDate = _.now(); //lodash.js        
                     makeDate = endDate - startDate;
                     msgNotice("SVRCTL 완료, 소요(초) = " + (Math.round((makeDate/1000*10))/10),5);
                     $("#makeSVRCTL").text("R");
                 }else{
-                    msgError("MakeAsync(SVRCTL) 응답오류 : " + response.RTN_MSG);
+                    msgError("MakeAsync(SVRCTL) 응답오류 : " + resJson.RTN_MSG);
                 }
               })
               .catch(function (error) {
                 msgError("MakeAsync(SVRCTL) Ajax http 500 error ( " + error + " )");
               }),
             axios.get(urls["SVRSVC"], {transitional: { forcedJSONParsing: true }}).then(function (response) {
-                if(response.RTN_CD != "200"){
+                alog(response.data);
+                res = response.data;
+                var fixedRes = res.replace(/MakeAsync\(/g,'').replace(/\)/g,'');
+                var resJson = JSON.parse(fixedRes);
+
+                if(resJson.RTN_CD == "200"){
                     endDate = _.now(); //lodash.js        
                     makeDate = endDate - startDate;
                     msgNotice("SVRSVC 완료, 소요(초) = " + (Math.round((makeDate/1000*10))/10),5);
                     $("#makeSVRSVC").text("R");
                 }else{
-                    msgError("MakeAsync(SVRSVC) 응답오류 : " + response.RTN_MSG);
+                    msgError("MakeAsync(SVRSVC) 응답오류 : " + resJson.RTN_MSG);
                 }
               })
               .catch(function (error) {
                 msgError("MakeAsync(SVRSVC) Ajax http 500 error ( " + error + " )");
               }),
             axios.get(urls["SVRDAO"], {transitional: { forcedJSONParsing: true }}).then(function (response) {
-                if(response.RTN_CD != "200"){
+                alog(response.data);
+                res = response.data;
+                var fixedRes = res.replace(/MakeAsync\(/g,'').replace(/\)/g,'');
+                var resJson = JSON.parse(fixedRes);
+
+                if(resJson.RTN_CD == "200"){
                     endDate = _.now(); //lodash.js        
                     makeDate = endDate - startDate;
                     msgNotice("SVRDAO 완료, 소요(초) = " + (Math.round((makeDate/1000*10))/10),5);
                     $("#makeSVRDAO").text("R");
                 }else{
-                    msgError("MakeAsync(SVRDAO) 응답오류 : " + response.RTN_MSG);
+                    msgError("MakeAsync(SVRDAO) 응답오류 : " + resJson.RTN_MSG);
                 }
               })
               .catch(function (error) {
