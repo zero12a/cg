@@ -212,7 +212,7 @@ header("Pragma:no-cache");
                 </div>
             </div>
             <div class="GRID_OBJECT" >
-                <div id="grid5" width="100%" height="173px" style="background-color:white;z-index:40;"></div>
+                <div id="grid5" width="100%" height="200px" style="background-color:white;z-index:40;"></div>
             </div>
 
             <div  class="GRID_LABELGRP_SLIM" >
@@ -229,7 +229,7 @@ header("Pragma:no-cache");
                 </div>
             </div>
             <div class="GRID_OBJECT" >
-                <div id="gridEvt" width="100%" height="100px" style="background-color:white;z-index:40;"></div>
+                <div id="gridEvt" width="100%" height="73px" style="background-color:white;z-index:40;"></div>
             </div>
 
         </div>
