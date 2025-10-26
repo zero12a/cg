@@ -51,8 +51,7 @@
             //mygridGrp.cells(rowId,mygridGrp.getColIndexById("GRPTYPE")).getValue() 
             var fncCd = mygridFnc.cells(rowId,mygridFnc.getColIndexById("FNCCD")).getValue();
             alog("fncCd=" + fncCd);
-            if(fncCd == "USERDEF"){
-
+            if(fncCd == "USERDEF" || fncCd == "CHKDEL" || fncCd == "CHKSAVE"){
                 var userDefJs = mygridFnc.cells(rowId,mygridFnc.getColIndexById("USERDEFJS")).getValue();
                 //userDefJs = userDefJs + " my script";
                 cmFnc.setValue(userDefJs);
